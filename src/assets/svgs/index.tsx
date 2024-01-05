@@ -1,1 +1,1 @@
-import { ReactComponent as Rect } from './Rectangle 17.svg';
+export { ReactComponent as Rect } from './Rectangle 17.svg';
