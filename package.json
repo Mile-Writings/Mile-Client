@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "lint": "eslint './**/*.{ts,tsx,js,jsx}'",
     "lint:fix": "eslint --fix './**/*.{ts,tsx,js,jsx}'",
+    "lint:styled": "stylelint './src/**/*.styles.ts' --fix",
     "preview": "vite preview"
   },
   "dependencies": {
