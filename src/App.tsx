@@ -15,17 +15,17 @@ const App = () => {
 export default App;
 
 const StyledH1 = styled.h1`
-  display: flex;
+  background-color: black;
+  border-radius: 100%;
   width: 200px;
   margin: 10px;
   padding: 10px;
 
-  background-color: black;
-
-  color: #e9ecef;
-  font-weight: bold;
-  font-size: 14px;
+  display: flex;
 
   animation: ease;
-  border-radius: 100%;
+
+  font-size: 14px;
+  font-weight: bold;
+  color: #e9ecef;
 `;
