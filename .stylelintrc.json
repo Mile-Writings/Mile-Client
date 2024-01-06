@@ -6,7 +6,7 @@
     "declaration-empty-line-before": [
       "always",
       {
-        "ignore": ["first-nested", "after-comment", "after-declaration", "inside-single-line-block"]
+        "ignore": ["after-comment", "after-declaration", "inside-single-line-block"]
       }
     ],
     "order/order": ["custom-properties", "declarations"],
