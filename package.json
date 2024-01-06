@@ -15,9 +15,7 @@
     "@emotion/styled": "^11.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.1",
-    "stylelint-order": "^6.0.4",
-    "stylelint-semantic-groups": "^1.2.1"
+    "react-router-dom": "^6.21.1"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.11.0",
@@ -35,6 +33,11 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "prettier": "3.1.1",
+    "stylelint": "^16.1.0",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-order": "^6.0.4",
+    "stylelint-semantic-groups": "^1.2.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
     "vite-plugin-svgr": "^4.2.0"
