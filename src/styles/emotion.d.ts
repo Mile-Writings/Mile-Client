@@ -1,27 +1,59 @@
-import '@emotion/react';
+import { SerializedStyles } from '@emotion/react';
 
 declare module '@emotion/react' {
   export interface Theme {
     colors: {
-      __main_mile_violet: string;
-      __main_base_violet: string;
-      __main_point_violet: string;
-      __main_mile_green: string;
-      __main_base_green: string;
-      __main_point_green: string;
-      __gray_black: string;
-      __gray_gray_10: string;
-      __gray_gray_9: string;
-      __gray_gray_8: string;
-      __gray_gray_7: string;
-      __gray_gray_6: string;
-      __gray_gray_5: string;
-      __gray_gray_4: string;
-      __gray_gray_3: string;
-      __gray_gray_2: string;
-      __gray_gray_1: string;
-      __gray_gray_05: string;
-      __gray_white: string;
+      mainViolet: string;
+      mileViolet: string;
+      lightViolet: string;
+      darkViolet: string;
+      grayViolet: string;
+      mainGreen: string;
+      mileGreen: string;
+      lightGreen: string;
+      backGround: string;
+      black: string;
+      gray100: string;
+      gray90: string;
+      gray80: string;
+      gray70: string;
+      gray60: string;
+      gray50: string;
+      gray40: string;
+      gray30: string;
+      gray20: string;
+      gray10: string;
+      gray5: string;
+      white: string;
+    };
+    fonts: {
+      title1: SerializedStyles;
+      title2: SerializedStyles;
+      title3: SerializedStyles;
+      title4: SerializedStyles;
+      title5: SerializedStyles;
+      title6: SerializedStyles;
+      title7: SerializedStyles;
+      title8: SerializedStyles;
+      title9: SerializedStyles;
+      subtitle1: SerializedStyles;
+      subtitle2: SerializedStyles;
+      subtitle3: SerializedStyles;
+      subtitle4: SerializedStyles;
+      subtitle5: SerializedStyles;
+      subtitle6: SerializedStyles;
+      body1: SerializedStyles;
+      body2: SerializedStyles;
+      body3: SerializedStyles;
+      body4: SerializedStyles;
+      body5: SerializedStyles;
+      body6: SerializedStyles;
+      body7: SerializedStyles;
+      body8: SerializedStyles;
+      button1: SerializedStyles;
+      button2: SerializedStyles;
+      button3: SerializedStyles;
+      button4: SerializedStyles;
     };
   }
 }
