@@ -29,4 +29,3 @@ jobs:
             Note this PR might be rejected due to its size.
           files_to_ignore: 'package-lock.json *.lock'
           
-# permission 추가, 첫 PR에 사이즈 라벨링 생기는지 확인용 커밋푸시
