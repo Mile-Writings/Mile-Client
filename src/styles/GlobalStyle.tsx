@@ -5,6 +5,7 @@ const globalStyle = css`
   ${reset}
   * {
     box-sizing: border-box;
+
     font-family:
       'Pretendard Variable',
       Pretendard,
@@ -26,21 +27,23 @@ const globalStyle = css`
   html,
   body {
     margin: 0 auto;
+
     font-size: 62.5%;
   }
 
   a {
-    cursor: pointer;
-
-    text-decoration: none;
     color: inherit;
+    text-decoration: none;
+
+    cursor: pointer;
   }
 
   button {
-    border: none;
+    font: inherit;
+
     background: none;
     cursor: pointer;
-    font: inherit;
+    border: none;
   }
 
   select {
