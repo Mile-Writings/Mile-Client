@@ -28,108 +28,108 @@ export const theme = {
   fonts: {
     large_title: css`
       font-family: Pretendard;
-      font-size: 36px;
+      font-size: 3.6rem;
       font-style: normal;
       font-weight: 800;
       line-height: normal;
     `,
     title1: css`
       font-family: Pretendard;
-      font-size: 30px;
+      font-size: 3rem;
       font-style: normal;
       font-weight: 700;
       line-height: normal;
     `,
     title2: css`
       font-family: Pretendard;
-      font-size: 24px;
+      font-size: 2.4rem;
       font-style: normal;
       font-weight: 700;
       line-height: normal;
     `,
     title3: css`
       font-family: Pretendard;
-      font-size: 24px;
+      font-size: 2.4rem;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
     `,
     subtitle1: css`
       font-family: Pretendard;
-      font-size: 20px;
+      font-size: 2rem;
       font-style: normal;
       font-weight: 700;
       line-height: normal;
     `,
     subtitle2: css`
       font-family: Pretendard;
-      font-size: 18px;
+      font-size: 1.8rem;
       font-style: normal;
       font-weight: 700;
       line-height: normal;
     `,
     subtitle3: css`
       font-family: Pretendard;
-      font-size: 18px;
+      font-size: 1.8rem;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
     `,
     subtitle4: css`
       font-family: Pretendard;
-      font-size: 14px;
+      font-size: 1.4rem;
       font-style: normal;
       font-weight: 700;
       line-height: normal;
     `,
     subtitle5: css`
       font-family: Pretendard;
-      font-size: 16px;
+      font-size: 1.6rem;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
     `,
     subtitle6: css`
       font-family: Pretendard;
-      font-size: 16px;
+      font-size: 1.6rem;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
     `,
     body1: css`
       font-family: Pretendard;
-      font-size: 14px;
+      font-size: 1.4rem;
       font-style: normal;
       font-weight: 700;
       line-height: normal;
     `,
     body2: css`
       font-family: Pretendard;
-      font-size: 14px;
+      font-size: 1.4rem;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
     `,
     body3: css`
       font-family: Pretendard;
-      font-size: 14px;
+      font-size: 1.4rem;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
     `,
     body4: css`
       font-family: Pretendard;
-      font-size: 12px;
+      font-size: 1.2rem;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
     `,
     body5: css`
       font-family: Pretendard;
-      font-size: 12px;
+      font-size: 1.2rem;
       font-style: normal;
       font-weight: 400;
-      line-height: 18px; /* 150% */
+      line-height: 1.8rem; /* 150% */
     `,
   },
 };
