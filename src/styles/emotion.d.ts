@@ -12,6 +12,8 @@ declare module '@emotion/react' {
       mileGreen: string;
       lightGreen: string;
       backGround: string;
+      thumbnailGradient: string;
+      categoryGradient: string;
       black: string;
       gray100: string;
       gray90: string;

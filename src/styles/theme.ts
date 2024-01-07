@@ -11,6 +11,9 @@ export const theme = {
     mileGreen: '#C5DB8F',
     lightGreen: '#F1F6E2',
     backGround: '#F5F5F7',
+    thumbnailGradient:
+      'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 72.25%, rgba(0, 0, 0, 0.08) 100%)',
+    categoryGradient: 'linear-gradient(90deg, #F5F5F7 68.37%, rgba(245, 245, 247, 0.00) 100%)',
     black: '#010101',
     gray100: '#1f1f1f',
     gray90: '#333',
