@@ -26,110 +26,196 @@ export const theme = {
     white: '#FFF',
   },
   fonts: {
-    large_title: css`
-      font-family: Pretendard;
-      font-size: 3.6rem;
-      font-style: normal;
-      font-weight: 800;
-      line-height: normal;
-    `,
     title1: css`
       font-family: Pretendard;
-      font-size: 3rem;
+      font-size: 4.2rem;
       font-style: normal;
       font-weight: 700;
-      line-height: normal;
+      line-height: 120%; /* 50.4px */
+      letter-spacing: -0.084rem;
     `,
     title2: css`
       font-family: Pretendard;
-      font-size: 2.4rem;
+      font-size: 3.6rem;
       font-style: normal;
       font-weight: 700;
-      line-height: normal;
+      line-height: 100%; /* 36px */
     `,
     title3: css`
       font-family: Pretendard;
+      font-size: 3.2rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 120%; /* 38.4px */
+    `,
+    title4: css`
+      font-family: Pretendard;
+      font-size: 2.6rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 200%; /* 52px */
+    `,
+    title5: css`
+      font-family: Pretendard;
       font-size: 2.4rem;
       font-style: normal;
-      font-weight: 400;
-      line-height: normal;
+      font-weight: 600;
+      line-height: 120%; /* 28.8px */
+    `,
+    title6: css`
+      font-family: Pretendard;
+      font-size: 2.2rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 120%; /* 26.4px */
+    `,
+    title7: css`
+      font-family: Pretendard;
+      font-size: 2.2rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%; /* 26.4px */
+      letter-spacing: -0.66px;
+    `,
+    title8: css`
+      font-family: Pretendard;
+      font-size: 1.8rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 130%; /* 23.4px */
+    `,
+    title9: css`
+      font-family: Pretendard;
+      font-size: 2.2rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 120%; /* 26.4px */
     `,
     subtitle1: css`
       font-family: Pretendard;
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-style: normal;
       font-weight: 700;
-      line-height: normal;
+      line-height: 200%; /* 36px */
     `,
     subtitle2: css`
       font-family: Pretendard;
       font-size: 1.8rem;
       font-style: normal;
-      font-weight: 700;
-      line-height: normal;
+      font-weight: 600;
+      line-height: 135%; /* 24.3px */
     `,
     subtitle3: css`
       font-family: Pretendard;
       font-size: 1.8rem;
       font-style: normal;
       font-weight: 500;
-      line-height: normal;
+      line-height: 135%; /* 24.3px */
     `,
     subtitle4: css`
       font-family: Pretendard;
-      font-size: 1.4rem;
+      font-size: 1.8rem;
       font-style: normal;
-      font-weight: 700;
-      line-height: normal;
+      font-weight: 400;
+      line-height: 120%; /* 21.6px */
     `,
     subtitle5: css`
       font-family: Pretendard;
       font-size: 1.6rem;
       font-style: normal;
-      font-weight: 500;
-      line-height: normal;
+      font-weight: 600;
+      line-height: 150%; /* 24px */
     `,
     subtitle6: css`
       font-family: Pretendard;
       font-size: 1.6rem;
       font-style: normal;
-      font-weight: 400;
-      line-height: normal;
+      font-weight: 600;
+      line-height: 120%; /* 19.2px */
     `,
     body1: css`
       font-family: Pretendard;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       font-style: normal;
-      font-weight: 700;
-      line-height: normal;
+      font-weight: 500;
+      line-height: 120%; /* 19.2px */
     `,
     body2: css`
       font-family: Pretendard;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       font-style: normal;
-      font-weight: 500;
-      line-height: normal;
+      font-weight: 400;
+      line-height: 160%; /* 25.6px */
     `,
     body3: css`
       font-family: Pretendard;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       font-style: normal;
       font-weight: 400;
-      line-height: normal;
+      line-height: 140%; /* 22.4px */
     `,
     body4: css`
       font-family: Pretendard;
-      font-size: 1.2rem;
+      font-size: 1.6rem;
       font-style: normal;
-      font-weight: 500;
-      line-height: normal;
+      font-weight: 400;
+      line-height: 120%; /* 19.2px */
     `,
     body5: css`
+      font-family: Pretendard;
+      font-size: 1.4rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%; /* 16.8px */
+    `,
+    body6: css`
+      font-family: Pretendard;
+      font-size: 1.4rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 120%; /* 16.8px */
+    `,
+    body7: css`
+      font-family: Pretendard;
+      font-size: 1.3rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%; /* 15.6px */
+    `,
+    body8: css`
       font-family: Pretendard;
       font-size: 1.2rem;
       font-style: normal;
       font-weight: 400;
-      line-height: 1.8rem; /* 150% */
+      line-height: 200%; /* 24px */
+    `,
+    button1: css`
+      font-family: Pretendard;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 150%; /* 24px */
+    `,
+    button2: css`
+      font-family: Pretendard;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%; /* 19.2px */
+    `,
+    button3: css`
+      font-family: Pretendard;
+      font-size: 1.4rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 140%; /* 19.6px */
+    `,
+    button4: css`
+      font-family: Pretendard;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 125%; /* 20px */
     `,
   },
 };
