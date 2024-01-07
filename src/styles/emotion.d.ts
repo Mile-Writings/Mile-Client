@@ -1,4 +1,4 @@
-import { SerializedStyles } from '@emotion/react';
+import type { SerializedStyles } from '@emotion/react';
 
 declare module '@emotion/react' {
   export interface Theme {
