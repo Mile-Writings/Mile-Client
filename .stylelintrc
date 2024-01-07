@@ -4,11 +4,12 @@
   "customSyntax": "postcss-styled-syntax",
   "rules": {
     "declaration-empty-line-before": [
-      "always",
+      "never",
       {
         "ignore": ["after-comment", "after-declaration", "inside-single-line-block"]
       }
     ],
+
     "order/order": ["custom-properties", "declarations"],
 
     "order/properties-order": [
