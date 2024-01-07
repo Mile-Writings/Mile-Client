@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
+import reset from 'emotion-reset';
 
-const reset = css`
+const globalStyle = css`
+  ${reset}
   * {
     box-sizing: border-box;
     font-family:
@@ -46,4 +48,4 @@ const reset = css`
   }
 `;
 
-export default reset;
+export default globalStyle;
