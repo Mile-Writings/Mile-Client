@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import { FooterLogoSvg, FooterInstaSvg, FooterKakaoSvg, FooterMailSvg } from './assets/svgs';
+import Spacing from './components/commons/Spacing';
 
 const Footer = () => {
   return (
@@ -15,6 +16,7 @@ const Footer = () => {
           <FooterKakaoSvg />
           <FooterInstaSvg />
         </IconContainer>
+        <Spacing marginBottom="2rem" />
       </Layout>
     </Wrapper>
   );
@@ -29,6 +31,7 @@ const Wrapper = styled.div`
   height: 24.6rem;
   padding: 8rem 16.5rem;
 
+  background-color: ${({ theme }) => theme.colors.grayViolet};
   border: 1px solid red;
 `;
 
@@ -49,6 +52,5 @@ const IconContainer = styled.div`
   display: flex;
   gap: 1.6rem;
   justify-content: flex-end;
-  width: 24.3rem;
-  height: 8.09rem;
+  height: 2.4rem;
 `;
