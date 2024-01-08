@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-import { FooterLogoSvg, FooterInstaSvg, FooterKakaoSvg, FooterMailSvg } from './assets/svgs';
-import Spacing from './components/commons/Spacing';
-import theme from './styles/theme';
+import Spacing from './Spacing';
+import { FooterLogoSvg, FooterInstaSvg, FooterKakaoSvg, FooterMailSvg } from '../../assets/svgs';
+import theme from '../../styles/theme';
 
 const Footer = () => {
   return (

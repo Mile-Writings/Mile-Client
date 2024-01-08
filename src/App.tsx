@@ -1,4 +1,4 @@
-import Footer from './Footer';
+import Footer from './components/commons/Footer';
 
 const App = () => {
   return (
