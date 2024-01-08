@@ -40,7 +40,6 @@ const FooterWrapper = styled.div`
   padding: 8rem 16.5rem;
 
   background-color: ${({ theme }) => theme.colors.grayViolet};
-  border: 1px solid red;
 `;
 
 const FooterLayout = styled.div`
