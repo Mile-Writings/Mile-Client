@@ -1,18 +1,12 @@
-import styled from '@emotion/styled';
-
-
+import Footer from './footer';
 
 const App = () => {
   return (
     <>
-      <Header>마일 웨비 화이팅</Header>
-
+      <h1>마일 웨비 화이팅</h1>
+      <Footer />
     </>
   );
 };
 
 export default App;
-
-
-const Header = styled.h1``;
-
