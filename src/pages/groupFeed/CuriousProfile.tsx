@@ -1,5 +1,3 @@
-import React from 'react';
-
 import styled from '@emotion/styled';
 
 import { GroupCuriousProfile } from '../../assets/svgs';
@@ -7,7 +5,9 @@ import { GroupCuriousProfile } from '../../assets/svgs';
 const CuriousProfile = () => {
   return (
     <CuriousProfileWrapper>
-      <GroupCuriousProfile /> 프로필명
+      <CuriousProfileLayout>
+        <GroupCuriousProfile /> 프로필명
+      </CuriousProfileLayout>
     </CuriousProfileWrapper>
   );
 };
@@ -18,13 +18,19 @@ const CuriousProfileWrapper = styled.div`
   display: flex;
   gap: 1.6rem;
   align-items: center;
+`;
+
+const CuriousProfileLayout = styled.div`
+  display: flex;
+  gap: 1.6rem;
+  align-items: center;
+  width: 35.2rem;
   padding: 2.4rem;
 
-  border-radius: 8px;
-  background-color: ${({ theme }) => theme.colors.white};
-
-  ${({ theme }) => theme.colors.white}
   color: ${({ theme }) => theme.colors.gray90};
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 8px;
 
   ${({ theme }) => theme.fonts.subtitle3};
 `;
