@@ -1,50 +1,49 @@
 import styled from '@emotion/styled';
 import Slider from 'react-slick';
 
-import 'slick-carousel/slick/slick.css';
 import '../style/slick-theme.css';
+import '../style/slick.css';
 import GroupContent from './GroupContent';
 
 const Carousel = () => {
   const settings = {
     arrow: false,
     dots: false,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
   };
   return (
-    <CarouselBox>
-      <GroupCarousel {...settings}>
-        <div>
+    <CarouselLayout>
+      <CarouselContainer {...settings}>
+        <CarouselBox>
           <GroupContent />
-        </div>
-        <div>
+        </CarouselBox>
+        <CarouselBox>
           <GroupContent />
-        </div>
-        <div>
+        </CarouselBox>
+        <CarouselBox>
           <GroupContent />
-        </div>
-        <div>
+        </CarouselBox>
+        <CarouselBox>
           <GroupContent />
-        </div>
-      </GroupCarousel>
-    </CarouselBox>
+        </CarouselBox>
+      </CarouselContainer>
+    </CarouselLayout>
   );
 };
 
 export default Carousel;
 
-const CarouselBox = styled.div`
+const CarouselLayout = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const GroupCarousel = styled(Slider)`
+const CarouselContainer = styled(Slider)`
   width: 93rem;
   height: 24rem;
-  .slick-slide div {
-    background-color: ${({ theme }) => theme.colors.white};
-  }
 `;
+
+const CarouselBox = styled.div``;
