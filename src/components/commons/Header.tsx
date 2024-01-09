@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 
 import LogInOutBtn from './LogInOutBtn';
-import MakeGroupBtn from './MakeGroupBtn';
-import MyGroupBtn from './MyGroupBtn';
 import { HeaderLogoSvg } from '../../assets/svgs';
+import MakeGroupBtn from '../../pages/groupFeed/MakeGroupBtn';
+import MyGroupBtn from '../../pages/groupFeed/MyGroupBtn';
 import theme from '../../styles/theme';
 
 const Header = () => {
