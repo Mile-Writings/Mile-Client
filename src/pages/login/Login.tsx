@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 
 const Login = () => {
-  const REDIRECT_URI = 'http://localhost:5173/redirect-kakao';
+  const REDIRECT_URL = 'http://localhost:5173/redirect-kakao';
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${
     import.meta.env.VITE_REDIRECT_URI
-  }&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  }&redirect_uri=${REDIRECT_URL}&response_type=code`;
 
   const handleKakaoLogin = () => {
     window.location.href = kakaoURL;
