@@ -1,15 +1,8 @@
-import { ReactNode } from 'react';
-
 import styled from '@emotion/styled';
 
 import theme from '../../styles/theme';
 
-// const LogInOutBtn = (children: React.ReactNode) => {
-
-type LogInOutPropTypes = {
-  children: ReactNode;
-};
-const LogInOutBtn = ({ children }: LogInOutPropTypes) => {
+const LogInOutBtn = () => {
   const token = sessionStorage.getItem('token');
 
   const handleLogOut = () => {
