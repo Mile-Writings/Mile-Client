@@ -1,19 +1,16 @@
+import { ReactNode } from 'react';
+
 import styled from '@emotion/styled';
 
 import theme from '../../styles/theme';
 
-const LogInOutBtn = () => {
-  const token = sessionStorage.getItem('token');
+// const LogInOutBtn = (children: React.ReactNode) => {
 
-  const handleLogOut = () => {
-    sessionStorage.removeItem('token');
-  };
-
-  return (
-    <LogInOutWrapper onClick={token ? handleLogOut : undefined}>
-      {token ? '로그아웃' : '로그인'}
-    </LogInOutWrapper>
-  );
+type LogInOutPropTypes = {
+  children: ReactNode;
+};
+const LogInOutBtn = ({ children }: LogInOutPropTypes) => {
+  return <LogInOutWrapper>{children}</LogInOutWrapper>;
 };
 
 export default LogInOutBtn;
