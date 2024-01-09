@@ -314,5 +314,8 @@ function checkIsUser({userName, userBirth}:userDataPropsTypes){
 </details>
 
 <br/>
+<hr>
 
-
+| ✅ 사전 조사 |
+| :--------------: |
+| <ul><li><a href='https://lapis-margin-2db.notion.site/Emotion-518a0b3b11054afebf41e729e77712b2?pvs=4'>Emotion</a></li><li><a href='https://www.notion.so/Storybook-c60797fa06104848ac9e5f4e143bed15'>StoryBook</a></li><li><a href='https://flossy-salary-36e.notion.site/React-Query-6685216d402e4d5e9cbb6e2b2b28b10d?pvs=4'>React Query</a></li><li><a href='https://velog.io/@namdaeun/React-Context-API-파헤치기'>Context API</a></li></ul> |
