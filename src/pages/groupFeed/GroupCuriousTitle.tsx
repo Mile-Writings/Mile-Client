@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 
 import Spacing from '../../components/commons/Spacing';
 
@@ -7,8 +7,8 @@ interface GroupCuriousPropTypes {
   subText: string;
 }
 
-const GroupCuriousTitle = (infoProps: GroupCuriousPropTypes) => {
-  const { mainText, subText } = infoProps;
+const GroupCuriousTitle = (curiousProps: GroupCuriousPropTypes) => {
+  const { mainText, subText } = curiousProps;
 
   return (
     <GroupCuriousTitleWrapper>
@@ -20,6 +20,7 @@ const GroupCuriousTitle = (infoProps: GroupCuriousPropTypes) => {
 };
 
 export default GroupCuriousTitle;
+
 const GroupCuriousTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;

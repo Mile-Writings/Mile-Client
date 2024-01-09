@@ -17,14 +17,7 @@ const GroupFeed = () => {
             mainText="궁금해요 버튼이 많은 2명의 프로필"
             subText="부연설명 텍스트"
           />
-
-          <GroupCuriousWrapper>
-            <MainText>궁금해요 버튼이 많은 2개의 글</MainText>
-            <Spacing marginBottom="0.8" />
-            <SubText>부연설명 텍스트</SubText>
-            <Spacing marginBottom="2" />
-            제목영역입니다
-          </GroupCuriousWrapper>
+          <GroupCuriousTitle mainText="궁금해요 버튼이 많은 2개의 글" subText="부연설명 텍스트" />
           <GroupFeeds>카테고리 영역</GroupFeeds>
         </GroupInfo>
       </GroupInfoWrapper>
@@ -68,26 +61,8 @@ const GroupTodayWritingStyle = styled.div`
 
   border: 1px solid purple;
 `;
-
-const GroupCuriousWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  border: 1px solid purple;
-`;
-
 const GroupFeeds = styled.div`
   height: 2rem;
 
   border: 1px solid purple;
-`;
-
-const MainText = styled.div`
-  color: ${({ theme }) => theme.colors.black};
-  ${({ theme }) => theme.fonts.title5};
-`;
-
-const SubText = styled.div`
-  color: ${({ theme }) => theme.colors.gray70};
-  ${({ theme }) => theme.fonts.body3};
 `;
