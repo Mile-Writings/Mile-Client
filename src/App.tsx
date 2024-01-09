@@ -1,5 +1,3 @@
-import styled from '@emotion/styled';
-
 import Header from './Header';
 
 const App = () => {
