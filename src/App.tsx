@@ -1,10 +1,9 @@
-import Header from './components/common/Header';
+import Router from './Router';
 
 const App = () => {
   return (
     <>
-      <h1>마일 웨비 화이팅</h1>
-      <Header />
+      <Router />
     </>
   );
 };
