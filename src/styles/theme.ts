@@ -4,6 +4,7 @@ export const theme = {
   colors: {
     mainViolet: '#6139D1',
     mileViolet: '#E9E3F8',
+    middleViolet: '#D9CEF6',
     lightViolet: '#F7F5FC',
     darkViolet: '#A29CAF',
     grayViolet: '#EDEDF5',
