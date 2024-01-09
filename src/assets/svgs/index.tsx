@@ -6,3 +6,4 @@ export { default as FooterLogoSvg } from './footerLogoSvg.svg?react';
 export { default as GroupDateIcn } from './groupDateIcn.svg?react';
 export { default as GroupLeaderIcn } from './groupLeaderIcn.svg?react';
 export { default as GroupMemberIcn } from './groupMemberIcn.svg?react';
+export { default as GroupCuriousProfile } from './groupBestProfileIcnOpen.svg?react';
