@@ -1,11 +1,10 @@
 import styled from '@emotion/styled';
 
+import { HeaderLogoSvg } from './../../assets/svgs';
+import MakeGroupBtn from './../../pages/groupFeed/MakeGroupBtn';
+import MyGroupBtn from './../../pages/groupFeed/MyGroupBtn';
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
-import { HeaderLogoSvg } from '../../assets/svgs';
-import MakeGroupBtn from '../../pages/groupFeed/MakeGroupBtn';
-import MyGroupBtn from '../../pages/groupFeed/MyGroupBtn';
-import theme from '../../styles/theme';
 
 interface OnClickProps {
   onClick?: () => void;
@@ -80,7 +79,7 @@ const HeaderWrapper = styled.div`
   padding-right: 6rem;
   padding-left: 6rem;
 
-  border-bottom: 1px solid ${theme.colors.gray30};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
 `;
 
 const HeaderBtnLayout = styled.div`
