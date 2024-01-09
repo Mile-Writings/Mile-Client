@@ -1,15 +1,11 @@
-import styled from '@emotion/styled';
-
-import Editor from '../src/pages/postPage/components/Editor';
+import Router from './Router';
 
 const App = () => {
   return (
     <>
-      <Editor />
+      <Router />
     </>
   );
 };
 
 export default App;
-
-const Header = styled.h1``;

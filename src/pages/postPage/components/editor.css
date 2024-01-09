@@ -1,0 +1,40 @@
+.ql-container {
+  width: 82.5rem;
+  height: 90.3rem;
+  padding: 2.8rem;
+  border-radius: 0.8rem;
+}
+
+.ql-editor {
+  font-family: 'Pretendard Variable';
+  padding: 0;
+}
+
+/* 본문 2 */
+.ql-size-extra-small,
+.ql-size span[data-value='extra-small']::before {
+  font-size: 1.2rem !important;
+  line-height: 200% !important;
+  font-weight: regular;
+}
+/* 본문 1 */
+.ql-size-small,
+.ql-size span[data-value='small']::before {
+  font-size: 1.6rem !important;
+  line-height: 160% !important;
+  font-weight: regular;
+}
+/* 제목 2 */
+.ql-size-medium,
+.ql-size span[data-value='medium']::before {
+  font-size: 1.8rem !important;
+  line-height: 200% !important;
+  font-weight: bold;
+}
+/* 제목 1 */
+.ql-size-large,
+.ql-size span[data-value='large']::before {
+  font-size: 2.6rem !important;
+  line-height: 200% !important;
+  font-weight: bold;
+}

@@ -4,6 +4,7 @@ export const theme = {
   colors: {
     mainViolet: '#6139D1',
     mileViolet: '#E9E3F8',
+    middleViolet: '#D9CEF6',
     lightViolet: '#F7F5FC',
     darkViolet: '#A29CAF',
     grayViolet: '#EDEDF5',
@@ -32,7 +33,7 @@ export const theme = {
     title1: css`
       font-weight: 700;
       font-size: 4.2rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 50.4px */
       letter-spacing: -0.084rem;
@@ -40,42 +41,42 @@ export const theme = {
     title2: css`
       font-weight: 700;
       font-size: 3.6rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 100%; /* 36px */
     `,
     title3: css`
       font-weight: 700;
       font-size: 3.2rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 38.4px */
     `,
     title4: css`
       font-weight: 700;
       font-size: 2.6rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 200%; /* 52px */
     `,
     title5: css`
       font-weight: 600;
       font-size: 2.4rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 28.8px */
     `,
     title6: css`
       font-weight: 600;
       font-size: 2.2rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 26.4px */
     `,
     title7: css`
       font-weight: 500;
       font-size: 2.2rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 26.4px */
       letter-spacing: -0.66px;
@@ -83,140 +84,140 @@ export const theme = {
     title8: css`
       font-weight: 600;
       font-size: 1.8rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 130%; /* 23.4px */
     `,
     title9: css`
       font-weight: 600;
       font-size: 2.2rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 26.4px */
     `,
     subtitle1: css`
       font-weight: 700;
       font-size: 1.8rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 200%; /* 36px */
     `,
     subtitle2: css`
       font-weight: 600;
       font-size: 1.8rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 135%; /* 24.3px */
     `,
     subtitle3: css`
       font-weight: 500;
       font-size: 1.8rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 135%; /* 24.3px */
     `,
     subtitle4: css`
       font-weight: 400;
       font-size: 1.8rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 21.6px */
     `,
     subtitle5: css`
       font-weight: 600;
       font-size: 1.6rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 150%; /* 24px */
     `,
     subtitle6: css`
       font-weight: 600;
       font-size: 1.6rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 19.2px */
     `,
     body1: css`
       font-weight: 500;
       font-size: 1.6rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 19.2px */
     `,
     body2: css`
       font-weight: 400;
       font-size: 1.6rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 160%; /* 25.6px */
     `,
     body3: css`
       font-weight: 400;
       font-size: 1.6rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 140%; /* 22.4px */
     `,
     body4: css`
       font-weight: 400;
       font-size: 1.6rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 19.2px */
     `,
     body5: css`
       font-weight: 500;
       font-size: 1.4rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 16.8px */
     `,
     body6: css`
       font-weight: 400;
       font-size: 1.4rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 16.8px */
     `,
     body7: css`
       font-weight: 500;
       font-size: 1.3rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 15.6px */
     `,
     body8: css`
       font-weight: 400;
       font-size: 1.2rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 200%; /* 24px */
     `,
     button1: css`
       font-weight: 600;
       font-size: 1.6rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 150%; /* 24px */
     `,
     button2: css`
       font-weight: 500;
       font-size: 1.6rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 19.2px */
     `,
     button3: css`
       font-weight: 600;
       font-size: 1.4rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 140%; /* 19.6px */
     `,
     button4: css`
       font-weight: 400;
       font-size: 1.6rem;
-      font-family: Pretendard, sans-serif;
+      font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 125%; /* 20px */
     `,
