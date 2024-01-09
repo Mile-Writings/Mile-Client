@@ -11,7 +11,7 @@ const MakeGroupBtn = () => {
       onMouseOver={() => setShowHoverIcon(true)}
       onMouseLeave={() => setShowHoverIcon(false)}
     >
-      {showHoverIcon ? <MakeGroupPlusHoverBtn /> : <MakeGroupPlusBtn />}
+      {showHoverIcon ? <MakeGroupPlusHoverBtn /> : <MakeGroupPlusBtn />} 글모임 만들기
     </MakeGroupBtnWrapper>
   );
 };
@@ -19,11 +19,21 @@ const MakeGroupBtn = () => {
 export default MakeGroupBtn;
 
 const MakeGroupBtnWrapper = styled.button`
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: 4rem;
+  padding: 1rem 1.6rem;
+
   color: ${({ theme }) => theme.colors.mileViolet};
 
   background-color: ${({ theme }) => theme.colors.mainViolet};
+  cursor: pointer;
+  border-radius: 8px;
 
-  &:hover {
+  :hover {
     color: ${({ theme }) => theme.colors.mainViolet};
 
     background-color: ${({ theme }) => theme.colors.mileViolet};

@@ -2,8 +2,9 @@ import styled from '@emotion/styled';
 
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
+import MakeGroupBtn from './MakeGroupBtn';
 import MyGroupBtn from './MyGroupBtn';
-import { HeaderLogoSvg, MakeGroupPlusBtn, MakeGroupPlusHoverBtn } from '../../assets/svgs';
+import { HeaderLogoSvg } from '../../assets/svgs';
 import theme from '../../styles/theme';
 
 const Header = () => {
@@ -17,21 +18,14 @@ const Header = () => {
       {token ? (
         <HeaderBtnLayout>
           <LogInOutBtn>로그아웃</LogInOutBtn>
-          <Button typeName="submitEditType" onClick={handleMakeGroup}>
-            <MakeGroupPlusBtn />
-            글모임 만들기
-          </Button>
+
           <MyGroupBtn />
         </HeaderBtnLayout>
       ) : (
         <HeaderBtnLayout>
           <MyGroupBtn />
-          <Button typeName="submitEditType" onClick={handleMakeGroup}>
-            <ButtonContainer>
-              <MakeGroupPlusBtn />
-              글모임 만들기
-            </ButtonContainer>
-          </Button>
+
+          <MakeGroupBtn />
           <LogInOutBtn>로그인</LogInOutBtn>
         </HeaderBtnLayout>
       )}
