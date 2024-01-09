@@ -284,8 +284,8 @@ function checkIsUser({userName, userBirth}:userDataPropsTypes){
 ```
 
 - 불필요한 반복문 지양 : filter, array.include() 등
-    - 조건부로 데이터를 확인하거나 뽑아야하는 로직을 사용할 때에는 `Map` 이나 `Object`처럼 `key`값을 이용해서 원소를 찾는 자료형을 이용하는것을 고려해보거나, <br />
-      배열을 순회하지 않고 index로 바로 접근할 수 있는 방법이 없는지 고려.
+    - 조건부로 데이터를 확인하거나 뽑아야하는 로직을 사용할 때에는 `Map` 이나 `Object`처럼 `key`값을 이용해서 원소를 찾는 자료형을 이용하는것을 고려해보거나,
+    - 배열을 순회하지 않고 index로 바로 접근할 수 있는 방법이 없는지 고려.
 
 <br />
 
