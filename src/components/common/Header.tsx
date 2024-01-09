@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import LogInOutBtn from './LogInOutBtn';
 import { HeaderLogoSvg } from '../../assets/svgs';
 import theme from '../../styles/theme';
 
@@ -7,7 +8,7 @@ const Header = () => {
   return (
     <HeaderWrapper>
       <HeaderLogoSvg />
-      <button>버튼</button>
+      <LogInOutBtn>로그인</LogInOutBtn>
     </HeaderWrapper>
   );
 };
