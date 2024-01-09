@@ -1,18 +1,11 @@
-import styled from '@emotion/styled';
-
-
+import Router from './Router';
 
 const App = () => {
   return (
     <>
-      <Header>마일 웨비 화이팅</Header>
-
+      <Router />
     </>
   );
 };
 
 export default App;
-
-
-const Header = styled.h1``;
-
