@@ -4,3 +4,5 @@ export { default as FooterInstaSvg } from './footerInstaSvg.svg?react';
 export { default as FooterKakaoSvg } from './footerKakaoSvg.svg?react';
 export { default as FooterMailSvg } from './footerMailSvg.svg?react';
 export { default as FooterLogoSvg } from './footerLogoSvg.svg?react';
+export { default as MakeGroupPlusBtn } from './mainMakeGroupBtnEnable.svg?react';
+export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?react';
