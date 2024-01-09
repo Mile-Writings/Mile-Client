@@ -19,6 +19,8 @@ const Button = ({ children, onClick, typeName }: ButtonProps) => {
       return <DisableCommentType onClick={onClick}>{children}</DisableCommentType>;
     case 'enableCommentType':
       return <EnableCommentType onClick={onClick}>{children}</EnableCommentType>;
+    case 'writingFlowType':
+      return <WritingFlowType onClick={onClick}>{children}</WritingFlowType>;
     default:
       return '';
   }
@@ -90,5 +92,19 @@ const EnableCommentType = styled.button`
     color: ${({ theme }) => theme.colors.mainViolet};
 
     background-color: ${({ theme }) => theme.colors.mileViolet};
+  }
+`;
+
+const WritingFlowType = styled.button`
+  ${basicCSS};
+  color: ${({ theme }) => theme.colors.white};
+
+  background-color: ${({ theme }) => theme.colors.mainViolet};
+  ${({ theme }) => theme.fonts.button1};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+
+    background-color: ${({ theme }) => theme.colors.middleViolet};
   }
 `;
