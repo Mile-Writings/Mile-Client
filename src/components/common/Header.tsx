@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
-import { HeaderLogoSvg } from './assets/svgs';
-import theme from './styles/theme';
+import { HeaderLogoSvg } from '../../assets/svgs';
+import theme from '../../styles/theme';
 
 const Header = () => {
   return (
