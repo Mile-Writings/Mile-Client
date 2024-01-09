@@ -12,17 +12,17 @@ interface ButtonProps {
 const Button = ({ children, onClick, typeName }: ButtonProps) => {
   switch (typeName) {
     case 'deleteTempType':
-      return <DeleteTempType onClick={onClick}>{children}</DeleteTempType>;
+      return <DeleteTempStoreBtn onClick={onClick}>{children}</DeleteTempStoreBtn>;
     case 'submitEditType':
-      return <SubmitEditType onClick={onClick}>{children}</SubmitEditType>;
+      return <SubmitEditBtn onClick={onClick}>{children}</SubmitEditBtn>;
     case 'disableCommentType':
-      return <DisableCommentType onClick={onClick}>{children}</DisableCommentType>;
+      return <DisableCommentBtn onClick={onClick}>{children}</DisableCommentBtn>;
     case 'enableCommentType':
-      return <EnableCommentType onClick={onClick}>{children}</EnableCommentType>;
+      return <EnableCommentBtn onClick={onClick}>{children}</EnableCommentBtn>;
     case 'writingFlowType':
-      return <WritingFlowType onClick={onClick}>{children}</WritingFlowType>;
+      return <WritingFlowBtn onClick={onClick}>{children}</WritingFlowBtn>;
     default:
-      return '';
+      return <button></button>;
   }
 };
 
@@ -39,7 +39,7 @@ const basicCSS = css`
 `;
 
 /* 삭제하기, 임시저장 버튼 */
-const DeleteTempType = styled.button`
+const DeleteTempStoreBtn = styled.button`
   ${basicCSS};
   color: ${({ theme }) => theme.colors.gray70};
 
@@ -54,7 +54,7 @@ const DeleteTempType = styled.button`
 `;
 
 // 글 제출하기, 수정 완료하기, 글 수정하기
-const SubmitEditType = styled.button`
+const SubmitEditBtn = styled.button`
   ${basicCSS};
   color: ${({ theme }) => theme.colors.mileViolet};
 
@@ -69,7 +69,7 @@ const SubmitEditType = styled.button`
 `;
 
 // 댓글 등록하기 비활성화
-const DisableCommentType = styled.button`
+const DisableCommentBtn = styled.button`
   ${basicCSS};
   color: ${({ theme }) => theme.colors.gray70};
 
@@ -81,7 +81,7 @@ const DisableCommentType = styled.button`
 `;
 
 // 댓글 등록하기 활성화
-const EnableCommentType = styled.button`
+const EnableCommentBtn = styled.button`
   ${basicCSS};
   color: ${({ theme }) => theme.colors.white};
 
@@ -96,7 +96,7 @@ const EnableCommentType = styled.button`
 `;
 
 // 글 작성하러가기
-const WritingFlowType = styled.button`
+const WritingFlowBtn = styled.button`
   ${basicCSS};
   color: ${({ theme }) => theme.colors.white};
 
