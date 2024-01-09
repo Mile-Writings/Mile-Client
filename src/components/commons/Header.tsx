@@ -14,17 +14,12 @@ const Header = () => {
       <HeaderLogoSvg />
       {token ? (
         <HeaderBtnLayout>
-          <LogInOutBtn>로그아웃</LogInOutBtn>
-
           <MyGroupBtn />
+          <MakeGroupBtn />
+          <LogInOutBtn>로그아웃</LogInOutBtn>
         </HeaderBtnLayout>
       ) : (
-        <HeaderBtnLayout>
-          <MyGroupBtn />
-
-          <MakeGroupBtn />
-          <LogInOutBtn>로그인</LogInOutBtn>
-        </HeaderBtnLayout>
+        <LogInOutBtn>로그인</LogInOutBtn>
       )}
     </HeaderWrapper>
   );
