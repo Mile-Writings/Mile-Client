@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import GroupCuriousTitle from './GroupCuriousTitle';
 import GroupSideHeader from './GroupSideHeader';
+import GroupTodayWriteStyle from './GroupTodayWriteStyle';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
@@ -12,7 +13,7 @@ const GroupFeed = () => {
       <GroupInfoWrapper>
         <GroupSideHeader />
         <GroupInfo>
-          <GroupTodayWritingStyle>글감 카테고리 자리</GroupTodayWritingStyle>
+          <GroupTodayWriteStyle />
           <GroupCuriousTitle
             mainText="궁금해요 버튼이 많은 2명의 프로필"
             subText="부연설명 텍스트"
@@ -54,13 +55,6 @@ const GroupInfo = styled.div`
   border: 1px solid red;
 `;
 
-const GroupTodayWritingStyle = styled.div`
-  display: flex;
-  height: 12.5rem;
-  padding: 3.2rem;
-
-  border: 1px solid purple;
-`;
 const GroupFeeds = styled.div`
   height: 2rem;
 
