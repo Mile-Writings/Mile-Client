@@ -1,10 +1,13 @@
 import styled from '@emotion/styled';
 
+import Spacing from '../../../components/commons/Spacing';
+
 const GroupContent = () => {
   return (
     <ContentBox>
       <Topic>글쓰기 주제가 입력될 공간</Topic>
       <MainText>작성된 글의 제목이 들어갈 공간입니다.</MainText>
+      <Spacing marginBottom="3.2" />
       <SubText>
         텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가
         들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈
