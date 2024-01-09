@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import GroupInfoBox from './GroupInfoBox';
+import { GroupLeaderIcn } from '../../assets/svgs';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
@@ -8,7 +10,9 @@ const GroupFeed = () => {
       <GroupFeedThumnail></GroupFeedThumnail>
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
-        <GroupName>그룹명</GroupName>
+        <GroupInfoLayout>
+          <GroupInfoBox icon={<GroupLeaderIcn />} title="타이틀" detail="상세 내용" />
+        </GroupInfoLayout>
         <GroupInfo>
           <GroupTodayWritingStyle>글감 카테고리 자리</GroupTodayWritingStyle>
           <GroupCuriousWrapper>
@@ -52,7 +56,7 @@ const GroupInfoWrapper = styled.div`
   border: 1px solid yellow;
 `;
 
-const GroupName = styled.div`
+const GroupInfoLayout = styled.div`
   width: 27.7rem;
 
   border: 1px solid red;
