@@ -36,6 +36,7 @@ const basicCSS = css`
   border-radius: 0.8rem;
 `;
 
+/* 삭제하기, 임시저장 버튼 */
 const DeleteTempType = styled.button`
   ${basicCSS};
   color: ${({ theme }) => theme.colors.gray70};
