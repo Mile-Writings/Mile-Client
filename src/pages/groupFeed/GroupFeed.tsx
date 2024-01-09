@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import GroupCuriousTitle from './GroupCuriousTitle';
 import GroupSideHeader from './GroupSideHeader';
 import Spacing from '../../components/commons/Spacing';
 
@@ -12,13 +13,11 @@ const GroupFeed = () => {
         <GroupSideHeader />
         <GroupInfo>
           <GroupTodayWritingStyle>글감 카테고리 자리</GroupTodayWritingStyle>
-          <GroupCuriousWrapper>
-            <MainText>궁금해요 버튼이 많은 2명의 프로필</MainText>
-            <Spacing marginBottom="0.8" />
-            <SubText>부연설명 텍스트</SubText>
-            <Spacing marginBottom="2" />
-            프로필명
-          </GroupCuriousWrapper>
+          <GroupCuriousTitle
+            mainText="궁금해요 버튼이 많은 2명의 프로필"
+            subText="부연설명 텍스트"
+          />
+
           <GroupCuriousWrapper>
             <MainText>궁금해요 버튼이 많은 2개의 글</MainText>
             <Spacing marginBottom="0.8" />
