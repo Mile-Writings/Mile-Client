@@ -35,7 +35,8 @@ export default Footer;
 const FooterWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 136.7rem;
+  width: 100%;
+  min-width: 136.7rem;
   height: 24.6rem;
   padding: 8rem 16.5rem;
 
