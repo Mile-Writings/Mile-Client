@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 
-import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
 import MakeGroupBtn from './MakeGroupBtn';
 import MyGroupBtn from './MyGroupBtn';
@@ -9,9 +8,7 @@ import theme from '../../styles/theme';
 
 const Header = () => {
   const token = sessionStorage.getItem('token');
-  const handleMakeGroup = () => {
-    console.log('makeGroup');
-  };
+
   return (
     <HeaderWrapper>
       <HeaderLogoSvg />
@@ -51,9 +48,4 @@ const HeaderBtnLayout = styled.div`
   display: flex;
   align-items: center;
   height: 6.4rem;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  gap: 0.6rem;
 `;

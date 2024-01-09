@@ -6,7 +6,7 @@ const MyGroupBtn = () => {
 
 export default MyGroupBtn;
 
-const MyGroupBtnWrapper = styled.div`
+const MyGroupBtnWrapper = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,6 +15,8 @@ const MyGroupBtnWrapper = styled.div`
 
   color: ${({ theme }) => theme.colors.gray70};
   text-align: center;
+
+  cursor: pointer;
 
   ${({ theme }) => theme.fonts.subtitle6}
 
