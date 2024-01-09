@@ -10,7 +10,7 @@ const Footer = () => {
       <FooterLayout>
         <FooterLogoSvg />
         <Spacing marginBottom="1.6" />
-        <MileText1>Make it look easy, 글쓰기를 쉽고 편안하게</MileText1>
+        <MileText>Make it look easy, 글쓰기를 쉽고 편안하게</MileText>
       </FooterLayout>
       <FooterLayout>
         <IconContainer>
@@ -19,11 +19,11 @@ const Footer = () => {
           <FooterInstaSvg />
         </IconContainer>
         <Spacing marginBottom="2" />
-        <MileText2>이용약관 및 개인정보 취급방침</MileText2>
+        <MilePrivacy>이용약관 및 개인정보 취급방침</MilePrivacy>
         <Spacing marginBottom="0.8" />
         <FooterBox>
-          <MileText1>Made by ZAKMI 2024</MileText1>
-          <MileText3>© 마일 MILE</MileText3>
+          <MileText>Made by ZAKMI 2024</MileText>
+          <MileCopyright>© 마일 MILE</MileCopyright>
         </FooterBox>
       </FooterLayout>
     </FooterWrapper>
@@ -55,7 +55,7 @@ const FooterBox = styled.div`
   width: 24.5rem;
 `;
 
-const MileText1 = styled.div`
+const MileText = styled.div`
   height: 1.7rem;
 
   color: ${theme.colors.gray80};
@@ -63,7 +63,7 @@ const MileText1 = styled.div`
   ${({ theme }) => theme.fonts.body6}
 `;
 
-const MileText2 = styled.div`
+const MilePrivacy = styled.div`
   display: flex;
   justify-content: flex-end;
   height: 1.7rem;
@@ -73,7 +73,7 @@ const MileText2 = styled.div`
   ${({ theme }) => theme.fonts.body6}
 `;
 
-const MileText3 = styled.span`
+const MileCopyright = styled.span`
   height: 1.7rem;
 
   color: ${theme.colors.gray80};
