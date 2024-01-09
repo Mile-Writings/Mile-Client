@@ -18,6 +18,19 @@ const CuriousArticle = () => {
           보여지는 자리입니다. 최대 세줄입니다{' '}
         </ArticlePreview>
       </CuriousArticleLayout>
+      <CuriousArticleLayout>
+        <ArticleThumbnail />
+        <Spacing marginBottom="1.6" />
+        <ArticleWritingStyle>글감자리입니다. 최대 공백포함 15자</ArticleWritingStyle>
+        <Spacing marginBottom="0.4" />
+        <ArticleTitle>제목영역입니다</ArticleTitle>
+        <Spacing marginBottom="1.2" />
+        <ArticlePreview>
+          {' '}
+          글이 보여지는 자리입니다. 최대 세줄입니다. 글이 보여지는 자리입니다. 최대 세줄입니다. 글이
+          보여지는 자리입니다. 최대 세줄입니다{' '}
+        </ArticlePreview>
+      </CuriousArticleLayout>
     </CuriousArticleWrapper>
   );
 };
