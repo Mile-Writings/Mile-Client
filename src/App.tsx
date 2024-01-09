@@ -1,18 +1,15 @@
 import styled from '@emotion/styled';
 
-
+import Editor from '../src/pages/postPage/components/Editor';
 
 const App = () => {
   return (
     <>
-      <Header>마일 웨비 화이팅</Header>
-
+      <Editor />
     </>
   );
 };
 
 export default App;
 
-
 const Header = styled.h1``;
-
