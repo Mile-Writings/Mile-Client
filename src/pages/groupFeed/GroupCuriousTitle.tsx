@@ -24,8 +24,6 @@ export default GroupCuriousTitle;
 const GroupCuriousTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
-  border: 1px solid purple;
 `;
 
 const MainText = styled.div`

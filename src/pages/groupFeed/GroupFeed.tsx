@@ -55,20 +55,14 @@ const GroupInfoWrapper = styled.div`
   height: 246.1rem;
   padding-right: 16.5rem;
   padding-left: 16.5rem;
-
-  border: 1px solid yellow;
 `;
 
 const GroupInfo = styled.div`
   display: flex;
   flex-direction: column;
   width: 72rem;
-
-  border: 1px solid red;
 `;
 
 const GroupFeeds = styled.div`
   height: 2rem;
-
-  border: 1px solid purple;
 `;

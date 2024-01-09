@@ -32,7 +32,10 @@ const GroupSideHeaderTitle = styled.div`
 `;
 
 const GroupSideHeaderWrapper = styled.div`
+  position: sticky;
+  top: 20px;
   width: 27.7rem;
+  height: 34.2rem;
 `;
 
 const GroupSideHeaderLayout = styled.div`
