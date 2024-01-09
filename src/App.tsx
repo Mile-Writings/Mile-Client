@@ -1,18 +1,14 @@
 import styled from '@emotion/styled';
 
-
+import Header from './Header';
 
 const App = () => {
   return (
     <>
-      <Header>마일 웨비 화이팅</Header>
-
+      <h1>마일 웨비 화이팅</h1>
+      <Header />
     </>
   );
 };
 
 export default App;
-
-
-const Header = styled.h1``;
-
