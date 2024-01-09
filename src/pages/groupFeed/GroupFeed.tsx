@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import CuriousArticle from './CuriousArticle';
 import CuriousProfile from './CuriousProfile';
 import GroupCuriousTitle from './GroupCuriousTitle';
 import GroupSideHeader from './GroupSideHeader';
@@ -15,12 +16,18 @@ const GroupFeed = () => {
         <GroupSideHeader />
         <GroupInfo>
           <GroupTodayWriteStyle />
+          <Spacing marginBottom="6.4" />
           <GroupCuriousTitle
             mainText="궁금해요 버튼이 많은 2명의 프로필"
             subText="부연설명 텍스트"
           />
+          <Spacing marginBottom="2" />
           <CuriousProfile />
+          <Spacing marginBottom="6.4" />
           <GroupCuriousTitle mainText="궁금해요 버튼이 많은 2개의 글" subText="부연설명 텍스트" />
+          <Spacing marginBottom="2" />
+          <CuriousArticle />
+          <Spacing marginBottom="6.4" />
           <GroupFeeds>카테고리 영역</GroupFeeds>
         </GroupInfo>
       </GroupInfoWrapper>
@@ -55,7 +62,6 @@ const GroupInfoWrapper = styled.div`
 const GroupInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 6.4rem;
   width: 72rem;
 
   border: 1px solid red;
