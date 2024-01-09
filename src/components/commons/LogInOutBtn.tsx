@@ -4,8 +4,6 @@ import styled from '@emotion/styled';
 
 import theme from '../../styles/theme';
 
-// const LogInOutBtn = (children: React.ReactNode) => {
-
 type LogInOutPropTypes = {
   children: ReactNode;
 };
@@ -17,7 +15,6 @@ export default LogInOutBtn;
 
 const LogInOutWrapper = styled.button`
   height: 4rem;
-  margin-left: 1.2rem;
   padding: 1rem 1.6rem;
 
   color: ${({ theme }) => theme.colors.gray70};
