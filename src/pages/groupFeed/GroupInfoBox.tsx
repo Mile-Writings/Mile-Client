@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -24,16 +24,17 @@ export default GroupInfoBox;
 const GroupInfoBoxWrapper = styled.div`
   display: flex;
   gap: 0.8rem;
+  align-items: center;
 `;
 
 const TitleText = styled.div`
-  color: ${theme.colors.gray80};
+  color: ${({ theme }) => theme.colors.gray70};
 
-  ${({ theme }) => theme.fonts.body6}
+  ${({ theme }) => theme.fonts.subtitle6}
 `;
 
 const DetailText = styled.div`
-  color: ${theme.colors.gray80};
+  color: ${({ theme }) => theme.colors.gray80};
 
-  ${({ theme }) => theme.fonts.body6}
+  ${({ theme }) => theme.fonts.body1};
 `;
