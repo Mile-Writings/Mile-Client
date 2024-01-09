@@ -1,8 +1,13 @@
 import styled from '@emotion/styled';
 
 const Login = () => {
+  const REDIRECT_URI = 'http://localhost:5173/redirect-kakao';
+  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${
+    import.meta.env.VITE_REDIRECT_URI
+  }&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
   const handleKakaoLogin = () => {
-    alert('kakao login 준비중입니다.');
+    window.location.href = kakaoURL;
   };
   return (
     <LoginWrapper>
