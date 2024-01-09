@@ -5,7 +5,7 @@ import Spacing from '../../components/commons/Spacing';
 const GroupFeed = () => {
   return (
     <>
-      <GroupFeedThumnail>썸네일</GroupFeedThumnail>
+      <GroupFeedThumnail></GroupFeedThumnail>
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
         <GroupName>그룹명</GroupName>
@@ -38,7 +38,7 @@ const GroupFeedThumnail = styled.div`
   width: 136.6rem;
   height: 37rem;
 
-  border: 1px solid yellow;
+  background-image: url('../../src/assets/images/commonThumbnail.png');
 `;
 
 const GroupInfoWrapper = styled.div`
