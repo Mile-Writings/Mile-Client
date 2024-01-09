@@ -1,36 +1,22 @@
 import styled from '@emotion/styled';
 
+import { CURIOUS_ARTICLE } from './constants/CURIOUS_PROFILE';
 import Spacing from '../../components/commons/Spacing';
 
 const CuriousArticle = () => {
   return (
     <CuriousArticleWrapper>
-      <CuriousArticleLayout>
-        <ArticleThumbnail />
-        <Spacing marginBottom="1.6" />
-        <ArticleWritingStyle>글감자리입니다. 최대 공백포함 15자</ArticleWritingStyle>
-        <Spacing marginBottom="0.4" />
-        <ArticleTitle>제목영역입니다</ArticleTitle>
-        <Spacing marginBottom="1.2" />
-        <ArticlePreview>
-          {' '}
-          글이 보여지는 자리입니다. 최대 세줄입니다. 글이 보여지는 자리입니다. 최대 세줄입니다. 글이
-          보여지는 자리입니다. 최대 세줄입니다{' '}
-        </ArticlePreview>
-      </CuriousArticleLayout>
-      <CuriousArticleLayout>
-        <ArticleThumbnail />
-        <Spacing marginBottom="1.6" />
-        <ArticleWritingStyle>글감자리입니다. 최대 공백포함 15자</ArticleWritingStyle>
-        <Spacing marginBottom="0.4" />
-        <ArticleTitle>제목영역입니다</ArticleTitle>
-        <Spacing marginBottom="1.2" />
-        <ArticlePreview>
-          {' '}
-          글이 보여지는 자리입니다. 최대 세줄입니다. 글이 보여지는 자리입니다. 최대 세줄입니다. 글이
-          보여지는 자리입니다. 최대 세줄입니다{' '}
-        </ArticlePreview>
-      </CuriousArticleLayout>
+      {CURIOUS_ARTICLE.postList.map((article, index) => (
+        <CuriousArticleLayout key={index}>
+          <ArticleThumbnail />
+          <Spacing marginBottom="1.6" />
+          <ArticleWritingStyle>{article.topic}</ArticleWritingStyle>
+          <Spacing marginBottom="0.4" />
+          <ArticleTitle>{article.title}</ArticleTitle>
+          <Spacing marginBottom="1.2" />
+          <ArticlePreview>{article.content}</ArticlePreview>
+        </CuriousArticleLayout>
+      ))}
     </CuriousArticleWrapper>
   );
 };

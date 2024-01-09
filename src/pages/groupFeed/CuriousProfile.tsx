@@ -1,17 +1,20 @@
 import styled from '@emotion/styled';
 
+import { CURIOUS_PROFILE } from './constants/CURIOUS_PROFILE';
 import { GroupCuriousProfile } from '../../assets/svgs';
 
 const CuriousProfile = () => {
   return (
     <CuriousProfileWrapper>
-      <CuriousProfileLayout>
-        <GroupCuriousProfile />
-        <ProfileWrapper>
-          <ProfileTitle>프로필명</ProfileTitle>
-          <ProfileDetail>프로필 소개글이 들어갈 자리입니다.</ProfileDetail>
-        </ProfileWrapper>
-      </CuriousProfileLayout>
+      {CURIOUS_PROFILE.popularWriters.map((writer, index) => (
+        <CuriousProfileLayout key={index}>
+          <GroupCuriousProfile />
+          <ProfileWrapper>
+            <ProfileTitle>{writer.writerName}</ProfileTitle>
+            <ProfileDetail>{writer.information}</ProfileDetail>
+          </ProfileWrapper>
+        </CuriousProfileLayout>
+      ))}
     </CuriousProfileWrapper>
   );
 };
