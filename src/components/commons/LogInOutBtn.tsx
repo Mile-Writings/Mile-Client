@@ -6,9 +6,10 @@ import theme from '../../styles/theme';
 
 type LogInOutPropTypes = {
   children: ReactNode;
+  onClick?: () => void;
 };
-const LogInOutBtn = ({ children }: LogInOutPropTypes) => {
-  return <LogInOutWrapper>{children}</LogInOutWrapper>;
+const LogInOutBtn = ({ children, onClick }: LogInOutPropTypes) => {
+  return <LogInOutWrapper onClick={onClick}>{children}</LogInOutWrapper>;
 };
 
 export default LogInOutBtn;
