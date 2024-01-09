@@ -12,5 +12,5 @@ const Spacing = (spacingProps: SpacingPropTypes) => {
 export default Spacing;
 
 const SpacingBox = styled.div<{ $marginBottom: string }>`
-  margin-bottom: ${(props) => props.$marginBottom || '0'};
+  margin-bottom: ${(props) => props.$marginBottom || '0'}rem;
 `;

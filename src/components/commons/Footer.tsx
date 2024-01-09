@@ -9,7 +9,7 @@ const Footer = () => {
     <FooterWrapper>
       <FooterLayout>
         <FooterLogoSvg />
-        <Spacing marginBottom="1.6rem" />
+        <Spacing marginBottom="1.6" />
         <MileText1>Make it look easy, 글쓰기를 쉽고 편안하게</MileText1>
       </FooterLayout>
       <FooterLayout>
@@ -18,9 +18,9 @@ const Footer = () => {
           <FooterKakaoSvg />
           <FooterInstaSvg />
         </IconContainer>
-        <Spacing marginBottom="2rem" />
+        <Spacing marginBottom="2" />
         <MileText2>이용약관 및 개인정보 취급방침</MileText2>
-        <Spacing marginBottom="0.8rem" />
+        <Spacing marginBottom="0.8" />
         <FooterBox>
           <MileText1>Made by ZAKMI 2024</MileText1>
           <MileText3>© 마일 MILE</MileText3>
