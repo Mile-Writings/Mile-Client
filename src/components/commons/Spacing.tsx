@@ -4,8 +4,8 @@ interface SpacingPropTypes {
   marginBottom: string;
 }
 
-const Spacing = (props: SpacingPropTypes) => {
-  const { marginBottom } = props;
+const Spacing = (spacingProps: SpacingPropTypes) => {
+  const { marginBottom } = spacingProps;
   return <SpacingBox $marginBottom={marginBottom} />;
 };
 
