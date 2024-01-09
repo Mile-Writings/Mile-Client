@@ -44,13 +44,13 @@ const DeleteTempType = styled.button`
   color: ${({ theme }) => theme.colors.gray70};
 
   background-color: ${({ theme }) => theme.colors.white};
-  ${({ theme }) => theme.fonts.button3};
   border: 1px solid ${({ theme }) => theme.colors.gray70};
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.gray20};
     ${({ theme }) => theme.fonts.button3};
   }
+  ${({ theme }) => theme.fonts.button3};
 `;
 
 // 글 제출하기, 수정 완료하기, 글 수정하기
@@ -59,13 +59,13 @@ const SubmitEditType = styled.button`
   color: ${({ theme }) => theme.colors.mileViolet};
 
   background-color: ${({ theme }) => theme.colors.mainViolet};
-  ${({ theme }) => theme.fonts.button3};
 
   &:hover {
     color: ${({ theme }) => theme.colors.mainViolet};
 
     background-color: ${({ theme }) => theme.colors.mileViolet};
   }
+  ${({ theme }) => theme.fonts.button3};
 `;
 
 // 댓글 등록하기 비활성화
@@ -74,10 +74,10 @@ const DisableCommentType = styled.button`
   color: ${({ theme }) => theme.colors.gray70};
 
   background-color: ${({ theme }) => theme.colors.gray20};
-  ${({ theme }) => theme.fonts.button3};
   cursor: default;
 
   pointer-events: none;
+  ${({ theme }) => theme.fonts.button3};
 `;
 
 // 댓글 등록하기 활성화
@@ -86,25 +86,26 @@ const EnableCommentType = styled.button`
   color: ${({ theme }) => theme.colors.white};
 
   background-color: ${({ theme }) => theme.colors.mainViolet};
-  ${({ theme }) => theme.fonts.button3};
 
   &:hover {
     color: ${({ theme }) => theme.colors.mainViolet};
 
     background-color: ${({ theme }) => theme.colors.mileViolet};
   }
+  ${({ theme }) => theme.fonts.button3};
 `;
 
+// 글 작성하러가기
 const WritingFlowType = styled.button`
   ${basicCSS};
   color: ${({ theme }) => theme.colors.white};
 
   background-color: ${({ theme }) => theme.colors.mainViolet};
-  ${({ theme }) => theme.fonts.button1};
 
   &:hover {
     color: ${({ theme }) => theme.colors.mainViolet};
 
     background-color: ${({ theme }) => theme.colors.middleViolet};
   }
+  ${({ theme }) => theme.fonts.button1};
 `;
