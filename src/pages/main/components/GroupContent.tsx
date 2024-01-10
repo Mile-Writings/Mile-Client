@@ -49,6 +49,7 @@ const TextImageBox = styled.div``;
 const SubText = styled.div<{ isImage: boolean }>`
   width: ${({ isImage }) => (isImage ? '59.8rem' : '85.8rem')};
   height: 8.4rem;
+  overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray80};
   ${({ theme }) => theme.fonts.body3};
