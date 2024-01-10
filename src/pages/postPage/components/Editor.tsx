@@ -19,7 +19,7 @@ const CustomToolbar = () => {
         </select>
 
         <select className="ql-color ql-custom-color">
-          <option value="#010101"></option>
+          <option value="#010101" className="ql-testest"></option>
           <option value="#505050"></option>
           <option value="#B81616"></option>
           <option value="#DA5B24"></option>

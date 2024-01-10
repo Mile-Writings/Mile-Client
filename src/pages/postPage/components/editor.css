@@ -91,19 +91,24 @@
   display: none !important;
 }
 
-.ql-color.ql-custom-color.ql-picker.ql-color-picker > .ql-picker-label::after {
+.ql-color.ql-custom-color.ql-picker.ql-color-picker > .ql-picker-label::after,
+.ql-background.ql-custom-background.ql-color-picker > .ql-picker-label::after {
   content: url(../../../assets/svgs/editorDropIcnClose.svg);
 }
 
-.ql-color.ql-custom-color.ql-picker.ql-color-picker.ql-expanded > .ql-picker-label::after {
+.ql-color.ql-custom-color.ql-picker.ql-color-picker.ql-expanded > .ql-picker-label::after,
+.ql-background.ql-custom-background.ql-picker.ql-color-picker.ql-expanded
+  > .ql-picker-label::after {
   content: url(../../../assets/svgs/editorDropIcnOpen.svg);
 }
 
-.ql-color.ql-custom-color.ql-picker.ql-color-picker {
+.ql-color.ql-custom-color.ql-picker.ql-color-picker,
+.ql-background.ql-custom-background.ql-picker.ql-color-picker {
   width: 8.1rem;
 }
 
-.ql-color.ql-custom-color.ql-picker.ql-color-picker > .ql-picker-label {
+.ql-color.ql-custom-color.ql-picker.ql-color-picker > .ql-picker-label,
+.ql-background.ql-custom-background.ql-picker.ql-color-picker > .ql-picker-label {
   width: 8.1rem;
   display: flex;
   justify-content: center;
@@ -215,29 +220,65 @@
 .ql-picker.ql-custom-background [data-value='#FFFFFF']::before {
   content: url(../../../assets/svgs/editorTextbasecolorIcnWhite.svg);
 }
+.ql-picker.ql-custom-background [data-value='#FFFFFF']::after {
+  color: #333333;
+  content: 'white';
+}
 .ql-picker.ql-custom-background [data-value='#EAEAEA']::before {
   content: url(../../../assets/svgs/editorTextbasecolorIcnGray.svg);
+}
+.ql-picker.ql-custom-background [data-value='#EAEAEA']::after {
+  color: #333333;
+  content: 'gray';
 }
 .ql-picker.ql-custom-background [data-value='#F6E2E2']::before {
   content: url(../../../assets/svgs/editorTextbasecolorIcnRed.svg);
 }
+.ql-picker.ql-custom-background [data-value='#F6E2E2']::after {
+  color: #333333;
+  content: 'red';
+}
 .ql-picker.ql-custom-background [data-value='#F6E7E2']::before {
   content: url(../../../assets/svgs/editorTextbasecolorIcnOrange.svg);
+}
+.ql-picker.ql-custom-background [data-value='#F6E7E2']::after {
+  color: #333333;
+  content: 'orange';
 }
 .ql-picker.ql-custom-background [data-value='#F6F4E2']::before {
   content: url(../../../assets/svgs/editorTextbasecolorIcnYellow.svg);
 }
+.ql-picker.ql-custom-background [data-value='#F6F4E2']::after {
+  color: #333333;
+  content: 'yellow';
+}
 .ql-picker.ql-custom-background [data-value='#F1F6E2']::before {
   content: url(../../../assets/svgs/editorTextbasecolorIcnGreen.svg);
+}
+.ql-picker.ql-custom-background [data-value='#F1F6E2']::after {
+  color: #333333;
+  content: 'green';
 }
 .ql-picker.ql-custom-background [data-value='#E2EAF6']::before {
   content: url(../../../assets/svgs/editorTextbasecolorIcnBlue.svg);
 }
+.ql-picker.ql-custom-background [data-value='#E2EAF6']::after {
+  color: #333333;
+  content: 'blue';
+}
 .ql-picker.ql-custom-background [data-value='#E9E3F8']::before {
   content: url(../../../assets/svgs/editorTextbasecolorIcnViolet.svg);
 }
+.ql-picker.ql-custom-background [data-value='#E9E3F8']::after {
+  color: #333333;
+  content: 'violet';
+}
 .ql-picker.ql-custom-background [data-value='#F6E2F3']::before {
   content: url(../../../assets/svgs/editorTextbasecolorIcnPink.svg);
+}
+.ql-picker.ql-custom-background [data-value='#F6E2F3']::after {
+  color: #333333;
+  content: 'pink';
 }
 
 /* 볼드 버튼 아이콘 커스텀 */
