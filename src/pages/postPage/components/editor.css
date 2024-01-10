@@ -10,6 +10,11 @@
   padding: 0;
 }
 
+p::selection {
+  background-color: #d9cef6;
+
+}
+
 .ql-toolbar {
   display: flex;
   align-items: center;
