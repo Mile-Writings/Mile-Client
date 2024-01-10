@@ -30,6 +30,9 @@ const Carousel = (props: CategoryIdPropTypes) => {
     initialSlide: 0,
     nextArrow: <Next />,
     prevArrow: <Prev />,
+    beforeChange: (_: number, newIndex: number) => {
+      setActiveCategoryId(newIndex + 1);
+    },
   };
 
   const handleCategoryClick = (categoryId: number) => {
@@ -68,7 +71,7 @@ const CarouselWrapper = styled.div`
 `;
 
 const Next = styled.div`
-  z-index: 2;
+  z-index: 4;
   width: 3.6rem;
   height: 3.6rem;
 
@@ -80,7 +83,7 @@ const Next = styled.div`
 `;
 
 const Prev = styled.div`
-  z-index: 2;
+  z-index: 3;
   width: 3.6rem;
   height: 3.6rem;
 
@@ -94,10 +97,16 @@ const Prev = styled.div`
 const GroupTabBtnBaseBeforeIc = styled(GroupTabBtnBaseBeforeIcn)`
   position: absolute;
   top: 0;
+  z-index: 3;
+
+  pointer-events: none;
 `;
 
 const GroupTabBtnBaseNextIc = styled(GroupTabBtnBaseNextIcn)`
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 3;
+
+  pointer-events: none;
 `;

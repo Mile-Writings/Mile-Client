@@ -7,7 +7,7 @@ import EachArticle from './carousel/EachArticle';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
-  const [activeCategoryId, setActiveCategoryId] = useState<number>(0);
+  const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
 
   return (
     <>
