@@ -50,3 +50,48 @@ export const CAROUSEL_CATEGORY = {
     },
   ],
 };
+
+export const CATEGORY_ARTICE_LIST = {
+  topicInfo: {
+    topic: '웹잼에 대하여',
+    topicDescription: '웹잼 웹잼 웹잼',
+  },
+  postList: [
+    {
+      postId: 1,
+      postTitle: '글 제목',
+      postContent: '글 내용',
+      writerName: '작자',
+      createdAt: '23.12.29. 11:11',
+      curiousCount: 14,
+      imageUrl: '~',
+    },
+    {
+      postId: 2,
+      postTitle: '글 제목',
+      postContent: '글 내용',
+      writerName: '작자',
+      createdAt: '23.12.29. 11:11',
+      curiousCount: 14,
+      imageUrl: '~',
+    },
+    {
+      postId: 3,
+      postTitle: '글 제목',
+      postContent: '글 내용',
+      writerName: '작자',
+      createdAt: '23.12.29. 11:11',
+      curiousCount: 14,
+      imageUrl: '~',
+    },
+    {
+      postId: 4,
+      postTitle: '글 제목',
+      postContent: '글 내용',
+      writerName: '작자',
+      createdAt: '23.12.29. 11:11',
+      curiousCount: 14,
+      imageUrl: '~',
+    },
+  ],
+};
