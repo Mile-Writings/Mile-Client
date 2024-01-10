@@ -372,3 +372,101 @@
 .ql-bubble .ql-picker-label {
   line-height: 0px;
 }
+
+/* svg 버튼 커스텀 */
+.ql-bold > svg,
+.ql-underline > svg,
+.ql-strike > svg,
+.ql-italic > svg,
+.ql-align > svg {
+  display: none;
+}
+
+/* bold 커스텀 */
+.ql-editor strong {
+  font-weight: bold;
+}
+button.ql-bold {
+  width: 2.4rem !important;
+  height: 2.4rem !important;
+}
+.ql-bold {
+  background-image: url(../../../assets/svgs/editorBoldSvgc.svg) !important;
+}
+.ql-bold:hover {
+  background-image: url(../../../assets/svgs/editorBoldSvgHover.svg) !important;
+}
+.ql-bold.ql-active {
+  background-image: url(../../../assets/svgs/editorBoldSvgActive.svg) !important;
+}
+
+/* 밑줄 커스텀 */
+button.ql-underline {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+}
+.ql-underline {
+  background-image: url(../../../assets/svgs/editorLineSvgEnable.svg) !important;
+}
+.ql-underline:hover {
+  background-image: url(../../../assets/svgs/editorLineSvgHover.svg) !important;
+}
+.ql-underline.ql-active {
+  background-image: url(../../../assets/svgs/editorLineSvgActive.svg) !important;
+}
+
+/* 취소선 커스텀 */
+button.ql-strike {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+}
+.ql-strike {
+  background-image: url(../../../assets/svgs/editorStrikeSvgEnable.svg) !important;
+}
+.ql-strike:hover {
+  background-image: url(../../../assets/svgs/editorStrikeSvgHover.svg) !important;
+}
+.ql-strike.ql-active {
+  background-image: url(../../../assets/svgs/editorStrikeSvgActive.svg) !important;
+}
+
+/* 이텔릭 커스텀 */
+button.ql-italic {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+}
+.ql-italic {
+  background-image: url(../../../assets/svgs/editorItalicSvgEnable.svg) !important;
+}
+.ql-italic:hover {
+  background-image: url(../../../assets/svgs/editorItalicSvgHover.svg) !important;
+}
+.ql-italic.ql-active {
+  background-image: url(../../../assets/svgs/editorItalicSvgActive.svg) !important;
+}
+
+/* 왼쪽 정렬 커스텀 */
+button.ql-align {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+}
+.ql-align {
+  background-image: url(../../../assets/svgs/editorLeftSvgEnable.svg) !important;
+}
+.ql-align:hover {
+  background-image: url(../../../assets/svgs/editorLeftSvgHover.svg) !important;
+}
+/* .ql-align.ql-active {
+  background-image: url(../../../assets/svgs/editorLeftSvgActive.svg) !important;
+} */
+
+/* 가운데 정렬 커스텀 */
+.ql-align[value='center'] {
+  background-image: url(../../../assets/svgs/editorCenterSvgEnable.svg) !important;
+}
+.ql-align[value='center']:hover {
+  background-image: url(../../../assets/svgs/editorCenterSvgHover.svg) !important;
+}
+/* .ql-align.ql-active[value='center'] {
+  background-image: url(../../../assets/svgs/editorCenterSvgActive.svg) !important;
+} */
