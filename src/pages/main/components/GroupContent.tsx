@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 
-import Spacing from '../../../components/commons/Spacing';
-import { groupContentypes } from '../constants/constants';
+import Spacing from './.././../../components/commons/Spacing';
+import { groupContentypes } from './../constants/constants';
+import Curious from './Curious';
 
 const GroupContent = ({ topic, maintext, subtext, image, isLast }: groupContentypes) => {
   const hasImage = () => {
@@ -14,10 +15,12 @@ const GroupContent = ({ topic, maintext, subtext, image, isLast }: groupContenty
         <Topic>{topic}</Topic>
         <MainText>{maintext}</MainText>
         <Spacing marginBottom="3.2" />
-        <SubText isImage={hasImage()}>{subtext}</SubText>
+        <SubText isImage={hasImage()} isLast={isLast}>
+          {subtext}
+        </SubText>
       </TextContainer>
-      {image !== null ? <Image src={image} isLast={isLast} alt="group-content-image" /> : <></>}
-      {isLast === true ? <Curious /> : <></>}
+      {image && <Image src={image} isLast={isLast} alt="group-content-image" />}
+      {isLast && <Curious />}
     </ContentLayout>
   );
 };
@@ -44,8 +47,15 @@ const TextContainer = styled.div`
   flex-direction: column;
 `;
 
-const SubText = styled.div<{ isImage: boolean }>`
-  width: ${({ isImage }) => (isImage ? '59.8rem' : '85.8rem')};
+const SubText = styled.div<{ isImage: boolean; isLast: boolean }>`
+  width: ${({ isImage, isLast }) =>
+    isImage && isLast
+      ? '47.8rem'
+      : isImage && !isLast
+        ? '59.8rem'
+        : !isImage && isLast
+          ? '68.2rem'
+          : '85.8rem'};
   height: 8.4rem;
   overflow: hidden;
 
@@ -56,10 +66,4 @@ const SubText = styled.div<{ isImage: boolean }>`
 const Image = styled.img<{ isLast: boolean }>`
   width: ${({ isLast }) => (isLast ? '16.8rem' : '22.4rem')};
   height: 16.8rem;
-  /* position: absolute; */
-  /* top: ${({ isLast }) => (isLast ? '5rem' : '5rem')};
-  left: ${({ isLast }) => (isLast ? '50rem' : '66.5rem')}; */
-  z-index: 1;
 `;
-
-const Curious = styled.div``;
