@@ -24,14 +24,11 @@ const CarouselBox = styled.button<{ $isActive: boolean }>`
   height: 6.2rem;
   padding: 2rem 0;
 
-  color: ${({ theme }) => theme.colors.gray60};
+  color: ${({ theme, $isActive }) => ($isActive ? theme.colors.black : theme.colors.gray60)};
   text-align: center;
 
+  border-bottom: 0.2rem solid
+    ${({ theme, $isActive }) => ($isActive ? theme.colors.mainViolet : 'transparent')};
+
   ${({ theme }) => theme.fonts.title8};
-
-  :focus {
-    color: ${({ theme }) => theme.colors.black};
-
-    border-bottom: 0.2rem solid ${({ theme }) => theme.colors.mainViolet};
-  }
 `;
