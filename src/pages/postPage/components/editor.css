@@ -10,21 +10,25 @@
   padding: 0;
 }
 
-p::selection {
+/* 텍스트 드래그 했을 때 색상 변경 */
+*::selection {
   background-color: #d9cef6;
-
 }
 
 .ql-toolbar {
+  position: absolute;
   display: flex;
   align-items: center;
-  background-color: white;
+
+  width: 62.3rem;
+  height: 3.6rem;
+  padding: 0;
+  margin: 0;
+
   border: 1px solid #d3d3d3;
   border-radius: 0.8rem;
-  height: 3.6rem;
-  width: 62.3rem;
-  padding: 0;
-  position: absolute;
+
+  background-color: white;
 }
 
 .ql-formats {
@@ -33,33 +37,51 @@ p::selection {
 }
 
 /* 글자 크기 커스텀 */
+.ql-size {
+  width: 10.1rem;
+  height: 3.6rem;
+}
+.ql-size > .ql-picker-label {
+  width: 10.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+}
+
 /* 본문 2 */
-.ql-size-extra-small,
-.ql-size span[data-value='extra-small']::before {
+.ql-size-extra-small {
   font-size: 1.2rem !important;
   line-height: 200% !important;
   font-weight: regular;
 }
 /* 본문 1 */
-.ql-size-small,
-.ql-size span[data-value='small']::before {
+.ql-size-small {
   font-size: 1.6rem !important;
   line-height: 160% !important;
   font-weight: regular;
 }
 /* 제목 2 */
-.ql-size-medium,
-.ql-size span[data-value='medium']::before {
+.ql-size-medium {
   font-size: 1.8rem !important;
   line-height: 200% !important;
   font-weight: bold;
 }
 /* 제목 1 */
-.ql-size-large,
-.ql-size span[data-value='large']::before {
+.ql-size-large {
   font-size: 2.6rem !important;
   line-height: 200% !important;
   font-weight: bold;
+}
+.ql-size span[data-value='extra-small']::before,
+.ql-size span[data-value='small']::before,
+.ql-size span[data-value='medium']::before,
+.ql-size span[data-value='large']::before {
+  color: #333333;
+  font-family: 'Pretendard Variable';
+  font-weight: 500;
+  font-size: 1.3rem !important;
+  line-height: 1.56rem;
 }
 
 /* 글자색, 글자 배경색 드롭다운 커스텀 */
@@ -67,6 +89,8 @@ p::selection {
   padding: 0;
 }
 
+/* 기존 svg 안 보이게 */
+.ql-size > .ql-picker-label > svg,
 .ql-color-picker > .ql-picker-label > svg {
   display: none;
 }
@@ -75,6 +99,55 @@ p::selection {
   width: 8rem;
 }
 
+/* 글자크기 드롭다운 커스텀 */
+.ql-size {
+  width: 10.1rem;
+  height: 3.6rem;
+}
+
+#ql-picker-options-0 {
+  position: relative;
+  top: 0.7rem;
+  left: -1.3rem;
+
+  width: 8.8rem;
+  height: 15rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #a5a5a5;
+  border-radius: 1rem;
+}
+
+#ql-picker-options-0 > span {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.6rem;
+
+  width: 6.8rem;
+  height: 2.8rem;
+  padding: 0.6rem 1rem;
+  margin: 0 0 0.6rem 0;
+
+  font-family: 'Pretendard Variable';
+  font-weight: 500;
+  font-size: 1.3rem;
+  line-height: 1.56rem;
+}
+
+#ql-picker-options-0 > span:last-child {
+  margin-bottom: 0;
+}
+
+/* 글자크기 관련 드롭다운 커스텀 */
+.ql-size > .ql-picker-label::after {
+  content: url(../../../assets/svgs/editorDropIcnClose.svg);
+}
+.ql-size.ql-expanded > .ql-picker-label::after {
+  content: url(../../../assets/svgs/editorDropIcnOpen.svg);
+}
+
+/* 글자 색상관련 드롭다운 커스텀 */
 #ql-picker-options-1,
 #ql-picker-options-2 {
   position: relative;
@@ -96,6 +169,7 @@ p::selection {
   display: none !important;
 }
 
+/* 드롭다운 화살표 커스텀 */
 .ql-color.ql-custom-color.ql-picker.ql-color-picker > .ql-picker-label::after,
 .ql-background.ql-custom-background.ql-color-picker > .ql-picker-label::after {
   content: url(../../../assets/svgs/editorDropIcnClose.svg);
@@ -112,6 +186,7 @@ p::selection {
   width: 8.1rem;
 }
 
+/* 글 색상 드롭다운 커스텀 */
 .ql-color.ql-custom-color.ql-picker.ql-color-picker > .ql-picker-label,
 .ql-background.ql-custom-background.ql-picker.ql-color-picker > .ql-picker-label {
   width: 8.1rem;
@@ -151,10 +226,6 @@ p::selection {
 #ql-picker-options-2:last-child {
   margin-bottom: 0;
 }
-
-/* .ql-custom-color > span {
-  overflow: hidden;
-} */
 
 /* 글자 색상 아이콘 커스텀 */
 .ql-picker.ql-custom-color [data-value='#010101']::before {
@@ -286,8 +357,6 @@ p::selection {
   content: 'pink';
 }
 
-/* 볼드 버튼 아이콘 커스텀 */
-
 /* 드롭다운 제외 크기 동일 조정 */
 #toolbar > button {
   width: 3.6rem;
@@ -296,6 +365,10 @@ p::selection {
   padding: 0.6rem;
 }
 
+/* svg 크기 추출값이랑 맞추기 */
 .ql-bubble .ql-picker-label::before {
+  line-height: 0px;
+}
+.ql-bubble .ql-picker-label {
   line-height: 0px;
 }
