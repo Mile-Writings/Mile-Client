@@ -1,6 +1,7 @@
+import styled from '@emotion/styled';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import './slick-theme.css';
+import './slick.css';
 
 const Carousel = () => {
   const settings = {
@@ -12,48 +13,42 @@ const Carousel = () => {
     initialSlide: 0,
   };
   return (
-    <div>
-      <h2> 캐러셀 </h2>
+    <CarouselWrapper>
       <Slider {...settings}>
-        <div>
-          <h3>1</h3>
-        </div>
-        <div>
-          <h3>2</h3>
-        </div>
-        <div>
-          <h3>3</h3>
-        </div>
-        <div>
-          <h3>4</h3>
-        </div>
-        <div>
-          <h3>5</h3>
-        </div>
-        <div>
-          <h3>6</h3>
-        </div>
-        <div>
-          <h3>7</h3>
-        </div>
-        <div>
-          <h3>8</h3>
-        </div>
-        <div>
-          <h3>9</h3>
-        </div>
-        <div>
-          <h3>10</h3>
-        </div>
-        <div>
-          <h3>11</h3>
-        </div>
-        <div>
-          <h3>12</h3>
-        </div>
+        <CarouselContainer>일이삼사오</CarouselContainer>
+        <CarouselContainer>키워드2</CarouselContainer>
+        <CarouselContainer>키워드3</CarouselContainer>
+        <CarouselContainer>키워드4</CarouselContainer>
+        <CarouselContainer>키워드5</CarouselContainer>
+        <CarouselContainer>키워드6</CarouselContainer>
+        <CarouselContainer>키워드7</CarouselContainer>
+        <CarouselContainer>키워드8</CarouselContainer>
+        {/* <CarouselContainer>키워드9</CarouselContainer>
+        <CarouselContainer>키워드10</CarouselContainer>
+        <CarouselContainer>키워드11</CarouselContainer>
+        <CarouselContainer>키워드12</CarouselContainer> */}
       </Slider>
-    </div>
+    </CarouselWrapper>
   );
 };
 
 export default Carousel;
+
+const CarouselWrapper = styled.div`
+  width: 72rem;
+  height: 6.2rem;
+
+  background-color: ${({ theme }) => theme.colors.backGroundGray};
+  border-bottom: 0.1rem solid ${({ theme }) => theme.colors.gray30};
+`;
+
+const CarouselContainer = styled.div`
+  width: 12rem;
+  height: 6.2rem;
+  padding: 2rem 0;
+
+  color: ${({ theme }) => theme.colors.gray60};
+  text-align: center;
+
+  ${({ theme }) => theme.fonts.title8};
+`;

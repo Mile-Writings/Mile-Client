@@ -20,7 +20,10 @@
 .slick-list {
   position: relative;
 
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: flex-start;
   overflow: hidden;
 
   margin: 0;
