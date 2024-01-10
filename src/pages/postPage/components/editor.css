@@ -26,6 +26,7 @@
   margin: 0;
 }
 
+/* 글자 크기 커스텀 */
 /* 본문 2 */
 .ql-size-extra-small,
 .ql-size span[data-value='extra-small']::before {
@@ -55,7 +56,7 @@
   font-weight: bold;
 }
 
-/* 글자색 커스텀 */
+/* 글자색, 글자 배경색 드롭다운 커스텀 */
 .ql-color {
   padding: 0;
 }
@@ -64,10 +65,14 @@
   display: none;
 }
 
+.ql-color-picker {
+  width: 8rem;
+}
+
 #ql-picker-options-1,
 #ql-picker-options-2 {
   position: relative;
-  top: -0.2rem;
+  top: 0.2rem;
 
   width: 11.6rem;
   height: 39.2rem;
@@ -77,10 +82,16 @@
   border-radius: 1rem;
 }
 
+.ql-picker-label > span::after {
+  display: none !important;
+}
+
 #ql-picker-options-1 > span,
 #ql-picker-options-2 > span {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
 
   width: 9.6rem;
   height: 3.6rem;
@@ -90,6 +101,10 @@
   border-radius: 0.6rem;
 
   background-color: white !important;
+  font-family: 'Pretendard Variable';
+  font-weight: 500;
+  font-size: 1.3rem;
+  line-height: 1.56rem;
 }
 
 #ql-picker-options-1 > span:hover,
@@ -102,39 +117,76 @@
   margin-bottom: 0;
 }
 
-/* .ql-picker.ql-custom-color .ql-picker-label::before {
-  content: url(../../../assets/svgs/editorTextcolorIcnBlack.svg);
-} */
+.ql-custom-color > span {
+  overflow: hidden;
+}
 
+/* 글자 색상 아이콘 커스텀 */
 .ql-picker.ql-custom-color [data-value='#010101']::before {
   content: url(../../../assets/svgs/editorTextcolorIcnBlack.svg);
+}
+.ql-picker.ql-custom-color [data-value='#010101']::after {
+  color: #333333;
+  content: 'black';
 }
 .ql-picker.ql-custom-color [data-value='#505050']::before {
   content: url(../../../assets/svgs/editorTextcolorIcnGray.svg);
 }
+.ql-picker.ql-custom-color [data-value='#505050']::after {
+  color: #333333;
+  content: 'gray';
+}
 .ql-picker.ql-custom-color [data-value='#B81616']::before {
   content: url(../../../assets/svgs/editorTextcolorIcnRed.svg);
+}
+.ql-picker.ql-custom-color [data-value='#B81616']::after {
+  color: #333333;
+  content: 'red';
 }
 .ql-picker.ql-custom-color [data-value='#DA5B24']::before {
   content: url(../../../assets/svgs/editorTextcolorIcnOrange.svg);
 }
+.ql-picker.ql-custom-color [data-value='#DA5B24']::after {
+  color: #333333;
+  content: 'orange';
+}
 .ql-picker.ql-custom-color [data-value='#C5B525']::before {
   content: url(../../../assets/svgs/editorTextcolorIcnYellow.svg);
+}
+.ql-picker.ql-custom-color [data-value='#C5B525']::after {
+  color: #333333;
+  content: 'yellow';
 }
 .ql-picker.ql-custom-color [data-value='#2F7417']::before {
   content: url(../../../assets/svgs/editorTextcolorIcnGreen.svg);
 }
+.ql-picker.ql-custom-color [data-value='#2F7417']::after {
+  color: #333333;
+  content: 'green';
+}
 .ql-picker.ql-custom-color [data-value='#172B74']::before {
   content: url(../../../assets/svgs/editorTextcolorIcnBlue.svg);
+}
+.ql-picker.ql-custom-color [data-value='#172B74']::after {
+  color: #333333;
+  content: 'blue';
 }
 .ql-picker.ql-custom-color [data-value='#6139D1']::before {
   content: url(../../../assets/svgs/editorTextcolorIcnViolet.svg);
 }
+.ql-picker.ql-custom-color [data-value='#6139D1']::after {
+  color: #333333;
+  content: 'violet';
+}
 .ql-picker.ql-custom-color [data-value='#951479']::before {
   content: url(../../../assets/svgs/editorTextcolorIcnPink.svg);
 }
+.ql-picker.ql-custom-color [data-value='#951479']::after {
+  color: #333333;
+  content: 'pink';
+}
 
-/* 글자 배경색 커스텀 */
+/* 글자 배경색 아이콘 커스텀 */
 .ql-picker.ql-custom-background [data-value='#FFFFFF']::before {
   content: url(../../../assets/svgs/editorTextbasecolorIcnWhite.svg);
 }
@@ -161,4 +213,14 @@
 }
 .ql-picker.ql-custom-background [data-value='#F6E2F3']::before {
   content: url(../../../assets/svgs/editorTextbasecolorIcnPink.svg);
+}
+
+/* 볼드 버튼 아이콘 커스텀 */
+
+/* 드롭다운 제외 크기 동일 조정 */
+#toolbar > button {
+  width: 3.6rem;
+  height: 3.6rem;
+  background-color: white;
+  padding: 0.6rem;
 }

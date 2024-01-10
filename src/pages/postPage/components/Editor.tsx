@@ -3,23 +3,7 @@ import 'react-quill/dist/quill.bubble.css';
 
 import './editor.css';
 
-// const Divider = () => <EditorHorizonIcnUnactiveSvg />;
-
-// const insertDivider = () => {
-//   const range = this.quill.getSelection(true);
-//   this.quill.insertText(range.index, '\n');
-//   this.quill.insertEmbed(range.index + 1, '----');
-//   this.quill.insertText(range.index + 2, Quill.sources.SILENT);
-// };
-
-// const BlockEmbed = Quill.import('blots/block/embed');
-// class DividerBlot extends BlockEmbed {}
-// DividerBlot.blotName = 'divider';
-// DividerBlot.tagName = 'hr';
-
-// Quill.register(DividerBlot);
-
-// // 색상 선택 아이콘 커스텀
+// 볼드 아이콘 커스텀
 // const icons = Quill.import('ui/icons');
 // icons['color'] = <EditorTextColorIcnBlackSvg />;
 
@@ -80,7 +64,7 @@ Quill.register(Size, true);
 // 글자 색상 커스텀
 const Color = Quill.import('formats/color');
 Color.whitelist = [
-  '#010101', 
+  '#010101',
   '#505050',
   '#B81616',
   '#DA5B24',
