@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Spacing from '../../../components/commons/Spacing';
 import { groupContentypes } from '../constants/constants';
 
-const GroupContent = ({ topic, maintext, subtext, image }: groupContentypes) => {
+const GroupContent = ({ topic, maintext, subtext, image, isLast }: groupContentypes) => {
   const hasImage = () => {
     return image !== null;
   };
@@ -15,7 +15,8 @@ const GroupContent = ({ topic, maintext, subtext, image }: groupContentypes) => 
       <Spacing marginBottom="3.2" />
       <ImageWithTextBox>
         <SubText isImage={hasImage()}>{subtext}</SubText>
-        {image !== null ? <Image src={image} alt="group-content-image" /> : <></>}
+        {image !== null ? <Image src={image} isLast={isLast} alt="group-content-image" /> : <></>}
+        {isLast === true ? <Curious /> : <></>}
       </ImageWithTextBox>
     </TextContainer>
   );
@@ -49,10 +50,13 @@ const SubText = styled.div<{ isImage: boolean }>`
   ${({ theme }) => theme.fonts.body3};
 `;
 
-const Image = styled.img`
-  width: 22.4rem;
+const Image = styled.img<{ isLast: boolean }>`
+  width: ${({ isLast }) => (isLast ? '16.8rem' : '22.4rem')};
   height: 16.8rem;
   position: absolute;
-  top: 5rem;
-  left: 66.5rem;
+  top: ${({ isLast }) => (isLast ? '5rem' : '5rem')};
+  left: ${({ isLast }) => (isLast ? '50rem' : '66.5rem')};
+  z-index: 1;
 `;
+
+const Curious = styled.div``;
