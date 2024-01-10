@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 
 import CuriousArticle from './CuriousArticle';
 import CuriousProfile from './CuriousProfile';
-import EachArticle from './EachArticle';
 import GroupCuriousTitle from './GroupCuriousTitle';
 import GroupSideHeader from './GroupSideHeader';
 import GroupTodayWriteStyle from './GroupTodayWriteStyle';
@@ -29,8 +28,6 @@ const GroupFeed = () => {
           <Spacing marginBottom="2" />
           <CuriousArticle />
           <Spacing marginBottom="6.4" />
-          <GroupFeeds>카테고리 영역</GroupFeeds>
-          <EachArticle />
         </GroupInfo>
       </GroupInfoWrapper>
     </GroupFeedWrapper>
@@ -63,8 +60,4 @@ const GroupInfo = styled.div`
   display: flex;
   flex-direction: column;
   width: 72rem;
-`;
-
-const GroupFeeds = styled.div`
-  height: 2rem;
 `;
