@@ -60,5 +60,5 @@ const Image = styled.img`
   height: 16.8rem;
   position: absolute;
   top: 5rem;
-  left: 66rem;
+  left: 66.5rem;
 `;
