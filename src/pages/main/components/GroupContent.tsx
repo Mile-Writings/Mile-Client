@@ -1,28 +1,35 @@
 import styled from '@emotion/styled';
 
 import Spacing from '../../../components/commons/Spacing';
+import { groupContentypes } from '../constants/constants';
 
-const GroupContent = () => {
+const GroupContent = ({ topic, maintext, subtext, image }: groupContentypes) => {
+  const hasImage = () => {
+    return image !== null;
+  };
+
   return (
-    <ContentBox>
-      <Topic>글쓰기 주제가 입력될 공간</Topic>
-      <MainText>작성된 글의 제목이 들어갈 공간입니다.</MainText>
+    <ContentContainer>
+      <Topic>{topic}</Topic>
+      <MainText>{maintext}</MainText>
       <Spacing marginBottom="3.2" />
-      <SubText>
-        텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가
-        들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈
-        공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈
-        공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈
-        공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈
-        공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 ...
-      </SubText>
-    </ContentBox>
+      <TextImageBox>
+        <SubText isImage={hasImage()}>{subtext}</SubText>
+        {image !== null ? (
+          <Image src={image} alt="group-content-image" />
+        ) : (
+          image !== null && (
+            <Image src={image} alt="group-content-image" style={{ display: 'none' }} />
+          )
+        )}
+      </TextImageBox>
+    </ContentContainer>
   );
 };
 
 export default GroupContent;
 
-const ContentBox = styled.div`
+const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 3.6rem;
@@ -37,7 +44,20 @@ const MainText = styled.div`
   ${({ theme }) => theme.fonts.title10};
 `;
 
-const SubText = styled.div`
+const TextImageBox = styled.div``;
+
+const SubText = styled.div<{ isImage: boolean }>`
+  width: ${({ isImage }) => (isImage ? '59.8rem' : '85.8rem')};
+  height: 8.4rem;
+
   color: ${({ theme }) => theme.colors.gray80};
   ${({ theme }) => theme.fonts.body3};
+`;
+
+const Image = styled.img`
+  width: 22.4rem;
+  height: 16.8rem;
+  position: absolute;
+  top: 5rem;
+  left: 66rem;
 `;
