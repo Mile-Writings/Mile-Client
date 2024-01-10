@@ -22,6 +22,10 @@ import { EditorTextColorIcnBlackSvg, ditorHorizonIcnUnactiveSvg } from '../../..
 
 // Quill.register(DividerBlot);
 
+// // 색상 선택 아이콘 커스텀
+// const icons = Quill.import('ui/icons');
+// icons['color'] = <EditorTextColorIcnBlackSvg />;
+
 const CustomToolbar = () => {
   return (
     <div id="toolbar">
@@ -33,7 +37,18 @@ const CustomToolbar = () => {
           <option value="extra-small">본문 2</option>
         </select>
 
-        <EditorTextColorIcnBlackSvg className="ql-color" />
+        <select className="ql-color ql-custom-color">
+          <option value="#010101"></option>
+          <option value="#505050"></option>
+          <option value="#B81616"></option>
+          <option value="#DA5B24"></option>
+          <option value="#C5B525"></option>
+          <option value="#2F7417"></option>
+          <option value="#172B74"></option>
+          <option value="#6139D1"></option>
+          <option value="#951479"></option>
+        </select>
+
         <button className="ql-background" />
 
         <button className="ql-bold" />
@@ -50,9 +65,25 @@ const CustomToolbar = () => {
   );
 };
 
+// 글자 크기 커스텀
 const Size = Quill.import('formats/size');
 Size.whitelist = ['large', 'medium', 'small', 'extra-small'];
 Quill.register(Size, true);
+
+// 글자 색상 커스텀
+const Color = Quill.import('formats/color');
+Color.whitelist = [
+  '#010101',
+  '#505050',
+  '#B81616',
+  '#DA5B24',
+  '#C5B525',
+  '#2F7417',
+  '#172B74',
+  '#6139D1',
+  '#951479',
+];
+Quill.register(Color, true);
 
 const Editor = () => {
   const [content, setContent] = useState('');
@@ -60,7 +91,6 @@ const Editor = () => {
   const modules = {
     toolbar: {
       container: '#toolbar',
-      handlers: {},
     },
   };
 

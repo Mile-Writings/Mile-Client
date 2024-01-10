@@ -10,6 +10,22 @@
   padding: 0;
 }
 
+.ql-toolbar {
+  display: flex;
+  background-color: white;
+  border: 1px solid #d3d3d3;
+  border-radius: 0.8rem;
+  height: 3.6rem;
+  width: 62.3rem;
+  padding: 0;
+  position: absolute;
+}
+
+.ql-formats {
+  padding: 0;
+  margin: 0;
+}
+
 /* 본문 2 */
 .ql-size-extra-small,
 .ql-size span[data-value='extra-small']::before {
@@ -37,4 +53,69 @@
   font-size: 2.6rem !important;
   line-height: 200% !important;
   font-weight: bold;
+}
+
+/* 글자색 커스텀 */
+.ql-color {
+  padding: 0;
+}
+
+.ql-color-picker > .ql-picker-label > svg {
+  display: none;
+}
+
+#ql-picker-options-1 {
+  position: relative;
+  top: -0.2rem;
+
+  width: 11.6rem;
+  height: 39.2rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #a5a5a5;
+  border-radius: 1rem;
+}
+
+#ql-picker-options-1 > span {
+  width: 9.6rem;
+  height: 3.6rem;
+  margin: 0 0 0.6rem 0;
+  border-radius: 0.6rem;
+  background-color: white !important;
+}
+
+#ql-picker-options-1:last-child {
+  margin-bottom: 0;
+}
+
+/* .ql-picker.ql-custom-color .ql-picker-label::before {
+  content: url(../../../assets/svgs/editorTextcolorIcnBlack.svg);
+} */
+
+.ql-picker.ql-custom-color [data-value='#010101']::before {
+  content: url(../../../assets/svgs/editorTextcolorIcnBlack.svg);
+}
+.ql-picker.ql-custom-color [data-value='#505050']::before {
+  content: url(../../../assets/svgs/editorTextcolorIcnGray.svg);
+}
+.ql-picker.ql-custom-color [data-value='#B81616']::before {
+  content: url(../../../assets/svgs/editorTextcolorIcnRed.svg);
+}
+.ql-picker.ql-custom-color [data-value='#DA5B24']::before {
+  content: url(../../../assets/svgs/editorTextcolorIcnOrange.svg);
+}
+.ql-picker.ql-custom-color [data-value='#C5B525']::before {
+  content: url(../../../assets/svgs/editorTextcolorIcnYellow.svg);
+}
+.ql-picker.ql-custom-color [data-value='#2F7417']::before {
+  content: url(../../../assets/svgs/editorTextcolorIcnGreen.svg);
+}
+.ql-picker.ql-custom-color [data-value='#172B74']::before {
+  content: url(../../../assets/svgs/editorTextcolorIcnBlue.svg);
+}
+.ql-picker.ql-custom-color [data-value='#6139D1']::before {
+  content: url(../../../assets/svgs/editorTextcolorIcnViolet.svg);
+}
+.ql-picker.ql-custom-color [data-value='#951479']::before {
+  content: url(../../../assets/svgs/editorTextcolorIcnPink.svg);
 }
