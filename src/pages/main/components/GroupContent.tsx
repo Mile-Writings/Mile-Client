@@ -9,27 +9,21 @@ const GroupContent = ({ topic, maintext, subtext, image }: groupContentypes) => 
   };
 
   return (
-    <ContentContainer>
+    <TextContainer>
       <Topic>{topic}</Topic>
       <MainText>{maintext}</MainText>
       <Spacing marginBottom="3.2" />
-      <TextImageBox>
+      <ImageWithTextBox>
         <SubText isImage={hasImage()}>{subtext}</SubText>
-        {image !== null ? (
-          <Image src={image} alt="group-content-image" />
-        ) : (
-          image !== null && (
-            <Image src={image} alt="group-content-image" style={{ display: 'none' }} />
-          )
-        )}
-      </TextImageBox>
-    </ContentContainer>
+        {image !== null ? <Image src={image} alt="group-content-image" /> : <></>}
+      </ImageWithTextBox>
+    </TextContainer>
   );
 };
 
 export default GroupContent;
 
-const ContentContainer = styled.div`
+const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 3.6rem;
@@ -44,7 +38,7 @@ const MainText = styled.div`
   ${({ theme }) => theme.fonts.title10};
 `;
 
-const TextImageBox = styled.div``;
+const ImageWithTextBox = styled.div``;
 
 const SubText = styled.div<{ isImage: boolean }>`
   width: ${({ isImage }) => (isImage ? '59.8rem' : '85.8rem')};
