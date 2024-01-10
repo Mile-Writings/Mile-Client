@@ -5,6 +5,7 @@ import Slider from 'react-slick';
 
 import './slick-theme.css';
 import './slick.css';
+import CarouselContainer from './CarouselContainer';
 import { CAROUSEL_CATEGORY } from '../constants/CAROUSEL_DATA';
 
 const Carousel = () => {
@@ -16,13 +17,24 @@ const Carousel = () => {
     slidesToScroll: 6,
     initialSlide: 0,
   };
-  const [activeCategoryId, setActiveCategoryId] = useState(null);
+
+  const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
+
+  const handleCategoryClick = (categoryId: number) => {
+    setActiveCategoryId(categoryId);
+  };
 
   return (
     <CarouselWrapper>
       <Slider {...settings}>
         {CAROUSEL_CATEGORY.categoryList.map((category) => (
-          <CarouselContainer key={category.categoryId}>{category.categoryName}</CarouselContainer>
+          <CarouselContainer
+            key={category.categoryId}
+            onClick={() => handleCategoryClick(category.categoryId)}
+            isActive={category.categoryId === activeCategoryId}
+          >
+            {category.categoryName}
+          </CarouselContainer>
         ))}
       </Slider>
     </CarouselWrapper>
@@ -37,15 +49,4 @@ const CarouselWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
   border-bottom: 0.1rem solid ${({ theme }) => theme.colors.gray30};
-`;
-
-const CarouselContainer = styled.div`
-  width: 12rem;
-  height: 6.2rem;
-  padding: 2rem 0;
-
-  color: ${({ theme }) => theme.colors.gray60};
-  text-align: center;
-
-  ${({ theme }) => theme.fonts.title8};
 `;
