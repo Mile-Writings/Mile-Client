@@ -7,12 +7,12 @@ import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
 
 interface OnClickProps {
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 interface OnClickTwoProps {
-  onClickTempSave?: () => void;
-  onClickSubmit?: () => void;
+  onClickTempSave: () => void;
+  onClickSubmit: () => void;
 }
 
 // 모임 피드 헤더
