@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { GroupListProfileOpenIcn } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 const EachArticle = () => {
@@ -15,6 +16,7 @@ const EachArticle = () => {
       </ArticleContent>
       <Spacing marginBottom="1.2" />
       <ArticleInfo>
+        <GroupListProfileOpenIcn />
         <ProfileName>프로필명</ProfileName>
         <ArticleDetail>23.12.29 11:11</ArticleDetail>
         <ArticleDetail>·</ArticleDetail>
@@ -51,6 +53,7 @@ const ArticleContent = styled.div`
 
 const ArticleInfo = styled.div`
   display: flex;
+  align-items: center;
 
   color: ${({ theme }) => theme.colors.gray90};
 
@@ -58,18 +61,23 @@ const ArticleInfo = styled.div`
 `;
 
 const ArticleDetail = styled.div`
-  color: ${({ theme }) => theme.colors.gray70};
+  margin-right: 0.4rem;
+
+  color: ${({ theme }) => theme.colors.gray60};
 
   ${({ theme }) => theme.fonts.body6};
 `;
 
 const ArticleDetailBold = styled.div`
-  color: ${({ theme }) => theme.colors.gray90};
+  color: ${({ theme }) => theme.colors.gray70};
 
   ${({ theme }) => theme.fonts.body5};
 `;
 
 const ProfileName = styled.div`
+  margin-right: 1.2rem;
+  margin-left: 0.8rem;
+
   color: ${({ theme }) => theme.colors.gray80};
 
   ${({ theme }) => theme.fonts.subtitle6};
