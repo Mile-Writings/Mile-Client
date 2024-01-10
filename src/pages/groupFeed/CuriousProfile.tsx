@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
 
 import { CURIOUS_PROFILE } from './constants/CURIOUS_PROFILE';
-import { GroupCuriousProfile } from '../../assets/svgs';
+import { GroupCuriousProfileOpenIc } from '../../assets/svgs';
 
 const CuriousProfile = () => {
   return (
     <CuriousProfileWrapper>
       {CURIOUS_PROFILE.popularWriters.map((writer, index) => (
         <CuriousProfileLayout key={index}>
-          <GroupCuriousProfile />
+          <GroupCuriousProfileOpenIc />
           <ProfileWrapper>
             <ProfileTitle>{writer.writerName}</ProfileTitle>
             <ProfileDetail>{writer.information}</ProfileDetail>

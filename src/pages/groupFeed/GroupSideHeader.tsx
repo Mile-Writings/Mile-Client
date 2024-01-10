@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import GroupInfoBox from './GroupInfoBox';
-import { GroupDateIcn, GroupLeaderIcn, GroupMemberIcn } from '../../assets/svgs';
+import { GroupDateIc, GroupLeaderIc, GroupMemberIc } from '../../assets/svgs';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupSideHeader = () => {
@@ -10,9 +10,9 @@ const GroupSideHeader = () => {
       <GroupSideHeaderTitle>그룹명자리입니다</GroupSideHeaderTitle>
       <Spacing marginBottom="2.8" />
       <GroupSideHeaderLayout>
-        <GroupInfoBox icon={<GroupLeaderIcn />} title="모임방장" detail="방장입니다" />
-        <GroupInfoBox icon={<GroupDateIcn />} title="설립날짜" detail="24.12.25" />
-        <GroupInfoBox icon={<GroupMemberIcn />} title="모임인원" detail="11명의 짜미들" />
+        <GroupInfoBox icon={<GroupLeaderIc />} title="모임방장" detail="방장입니다" />
+        <GroupInfoBox icon={<GroupDateIc />} title="설립날짜" detail="24.12.25" />
+        <GroupInfoBox icon={<GroupMemberIc />} title="모임인원" detail="11명의 짜미들" />
       </GroupSideHeaderLayout>
       <Spacing marginBottom="2.4" />
       <GroupSideHeaderDetailBox>

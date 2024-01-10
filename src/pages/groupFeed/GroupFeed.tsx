@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import CuriousArticle from './CuriousArticle';
 import CuriousProfile from './CuriousProfile';
+import EachArticle from './EachArticle';
 import GroupCuriousTitle from './GroupCuriousTitle';
 import GroupSideHeader from './GroupSideHeader';
 import GroupTodayWriteStyle from './GroupTodayWriteStyle';
@@ -29,6 +30,7 @@ const GroupFeed = () => {
           <CuriousArticle />
           <Spacing marginBottom="6.4" />
           <GroupFeeds>카테고리 영역</GroupFeeds>
+          <EachArticle />
         </GroupInfo>
       </GroupInfoWrapper>
     </GroupFeedWrapper>

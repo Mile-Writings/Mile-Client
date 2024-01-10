@@ -1,18 +1,26 @@
-import React from 'react';
-
 import styled from '@emotion/styled';
+
+import Spacing from '../../components/commons/Spacing';
 
 const EachArticle = () => {
   return (
     <ArticleWrapper>
       <ArticleTitle>글제목 부분입니다. 공백포함 최대 29자입니다.</ArticleTitle>
+      <Spacing marginBottom="1.6" />
       <ArticleContent>
         글내용입니다. 글내용입니다. 글내용입니다. 글내용입니다.
         글내용입니다.글내용입니다.글내용입니다.글내용입니다.글내용입니다. 글내용입니다.
         글내용입니다. 글내용입니다.글내용입니다. 글내용입니다.글내용입니다.
         글내용입니다.글내용입니다. 글내용입니다.글내용입니다. 글내용입니다.최대 3줄입니다.
       </ArticleContent>
-      <ArticleInfo>23.12.29 11:11</ArticleInfo>
+      <Spacing marginBottom="1.2" />
+      <ArticleInfo>
+        <ProfileName>프로필명</ProfileName>
+        <ArticleDetail>23.12.29 11:11</ArticleDetail>
+        <ArticleDetail>·</ArticleDetail>
+        <ArticleDetail>궁금해요</ArticleDetail>
+        <ArticleDetailBold>14</ArticleDetailBold>
+      </ArticleInfo>
     </ArticleWrapper>
   );
 };
@@ -21,8 +29,10 @@ export default EachArticle;
 
 const ArticleWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   padding: 3.2rem;
 
+  background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
 `;
 
@@ -39,6 +49,26 @@ const ArticleContent = styled.div`
 `;
 
 const ArticleInfo = styled.div`
+  display: flex;
+
+  color: ${({ theme }) => theme.colors.gray90};
+
+  ${({ theme }) => theme.fonts.subtitle3};
+`;
+
+const ArticleDetail = styled.div`
+  color: ${({ theme }) => theme.colors.gray90};
+
+  ${({ theme }) => theme.fonts.subtitle3};
+`;
+
+const ArticleDetailBold = styled.div`
+  color: ${({ theme }) => theme.colors.gray90};
+
+  ${({ theme }) => theme.fonts.subtitle3};
+`;
+
+const ProfileName = styled.div`
   color: ${({ theme }) => theme.colors.gray90};
 
   ${({ theme }) => theme.fonts.subtitle3};
