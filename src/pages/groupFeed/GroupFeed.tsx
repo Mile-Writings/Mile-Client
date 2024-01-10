@@ -1,5 +1,7 @@
+import Carousel from './carousel/carousel';
+
 const GroupFeed = () => {
-  return <div>GroupFeed</div>;
+  return <Carousel />;
 };
 
 export default GroupFeed;
