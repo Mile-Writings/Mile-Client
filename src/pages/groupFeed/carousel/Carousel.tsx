@@ -6,6 +6,7 @@ import Slider from 'react-slick';
 import './slick-theme.css';
 import './slick.css';
 import CarouselContainer from './CarouselContainer';
+import { GroupTabBtnBaseBeforeIcn, GroupTabBtnBaseNextIcn } from '../../../assets/svgs';
 import BeforeBtn from '../../../assets/svgs/groupTabBeforeBtnEnable.svg';
 import BeforeBtnHover from '../../../assets/svgs/groupTabBeforeBtnHover.svg';
 import NextBtn from '../../../assets/svgs/groupTabNextBtnEnable.svg';
@@ -27,13 +28,8 @@ const Carousel = (props: CategoryIdPropTypes) => {
     slidesToShow: 6,
     slidesToScroll: 6,
     initialSlide: 0,
-
-    //오른쪽 화살표
-
-    nextArrow: <Next>왼쪽</Next>,
-    //왼쪽 화살표
-
-    prevArrow: <Prev>외인쪽</Prev>,
+    nextArrow: <Next />,
+    prevArrow: <Prev />,
   };
 
   const handleCategoryClick = (categoryId: number) => {
@@ -42,6 +38,7 @@ const Carousel = (props: CategoryIdPropTypes) => {
 
   return (
     <CarouselWrapper>
+      <GroupTabBtnBaseBeforeIc />
       <Slider {...settings}>
         {CAROUSEL_CATEGORY.categoryList.map((category) => (
           <CarouselContainer
@@ -53,6 +50,7 @@ const Carousel = (props: CategoryIdPropTypes) => {
           </CarouselContainer>
         ))}
       </Slider>
+      <GroupTabBtnBaseNextIc />
     </CarouselWrapper>
   );
 };
@@ -60,6 +58,7 @@ const Carousel = (props: CategoryIdPropTypes) => {
 export default Carousel;
 
 const CarouselWrapper = styled.div`
+  position: relative;
   width: 72rem;
   height: 6.2rem;
   margin-left: 5rem;
@@ -69,6 +68,7 @@ const CarouselWrapper = styled.div`
 `;
 
 const Next = styled.div`
+  z-index: 2;
   width: 3.6rem;
   height: 3.6rem;
 
@@ -80,6 +80,7 @@ const Next = styled.div`
 `;
 
 const Prev = styled.div`
+  z-index: 2;
   width: 3.6rem;
   height: 3.6rem;
 
@@ -88,4 +89,15 @@ const Prev = styled.div`
   :hover {
     background-image: url(${BeforeBtnHover});
   }
+`;
+
+const GroupTabBtnBaseBeforeIc = styled(GroupTabBtnBaseBeforeIcn)`
+  position: absolute;
+  top: 0;
+`;
+
+const GroupTabBtnBaseNextIc = styled(GroupTabBtnBaseNextIcn)`
+  position: absolute;
+  top: 0;
+  right: 0;
 `;
