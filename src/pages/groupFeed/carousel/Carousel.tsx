@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import styled from '@emotion/styled';
 import Slider from 'react-slick';
 
@@ -14,6 +16,8 @@ const Carousel = () => {
     slidesToScroll: 6,
     initialSlide: 0,
   };
+  const [activeCategoryId, setActiveCategoryId] = useState(null);
+
   return (
     <CarouselWrapper>
       <Slider {...settings}>
