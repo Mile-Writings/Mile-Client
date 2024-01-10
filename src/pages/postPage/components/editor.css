@@ -12,6 +12,7 @@
 
 .ql-toolbar {
   display: flex;
+  align-items: center;
   background-color: white;
   border: 1px solid #d3d3d3;
   border-radius: 0.8rem;
@@ -72,7 +73,7 @@
 #ql-picker-options-1,
 #ql-picker-options-2 {
   position: relative;
-  top: 0.2rem;
+  top: 0.7rem;
 
   width: 11.6rem;
   height: 39.2rem;
@@ -82,8 +83,32 @@
   border-radius: 1rem;
 }
 
+.ql-picker-label {
+  padding: 0 !important;
+}
+
 .ql-picker-label > span::after {
   display: none !important;
+}
+
+.ql-color.ql-custom-color.ql-picker.ql-color-picker > .ql-picker-label::after {
+  content: url(../../../assets/svgs/editorDropIcnClose.svg);
+}
+
+.ql-color.ql-custom-color.ql-picker.ql-color-picker.ql-expanded > .ql-picker-label::after {
+  content: url(../../../assets/svgs/editorDropIcnOpen.svg);
+}
+
+.ql-color.ql-custom-color.ql-picker.ql-color-picker {
+  width: 8.1rem;
+}
+
+.ql-color.ql-custom-color.ql-picker.ql-color-picker > .ql-picker-label {
+  width: 8.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
 }
 
 #ql-picker-options-1 > span,
@@ -117,9 +142,9 @@
   margin-bottom: 0;
 }
 
-.ql-custom-color > span {
+/* .ql-custom-color > span {
   overflow: hidden;
-}
+} */
 
 /* 글자 색상 아이콘 커스텀 */
 .ql-picker.ql-custom-color [data-value='#010101']::before {
@@ -223,4 +248,8 @@
   height: 3.6rem;
   background-color: white;
   padding: 0.6rem;
+}
+
+.ql-bubble .ql-picker-label::before {
+  line-height: 0px;
 }
