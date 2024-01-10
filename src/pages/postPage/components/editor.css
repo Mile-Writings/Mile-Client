@@ -79,11 +79,22 @@
 
 #ql-picker-options-1 > span,
 #ql-picker-options-2 > span {
+  display: flex;
+  align-items: center;
+
   width: 9.6rem;
   height: 3.6rem;
+  padding: 0.6rem 1rem;
   margin: 0 0 0.6rem 0;
+
   border-radius: 0.6rem;
+
   background-color: white !important;
+}
+
+#ql-picker-options-1 > span:hover,
+#ql-picker-options-2 > span:hover {
+  background-color: #eaeaea !important;
 }
 
 #ql-picker-options-1:last-child,
