@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
-
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 
 import './editor.css';
-import { EditorTextColorIcnBlackSvg, ditorHorizonIcnUnactiveSvg } from '../../../assets/svgs/index';
 
 // const Divider = () => <EditorHorizonIcnUnactiveSvg />;
 
@@ -49,7 +46,17 @@ const CustomToolbar = () => {
           <option value="#951479"></option>
         </select>
 
-        <button className="ql-background" />
+        <select className="ql-background ql-custom-background">
+          <option value="#FFFFFF"></option>
+          <option value="#EAEAEA"></option>
+          <option value="#F6E2E2"></option>
+          <option value="#F6E7E2"></option>
+          <option value="#F6F4E2"></option>
+          <option value="#F1F6E2"></option>
+          <option value="#E2EAF6"></option>
+          <option value="#E9E3F8"></option>
+          <option value="#F6E2F3"></option>
+        </select>
 
         <button className="ql-bold" />
         <button className="ql-underline" />
@@ -73,7 +80,7 @@ Quill.register(Size, true);
 // 글자 색상 커스텀
 const Color = Quill.import('formats/color');
 Color.whitelist = [
-  '#010101',
+  '#010101', 
   '#505050',
   '#B81616',
   '#DA5B24',
@@ -85,9 +92,22 @@ Color.whitelist = [
 ];
 Quill.register(Color, true);
 
-const Editor = () => {
-  const [content, setContent] = useState('');
+// 글자 배경색 커스텀
+const BackgroundColor = Quill.import('formats/background');
+BackgroundColor.whitelist = [
+  '#FFFFFF', // white
+  '#EAEAEA', // Gray
+  '#F6E2E2', // red
+  '#F6E7E2', // orange
+  '#F6F4E2', // yellow
+  '#F1F6E2', // green
+  '#E2EAF6', // blue
+  '#E9E3F8', // violet
+  '#F6E2F3', // pink
+];
+Quill.register(BackgroundColor, true);
 
+const Editor = () => {
   const modules = {
     toolbar: {
       container: '#toolbar',
@@ -97,7 +117,7 @@ const Editor = () => {
   const formats = [
     'size',
     'color',
-    // 'background',
+    'background',
     'bold',
     'underline',
     'strike',
@@ -113,8 +133,6 @@ const Editor = () => {
       <CustomToolbar />
       <ReactQuill
         theme="bubble"
-        // value={content}
-        onChange={setContent}
         placeholder="글을 작성해 주세요"
         modules={modules}
         formats={formats}
