@@ -15,6 +15,7 @@ const Carousel = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
   return (
     <CarouselLayout>
       <CarouselContainer {...settings}>
@@ -26,6 +27,7 @@ const Carousel = () => {
             maintext={maintext}
             subtext={subtext}
             image={image}
+            isLast={id === GROUP_CONTENT.length}
           />
         ))}
       </CarouselContainer>
@@ -44,9 +46,9 @@ const CarouselContainer = styled(Slider)`
   width: 93rem;
   height: 24rem;
   border: 1px solid ${({ theme }) => theme.colors.black};
-
   .slick-slide.slick-active:last-of-type {
     width: 75.4rem !important;
     height: 24rem;
+    border: 1px solid ${({ theme }) => theme.colors.black};
   }
 `;
