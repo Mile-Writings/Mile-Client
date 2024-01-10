@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import Slider from 'react-slick';
+
 import './slick-theme.css';
 import './slick.css';
+import { CAROUSEL_CATEGORY } from '../constants/CAROUSEL_DATA';
 
 const Carousel = () => {
   const settings = {
@@ -15,18 +17,9 @@ const Carousel = () => {
   return (
     <CarouselWrapper>
       <Slider {...settings}>
-        <CarouselContainer>일이삼사오</CarouselContainer>
-        <CarouselContainer>키워드2</CarouselContainer>
-        <CarouselContainer>키워드3</CarouselContainer>
-        <CarouselContainer>키워드4</CarouselContainer>
-        <CarouselContainer>키워드5</CarouselContainer>
-        <CarouselContainer>키워드6</CarouselContainer>
-        <CarouselContainer>키워드7</CarouselContainer>
-        <CarouselContainer>키워드8</CarouselContainer>
-        {/* <CarouselContainer>키워드9</CarouselContainer>
-        <CarouselContainer>키워드10</CarouselContainer>
-        <CarouselContainer>키워드11</CarouselContainer>
-        <CarouselContainer>키워드12</CarouselContainer> */}
+        {CAROUSEL_CATEGORY.categoryList.map((category) => (
+          <CarouselContainer key={category.categoryId}>{category.categoryName}</CarouselContainer>
+        ))}
       </Slider>
     </CarouselWrapper>
   );
