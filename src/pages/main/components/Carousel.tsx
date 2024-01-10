@@ -45,10 +45,8 @@ const CarouselLayout = styled.div`
 const CarouselContainer = styled(Slider)`
   width: 93rem;
   height: 24rem;
-  border: 1px solid ${({ theme }) => theme.colors.black};
   .slick-slide.slick-active:last-of-type {
     width: 75.4rem !important;
     height: 24rem;
-    border: 1px solid ${({ theme }) => theme.colors.black};
   }
 `;
