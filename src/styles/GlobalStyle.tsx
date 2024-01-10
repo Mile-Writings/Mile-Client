@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import reset from 'emotion-reset';
 
+import theme from './theme';
+
 const globalStyle = css`
   ${reset}
   * {
@@ -29,6 +31,8 @@ const globalStyle = css`
     margin: 0 auto;
 
     font-size: 62.5%;
+
+    background-color: ${theme.colors.backGroundGray};
   }
 
   a {

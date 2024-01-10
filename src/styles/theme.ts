@@ -16,6 +16,7 @@ export const theme = {
       'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 72.25%, rgba(0, 0, 0, 0.08) 100%)',
     categoryGradient: 'linear-gradient(90deg, #F5F5F7 68.37%, rgba(245, 245, 247, 0.00) 100%)',
     black: '#010101',
+    grayBlack: '#151515',
     gray100: '#1f1f1f',
     gray90: '#333',
     gray80: '#505050',
