@@ -12,22 +12,22 @@ export const CAROUSEL_CATEGORY = {
       categoryId: 3,
       categoryName: '웹잼3',
     },
-    {
-      categoryId: 4,
-      categoryName: '웹잼4',
-    },
-    {
-      categoryId: 5,
-      categoryName: '웹잼5',
-    },
-    {
-      categoryId: 6,
-      categoryName: '웹잼6',
-    },
-    {
-      categoryId: 7,
-      categoryName: '웹잼7',
-    },
+    // {
+    //   categoryId: 4,
+    //   categoryName: '웹잼4',
+    // },
+    // {
+    //   categoryId: 5,
+    //   categoryName: '웹잼5',
+    // },
+    // {
+    //   categoryId: 6,
+    //   categoryName: '웹잼6',
+    // },
+    // {
+    //   categoryId: 7,
+    //   categoryName: '웹잼7',
+    // },
     // {
     //   categoryId: 8,
     //   categoryName: '웹잼8',
