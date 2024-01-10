@@ -30,6 +30,7 @@ export default EachArticle;
 const ArticleWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 72rem;
   padding: 3.2rem;
 
   background-color: ${({ theme }) => theme.colors.white};
