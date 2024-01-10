@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import styled from '@emotion/styled';
 
 import Carousel from './carousel/Carousel';
@@ -5,9 +7,11 @@ import EachArticle from './carousel/EachArticle';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
+  const [activeCategoryId, setActiveCategoryId] = useState<number>(0);
+
   return (
     <>
-      <Carousel />
+      <Carousel activeCategoryId={activeCategoryId} setActiveCategoryId={setActiveCategoryId} />
       <Spacing marginBottom="3.2" />
       <Topic>글감자리입니다.최대 공백포함 15자입니다.</Topic>
       <Spacing marginBottom="0.8" />

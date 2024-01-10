@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 
 import styled from '@emotion/styled';
 import Slider from 'react-slick';
@@ -8,7 +8,13 @@ import './slick.css';
 import CarouselContainer from './CarouselContainer';
 import { CAROUSEL_CATEGORY } from '../constants/CAROUSEL_DATA';
 
-const Carousel = () => {
+interface CategoryIdPropTypes {
+  activeCategoryId: number;
+  setActiveCategoryId: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const Carousel = (props: CategoryIdPropTypes) => {
+  const { activeCategoryId, setActiveCategoryId } = props;
   const settings = {
     dots: true,
     infinite: false,
@@ -17,8 +23,6 @@ const Carousel = () => {
     slidesToScroll: 6,
     initialSlide: 0,
   };
-
-  const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
 
   const handleCategoryClick = (categoryId: number) => {
     setActiveCategoryId(categoryId);
