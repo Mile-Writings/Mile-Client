@@ -4,6 +4,6 @@ export interface recommendType {
 
 export const KEYWORD_DATA: recommendType[] = [
   {
-    recommend: '죽음',
+    recommend: '갸나다라라말말',
   },
 ];
