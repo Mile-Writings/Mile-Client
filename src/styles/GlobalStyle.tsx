@@ -28,7 +28,7 @@ const globalStyle = css`
 
   html,
   body {
-    box-sizing: content-box; /* default */
+    box-sizing: border-box; /* default */
     margin: 0 auto;
 
     font-size: 62.5%;
