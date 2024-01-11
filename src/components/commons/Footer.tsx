@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 
-import { FooterInstaSvg, FooterKakaoSvg, FooterLogoSvg, FooterMailSvg } from '../../assets/svgs';
+import Spacing from './Spacing';
+import { FooterInstaIc, FooterKakaoIc, FooterLogoIc, FooterMailIc } from '../../assets/svgs';
+
 import theme from '../../styles/theme';
 import Spacing from '../commons/Spacing';
 
@@ -8,15 +10,15 @@ const Footer = () => {
   return (
     <FooterWrapper>
       <FooterLayout>
-        <FooterLogoSvg />
+        <FooterLogoIc />
         <Spacing marginBottom="1.6" />
         <MileText>Make it look easy, 글쓰기를 쉽고 편안하게</MileText>
       </FooterLayout>
       <FooterLayout>
         <IconContainer>
-          <FooterMailSvg />
-          <FooterKakaoSvg />
-          <FooterInstaSvg />
+          <FooterMailIc />
+          <FooterKakaoIc />
+          <FooterInstaIc />
         </IconContainer>
         <Spacing marginBottom="2" />
         <MilePrivacy>이용약관 및 개인정보 취급방침</MilePrivacy>

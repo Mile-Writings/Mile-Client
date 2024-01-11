@@ -9,9 +9,10 @@ import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
 import Summary from './Summary';
 
+
 const Carousel = () => {
   const settings = {
-    arrows: true,
+    arrow: false,
     dots: false,
     infinite: false,
     speed: 500,
@@ -42,6 +43,7 @@ const Carousel = () => {
         </CarouselContainer>
       </CarouselWithButtonLayout>
     </CarouselContentWithSummaryWrapper>
+
   );
 };
 
@@ -62,6 +64,7 @@ const CarouselContainer = styled.div`
 const CarouselBox = styled(Slider)`
   width: 93rem;
   height: 24rem;
+
   .slick-slide.slick-active:last-of-type {
     width: 75.4rem !important;
     height: 24rem;

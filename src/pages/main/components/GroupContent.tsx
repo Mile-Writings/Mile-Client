@@ -22,6 +22,7 @@ const GroupContent = ({ topic, maintext, subtext, image, isLast }: groupContenty
       {image && <Image src={image} isLast={isLast} alt="group-content-image" />}
       {isLast && <Curious />}
     </ContentLayout>
+
   );
 };
 
@@ -31,6 +32,7 @@ const ContentLayout = styled.div`
   display: flex;
   padding: 3.6rem;
   gap: 3.6rem;
+
 `;
 
 const Topic = styled.div`
@@ -67,3 +69,4 @@ const Image = styled.img<{ isLast: boolean }>`
   width: ${({ isLast }) => (isLast ? '16.8rem' : '22.4rem')};
   height: 16.8rem;
 `;
+
