@@ -44,7 +44,7 @@ Quill.register(BackgroundColor, true);
 const BlockEmbed = Quill.import('blots/embed');
 
 class Divider extends BlockEmbed {
-  static create(value: any) {
+  static create(value: HTMLElement) {
     const node = super.create(value);
     node.setAttribute('style', 'height:0px; margin-top:10px; margin-bottom:10px;');
     return node;
@@ -68,7 +68,7 @@ const CustomToolbar = () => {
         </select>
 
         <select className="ql-color ql-custom-color">
-          <option value="#010101" className="ql-testest"></option>
+          <option value="#010101"></option>
           <option value="#505050"></option>
           <option value="#B81616"></option>
           <option value="#DA5B24"></option>
@@ -109,22 +109,22 @@ const CustomToolbar = () => {
 };
 
 const Editor = () => {
+  // 구분선 커스텀 동작 함수
   const quillRef = useRef<ReactQuill | null>(null);
 
   const dividerToolbarHandler = useCallback(() => {
     if (!quillRef.current) return;
     const quill = quillRef.current.getEditor();
 
-    let index = (quill.getSelection(true) || {}).length;
-
-    // 포커스 안 되어 있을 때 예외처리
-    if (index === undefined || index < 0) {
-      index = quill.getLength();
-    }
+    // index : 현재 드래그 된 글자가 몇번째인지 반환
+    // length : 현재 드래그 된 글자 개수
+    let range = quill.getSelection(true);
+    let index = range.index + range.length;
+    // let selectedText = (quill.getSelection(true) || {}).length;
 
     quill.insertText(index, '\n', 'user');
     quill.insertEmbed(index + 1, 'divider', true, 'user');
-    quill.setSelection(index + 2, 1, 'user');
+    quill.setSelection(index + 2, 0, 'user');
   }, []);
 
   const modules = {

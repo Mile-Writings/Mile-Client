@@ -15,7 +15,11 @@
   background-color: #d9cef6;
 }
 
+/* 툴바 자체 커스텀 */
 .ql-toolbar {
+  position: relative;
+  top: -7rem;
+  /* right: 4rem; */
   position: absolute;
   display: flex;
   align-items: center;
@@ -29,6 +33,9 @@
   border-radius: 0.8rem;
 
   background-color: white;
+}
+.ql-tooltip-arrow {
+  display: none !important;
 }
 
 .ql-formats {
@@ -517,7 +524,6 @@ button.ql-blockquote {
   height: 2.5rem !important;
 }
 .ql-bubble .ql-editor blockquote {
-  border-radius: 0.4rem;
   border-left: 4px solid #6139d1;
   padding-left: 1.8rem;
 }
