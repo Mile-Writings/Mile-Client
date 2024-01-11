@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { HeaderLogoSvg } from './../../assets/svgs';
+import { HeaderLogoIc } from './../../assets/svgs';
 import MakeGroupBtn from './../../pages/groupFeed/MakeGroupBtn';
 import MyGroupBtn from './../../pages/groupFeed/MyGroupBtn';
 import Button from './Button';
@@ -19,7 +19,7 @@ interface OnClickTwoProps {
 export const GroupFeedHeader = ({ onClick }: OnClickProps) => {
   return (
     <HeaderWrapper>
-      <HeaderLogoSvg />
+      <HeaderLogoIc />
       <HeaderBtnLayout>
         <MyGroupBtn />
         <CommonBtnLayout>
@@ -35,7 +35,7 @@ export const GroupFeedHeader = ({ onClick }: OnClickProps) => {
 export const LogOutHeader = ({ onClick }: OnClickProps) => {
   return (
     <HeaderWrapper>
-      <HeaderLogoSvg />
+      <HeaderLogoIc />
       <LogInOutBtn onClick={onClick}>로그인</LogInOutBtn>
     </HeaderWrapper>
   );
@@ -45,7 +45,7 @@ export const LogOutHeader = ({ onClick }: OnClickProps) => {
 export const EditorHeader = ({ onClick }: OnClickProps) => {
   return (
     <HeaderWrapper>
-      <HeaderLogoSvg />
+      <HeaderLogoIc />
       <Button typeName="submitEditType" onClick={onClick}>
         수정 완료하기
       </Button>
@@ -57,7 +57,7 @@ export const EditorHeader = ({ onClick }: OnClickProps) => {
 export const EditorHeaderTemp = ({ onClickTempSave, onClickSubmit }: OnClickTwoProps) => {
   return (
     <HeaderWrapper>
-      <HeaderLogoSvg />
+      <HeaderLogoIc />
       <CommonBtnLayout>
         <Button typeName="deleteTempType" onClick={onClickTempSave}>
           임시저장
