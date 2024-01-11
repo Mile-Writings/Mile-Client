@@ -10,15 +10,15 @@
   padding: 0;
 }
 
-/* 텍스트 드래그 했을 때 색상 변경 */
+/* 브라우저 텍스트 드래그 했을 때 색상 변경 */
 *::selection {
   background-color: #d9cef6;
 }
 
 /* 툴바 자체 커스텀 */
 .ql-toolbar {
-  position: relative;
-  top: -7rem;
+  /* position: relative; */
+  /* top: -7rem; */
   /* right: 4rem; */
   position: absolute;
   display: flex;
@@ -41,6 +41,11 @@
 .ql-formats {
   padding: 0;
   margin: 0 !important;
+}
+
+/* placeholder 위치 조정 */
+.ql-editor.ql-blank::before {
+  left: 2.8rem;
 }
 
 /* 글자 크기 커스텀 */
