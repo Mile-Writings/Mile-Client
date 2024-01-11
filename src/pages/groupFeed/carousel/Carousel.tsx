@@ -1,4 +1,4 @@
-import React from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import styled from '@emotion/styled';
 import Slider from 'react-slick';
@@ -15,7 +15,7 @@ import { CAROUSEL_CATEGORY } from '../constants/CAROUSEL_DATA';
 
 interface CategoryIdPropTypes {
   activeCategoryId: number;
-  setActiveCategoryId: React.Dispatch<React.SetStateAction<number>>;
+  setActiveCategoryId: Dispatch<SetStateAction<number>>;
 }
 
 const Carousel = (props: CategoryIdPropTypes) => {

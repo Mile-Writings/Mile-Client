@@ -1,11 +1,11 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
 import styled from '@emotion/styled';
 
 interface CarouselPropTypes {
   isActive: boolean;
   onClick: () => void;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const CarouselContainer = (props: CarouselPropTypes) => {
