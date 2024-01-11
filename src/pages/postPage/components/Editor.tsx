@@ -3,12 +3,6 @@ import 'react-quill/dist/quill.bubble.css';
 
 import './editor.css';
 
-// import { EditorTextColorIcnBlackSvg } from '../../../assets/svgs';
-
-// 볼드 아이콘 커스텀
-// const icons = Quill.import('ui/icons');
-// icons['bold'] = <Editor />
-
 const CustomToolbar = () => {
   return (
     <div id="toolbar">
@@ -48,11 +42,11 @@ const CustomToolbar = () => {
         <button className="ql-underline" />
         <button className="ql-strike" />
         <button className="ql-italic" />
-        <button className="ql-align ql-left" />
-        <button className="ql-align" value="center" />
-        <button className="ql-list" value="bullet" />
-        <button className="ql-list" value="ordered" />
-        <button className="ql-blockquote" value="ordered" />
+        <button className="ql-align ql-left" value="justify" />
+        <button className="ql-align ql-center" value="center" />
+        <button className="ql-list ql-bullet" value="bullet" />
+        <button className="ql-list ql-ordered" value="ordered" />
+        <button className="ql-blockquote" />
       </span>
     </div>
   );

@@ -374,11 +374,15 @@
 }
 
 /* svg 버튼 커스텀 */
+
+/* 기존 아이콘 숨기기 */
 .ql-bold > svg,
 .ql-underline > svg,
 .ql-strike > svg,
 .ql-italic > svg,
-.ql-align > svg {
+.ql-align > svg,
+.ql-list > svg,
+.ql-blockquote > svg {
   display: none;
 }
 
@@ -431,6 +435,9 @@ button.ql-strike {
 }
 
 /* 이텔릭 커스텀 */
+.ql-editor em {
+  font-style: italic;
+}
 button.ql-italic {
   width: 2.5rem !important;
   height: 2.5rem !important;
@@ -456,9 +463,9 @@ button.ql-align {
 .ql-align:hover {
   background-image: url(../../../assets/svgs/editorLeftSvgHover.svg) !important;
 }
-/* .ql-align.ql-active {
+.ql-align.ql-left.ql-active {
   background-image: url(../../../assets/svgs/editorLeftSvgActive.svg) !important;
-} */
+}
 
 /* 가운데 정렬 커스텀 */
 .ql-align[value='center'] {
@@ -467,6 +474,47 @@ button.ql-align {
 .ql-align[value='center']:hover {
   background-image: url(../../../assets/svgs/editorCenterSvgHover.svg) !important;
 }
-/* .ql-align.ql-active[value='center'] {
+.ql-align.ql-center.ql-active {
   background-image: url(../../../assets/svgs/editorCenterSvgActive.svg) !important;
-} */
+}
+
+/* bullet 리스트 커스텀 */
+button.ql-list {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+}
+.ql-list.ql-bullet {
+  background-image: url(../../../assets/svgs/editorBulletSvgEnable.svg) !important;
+}
+.ql-list.ql-bullet:hover {
+  background-image: url(../../../assets/svgs/editorBulletSvgHover.svg) !important;
+}
+.ql-list.ql-bullet.ql-active {
+  background-image: url(../../../assets/svgs/editorBulletSvgActive.svg) !important;
+}
+
+/* ordered 리스트 커스텀 */
+.ql-list.ql-ordered {
+  background-image: url(../../../assets/svgs/editorNumberSvgEnable.svg) !important;
+}
+.ql-list.ql-ordered:hover {
+  background-image: url(../../../assets/svgs/editorNumberSvgHover.svg) !important;
+}
+.ql-list.ql-ordered.ql-active {
+  background-image: url(../../../assets/svgs/editorNumberSvgActive.svg) !important;
+}
+
+/* 인용구 커스텀 */
+button.ql-blockquote {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+}
+.ql-blockquote {
+  background-image: url(../../../assets/svgs/editorQuoteSvgEnable.svg) !important;
+}
+.ql-blockquote:hover {
+  background-image: url(../../../assets/svgs/editorQuoteSvgHover.svg) !important;
+}
+.ql-blockquote.ql-active {
+  background-image: url(../../../assets/svgs/editorQuoteSvgActive.svg) !important;
+}
