@@ -59,6 +59,9 @@ const MileMakersTextLayout = styled.div`
 `;
 
 const MainText = styled.p`
+  width: fit-content;
+
+  white-space: nowrap;
   ${({ theme }) => theme.fonts.title3};
 `;
 
@@ -113,10 +116,16 @@ const HookText = styled.p`
 `;
 
 const GreetingText = styled.p`
+  width: fit-content;
+
+  white-space: nowrap;
   ${({ theme }) => theme.fonts.title5};
 `;
 
 const DiscriptionText = styled.p`
+  width: fit-content;
+  overflow: hidden;
+
   color: ${({ theme }) => theme.colors.gray80};
   ${({ theme }) => theme.fonts.body3};
 `;
