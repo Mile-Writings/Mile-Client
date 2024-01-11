@@ -1,31 +1,38 @@
 import styled from '@emotion/styled';
 
-import Spacing from '../../../components/commons/Spacing';
+import Spacing from './.././../../components/commons/Spacing';
+import { groupContentypes } from './../constants/constants';
+import Curious from './Curious';
 
-const GroupContent = () => {
+const GroupContent = ({ topic, maintext, subtext, image, isLast }: groupContentypes) => {
+  const hasImage = () => {
+    return image !== null;
+  };
+
   return (
-    <ContentBox>
-      <Topic>글쓰기 주제가 입력될 공간</Topic>
-      <MainText>작성된 글의 제목이 들어갈 공간입니다.</MainText>
-      <Spacing marginBottom="3.2" />
-      <SubText>
-        텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가
-        들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈
-        공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈
-        공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈
-        공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈
-        공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 ...
-      </SubText>
-    </ContentBox>
+    <ContentLayout>
+      <TextContainer>
+        <Topic>{topic}</Topic>
+        <MainText>{maintext}</MainText>
+        <Spacing marginBottom="3.2" />
+        <SubText isImage={hasImage()} isLast={isLast}>
+          {subtext}
+        </SubText>
+      </TextContainer>
+      {image && <Image src={image} isLast={isLast} alt="group-content-image" />}
+      {isLast && <Curious />}
+    </ContentLayout>
+
   );
 };
 
 export default GroupContent;
 
-const ContentBox = styled.div`
+const ContentLayout = styled.div`
   display: flex;
-  flex-direction: column;
   padding: 3.6rem;
+  gap: 3.6rem;
+
 `;
 
 const Topic = styled.div`
@@ -37,7 +44,29 @@ const MainText = styled.div`
   ${({ theme }) => theme.fonts.title10};
 `;
 
-const SubText = styled.div`
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const SubText = styled.div<{ isImage: boolean; isLast: boolean }>`
+  width: ${({ isImage, isLast }) =>
+    isImage && isLast
+      ? '47.8rem'
+      : isImage && !isLast
+        ? '59.8rem'
+        : !isImage && isLast
+          ? '68.2rem'
+          : '85.8rem'};
+  height: 8.4rem;
+  overflow: hidden;
+
   color: ${({ theme }) => theme.colors.gray80};
   ${({ theme }) => theme.fonts.body3};
 `;
+
+const Image = styled.img<{ isLast: boolean }>`
+  width: ${({ isLast }) => (isLast ? '16.8rem' : '22.4rem')};
+  height: 16.8rem;
+`;
+
