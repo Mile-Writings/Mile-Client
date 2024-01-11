@@ -7,6 +7,10 @@ import {
 import Spacing from '../../../components/commons/Spacing';
 
 const Introduction = () => {
+  const handleOnClick = () => {
+    alert('Button Clicked!');
+  };
+
   return (
     <IntroductionWrapper>
       <MileMakersTextLayout>
@@ -19,8 +23,8 @@ const Introduction = () => {
         <Spacing marginBottom="0.8" />
         <SubText>아직 가입된 글 모임이 없으시다면, 마일과 함께 써요!</SubText>
         <Spacing marginBottom="8" />
-        <GroupRoutingButtonBox>
-          <GroupRoutingButtonText>마일 글 모임 바로가기</GroupRoutingButtonText>
+        <GroupRoutingButtonBox onClick={handleOnClick}>
+          마일 글 모임 바로가기
           <MainArrowWhiteIc />
         </GroupRoutingButtonBox>
       </MileMakersTextLayout>
@@ -97,8 +101,6 @@ const GroupRoutingButtonBox = styled.button`
     }
   }
 `;
-
-const GroupRoutingButtonText = styled.div``;
 
 const IntroduceZakmiBox = styled.div`
   display: flex;
