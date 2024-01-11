@@ -8,3 +8,5 @@ export { default as HeaderLogoSvg } from './headerLogoSvg.svg?react';
 export { default as MakeGroupPlusBtn } from './mainMakeGroupBtnEnable.svg?react';
 export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?react';
 export { default as CheckboxIc } from './postDetailCheckIc.svg?react';
+export { default as QuestionDefaultIc } from './questionDefaultIc.svg?react';
+export { default as QuestioHoverIc } from './questionHoverIc.svg?react';
