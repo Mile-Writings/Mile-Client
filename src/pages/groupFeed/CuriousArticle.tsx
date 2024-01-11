@@ -4,7 +4,7 @@ import { CURIOUS_ARTICLE } from './constants/CURIOUS_PROFILE';
 import { GroupNoDataImgIc } from '../../assets/svgs';
 import Spacing from '../../components/commons/Spacing';
 
-interface Article {
+interface ArticlePropTypes {
   topic: string;
   title: string;
   content: string;
@@ -22,7 +22,7 @@ const CuriousArticle = () => {
           <Spacing marginBottom="4" />
         </NoCuriousArticleWrapper>
       ) : (
-        CURIOUS_ARTICLE.postList.map((article: Article, index: number) => (
+        CURIOUS_ARTICLE.postList.map((article: ArticlePropTypes, index: number) => (
           <CuriousArticleLayout key={index}>
             <ArticleThumbnail />
             <Spacing marginBottom="1.6" />

@@ -3,6 +3,11 @@ import styled from '@emotion/styled';
 import { CURIOUS_PROFILE } from './constants/CURIOUS_PROFILE';
 import { GroupCuriousProfileOpenIc } from '../../assets/svgs';
 
+interface ProfilePropTypes {
+  writerName: string;
+  information: string;
+}
+
 const CuriousProfile = () => {
   return (
     <CuriousProfileWrapper>
