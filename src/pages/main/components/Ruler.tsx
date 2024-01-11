@@ -32,6 +32,7 @@ const RulerWrapper = styled.div`
   flex-direction: column;
   width: 93rem;
   height: 8.4rem;
+  margin-left: 21.8rem;
 `;
 
 const RulerHeaderLayout = styled.section`
