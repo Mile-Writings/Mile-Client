@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import Button from '../../components/common/Button';
+import Button from '../../components/commons/Button';
 
 const GroupTodayWriteStyle = () => {
   const onHandleSubmit = () => {
