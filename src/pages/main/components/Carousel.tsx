@@ -5,6 +5,7 @@ import '../style/slick-theme.css';
 import '../style/slick.css';
 import GROUP_CONTENT, { groupContentypes } from './../constants/constants';
 import GroupContent from './GroupContent';
+import GroupNameBtn from './GroupNameBtn';
 
 const Carousel = () => {
   const settings = {
@@ -17,25 +18,33 @@ const Carousel = () => {
   };
 
   return (
-    <CarouselLayout>
-      <CarouselContainer {...settings}>
-        {GROUP_CONTENT.map(({ id, topic, maintext, subtext, image }: groupContentypes) => (
-          <GroupContent
-            key={id}
-            id={id}
-            topic={topic}
-            maintext={maintext}
-            subtext={subtext}
-            image={image}
-            isLast={id === GROUP_CONTENT.length}
-          />
-        ))}
-      </CarouselContainer>
-    </CarouselLayout>
+    <CarouselWithButtonWrapper>
+      <GroupNameBtn />
+      <CarouselLayout>
+        <CarouselContainer {...settings}>
+          {GROUP_CONTENT.map(({ id, topic, maintext, subtext, image }: groupContentypes) => (
+            <GroupContent
+              key={id}
+              id={id}
+              topic={topic}
+              maintext={maintext}
+              subtext={subtext}
+              image={image}
+              isLast={id === GROUP_CONTENT.length}
+            />
+          ))}
+        </CarouselContainer>
+      </CarouselLayout>
+    </CarouselWithButtonWrapper>
   );
 };
 
 export default Carousel;
+
+const CarouselWithButtonWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+`;
 
 const CarouselLayout = styled.div`
   display: flex;
