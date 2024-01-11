@@ -51,7 +51,6 @@ const GroupInfoWrapper = styled.div`
   display: flex;
   gap: 3.9rem;
   width: 136.6rem;
-  height: 246.1rem;
   padding-right: 16.5rem;
   padding-left: 16.5rem;
 `;
