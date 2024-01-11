@@ -71,7 +71,7 @@ const CarouselWrapper = styled.div`
 `;
 
 const Next = styled.div`
-  z-index: 4;
+  z-index: 2;
   width: 3.6rem;
   height: 3.6rem;
 
@@ -83,7 +83,7 @@ const Next = styled.div`
 `;
 
 const Prev = styled.div`
-  z-index: 3;
+  z-index: 2;
   width: 3.6rem;
   height: 3.6rem;
 
@@ -97,7 +97,7 @@ const Prev = styled.div`
 const GroupTabBtnBaseBeforeIc = styled(GroupTabBtnBaseBeforeIcn)`
   position: absolute;
   top: 0;
-  z-index: 3;
+  z-index: 1;
 
   pointer-events: none;
 `;
@@ -106,7 +106,7 @@ const GroupTabBtnBaseNextIc = styled(GroupTabBtnBaseNextIcn)`
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 3;
+  z-index: 1;
 
   pointer-events: none;
 `;
