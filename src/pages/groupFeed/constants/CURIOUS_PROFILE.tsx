@@ -12,20 +12,5 @@ export const CURIOUS_PROFILE = {
 };
 
 export const CURIOUS_ARTICLE = {
-  postList: [
-    {
-      postId: 1,
-      imageUrl: '사진',
-      topic: '글감1',
-      title: '글 제목1',
-      content: '글 내용1',
-    },
-    {
-      postId: 2,
-      imageUrl: '사진',
-      topic: '글감2',
-      title: '글 제목2',
-      content: '글 내용2',
-    },
-  ],
+  postList: [],
 };
