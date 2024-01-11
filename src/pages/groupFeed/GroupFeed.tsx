@@ -9,6 +9,7 @@ import CuriousProfile from './CuriousProfile';
 import GroupCuriousTitle from './GroupCuriousTitle';
 import GroupSideHeader from './GroupSideHeader';
 import GroupTodayWriteStyle from './GroupTodayWriteStyle';
+import Footer from '../../components/commons/Footer';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
@@ -43,9 +44,12 @@ const GroupFeed = () => {
             공백포함90자입니다. 글감 소개 자리입니다. 최대 공백포함90자입니다. 글감 소개 자리입니다.
             최대 공백포함90자입니다.
           </TopicDescription>
+          <Spacing marginBottom="2" />
           <EachArticle />
         </GroupInfo>
       </GroupInfoWrapper>
+      <Spacing marginBottom="14" />
+      <Footer />
     </GroupFeedWrapper>
   );
 };
