@@ -1,3 +1,7 @@
+export { default as GroupListProfileOpenIcn } from './groupListProfileIcnOpen.svg?react';
+export { default as GroupTabBtnBaseBeforeIcn } from './groupTabBtnBaseBefore.svg?react';
+export { default as GroupTabBtnBaseNextIcn } from './groupTabBtnBaseNext.svg?react';
+        
 export { default as FooterInstaIc } from './footerInstaSvg.svg?react';
 export { default as FooterKakaoIc } from './footerKakaoSvg.svg?react';
 export { default as FooterMailIc } from './footerMailSvg.svg?react';
