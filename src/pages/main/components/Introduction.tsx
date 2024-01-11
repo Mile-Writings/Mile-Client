@@ -76,10 +76,23 @@ const GroupRoutingButtonBox = styled.button`
   padding: 0.6rem 1rem;
 
   color: ${({ theme }) => theme.colors.white};
-  font: ${({ theme }) => theme.fonts.button1};
+  ${({ theme }) => theme.fonts.button1};
 
   background-color: ${({ theme }) => theme.colors.mainViolet};
   border-radius: 0.8rem;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+    ${({ theme }) => theme.fonts.button1};
+
+    background-color: ${({ theme }) => theme.colors.mileViolet};
+
+    & > svg {
+      path {
+        stroke: ${({ theme }) => theme.colors.mainViolet};
+      }
+    }
+  }
 `;
 
 const GroupRoutingButtonText = styled.div``;
