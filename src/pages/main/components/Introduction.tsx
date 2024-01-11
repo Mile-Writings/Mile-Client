@@ -44,6 +44,8 @@ export default Introduction;
 const IntroductionWrapper = styled.section`
   display: flex;
   gap: 7.4rem;
+  align-items: center;
+  justify-content: center;
   margin-top: 10rem;
   padding: 10.1rem 28.4rem 10rem 21.8rem;
 
@@ -53,6 +55,7 @@ const IntroductionWrapper = styled.section`
 const MileMakersTextLayout = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 6.4rem;
 `;
 
 const MainText = styled.p`
