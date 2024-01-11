@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import Image from './../../assets/images/defaultSeaImage.png';
-import { CheckboxIc, DefaultProfileIc, HeaderLogoSvg } from './../../assets/svgs';
+import { CheckboxIc, DefaultProfileIc, HeaderLogoIc } from './../../assets/svgs';
 import Button from './../../components/commons/Button';
 import LogInOutBtn from './../../components/commons/LogInOutBtn';
 import Spacing from './../../components/commons/Spacing';
@@ -119,8 +119,7 @@ const PostHeader = styled.header`
   justify-content: space-between;
   width: 100%;
   height: 6.4rem;
-  padding-right: 6rem;
-  padding-left: 6rem;
+  padding: 0 6rem;
 
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
 `;
@@ -136,7 +135,7 @@ const CommonBtnLayout = styled.div`
   height: 6.4rem;
 `;
 
-const HeaderLogoIcon = styled(HeaderLogoSvg)`
+const HeaderLogoIcon = styled(HeaderLogoIc)`
   cursor: pointer;
 `;
 
@@ -264,38 +263,3 @@ const GroupInfoText = styled.p`
   color: ${({ theme }) => theme.colors.gray50};
   ${({ theme }) => theme.fonts.body6};
 `;
-// const CuriousBtn = styled.button`
-//   padding: 1rem 1.6rem;
-
-//   color: ${({ theme }) => theme.colors.mainViolet};
-
-//   background-color: ${({ theme }) => theme.colors.white};
-//   border: 1px solid ${({ theme }) => theme.colors.mainViolet};
-//   border-radius: 8px;
-
-//   ${({ theme }) => theme.fonts.button3};
-// `;
-
-const CommentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 82.4rem;
-  height: 30.7rem;
-  padding: 2.8rem;
-
-  background-color: ${({ theme }) => theme.colors.white};
-  border-radius: 8px;
-`;
-
-const CommentFormWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 76.8rem;
-  height: 4rem;
-`;
-
-// const CommentViewWrapper = styled.div`
-//   display: flex;
-//   justify-content:;
-// `;

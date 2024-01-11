@@ -11,9 +11,12 @@ interface Curious {
 const CuriousBtn = ({ curiousNum }: Curious) => {
   const [isClick, setIsClick] = useState(false);
 
+  const handleIsClick = () => {
+    setIsClick((prev) => !prev);
+  };
   return (
     <>
-      <CuriousBtnWrapper onClick={() => setIsClick(!isClick)} $isClick={isClick}>
+      <CuriousBtnWrapper onClick={handleIsClick} $isClick={isClick}>
         <CuriousTextWrapper>
           <CuriousTextContainer>
             {isClick ? <QuestioHoverIc /> : <QuestionDefaultIc />}
