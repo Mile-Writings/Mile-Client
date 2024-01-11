@@ -12,6 +12,7 @@ import GroupTodayWriteStyle from './GroupTodayWriteStyle';
 import GroupFloatingBtn from '../../assets/svgs/groupFloatingBtn.svg';
 import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import Footer from '../../components/commons/Footer';
+import { GroupFeedHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
@@ -19,6 +20,7 @@ const GroupFeed = () => {
 
   return (
     <GroupFeedWrapper>
+      <GroupFeedHeader />
       <GroupFeedThumnail />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
