@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 
 import { CURIOUS_PROFILE } from './constants/CURIOUS_PROFILE';
-import { GroupCuriousProfileOpenIc } from '../../assets/svgs';
+import { GroupCuriousProfileOpenIc, GroupNoDataImgIc } from '../../assets/svgs';
+import Spacing from '../../components/commons/Spacing';
 
 interface ProfilePropTypes {
   writerName: string;
@@ -11,21 +12,31 @@ interface ProfilePropTypes {
 const CuriousProfile = () => {
   return (
     <CuriousProfileWrapper>
-      {CURIOUS_PROFILE.popularWriters.map((writer, index) => (
-        <CuriousProfileLayout key={index}>
-          <GroupCuriousProfileOpenIc />
-          <ProfileWrapper>
-            {writer.information == '' ? (
-              <ProfileTitle>{writer.writerName}</ProfileTitle>
-            ) : (
-              <>
+      {CURIOUS_PROFILE.popularWriters.length == 0 ? (
+        <NoCuriousProfileeWrapper>
+          <Spacing marginBottom="4" />
+          <GroupNoDataImgIc />
+          <Spacing marginBottom="1.6" />
+          아직은 굼금해요를 많이 받은 작가가 없어요
+          <Spacing marginBottom="4" />
+        </NoCuriousProfileeWrapper>
+      ) : (
+        CURIOUS_PROFILE.popularWriters.map((writer: ProfilePropTypes, index: number) => (
+          <CuriousProfileLayout key={index}>
+            <GroupCuriousProfileOpenIc />
+            <ProfileWrapper>
+              {writer.information == '' ? (
                 <ProfileTitle>{writer.writerName}</ProfileTitle>
-                <ProfileDetail>{writer.information}</ProfileDetail>
-              </>
-            )}
-          </ProfileWrapper>
-        </CuriousProfileLayout>
-      ))}
+              ) : (
+                <>
+                  <ProfileTitle>{writer.writerName}</ProfileTitle>
+                  <ProfileDetail>{writer.information}</ProfileDetail>
+                </>
+              )}
+            </ProfileWrapper>
+          </CuriousProfileLayout>
+        ))
+      )}
     </CuriousProfileWrapper>
   );
 };
@@ -66,6 +77,19 @@ const CuriousProfileLayout = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
+
+  ${({ theme }) => theme.fonts.subtitle3};
+`;
+
+const NoCuriousProfileeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 72rem;
+  height: 22rem;
+
+  color: ${({ theme }) => theme.colors.gray40};
 
   ${({ theme }) => theme.fonts.subtitle3};
 `;
