@@ -1,5 +1,11 @@
 export { default as EditorTextColorIcnBlackSvg } from './editorTextcolorIcnBlack.svg?react';
 export { default as EditorHorizonIcnUnactiveSvg } from './editorHorizonIcnUnactive.svg?react';
+
+export { default as HeaderLogoSvg } from './headerLogoSvg.svg?react';
+export { default as MainGroupRoutingBtn } from './mainGroupRoutingBtn.svg?react';
+export { default as MainGroupRoutingBtnHover } from './mainGroupRoutingBtnHover.svg?react';
+export { default as MainIcnArrowPurple } from './mainIcnArrowPurple.svg?react';
+
 export { default as GroupTabBtnBaseBeforeIc } from './groupTabBtnBaseBefore.svg?react';
 export { default as GroupTabBtnBaseNextIc } from './groupTabBtnBaseNext.svg?react';
 
@@ -15,6 +21,5 @@ export { default as GroupCuriousProfileOpenIc } from './groupBestProfileIcnOpen.
 export { default as GroupListProfileOpenIc } from './groupListProfileIcnOpen.svg?react';
 
 export { default as HeaderLogoIc } from './headerLogoSvg.svg?react';
-
 export { default as MakeGroupPlusBtn } from './mainMakeGroupBtnEnable.svg?react';
 export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?react';
