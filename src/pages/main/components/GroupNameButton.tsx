@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
-import { MainIcnArrowPurple } from '../../../assets/svgs';
+import { MainIcnArrowPurple as MainIcnArrowPurpleIcon } from '../../../assets/svgs';
 
 const GroupNameBtn = () => {
   return (
     <GroupNameButtonBox>
       글 모임 이름
-      <MainIcnArrowPurple />
+      <MainIcnArrowPurpleIcon />
     </GroupNameButtonBox>
   );
 };
@@ -19,15 +19,13 @@ const GroupNameButtonBox = styled.button`
   padding: 0.6rem 1rem;
   align-items: center;
   border-radius: 0.8rem;
-  /* margin-left: 21.8rem; */
+  justify-content: flex-start;
 
   border: 1px solid ${({ theme }) => theme.colors.mainViolet};
   color: ${({ theme }) => theme.colors.mainViolet};
   ${({ theme }) => theme.fonts.subtitle2};
 
-  &:hover > MainIcnArrowPurple {
-    path {
-      fill: ${({ theme }) => theme.colors.mileViolet};
-    }
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.mileViolet};
   }
 `;
