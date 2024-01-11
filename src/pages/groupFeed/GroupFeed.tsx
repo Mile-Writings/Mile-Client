@@ -10,7 +10,7 @@ import Spacing from '../../components/commons/Spacing';
 const GroupFeed = () => {
   return (
     <GroupFeedWrapper>
-      <GroupFeedThumnail></GroupFeedThumnail>
+      <GroupFeedThumnail />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
         <GroupSideHeader />
