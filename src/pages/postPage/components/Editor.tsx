@@ -1,7 +1,60 @@
+import { useRef, useCallback } from 'react';
+
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 
 import './editor.css';
+
+// 글자 크기 커스텀
+const Size = Quill.import('formats/size');
+Size.whitelist = ['large', 'medium', 'small', 'extra-small'];
+Quill.register(Size, true);
+
+// 글자 색상 커스텀
+const Color = Quill.import('formats/color');
+Color.whitelist = [
+  '#010101',
+  '#505050',
+  '#B81616',
+  '#DA5B24',
+  '#C5B525',
+  '#2F7417',
+  '#172B74',
+  '#6139D1',
+  '#951479',
+];
+Quill.register(Color, true);
+
+// 글자 배경색 커스텀
+const BackgroundColor = Quill.import('formats/background');
+BackgroundColor.whitelist = [
+  '#FFFFFF', // white
+  '#EAEAEA', // Gray
+  '#F6E2E2', // red
+  '#F6E7E2', // orange
+  '#F6F4E2', // yellow
+  '#F1F6E2', // green
+  '#E2EAF6', // blue
+  '#E9E3F8', // violet
+  '#F6E2F3', // pink
+];
+Quill.register(BackgroundColor, true);
+
+// 구분선 커스텀
+const BlockEmbed = Quill.import('blots/embed');
+
+class Divider extends BlockEmbed {
+  static create(value: any) {
+    const node = super.create(value);
+    node.setAttribute('style', 'height:0px; margin-top:10px; margin-bottom:10px;');
+    return node;
+  }
+
+  static blotName = 'divider';
+  static tagName = 'hr';
+}
+
+Quill.register({ 'formats/hr': Divider });
 
 const CustomToolbar = () => {
   return (
@@ -47,50 +100,39 @@ const CustomToolbar = () => {
         <button className="ql-list ql-bullet" value="bullet" />
         <button className="ql-list ql-ordered" value="ordered" />
         <button className="ql-blockquote" />
+        <span className="ql-formats">
+          <button className="ql-divider" />
+        </span>
       </span>
     </div>
   );
 };
 
-// 글자 크기 커스텀
-const Size = Quill.import('formats/size');
-Size.whitelist = ['large', 'medium', 'small', 'extra-small'];
-Quill.register(Size, true);
-
-// 글자 색상 커스텀
-const Color = Quill.import('formats/color');
-Color.whitelist = [
-  '#010101',
-  '#505050',
-  '#B81616',
-  '#DA5B24',
-  '#C5B525',
-  '#2F7417',
-  '#172B74',
-  '#6139D1',
-  '#951479',
-];
-Quill.register(Color, true);
-
-// 글자 배경색 커스텀
-const BackgroundColor = Quill.import('formats/background');
-BackgroundColor.whitelist = [
-  '#FFFFFF', // white
-  '#EAEAEA', // Gray
-  '#F6E2E2', // red
-  '#F6E7E2', // orange
-  '#F6F4E2', // yellow
-  '#F1F6E2', // green
-  '#E2EAF6', // blue
-  '#E9E3F8', // violet
-  '#F6E2F3', // pink
-];
-Quill.register(BackgroundColor, true);
-
 const Editor = () => {
+  const quillRef = useRef<ReactQuill | null>(null);
+
+  const dividerToolbarHandler = useCallback(() => {
+    if (!quillRef.current) return;
+    const quill = quillRef.current.getEditor();
+
+    let index = (quill.getSelection(true) || {}).length;
+
+    // 포커스 안 되어 있을 때 예외처리
+    if (index === undefined || index < 0) {
+      index = quill.getLength();
+    }
+
+    quill.insertText(index, '\n', 'user');
+    quill.insertEmbed(index + 1, 'divider', true, 'user');
+    quill.setSelection(index + 2, 1, 'user');
+  }, []);
+
   const modules = {
     toolbar: {
       container: '#toolbar',
+      handlers: {
+        divider: dividerToolbarHandler,
+      },
     },
   };
 
@@ -106,12 +148,14 @@ const Editor = () => {
     'list',
     'bullet',
     'blockquote',
+    'divider',
   ];
 
   return (
     <div className="text-editor">
       <CustomToolbar />
       <ReactQuill
+        ref={quillRef}
         theme="bubble"
         placeholder="글을 작성해 주세요"
         modules={modules}

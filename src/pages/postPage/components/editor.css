@@ -509,6 +509,11 @@ button.ql-blockquote {
   width: 2.5rem !important;
   height: 2.5rem !important;
 }
+.ql-bubble .ql-editor blockquote {
+  border-radius: 0.4rem;
+  border-left: 4px solid #6139d1;
+  padding-left: 1.8rem;
+}
 .ql-blockquote {
   background-image: url(../../../assets/svgs/editorQuoteSvgEnable.svg) !important;
 }
@@ -517,4 +522,19 @@ button.ql-blockquote {
 }
 .ql-blockquote.ql-active {
   background-image: url(../../../assets/svgs/editorQuoteSvgActive.svg) !important;
+}
+
+/* 구분선 커스텀 */
+.ql-divider {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+}
+.ql-divider {
+  background-image: url(../../../assets/svgs/editorHorizonSvgEnable.svg) !important;
+}
+.ql-divider:hover {
+  background-image: url(../../../assets/svgs/editorHorizonSvgHover.svg) !important;
+}
+.ql-divider.ql-active {
+  background-image: url(../../../assets/svgs/editorHorizonSvgActive.svg) !important;
 }
