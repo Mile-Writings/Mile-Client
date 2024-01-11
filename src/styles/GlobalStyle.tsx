@@ -28,11 +28,16 @@ const globalStyle = css`
 
   html,
   body {
+    box-sizing: content-box; /* default */
     margin: 0 auto;
 
     font-size: 62.5%;
 
     background-color: ${theme.colors.backGroundGray};
+  }
+
+  input {
+    outline: none;
   }
 
   a {
