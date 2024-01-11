@@ -10,8 +10,14 @@ const CuriousProfile = () => {
         <CuriousProfileLayout key={index}>
           <GroupCuriousProfileOpenIc />
           <ProfileWrapper>
-            <ProfileTitle>{writer.writerName}</ProfileTitle>
-            <ProfileDetail>{writer.information}</ProfileDetail>
+            {writer.information == '' ? (
+              <ProfileTitle>{writer.writerName}</ProfileTitle>
+            ) : (
+              <>
+                <ProfileTitle>{writer.writerName}</ProfileTitle>
+                <ProfileDetail>{writer.information}</ProfileDetail>
+              </>
+            )}
           </ProfileWrapper>
         </CuriousProfileLayout>
       ))}
