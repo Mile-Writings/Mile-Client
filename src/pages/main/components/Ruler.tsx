@@ -7,20 +7,22 @@ import { KEYWORD_DATA } from '../constants/keyword';
 const Ruler = () => {
   return (
     <RulerWrapper>
-      <RulerHeaderLayout>
-        <MainGrapicGradationIcon />
-        <Spacing marginBottom="0.5" />
-        <RulerContentContainer>
-          <TodayKeyWord>오늘의 글감</TodayKeyWord>
-          <Pipe />
-          <KeyWord>
-            {KEYWORD_DATA.map((item) => (
-              <p key={item.recommend}>{item.recommend}</p>
-            ))}
-          </KeyWord>
-        </RulerContentContainer>
-        <Spacing marginBottom="1.2" />
-      </RulerHeaderLayout>
+      <RulerLayout>
+        <RulerHeaderContainer>
+          <MainGrapicGradationIcon />
+          <Spacing marginBottom="0.5" />
+          <RulerContentBox>
+            <TodayKeyWord>오늘의 글감</TodayKeyWord>
+            <Pipe />
+            <KeyWord>
+              {KEYWORD_DATA.map((item) => (
+                <p key={item.recommend}>{item.recommend}</p>
+              ))}
+            </KeyWord>
+          </RulerContentBox>
+          <Spacing marginBottom="1.2" />
+        </RulerHeaderContainer>
+      </RulerLayout>
     </RulerWrapper>
   );
 };
@@ -29,13 +31,19 @@ export default Ruler;
 
 const RulerWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 93rem;
-  height: 8.4rem;
-  margin-left: 21.8rem;
+  align-items: center;
+  justify-content: center;
 `;
 
-const RulerHeaderLayout = styled.section`
+const RulerLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 93rem;
+  height: 8.4rem;
+`;
+
+const RulerHeaderContainer = styled.section`
   display: flex;
   flex-direction: column;
 
@@ -49,7 +57,7 @@ const MainGrapicGradationIcon = styled(MainGrapicGradationIc)`
   margin-left: 2.1rem;
 `;
 
-const RulerContentContainer = styled.div`
+const RulerContentBox = styled.div`
   display: flex;
   gap: 4.8rem;
   align-items: center;
