@@ -6,5 +6,6 @@ export { default as FooterMailSvg } from './footerMailSvg.svg?react';
 export { default as HeaderLogoSvg } from './headerLogoSvg.svg?react';
 export { default as MainGroupRoutingBtn } from './mainGroupRoutingBtn.svg?react';
 export { default as MainGroupRoutingBtnHover } from './mainGroupRoutingBtnHover.svg?react';
+export { default as MainIcnArrowPurple } from './mainIcnArrowPurple.svg?react';
 export { default as MakeGroupPlusBtn } from './mainMakeGroupBtnEnable.svg?react';
 export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?react';

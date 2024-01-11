@@ -5,7 +5,7 @@ import '../style/slick-theme.css';
 import '../style/slick.css';
 import GROUP_CONTENT, { groupContentypes } from './../constants/constants';
 import GroupContent from './GroupContent';
-import GroupNameBtn from './GroupNameBtn';
+import GroupNameButton from './GroupNameButton';
 
 const Carousel = () => {
   const settings = {
@@ -19,7 +19,7 @@ const Carousel = () => {
 
   return (
     <CarouselWithButtonWrapper>
-      <GroupNameBtn />
+      <GroupNameButton />
       <CarouselLayout>
         <CarouselContainer {...settings}>
           {GROUP_CONTENT.map(({ id, topic, maintext, subtext, image }: groupContentypes) => (
@@ -42,13 +42,13 @@ const Carousel = () => {
 export default Carousel;
 
 const CarouselWithButtonWrapper = styled.section`
-  display: flex;
-  flex-direction: column;
+  margin-left: 21.8rem;
+  width: 100%;
+  margin-right: 21.8rem;
 `;
 
 const CarouselLayout = styled.div`
   display: flex;
-  justify-content: center;
 `;
 
 const CarouselContainer = styled(Slider)`
