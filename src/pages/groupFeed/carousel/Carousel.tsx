@@ -6,7 +6,7 @@ import Slider from 'react-slick';
 import './slick-theme.css';
 import './slick.css';
 import CarouselContainer from './CarouselContainer';
-import { GroupTabBtnBaseBeforeIcn, GroupTabBtnBaseNextIcn } from '../../../assets/svgs';
+import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
 import BeforeBtn from '../../../assets/svgs/groupTabBeforeBtnEnable.svg';
 import BeforeBtnHover from '../../../assets/svgs/groupTabBeforeBtnHover.svg';
 import NextBtn from '../../../assets/svgs/groupTabNextBtnEnable.svg';
@@ -41,7 +41,7 @@ const Carousel = (props: CategoryIdPropTypes) => {
 
   return (
     <CarouselWrapper>
-      <GroupTabBtnBaseBeforeIc />
+      <GroupTabBtnBaseBeforeIcon />
       <Slider {...settings}>
         {CAROUSEL_CATEGORY.categoryList.map((category) => (
           <CarouselContainer
@@ -53,7 +53,7 @@ const Carousel = (props: CategoryIdPropTypes) => {
           </CarouselContainer>
         ))}
       </Slider>
-      <GroupTabBtnBaseNextIc />
+      <GroupTabBtnBaseNextIcon />
     </CarouselWrapper>
   );
 };
@@ -94,7 +94,7 @@ const Prev = styled.div`
   }
 `;
 
-const GroupTabBtnBaseBeforeIc = styled(GroupTabBtnBaseBeforeIcn)`
+const GroupTabBtnBaseBeforeIcon = styled(GroupTabBtnBaseBeforeIc)`
   position: absolute;
   top: 0;
   z-index: 1;
@@ -102,7 +102,7 @@ const GroupTabBtnBaseBeforeIc = styled(GroupTabBtnBaseBeforeIcn)`
   pointer-events: none;
 `;
 
-const GroupTabBtnBaseNextIc = styled(GroupTabBtnBaseNextIcn)`
+const GroupTabBtnBaseNextIcon = styled(GroupTabBtnBaseNextIc)`
   position: absolute;
   top: 0;
   right: 0;

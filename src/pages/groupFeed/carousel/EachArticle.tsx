@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { GroupListProfileOpenIcn } from '../../../assets/svgs';
+import { GroupListProfileOpenIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 const EachArticle = () => {
@@ -16,7 +16,7 @@ const EachArticle = () => {
       </ArticleContent>
       <Spacing marginBottom="1.2" />
       <ArticleInfo>
-        <GroupListProfileOpenIcn />
+        <GroupListProfileOpenIc />
         <ProfileName>프로필명</ProfileName>
         <ArticleDetail>23.12.29 11:11</ArticleDetail>
         <ArticleDetail>·</ArticleDetail>
