@@ -1,5 +1,6 @@
 export { default as Rect } from './Rectangle 17.svg?react';
 export { default as DefaultProfileIc } from './defaultProfileIc.svg?react';
+export { default as DetailCommentMeatBallIc } from './detailCommentMeatBallIc.svg?react';
 export { default as FooterInstaSvg } from './footerInstaSvg.svg?react';
 export { default as FooterKakaoSvg } from './footerKakaoSvg.svg?react';
 export { default as FooterLogoSvg } from './footerLogoSvg.svg?react';
