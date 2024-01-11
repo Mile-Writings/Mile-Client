@@ -33,13 +33,14 @@
 
 .ql-formats {
   padding: 0;
-  margin: 0;
+  margin: 0 !important;
 }
 
 /* 글자 크기 커스텀 */
 .ql-size {
   width: 10.1rem;
   height: 3.6rem;
+  padding: 0.65rem 1.3rem;
 }
 .ql-size > .ql-picker-label {
   width: 10.1rem;
@@ -104,10 +105,13 @@
   width: 10.1rem;
   height: 3.6rem;
 }
+.ql-size.ql-custom-size > .ql-picker-label {
+  width: 7.5rem;
+}
 
 #ql-picker-options-0 {
   position: relative;
-  top: 0.7rem;
+  top: 1.4rem;
   left: -1.3rem;
 
   width: 8.8rem;
@@ -403,6 +407,9 @@ button.ql-bold {
 .ql-bold.ql-active {
   background-image: url(../../../assets/svgs/editorBoldSvgActive.svg) !important;
 }
+.ql-bold.ql-active:hover {
+  background-image: url(../../../assets/svgs/editorBoldSvgHover.svg) !important;
+}
 
 /* 밑줄 커스텀 */
 button.ql-underline {
@@ -537,4 +544,24 @@ button.ql-blockquote {
 }
 .ql-divider.ql-active {
   background-image: url(../../../assets/svgs/editorHorizonSvgActive.svg) !important;
+}
+
+/* 리스트 앞에 글머리 커스텀 */
+li:has(.ql-size-large)::before {
+  font-size: 2.6rem !important;
+  line-height: 200% !important;
+}
+li:has(.ql-size-medium)::before {
+  font-size: 1.8rem !important;
+  line-height: 200% !important;
+}
+li:has(.ql-size-small)::before {
+  font-size: 1.6rem !important;
+  line-height: 160% !important;
+  font-weight: regular;
+}
+li:has(.ql-size-extra-small)::before {
+  font-size: 1.2rem !important;
+  line-height: 200% !important;
+  font-weight: regular;
 }

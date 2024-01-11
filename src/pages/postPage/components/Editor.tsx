@@ -60,7 +60,7 @@ const CustomToolbar = () => {
   return (
     <div id="toolbar">
       <span className="ql-formats">
-        <select className="ql-size" defaultValue={'small'}>
+        <select className="ql-size ql-custom-size" defaultValue={'small'}>
           <option value="large">제목 1</option>
           <option value="medium">제목 2</option>
           <option value="small">본문 1</option>
