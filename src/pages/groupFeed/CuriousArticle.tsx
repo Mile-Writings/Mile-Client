@@ -32,7 +32,7 @@ const ArticleThumbnail = styled.div`
   width: 28.8rem;
   height: 14rem;
 
-  background-image: url('../../src/assets/images/image area.png');
+  background-image: url('../../src/assets/images/image_area.png');
   border-radius: 8px;
 `;
 
