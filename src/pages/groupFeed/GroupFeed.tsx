@@ -9,6 +9,8 @@ import CuriousProfile from './CuriousProfile';
 import GroupCuriousTitle from './GroupCuriousTitle';
 import GroupSideHeader from './GroupSideHeader';
 import GroupTodayWriteStyle from './GroupTodayWriteStyle';
+import GroupFloatingBtn from '../../assets/svgs/groupFloatingBtn.svg';
+import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import Footer from '../../components/commons/Footer';
 import Spacing from '../../components/commons/Spacing';
 
@@ -50,6 +52,7 @@ const GroupFeed = () => {
       </GroupInfoWrapper>
       <Spacing marginBottom="14" />
       <Footer />
+      <FloatingBtn />
     </GroupFeedWrapper>
   );
 };
@@ -94,4 +97,21 @@ const TopicDescription = styled.div`
   color: ${({ theme }) => theme.colors.gray70};
 
   ${({ theme }) => theme.fonts.body3};
+`;
+
+const FloatingBtn = styled.div`
+  position: fixed;
+  right: calc((100vw - 136.6rem) / 2 + 6rem);
+  bottom: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 7rem;
+  height: 7rem;
+
+  background-image: url(${GroupFloatingBtn});
+
+  :hover {
+    background-image: url(${GroupFloatingBtnHover});
+  }
 `;
