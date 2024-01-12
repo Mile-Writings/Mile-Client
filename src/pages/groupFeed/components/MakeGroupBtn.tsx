@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import styled from '@emotion/styled';
 
-import { MakeGroupPlusBtn, MakeGroupPlusHoverBtn } from '../../assets/svgs';
+import { MakeGroupPlusBtn, MakeGroupPlusHoverBtn } from '../../../assets/svgs';
 
 const MakeGroupBtn = () => {
   const [showHoverIcon, setShowHoverIcon] = useState(false);

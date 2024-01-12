@@ -5,11 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 
 import Carousel from './carousel/Carousel';
 import EachArticle from './carousel/EachArticle';
-import CuriousArticle from './CuriousArticle';
-import CuriousProfile from './CuriousProfile';
-import GroupCuriousTitle from './GroupCuriousTitle';
-import GroupSideHeader from './GroupSideHeader';
-import GroupTodayWriteStyle from './GroupTodayWriteStyle';
+import CuriousArticle from './components/CuriousArticle';
+import CuriousProfile from './components/CuriousProfile';
+import GroupCuriousTitle from './components/GroupCuriousTitle';
+import GroupSideHeader from './components/GroupSideHeader';
+import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
 import GroupFloatingBtn from '../../assets/svgs/groupFloatingBtn.svg';
 import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import Footer from '../../components/commons/Footer';
@@ -33,9 +33,11 @@ const fetchGroupFeedAuth = async () => {
 
 const GroupFeed = () => {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['groupFeedAuth'],
+    queryKey: ['groupFeed_Auth_moimId'],
     queryFn: fetchGroupFeedAuth,
   });
+
+  const isMember = data.isMember;
   const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
 
   if (isLoading) {
@@ -43,10 +45,8 @@ const GroupFeed = () => {
   }
 
   if (isError) {
-    return <div>Error fetching data..{error?.message}</div>;
+    return <div>Error fetching data..{error.message}</div>;
   }
-
-  const isMember = data.isMember;
 
   return (
     <GroupFeedWrapper>

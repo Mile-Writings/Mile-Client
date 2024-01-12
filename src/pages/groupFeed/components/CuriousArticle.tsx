@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-import { CURIOUS_ARTICLE } from './constants/CURIOUS_PROFILE';
-import { GroupNoDataImgIc } from '../../assets/svgs';
-import Spacing from '../../components/commons/Spacing';
+import { GroupNoDataImgIc } from '../../../assets/svgs';
+import Spacing from '../../../components/commons/Spacing';
+import { CURIOUS_ARTICLE } from '../constants/CURIOUS_PROFILE';
 
 interface ArticlePropTypes {
   topic: string;

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import Button from '../../components/commons/Button';
+import Button from '../../../components/commons/Button';
 
 interface GroupTodayWriteStylePropTypes {
   isMember: boolean;
@@ -9,7 +9,7 @@ interface GroupTodayWriteStylePropTypes {
 const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
   const { isMember } = props;
   const onHandleSubmit = () => {
-    console.log('submit');
+    // console.log('submit');
   };
   return (
     <TodayWriteStyleWrapper>

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import Spacing from '../../components/commons/Spacing';
+import Spacing from '../../../components/commons/Spacing';
 
 interface GroupCuriousPropTypes {
   mainText: string;
