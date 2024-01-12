@@ -1,5 +1,11 @@
+import EditorDropdown from './EditorDropdown';
+
 const PostEditor = () => {
-  return <div>PostEditor</div>;
+  return (
+    <div>
+      <EditorDropdown />
+    </div>
+  );
 };
 
 export default PostEditor;
