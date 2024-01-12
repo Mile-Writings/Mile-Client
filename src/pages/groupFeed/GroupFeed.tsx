@@ -15,21 +15,6 @@ import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import Footer from '../../components/commons/Footer';
 import { GroupFeedHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
-import { client } from '../../utils/apis/axios';
-
-const fetchGroupFeedAuth = async () => {
-  try {
-    const accessToken = localStorage.getItem('accessToken');
-    const response = await client.get('/api/moim/:moimId/authenticate', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    return response.data; //"isMember" : boolean
-  } catch (error) {
-    console.error('에러:', error);
-  }
-};
 
 const GroupFeed = () => {
   const { data, isLoading, isError, error } = useQuery({
