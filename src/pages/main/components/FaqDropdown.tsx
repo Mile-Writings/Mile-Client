@@ -50,6 +50,7 @@ const DropdownLayout = styled.section`
   padding: 2.4rem 2.8rem;
 
   background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 8px;
 `;
 
 const FaqContainer = styled.div`
