@@ -8,16 +8,28 @@ const RedirectLogin = () => {
   const code = new URL(window.location.href).searchParams.get('code') || '';
   const navigate = useNavigate();
   useEffect(() => {
-    try {
-      const data = loginService({ authorizationCode: code, socialType: 'KAKAO' });
-      console.log(data);
+    const fetchData = async () => {
+      try {
+        const { accessToken } = await loginService({
+          authorizationCode: code,
+          socialType: 'KAKAO',
+        });
 
-      // localStorage.setItem('accessToken', accessToken);
-      navigate('/');
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
+        if (accessToken) {
+          console.log(accessToken);
+          localStorage.setItem('accessToken', accessToken);
+          navigate('/');
+        } else {
+          console.error('No data received from loginService');
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchData();
+  }, [code]);
+
   return <div>RedirectLogin</div>;
 };
 
