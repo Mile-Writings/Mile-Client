@@ -110,6 +110,7 @@ const IntroduceZakmiBox = styled.div`
   padding: 3.6rem;
 
   background-color: ${({ theme }) => theme.colors.white};
+  box-shadow: 0 2px 8px 0 rgb(0 0 0 / 10%);
   border-radius: 1rem;
 `;
 
@@ -125,7 +126,6 @@ const GreetingText = styled.p`
 `;
 
 const DiscriptionText = styled.p`
-  width: fit-content;
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray80};
