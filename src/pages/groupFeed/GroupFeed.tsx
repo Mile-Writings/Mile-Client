@@ -38,7 +38,7 @@ const GroupFeed = () => {
 
   return (
     <GroupFeedWrapper>
-      {accessToken ? <GroupFeedHeader /> : <LogOutHeader />}
+      {accessToken ? <GroupFeedHeader /> : <LogOutHeader onClick={handleLogin} />}
       <GroupFeedThumnail />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
