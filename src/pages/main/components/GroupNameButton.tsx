@@ -3,8 +3,12 @@ import styled from '@emotion/styled';
 import { MainIcnArrowPurple as MainIcnArrowPurpleIcon } from '../../../assets/svgs';
 
 const GroupNameButton = () => {
+  const handleButtonOnClick = () => {
+    alert('button clicked');
+  };
+
   return (
-    <GroupNameButtonBox>
+    <GroupNameButtonBox onClick={handleButtonOnClick}>
       글 모임 이름
       <MainIcnArrowPurpleIcon />
     </GroupNameButtonBox>
