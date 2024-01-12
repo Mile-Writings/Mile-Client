@@ -51,7 +51,7 @@ const IntroductionWrapper = styled.section`
   align-items: center;
   justify-content: center;
   margin-top: 10rem;
-  padding: 10.1rem 28.4rem 10rem 21.8rem;
+  padding: 10.1rem 21.8rem 10rem 28.4rem;
 
   background-color: ${({ theme }) => theme.colors.mileViolet};
 `;
@@ -59,7 +59,6 @@ const IntroductionWrapper = styled.section`
 const MileMakersTextLayout = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 6.4rem;
 `;
 
 const MainText = styled.p`
