@@ -20,7 +20,7 @@ export { default as FooterKakaoSvg } from './footerKakaoSvg.svg?react';
 export { default as FooterLogoSvg } from './footerLogoSvg.svg?react';
 export { default as FooterMailSvg } from './footerMailSvg.svg?react';
 export { default as HeaderLogoSvg } from './headerLogoSvg.svg?react';
-export { default as mainGrapicGradation } from './mainGraphicGradation.svg?react';
+export { default as MainGraphicGradationIc } from './mainGraphicGradation.svg?react';
 export { default as MainGraphicLogo } from './mainGraphicLogo.svg?react';
 export { default as MainIcnArrowWhite } from './mainIcnArrowWhite.svg?react';
 export { default as MakeGroupPlusBtn } from './mainMakeGroupBtnEnable.svg?react';

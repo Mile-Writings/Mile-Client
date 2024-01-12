@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { mainGrapicGradation as MainGrapicGradationIc } from '../../../assets/svgs';
+import { MainGraphicGradationIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 import { KEYWORD_DATA } from '../constants/keyword';
 
@@ -9,7 +9,7 @@ const Ruler = () => {
     <RulerWrapper>
       <RulerLayout>
         <RulerHeaderContainer>
-          <MainGrapicGradationIcon />
+          <MainGraphicGradationIcon />
           <Spacing marginBottom="0.5" />
           <RulerContentBox>
             <TodayKeyWord>오늘의 글감</TodayKeyWord>
@@ -53,7 +53,7 @@ const RulerHeaderContainer = styled.section`
   ${({ theme }) => theme.fonts.title11};
 `;
 
-const MainGrapicGradationIcon = styled(MainGrapicGradationIc)`
+const MainGraphicGradationIcon = styled(MainGraphicGradationIc)`
   margin-left: 2.1rem;
 `;
 
