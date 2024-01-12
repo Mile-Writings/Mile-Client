@@ -36,6 +36,7 @@ export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?re
 export { default as MainTogglearrowClosedIc } from './mainTogglearrowClosedIc.svg?react';
 export { default as MainToggleArrowOpenedIc } from './mainTogglearrowOpenedIc.svg?react';
 
+export { default as MainIcnOnBorarding } from './mainIcnOnboarding.svg?react';
 export { default as CheckboxIc } from './postDetailCheckIc.svg?react';
 export { default as QuestionDefaultIc } from './questionDefaultIc.svg?react';
 export { default as QuestioHoverIc } from './questionHoverIc.svg?react';
