@@ -28,26 +28,23 @@ export default Login;
 const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
   align-items: center;
-
   padding-top: 13.2rem;
 `;
 
 const LoginContainer = styled.div`
-  padding: 4rem 0;
   display: flex;
   flex-direction: column;
-
-  align-items: center;
   gap: 2.4rem;
+  align-items: center;
+  padding: 4rem 0;
 `;
 
 const LoginTextBox = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 1.6rem;
+  align-items: center;
   width: 30.9rem;
   height: 7.4rem;
 `;
@@ -63,13 +60,15 @@ const SubText = styled.p`
 `;
 
 const LoginImageTemp = styled.div`
-  background-color: pink;
   width: 21rem;
   height: 14rem;
+
+  background-color: pink;
 `;
 
 const KakaoLoginBtn = styled.button`
   width: 30rem;
   height: 4.5rem;
+
   background-image: url('src/assets/images/kakao_login_medium_wide.png');
 `;

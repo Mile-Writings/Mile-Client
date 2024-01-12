@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import reset from 'emotion-reset';
 
+import theme from './theme';
+
 const globalStyle = css`
   ${reset}
   * {
@@ -26,9 +28,16 @@ const globalStyle = css`
 
   html,
   body {
+    box-sizing: border-box; /* default */
     margin: 0 auto;
 
     font-size: 62.5%;
+
+    background-color: ${theme.colors.backGroundGray};
+  }
+
+  input {
+    outline: none;
   }
 
   a {
