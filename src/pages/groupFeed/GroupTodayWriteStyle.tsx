@@ -31,6 +31,7 @@ const TodayWriteStyleWrapper = styled.div`
   padding: 3.2rem;
 
   background-color: ${({ theme }) => theme.colors.mileViolet};
+  border-radius: 8px;
 `;
 
 const TextLayout = styled.div`
