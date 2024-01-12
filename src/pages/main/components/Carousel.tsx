@@ -46,13 +46,14 @@ const Carousel = () => {
 
 export default Carousel;
 
-const CarouselWrapper = styled.div``;
-
-const CarouselWithButtonLayout = styled.section`
-  width: 100%;
-  margin-right: 21.8rem;
-  margin-left: 21.8rem;
+const CarouselWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
+
+const CarouselWithButtonLayout = styled.section``;
 
 const CarouselContainer = styled.div`
   display: flex;
