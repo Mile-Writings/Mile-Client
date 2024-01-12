@@ -23,6 +23,7 @@ const Carousel = () => {
       <Spacing marginBottom="3.6" />
       <CarouselWithButtonLayout>
         <GroupNameButton />
+        <Spacing marginBottom="1.6" />
         <CarouselContainer>
           <CarouselBox {...settings}>
             {GROUP_CONTENT.map(({ id, topic, maintext, subtext, image }: groupContentypes) => (
@@ -60,6 +61,9 @@ const CarouselContainer = styled.div`
 const CarouselBox = styled(Slider)`
   width: 93rem;
   height: 24rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 0.8rem;
 
   .slick-slide.slick-active:last-of-type {
     width: 75.4rem !important;
