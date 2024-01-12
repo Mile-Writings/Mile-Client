@@ -6,6 +6,7 @@ import RedirectLogin from './pages/login/RedirectLogin';
 import Main from './pages/main/Main';
 import PostDetail from './pages/postDetail/PostDetail';
 import PostEditor from './pages/postEditor/PostEditor';
+import PostPage from './pages/postPage/PostPage';
 
 const Router = () => {
   return (
@@ -13,8 +14,9 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/group/:groupId" element={<GroupFeed />} />
-        <Route path="/detail/:postId" element={<PostDetail />} />
-        <Route path="/edit/:postId" element={<PostEditor />} />
+        <Route path="/detail/:groupId/:postId" element={<PostDetail />} />
+        <Route path="/postEdit/:groupId/" element={<PostPage />} />
+        <Route path="/edit/:groupId" element={<PostEditor />} />
         <Route path="/login" element={<Login />} />
         <Route path="/redirect-kakao" element={<RedirectLogin />} />
         <Route path="*" element={<div>Error Page</div>} />
