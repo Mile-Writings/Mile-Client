@@ -1,14 +1,19 @@
 import styled from '@emotion/styled';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import Router from './Router';
 
+const queryClient = new QueryClient();
+
 const App = () => {
   return (
-    <DesktopWrapper>
-      <DesktopContainer>
-        <Router />
-      </DesktopContainer>
-    </DesktopWrapper>
+    <QueryClientProvider client={queryClient}>
+      <DesktopWrapper>
+        <DesktopContainer>
+          <Router />
+        </DesktopContainer>
+      </DesktopWrapper>
+    </QueryClientProvider>
   );
 };
 
