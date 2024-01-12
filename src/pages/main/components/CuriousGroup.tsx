@@ -26,14 +26,16 @@ export default Curious;
 
 const CuriousContentContainer = styled.section`
   display: flex;
-  padding-left: 4.2rem;
   flex-direction: column;
-  text-align: center;
   justify-content: center;
+  padding-left: 4.2rem;
+
+  text-align: center;
 `;
 
 const CuriousGroupText = styled.p`
   width: 12.3rem;
+
   color: ${({ theme }) => theme.colors.mainViolet};
   ${({ theme }) => theme.fonts.title8};
 `;
