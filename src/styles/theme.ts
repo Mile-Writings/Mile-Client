@@ -103,6 +103,13 @@ export const theme = {
       font-style: normal;
       line-height: 200%; /* 52px */
     `,
+    title11: css`
+      font-weight: 600;
+      font-size: 26px;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-style: normal;
+      line-height: 200%; /* 52px */
+    `,
     subtitle1: css`
       font-weight: 700;
       font-size: 1.8rem;

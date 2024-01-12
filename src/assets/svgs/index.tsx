@@ -1,7 +1,7 @@
 
+
 export { default as DefaultProfileIc } from './defaultProfileIc.svg?react';
 export { default as DetailCommentMeatBallIc } from './detailCommentMeatBallIc.svg?react';
-
 export { default as HeaderLogoSvg } from './headerLogoSvg.svg?react';
 export { default as MainGroupRoutingBtn } from './mainGroupRoutingBtn.svg?react';
 export { default as MainGroupRoutingBtnHover } from './mainGroupRoutingBtnHover.svg?react';
@@ -22,6 +22,9 @@ export { default as GroupListProfileOpenIc } from './groupListProfileIcnOpen.svg
 export { default as GroupMemberIc } from './groupMemberIcn.svg?react';
 
 export { default as HeaderLogoIc } from './headerLogoSvg.svg?react';
+export { default as MainGraphicGradationIc } from './mainGraphicGradation.svg?react';
+export { default as MainGraphicLogo } from './mainGraphicLogo.svg?react';
+export { default as MainIcnArrowWhite } from './mainIcnArrowWhite.svg?react';
 export { default as MakeGroupPlusBtn } from './mainMakeGroupBtnEnable.svg?react';
 export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?react';
 export { default as CheckboxIc } from './postDetailCheckIc.svg?react';
