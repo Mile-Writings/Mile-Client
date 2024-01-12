@@ -63,9 +63,6 @@ const CarouselBox = styled(Slider)`
   width: 93rem;
   height: 24rem;
 
-  background-color: ${({ theme }) => theme.colors.white};
-  border-radius: 0.8rem;
-
   .slick-slide.slick-active:last-of-type {
     width: 75.4rem !important;
     height: 24rem;

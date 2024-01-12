@@ -31,6 +31,9 @@ const ContentLayout = styled.div`
   display: flex;
   gap: 3.6rem;
   padding: 3.6rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 0.8rem;
 `;
 
 const Topic = styled.div`
