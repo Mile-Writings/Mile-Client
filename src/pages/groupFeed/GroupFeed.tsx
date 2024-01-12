@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import styled from '@emotion/styled';
+import { useQuery } from '@tanstack/react-query';
 
 import Carousel from './carousel/Carousel';
 import EachArticle from './carousel/EachArticle';
@@ -14,9 +15,38 @@ import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import Footer from '../../components/commons/Footer';
 import { GroupFeedHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
+import { client } from '../../utils/apis/axios';
+
+const fetchGroupFeedAuth = async () => {
+  try {
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await client.get('/api/moim/:moimId/authenticate', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data; //"isMember" : boolean
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
 
 const GroupFeed = () => {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['groupFeedAuth'],
+    queryFn: fetchGroupFeedAuth,
+  });
   const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error fetching data..{error?.message}</div>;
+  }
+
+  const isMember = data.isMember;
 
   return (
     <GroupFeedWrapper>
@@ -26,7 +56,7 @@ const GroupFeed = () => {
       <GroupInfoWrapper>
         <GroupSideHeader />
         <GroupInfo>
-          <GroupTodayWriteStyle />
+          <GroupTodayWriteStyle isMember={isMember} />
           <Spacing marginBottom="6.4" />
           <GroupCuriousTitle
             mainText="궁금해요 버튼이 많은 2명의 프로필"
@@ -54,7 +84,7 @@ const GroupFeed = () => {
       </GroupInfoWrapper>
       <Spacing marginBottom="14" />
       <Footer />
-      <FloatingBtn />
+      {isMember && <FloatingBtn />}
     </GroupFeedWrapper>
   );
 };

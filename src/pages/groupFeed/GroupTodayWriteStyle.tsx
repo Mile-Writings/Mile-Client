@@ -2,7 +2,12 @@ import styled from '@emotion/styled';
 
 import Button from '../../components/commons/Button';
 
-const GroupTodayWriteStyle = () => {
+interface GroupTodayWriteStylePropTypes {
+  isMember: boolean;
+}
+
+const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
+  const { isMember } = props;
   const onHandleSubmit = () => {
     console.log('submit');
   };
@@ -14,10 +19,11 @@ const GroupTodayWriteStyle = () => {
           오늘의 주제는 <SubBoldText>글감자리</SubBoldText> 입니다.
         </SubText>
       </TextLayout>
-      <Button typeName="writingFlowType" onClick={onHandleSubmit}>
-        {' '}
-        나의 글 작성하러가기{' '}
-      </Button>
+      {isMember && (
+        <Button typeName="writingFlowType" onClick={onHandleSubmit}>
+          나의 글 작성하러가기
+        </Button>
+      )}
     </TodayWriteStyleWrapper>
   );
 };
