@@ -13,12 +13,13 @@ import { GroupFeedAuthQuery } from './queries/queries';
 import GroupFloatingBtn from '../../assets/svgs/groupFloatingBtn.svg';
 import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import Footer from '../../components/commons/Footer';
-import { GroupFeedHeader } from '../../components/commons/Header';
+import { GroupFeedHeader, LogOutHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
   const { isMember, isLoading, isError, error } = GroupFeedAuthQuery();
   const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
+  const accessToken = localStorage.getItem('accessToken');
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -30,7 +31,7 @@ const GroupFeed = () => {
 
   return (
     <GroupFeedWrapper>
-      <GroupFeedHeader />
+      {accessToken ? <GroupFeedHeader /> : <LogOutHeader />}
       <GroupFeedThumnail />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
