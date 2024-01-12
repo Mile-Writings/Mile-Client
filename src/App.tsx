@@ -3,9 +3,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import Router from './Router';
 
-const queryClient = new QueryClient();
-
 const App = () => {
+  const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
       <DesktopWrapper>
@@ -30,5 +29,5 @@ const DesktopContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 136.6rem;
 `;

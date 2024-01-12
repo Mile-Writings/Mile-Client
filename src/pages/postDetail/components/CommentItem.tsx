@@ -49,12 +49,6 @@ const CommentItemContainer = styled.div`
   height: 4.7rem;
 `;
 
-// const CommentItemLayout = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   gap: 0.6rem;
-// `;
-
 const CommentInfoWrapper = styled.div`
   display: flex;
   gap: 0.4rem;
