@@ -13,8 +13,8 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/group/:groupId" element={<GroupFeed />} />
-        <Route path="/detail/:groupId" element={<PostDetail />} />
-        <Route path="/edit/:groupId" element={<PostEditor />} />
+        <Route path="/detail/:postId" element={<PostDetail />} />
+        <Route path="/edit/:postId" element={<PostEditor />} />
         <Route path="/login" element={<Login />} />
         <Route path="/redirect-kakao" element={<RedirectLogin />} />
         <Route path="*" element={<div>Error Page</div>} />

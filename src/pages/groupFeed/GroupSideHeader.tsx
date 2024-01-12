@@ -45,7 +45,7 @@ const GroupSideHeaderLayout = styled.div`
 `;
 
 const DetailBoxRect = styled.div`
-  width: 0.4rem;
+  width: 1.6rem;
   height: 7rem;
 
   background-color: ${({ theme }) => theme.colors.mileGreen};
