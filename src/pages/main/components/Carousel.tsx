@@ -7,8 +7,6 @@ import Spacing from './../../../components/commons/Spacing';
 import GROUP_CONTENT, { groupContentypes } from './../constants/constants';
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
-import Summary from './Summary';
-
 
 const Carousel = () => {
   const settings = {
@@ -21,8 +19,7 @@ const Carousel = () => {
   };
 
   return (
-    <CarouselContentWithSummaryWrapper>
-      <Summary />
+    <CarouselWrapper>
       <Spacing marginBottom="3.6" />
       <CarouselWithButtonLayout>
         <GroupNameButton />
@@ -42,19 +39,18 @@ const Carousel = () => {
           </CarouselBox>
         </CarouselContainer>
       </CarouselWithButtonLayout>
-    </CarouselContentWithSummaryWrapper>
-
+    </CarouselWrapper>
   );
 };
 
 export default Carousel;
 
-const CarouselContentWithSummaryWrapper = styled.div``;
+const CarouselWrapper = styled.div``;
 
 const CarouselWithButtonLayout = styled.section`
-  margin-left: 21.8rem;
   width: 100%;
   margin-right: 21.8rem;
+  margin-left: 21.8rem;
 `;
 
 const CarouselContainer = styled.div`
