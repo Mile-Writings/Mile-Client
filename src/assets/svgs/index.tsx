@@ -19,3 +19,6 @@ export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?re
 export { default as GroupFloatingBtnIc } from './groupFloatingBtn.svg?react';
 export { default as GroupFloatingBtnHoverIc } from './groupFloatingBtnHover.svg?react';
 export { default as GroupNoDataImgIc } from './groupNoDataImg.svg?react';
+
+export { default as GroupBestProfileIc } from './groupBestProfileSvg.svg?react';
+export { default as GroupListProfileIc } from './groupListProfileSvg.svg?react';

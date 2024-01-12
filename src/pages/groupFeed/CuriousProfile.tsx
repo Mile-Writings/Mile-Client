@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { CURIOUS_PROFILE } from './constants/CURIOUS_PROFILE';
-import { GroupCuriousProfileOpenIc, GroupNoDataImgIc } from '../../assets/svgs';
+import { GroupBestProfileIc, GroupNoDataImgIc } from '../../assets/svgs';
 import Spacing from '../../components/commons/Spacing';
 
 interface ProfilePropTypes {
@@ -23,7 +23,7 @@ const CuriousProfile = () => {
       ) : (
         CURIOUS_PROFILE.popularWriters.map((writer: ProfilePropTypes, index: number) => (
           <CuriousProfileLayout key={index}>
-            <GroupCuriousProfileOpenIc />
+            <GroupBestProfileIc />
             <ProfileWrapper>
               {writer.information == '' ? (
                 <ProfileTitle>{writer.writerName}</ProfileTitle>
