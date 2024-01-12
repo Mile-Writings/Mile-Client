@@ -1,3 +1,8 @@
+export { default as EditorHorizonIcnUnactiveSvg } from './editorHorizonIcnUnactive.svg?react';
+export { default as EditorTextColorIcnBlackSvg } from './editorTextcolorIcnBlack.svg?react';
+
+export { default as DefaultProfileIc } from './defaultProfileIc.svg?react';
+export { default as DetailCommentMeatBallIc } from './detailCommentMeatBallIc.svg?react';
 export { default as HeaderLogoSvg } from './headerLogoSvg.svg?react';
 export { default as MainGroupRoutingBtn } from './mainGroupRoutingBtn.svg?react';
 export { default as MainGroupRoutingBtnHover } from './mainGroupRoutingBtnHover.svg?react';
@@ -17,6 +22,11 @@ export { default as GroupLeaderIc } from './groupLeaderIcn.svg?react';
 export { default as GroupListProfileOpenIc } from './groupListProfileIcnOpen.svg?react';
 export { default as GroupMemberIc } from './groupMemberIcn.svg?react';
 
+export { default as GroupBestProfileIc } from './groupBestProfileSvg.svg?react';
+export { default as GroupFloatingBtnIc } from './groupFloatingBtn.svg?react';
+export { default as GroupFloatingBtnHoverIc } from './groupFloatingBtnHover.svg?react';
+export { default as GroupListProfileIc } from './groupListProfileSvg.svg?react';
+export { default as GroupNoDataImgIc } from './groupNoDataImg.svg?react';
 export { default as HeaderLogoIc } from './headerLogoSvg.svg?react';
 export { default as MainGraphicGradationIc } from './mainGraphicGradation.svg?react';
 export { default as MainGraphicLogo } from './mainGraphicLogo.svg?react';
