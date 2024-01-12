@@ -59,9 +59,10 @@ const FaqContainer = styled.div`
 const QuestionBox = styled.div`
   display: flex;
   gap: 0.8rem;
+  align-items: center;
 
   & > svg {
-    justify-content: flex-end;
+    margin-left: auto;
   }
 `;
 
