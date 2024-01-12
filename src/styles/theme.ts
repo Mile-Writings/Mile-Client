@@ -16,6 +16,7 @@ export const theme = {
       'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 72.25%, rgba(0, 0, 0, 0.08) 100%)',
     categoryGradient: 'linear-gradient(90deg, #F5F5F7 68.37%, rgba(245, 245, 247, 0.00) 100%)',
     black: '#010101',
+    grayBlack: '#151515',
     gray100: '#1f1f1f',
     gray90: '#333',
     gray80: '#505050',
@@ -98,6 +99,13 @@ export const theme = {
     title10: css`
       font-weight: 700;
       font-size: 2.6rem;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-style: normal;
+      line-height: 200%; /* 52px */
+    `,
+    title11: css`
+      font-weight: 600;
+      font-size: 26px;
       font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 200%; /* 52px */

@@ -64,7 +64,6 @@ const CarouselWrapper = styled.div`
   position: relative;
   width: 72rem;
   height: 6.2rem;
-  margin-left: 5rem;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
   border-bottom: 0.1rem solid ${({ theme }) => theme.colors.gray30};
