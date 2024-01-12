@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
 
 import Carousel from './components/Carousel';
+import Introduction from './components/Introduction';
+import Manual from './components/Manual';
+import Ruler from './components/Ruler';
 import Summary from './components/Summary';
 
 const Main = () => {
@@ -12,6 +15,9 @@ const Main = () => {
         <Carousel />
         <Carousel />
       </CarouselComponentLayout>
+      <Ruler />
+      <Introduction />
+      <Manual />
     </MainPageWrapper>
   );
 };
