@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { useQuery } from '@tanstack/react-query';
 
 import { fetchGroupFeedAuth } from '../apis/fetchGroupFeed';
@@ -16,10 +14,8 @@ export const GroupFeedAuthQuery = (): GroupFeedAuthQueryResult => {
     queryKey: ['groupFeed_Auth_moimId'],
     queryFn: fetchGroupFeedAuth,
   });
-  const [isMember, setIsMember] = useState<boolean>(false);
-  if (!isLoading && !isError) {
-    setIsMember(data.isMember);
-  }
+
+  const isMember = data ? data.isMember : false;
 
   return { isMember, isLoading, isError, error };
 };
