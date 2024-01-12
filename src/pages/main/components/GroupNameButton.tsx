@@ -8,16 +8,16 @@ const GroupNameButton = () => {
   };
 
   return (
-    <GroupNameButtonBox onClick={handleButtonOnClick}>
+    <GroupNameButtonWrapper onClick={handleButtonOnClick}>
       글 모임 이름
       <MainIcnArrowPurpleIcon />
-    </GroupNameButtonBox>
+    </GroupNameButtonWrapper>
   );
 };
 
 export default GroupNameButton;
 
-const GroupNameButtonBox = styled.button`
+const GroupNameButtonWrapper = styled.button`
   display: flex;
   gap: 0.8rem;
   align-items: center;
