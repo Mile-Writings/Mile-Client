@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import styled from '@emotion/styled';
+import { useNavigate, Navigate } from 'react-router-dom';
 
 import Carousel from './carousel/Carousel';
 import EachArticle from './carousel/EachArticle';
@@ -20,6 +21,12 @@ const GroupFeed = () => {
   const { isMember, isLoading, isError, error } = GroupFeedAuthQuery();
   const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
   const accessToken = localStorage.getItem('accessToken');
+
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate(`/login`);
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -65,7 +72,7 @@ const GroupFeed = () => {
       </GroupInfoWrapper>
       <Spacing marginBottom="14" />
       <Footer />
-      {isMember && <FloatingBtn />}
+      {isMember !== undefined && isMember && <FloatingBtn />}
     </GroupFeedWrapper>
   );
 };

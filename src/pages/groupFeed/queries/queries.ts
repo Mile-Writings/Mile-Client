@@ -15,7 +15,7 @@ export const GroupFeedAuthQuery = (): GroupFeedAuthQueryResult => {
     queryFn: fetchGroupFeedAuth,
   });
 
-  const isMember = data ? data.isMember : false;
+  const isMember = data && data.data.isMember;
 
   return { isMember, isLoading, isError, error };
 };
