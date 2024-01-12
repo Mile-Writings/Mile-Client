@@ -5,10 +5,9 @@ import '../style/slick-theme.css';
 import '../style/slick.css';
 import Spacing from './../../../components/commons/Spacing';
 import GROUP_CONTENT, { groupContentypes } from './../constants/constants';
+import Summary from './GroupCarouselTitle';
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
-import Summary from './Summary';
-
 
 const Carousel = () => {
   const settings = {
@@ -43,7 +42,6 @@ const Carousel = () => {
         </CarouselContainer>
       </CarouselWithButtonLayout>
     </CarouselContentWithSummaryWrapper>
-
   );
 };
 
@@ -52,9 +50,9 @@ export default Carousel;
 const CarouselContentWithSummaryWrapper = styled.div``;
 
 const CarouselWithButtonLayout = styled.section`
-  margin-left: 21.8rem;
   width: 100%;
   margin-right: 21.8rem;
+  margin-left: 21.8rem;
 `;
 
 const CarouselContainer = styled.div`
