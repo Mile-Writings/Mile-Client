@@ -33,7 +33,7 @@ const ContentLayout = styled.div`
   padding: 3.6rem;
 
   background-color: ${({ theme }) => theme.colors.white};
-  border-radius: 0.8rem;
+  border-radius: 8px;
 `;
 
 const Topic = styled.div`
