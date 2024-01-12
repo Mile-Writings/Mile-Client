@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import Spacing from './.././../../components/commons/Spacing';
 import { groupContentypes } from './../constants/constants';
-import Curious from './Curious';
+import Curious from './CuriousGroup';
 
 const GroupContent = ({ topic, maintext, subtext, image, isLast }: groupContentypes) => {
   const hasImage = () => {
