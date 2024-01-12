@@ -76,6 +76,8 @@ const QuestionText = styled.p`
 `;
 
 const AnswerTextBox = styled.div`
-  padding: 1.6rem 2.8rem 2.4rem;
+  padding: 1.6rem 2.8rem 0;
+
+  color: ${({ theme }) => theme.colors.gray80};
   ${({ theme }) => theme.fonts.body3};
 `;
