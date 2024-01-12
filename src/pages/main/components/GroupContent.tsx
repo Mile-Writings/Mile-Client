@@ -41,7 +41,7 @@ const Topic = styled.div`
   ${({ theme }) => theme.fonts.body6};
 `;
 
-const MainText = styled.div`
+const MainText = styled.p`
   ${({ theme }) => theme.fonts.title10};
 `;
 
@@ -50,7 +50,7 @@ const TextContainer = styled.div`
   flex-direction: column;
 `;
 
-const SubText = styled.div<{ isImage: boolean; isLast: boolean }>`
+const SubText = styled.p<{ isImage: boolean; isLast: boolean }>`
   flex-shrink: 0;
   width: ${({ isImage, isLast }) =>
     isImage && isLast
