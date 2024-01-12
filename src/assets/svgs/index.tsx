@@ -1,3 +1,10 @@
+
+
+export { default as HeaderLogoSvg } from './headerLogoSvg.svg?react';
+export { default as MainGroupRoutingBtn } from './mainGroupRoutingBtn.svg?react';
+export { default as MainGroupRoutingBtnHover } from './mainGroupRoutingBtnHover.svg?react';
+export { default as MainIcnArrowPurple } from './mainIcnArrowPurple.svg?react';
+
 export { default as GroupTabBtnBaseBeforeIc } from './groupTabBtnBaseBefore.svg?react';
 export { default as GroupTabBtnBaseNextIc } from './groupTabBtnBaseNext.svg?react';
 
@@ -13,13 +20,6 @@ export { default as GroupListProfileOpenIc } from './groupListProfileIcnOpen.svg
 export { default as GroupMemberIc } from './groupMemberIcn.svg?react';
 
 export { default as HeaderLogoIc } from './headerLogoSvg.svg?react';
-
-export { default as Rect } from './Rectangle 17.svg?react';
-export { default as FooterInstaSvg } from './footerInstaSvg.svg?react';
-export { default as FooterKakaoSvg } from './footerKakaoSvg.svg?react';
-export { default as FooterLogoSvg } from './footerLogoSvg.svg?react';
-export { default as FooterMailSvg } from './footerMailSvg.svg?react';
-export { default as HeaderLogoSvg } from './headerLogoSvg.svg?react';
 export { default as mainGrapicGradation } from './mainGraphicGradation.svg?react';
 export { default as MainGraphicLogo } from './mainGraphicLogo.svg?react';
 export { default as MainIcnArrowWhite } from './mainIcnArrowWhite.svg?react';
