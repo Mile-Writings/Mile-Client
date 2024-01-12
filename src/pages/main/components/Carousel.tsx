@@ -3,7 +3,12 @@ import Slider from 'react-slick';
 
 import '../style/slick-theme.css';
 import '../style/slick.css';
+import Spacing from './../../../components/commons/Spacing';
+import GROUP_CONTENT, { groupContentypes } from './../constants/constants';
 import GroupContent from './GroupContent';
+import GroupNameButton from './GroupNameButton';
+import Summary from './Summary';
+
 
 const Carousel = () => {
   const settings = {
@@ -14,34 +19,49 @@ const Carousel = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
   return (
-    <CarouselLayout>
-      <CarouselContainer {...settings}>
-        <CarouselBox>
-          <GroupContent />
-        </CarouselBox>
-        <CarouselBox>
-          <GroupContent />
-        </CarouselBox>
-        <CarouselBox>
-          <GroupContent />
-        </CarouselBox>
-        <CarouselBox>
-          <GroupContent />
-        </CarouselBox>
-      </CarouselContainer>
-    </CarouselLayout>
+    <CarouselContentWithSummaryWrapper>
+      <Summary />
+      <Spacing marginBottom="3.6" />
+      <CarouselWithButtonLayout>
+        <GroupNameButton />
+        <CarouselContainer>
+          <CarouselBox {...settings}>
+            {GROUP_CONTENT.map(({ id, topic, maintext, subtext, image }: groupContentypes) => (
+              <GroupContent
+                key={id}
+                id={id}
+                topic={topic}
+                maintext={maintext}
+                subtext={subtext}
+                image={image}
+                isLast={id === GROUP_CONTENT.length}
+              />
+            ))}
+          </CarouselBox>
+        </CarouselContainer>
+      </CarouselWithButtonLayout>
+    </CarouselContentWithSummaryWrapper>
+
   );
 };
 
 export default Carousel;
 
-const CarouselLayout = styled.div`
-  display: flex;
-  justify-content: center;
+const CarouselContentWithSummaryWrapper = styled.div``;
+
+const CarouselWithButtonLayout = styled.section`
+  margin-left: 21.8rem;
+  width: 100%;
+  margin-right: 21.8rem;
 `;
 
-const CarouselContainer = styled(Slider)`
+const CarouselContainer = styled.div`
+  display: flex;
+`;
+
+const CarouselBox = styled(Slider)`
   width: 93rem;
   height: 24rem;
 
@@ -50,5 +70,3 @@ const CarouselContainer = styled(Slider)`
     height: 24rem;
   }
 `;
-
-const CarouselBox = styled.li``;
