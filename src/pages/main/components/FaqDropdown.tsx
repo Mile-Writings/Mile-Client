@@ -1,6 +1,15 @@
+import React, { useState } from 'react';
+
 import styled from '@emotion/styled';
 
 const FaqDropdown = () => {
+  const [dropDown, setDropdDown] = useState(false);
+
+  const handleDropDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setDropdDown(!dropDown);
+  };
+
   return (
     <DropdownWrapper>
       <QuestionMarkText>Q.</QuestionMarkText>
