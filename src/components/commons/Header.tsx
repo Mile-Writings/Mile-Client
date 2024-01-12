@@ -1,19 +1,18 @@
 import styled from '@emotion/styled';
 
+import { HeaderLogoIc } from './../../assets/svgs';
+import MakeGroupBtn from './../../pages/groupFeed/MakeGroupBtn';
+import MyGroupBtn from './../../pages/groupFeed/MyGroupBtn';
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
-import { HeaderLogoIc } from '../../assets/svgs';
-import MakeGroupBtn from '../../pages/groupFeed/MakeGroupBtn';
-import MyGroupBtn from '../../pages/groupFeed/MyGroupBtn';
-import theme from '../../styles/theme';
 
 interface OnClickProps {
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 interface OnClickTwoProps {
-  onClickTempSave?: () => void;
-  onClickSubmit?: () => void;
+  onClickTempSave: () => void;
+  onClickSubmit: () => void;
 }
 
 // 모임 피드 헤더
@@ -80,7 +79,7 @@ const HeaderWrapper = styled.div`
   padding-right: 6rem;
   padding-left: 6rem;
 
-  border-bottom: 1px solid ${theme.colors.gray30};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
 `;
 
 const HeaderBtnLayout = styled.div`

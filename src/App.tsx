@@ -17,11 +17,13 @@ export default App;
 const DesktopWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
   align-items: center;
   width: 100%;
 `;
 
 const DesktopContainer = styled.div`
-  width: 136.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 `;
