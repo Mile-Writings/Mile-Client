@@ -18,7 +18,6 @@ export { default as GroupListProfileOpenIc } from './groupListProfileIcnOpen.svg
 export { default as GroupMemberIc } from './groupMemberIcn.svg?react';
 
 export { default as HeaderLogoIc } from './headerLogoSvg.svg?react';
-
 export { default as MainGraphicGradationIc } from './mainGraphicGradation.svg?react';
 export { default as MainGraphicLogo } from './mainGraphicLogo.svg?react';
 export { default as MainIcnArrowWhite } from './mainIcnArrowWhite.svg?react';
