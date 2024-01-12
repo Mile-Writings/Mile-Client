@@ -16,6 +16,7 @@ declare module '@emotion/react' {
       thumbnailGradient: string;
       categoryGradient: string;
       black: string;
+      grayBlack: string;
       gray100: string;
       gray90: string;
       gray80: string;
@@ -40,6 +41,7 @@ declare module '@emotion/react' {
       title8: SerializedStyles;
       title9: SerializedStyles;
       title10: SerializedStyles;
+      title11: SerializedStyles;
       subtitle1: SerializedStyles;
       subtitle2: SerializedStyles;
       subtitle3: SerializedStyles;
