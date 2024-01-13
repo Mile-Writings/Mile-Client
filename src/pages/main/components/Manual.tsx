@@ -1,23 +1,31 @@
 import styled from '@emotion/styled';
 
+import {
+  MainManualCuriousIc,
+  MainManualJoinIc,
+  MainManualLookIc,
+  MainManualMakeIc,
+  MainManualShareIc,
+  MainManualWriteIc,
+} from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 const Manual = () => {
   return (
     <ManualLayout>
       <TitleWithManualContainer>
-        <ManualTitle>마일 메뉴얼</ManualTitle>
+        <ManualTitle>마일에 오신 것을 환영해요</ManualTitle>
         <Spacing marginBottom="3.6" />
         <ManualBox>
           <ManualRow>
-            <ManualItem />
-            <ManualItem />
-            <ManualItem />
+            <MainManualMakeIc />
+            <MainManualJoinIc />
+            <MainManualWriteIc />
           </ManualRow>
           <ManualRow>
-            <ManualItem />
-            <ManualItem />
-            <ManualItem />
+            <MainManualShareIc />
+            <MainManualCuriousIc />
+            <MainManualLookIc />
           </ManualRow>
         </ManualBox>
       </TitleWithManualContainer>
@@ -32,6 +40,7 @@ const ManualLayout = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-bottom: 10rem;
 `;
 
 const TitleWithManualContainer = styled.div`
@@ -55,13 +64,6 @@ const ManualBox = styled.div`
   align-items: center;
   justify-content: center;
   width: 92.8rem;
-`;
-
-const ManualItem = styled.div`
-  width: 29.6rem;
-  height: 37.2rem;
-
-  background-color: ${({ theme }) => theme.colors.darkViolet};
 `;
 
 const ManualRow = styled.div`

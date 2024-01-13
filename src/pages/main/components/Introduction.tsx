@@ -17,11 +17,11 @@ const Introduction = () => {
         <MainGraphicLogoIc />
         <Spacing marginBottom="2.9" />
         <MainText>
-          마일은 어떻게 만들어졌을까요?
-          <br /> 마일 메이커들의 에피소드
+          마일은 어떻게 만들어졌을까? <br />
+          마일 메이커들의 에피소드
         </MainText>
         <Spacing marginBottom="0.8" />
-        <SubText>아직 가입된 글 모임이 없으시다면, 마일과 함께 써요!</SubText>
+        <SubText>메이커들의 글 모임에서 확인해 보세요</SubText>
         <Spacing marginBottom="8" />
         <GroupRoutingButtonBox onClick={handleOnClick}>
           마일 글 모임 바로가기
@@ -29,14 +29,14 @@ const Introduction = () => {
         </GroupRoutingButtonBox>
       </MileMakersTextLayout>
       <IntroduceZakmiBox>
-        <HookText>우리가 글을 사랑하는 이유</HookText>
+        <HookText>마일의 첫 번째 에피소드</HookText>
         <Spacing marginBottom="0.4" />
-        <GreetingText>안녕하세요, 팀 작미입니다.</GreetingText>
+        <GreetingText>우리가 글쓰기 모임에 주목한 이유</GreetingText>
         <Spacing marginBottom="3" />
         <DiscriptionText>
-          텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다.
-          텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다.
-          텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간입니다. 텍스트가 들어갈 공간...
+          “체취가 느껴지는 글은 오랜만에 읽어보는 것 같아. 솔직담백해서 좋다!” 내가 처음으로 올린
+          블로그 글에 친구가 달아준 댓글이었다. 사실 글쓰기에 중요한 건, ‘잘’ 쓰는 것이 아니라 그냥
+          내 마음을 담아 쓰는 것이라는 걸 알게 됐었다. 그리고 그렇게 마음을 담은 글...
         </DiscriptionText>
       </IntroduceZakmiBox>
     </IntroductionWrapper>
@@ -51,7 +51,7 @@ const IntroductionWrapper = styled.section`
   align-items: center;
   justify-content: center;
   margin-top: 10rem;
-  padding: 10.1rem 28.4rem 10rem 21.8rem;
+  padding: 10.1rem 21.8rem 10rem 28.4rem;
 
   background-color: ${({ theme }) => theme.colors.mileViolet};
 `;
@@ -59,7 +59,6 @@ const IntroductionWrapper = styled.section`
 const MileMakersTextLayout = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 6.4rem;
 `;
 
 const MainText = styled.p`
@@ -110,11 +109,13 @@ const IntroduceZakmiBox = styled.div`
   padding: 3.6rem;
 
   background-color: ${({ theme }) => theme.colors.white};
+  box-shadow: 0 2px 8px 0 rgb(0 0 0 / 10%);
   border-radius: 1rem;
 `;
 
 const HookText = styled.p`
   color: ${({ theme }) => theme.colors.gray70};
+  ${({ theme }) => theme.fonts.subtitle4};
 `;
 
 const GreetingText = styled.p`
@@ -125,7 +126,6 @@ const GreetingText = styled.p`
 `;
 
 const DiscriptionText = styled.p`
-  width: fit-content;
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray80};

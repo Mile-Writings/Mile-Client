@@ -7,7 +7,7 @@ const Summary = () => {
 export default Summary;
 
 const TextBox = styled.div`
-  margin-top: 7.2rem;
-  margin-left: 21.8rem;
+  padding-top: 7.2rem;
+  padding-left: 21.8rem;
   ${({ theme }) => theme.fonts.title3};
 `;
