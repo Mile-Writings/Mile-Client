@@ -39,14 +39,14 @@ const Carousel = () => {
   return (
     <CarouselWrapper>
       <Spacing marginBottom="3.6" />
-      <section>
-        <GroupNameButton buttonName={'모임이름'} />
-        <Spacing marginBottom="1.6" />
-        <CarouselContainer>
-          <CarouselBox {...settings}>
-            {groupData &&
-              groupData.map((moim) => (
-                <div key={moim.moimId}>
+      {groupData && (
+        <section>
+          {groupData.map((moim) => (
+            <CarouselWithButtonLayout key={moim.moimId}>
+              <GroupNameButton buttonName={moim.moimName} />
+              <Spacing marginBottom="1.6" />
+              <CarouselContainer>
+                <CarouselBox {...settings}>
                   {moim.moimPosts.map((post, index) => (
                     <GroupContent
                       key={index}
@@ -57,11 +57,12 @@ const Carousel = () => {
                       isLast={index === moim.moimPosts.length - 1}
                     />
                   ))}
-                </div>
-              ))}
-          </CarouselBox>
-        </CarouselContainer>
-      </section>
+                </CarouselBox>
+              </CarouselContainer>
+            </CarouselWithButtonLayout>
+          ))}
+        </section>
+      )}
     </CarouselWrapper>
   );
 };
@@ -73,6 +74,10 @@ const CarouselWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+const CarouselWithButtonLayout = styled.div`
+  margin-bottom: 3.2rem;
 `;
 
 const CarouselContainer = styled.div`
