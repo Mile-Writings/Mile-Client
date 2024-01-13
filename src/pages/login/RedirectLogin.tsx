@@ -1,36 +1,15 @@
-import { useEffect } from 'react';
-
-import { useNavigate } from 'react-router-dom';
-
 import useLoginService from './hooks/useLoginService';
 
 const RedirectLogin = () => {
   const code: string = new URL(window.location.href).searchParams.get('code') || '';
 
-  const navigate = useNavigate();
+  const { mutate } = useLoginService({ code, socialType: 'KAKAO' });
+  mutate();
 
-  const { mutate, data, isSuccess, isError } = useLoginService({ code, socialType: 'KAKAO' });
-
-  const handleOnclickLogin = () => {
-    mutate();
-    if (isSuccess) {
-      console.log(data);
-      navigate('/');
-    }
-    console.log(data);
-    if (isError) {
-      console.log('Error');
-    }
-  };
-  useEffect(() => {
-    handleOnclickLogin();
-  }, []);
-
-  return <div>login</div>;
+  return <div>loading...</div>;
 };
 
 export default RedirectLogin;
-
 // axios로 구현한거 refactoring한 부분이라 남겨둘게요~
 // useEffect(() => {
 //   const fetchData = async () => {
