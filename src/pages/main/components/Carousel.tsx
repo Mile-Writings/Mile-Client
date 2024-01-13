@@ -1,14 +1,19 @@
+import { useEffect, useState } from 'react';
+
 import styled from '@emotion/styled';
 import Slider from 'react-slick';
 
 import '../style/slick-theme.css';
 import '../style/slick.css';
 import Spacing from './../../../components/commons/Spacing';
-import GROUP_CONTENT, { groupContentypes } from './../constants/constants';
+import { getGroupContent } from './../apis/getGroupContent';
+import { MoimPropTypes } from './../constants/constants';
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
 
 const Carousel = () => {
+  const [groupData, setGroupData] = useState<MoimPropTypes[]>([]);
+
   const settings = {
     arrow: false,
     dots: false,
@@ -18,6 +23,19 @@ const Carousel = () => {
     slidesToScroll: 1,
   };
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await getGroupContent();
+        typeof response?.data === 'object' && setGroupData(response?.data);
+        console.log(groupData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, []);
+
   return (
     <CarouselWrapper>
       <Spacing marginBottom="3.6" />
@@ -26,16 +44,19 @@ const Carousel = () => {
         <Spacing marginBottom="1.6" />
         <CarouselContainer>
           <CarouselBox {...settings}>
-            {GROUP_CONTENT.map(({ id, topic, maintext, subtext, image }: groupContentypes) => (
-              <GroupContent
-                key={id}
-                id={id}
-                topic={topic}
-                maintext={maintext}
-                subtext={subtext}
-                image={image}
-                isLast={id === GROUP_CONTENT.length}
-              />
+            {groupData.map(({ moimId, moimPosts }: MoimPropTypes) => (
+              <div key={moimId}>
+                {moimPosts.map((post, index) => (
+                  <GroupContent
+                    key={index}
+                    topicName={post.topicName}
+                    imageUrl={post.imageUrl}
+                    postTitle={post.postTitle}
+                    postContent={post.postContent}
+                    isLast={index === moimPosts.length - 1}
+                  />
+                ))}
+              </div>
             ))}
           </CarouselBox>
         </CarouselContainer>
