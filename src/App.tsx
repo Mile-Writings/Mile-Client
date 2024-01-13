@@ -6,13 +6,13 @@ import Router from './Router';
 const App = () => {
   const queryClient = new QueryClient();
   return (
-    <DesktopWrapper>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <DesktopWrapper>
         <DesktopContainer>
           <Router />
         </DesktopContainer>
-      </QueryClientProvider>
-    </DesktopWrapper>
+      </DesktopWrapper>
+    </QueryClientProvider>
   );
 };
 
