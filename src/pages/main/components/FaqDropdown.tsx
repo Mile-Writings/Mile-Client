@@ -34,13 +34,14 @@ const FaqDropdown = ({ id, question, answer }: faqDataPropTypes) => {
 export default FaqDropdown;
 
 const FaqWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 1.4rem;
 `;
 
 const DropdownLayout = styled.section`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: fit-content;
   padding: 2.4rem 2.8rem;
 
@@ -49,7 +50,7 @@ const DropdownLayout = styled.section`
 `;
 
 const FaqContainer = styled.div`
-  width: 85.3rem;
+  width: 87.4rem;
 `;
 
 const QuestionAnswerBox = styled.div`
