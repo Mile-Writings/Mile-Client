@@ -18,8 +18,8 @@ import { GroupFeedHeader, LogOutHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
-  const { moimId } = useParams();
-  const { isMember, isLoading, isError, error } = GroupFeedAuthQuery(moimId || '');
+  const { groupId } = useParams();
+  const { isMember, isLoading, isError, error } = GroupFeedAuthQuery(groupId || '');
   const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
   const accessToken = localStorage.getItem('accessToken');
 

@@ -9,10 +9,10 @@ interface GroupFeedAuthQueryResult {
   error: Error | null; //모르겟삼
 }
 
-export const GroupFeedAuthQuery = (moimId: string): GroupFeedAuthQueryResult => {
+export const GroupFeedAuthQuery = (groupId: string): GroupFeedAuthQueryResult => {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['groupFeed_Auth_moimId', moimId],
-    queryFn: () => fetchGroupFeedAuth(moimId),
+    queryKey: ['groupFeed_Auth_moimId', groupId],
+    queryFn: () => fetchGroupFeedAuth(groupId),
   });
 
   const isMember = data && data.data.isMember;
