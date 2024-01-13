@@ -24,20 +24,18 @@ const PR_DUMMY_DATA_LONG: string[] = [
 ];
 
 const TopicDropDown = (props: DropDownPropsType) => {
-  const { isOpen, activeDropDown } = props;
+  const { isOpen, onClickDropDown } = props;
 
   const handleOnClick = () => {
-    activeDropDown('topic');
+    onClickDropDown('topic');
   };
   return (
-    <>
-      <DropDownToggle>
-        <DropDownContent $contentWidth={29} onClick={handleOnClick}>
-          웹잼에 대하여
-        </DropDownContent>
+    <TopicDropDownWrapper>
+      <DropDownToggle onClick={handleOnClick}>
+        <DropDownContent $contentWidth={29}>웹잼에 대하여</DropDownContent>
         {isOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
       </DropDownToggle>
-      <TopicListWrapper>
+      <TopicListWrapper $isOpen={isOpen}>
         <TopicContainer>
           <TopicLog>최신 글감</TopicLog>
           <Topic>웹잼에 대하여</Topic>
@@ -50,30 +48,56 @@ const TopicDropDown = (props: DropDownPropsType) => {
           <Topic>웹잼에 대하여</Topic>
           <Topic>웹잼에 대하여</Topic>
           <Topic>웹잼에 대하여</Topic>
+          <Topic>웹잼에 대하여</Topic>
+          <Topic>웹잼에 대하여</Topic>
+          <Topic>웹잼에 대하여</Topic>
         </TopicContainer>
       </TopicListWrapper>
-    </>
+    </TopicDropDownWrapper>
   );
 };
 
 export default TopicDropDown;
 
-const TopicListWrapper = styled.div`
+const TopicDropDownWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+`;
+
+const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
   position: absolute;
   top: 5rem;
   z-index: 3;
 
-  display: flex;
+  display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 36rem;
   max-height: 37.1rem;
-  padding: 2rem 2.8rem;
+  padding: 2rem;
+  overflow: hidden scroll;
 
   background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.gray50};
   border-radius: 1rem;
+
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.colors.gray20};
+    background-clip: padding-box;
+    border: 20px solid ${({ theme }) => theme.colors.gray20};
+    border-radius: 0.4rem;
+  }
+
+  /* &::-webkit-scrollbar-track {
+    background-color: ${({ theme }) => theme.colors.gray10};
+  } */
 `;
 
 const TopicLog = styled.span`

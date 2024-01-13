@@ -9,16 +9,21 @@ type DropdownType = 'topic' | 'writer';
 
 export interface DropDownPropsType {
   isOpen: boolean;
-  activeDropDown: (dropDownType: DropdownType) => void;
+  onClickDropDown: (dropDownType: DropdownType) => void;
 }
 
 const DropDown = () => {
   const [activeDropdown, setActiveDropDown] = useState<DropdownType | null>(null);
 
+  // 열고 닫힘만 관여
+  const handleDropDownClick = (dropdownType: DropdownType) => {
+    setActiveDropDown(activeDropdown === dropdownType ? null : dropdownType);
+  };
+
   return (
     <DropDownWrapper>
-      <TopicDropDown isOpen={activeDropdown === 'topic'} activeDropDown={setActiveDropDown} />
-      <WriterDropDown isOpen={activeDropdown === 'writer'} activeDropDown={setActiveDropDown} />
+      <TopicDropDown isOpen={activeDropdown === 'topic'} onClickDropDown={handleDropDownClick} />
+      <WriterDropDown isOpen={activeDropdown === 'writer'} onClickDropDown={handleDropDownClick} />
     </DropDownWrapper>
   );
 };
