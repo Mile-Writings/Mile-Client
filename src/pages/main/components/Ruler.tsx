@@ -47,7 +47,7 @@ const RulerHeaderContainer = styled.section`
   display: flex;
   flex-direction: column;
 
-  background-color: ${({ theme }) => theme.colors.mileGreen};
+  background-color: ${({ theme }) => theme.colors.middleGreen};
   border-radius: 1rem;
 
   ${({ theme }) => theme.fonts.title11};
