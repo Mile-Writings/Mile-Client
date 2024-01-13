@@ -29,5 +29,5 @@ const DesktopContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 136.6rem;
+  width: 100%;
 `;
