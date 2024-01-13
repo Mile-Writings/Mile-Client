@@ -1,6 +1,6 @@
-import { useState } from 'react';
-
 import styled from '@emotion/styled';
+
+import { useState } from 'react';
 
 import Carousel from './carousel/Carousel';
 import EachArticle from './carousel/EachArticle';
@@ -9,6 +9,7 @@ import CuriousProfile from './CuriousProfile';
 import GroupCuriousTitle from './GroupCuriousTitle';
 import GroupSideHeader from './GroupSideHeader';
 import GroupTodayWriteStyle from './GroupTodayWriteStyle';
+
 import GroupFloatingBtn from '../../assets/svgs/groupFloatingBtn.svg';
 import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import Footer from '../../components/commons/Footer';
