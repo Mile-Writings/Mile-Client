@@ -21,19 +21,25 @@ const GroupSideHeader = (props: GroupSideHeaderPropTypes) => {
     return <div>Error fetching data..{error?.message}</div>;
   }
 
+  console.log(groupInfoData, 'data');
+
   return (
     <GroupSideHeaderWrapper>
-      <GroupSideHeaderTitle>그룹명자리입니다</GroupSideHeaderTitle>
+      <GroupSideHeaderTitle>{groupInfoData.moimName}</GroupSideHeaderTitle>
       <Spacing marginBottom="2.8" />
       <GroupSideHeaderLayout>
-        <GroupInfoBox icon={<GroupLeaderIc />} title="모임방장" detail="방장입니다" />
-        <GroupInfoBox icon={<GroupDateIc />} title="설립날짜" detail="24.12.25" />
-        <GroupInfoBox icon={<GroupMemberIc />} title="모임인원" detail="11명의 짜미들" />
+        <GroupInfoBox icon={<GroupLeaderIc />} title="모임방장" detail={groupInfoData.ownerName} />
+        <GroupInfoBox icon={<GroupDateIc />} title="설립날짜" detail={groupInfoData.startDate} />
+        <GroupInfoBox
+          icon={<GroupMemberIc />}
+          title="모임인원"
+          detail={`${groupInfoData.writerCount}명의 작가들`}
+        />
       </GroupSideHeaderLayout>
       <Spacing marginBottom="2.4" />
       <GroupSideHeaderDetailBox>
         <DetailBoxRect />
-        일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십
+        {groupInfoData.description}
       </GroupSideHeaderDetailBox>
     </GroupSideHeaderWrapper>
   );
@@ -61,7 +67,7 @@ const GroupSideHeaderLayout = styled.div`
 `;
 
 const DetailBoxRect = styled.div`
-  width: 1.6rem;
+  width: 0.4rem;
   height: 7rem;
 
   background-color: ${({ theme }) => theme.colors.mileGreen};
