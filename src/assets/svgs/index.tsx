@@ -22,9 +22,10 @@ export { default as GroupListProfileOpenIc } from './groupListProfileIcnOpen.svg
 export { default as GroupMemberIc } from './groupMemberIcn.svg?react';
 
 export { default as GroupBestProfileIc } from './groupBestProfileSvg.svg?react';
+export { default as GroupListProfileIc } from './groupListProfileSvg.svg?react';
+
 export { default as GroupFloatingBtnIc } from './groupFloatingBtn.svg?react';
 export { default as GroupFloatingBtnHoverIc } from './groupFloatingBtnHover.svg?react';
-export { default as GroupListProfileIc } from './groupListProfileSvg.svg?react';
 export { default as GroupNoDataImgIc } from './groupNoDataImg.svg?react';
 export { default as HeaderLogoIc } from './headerLogoSvg.svg?react';
 export { default as MainGraphicGradationIc } from './mainGraphicGradation.svg?react';

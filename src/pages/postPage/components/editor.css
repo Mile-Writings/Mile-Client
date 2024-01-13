@@ -1,8 +1,9 @@
 .ql-container {
   width: 82.5rem;
-  height: 90.3rem;
+  height: 64.5rem;
   padding: 2.8rem;
   border-radius: 0.8rem;
+  background-color: white;
 }
 
 .ql-editor {
@@ -46,6 +47,10 @@
 /* placeholder 위치 조정 */
 .ql-editor.ql-blank::before {
   left: 2.8rem;
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 400;
+  color: #a5a5a5 !important;
 }
 
 /* 글자 크기 커스텀 */
