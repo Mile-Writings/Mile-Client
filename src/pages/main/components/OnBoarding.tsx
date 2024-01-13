@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { MainIcnOnBorarding } from '../../../assets/svgs';
+import { MainOnBoardingIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 const OnBoarding = () => {
@@ -15,7 +15,7 @@ const OnBoarding = () => {
         </SubText>
       </TextLayout>
       <Spacing marginBottom="8.86" />
-      <MainIcnOnBorarding />
+      <MainOnBoardingIc />
     </OnBoardingWrapper>
   );
 };

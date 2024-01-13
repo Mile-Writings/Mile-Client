@@ -16,7 +16,6 @@ const Main = () => {
   return (
     <MainPageWrapper>
       <OnBoarding />
-
       <CarouselComponentLayout>
         <GroupTitle />
         <Carousel />
