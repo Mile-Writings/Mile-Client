@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import styled from '@emotion/styled';
 
@@ -22,8 +22,12 @@ const WriterDropDown = (props: DropDownPropsType) => {
       {/* api로 대체 필요 */}
       {isOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
       <WriterDropDownWrapper $isOpen={isOpen}>
-        <WriterList onClick={handleListClick}>작자미상</WriterList>
-        <WriterList onClick={handleListClick}>필명</WriterList>
+        <WriterList onClick={handleListClick} $selected={selectedValue === '작자미상'}>
+          작자미상
+        </WriterList>
+        <WriterList onClick={handleListClick} $selected={selectedValue === '필명'}>
+          필명
+        </WriterList>
       </WriterDropDownWrapper>
     </DropDownToggle>
   );
@@ -49,11 +53,11 @@ const WriterDropDownWrapper = styled.div<{ $isOpen: boolean }>`
   border-radius: 8px;
 `;
 
-const WriterList = styled.div`
+const WriterList = styled.div<{ $selected: boolean }>`
   width: 10.8rem;
   padding: 0.6rem 0 0.6rem 1rem;
 
-  color: ${({ theme }) => theme.colors.gray90};
+  color: ${({ $selected, theme }) => ($selected ? theme.colors.mainViolet : theme.colors.gray90)};
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 6px;

@@ -6,23 +6,28 @@ interface TopicPropTypes {
   topicId: number;
   topicName: string;
   onClickHandler: (key: string, value: string) => void;
+  selected: boolean;
 }
 
 const ThisWeekTopic = (props: TopicPropTypes) => {
-  const { topicName, onClickHandler } = props;
+  const { topicName, onClickHandler, selected } = props;
+  console.log(selected);
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
   };
   return (
     <>
       <TopicLog>최신 글감</TopicLog>
-      <Topic onClick={handleListClick}>{topicName}</Topic>
+      <Topic onClick={handleListClick} $selected={selected}>
+        {topicName}
+      </Topic>
     </>
   );
 };
 
 const PrevFirstTopic = (props: TopicPropTypes) => {
-  const { topicName, onClickHandler } = props;
+  const { topicName, onClickHandler, selected } = props;
+  console.log(selected);
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
   };
@@ -30,17 +35,24 @@ const PrevFirstTopic = (props: TopicPropTypes) => {
     <>
       <Divider />
       <TopicLog>이전 글감</TopicLog>
-      <Topic onClick={handleListClick}>{topicName}</Topic>
+      <Topic onClick={handleListClick} $selected={selected}>
+        {topicName}
+      </Topic>
     </>
   );
 };
 
 const PrevTopic = (props: TopicPropTypes) => {
-  const { topicName, onClickHandler } = props;
+  const { topicName, onClickHandler, selected } = props;
+  console.log(selected);
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
   };
-  return <Topic onClick={handleListClick}>{topicName}</Topic>;
+  return (
+    <Topic onClick={handleListClick} $selected={selected}>
+      {topicName}
+    </Topic>
+  );
 };
 
 export { ThisWeekTopic, PrevFirstTopic, PrevTopic };
@@ -54,14 +66,14 @@ const TopicLog = styled.span`
 `;
 
 // 글감
-const Topic = styled.div`
+const Topic = styled.div<{ $selected: boolean }>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   width: 100%;
   padding: 0.8rem 0 0.8rem 0.8rem;
 
-  color: ${({ theme }) => theme.colors.gray90};
+  color: ${({ $selected, theme }) => ($selected ? theme.colors.mainViolet : theme.colors.gray90)};
 
   cursor: pointer;
   border-radius: 6px;

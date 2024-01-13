@@ -15,19 +15,15 @@ export interface DropDownPropsType {
   selectedValue: string;
 }
 
-interface selectedValueType {
-  topic: string;
-  writer: string;
-}
-
 const DropDown = () => {
   // 현재 열린 드롭다운 저장
   const [activeDropdown, setActiveDropDown] = useState<DropdownType | null>(null);
+
   // 드롭다운에서 선택된 값 저장
   // 글감ID, 익명여부 저장 필요
   // 가장 최신값으로 초기값 업데이트 해두어야 함
   const [selectedValues, setSelectedValues] = useState({
-    topic: '웹잼에 대하여',
+    topic: '필명에 대하여',
     writer: '작자미상',
   });
 

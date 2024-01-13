@@ -1,22 +1,23 @@
+import { useState } from 'react';
+
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import {
-  //   basicDropDownListCSS,
-  DropDownToggle,
-  DropDownContent,
-  DropDownPropsType,
-} from './DropDown';
+import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
 import { ThisWeekTopic, PrevFirstTopic, PrevTopic } from './Topic';
 import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../assets/svgs';
 import { TOPIC_DUMMY_DATA } from '../constants/topicConstants';
 
 const TopicDropDown = (props: DropDownPropsType) => {
   const { isOpen, onClickDropDown, onClickListItem, selectedValue } = props;
+  const [selectedTopic, setSelectedTopic] = useState(null); // 초기값은 받아온 값 중 제일 최근 값
 
+  // 토글 열림 닫힘만 핸들링하는 함수
   const handleOnClick = () => {
     onClickDropDown('topic');
   };
+
+  // 선택된 값 스타일 적용 위한 함수
 
   return (
     <TopicDropDownWrapper onClick={handleOnClick}>
@@ -33,6 +34,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 topicId={item.topicId}
                 topicName={item.topicName}
                 onClickHandler={onClickListItem}
+                selected={selectedValue === item.topicName}
               />
             );
           } else if (idx === 1) {
@@ -42,6 +44,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 topicId={item.topicId}
                 topicName={item.topicName}
                 onClickHandler={onClickListItem}
+                selected={selectedValue === item.topicName}
               />
             );
           } else {
@@ -51,6 +54,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 topicId={item.topicId}
                 topicName={item.topicName}
                 onClickHandler={onClickListItem}
+                selected={selectedValue === item.topicName}
               />
             );
           }
@@ -106,7 +110,7 @@ const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
   }
 `;
 
-const TopicContainer = styled.div`
+/* const TopicContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -114,4 +118,4 @@ const TopicContainer = styled.div`
   justify-content: flex-start;
   width: 100%;
   padding-top: 0.6rem;
-`;
+`; */
