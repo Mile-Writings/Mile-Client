@@ -7,7 +7,7 @@ import '../style/slick-theme.css';
 import '../style/slick.css';
 import Spacing from './../../../components/commons/Spacing';
 import { getGroupContent } from './../apis/getGroupContent';
-import { MoimPropTypes } from './../constants/constants';
+import { MoimPropTypes } from './../types/moimPost';
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
 
@@ -27,7 +27,8 @@ const Carousel = () => {
     const getData = async () => {
       try {
         const response = await getGroupContent();
-        typeof response?.data === 'object' && setGroupData(response?.data.moim);
+        setGroupData(response?.data?.moim);
+        console.log(response?.data?.moim);
       } catch (error) {
         console.log(error);
       }
@@ -38,28 +39,29 @@ const Carousel = () => {
   return (
     <CarouselWrapper>
       <Spacing marginBottom="3.6" />
-      <CarouselWithButtonLayout>
-        <GroupNameButton />
+      <section>
+        <GroupNameButton buttonName={'모임이름'} />
         <Spacing marginBottom="1.6" />
         <CarouselContainer>
           <CarouselBox {...settings}>
-            {groupData.map(({ moimId, moimPosts }: MoimPropTypes) => (
-              <div key={moimId}>
-                {moimPosts.map((post, index) => (
-                  <GroupContent
-                    key={index}
-                    topicName={post.topicName}
-                    imageUrl={post.imageUrl}
-                    postTitle={post.postTitle}
-                    postContent={post.postContent}
-                    isLast={index === moimPosts.length - 1}
-                  />
-                ))}
-              </div>
-            ))}
+            {groupData &&
+              groupData.map((moim) => (
+                <div key={moim.moimId}>
+                  {moim.moimPosts.map((post, index) => (
+                    <GroupContent
+                      key={index}
+                      topicName={post.topicName}
+                      imageUrl={post.imageUrl}
+                      postTitle={post.postTitle}
+                      postContent={post.postContent}
+                      isLast={index === moim.moimPosts.length - 1}
+                    />
+                  ))}
+                </div>
+              ))}
           </CarouselBox>
         </CarouselContainer>
-      </CarouselWithButtonLayout>
+      </section>
     </CarouselWrapper>
   );
 };
@@ -72,8 +74,6 @@ const CarouselWrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
-const CarouselWithButtonLayout = styled.section``;
 
 const CarouselContainer = styled.div`
   display: flex;
