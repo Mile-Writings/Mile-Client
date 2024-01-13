@@ -9,9 +9,10 @@ import useClickOutside from '../../../hooks/useClickOutside';
 const WriterDropDown = (props: DropDownPropsType) => {
   // const { isOpen, onClickDropDown, onClickListItem, selectedValue, clickOutside } = props;
   const { isOpen, onClickDropDown, onClickListItem, selectedValue } = props;
+  const [writerIsOpen, setWriterIsOpen] = useState(false);
 
   // 드롭다운 리스트 부분 잡아오기
-  // const dropDownRef = useRef(null);
+  const dropDownRef = useRef(null);
   // const [isListOpen, setListIsOpen] = useClickOutside(dropDownRef, false);
 
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -19,18 +20,20 @@ const WriterDropDown = (props: DropDownPropsType) => {
   };
 
   const handleOnClick = () => {
-    onClickDropDown('writer');
-    // setListIsOpen(!isOpen);
+    setWriterIsOpen(!writerIsOpen);
+  };
+  const handleOutSideClick = () => {
+    setWriterIsOpen(false);
   };
 
   // 커스텀훅 사용
-  // useClickOutside(dropDownRef, clickOutside);
+  useClickOutside(dropDownRef, handleOutSideClick);
 
   return (
-    <DropDownToggle onClick={handleOnClick} >
+    <DropDownToggle onClick={handleOnClick} ref={dropDownRef}>
       <DropDownContent $contentWidth={14.6}>{selectedValue}</DropDownContent>
-      {isOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
-      <WriterListWrapper $isOpen={isOpen}>
+      {writerIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
+      <WriterListWrapper $isOpen={writerIsOpen}>
         <WriterList onClick={handleListClick} $selected={selectedValue === '작자미상'}>
           작자미상
         </WriterList>

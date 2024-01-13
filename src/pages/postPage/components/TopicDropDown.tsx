@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -10,27 +10,31 @@ import useClickOutside from '../../../hooks/useClickOutside';
 import { TOPIC_DUMMY_DATA } from '../constants/topicConstants';
 
 const TopicDropDown = (props: DropDownPropsType) => {
-  // const { isOpen, onClickDropDown, onClickListItem, selectedValue, clickOutside } = props;
-  const { isOpen, onClickDropDown, onClickListItem, selectedValue } = props;
+  const { onClickListItem, selectedValue } = props;
+
+  const [topicIsOpen, setTopicIsOpen] = useState(false);
 
   // 드롭다운 리스트 부분 잡아오기
-  // const dropDownRef = useRef(null);
+  const dropDownRef = useRef(null);
 
   // 토글 열림 닫힘만 핸들링하는 함수
   const handleOnClick = () => {
-    onClickDropDown('topic');
+    setTopicIsOpen(!topicIsOpen);
+  };
+  const handleOutSideClick = () => {
+    setTopicIsOpen(false);
   };
 
-  // 커스텀훅 사용
-  // useClickOutside(dropDownRef, clickOutside);
+  //커스텀훅 사용
+  useClickOutside(dropDownRef, handleOutSideClick);
 
   return (
-    <TopicDropDownWrapper onClick={handleOnClick} >
+    <TopicDropDownWrapper onClick={handleOnClick} ref={dropDownRef}>
       <DropDownToggle>
         <DropDownContent $contentWidth={29}>{selectedValue}</DropDownContent>
-        {isOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
+        {topicIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
       </DropDownToggle>
-      <TopicListWrapper $isOpen={isOpen}>
+      <TopicListWrapper $isOpen={topicIsOpen}>
         {TOPIC_DUMMY_DATA.map((item, idx) => {
           if (idx === 0) {
             return (
@@ -102,8 +106,6 @@ const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
   overflow: hidden scroll;
 
   background-color: ${({ theme }) => theme.colors.white};
-
-  /* visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')}; */
   border: 1px solid ${({ theme }) => theme.colors.gray50};
 
   &::-webkit-scrollbar {
