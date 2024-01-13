@@ -1,4 +1,4 @@
 export interface LoginProps {
-  authorizationCode: string;
+  code: string;
   socialType: string;
 }

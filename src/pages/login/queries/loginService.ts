@@ -1,11 +1,12 @@
 import { client } from '../../../utils/apis/axios';
-import { LoginProps } from '../types/loginType';
 
-const loginService = async ({ authorizationCode, socialType }: LoginProps) => {
+const loginService = async (code: string, socialType: string) => {
   try {
-    const { data } = await client.post(`/api/user/login?authorizationCode=${authorizationCode}`, {
+    const { data } = await client.post(`/api/user/login?authorizationCode=${code}`, {
       socialType,
     });
+
+    console.log(data);
 
     return data.data;
   } catch (e) {
