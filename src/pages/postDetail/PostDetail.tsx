@@ -6,8 +6,8 @@ import { CheckboxIc, DefaultProfileIc, HeaderLogoIc } from './../../assets/svgs'
 import Button from './../../components/commons/Button';
 import LogInOutBtn from './../../components/commons/LogInOutBtn';
 import Spacing from './../../components/commons/Spacing';
-import MakeGroupBtn from './../../pages/groupFeed/MakeGroupBtn';
-import MyGroupBtn from './../../pages/groupFeed/MyGroupBtn';
+import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
+import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
 
