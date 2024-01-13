@@ -2,8 +2,9 @@ import styled from '@emotion/styled';
 
 const Login = () => {
   const REDIRECT_URL = 'http://localhost:5173/redirect-kakao';
+  // const REDIRECT_URL = 'https://milewriting.com/kakao/callback';
   const KAKAO_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${
-    import.meta.env.VITE_REDIRECT_URI
+    import.meta.env.VITE_API_KEY
   }&redirect_uri=${REDIRECT_URL}&response_type=code`;
 
   const handleKakaoLogin = () => {
@@ -28,26 +29,23 @@ export default Login;
 const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
   align-items: center;
-
   padding-top: 13.2rem;
 `;
 
 const LoginContainer = styled.div`
-  padding: 4rem 0;
   display: flex;
   flex-direction: column;
-
-  align-items: center;
   gap: 2.4rem;
+  align-items: center;
+  padding: 4rem 0;
 `;
 
 const LoginTextBox = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 1.6rem;
+  align-items: center;
   width: 30.9rem;
   height: 7.4rem;
 `;
@@ -63,13 +61,15 @@ const SubText = styled.p`
 `;
 
 const LoginImageTemp = styled.div`
-  background-color: pink;
   width: 21rem;
   height: 14rem;
+
+  background-color: pink;
 `;
 
 const KakaoLoginBtn = styled.button`
   width: 30rem;
   height: 4.5rem;
+
   background-image: url('src/assets/images/kakao_login_medium_wide.png');
 `;
