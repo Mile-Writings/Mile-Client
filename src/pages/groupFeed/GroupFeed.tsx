@@ -13,9 +13,19 @@ import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
 import { useGroupFeedAuth, useGroupInfo } from './hooks/queries';
 import GroupFloatingBtn from '../../assets/svgs/groupFloatingBtn.svg';
 import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
+import GroupThumbnailImg from '../../assets/svgs/groupThumnailImg.svg';
 import Footer from '../../components/commons/Footer';
 import { GroupFeedHeader, LogOutHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
+
+interface GroupInfoPropTypes {
+  imageUrl: string;
+  moimName: string;
+  ownerName: string;
+  startDate: string;
+  writerCount: number;
+  description: string;
+}
 
 const GroupFeed = () => {
   const { groupId } = useParams();
@@ -42,7 +52,7 @@ const GroupFeed = () => {
   return (
     <GroupFeedWrapper>
       {accessToken ? <GroupFeedHeader /> : <LogOutHeader onClick={handleLogin} />}
-      <GroupFeedThumnail />
+      <GroupFeedThumnail groupInfoData={groupInfoData} />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
         <GroupSideHeader groupInfoData={groupInfoData} />
@@ -86,13 +96,13 @@ const GroupFeedWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
 
-const GroupFeedThumnail = styled.div`
+const GroupFeedThumnail = styled.div<{ groupInfoData: GroupInfoPropTypes }>`
   width: 136.6rem;
   height: 37rem;
 
-  background-image: url('../../src/assets/images/commonThumbnail.png');
+  background-image: ${({ groupInfoData }) =>
+    groupInfoData ? `url(${groupInfoData.imageUrl})` : `url(${GroupThumbnailImg})`};
 `;
-
 const GroupInfoWrapper = styled.div`
   display: flex;
   gap: 3.9rem;

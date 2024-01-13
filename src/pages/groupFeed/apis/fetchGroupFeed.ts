@@ -17,7 +17,7 @@ export const fetchGroupFeedAuth = async (groupId: string) => {
 export const fetchGroupInfo = async (groupId: string) => {
   try {
     const response = await client.get(`/api/moim/${groupId}/info`);
-    console.log(response.data, '데이터');
+
     return response.data;
   } catch (error) {
     console.error('에러:', error);

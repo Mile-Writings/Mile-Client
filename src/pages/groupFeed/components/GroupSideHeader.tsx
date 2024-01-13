@@ -22,22 +22,34 @@ const GroupSideHeader = (props: GroupSideHeaderProps) => {
 
   return (
     <GroupSideHeaderWrapper>
-      <GroupSideHeaderTitle>{groupInfoData.moimName}</GroupSideHeaderTitle>
-      <Spacing marginBottom="2.8" />
-      <GroupSideHeaderLayout>
-        <GroupInfoBox icon={<GroupLeaderIc />} title="모임방장" detail={groupInfoData.ownerName} />
-        <GroupInfoBox icon={<GroupDateIc />} title="설립날짜" detail={groupInfoData.startDate} />
-        <GroupInfoBox
-          icon={<GroupMemberIc />}
-          title="모임인원"
-          detail={`${groupInfoData.writerCount}명의 작가들`}
-        />
-      </GroupSideHeaderLayout>
-      <Spacing marginBottom="2.4" />
-      <GroupSideHeaderDetailBox>
-        <DetailBoxRect />
-        {groupInfoData.description}
-      </GroupSideHeaderDetailBox>
+      {groupInfoData && (
+        <>
+          <GroupSideHeaderTitle>{groupInfoData.moimName}</GroupSideHeaderTitle>
+          <Spacing marginBottom="2.8" />
+          <GroupSideHeaderLayout>
+            <GroupInfoBox
+              icon={<GroupLeaderIc />}
+              title="모임방장"
+              detail={groupInfoData.ownerName}
+            />
+            <GroupInfoBox
+              icon={<GroupDateIc />}
+              title="설립날짜"
+              detail={groupInfoData.startDate}
+            />
+            <GroupInfoBox
+              icon={<GroupMemberIc />}
+              title="모임인원"
+              detail={`${groupInfoData.writerCount}명의 작가들`}
+            />
+          </GroupSideHeaderLayout>
+          <Spacing marginBottom="2.4" />
+          <GroupSideHeaderDetailBox>
+            <DetailBoxRect />
+            {groupInfoData?.description}
+          </GroupSideHeaderDetailBox>{' '}
+        </>
+      )}
     </GroupSideHeaderWrapper>
   );
 };
