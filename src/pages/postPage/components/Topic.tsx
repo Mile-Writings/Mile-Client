@@ -1,0 +1,81 @@
+import React from 'react';
+
+import styled from '@emotion/styled';
+
+interface TopicPropTypes {
+  topicId: number;
+  topicName: string;
+  onClickHandler: (key: string, value: string) => void;
+}
+
+const ThisWeekTopic = (props: TopicPropTypes) => {
+  const { topicName, onClickHandler } = props;
+  const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    onClickHandler('topic', e.currentTarget.innerText);
+  };
+  return (
+    <>
+      <TopicLog>최신 글감</TopicLog>
+      <Topic onClick={handleListClick}>{topicName}</Topic>
+    </>
+  );
+};
+
+const PrevFirstTopic = (props: TopicPropTypes) => {
+  const { topicName, onClickHandler } = props;
+  const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    onClickHandler('topic', e.currentTarget.innerText);
+  };
+  return (
+    <>
+      <Divider />
+      <TopicLog>이전 글감</TopicLog>
+      <Topic onClick={handleListClick}>{topicName}</Topic>
+    </>
+  );
+};
+
+const PrevTopic = (props: TopicPropTypes) => {
+  const { topicName, onClickHandler } = props;
+  const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    onClickHandler('topic', e.currentTarget.innerText);
+  };
+  return <Topic onClick={handleListClick}>{topicName}</Topic>;
+};
+
+export { ThisWeekTopic, PrevFirstTopic, PrevTopic };
+
+// 최신 글감, 이전 글감
+const TopicLog = styled.span`
+  width: 100%;
+
+  color: ${({ theme }) => theme.colors.gray70};
+  ${({ theme }) => theme.fonts.body7};
+`;
+
+// 글감
+const Topic = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0.8rem 0 0.8rem 0.8rem;
+
+  color: ${({ theme }) => theme.colors.gray90};
+
+  cursor: pointer;
+  border-radius: 6px;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.gray20};
+  }
+
+  ${({ theme }) => theme.fonts.button2};
+`;
+
+const Divider = styled.div`
+  width: 100%;
+  margin-bottom: 0.6rem;
+
+  border: 1px solid ${({ theme }) => theme.colors.gray20};
+`;

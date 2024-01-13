@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -8,8 +8,8 @@ import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../asset
 const WriterDropDown = (props: DropDownPropsType) => {
   const { isOpen, onClickDropDown, onClickListItem, selectedValue } = props;
 
-  const handleListClick = (e) => {
-    onClickListItem('writer', e.target.innerText);
+  const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    onClickListItem('writer', e.currentTarget.innerText);
   };
 
   const handleOnClick = () => {
