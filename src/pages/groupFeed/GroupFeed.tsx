@@ -10,7 +10,7 @@ import CuriousProfile from './components/CuriousProfile';
 import GroupCuriousTitle from './components/GroupCuriousTitle';
 import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
-import { GroupFeedAuthQuery } from './queries/queries';
+import { useGroupFeedAuth } from './queries/queries';
 import GroupFloatingBtn from '../../assets/svgs/groupFloatingBtn.svg';
 import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import Footer from '../../components/commons/Footer';
@@ -19,7 +19,7 @@ import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
   const { groupId } = useParams();
-  const { isMember, isLoading, isError, error } = GroupFeedAuthQuery(groupId || '');
+  const { isMember, isLoading, isError, error } = useGroupFeedAuth(groupId || '');
   const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
   const accessToken = localStorage.getItem('accessToken');
 

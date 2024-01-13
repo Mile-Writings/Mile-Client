@@ -6,10 +6,10 @@ interface GroupFeedAuthQueryResult {
   isMember: boolean;
   isLoading: boolean;
   isError: boolean;
-  error: Error | null; //모르겟삼
+  error: Error | null;
 }
 
-export const GroupFeedAuthQuery = (groupId: string): GroupFeedAuthQueryResult => {
+export const useGroupFeedAuth = (groupId: string): GroupFeedAuthQueryResult => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['groupFeed_Auth_moimId', groupId],
     queryFn: () => fetchGroupFeedAuth(groupId),
