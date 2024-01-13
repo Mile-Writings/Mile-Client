@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import styled from '@emotion/styled';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Carousel from './carousel/Carousel';
 import EachArticle from './carousel/EachArticle';
@@ -18,7 +18,8 @@ import { GroupFeedHeader, LogOutHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
-  const { isMember, isLoading, isError, error } = GroupFeedAuthQuery();
+  const { moimId } = useParams();
+  const { isMember, isLoading, isError, error } = GroupFeedAuthQuery(moimId || '');
   const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
   const accessToken = localStorage.getItem('accessToken');
 

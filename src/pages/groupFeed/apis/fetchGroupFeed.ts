@@ -1,9 +1,9 @@
 import { client } from '../../../utils/apis/axios';
 
-export const fetchGroupFeedAuth = async () => {
+export const fetchGroupFeedAuth = async (moimId: string) => {
   try {
     const accessToken = localStorage.getItem('accessToken');
-    const response = await client.get(`/api/moim/1/authenticate`, {
+    const response = await client.get(`/api/moim/${moimId}/authenticate`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
