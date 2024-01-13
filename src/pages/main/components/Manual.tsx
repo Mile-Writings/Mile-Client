@@ -66,13 +66,6 @@ const ManualBox = styled.div`
   width: 92.8rem;
 `;
 
-const ManualItem = styled.div`
-  width: 29.6rem;
-  height: 37.2rem;
-
-  background-color: ${({ theme }) => theme.colors.white};
-`;
-
 const ManualRow = styled.div`
   display: flex;
   gap: 2rem;
