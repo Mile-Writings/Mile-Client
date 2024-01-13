@@ -10,6 +10,7 @@ export const theme = {
     grayViolet: '#EDEDF5',
     mainGreen: '#2F7417',
     mileGreen: '#C5DB8F',
+    middleGreen: '#CCE09B',
     lightGreen: '#F1F6E2',
     backGroundGray: '#F5F5F7',
     thumbnailGradient:
