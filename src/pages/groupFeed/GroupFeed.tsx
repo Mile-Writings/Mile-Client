@@ -1,7 +1,7 @@
-import { useState } from 'react';
-
 import styled from '@emotion/styled';
 import { useNavigate, useParams } from 'react-router-dom';
+
+import { useState } from 'react';
 
 import Carousel from './carousel/Carousel';
 import EachArticle from './carousel/EachArticle';
@@ -10,7 +10,8 @@ import CuriousProfile from './components/CuriousProfile';
 import GroupCuriousTitle from './components/GroupCuriousTitle';
 import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
-import { useGroupFeedAuth } from './queries/queries';
+import { useGroupFeedAuth } from './hooks/queries';
+
 import GroupFloatingBtn from '../../assets/svgs/groupFloatingBtn.svg';
 import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import Footer from '../../components/commons/Footer';

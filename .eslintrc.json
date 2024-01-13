@@ -44,11 +44,13 @@
     "import/order": [
       "error",
       {
-        "groups": ["builtin", "external", "internal", ["parent", "sibling"], "index"], //import 순서를 고정. builtin- 외부- 내부
+        "groups": [["builtin", "external"], "internal", ["parent", "sibling"], "index"], //import 순서를 고정. builtin- 외부- 내부
         "pathGroups": [
           // react 컴포넌트가 builtin 뒤에 (external import 앞에 나오도록 설정)
           { "pattern": "react", "group": "builtin", "position": "after" },
-          { "pattern": "react-dom", "group": "builtin", "position": "after" }
+          { "pattern": "react-dom", "group": "builtin", "position": "after" },
+          { "pattern": "./**", "group": "internal" }, // './'로 시작하는 상대 경로 파일은 internal 그룹에 속하도록 설정
+          { "pattern": "../**", "group": "parent", "position": "before" } // '../'로 시작하는 상위 경로 파일은 parent 그룹에 속하도록 설정
         ],
         "pathGroupsExcludedImportTypes": ["react", "react-dom"], // pathGroups가 올바르게 적용하기 위해.. (확실치 않음)
         "alphabetize": {
