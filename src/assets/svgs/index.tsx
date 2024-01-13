@@ -37,3 +37,6 @@ export { default as GroupListProfileIc } from './groupListProfileSvg.svg?react';
 export { default as CheckboxIc } from './postDetailCheckIc.svg?react';
 export { default as QuestionDefaultIc } from './questionDefaultIc.svg?react';
 export { default as QuestioHoverIc } from './questionHoverIc.svg?react';
+
+export { default as EditorDropIcnActiveIc } from './editorDropIcnActive.svg?react';
+export { default as EditorDropIcnActiveOpenIc } from './editorDropIcnActiveopen.svg?react';
