@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 const useClickOutside = (ref: React.RefObject<HTMLElement>, callback: () => void) => {
   useEffect(() => {
@@ -23,27 +23,3 @@ const useClickOutside = (ref: React.RefObject<HTMLElement>, callback: () => void
 };
 
 export default useClickOutside;
-
-// const useClickOutside = (ref: React.RefObject<HTMLElement>, initialState: boolean) => {
-//   const [isListOpen, setListIsOpen] = useState(initialState);
-
-//   useEffect(() => {
-//     const onClick = (event: MouseEvent) => {
-//       if (ref.current && !ref.current.contains(event.target as Node)) {
-//         setListIsOpen(!isListOpen);
-//       }
-//     };
-
-//     if (isListOpen) {
-//       window.addEventListener('click', onClick);
-//     }
-
-//     return () => {
-//       window.removeEventListener('click', onClick);
-//     };
-//   }, [isListOpen, ref]);
-
-//   return [isListOpen, setListIsOpen];
-// };
-
-// export default useClickOutside;

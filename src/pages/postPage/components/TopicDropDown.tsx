@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react';
 
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
@@ -21,11 +20,11 @@ const TopicDropDown = (props: DropDownPropsType) => {
   const handleOnClick = () => {
     setTopicIsOpen(!topicIsOpen);
   };
+  // 커스텀 훅 전달 콜백 함수
   const handleOutSideClick = () => {
     setTopicIsOpen(false);
   };
-
-  //커스텀훅 사용
+  //커스텀 훅 사용
   useClickOutside(dropDownRef, handleOutSideClick);
 
   return (
@@ -75,19 +74,6 @@ const TopicDropDown = (props: DropDownPropsType) => {
 
 export default TopicDropDown;
 
-const basicDropDownListCSS = css`
-  position: absolute;
-  top: 4.4rem;
-  z-index: 3;
-
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 2rem;
-
-  border-radius: 10px;
-`;
-
 const TopicDropDownWrapper = styled.div`
   position: relative;
   display: flex;
@@ -97,16 +83,23 @@ const TopicDropDownWrapper = styled.div`
 `;
 
 const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
-  display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
+  position: absolute;
+  top: 4.4rem;
+  z-index: 3;
 
-  /* display: flex; */
+  display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
+  flex-direction: column;
   gap: 0.6rem;
+  align-items: center;
+  justify-content: flex-start;
   width: 36rem;
   max-height: 37.1rem;
+  padding: 2rem;
   overflow: hidden scroll;
 
   background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.gray50};
+  border-radius: 10px;
 
   &::-webkit-scrollbar {
     width: 0.4rem;
@@ -118,5 +111,4 @@ const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
     border: 20px solid ${({ theme }) => theme.colors.gray20};
     border-radius: 4px;
   }
-  ${basicDropDownListCSS}
 `;

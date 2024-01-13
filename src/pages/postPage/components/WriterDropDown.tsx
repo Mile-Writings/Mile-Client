@@ -7,32 +7,32 @@ import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../asset
 import useClickOutside from '../../../hooks/useClickOutside';
 
 const WriterDropDown = (props: DropDownPropsType) => {
-  // const { isOpen, onClickDropDown, onClickListItem, selectedValue, clickOutside } = props;
-  const { isOpen, onClickDropDown, onClickListItem, selectedValue } = props;
+  const { onClickListItem, selectedValue } = props;
   const [writerIsOpen, setWriterIsOpen] = useState(false);
 
   // 드롭다운 리스트 부분 잡아오기
   const dropDownRef = useRef(null);
-  // const [isListOpen, setListIsOpen] = useClickOutside(dropDownRef, false);
-
+  // 선택된 값 저장
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickListItem('writer', e.currentTarget.innerText);
   };
-
+  // 필명 드롭다운 버튼 누르면 열림/닫힘
   const handleOnClick = () => {
     setWriterIsOpen(!writerIsOpen);
   };
+  // 커스텀 훅 전달 함수
   const handleOutSideClick = () => {
     setWriterIsOpen(false);
   };
-
-  // 커스텀훅 사용
+  // 커스텀 훅 사용
   useClickOutside(dropDownRef, handleOutSideClick);
 
   return (
-    <DropDownToggle onClick={handleOnClick} ref={dropDownRef}>
-      <DropDownContent $contentWidth={14.6}>{selectedValue}</DropDownContent>
-      {writerIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
+    <WriterDropDownWrapper onClick={handleOnClick} ref={dropDownRef}>
+      <DropDownToggle>
+        <DropDownContent $contentWidth={14.6}>{selectedValue}</DropDownContent>
+        {writerIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
+      </DropDownToggle>
       <WriterListWrapper $isOpen={writerIsOpen}>
         <WriterList onClick={handleListClick} $selected={selectedValue === '작자미상'}>
           작자미상
@@ -41,11 +41,19 @@ const WriterDropDown = (props: DropDownPropsType) => {
           필명
         </WriterList>
       </WriterListWrapper>
-    </DropDownToggle>
+    </WriterDropDownWrapper>
   );
 };
 
 export default WriterDropDown;
+
+const WriterDropDownWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+`;
 
 const WriterListWrapper = styled.div<{ $isOpen: boolean }>`
   position: absolute;
@@ -72,6 +80,7 @@ const WriterList = styled.div<{ $selected: boolean }>`
   color: ${({ $selected, theme }) => ($selected ? theme.colors.mainViolet : theme.colors.gray90)};
 
   background-color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
   border-radius: 6px;
   ${({ theme }) => theme.fonts.button2};
 
