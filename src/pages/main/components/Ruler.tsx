@@ -77,7 +77,7 @@ const Pipe = styled.div`
   border-radius: 10rem;
 `;
 
-const KeyWord = styled.p`
+const KeyWord = styled.div`
   width: fit-content;
 
   white-space: nowrap;
