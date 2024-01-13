@@ -8,12 +8,15 @@ import FaqTitle from './components/FaqTitle';
 import GroupTitle from './components/GroupTitle';
 import Introduction from './components/Introduction';
 import Manual from './components/Manual';
+import OnBoarding from './components/OnBoarding';
 import Ruler from './components/Ruler';
 import { FAQ_DATA } from './constants/faqData';
 
 const Main = () => {
   return (
     <MainPageWrapper>
+      <OnBoarding />
+
       <CarouselComponentLayout>
         <GroupTitle />
         <Carousel />

@@ -26,7 +26,6 @@ export { default as GroupListProfileIc } from './groupListProfileSvg.svg?react';
 
 export { default as GroupFloatingBtnIc } from './groupFloatingBtn.svg?react';
 export { default as GroupFloatingBtnHoverIc } from './groupFloatingBtnHover.svg?react';
-
 export { default as GroupNoDataImgIc } from './groupNoDataImg.svg?react';
 export { default as HeaderLogoIc } from './headerLogoSvg.svg?react';
 export { default as MainGraphicGradationIc } from './mainGraphicGradation.svg?react';
@@ -38,6 +37,7 @@ export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?re
 export { default as MainTogglearrowClosedIc } from './mainTogglearrowClosedIc.svg?react';
 export { default as MainToggleArrowOpenedIc } from './mainTogglearrowOpenedIc.svg?react';
 
+export { default as MainIcnOnBorarding } from './mainIcnOnboarding.svg?react';
 export { default as MainManualCuriousIc } from './mainManualCurious.svg?react';
 export { default as MainManualJoinIc } from './mainManualJoin.svg?react';
 export { default as MainManualLookIc } from './mainManualLook.svg?react';
