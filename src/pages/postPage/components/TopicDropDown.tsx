@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -12,49 +14,54 @@ import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../asset
 // const PR_DUMMY_DATA_SMALL: string[] = ['웹잼에 대하여'];
 
 // const PR_DUMMY_DATA_MEDIUM: string[] = [
-//   '웹잼에 대하여',
-//   '웹잼에 대하여',
+//   '서진이에 대하여',
+//   '재훈이에 대하여',
 //   '공백 포함 22자로 글자수 제한 합니다',
 // ];
 
 // const PR_DUMMY_DATA_LONG: string[] = [
-//   '웹잼에 대하여',
-//   '웹잼에 대하여',
+//   '다현이에 대하여',
+//   '동헌이에 대하여',
 //   '공백 포함 22자로 글자수 제한 합니다',
-//   '웹잼에 대하여',
-//   '웹잼에 대하여',
-//   '웹잼에 대하여',
-//   '웹잼에 대하여',
+//   '다은이에 대하여',
+//   '희정이에 대하여',
+//   '소현이에 대하여',
+//   '지원이에 대하여',
 // ];
 
 const TopicDropDown = (props: DropDownPropsType) => {
-  const { isOpen, onClickDropDown } = props;
+  const { isOpen, onClickDropDown, onClickListItem, selectedValue } = props;
+
+  const handleListClick = (e) => {
+    onClickListItem('topic', e.target.innerText);
+  };
 
   const handleOnClick = () => {
     onClickDropDown('topic');
   };
+
   return (
-    <TopicDropDownWrapper>
-      <DropDownToggle onClick={handleOnClick}>
-        <DropDownContent $contentWidth={29}>웹잼에 대하여</DropDownContent>
+    <TopicDropDownWrapper onClick={handleOnClick}>
+      <DropDownToggle>
+        <DropDownContent $contentWidth={29}>{selectedValue}</DropDownContent>
         {isOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
       </DropDownToggle>
       <TopicListWrapper $isOpen={isOpen}>
         <TopicContainer>
           <TopicLog>최신 글감</TopicLog>
-          <Topic>웹잼에 대하여</Topic>
+          <Topic onClick={handleListClick}>웹잼에 대하여</Topic>
         </TopicContainer>
         <Divider />
         <TopicContainer>
           <TopicLog>이전 글감</TopicLog>
-          <Topic>공백 포함 22자로 글자수 제한 합니다</Topic>
-          <Topic>웹잼에 대하여</Topic>
-          <Topic>웹잼에 대하여</Topic>
-          <Topic>웹잼에 대하여</Topic>
-          <Topic>웹잼에 대하여</Topic>
-          <Topic>웹잼에 대하여</Topic>
-          <Topic>웹잼에 대하여</Topic>
-          <Topic>웹잼에 대하여</Topic>
+          <Topic onClick={handleListClick}>공백 포함 22자로 글자수 제한 합니다</Topic>
+          <Topic onClick={handleListClick}>웹잼에 대하여</Topic>
+          <Topic onClick={handleListClick}>웹잼에 대하여</Topic>
+          <Topic onClick={handleListClick}>웹잼에 대하여</Topic>
+          <Topic onClick={handleListClick}>웹잼에 대하여</Topic>
+          <Topic onClick={handleListClick}>웹잼에 대하여</Topic>
+          <Topic onClick={handleListClick}>웹잼에 대하여</Topic>
+          <Topic onClick={handleListClick}>웹잼에 대하여</Topic>
         </TopicContainer>
       </TopicListWrapper>
     </TopicDropDownWrapper>

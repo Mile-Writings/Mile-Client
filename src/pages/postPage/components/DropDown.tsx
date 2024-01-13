@@ -11,20 +11,50 @@ type DropdownType = 'topic' | 'writer';
 export interface DropDownPropsType {
   isOpen: boolean;
   onClickDropDown: (dropDownType: DropdownType) => void;
+  onClickListItem: (key: string, value: string) => void;
+  selectedValue: string;
+}
+
+interface selectedValueType {
+  topic: string;
+  writer: string;
 }
 
 const DropDown = () => {
+  // 현재 열린 드롭다운 저장
   const [activeDropdown, setActiveDropDown] = useState<DropdownType | null>(null);
+  // 드롭다운에서 선택된 값 저장
+  // 글감ID, 익명여부 저장 필요
+  // 가장 최신값으로 초기값 업데이트 해두어야 함
+  const [selectedValues, setSelectedValues] = useState({
+    topic: '웹잼에 대하여',
+    writer: '작자미상',
+  });
 
   // 열고 닫힘만 관여
   const handleDropDownClick = (dropdownType: DropdownType) => {
     setActiveDropDown(activeDropdown === dropdownType ? null : dropdownType);
   };
 
+  // 드롭다운 리스트 중 선택된 값 저장
+  const handleListItem = (key: string, value: string) => {
+    setSelectedValues((prev) => ({ ...prev, [key]: value }));
+  };
+
   return (
     <DropDownWrapper>
-      <TopicDropDown isOpen={activeDropdown === 'topic'} onClickDropDown={handleDropDownClick} />
-      <WriterDropDown isOpen={activeDropdown === 'writer'} onClickDropDown={handleDropDownClick} />
+      <TopicDropDown
+        isOpen={activeDropdown === 'topic'}
+        onClickDropDown={handleDropDownClick}
+        onClickListItem={handleListItem}
+        selectedValue={selectedValues.topic}
+      />
+      <WriterDropDown
+        isOpen={activeDropdown === 'writer'}
+        onClickDropDown={handleDropDownClick}
+        onClickListItem={handleListItem}
+        selectedValue={selectedValues.writer}
+      />
     </DropDownWrapper>
   );
 };

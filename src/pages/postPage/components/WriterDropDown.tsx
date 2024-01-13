@@ -6,7 +6,11 @@ import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
 import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../assets/svgs';
 
 const WriterDropDown = (props: DropDownPropsType) => {
-  const { isOpen, onClickDropDown } = props;
+  const { isOpen, onClickDropDown, onClickListItem, selectedValue } = props;
+
+  const handleListClick = (e) => {
+    onClickListItem('writer', e.target.innerText);
+  };
 
   const handleOnClick = () => {
     onClickDropDown('writer');
@@ -14,11 +18,12 @@ const WriterDropDown = (props: DropDownPropsType) => {
 
   return (
     <DropDownToggle onClick={handleOnClick}>
-      <DropDownContent $contentWidth={14.6}>필명</DropDownContent> {/* api로 대체 필요 */}
+      <DropDownContent $contentWidth={14.6}>{selectedValue}</DropDownContent>{' '}
+      {/* api로 대체 필요 */}
       {isOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
       <WriterDropDownWrapper $isOpen={isOpen}>
-        <WriterList>작자미상</WriterList>
-        <WriterList>필명</WriterList>
+        <WriterList onClick={handleListClick}>작자미상</WriterList>
+        <WriterList onClick={handleListClick}>필명</WriterList>
       </WriterDropDownWrapper>
     </DropDownToggle>
   );
@@ -45,7 +50,7 @@ const WriterDropDownWrapper = styled.div<{ $isOpen: boolean }>`
 `;
 
 const WriterList = styled.div`
-  width: 100%;
+  width: 10.8rem;
   padding: 0.6rem 0 0.6rem 1rem;
 
   color: ${({ theme }) => theme.colors.gray90};
