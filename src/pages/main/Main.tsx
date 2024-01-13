@@ -21,8 +21,6 @@ const Main = () => {
       <CarouselComponentLayout>
         <GroupCarouselTitle />
         <Carousel />
-        <Carousel />
-        <Carousel />
       </CarouselComponentLayout>
       <Ruler />
       <Introduction />
