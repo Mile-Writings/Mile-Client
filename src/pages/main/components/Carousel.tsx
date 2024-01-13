@@ -48,7 +48,7 @@ const Carousel = () => {
               <div key={moimId}>
                 {moimPosts.map((post, index) => (
                   <GroupContent
-                    key={index}
+                    key={moimId}
                     topicName={post.topicName}
                     imageUrl={post.imageUrl}
                     postTitle={post.postTitle}
