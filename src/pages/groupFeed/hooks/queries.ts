@@ -42,5 +42,5 @@ export const useGroupInfo = (groupId: string): GroupInfoQueryResult => {
 
   const groupInfoData = data && data.data;
 
-  return groupInfoData;
+  return { groupInfoData, isLoading, isError, error };
 };

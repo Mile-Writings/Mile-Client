@@ -3,15 +3,24 @@ import styled from '@emotion/styled';
 import GroupInfoBox from './GroupInfoBox';
 import { GroupDateIc, GroupLeaderIc, GroupMemberIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-import { useGroupFeedAuth } from '../hooks/queries';
+import { useGroupInfo } from '../hooks/queries';
 
 interface GroupSideHeaderPropTypes {
-  groupId: string;
+  groupId: string | undefined;
 }
 
 const GroupSideHeader = (props: GroupSideHeaderPropTypes) => {
   const { groupId } = props;
-  const { isMember, isLoading, isError, error } = useGroupFeedAuth(groupId || '');
+  const { groupInfoData, isLoading, isError, error } = useGroupInfo(groupId || '');
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error fetching data..{error?.message}</div>;
+  }
+
   return (
     <GroupSideHeaderWrapper>
       <GroupSideHeaderTitle>그룹명자리입니다</GroupSideHeaderTitle>
