@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import TopicDropDown from './TopicDropDown';
@@ -30,8 +31,21 @@ const DropDown = () => {
 
 export default DropDown;
 
+// 드롭다운 리스트 공통 스타일 재사용
+export const basicDropDownListCSS = css`
+  position: absolute;
+  top: 5rem;
+  z-index: 3;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2rem;
+
+  border-radius: 10px;
+`;
+
 const DropDownWrapper = styled.div`
-  position: relative;
   display: flex;
   flex-direction: row;
   gap: 1.2rem;
@@ -41,6 +55,7 @@ const DropDownWrapper = styled.div`
 `;
 
 export const DropDownToggle = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -50,7 +65,7 @@ export const DropDownToggle = styled.div`
   background-color: ${({ theme }) => theme.colors.mileViolet};
   cursor: pointer;
   border: 1px solid transparent;
-  border-radius: 0.8rem;
+  border-radius: 8px;
 
   &:hover {
     border: 1px solid ${({ theme }) => theme.colors.mainViolet};

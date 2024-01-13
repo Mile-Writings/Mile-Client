@@ -1,27 +1,31 @@
-import React from 'react';
-
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
+import {
+  //   basicDropDownListCSS,
+  DropDownToggle,
+  DropDownContent,
+  DropDownPropsType,
+} from './DropDown';
 import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../assets/svgs';
 
-const PR_DUMMY_DATA_SMALL: string[] = ['웹잼에 대하여'];
+// const PR_DUMMY_DATA_SMALL: string[] = ['웹잼에 대하여'];
 
-const PR_DUMMY_DATA_MEDIUM: string[] = [
-  '웹잼에 대하여',
-  '웹잼에 대하여',
-  '공백 포함 22자로 글자수 제한 합니다',
-];
+// const PR_DUMMY_DATA_MEDIUM: string[] = [
+//   '웹잼에 대하여',
+//   '웹잼에 대하여',
+//   '공백 포함 22자로 글자수 제한 합니다',
+// ];
 
-const PR_DUMMY_DATA_LONG: string[] = [
-  '웹잼에 대하여',
-  '웹잼에 대하여',
-  '공백 포함 22자로 글자수 제한 합니다',
-  '웹잼에 대하여',
-  '웹잼에 대하여',
-  '웹잼에 대하여',
-  '웹잼에 대하여',
-];
+// const PR_DUMMY_DATA_LONG: string[] = [
+//   '웹잼에 대하여',
+//   '웹잼에 대하여',
+//   '공백 포함 22자로 글자수 제한 합니다',
+//   '웹잼에 대하여',
+//   '웹잼에 대하여',
+//   '웹잼에 대하여',
+//   '웹잼에 대하여',
+// ];
 
 const TopicDropDown = (props: DropDownPropsType) => {
   const { isOpen, onClickDropDown } = props;
@@ -60,29 +64,35 @@ const TopicDropDown = (props: DropDownPropsType) => {
 export default TopicDropDown;
 
 const TopicDropDownWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
 `;
 
-const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
+const basicDropDownListCSS = css`
   position: absolute;
-  top: 5rem;
+  top: 4.4rem;
   z-index: 3;
 
-  display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  padding: 2rem;
+
+  border-radius: 10px;
+`;
+
+const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
+  ${basicDropDownListCSS}
+  display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
   width: 36rem;
   max-height: 37.1rem;
-  padding: 2rem;
   overflow: hidden scroll;
 
   background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.gray50};
-  border-radius: 1rem;
 
   &::-webkit-scrollbar {
     width: 0.4rem;
@@ -92,12 +102,8 @@ const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
     background: ${({ theme }) => theme.colors.gray20};
     background-clip: padding-box;
     border: 20px solid ${({ theme }) => theme.colors.gray20};
-    border-radius: 0.4rem;
+    border-radius: 4px;
   }
-
-  /* &::-webkit-scrollbar-track {
-    background-color: ${({ theme }) => theme.colors.gray10};
-  } */
 `;
 
 const TopicLog = styled.span`
@@ -134,7 +140,7 @@ const Topic = styled.div`
   color: ${({ theme }) => theme.colors.gray90};
 
   cursor: pointer;
-  border-radius: 0.6rem;
+  border-radius: 6px;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.gray20};
