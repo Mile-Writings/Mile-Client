@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState, useRef } from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import TopicDropDown from './TopicDropDown';
 import WriterDropDown from './WriterDropDown';
+import useClickOutside from '../../../hooks/useClickOutside';
 
 type DropdownType = 'topic' | 'writer';
 
@@ -13,43 +15,55 @@ export interface DropDownPropsType {
   onClickDropDown: (dropDownType: DropdownType) => void;
   onClickListItem: (key: string, value: string) => void;
   selectedValue: string;
+  clickOutside: () => void;
 }
 
 const DropDown = () => {
   // 현재 열린 드롭다운 저장
   const [activeDropdown, setActiveDropDown] = useState<DropdownType | null>(null);
 
-  // 드롭다운에서 선택된 값 저장
+  // 드롭다운에서 선택된 값 저장 state
   // 글감ID, 익명여부 저장 필요
-  // 가장 최신값으로 초기값 업데이트 해두어야 함
+  // 가장 최신값으로 초기값 업데이트
   const [selectedValues, setSelectedValues] = useState({
     topic: '필명에 대하여',
     writer: '작자미상',
   });
 
-  // 열고 닫힘만 관여
+  const dropDownRef = useRef(null);
+
+  // 열고 닫힘만 담당하는 이벤트 핸들러
   const handleDropDownClick = (dropdownType: DropdownType) => {
     setActiveDropDown(activeDropdown === dropdownType ? null : dropdownType);
   };
 
-  // 드롭다운 리스트 중 선택된 값 저장
+  // 드롭다운 리스트 중 선택된 값 저장 이벤트 핸들러
   const handleListItem = (key: string, value: string) => {
     setSelectedValues((prev) => ({ ...prev, [key]: value }));
   };
 
+  // 외부영역 클릭시 커스텀훅에 전달할 함수
+  const clickOutsideCloseDropDown = () => {
+    setActiveDropDown(null);
+  };
+
+  useClickOutside(dropDownRef, clickOutsideCloseDropDown);
+
   return (
-    <DropDownWrapper>
+    <DropDownWrapper ref={dropDownRef}>
       <TopicDropDown
         isOpen={activeDropdown === 'topic'}
         onClickDropDown={handleDropDownClick}
         onClickListItem={handleListItem}
         selectedValue={selectedValues.topic}
+        clickOutside={clickOutsideCloseDropDown}
       />
       <WriterDropDown
         isOpen={activeDropdown === 'writer'}
         onClickDropDown={handleDropDownClick}
         onClickListItem={handleListItem}
         selectedValue={selectedValues.writer}
+        clickOutside={clickOutsideCloseDropDown}
       />
     </DropDownWrapper>
   );

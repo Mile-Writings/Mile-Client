@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 
 import styled from '@emotion/styled';
@@ -11,7 +12,6 @@ interface TopicPropTypes {
 
 const ThisWeekTopic = (props: TopicPropTypes) => {
   const { topicName, onClickHandler, selected } = props;
-  console.log(selected);
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
   };
@@ -27,7 +27,6 @@ const ThisWeekTopic = (props: TopicPropTypes) => {
 
 const PrevFirstTopic = (props: TopicPropTypes) => {
   const { topicName, onClickHandler, selected } = props;
-  console.log(selected);
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
   };
@@ -44,7 +43,6 @@ const PrevFirstTopic = (props: TopicPropTypes) => {
 
 const PrevTopic = (props: TopicPropTypes) => {
   const { topicName, onClickHandler, selected } = props;
-  console.log(selected);
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
   };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -6,21 +6,26 @@ import styled from '@emotion/styled';
 import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
 import { ThisWeekTopic, PrevFirstTopic, PrevTopic } from './Topic';
 import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../assets/svgs';
+import useClickOutside from '../../../hooks/useClickOutside';
 import { TOPIC_DUMMY_DATA } from '../constants/topicConstants';
 
 const TopicDropDown = (props: DropDownPropsType) => {
+  // const { isOpen, onClickDropDown, onClickListItem, selectedValue, clickOutside } = props;
   const { isOpen, onClickDropDown, onClickListItem, selectedValue } = props;
-  const [selectedTopic, setSelectedTopic] = useState(null); // 초기값은 받아온 값 중 제일 최근 값
+
+  // 드롭다운 리스트 부분 잡아오기
+  // const dropDownRef = useRef(null);
 
   // 토글 열림 닫힘만 핸들링하는 함수
   const handleOnClick = () => {
     onClickDropDown('topic');
   };
 
-  // 선택된 값 스타일 적용 위한 함수
+  // 커스텀훅 사용
+  // useClickOutside(dropDownRef, clickOutside);
 
   return (
-    <TopicDropDownWrapper onClick={handleOnClick}>
+    <TopicDropDownWrapper onClick={handleOnClick} >
       <DropDownToggle>
         <DropDownContent $contentWidth={29}>{selectedValue}</DropDownContent>
         {isOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
@@ -88,14 +93,17 @@ const TopicDropDownWrapper = styled.div`
 `;
 
 const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
-  ${basicDropDownListCSS}
   display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
+
+  /* display: flex; */
   gap: 0.6rem;
   width: 36rem;
   max-height: 37.1rem;
   overflow: hidden scroll;
 
   background-color: ${({ theme }) => theme.colors.white};
+
+  /* visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')}; */
   border: 1px solid ${({ theme }) => theme.colors.gray50};
 
   &::-webkit-scrollbar {
@@ -108,14 +116,5 @@ const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
     border: 20px solid ${({ theme }) => theme.colors.gray20};
     border-radius: 4px;
   }
+  ${basicDropDownListCSS}
 `;
-
-/* const TopicContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  padding-top: 0.6rem;
-`; */

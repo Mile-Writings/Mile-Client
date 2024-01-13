@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 import styled from '@emotion/styled';
 
 import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
 import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../assets/svgs';
+import useClickOutside from '../../../hooks/useClickOutside';
 
 const WriterDropDown = (props: DropDownPropsType) => {
+  // const { isOpen, onClickDropDown, onClickListItem, selectedValue, clickOutside } = props;
   const { isOpen, onClickDropDown, onClickListItem, selectedValue } = props;
+
+  // 드롭다운 리스트 부분 잡아오기
+  // const dropDownRef = useRef(null);
+  // const [isListOpen, setListIsOpen] = useClickOutside(dropDownRef, false);
 
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickListItem('writer', e.currentTarget.innerText);
@@ -14,28 +20,31 @@ const WriterDropDown = (props: DropDownPropsType) => {
 
   const handleOnClick = () => {
     onClickDropDown('writer');
+    // setListIsOpen(!isOpen);
   };
 
+  // 커스텀훅 사용
+  // useClickOutside(dropDownRef, clickOutside);
+
   return (
-    <DropDownToggle onClick={handleOnClick}>
-      <DropDownContent $contentWidth={14.6}>{selectedValue}</DropDownContent>{' '}
-      {/* api로 대체 필요 */}
+    <DropDownToggle onClick={handleOnClick} >
+      <DropDownContent $contentWidth={14.6}>{selectedValue}</DropDownContent>
       {isOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
-      <WriterDropDownWrapper $isOpen={isOpen}>
+      <WriterListWrapper $isOpen={isOpen}>
         <WriterList onClick={handleListClick} $selected={selectedValue === '작자미상'}>
           작자미상
         </WriterList>
         <WriterList onClick={handleListClick} $selected={selectedValue === '필명'}>
           필명
         </WriterList>
-      </WriterDropDownWrapper>
+      </WriterListWrapper>
     </DropDownToggle>
   );
 };
 
 export default WriterDropDown;
 
-const WriterDropDownWrapper = styled.div<{ $isOpen: boolean }>`
+const WriterListWrapper = styled.div<{ $isOpen: boolean }>`
   position: absolute;
   top: 4.3rem;
   right: 7rem;
