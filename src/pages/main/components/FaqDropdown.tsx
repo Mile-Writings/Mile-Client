@@ -46,6 +46,7 @@ const DropdownLayout = styled.section`
   padding: 2.4rem 2.8rem;
 
   background-color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
   border-radius: 8px;
 `;
 
