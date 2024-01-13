@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { DefaultProfileIc, DetailCommentMeatBallIc } from '../../../assets/svgs';
 
 interface CommentItem {
-  id: number;
+  id?: number;
   name: string;
   moimName: string;
   content: string;
