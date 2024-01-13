@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-import { CURIOUS_PROFILE } from './constants/CURIOUS_PROFILE';
-import { GroupBestProfileIc, GroupNoDataImgIc } from '../../assets/svgs';
-import Spacing from '../../components/commons/Spacing';
+import { GroupBestProfileIc, GroupNoDataImgIc } from '../../../assets/svgs';
+import Spacing from '../../../components/commons/Spacing';
+import { CURIOUS_PROFILE } from '../constants/CURIOUS_PROFILE';
 
 interface ProfilePropTypes {
   writerName: string;

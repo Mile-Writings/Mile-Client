@@ -1,32 +1,51 @@
 import { useState } from 'react';
 
 import styled from '@emotion/styled';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Carousel from './carousel/Carousel';
 import EachArticle from './carousel/EachArticle';
-import CuriousArticle from './CuriousArticle';
-import CuriousProfile from './CuriousProfile';
-import GroupCuriousTitle from './GroupCuriousTitle';
-import GroupSideHeader from './GroupSideHeader';
-import GroupTodayWriteStyle from './GroupTodayWriteStyle';
+import CuriousArticle from './components/CuriousArticle';
+import CuriousProfile from './components/CuriousProfile';
+import GroupCuriousTitle from './components/GroupCuriousTitle';
+import GroupSideHeader from './components/GroupSideHeader';
+import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
+import { useGroupFeedAuth } from './queries/queries';
 import GroupFloatingBtn from '../../assets/svgs/groupFloatingBtn.svg';
 import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import Footer from '../../components/commons/Footer';
-import { GroupFeedHeader } from '../../components/commons/Header';
+import { GroupFeedHeader, LogOutHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
+  const { groupId } = useParams();
+  const { isMember, isLoading, isError, error } = useGroupFeedAuth(groupId || '');
   const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
+  const accessToken = localStorage.getItem('accessToken');
+
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate(`/login`);
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error fetching data..{error?.message}</div>;
+  }
 
   return (
     <GroupFeedWrapper>
-      <GroupFeedHeader />
+      {accessToken ? <GroupFeedHeader /> : <LogOutHeader onClick={handleLogin} />}
       <GroupFeedThumnail />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
         <GroupSideHeader />
         <GroupInfo>
-          <GroupTodayWriteStyle />
+          <GroupTodayWriteStyle isMember={isMember} />
           <Spacing marginBottom="6.4" />
           <GroupCuriousTitle
             mainText="궁금해요 버튼이 많은 2명의 프로필"
@@ -54,7 +73,7 @@ const GroupFeed = () => {
       </GroupInfoWrapper>
       <Spacing marginBottom="14" />
       <Footer />
-      <FloatingBtn />
+      {isMember !== undefined && isMember && <FloatingBtn />}
     </GroupFeedWrapper>
   );
 };

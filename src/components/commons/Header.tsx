@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 
 import { HeaderLogoIc } from './../../assets/svgs';
-import MakeGroupBtn from './../../pages/groupFeed/MakeGroupBtn';
-import MyGroupBtn from './../../pages/groupFeed/MyGroupBtn';
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
+import MakeGroupBtn from '../../pages/groupFeed/components/MakeGroupBtn';
+import MyGroupBtn from '../../pages/groupFeed/components/MyGroupBtn';
 
 interface OnClickProps {
   onClick: () => void;
