@@ -3,25 +3,22 @@ import styled from '@emotion/styled';
 import GroupInfoBox from './GroupInfoBox';
 import { GroupDateIc, GroupLeaderIc, GroupMemberIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-import { useGroupInfo } from '../hooks/queries';
 
-interface GroupSideHeaderPropTypes {
-  groupId: string | undefined;
+interface GroupInfoPropTypes {
+  imageUrl: string;
+  moimName: string;
+  ownerName: string;
+  startDate: string;
+  writerCount: number;
+  description: string;
 }
 
-const GroupSideHeader = (props: GroupSideHeaderPropTypes) => {
-  const { groupId } = props;
-  const { groupInfoData, isLoading, isError, error } = useGroupInfo(groupId || '');
+interface GroupSideHeaderProps {
+  groupInfoData: GroupInfoPropTypes;
+}
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error fetching data..{error?.message}</div>;
-  }
-
-  console.log(groupInfoData, 'data');
+const GroupSideHeader = (props: GroupSideHeaderProps) => {
+  const { groupInfoData } = props;
 
   return (
     <GroupSideHeaderWrapper>
