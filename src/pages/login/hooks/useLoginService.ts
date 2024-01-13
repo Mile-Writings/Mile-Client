@@ -21,6 +21,9 @@ export const useLoginService = ({ code, socialType }: LoginProps) => {
       localStorage.setItem('accessToken', data.accessToken);
       navigate('/');
     },
+    onError: () => {
+      console.log('Error');
+    },
   });
 };
 
