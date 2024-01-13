@@ -110,6 +110,14 @@ export const theme = {
       font-style: normal;
       line-height: 200%; /* 52px */
     `,
+    title12: css`
+      font-weight: 700;
+      font-size: 48px;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-style: normal;
+      line-height: 120%; /* 57.6px */
+      letter-spacing: -1.44px;
+    `,
     subtitle1: css`
       font-weight: 700;
       font-size: 1.8rem;
@@ -151,6 +159,14 @@ export const theme = {
       font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 120%; /* 19.2px */
+    `,
+    subtitle7: css`
+      font-weight: 400;
+      font-size: 26px;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-style: normal;
+      line-height: 150%; /* 39px */
+      letter-spacing: -0.78px;
     `,
     body1: css`
       font-weight: 500;
