@@ -2,27 +2,33 @@ import styled from '@emotion/styled';
 
 import { MainIcnArrowPurple as MainIcnArrowPurpleIcon } from '../../../assets/svgs';
 
-const GroupNameBtn = () => {
+const GroupNameButton = () => {
+  const handleButtonOnClick = () => {
+    alert('button clicked');
+  };
+
   return (
-    <GroupNameButtonBox>
+    <GroupNameButtonWrapper onClick={handleButtonOnClick}>
       글 모임 이름
       <MainIcnArrowPurpleIcon />
-    </GroupNameButtonBox>
+    </GroupNameButtonWrapper>
   );
 };
 
-export default GroupNameBtn;
+export default GroupNameButton;
 
-const GroupNameButtonBox = styled.button`
+const GroupNameButtonWrapper = styled.button`
   display: flex;
   gap: 0.8rem;
-  padding: 0.6rem 1rem;
   align-items: center;
-  border-radius: 0.8rem;
   justify-content: flex-start;
+  padding: 0.6rem 1rem;
+
+  color: ${({ theme }) => theme.colors.mainViolet};
 
   border: 1px solid ${({ theme }) => theme.colors.mainViolet};
-  color: ${({ theme }) => theme.colors.mainViolet};
+  border-radius: 0.8rem;
+
   ${({ theme }) => theme.fonts.subtitle2};
 
   &:hover {
