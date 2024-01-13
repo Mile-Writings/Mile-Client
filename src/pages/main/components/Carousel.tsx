@@ -27,8 +27,7 @@ const Carousel = () => {
     const getData = async () => {
       try {
         const response = await getGroupContent();
-        typeof response?.data === 'object' && setGroupData(response?.data);
-        console.log(groupData);
+        typeof response?.data === 'object' && setGroupData(response?.data.moim);
       } catch (error) {
         console.log(error);
       }
@@ -48,7 +47,7 @@ const Carousel = () => {
               <div key={moimId}>
                 {moimPosts.map((post, index) => (
                   <GroupContent
-                    key={moimId}
+                    key={index}
                     topicName={post.topicName}
                     imageUrl={post.imageUrl}
                     postTitle={post.postTitle}
