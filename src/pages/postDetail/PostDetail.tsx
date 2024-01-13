@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import { useEffect } from 'react';
+
+import fetchPostDetail from './apis/fetchPostDetail';
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
 
@@ -15,7 +18,14 @@ import Spacing from './../../components/commons/Spacing';
 
 const PostDetail = () => {
   const navigate = useNavigate();
+  const { postId } = useParams() || '';
 
+  useEffect(() => {
+    if (typeof postId === 'string') {
+      const data = fetchPostDetail(postId);
+      console.log(data);
+    }
+  }, []);
   return (
     <>
       <PostHeader>
