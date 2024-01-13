@@ -70,6 +70,7 @@ const SubText = styled.p<{ isImage: boolean; isLast: boolean }>`
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray80};
+  text-overflow: ellipsis;
   ${({ theme }) => theme.fonts.body3};
 `;
 
