@@ -1,10 +1,28 @@
+import { useEffect, useState } from 'react';
+
 import styled from '@emotion/styled';
 
+import { recommendPropsType } from '../\btypes/recommendTopic';
 import { MainGraphicGradationIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-import { KEYWORD_DATA } from '../constants/keyword';
+import { getRecommendTopic } from '../apis/getRecommendTopic';
 
 const Ruler = () => {
+  const [recommendTopicData, setRecommendTopicData] = useState<recommendPropsType[]>([]);
+
+  useEffect(() => {
+    const getRecommendData = async () => {
+      try {
+        const response = await getRecommendTopic();
+        setRecommendTopicData(response?.data);
+        console.log(recommendTopicData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getRecommendData();
+  }, []);
+
   return (
     <RulerWrapper>
       <RulerLayout>
@@ -15,8 +33,8 @@ const Ruler = () => {
             <TodayKeyWord>오늘의 글감</TodayKeyWord>
             <Pipe />
             <KeyWord>
-              {KEYWORD_DATA.map((item) => (
-                <p key={item.recommend}>{item.recommend}</p>
+              {recommendTopicData.map(({ content }: recommendPropsType) => (
+                <p key={content}>{content}</p>
               ))}
             </KeyWord>
           </RulerContentBox>
