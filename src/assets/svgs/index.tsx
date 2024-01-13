@@ -22,9 +22,11 @@ export { default as GroupListProfileOpenIc } from './groupListProfileIcnOpen.svg
 export { default as GroupMemberIc } from './groupMemberIcn.svg?react';
 
 export { default as GroupBestProfileIc } from './groupBestProfileSvg.svg?react';
+export { default as GroupListProfileIc } from './groupListProfileSvg.svg?react';
+
 export { default as GroupFloatingBtnIc } from './groupFloatingBtn.svg?react';
 export { default as GroupFloatingBtnHoverIc } from './groupFloatingBtnHover.svg?react';
-export { default as GroupListProfileIc } from './groupListProfileSvg.svg?react';
+
 export { default as GroupNoDataImgIc } from './groupNoDataImg.svg?react';
 export { default as HeaderLogoIc } from './headerLogoSvg.svg?react';
 export { default as MainGraphicGradationIc } from './mainGraphicGradation.svg?react';
@@ -32,8 +34,10 @@ export { default as MainGraphicLogo } from './mainGraphicLogo.svg?react';
 export { default as MainIcnArrowWhite } from './mainIcnArrowWhite.svg?react';
 export { default as MakeGroupPlusBtn } from './mainMakeGroupBtnEnable.svg?react';
 export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?react';
+
 export { default as MainTogglearrowClosedIc } from './mainTogglearrowClosedIc.svg?react';
 export { default as MainToggleArrowOpenedIc } from './mainTogglearrowOpenedIc.svg?react';
+
 export { default as CheckboxIc } from './postDetailCheckIc.svg?react';
 export { default as QuestionDefaultIc } from './questionDefaultIc.svg?react';
 export { default as QuestioHoverIc } from './questionHoverIc.svg?react';

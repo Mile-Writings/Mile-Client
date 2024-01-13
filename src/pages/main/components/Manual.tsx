@@ -32,6 +32,7 @@ const ManualLayout = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-bottom: 10rem;
 `;
 
 const TitleWithManualContainer = styled.div`
@@ -61,7 +62,7 @@ const ManualItem = styled.div`
   width: 29.6rem;
   height: 37.2rem;
 
-  background-color: ${({ theme }) => theme.colors.darkViolet};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const ManualRow = styled.div`
