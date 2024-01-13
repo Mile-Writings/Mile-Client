@@ -1,23 +1,31 @@
 import styled from '@emotion/styled';
 
+import {
+  MainManualCuriousIc,
+  MainManualJoinIc,
+  MainManualLookIc,
+  MainManualMakeIc,
+  MainManualShareIc,
+  MainManualWriteIc,
+} from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 const Manual = () => {
   return (
     <ManualLayout>
       <TitleWithManualContainer>
-        <ManualTitle>마일 메뉴얼</ManualTitle>
+        <ManualTitle>마일에 오신 것을 환영해요</ManualTitle>
         <Spacing marginBottom="3.6" />
         <ManualBox>
           <ManualRow>
-            <ManualItem />
-            <ManualItem />
-            <ManualItem />
+            <MainManualMakeIc />
+            <MainManualJoinIc />
+            <MainManualWriteIc />
           </ManualRow>
           <ManualRow>
-            <ManualItem />
-            <ManualItem />
-            <ManualItem />
+            <MainManualShareIc />
+            <MainManualCuriousIc />
+            <MainManualLookIc />
           </ManualRow>
         </ManualBox>
       </TitleWithManualContainer>

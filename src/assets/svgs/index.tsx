@@ -38,6 +38,12 @@ export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?re
 export { default as MainTogglearrowClosedIc } from './mainTogglearrowClosedIc.svg?react';
 export { default as MainToggleArrowOpenedIc } from './mainTogglearrowOpenedIc.svg?react';
 
+export { default as MainManualCuriousIc } from './mainManualCurious.svg?react';
+export { default as MainManualJoinIc } from './mainManualJoin.svg?react';
+export { default as MainManualLookIc } from './mainManualLook.svg?react';
+export { default as MainManualMakeIc } from './mainManualMake.svg?react';
+export { default as MainManualShareIc } from './mainManualShare.svg?react';
+export { default as MainManualWriteIc } from './mainManualWrite.svg?react';
 export { default as CheckboxIc } from './postDetailCheckIc.svg?react';
 export { default as QuestionDefaultIc } from './questionDefaultIc.svg?react';
 export { default as QuestioHoverIc } from './questionHoverIc.svg?react';
