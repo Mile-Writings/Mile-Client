@@ -43,7 +43,7 @@ const Carousel = () => {
       {groupData && (
         <section>
           {groupData
-            .sort((prev, next) => prev.moimId - next.moimId)
+            .sort((previous, current) => previous.moimId - current.moimId)
             .map((moim) => (
               <CarouselWithButtonLayout key={moim.moimId}>
                 <GroupNameButton buttonName={moim.moimName} />
