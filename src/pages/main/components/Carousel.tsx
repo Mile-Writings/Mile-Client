@@ -29,7 +29,6 @@ const Carousel = () => {
       try {
         const response = await getGroupContent();
         setGroupData(response?.data?.moim);
-        console.log(response?.data?.moim);
       } catch (error) {
         console.log(error);
       }
