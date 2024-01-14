@@ -50,4 +50,3 @@ export { default as QuestioHoverIc } from './questionHoverIc.svg?react';
 export { default as EditorDropIcnActiveIc } from './editorDropIcnActive.svg?react';
 export { default as EditorDropIcnActiveOpenIc } from './editorDropIcnActiveopen.svg?react';
 export { default as GroupThumnailImgIc } from './groupThumnailImg.svg?react';
-

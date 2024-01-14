@@ -11,13 +11,13 @@ import GroupCuriousTitle from './components/GroupCuriousTitle';
 import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
 import { useGroupFeedAuth, useGroupInfo } from './hooks/queries';
+
 import GroupFloatingBtn from '../../assets/svgs/groupFloatingBtn.svg';
 import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import GroupThumbnailImg from '../../assets/svgs/groupThumnailImg.svg';
 import Footer from '../../components/commons/Footer';
 import { GroupFeedHeader, LogOutHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
-
 
 const GroupFeed = () => {
   const { groupId } = useParams();
