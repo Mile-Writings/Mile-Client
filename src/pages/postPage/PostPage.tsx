@@ -3,7 +3,9 @@ import { useParams } from 'react-router-dom';
 
 import { useState, useReducer } from 'react';
 
+import DropDown from './components/DropDown';
 import Editor from './components/Editor';
+import Spacing from '../../components/commons/Spacing';
 
 import {
   EditorEditHeader, // 수정하기 -> 헤더
@@ -48,6 +50,9 @@ const PostPage = () => {
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
+      <Spacing marginBottom="3.4" />
+      <DropDown />
+      <Spacing marginBottom="2.4" />
       <Editor saveTitle={setTitle} saveContent={setContent} />
     </PostPageWrapper>
   );
@@ -60,4 +65,5 @@ const PostPageWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 100%;
+  align-items: center;
 `;
