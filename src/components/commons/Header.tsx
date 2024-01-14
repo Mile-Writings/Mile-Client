@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 
-import { HeaderLogoIc } from './../../assets/svgs';
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
+
+import { HeaderLogoIc } from './../../assets/svgs';
 import MakeGroupBtn from '../../pages/groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../../pages/groupFeed/components/MyGroupBtn';
 

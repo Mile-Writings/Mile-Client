@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import GroupInfoBox from './GroupInfoBox';
+
 import { GroupDateIc, GroupLeaderIc, GroupMemberIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 

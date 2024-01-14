@@ -13,3 +13,12 @@ export const fetchGroupFeedAuth = async (groupId: string) => {
     console.error('에러:', error);
   }
 };
+
+export const fetchTopTwoCuriousWriter = async (groupId: string) => {
+  try {
+    const response = await client.get(`/api/moim/${groupId}/authenticate`);
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
