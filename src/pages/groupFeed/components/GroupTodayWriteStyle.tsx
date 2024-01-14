@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Button from '../../../components/commons/Button';
 
 interface GroupTodayWriteStylePropTypes {
-  isMember: boolean;
+  isMember: boolean | undefined;
 }
 
 const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {

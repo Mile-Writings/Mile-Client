@@ -63,7 +63,7 @@
   visibility: hidden;
 }
 
-.slick-slide {
+.groupFeedCarousel .slick-slide {
   display: none;
   float: left;
 
