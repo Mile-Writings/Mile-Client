@@ -51,7 +51,7 @@ const GroupFeed = () => {
   return (
     <GroupFeedWrapper>
       {accessToken ? <GroupFeedHeader /> : <LogOutHeader onClick={handleLogin} />}
-      <GroupFeedThumnail groupInfoData={groupInfoData} />
+      <GroupFeedThumnail imageUrl={groupInfoData?.imageUrl} />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
         <GroupSideHeader groupInfoData={groupInfoData} />
@@ -95,12 +95,12 @@ const GroupFeedWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
 
-const GroupFeedThumnail = styled.div<{ groupInfoData: GroupInfoPropTypes }>`
+const GroupFeedThumnail = styled.div<{ imageUrl: string }>`
   width: 136.6rem;
   height: 37rem;
 
-  background-image: ${({ groupInfoData }) =>
-    groupInfoData ? `url(${GroupThumbnailImg})` : `url(${GroupThumbnailImg})`};
+  background-image: ${({ imageUrl }) => `url(${imageUrl || GroupThumbnailImg})`};
+  background-size: cover;
 `;
 const GroupInfoWrapper = styled.div`
   display: flex;
