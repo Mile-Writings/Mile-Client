@@ -27,13 +27,13 @@ const Ruler = () => {
       <RulerLayout>
         <RulerHeaderContainer>
           <MainGraphicGradationIcon />
-          <Spacing marginBottom="0.5rem" />
+          <Spacing marginBottom="0.5" />
           <RulerContentBox>
             <TodayKeyWord>오늘의 글감</TodayKeyWord>
             <Pipe />
             <KeyWord>{recommendTopicData?.content}</KeyWord>
           </RulerContentBox>
-          <Spacing marginBottom="1.2rem" />
+          <Spacing marginBottom="1.2" />
         </RulerHeaderContainer>
       </RulerLayout>
     </RulerWrapper>
