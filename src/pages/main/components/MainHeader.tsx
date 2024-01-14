@@ -3,11 +3,11 @@ import styled from '@emotion/styled';
 import { HeaderLogoIc } from '../../../assets/svgs';
 import LogInOutBtn from '../../../components/commons/LogInOutBtn';
 import theme from '../../../styles/theme';
-import MakeGroupBtn from '../../groupFeed/MakeGroupBtn';
-import MyGroupBtn from '../../groupFeed/MyGroupBtn';
+import MakeGroupBtn from '../../groupFeed/components/MakeGroupBtn';
+import MyGroupBtn from '../../groupFeed/components/MyGroupBtn';
 
 interface OnClickProps {
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 // 메인 페이지 헤더

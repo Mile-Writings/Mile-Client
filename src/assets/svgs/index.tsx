@@ -46,3 +46,5 @@ export { default as MainOnBoardingIc } from './mainOnBoarding.svg?react';
 export { default as CheckboxIc } from './postDetailCheckIc.svg?react';
 export { default as QuestionDefaultIc } from './questionDefaultIc.svg?react';
 export { default as QuestioHoverIc } from './questionHoverIc.svg?react';
+
+export { default as GroupThumnailImgIc } from './groupThumnailImg.svg?react';
