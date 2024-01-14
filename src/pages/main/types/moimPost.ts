@@ -12,7 +12,7 @@ export interface moimPropTypes {
 }
 
 export interface dataPropTypes {
-  moim: moimPropTypes;
+  data: moimPropTypes;
 }
 
 export interface groupContentPropTypes {
