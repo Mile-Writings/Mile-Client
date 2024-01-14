@@ -1,19 +1,21 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
-
 import styled from '@emotion/styled';
+
+import React from 'react';
 
 interface TopicPropTypes {
   topicId: number;
   topicName: string;
   onClickHandler: (key: string, value: string) => void;
   selected: boolean;
+  onClickClose: (state: boolean) => void;
 }
 
 const ThisWeekTopic = (props: TopicPropTypes) => {
-  const { topicName, onClickHandler, selected } = props;
+  const { topicName, onClickHandler, selected, onClickClose } = props;
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
+    onClickClose(false);
   };
   return (
     <>
@@ -26,9 +28,10 @@ const ThisWeekTopic = (props: TopicPropTypes) => {
 };
 
 const PrevFirstTopic = (props: TopicPropTypes) => {
-  const { topicName, onClickHandler, selected } = props;
+  const { topicName, onClickHandler, selected, onClickClose } = props;
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
+    onClickClose(false);
   };
   return (
     <>
@@ -42,9 +45,10 @@ const PrevFirstTopic = (props: TopicPropTypes) => {
 };
 
 const PrevTopic = (props: TopicPropTypes) => {
-  const { topicName, onClickHandler, selected } = props;
+  const { topicName, onClickHandler, selected, onClickClose } = props;
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
+    onClickClose(false);
   };
   return (
     <Topic onClick={handleListClick} $selected={selected}>

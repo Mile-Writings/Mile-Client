@@ -1,12 +1,11 @@
 import styled from '@emotion/styled';
 
-const Summary = () => {
-  return <TextBox>베스트 활동 모임 3개와 글 각 4개</TextBox>;
+const GroupCarouselTitle = () => {
+  return <TextWrapper>마일과 함께하고 있는 글 모임이에요</TextWrapper>;
 };
+export default GroupCarouselTitle;
 
-export default Summary;
-
-const TextBox = styled.div`
+const TextWrapper = styled.div`
   padding-top: 7.2rem;
   padding-left: 21.8rem;
   ${({ theme }) => theme.fonts.title3};
