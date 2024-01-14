@@ -18,14 +18,6 @@ import Footer from '../../components/commons/Footer';
 import { GroupFeedHeader, LogOutHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
-interface GroupInfoPropTypes {
-  moimName: string;
-  ownerName: string;
-  startDate: string;
-  writerCount: number;
-  description: string;
-}
-
 const GroupFeed = () => {
   const { groupId } = useParams();
   const { isMember, isLoading, isError, error } = useGroupFeedAuth(groupId || '');

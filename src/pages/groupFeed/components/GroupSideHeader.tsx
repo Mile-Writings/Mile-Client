@@ -12,13 +12,8 @@ interface GroupInfoPropTypes {
   description: string;
 }
 
-interface GroupSideHeaderProps {
-  groupInfoData: GroupInfoPropTypes;
-}
-
-const GroupSideHeader = (props: GroupSideHeaderProps) => {
+const GroupSideHeader = (props: { groupInfoData: GroupInfoPropTypes }) => {
   const { groupInfoData } = props;
-  console.log(groupInfoData);
 
   return (
     <GroupSideHeaderWrapper>
@@ -46,7 +41,7 @@ const GroupSideHeader = (props: GroupSideHeaderProps) => {
           <Spacing marginBottom="2.4" />
           <GroupSideHeaderDetailBox>
             <DetailBoxRect />
-            {groupInfoData?.description}
+            {groupInfoData.description}
           </GroupSideHeaderDetailBox>{' '}
         </>
       )}
