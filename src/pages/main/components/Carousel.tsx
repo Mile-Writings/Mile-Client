@@ -12,7 +12,6 @@ import Spacing from './../../../components/commons/Spacing';
 import { getGroupContent } from './../apis/getGroupContent';
 
 export interface moimPropTypes {
-  moim: moimPropTypes;
   moimId: number;
   moimName: string;
   moimPosts: moimPostPropTypes[];
