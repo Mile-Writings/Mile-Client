@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
-
 import styled from '@emotion/styled';
 import Slider from 'react-slick';
 
+import { useEffect, useState } from 'react';
+
 import '../style/slick-theme.css';
 import '../style/slick.css';
+import GroupContent from './GroupContent';
+import GroupNameButton from './GroupNameButton';
+
 import Spacing from './../../../components/commons/Spacing';
 import { getGroupContent } from './../apis/getGroupContent';
 import { MoimPropTypes } from './../types/moimPost';
-import GroupContent from './GroupContent';
-import GroupNameButton from './GroupNameButton';
 
 const Carousel = () => {
   const [groupData, setGroupData] = useState<MoimPropTypes[]>([]);
@@ -41,26 +42,28 @@ const Carousel = () => {
       <Spacing marginBottom="3.6" />
       {groupData && (
         <section>
-          {groupData.map((moim) => (
-            <CarouselWithButtonLayout key={moim.moimId}>
-              <GroupNameButton buttonName={moim.moimName} />
-              <Spacing marginBottom="1.6" />
-              <CarouselContainer>
-                <CarouselBox {...settings}>
-                  {moim.moimPosts.map((post, index) => (
-                    <GroupContent
-                      key={index}
-                      topicName={post.topicName}
-                      imageUrl={post.imageUrl}
-                      postTitle={post.postTitle}
-                      postContent={post.postContent}
-                      isLast={index === moim.moimPosts.length - 1}
-                    />
-                  ))}
-                </CarouselBox>
-              </CarouselContainer>
-            </CarouselWithButtonLayout>
-          ))}
+          {groupData
+            .sort((prev, next) => prev.moimId - next.moimId)
+            .map((moim) => (
+              <CarouselWithButtonLayout key={moim.moimId}>
+                <GroupNameButton buttonName={moim.moimName} />
+                <Spacing marginBottom="1.6" />
+                <CarouselContainer>
+                  <CarouselBox {...settings}>
+                    {moim.moimPosts.map((post, index) => (
+                      <GroupContent
+                        key={index}
+                        topicName={post.topicName}
+                        imageUrl={post.imageUrl}
+                        postTitle={post.postTitle}
+                        postContent={post.postContent}
+                        isLast={index === moim.moimPosts.length - 1}
+                      />
+                    ))}
+                  </CarouselBox>
+                </CarouselContainer>
+              </CarouselWithButtonLayout>
+            ))}
         </section>
       )}
     </CarouselWrapper>
