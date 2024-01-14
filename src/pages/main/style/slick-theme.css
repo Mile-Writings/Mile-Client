@@ -49,10 +49,12 @@
   background: transparent;
 }
 .slick-prev:hover:before {
-  content: url(../../../src/assets/svgs/mainBtnBeforeHover.svg);
+  display: block;
+  content: url('../../../src/assets/svgs/mainBtnBeforeHover.svg');
 }
 .slick-next:hover:before {
-  content: url(../../../src/assets/svgs/mainBtnNextHover.svg);
+  display: block;
+  content: url('../../../src/assets/svgs/mainBtnNextHover.svg');
 }
 .slick-prev.slick-disabled:before,
 .slick-next.slick-disabled:before {
@@ -73,6 +75,7 @@
 }
 
 .slick-prev {
+  display: block;
   position: absolute;
   left: -7.5rem;
 }
@@ -81,13 +84,16 @@
   left: auto;
 }
 .slick-prev:before {
-  content: url(../../../src/assets/svgs/mainBtnBefore.svg);
+  display: block;
+  content: url('../../../src/assets/svgs/mainBtnBefore.svg');
 }
 [dir='rtl'] .slick-prev:before {
-  content: url(../../../src/assets/svgs/mainBtnNext.svg);
+  display: block;
+  content: url('../../../src/assets/svgs/mainBtnNext.svg');
 }
 
 .slick-next {
+  display: block;
   position: absolute;
   right: -5rem;
 }
@@ -96,9 +102,11 @@
   left: -25px;
 }
 .slick-next:before {
+  display: block;
   content: url(../../../src/assets/svgs/mainBtnNext.svg);
 }
 [dir='rtl'] .slick-next:before {
+  display: block;
   content: url(../../../src/assets/svgs/mainBtnBefore.svg);
 }
 
