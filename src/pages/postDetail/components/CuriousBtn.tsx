@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 import { useState } from 'react';
 
-import { QuestioHoverIc, QuestionDefaultIc } from './../../../assets/svgs';
+import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets/svgs';
 
 interface Curious {
   curiousNum: number;
@@ -19,7 +19,7 @@ const CuriousBtn = ({ curiousNum }: Curious) => {
       <CuriousBtnWrapper onClick={handleIsClick} $isClick={isClick}>
         <CuriousTextWrapper>
           <CuriousTextContainer>
-            {isClick ? <QuestioHoverIc /> : <QuestionDefaultIc />}
+            {isClick ? <DetailWhiteFavoriteIc /> : <DetailPurpleFavoriteIc />}
             궁금해요
           </CuriousTextContainer>
           <CuriousTextWrapper>{curiousNum}</CuriousTextWrapper>
@@ -63,6 +63,7 @@ const CuriousTextWrapper = styled.div`
 
 const CuriousTextContainer = styled.div`
   display: flex;
+  gap: 0.2rem;
   align-items: center;
   justify-content: center;
 `;

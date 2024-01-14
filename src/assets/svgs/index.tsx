@@ -1,12 +1,14 @@
-export { default as EditorHorizonIcnUnactiveSvg } from './editorHorizonIcnUnactive.svg?react';
-export { default as EditorTextColorIcnBlackSvg } from './editorTextcolorIcnBlack.svg?react';
 export { default as DefaultProfileIc } from './defaultProfileIc.svg?react';
 export { default as DetailCommentMeatBallIc } from './detailCommentMeatBallIc.svg?react';
+export { default as EditorHorizonIcnUnactiveSvg } from './editorHorizonIcnUnactive.svg?react';
+export { default as EditorTextColorIcnBlackSvg } from './editorTextcolorIcnBlack.svg?react';
 export { default as HeaderLogoSvg } from './headerLogoSvg.svg?react';
 export { default as MainGroupRoutingBtn } from './mainGroupRoutingBtn.svg?react';
 export { default as MainGroupRoutingBtnHover } from './mainGroupRoutingBtnHover.svg?react';
 export { default as MainIcnArrowPurple } from './mainIcnArrowPurple.svg?react';
 
+export { default as DetailPurpleFavoriteIc } from './detailPurplefavorite.svg?react';
+export { default as DetailWhiteFavoriteIc } from './detailWhitefavorite.svg?react';
 export { default as GroupTabBtnBaseBeforeIc } from './groupTabBtnBaseBefore.svg?react';
 export { default as GroupTabBtnBaseNextIc } from './groupTabBtnBaseNext.svg?react';
 
@@ -50,4 +52,3 @@ export { default as QuestioHoverIc } from './questionHoverIc.svg?react';
 export { default as EditorDropIcnActiveIc } from './editorDropIcnActive.svg?react';
 export { default as EditorDropIcnActiveOpenIc } from './editorDropIcnActiveopen.svg?react';
 export { default as GroupThumnailImgIc } from './groupThumnailImg.svg?react';
-

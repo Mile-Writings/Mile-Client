@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
-import { useGetCuriousInfo, useGetPostDetail } from './hooks/queries';
+import { useGetPostDetail } from './hooks/queries';
 
 import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
@@ -18,8 +18,8 @@ const PostDetail = () => {
   const { postId } = useParams();
 
   const { data, isError, isLoading } = useGetPostDetail(postId || '');
-  const { data1, isError1, isLoading1 } = useGetCuriousInfo(postId || '');
-  console.log(data1);
+  // const { data1, isError1, isLoading1 } = useGetCuriousInfo(postId || '');
+  // console.log(data1);
   const postData = data?.data;
   if (isError) {
     navigate('/error');
@@ -79,7 +79,7 @@ const PostDetail = () => {
                 <WriterInfoText>{postData?.writerName}</WriterInfoText>
                 <GroupInfoText>{postData?.moimName}</GroupInfoText>
               </WriterInfoBox>
-              <WriterDesc>{postData?.writerInfo}</WriterDesc>
+              <WriterDesc>{postData?.writerInfo && '아직 작가소개를 작성하지 않았어요'}</WriterDesc>
             </InfoWrapper>
           </WriterInfoContainer>
           <CuriousBtn curiousNum={4}></CuriousBtn>
