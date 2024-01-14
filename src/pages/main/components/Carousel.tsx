@@ -8,13 +8,13 @@ import '../style/slick.css';
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
 
+import { moimPropTypes } from '../types/moimPost';
+
 import Spacing from './../../../components/commons/Spacing';
 import { getGroupContent } from './../apis/getGroupContent';
-import { MoimPropTypes } from './../types/moimPost';
 
 const Carousel = () => {
-  const [groupData, setGroupData] = useState<MoimPropTypes[]>([]);
-
+  const [groupData, setGroupData] = useState<moimPropTypes[]>([]);
   const settings = {
     arrow: false,
     dots: false,
@@ -45,7 +45,7 @@ const Carousel = () => {
             .sort((previous, current) => previous.moimId - current.moimId)
             .map((moim) => (
               <CarouselWithButtonLayout key={moim.moimId}>
-                <GroupNameButton buttonName={moim.moimName} />
+                <GroupNameButton groupName={moim.moimName} groupId={moim.moimId} />
                 <Spacing marginBottom="1.6" />
                 <CarouselContainer>
                   <CarouselBox {...settings}>
@@ -56,6 +56,7 @@ const Carousel = () => {
                         imageUrl={post.imageUrl}
                         postTitle={post.postTitle}
                         postContent={post.postContent}
+                        groupId={moim.moimId}
                         isLast={index === moim.moimPosts.length - 1}
                       />
                     ))}
