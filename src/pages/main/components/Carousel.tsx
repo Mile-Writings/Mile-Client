@@ -40,7 +40,7 @@ const Carousel = () => {
     const getData = async () => {
       try {
         const response = await getGroupContent();
-        setGroupData(response?.data?.moim);
+        setGroupData(response);
       } catch (error) {
         console.log(error);
       }
@@ -60,7 +60,7 @@ const Carousel = () => {
                 <GroupNameButton groupName={moim.moimName} groupId={moim.moimId} />
                 <Spacing marginBottom="1.6" />
                 <CarouselContainer>
-                  <CarouselBox {...settings}>
+                  <CarouselBox {...settings} className="main">
                     {moim.moimPosts.map((post, index) => (
                       <GroupContent
                         key={index}
