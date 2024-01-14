@@ -121,6 +121,7 @@ const HeaderLogoIcon = styled(HeaderLogoIc)`
 const ThumnailImg = styled.img`
   width: 100%;
   height: 37rem;
+  object-fit: cover;
 `;
 
 const PostDetailWrapper = styled.div`
