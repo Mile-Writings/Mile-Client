@@ -8,11 +8,11 @@ import { useGetPostDetail } from './hooks/queries';
 import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
 
-import logout from '../../utils/logout';
 import { CheckboxIc, DefaultProfileIc, HeaderLogoIc } from './../../assets/svgs';
 import Button from './../../components/commons/Button';
 import LogInOutBtn from './../../components/commons/LogInOutBtn';
 import Spacing from './../../components/commons/Spacing';
+import logout from './../../utils/logout';
 
 const PostDetail = () => {
   const navigate = useNavigate();

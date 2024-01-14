@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import Slider from 'react-slick';
-
 import { useEffect, useState } from 'react';
+import Slider from 'react-slick';
 
 import '../style/slick-theme.css';
 import '../style/slick.css';

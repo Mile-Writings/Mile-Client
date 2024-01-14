@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import { useParams } from 'react-router-dom';
-
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';

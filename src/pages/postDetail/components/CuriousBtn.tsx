@@ -1,8 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useParams } from 'react-router-dom';
-
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { useGetCuriousInfo } from '../hooks/queries';
 
