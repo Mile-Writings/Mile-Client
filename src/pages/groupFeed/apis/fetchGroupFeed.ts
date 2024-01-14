@@ -16,7 +16,7 @@ export const fetchGroupFeedAuth = async (groupId: string) => {
 
 export const fetchTopTwoCuriousWriter = async (groupId: string) => {
   try {
-    const response = await client.get(`/api/moim/${groupId}/authenticate`);
+    const response = await client.get(`/api/moim/${groupId}/mostCuriousWriters`);
     return response.data;
   } catch (error) {
     console.error('에러:', error);
