@@ -82,6 +82,7 @@ const SubText = styled.p<{ isImage: boolean; isLast: boolean }>`
 const Image = styled.img<{ isLast: boolean }>`
   width: ${({ isLast }) => (isLast ? '16.8rem' : '22.4rem')};
   height: 16.8rem;
+  object-fit: cover;
 
   border-radius: 8px;
 `;
