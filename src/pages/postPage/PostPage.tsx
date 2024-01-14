@@ -1,17 +1,13 @@
 import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
 
-import { useState, useReducer } from 'react';
+import { useState } from 'react';
 
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
-import Spacing from '../../components/commons/Spacing';
 
-import {
-  EditorEditHeader, // 수정하기 -> 헤더
-  EditorTempNotExistHeader, // 임시저장 글 없음 -> 헤더
-  EditorTempExistHeader, // 임시저장 글 있음 -> 헤더
-} from '../../components/commons/Header';
+import { EditorTempExistHeader, EditorTempNotExistHeader } from '../../components/commons/Header';
+import Spacing from '../../components/commons/Spacing';
 
 const PostPage = () => {
   // 에디터 제목, 내용 저장 함수
@@ -63,7 +59,7 @@ export default PostPage;
 const PostPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   width: 100%;
-  align-items: center;
 `;

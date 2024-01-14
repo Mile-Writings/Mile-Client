@@ -1,15 +1,17 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useParams } from 'react-router-dom';
 
 import { useState } from 'react';
 
+import { useGetCuriousInfo } from '../hooks/queries';
+
 import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets/svgs';
 
-interface Curious {
-  curiousNum: number;
-}
-const CuriousBtn = ({ curiousNum }: Curious) => {
+const CuriousBtn = () => {
   const [isClick, setIsClick] = useState(false);
+  const { postId } = useParams();
+  const { data } = useGetCuriousInfo(postId || '');
 
   const handleIsClick = () => {
     setIsClick((prev) => !prev);
@@ -22,7 +24,7 @@ const CuriousBtn = ({ curiousNum }: Curious) => {
             {isClick ? <DetailWhiteFavoriteIc /> : <DetailPurpleFavoriteIc />}
             궁금해요
           </CuriousTextContainer>
-          <CuriousTextWrapper>{curiousNum}</CuriousTextWrapper>
+          <CuriousTextWrapper>{data?.data?.curiousCount}</CuriousTextWrapper>
         </CuriousTextWrapper>
       </CuriousBtnWrapper>
     </>

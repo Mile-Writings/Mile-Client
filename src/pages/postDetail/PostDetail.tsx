@@ -8,6 +8,7 @@ import { useGetPostDetail } from './hooks/queries';
 import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
 
+import logout from '../../utils/logout';
 import { CheckboxIc, DefaultProfileIc, HeaderLogoIc } from './../../assets/svgs';
 import Button from './../../components/commons/Button';
 import LogInOutBtn from './../../components/commons/LogInOutBtn';
@@ -47,7 +48,7 @@ const PostDetail = () => {
           <MyGroupBtn />
           <CommonBtnLayout>
             <MakeGroupBtn />
-            <LogInOutBtn>로그아웃</LogInOutBtn>
+            <LogInOutBtn onClick={logout}>로그아웃</LogInOutBtn>
           </CommonBtnLayout>
         </HeaderBtnLayout>
       </PostHeader>
@@ -82,7 +83,7 @@ const PostDetail = () => {
               <WriterDesc>{postData?.writerInfo && '아직 작가소개를 작성하지 않았어요'}</WriterDesc>
             </InfoWrapper>
           </WriterInfoContainer>
-          <CuriousBtn curiousNum={4}></CuriousBtn>
+          <CuriousBtn />
         </WriterInfoWrapper>
 
         <Comment />

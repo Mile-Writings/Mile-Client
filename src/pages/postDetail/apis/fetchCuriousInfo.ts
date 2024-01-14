@@ -12,12 +12,14 @@ interface GetCuriousInfo {
 const fetchCuriousInfo = async (postId: string) => {
   try {
     const token = localStorage.getItem('accessToken');
-    const { data } = await client.get<GetCuriousInfo>(`/api/post/${postId}/cusiousInfo`, {
+    console.log(token);
+    const { data } = await client.get<GetCuriousInfo>(`/api/post/${postId}/curiousInfo`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     console.log(data);
+    return data;
   } catch (err) {
     console.log(err);
   }
