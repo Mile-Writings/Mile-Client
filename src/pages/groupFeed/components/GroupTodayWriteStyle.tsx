@@ -4,10 +4,11 @@ import Button from '../../../components/commons/Button';
 
 interface GroupTodayWriteStylePropTypes {
   isMember: boolean;
+  groupId: number;
 }
 
 const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
-  const { isMember } = props;
+  const { isMember, groupId } = props;
   const onHandleSubmit = () => {
     // console.log('submit');
   };

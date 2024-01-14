@@ -46,7 +46,7 @@ const GroupFeed = () => {
       <GroupInfoWrapper>
         <GroupSideHeader />
         <GroupInfo>
-          <GroupTodayWriteStyle isMember={isMember} />
+          <GroupTodayWriteStyle isMember={isMember} groupId={groupId} />
           <Spacing marginBottom="6.4" />
           <GroupCuriousTitle
             mainText="궁금해요 버튼이 많은 2명의 프로필"
