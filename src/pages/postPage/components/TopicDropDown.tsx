@@ -1,12 +1,14 @@
-import { useRef, useState } from 'react';
-
 import styled from '@emotion/styled';
+
+import { useRef, useState } from 'react';
 
 import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
 import { ThisWeekTopic, PrevFirstTopic, PrevTopic } from './Topic';
+
+import { TOPIC_DUMMY_DATA } from '../constants/topicConstants';
+
 import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../assets/svgs';
 import useClickOutside from '../../../hooks/useClickOutside';
-import { TOPIC_DUMMY_DATA } from '../constants/topicConstants';
 
 const TopicDropDown = (props: DropDownPropsType) => {
   const { onClickListItem, selectedValue } = props;
@@ -28,8 +30,8 @@ const TopicDropDown = (props: DropDownPropsType) => {
   useClickOutside(dropDownRef, handleOutSideClick);
 
   return (
-    <TopicDropDownWrapper onClick={handleOnClick} ref={dropDownRef}>
-      <DropDownToggle>
+    <TopicDropDownWrapper ref={dropDownRef}>
+      <DropDownToggle onClick={handleOnClick}>
         <DropDownContent $contentWidth={29}>{selectedValue}</DropDownContent>
         {topicIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
       </DropDownToggle>
@@ -43,6 +45,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 topicName={item.topicName}
                 onClickHandler={onClickListItem}
                 selected={selectedValue === item.topicName}
+                onClickClose={setTopicIsOpen}
               />
             );
           } else if (idx === 1) {
@@ -53,6 +56,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 topicName={item.topicName}
                 onClickHandler={onClickListItem}
                 selected={selectedValue === item.topicName}
+                onClickClose={setTopicIsOpen}
               />
             );
           } else {
@@ -63,6 +67,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 topicName={item.topicName}
                 onClickHandler={onClickListItem}
                 selected={selectedValue === item.topicName}
+                onClickClose={setTopicIsOpen}
               />
             );
           }

@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
-
 import styled from '@emotion/styled';
 
+import React, { useRef, useState } from 'react';
+
 import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
+
 import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../assets/svgs';
 import useClickOutside from '../../../hooks/useClickOutside';
 
@@ -15,6 +16,7 @@ const WriterDropDown = (props: DropDownPropsType) => {
   // 선택된 값 저장
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickListItem('writer', e.currentTarget.innerText);
+    setWriterIsOpen(false);
   };
   // 필명 드롭다운 버튼 누르면 열림/닫힘
   const handleOnClick = () => {
@@ -28,8 +30,8 @@ const WriterDropDown = (props: DropDownPropsType) => {
   useClickOutside(dropDownRef, handleOutSideClick);
 
   return (
-    <WriterDropDownWrapper onClick={handleOnClick} ref={dropDownRef}>
-      <DropDownToggle>
+    <WriterDropDownWrapper ref={dropDownRef}>
+      <DropDownToggle onClick={handleOnClick}>
         <DropDownContent $contentWidth={14.6}>{selectedValue}</DropDownContent>
         {writerIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
       </DropDownToggle>
