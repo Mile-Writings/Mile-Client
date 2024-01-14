@@ -12,21 +12,21 @@ import GroupNameButton from './GroupNameButton';
 import Spacing from './../../../components/commons/Spacing';
 import { getGroupContent } from './../apis/getGroupContent';
 
-export interface moimPropTypes {
+interface groupPropTypes {
   moimId: number;
   moimName: string;
-  moimPosts: moimPostPropTypes[];
+  moimPosts: moimPostTypes[];
 }
 
-export interface moimPostPropTypes {
+export interface moimPostTypes {
   topicName: string;
-  imageUrl: string | null;
+  imageUrl: string;
   postTitle: string;
   postContent: string;
 }
 
 const Carousel = () => {
-  const [groupData, setGroupData] = useState<moimPropTypes[]>();
+  const [groupData, setGroupData] = useState<groupPropTypes[]>();
   const settings = {
     arrow: false,
     dots: false,
