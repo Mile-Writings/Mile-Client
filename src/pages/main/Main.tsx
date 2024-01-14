@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
 
-import Footer from './../../components/commons/Footer';
-import Spacing from './../../components/commons/Spacing';
 import Carousel from './components/Carousel';
 import FaqDropdown from './components/FaqDropdown';
 import FaqTitle from './components/FaqTitle';
@@ -12,6 +10,9 @@ import Manual from './components/Manual';
 import OnBoarding from './components/OnBoarding';
 import Ruler from './components/Ruler';
 import { FAQ_DATA } from './constants/faqData';
+
+import Footer from './../../components/commons/Footer';
+import Spacing from './../../components/commons/Spacing';
 
 const Main = () => {
   return (

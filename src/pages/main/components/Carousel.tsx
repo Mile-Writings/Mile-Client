@@ -5,11 +5,16 @@ import Slider from 'react-slick';
 
 import '../style/slick-theme.css';
 import '../style/slick.css';
+
 import Spacing from './../../../components/commons/Spacing';
 import { getGroupContent } from './../apis/getGroupContent';
 import { MoimPropTypes } from './../types/moimPost';
+
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
+
+import Spacing from './../../../components/commons/Spacing';
+import GROUP_CONTENT, { groupContentypes } from './../constants/constants';
 
 const Carousel = () => {
   const [groupData, setGroupData] = useState<MoimPropTypes[]>([]);

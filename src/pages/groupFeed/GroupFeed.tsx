@@ -12,7 +12,6 @@ import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
 import { useGroupFeedAuth, useGroupInfo } from './hooks/queries';
 
-
 import GroupFloatingBtn from '../../assets/svgs/groupFloatingBtn.svg';
 import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import GroupThumbnailImg from '../../assets/svgs/groupThumnailImg.svg';
@@ -50,7 +49,7 @@ const GroupFeed = () => {
       <GroupInfoWrapper>
         {groupInfoData && <GroupSideHeader groupInfoData={groupInfoData} />}
         <GroupInfo>
-          <GroupTodayWriteStyle isMember={isMember} />
+          <GroupTodayWriteStyle isMember={isMember} groupId={groupId} />
           <Spacing marginBottom="6.4" />
           <GroupCuriousTitle
             mainText="궁금해요 버튼이 많은 2명의 프로필"
