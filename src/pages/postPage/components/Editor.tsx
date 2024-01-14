@@ -1,7 +1,7 @@
-import { useRef, useCallback } from 'react';
-
 import styled from '@emotion/styled';
 import ReactQuill, { Quill } from 'react-quill';
+
+import { useRef, useCallback } from 'react';
 import 'react-quill/dist/quill.bubble.css';
 
 import Spacing from '../../../components/commons/Spacing';

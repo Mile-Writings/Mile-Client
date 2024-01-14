@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 
-import { HeaderLogoIc } from './../../assets/svgs';
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
+
+import { HeaderLogoIc } from './../../assets/svgs';
 import MakeGroupBtn from '../../pages/groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../../pages/groupFeed/components/MyGroupBtn';
 
@@ -12,6 +13,10 @@ interface OnClickProps {
 
 interface OnClickTwoProps {
   onClickTempSave: () => void;
+  onClickSubmit: () => void;
+}
+
+interface OnClickTempExistProps {
   onClickSubmit: () => void;
 }
 
@@ -42,7 +47,7 @@ export const LogOutHeader = ({ onClick }: OnClickProps) => {
 };
 
 //에디터 창에서 글을 수정하고 있을 때 헤더
-export const EditorHeader = ({ onClick }: OnClickProps) => {
+export const EditorEditHeader = ({ onClick }: OnClickProps) => {
   return (
     <HeaderWrapper>
       <HeaderLogoIc />
@@ -53,8 +58,8 @@ export const EditorHeader = ({ onClick }: OnClickProps) => {
   );
 };
 
-//에디터 창에서 글을 쓰고 있을 때
-export const EditorHeaderTemp = ({ onClickTempSave, onClickSubmit }: OnClickTwoProps) => {
+// 임시저장 글 존재 X -> 에디터 창에서 글을 쓰고 있을 때
+export const EditorTempNotExistHeader = ({ onClickTempSave, onClickSubmit }: OnClickTwoProps) => {
   return (
     <HeaderWrapper>
       <HeaderLogoIc />
@@ -62,6 +67,20 @@ export const EditorHeaderTemp = ({ onClickTempSave, onClickSubmit }: OnClickTwoP
         <Button typeName="deleteTempType" onClick={onClickTempSave}>
           임시저장
         </Button>
+        <Button typeName="submitEditType" onClick={onClickSubmit}>
+          글 제출하기
+        </Button>
+      </CommonBtnLayout>
+    </HeaderWrapper>
+  );
+};
+
+// 임시저장 글 존재 O -> 에디터 창에서 글을 쓰고 있을 때
+export const EditorTempExistHeader = ({ onClickSubmit }: OnClickTempExistProps) => {
+  return (
+    <HeaderWrapper>
+      <HeaderLogoIc />
+      <CommonBtnLayout>
         <Button typeName="submitEditType" onClick={onClickSubmit}>
           글 제출하기
         </Button>
