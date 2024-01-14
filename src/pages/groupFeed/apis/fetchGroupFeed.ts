@@ -61,3 +61,32 @@ export const fetchTodayTopic = async (groupId: string) => {
     console.error('에러:', error);
   }
 };
+
+interface CuriousWriterPropTypes {
+  data: {
+    popularWriters: [
+      {
+        writerName: string;
+        information: string;
+      },
+      {
+        writerName: string;
+        information: string;
+      },
+    ];
+  };
+  status: number;
+  message: string;
+}
+
+export const fetchCuriousWriter = async (groupId: string) => {
+  try {
+    const response = await client.get<CuriousWriterPropTypes>(
+      `/api/moim/${groupId}/mostCuriousWriters`,
+    );
+    console.log(response.data, '데이터');
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};

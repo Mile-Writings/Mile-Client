@@ -51,14 +51,7 @@ export const useGroupInfo = (groupId: string): GroupInfoQueryResult => {
   return { groupInfoData, isLoading, isError, error };
 };
 
-interface WritingStyleQueryResult {
-  content: boolean;
-  isLoading: boolean;
-  isError: boolean;
-  error: Error | null;
-}
-
-export const useTodayWritingStyle = (groupId: string): WritingStyleQueryResult => {
+export const useTodayWritingStyle = (groupId: string) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getTodayWritingStyle, groupId],
     queryFn: () => fetchTodayTopic(groupId),
