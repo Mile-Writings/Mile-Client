@@ -1,11 +1,15 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
+
+import { groupContentPropTypes } from '../types/moimPost';
 
 import { MainGroupRoutingBtn as MainGroupRoutingBtnIcon } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
-const Curious = () => {
+const CuriousGroup = ({ groupId }: groupContentPropTypes) => {
+  const navigate = useNavigate();
   const handleOnClick = () => {
-    alert('Button Clicked!');
+    navigate(`/group/${groupId}`);
   };
 
   return (
@@ -22,7 +26,7 @@ const Curious = () => {
   );
 };
 
-export default Curious;
+export default CuriousGroup;
 
 const CuriousContentContainer = styled.section`
   display: flex;
