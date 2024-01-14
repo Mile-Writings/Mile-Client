@@ -1,15 +1,17 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
+import Comment from './components/Comment';
+import CuriousBtn from './components/CuriousBtn';
+
+import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
+import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
+
 import Image from './../../assets/images/defaultSeaImage.png';
 import { CheckboxIc, DefaultProfileIc, HeaderLogoIc } from './../../assets/svgs';
 import Button from './../../components/commons/Button';
 import LogInOutBtn from './../../components/commons/LogInOutBtn';
 import Spacing from './../../components/commons/Spacing';
-import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
-import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
-import Comment from './components/Comment';
-import CuriousBtn from './components/CuriousBtn';
 
 const PostDetail = () => {
   const navigate = useNavigate();
