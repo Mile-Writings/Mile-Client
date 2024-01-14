@@ -7,7 +7,7 @@ import MakeGroupBtn from '../../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../../groupFeed/components/MyGroupBtn';
 
 interface OnClickProps {
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 // 메인 페이지 헤더
