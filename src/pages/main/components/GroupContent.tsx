@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 
+import Curious from './CuriousGroup';
+
 import Spacing from './.././../../components/commons/Spacing';
 import { MoimPostPropTypes } from './../constants/constants';
-import Curious from './CuriousGroup';
 
 const GroupContent = ({
   topicName,
@@ -67,7 +68,7 @@ const SubText = styled.p<{ isImage: boolean; isLast: boolean }>`
           ? '68.2rem'
           : '85.8rem'};
   height: 8.5rem;
-  overflow: hidden;
+  overflow-y: hidden;
 
   color: ${({ theme }) => theme.colors.gray80};
   text-overflow: ellipsis;
@@ -77,4 +78,6 @@ const SubText = styled.p<{ isImage: boolean; isLast: boolean }>`
 const Image = styled.img<{ isLast: boolean }>`
   width: ${({ isLast }) => (isLast ? '16.8rem' : '22.4rem')};
   height: 16.8rem;
+
+  border-radius: 8px;
 `;
