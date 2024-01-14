@@ -46,7 +46,7 @@ const GroupFeed = () => {
       <GroupFeedThumnail imageUrl={groupInfoData?.imageUrl} />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
-        <GroupSideHeader groupInfoData={groupInfoData} />
+        {groupInfoData && <GroupSideHeader groupInfoData={groupInfoData} />}
         <GroupInfo>
           <GroupTodayWriteStyle isMember={isMember} />
           <Spacing marginBottom="6.4" />
@@ -87,7 +87,7 @@ const GroupFeedWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
 
-const GroupFeedThumnail = styled.div<{ imageUrl: string }>`
+const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
   width: 136.6rem;
   height: 37rem;
 

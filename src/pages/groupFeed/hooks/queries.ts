@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchGroupFeedAuth, fetchGroupInfo } from '../apis/fetchGroupFeed';
 
 interface GroupFeedAuthQueryResult {
-  isMember: boolean;
+  isMember: boolean | undefined;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
@@ -21,13 +21,13 @@ export const useGroupFeedAuth = (groupId: string): GroupFeedAuthQueryResult => {
 };
 
 interface GroupInfoQueryResult {
-  groupInfoData: {
+  groupInfoData?: {
     imageUrl: string;
     moimName: string;
     ownerName: string;
     startDate: string;
     writerCount: number;
-    description: string;
+    description: string | undefined;
   };
   isLoading: boolean;
   isError: boolean;
@@ -40,7 +40,7 @@ export const useGroupInfo = (groupId: string): GroupInfoQueryResult => {
     queryFn: () => fetchGroupInfo(groupId),
   });
 
-  const groupInfoData = data && data.data;
+  const groupInfoData = data?.data;
 
   return { groupInfoData, isLoading, isError, error };
 };

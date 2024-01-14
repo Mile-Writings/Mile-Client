@@ -9,7 +9,7 @@ interface GroupInfoPropTypes {
   ownerName: string;
   startDate: string;
   writerCount: number;
-  description: string;
+  description?: string;
 }
 
 const GroupSideHeader = (props: { groupInfoData: GroupInfoPropTypes }) => {
