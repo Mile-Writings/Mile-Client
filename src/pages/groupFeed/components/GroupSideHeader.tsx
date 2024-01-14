@@ -5,7 +5,6 @@ import { GroupDateIc, GroupLeaderIc, GroupMemberIc } from '../../../assets/svgs'
 import Spacing from '../../../components/commons/Spacing';
 
 interface GroupInfoPropTypes {
-  imageUrl: string;
   moimName: string;
   ownerName: string;
   startDate: string;
@@ -19,6 +18,7 @@ interface GroupSideHeaderProps {
 
 const GroupSideHeader = (props: GroupSideHeaderProps) => {
   const { groupInfoData } = props;
+  console.log(groupInfoData);
 
   return (
     <GroupSideHeaderWrapper>

@@ -19,7 +19,6 @@ import { GroupFeedHeader, LogOutHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 interface GroupInfoPropTypes {
-  imageUrl: string;
   moimName: string;
   ownerName: string;
   startDate: string;
@@ -101,7 +100,7 @@ const GroupFeedThumnail = styled.div<{ groupInfoData: GroupInfoPropTypes }>`
   height: 37rem;
 
   background-image: ${({ groupInfoData }) =>
-    groupInfoData ? `url(${groupInfoData.imageUrl})` : `url(${GroupThumbnailImg})`};
+    groupInfoData ? `url(${GroupThumbnailImg})` : `url(${GroupThumbnailImg})`};
 `;
 const GroupInfoWrapper = styled.div`
   display: flex;
