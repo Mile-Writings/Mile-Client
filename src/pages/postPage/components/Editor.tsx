@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import ReactQuill, { Quill } from 'react-quill';
 
-import { useRef, useCallback } from 'react';
+import React, { useRef, useCallback } from 'react';
 import 'react-quill/dist/quill.bubble.css';
 
 import Spacing from '../../../components/commons/Spacing';
@@ -61,7 +62,6 @@ Quill.register({ 'formats/hr': Divider });
 const CustomToolbar = () => {
   return (
     <>
-      <Title placeholder="제목을 적어주세요" />
       <Spacing marginBottom="2.4" />
       <div id="toolbar">
         <span className="ql-formats">
@@ -114,7 +114,13 @@ const CustomToolbar = () => {
   );
 };
 
-const Editor = () => {
+interface EditorPropTypes {
+  saveTitle: (title: string) => void;
+  saveContent: (content: string) => void;
+}
+
+const Editor = (props: EditorPropTypes) => {
+  const { saveTitle, saveContent } = props;
   // 구분선 커스텀 동작 함수
   const quillRef = useRef<ReactQuill | null>(null);
 
@@ -132,6 +138,11 @@ const Editor = () => {
     quill.insertEmbed(index + 1, 'divider', true, 'user');
     quill.setSelection(index + 2, 0, 'user');
   }, []);
+
+  // 에디터 제목 저장
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    saveTitle(e.target.value);
+  };
 
   const modules = {
     toolbar: {
@@ -159,6 +170,7 @@ const Editor = () => {
 
   return (
     <div className="text-editor">
+      <Title type="text" placeholder="제목을 적어주세요" onChange={handleTitleChange} />
       <CustomToolbar />
       <ReactQuill
         ref={quillRef}
@@ -166,6 +178,7 @@ const Editor = () => {
         placeholder="글을 작성해 주세요"
         modules={modules}
         formats={formats}
+        onChange={saveContent} // 에디터 내용 저장
       />
     </div>
   );
