@@ -1,17 +1,9 @@
 import styled from '@emotion/styled';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useEffect } from 'react';
-
-import fetchPostDetail from './apis/fetchPostDetail';
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
-
-import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
-import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
-
-import Comment from './components/Comment';
-import CuriousBtn from './components/CuriousBtn';
+import { useGetPostDetail } from './hooks/queries';
 
 import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
@@ -24,14 +16,21 @@ import Spacing from './../../components/commons/Spacing';
 
 const PostDetail = () => {
   const navigate = useNavigate();
-  const { postId } = useParams() || '';
+  const { postId } = useParams();
 
-  useEffect(() => {
-    if (typeof postId === 'string') {
-      const data = fetchPostDetail(postId);
-      console.log(data);
-    }
-  }, []);
+  const { data, isError, isLoading } = useGetPostDetail(postId || '');
+
+  if (isError) {
+    navigate('/error');
+  }
+  // 리팩토링 전 코드
+  // useEffect(() => {
+  //   if (typeof postId === 'string') {
+  //     const data = fetchPostDetail(postId);
+  //     console.log(data);
+  //   }
+  // }, []);
+
   return (
     <>
       <PostHeader>
@@ -53,7 +52,7 @@ const PostDetail = () => {
       <PostDetailWrapper>
         <PostDetailContainer>
           <InfoTextBox>
-            <TitleText>필멸의 방정식</TitleText>
+            <TitleText>{data?.topic}</TitleText>
             <DateText>2023년 6월 8일</DateText>
           </InfoTextBox>
           <ButtonWrapper>
