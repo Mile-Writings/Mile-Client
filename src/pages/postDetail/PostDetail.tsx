@@ -10,6 +10,12 @@ import CuriousBtn from './components/CuriousBtn';
 import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
 
+import Comment from './components/Comment';
+import CuriousBtn from './components/CuriousBtn';
+
+import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
+import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
+
 import Image from './../../assets/images/defaultSeaImage.png';
 import { CheckboxIc, DefaultProfileIc, HeaderLogoIc } from './../../assets/svgs';
 import Button from './../../components/commons/Button';
