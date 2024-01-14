@@ -1,16 +1,25 @@
-export interface MoimPostPropTypes {
+export interface moimPostPropTypes {
   topicName: string;
   imageUrl: string | null;
   postTitle: string;
   postContent: string;
 }
 
-export interface MoimPropTypes {
+export interface moimPropTypes {
   moimId: number;
   moimName: string;
-  moimPosts: MoimPostPropTypes[];
+  moimPosts: moimPostPropTypes[];
 }
 
-export interface DataPropTypes {
-  moim: MoimPropTypes;
+export interface dataPropTypes {
+  moim: moimPropTypes;
+}
+
+export interface groupContentPropTypes {
+  topicName: string;
+  imageUrl: string | null;
+  postTitle: string;
+  postContent: string;
+  groupId: number;
+  isLast: boolean;
 }

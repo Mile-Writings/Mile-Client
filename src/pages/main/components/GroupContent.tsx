@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-import Curious from './CuriousGroup';
+import CuriousGroup from './CuriousGroup';
 
-import { MoimPostPropTypes } from '../types/moimPost';
+import { groupContentPropTypes } from '../types/moimPost';
 
 import Spacing from './.././../../components/commons/Spacing';
 
@@ -11,8 +11,9 @@ const GroupContent = ({
   imageUrl,
   postTitle,
   postContent,
+  groupId,
   isLast,
-}: MoimPostPropTypes & { isLast: boolean }) => {
+}: groupContentPropTypes) => {
   const hasImage = () => {
     return imageUrl !== null;
   };
@@ -28,7 +29,16 @@ const GroupContent = ({
         </SubText>
       </TextContainer>
       {imageUrl && <Image src={imageUrl} isLast={isLast} alt="group-content-image" />}
-      {isLast && <Curious />}
+      {isLast && (
+        <CuriousGroup
+          groupId={groupId}
+          topicName={topicName}
+          imageUrl={imageUrl}
+          postTitle={postTitle}
+          postContent={postContent}
+          isLast={isLast}
+        />
+      )}
     </ContentLayout>
   );
 };
