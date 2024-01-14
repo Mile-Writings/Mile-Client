@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchGroupFeedAuth, fetchTodayWritingStyle } from '../apis/fetchGroupFeed';
+import { fetchGroupFeedAuth, fetchTodayWritingStyle, fetchGroupInfo } from '../apis/fetchGroupFeed';
 
 export const QUERY_KEY_GROUPFEED = {
   getGroupFeedAuth: 'getGroupFeedAuth',
@@ -8,7 +8,7 @@ export const QUERY_KEY_GROUPFEED = {
 };
 
 interface GroupFeedAuthQueryResult {
-  isMember: boolean;
+  isMember: boolean | undefined;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
@@ -25,6 +25,32 @@ export const useGroupFeedAuth = (groupId: string): GroupFeedAuthQueryResult => {
   return { isMember, isLoading, isError, error };
 };
 
+interface GroupInfoQueryResult {
+  groupInfoData?: {
+    imageUrl: string;
+    moimName: string;
+    ownerName: string;
+    startDate: string;
+    writerCount: number;
+    description: string | undefined;
+  };
+
+  isLoading: boolean;
+  isError: boolean;
+  error: Error | null;
+}
+
+export const useGroupInfo = (groupId: string): GroupInfoQueryResult => {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['groupFeed_Info_moimId', groupId],
+    queryFn: () => fetchGroupInfo(groupId),
+  });
+
+  const groupInfoData = data?.data;
+
+  return { groupInfoData, isLoading, isError, error };
+};
+
 interface WritingStyleQueryResult {
   content: boolean;
   isLoading: boolean;
@@ -39,6 +65,5 @@ export const useTodayWritingStyle = (groupId: string): WritingStyleQueryResult =
   });
 
   const content = data && data.data.content;
-
   return { content, isLoading, isError, error };
 };

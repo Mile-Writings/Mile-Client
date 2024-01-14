@@ -5,7 +5,7 @@ import { useTodayWritingStyle } from '../hooks/queries';
 import Button from '../../../components/commons/Button';
 
 interface GroupTodayWriteStylePropTypes {
-  isMember: boolean; //나의 글 작성하기 권한 확인
+  isMember: boolean | undefined; //나의 글 작성하기 권한 확인
   groupId: string | undefined; //오늘의 주제
 }
 

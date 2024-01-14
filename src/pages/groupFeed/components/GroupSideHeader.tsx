@@ -5,21 +5,47 @@ import GroupInfoBox from './GroupInfoBox';
 import { GroupDateIc, GroupLeaderIc, GroupMemberIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
-const GroupSideHeader = () => {
+interface GroupInfoPropTypes {
+  moimName: string;
+  ownerName: string;
+  startDate: string;
+  writerCount: number;
+  description?: string;
+}
+
+const GroupSideHeader = (props: { groupInfoData: GroupInfoPropTypes }) => {
+  const { groupInfoData } = props;
+
   return (
     <GroupSideHeaderWrapper>
-      <GroupSideHeaderTitle>그룹명자리입니다</GroupSideHeaderTitle>
-      <Spacing marginBottom="2.8" />
-      <GroupSideHeaderLayout>
-        <GroupInfoBox icon={<GroupLeaderIc />} title="모임방장" detail="방장입니다" />
-        <GroupInfoBox icon={<GroupDateIc />} title="설립날짜" detail="24.12.25" />
-        <GroupInfoBox icon={<GroupMemberIc />} title="모임인원" detail="11명의 짜미들" />
-      </GroupSideHeaderLayout>
-      <Spacing marginBottom="2.4" />
-      <GroupSideHeaderDetailBox>
-        <DetailBoxRect />
-        일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십
-      </GroupSideHeaderDetailBox>
+      {groupInfoData && (
+        <>
+          <GroupSideHeaderTitle>{groupInfoData.moimName}</GroupSideHeaderTitle>
+          <Spacing marginBottom="2.8" />
+          <GroupSideHeaderLayout>
+            <GroupInfoBox
+              icon={<GroupLeaderIc />}
+              title="모임방장"
+              detail={groupInfoData.ownerName}
+            />
+            <GroupInfoBox
+              icon={<GroupDateIc />}
+              title="설립날짜"
+              detail={groupInfoData.startDate}
+            />
+            <GroupInfoBox
+              icon={<GroupMemberIc />}
+              title="모임인원"
+              detail={`${groupInfoData.writerCount}명의 작가들`}
+            />
+          </GroupSideHeaderLayout>
+          <Spacing marginBottom="2.4" />
+          <GroupSideHeaderDetailBox>
+            <DetailBoxRect />
+            {groupInfoData.description}
+          </GroupSideHeaderDetailBox>{' '}
+        </>
+      )}
     </GroupSideHeaderWrapper>
   );
 };
