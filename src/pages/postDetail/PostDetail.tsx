@@ -49,7 +49,7 @@ const PostDetail = () => {
           </CommonBtnLayout>
         </HeaderBtnLayout>
       </PostHeader>
-      <ThumnailImg src={postData?.imageUrl} />
+      <ThumnailImg src={postData?.imageUrl} alt={'썸네일 이미지'} />
       <Spacing marginBottom="4.8" />
       <PostDetailWrapper>
         <PostDetailContainer>
