@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import '../style/slick-theme.css';
 import '../style/slick.css';
+
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
 

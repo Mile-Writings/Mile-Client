@@ -10,10 +10,11 @@ import CuriousProfile from './components/CuriousProfile';
 import GroupCuriousTitle from './components/GroupCuriousTitle';
 import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
-import { useGroupFeedAuth } from './hooks/queries';
+import { useGroupFeedAuth, useGroupInfo } from './hooks/queries';
 
 import GroupFloatingBtn from '../../assets/svgs/groupFloatingBtn.svg';
 import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
+import GroupThumbnailImg from '../../assets/svgs/groupThumnailImg.svg';
 import Footer from '../../components/commons/Footer';
 import { GroupFeedHeader, LogOutHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
@@ -21,6 +22,8 @@ import Spacing from '../../components/commons/Spacing';
 const GroupFeed = () => {
   const { groupId } = useParams();
   const { isMember, isLoading, isError, error } = useGroupFeedAuth(groupId || '');
+  const { groupInfoData } = useGroupInfo(groupId || '');
+
   const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
   const accessToken = localStorage.getItem('accessToken');
 
@@ -41,12 +44,12 @@ const GroupFeed = () => {
   return (
     <GroupFeedWrapper>
       {accessToken ? <GroupFeedHeader /> : <LogOutHeader onClick={handleLogin} />}
-      <GroupFeedThumnail />
+      <GroupFeedThumnail imageUrl={groupInfoData?.imageUrl} />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
-        <GroupSideHeader />
+        {groupInfoData && <GroupSideHeader groupInfoData={groupInfoData} />}
         <GroupInfo>
-          <GroupTodayWriteStyle isMember={isMember} />
+          <GroupTodayWriteStyle isMember={isMember} groupId={groupId} />
           <Spacing marginBottom="6.4" />
           <GroupCuriousTitle
             mainText="궁금해요 버튼이 많은 2명의 프로필"
@@ -85,13 +88,13 @@ const GroupFeedWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
 
-const GroupFeedThumnail = styled.div`
+const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
   width: 136.6rem;
   height: 37rem;
 
-  background-image: url('../../src/assets/images/commonThumbnail.png');
+  background-image: ${({ imageUrl }) => `url(${imageUrl || GroupThumbnailImg})`};
+  background-size: cover;
 `;
-
 const GroupInfoWrapper = styled.div`
   display: flex;
   gap: 3.9rem;

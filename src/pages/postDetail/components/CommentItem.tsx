@@ -3,14 +3,14 @@ import styled from '@emotion/styled';
 import { DefaultProfileIc, DetailCommentMeatBallIc } from '../../../assets/svgs';
 
 interface CommentItem {
-  id: number;
+  // id?: number;  추후 사용될지 모름
   name: string;
   moimName: string;
   content: string;
   isMyComment: boolean;
 }
 
-const CommentItem = ({ id, name, moimName, content, isMyComment }: CommentItem) => {
+const CommentItem = ({ name, moimName, content, isMyComment }: CommentItem) => {
   return (
     <CommentItemWrapper>
       <DefaultProfileIc />
