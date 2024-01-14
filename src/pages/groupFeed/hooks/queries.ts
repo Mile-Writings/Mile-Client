@@ -32,7 +32,7 @@ interface WritingStyleQueryResult {
   error: Error | null;
 }
 
-export const useWritingStyle = (groupId: string): WritingStyleQueryResult => {
+export const useTodayWritingStyle = (groupId: string): WritingStyleQueryResult => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getTodayWritingStyle, groupId],
     queryFn: () => fetchTodayWritingStyle(groupId),

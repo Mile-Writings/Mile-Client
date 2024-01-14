@@ -1,23 +1,33 @@
 import styled from '@emotion/styled';
 
+import { useTodayWritingStyle } from '../hooks/queries';
+
 import Button from '../../../components/commons/Button';
 
 interface GroupTodayWriteStylePropTypes {
-  isMember: boolean;
-  groupId: number;
+  isMember: boolean; //나의 글 작성하기 권한 확인
+  groupId: string | undefined; //오늘의 주제
 }
 
 const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
   const { isMember, groupId } = props;
+  const { content, isLoading, isError, error } = useTodayWritingStyle(groupId || '');
   const onHandleSubmit = () => {
     // console.log('submit');
   };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error fetching data..{error?.message}</div>;
+  }
   return (
     <TodayWriteStyleWrapper>
       <TextLayout>
         <MainText>글감 카테고리 자리</MainText>
         <SubText>
-          오늘의 주제는 <SubBoldText>글감자리</SubBoldText> 입니다.
+          오늘의 주제는 <SubBoldText>{content}</SubBoldText> 입니다.
         </SubText>
       </TextLayout>
       {isMember && (
@@ -56,9 +66,11 @@ const MainText = styled.div`
 const SubText = styled.div`
   color: ${({ theme }) => theme.colors.gray80};
 
-  ${({ theme }) => theme.fonts.title8};
+  ${({ theme }) => theme.fonts.subtitle4};
 `;
 
 const SubBoldText = styled.span`
   color: ${({ theme }) => theme.colors.gray90};
+
+  ${({ theme }) => theme.fonts.title8};
 `;
