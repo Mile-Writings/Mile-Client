@@ -1,4 +1,4 @@
-import { moimPropTypes } from '../types/moimPost';
+import { moimPropTypes } from '../components/Carousel';
 
 import { client } from '../../../utils/apis/axios';
 
