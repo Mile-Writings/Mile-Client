@@ -3,10 +3,11 @@ import Slider from 'react-slick';
 
 import '../style/slick-theme.css';
 import '../style/slick.css';
-import Spacing from './../../../components/commons/Spacing';
-import GROUP_CONTENT, { groupContentypes } from './../constants/constants';
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
+
+import Spacing from './../../../components/commons/Spacing';
+import GROUP_CONTENT, { groupContentypes } from './../constants/constants';
 
 const Carousel = () => {
   const settings = {
@@ -25,7 +26,7 @@ const Carousel = () => {
         <GroupNameButton />
         <Spacing marginBottom="1.6" />
         <CarouselContainer>
-          <CarouselBox {...settings}>
+          <CarouselBox {...settings} className="main">
             {GROUP_CONTENT.map(({ id, topic, maintext, subtext, image }: groupContentypes) => (
               <GroupContent
                 key={id}
