@@ -45,9 +45,17 @@ export const fetchGroupInfo = async (groupId: string) => {
   }
 };
 
+interface TodayTopicPropTypes {
+  data: {
+    content: string;
+  };
+  status: number;
+  message: string;
+}
+
 export const fetchTodayTopic = async (groupId: string) => {
   try {
-    const response = await client.get(`/api/moim/${groupId}/topic`);
+    const response = await client.get<TodayTopicPropTypes>(`/api/moim/${groupId}/topic`);
     return response.data;
   } catch (error) {
     console.error('에러:', error);
