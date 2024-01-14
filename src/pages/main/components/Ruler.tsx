@@ -47,7 +47,7 @@ const RulerHeaderContainer = styled.section`
   display: flex;
   flex-direction: column;
 
-  background-color: ${({ theme }) => theme.colors.mileGreen};
+  background-color: ${({ theme }) => theme.colors.middleGreen};
   border-radius: 1rem;
 
   ${({ theme }) => theme.fonts.title11};
@@ -77,7 +77,7 @@ const Pipe = styled.div`
   border-radius: 10rem;
 `;
 
-const KeyWord = styled.p`
+const KeyWord = styled.div`
   width: fit-content;
 
   white-space: nowrap;
