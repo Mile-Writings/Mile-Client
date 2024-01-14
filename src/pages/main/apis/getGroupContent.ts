@@ -1,6 +1,10 @@
-import { dataPropTypes } from '../types/moimPost';
+import { moimPropTypes } from '../types/moimPost';
 
 import { client } from '../../../utils/apis/axios';
+
+export interface dataPropTypes {
+  data: moimPropTypes;
+}
 
 export const getGroupContent = async () => {
   try {

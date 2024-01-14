@@ -2,9 +2,16 @@ import styled from '@emotion/styled';
 
 import CuriousGroup from './CuriousGroup';
 
-import { groupContentPropTypes } from '../types/moimPost';
-
 import Spacing from './.././../../components/commons/Spacing';
+
+export interface groupContentPropTypes {
+  topicName: string;
+  imageUrl: string | null;
+  postTitle: string;
+  postContent: string;
+  groupId: number;
+  isLast: boolean;
+}
 
 const GroupContent = ({
   topicName,

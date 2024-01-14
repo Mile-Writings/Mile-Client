@@ -8,13 +8,25 @@ import '../style/slick.css';
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
 
-import { moimPropTypes } from '../types/moimPost';
-
 import Spacing from './../../../components/commons/Spacing';
 import { getGroupContent } from './../apis/getGroupContent';
 
+export interface moimPropTypes {
+  moim: moimPropTypes;
+  moimId: number;
+  moimName: string;
+  moimPosts: moimPostPropTypes[];
+}
+
+export interface moimPostPropTypes {
+  topicName: string;
+  imageUrl: string | null;
+  postTitle: string;
+  postContent: string;
+}
+
 const Carousel = () => {
-  const [groupData, setGroupData] = useState<moimPropTypes[]>([]);
+  const [groupData, setGroupData] = useState<moimPropTypes[]>();
   const settings = {
     arrow: false,
     dots: false,

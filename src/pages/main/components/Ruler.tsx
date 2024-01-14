@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 
+import { KEYWORD_DATA } from '../constants/keyword';
+
 import { MainGraphicGradationIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-import { KEYWORD_DATA } from '../constants/keyword';
 
 const Ruler = () => {
   return (
