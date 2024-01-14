@@ -1,10 +1,27 @@
+import { useEffect, useState } from 'react';
+
 import styled from '@emotion/styled';
 
 import { MainGraphicGradationIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-import { KEYWORD_DATA } from '../constants/keyword';
+import { getRecommendTopic } from '../apis/getRecommendTopic';
+import { recommendPropsTypes } from '../types/recommendTopic';
 
 const Ruler = () => {
+  const [recommendTopicData, setRecommendTopicData] = useState<recommendPropsTypes>();
+
+  useEffect(() => {
+    const getRecommendData = async () => {
+      try {
+        const response = await getRecommendTopic();
+        setRecommendTopicData(response?.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getRecommendData();
+  }, []);
+
   return (
     <RulerWrapper>
       <RulerLayout>
@@ -14,11 +31,7 @@ const Ruler = () => {
           <RulerContentBox>
             <TodayKeyWord>오늘의 글감</TodayKeyWord>
             <Pipe />
-            <KeyWord>
-              {KEYWORD_DATA.map((item) => (
-                <p key={item.recommend}>{item.recommend}</p>
-              ))}
-            </KeyWord>
+            <KeyWord>{recommendTopicData?.content}</KeyWord>
           </RulerContentBox>
           <Spacing marginBottom="1.2" />
         </RulerHeaderContainer>
@@ -47,9 +60,8 @@ const RulerHeaderContainer = styled.section`
   display: flex;
   flex-direction: column;
 
-  background-color: ${({ theme }) => theme.colors.mileGreen};
+  background-color: ${({ theme }) => theme.colors.middleGreen};
   border-radius: 1rem;
-
   ${({ theme }) => theme.fonts.title11};
 `;
 
@@ -77,7 +89,7 @@ const Pipe = styled.div`
   border-radius: 10rem;
 `;
 
-const KeyWord = styled.p`
+const KeyWord = styled.div`
   width: fit-content;
 
   white-space: nowrap;

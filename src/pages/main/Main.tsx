@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Carousel from './components/Carousel';
 import FaqDropdown from './components/FaqDropdown';
 import FaqTitle from './components/FaqTitle';
-import GroupTitle from './components/GroupTitle';
+import GroupCarouselTitle from './components/GroupCarouselTitle';
 import Introduction from './components/Introduction';
 import { MainHeader } from './components/MainHeader';
 import Manual from './components/Manual';
@@ -20,9 +20,7 @@ const Main = () => {
       <MainHeader />
       <OnBoarding />
       <CarouselComponentLayout>
-        <GroupTitle />
-        <Carousel />
-        <Carousel />
+        <GroupCarouselTitle />
         <Carousel />
       </CarouselComponentLayout>
       <Ruler />

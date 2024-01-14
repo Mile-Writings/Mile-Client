@@ -1,8 +1,15 @@
+import { useEffect, useState } from 'react';
+
 import styled from '@emotion/styled';
 import Slider from 'react-slick';
 
 import '../style/slick-theme.css';
 import '../style/slick.css';
+
+import Spacing from './../../../components/commons/Spacing';
+import { getGroupContent } from './../apis/getGroupContent';
+import { MoimPropTypes } from './../types/moimPost';
+
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
 
@@ -10,6 +17,8 @@ import Spacing from './../../../components/commons/Spacing';
 import GROUP_CONTENT, { groupContentypes } from './../constants/constants';
 
 const Carousel = () => {
+  const [groupData, setGroupData] = useState<MoimPropTypes[]>([]);
+
   const settings = {
     arrow: false,
     dots: false,
@@ -19,28 +28,46 @@ const Carousel = () => {
     slidesToScroll: 1,
   };
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await getGroupContent();
+        setGroupData(response?.data?.moim);
+        console.log(response?.data?.moim);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, []);
+
   return (
     <CarouselWrapper>
       <Spacing marginBottom="3.6" />
-      <CarouselWithButtonLayout>
-        <GroupNameButton />
-        <Spacing marginBottom="1.6" />
-        <CarouselContainer>
-          <CarouselBox {...settings} className="main">
-            {GROUP_CONTENT.map(({ id, topic, maintext, subtext, image }: groupContentypes) => (
-              <GroupContent
-                key={id}
-                id={id}
-                topic={topic}
-                maintext={maintext}
-                subtext={subtext}
-                image={image}
-                isLast={id === GROUP_CONTENT.length}
-              />
-            ))}
-          </CarouselBox>
-        </CarouselContainer>
-      </CarouselWithButtonLayout>
+      {groupData && (
+        <section>
+          {groupData.map((moim) => (
+            <CarouselWithButtonLayout key={moim.moimId}>
+              <GroupNameButton buttonName={moim.moimName} />
+              <Spacing marginBottom="1.6" />
+              <CarouselContainer>
+                <CarouselBox {...settings}>
+                  {moim.moimPosts.map((post, index) => (
+                    <GroupContent
+                      key={index}
+                      topicName={post.topicName}
+                      imageUrl={post.imageUrl}
+                      postTitle={post.postTitle}
+                      postContent={post.postContent}
+                      isLast={index === moim.moimPosts.length - 1}
+                    />
+                  ))}
+                </CarouselBox>
+              </CarouselContainer>
+            </CarouselWithButtonLayout>
+          ))}
+        </section>
+      )}
     </CarouselWrapper>
   );
 };
@@ -54,7 +81,9 @@ const CarouselWrapper = styled.div`
   justify-content: center;
 `;
 
-const CarouselWithButtonLayout = styled.section``;
+const CarouselWithButtonLayout = styled.div`
+  margin-bottom: 3.2rem;
+`;
 
 const CarouselContainer = styled.div`
   display: flex;
