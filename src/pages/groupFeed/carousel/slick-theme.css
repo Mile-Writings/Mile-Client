@@ -39,7 +39,7 @@
   display: none;
 }
 
-.slick-prev {
+.groupFeedCarousel .slick-prev {
   left: -2.5rem;
 }
 [dir='rtl'] .slick-prev {
@@ -53,7 +53,7 @@
   content: '→';
 }
 
-.slick-next {
+.groupFeedCarousel .slick-next {
   right: -2.5rem;
 }
 [dir='rtl'] .slick-next {
