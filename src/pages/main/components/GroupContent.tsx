@@ -58,7 +58,7 @@ const TextContainer = styled.div`
 `;
 
 const SubText = styled.p<{ isImage: boolean; isLast: boolean }>`
-  flex-shrink: 0;
+  display: -webkit-box;
   width: ${({ isImage, isLast }) =>
     isImage && isLast
       ? '47.8rem'
@@ -68,10 +68,14 @@ const SubText = styled.p<{ isImage: boolean; isLast: boolean }>`
           ? '68.2rem'
           : '85.8rem'};
   height: 8.5rem;
-  overflow-y: hidden;
+  overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray80};
   text-overflow: ellipsis;
+
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+
   ${({ theme }) => theme.fonts.body3};
 `;
 
