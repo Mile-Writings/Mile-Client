@@ -11,6 +11,10 @@ interface OnClickProps {
   onClick: () => void;
 }
 
+interface onClickEditProps {
+  onClickEditSave: () => void;
+}
+
 interface OnClickTwoProps {
   onClickTempSave: () => void;
   onClickSubmit: () => void;
@@ -47,11 +51,11 @@ export const LogOutHeader = ({ onClick }: OnClickProps) => {
 };
 
 //에디터 창에서 글을 수정하고 있을 때 헤더
-export const EditorEditHeader = ({ onClick }: OnClickProps) => {
+export const EditorEditHeader = ({ onClickEditSave }: onClickEditProps) => {
   return (
     <HeaderWrapper>
       <HeaderLogoIc />
-      <Button typeName="submitEditType" onClick={onClick}>
+      <Button typeName="submitEditType" onClick={onClickEditSave}>
         수정 완료하기
       </Button>
     </HeaderWrapper>

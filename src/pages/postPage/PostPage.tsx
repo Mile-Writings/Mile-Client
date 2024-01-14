@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useParams } from 'react-router-dom';
 
 import { useState, useReducer } from 'react';
 
@@ -11,24 +12,34 @@ import {
 } from '../../components/commons/Header';
 
 const PostPage = () => {
-  // 헤더 조건부 렌더링
+  // 에디터 제목, 내용 저장 함수
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  // console.log(title);
+  // console.log(content);
+
+  // 모임 ID url에서 받아오기
+  const { groupId } = useParams();
+
+  // 임시저장 값 여부 확인
+
+  // 헤더 조건부 렌더링 (임시값)
+  // 임시저장 값 있는지 확인 api
   const tempSaveExist = false;
+
+  // 최초 저장
+  const saveHandler = () => {
+    // request parameter
+    // moimID
+    // topicId : 글감주제 드롭다운에서 가져오기
+    // anonymous : 필명/익명 드롭다운에서 가져오기
+  };
 
   // 임시 저장 글 -> 저장하기
   const tempExistSaveHandler = () => {};
 
-  // 최초 저장
-  const saveHandler = () => {};
-
   // 임시 저장
   const tempSaveHandler = () => {};
-
-  // 에디터 제목, 내용 저장 함수
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-
-  console.log(title);
-  console.log(content);
 
   return (
     <PostPageWrapper>
