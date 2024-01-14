@@ -79,7 +79,9 @@ const RulerContentBox = styled.div`
 `;
 
 const TodayKeyWord = styled.span`
-  width: 30rem;
+  width: fit-content;
+
+  white-space: nowrap;
 `;
 
 const Pipe = styled.div`
