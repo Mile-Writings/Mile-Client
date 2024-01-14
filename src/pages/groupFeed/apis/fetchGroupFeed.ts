@@ -45,7 +45,7 @@ export const fetchGroupInfo = async (groupId: string) => {
   }
 };
 
-export const fetchTodayWritingStyle = async (groupId: string) => {
+export const fetchTodayTopic = async (groupId: string) => {
   try {
     const response = await client.get(`/api/moim/${groupId}/topic`);
     return response.data;

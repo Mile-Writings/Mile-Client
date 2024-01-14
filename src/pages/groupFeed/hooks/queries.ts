@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchGroupFeedAuth, fetchTodayWritingStyle, fetchGroupInfo } from '../apis/fetchGroupFeed';
+import { fetchGroupFeedAuth, fetchTodayTopic, fetchGroupInfo } from '../apis/fetchGroupFeed';
 
 export const QUERY_KEY_GROUPFEED = {
   getGroupFeedAuth: 'getGroupFeedAuth',
@@ -61,7 +61,7 @@ interface WritingStyleQueryResult {
 export const useTodayWritingStyle = (groupId: string): WritingStyleQueryResult => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getTodayWritingStyle, groupId],
-    queryFn: () => fetchTodayWritingStyle(groupId),
+    queryFn: () => fetchTodayTopic(groupId),
   });
 
   const content = data && data.data.content;
