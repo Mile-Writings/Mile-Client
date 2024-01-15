@@ -8,9 +8,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <DesktopWrapper>
-        <DesktopContainer>
-          <Router />
-        </DesktopContainer>
+        <Router />
       </DesktopWrapper>
     </QueryClientProvider>
   );
@@ -23,11 +21,4 @@ const DesktopWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-`;
-
-const DesktopContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 136.6rem;
 `;

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { EditorTextColorIcnBlackSvg } from '../../../assets/svgs/index';
 
 const EditorToolBar = () => {

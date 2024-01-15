@@ -1,17 +1,19 @@
-import { Dispatch, SetStateAction } from 'react';
-
 import styled from '@emotion/styled';
 import Slider from 'react-slick';
+
+import { Dispatch, SetStateAction } from 'react';
 
 import './slick-theme.css';
 import './slick.css';
 import CarouselContainer from './CarouselContainer';
+
+import { CAROUSEL_CATEGORY } from '../constants/CAROUSEL_DATA';
+
 import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
 import BeforeBtn from '../../../assets/svgs/groupTabBeforeBtnEnable.svg';
 import BeforeBtnHover from '../../../assets/svgs/groupTabBeforeBtnHover.svg';
 import NextBtn from '../../../assets/svgs/groupTabNextBtnEnable.svg';
 import NextBtnHover from '../../../assets/svgs/groupTabNextBtnHover.svg';
-import { CAROUSEL_CATEGORY } from '../constants/CAROUSEL_DATA';
 
 interface CategoryIdPropTypes {
   activeCategoryId: number;

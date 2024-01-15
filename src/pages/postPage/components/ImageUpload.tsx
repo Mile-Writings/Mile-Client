@@ -37,7 +37,6 @@ const ImageUpload = () => {
           <EditorThuminputIcnActiveIcon />
         )}
       </ImageUploadBtn>
-      <Spacing marginBottom="3.4" />
     </>
   );
 };
@@ -62,7 +61,7 @@ const ThumbNailImg = styled.img<{ $imgExist: string }>`
 
 const ImageUploadBtn = styled.label`
   position: absolute;
-  top: 23rem;
+  top: 29.4rem;
   right: 27.495rem;
   z-index: 3;
 
