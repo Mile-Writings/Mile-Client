@@ -54,7 +54,7 @@ export const fetchTodayWritingStyle = async (groupId: string) => {
   }
 };
 
-interface GroupFeedCategoryPropTypes {
+interface TopicListPropTypes {
   data: {
     topicList: {
       topicId: string;
@@ -65,9 +65,9 @@ interface GroupFeedCategoryPropTypes {
   message: string;
 }
 
-export const fetchGroupFeedCategory = async (groupId: string) => {
+export const fetchTopicList = async (groupId: string) => {
   try {
-    const response = await client.get<GroupFeedCategoryPropTypes>(`/api/moim/${groupId}/topicList`);
+    const response = await client.get<TopicListPropTypes>(`/api/moim/${groupId}/topicList`);
     console.log(response.data, '데이터');
     return response.data;
   } catch (error) {

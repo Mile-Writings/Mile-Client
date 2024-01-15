@@ -4,7 +4,7 @@ import {
   fetchGroupFeedAuth,
   fetchTodayWritingStyle,
   fetchGroupInfo,
-  fetchGroupFeedCategory,
+  fetchTopicList,
 } from '../apis/fetchGroupFeed';
 
 export const QUERY_KEY_GROUPFEED = {
@@ -74,10 +74,10 @@ export const useTodayWritingStyle = (groupId: string): WritingStyleQueryResult =
   return { content, isLoading, isError, error };
 };
 
-export const useGroupFeedCategory = (groupId: string) => {
+export const useTopicList = (groupId: string) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getGroupFeedCategory, groupId],
-    queryFn: () => fetchGroupFeedCategory(groupId),
+    queryFn: () => fetchTopicList(groupId),
   });
 
   const groupFeedCategoryData = data && data.data.topicList;
