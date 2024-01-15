@@ -53,3 +53,24 @@ export const fetchTodayWritingStyle = async (groupId: string) => {
     console.error('에러:', error);
   }
 };
+
+interface GroupFeedCategoryPropTypes {
+  data: {
+    topicList: {
+      topicId: string;
+      topicName: string;
+    }[];
+  };
+  status: number;
+  message: string;
+}
+
+export const fetchGroupFeedCategory = async (groupId: string) => {
+  try {
+    const response = await client.get<GroupFeedCategoryPropTypes>(`/api/moim/${groupId}/topicList`);
+    console.log(response.data, '데이터');
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
