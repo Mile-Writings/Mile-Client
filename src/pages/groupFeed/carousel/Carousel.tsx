@@ -45,9 +45,9 @@ const Carousel = (props: CategoryIdPropTypes) => {
     <CarouselWrapper>
       <GroupTabBtnBaseBeforeIcon />
       <Slider {...settings} className="groupFeedCarousel">
-        {CAROUSEL_CATEGORY.categoryList.map((category) => (
+        {CAROUSEL_CATEGORY.categoryList.map((category, index) => (
           <CarouselContainer
-            key={category.categoryId}
+            key={index}
             onClick={() => handleCategoryClick(category.categoryId)}
             isActive={category.categoryId === activeCategoryId}
           >
