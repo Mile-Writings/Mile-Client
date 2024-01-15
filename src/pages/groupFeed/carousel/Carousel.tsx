@@ -7,7 +7,6 @@ import './slick-theme.css';
 import './slick.css';
 import CarouselContainer from './CarouselContainer';
 
-import { CAROUSEL_CATEGORY } from '../constants/CAROUSEL_DATA';
 import { useTopicList } from '../hooks/queries';
 
 import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
@@ -17,8 +16,8 @@ import NextBtn from '../../../assets/svgs/groupTabNextBtnEnable.svg';
 import NextBtnHover from '../../../assets/svgs/groupTabNextBtnHover.svg';
 
 interface CategoryIdPropTypes {
-  activeCategoryId: string;
-  setActiveCategoryId: Dispatch<SetStateAction<string>>;
+  activeCategoryId: number;
+  setActiveCategoryId: Dispatch<SetStateAction<number>>;
   groupId: string | undefined;
 }
 
@@ -39,7 +38,7 @@ const Carousel = (props: CategoryIdPropTypes) => {
     },
   };
 
-  const handleCategoryClick = (categoryId: string) => {
+  const handleCategoryClick = (categoryId: number) => {
     setActiveCategoryId(categoryId);
   };
 
@@ -60,8 +59,8 @@ const Carousel = (props: CategoryIdPropTypes) => {
         {groupFeedCategoryData?.map((topic) => (
           <CarouselContainer
             key={topic.topicId}
-            onClick={() => handleCategoryClick(topic.topicId)}
-            isActive={topic.topicId === activeCategoryId}
+            onClick={() => handleCategoryClick(Number(topic.topicId))}
+            isActive={Number(topic.topicId) === activeCategoryId}
           >
             {topic.topicName}
           </CarouselContainer>
