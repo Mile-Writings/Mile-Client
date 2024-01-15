@@ -21,11 +21,14 @@ import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
   const { groupId } = useParams();
-  const { isMember, isLoading, isError, error } = useGroupFeedAuth(groupId || '');
+  const accessToken = localStorage.getItem('accessToken');
+  const { isMember, isLoading, isError, error } = useGroupFeedAuth(
+    groupId || '',
+    accessToken || '',
+  );
   const { groupInfoData } = useGroupInfo(groupId || '');
 
   const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
-  const accessToken = localStorage.getItem('accessToken');
 
   const navigate = useNavigate();
 
