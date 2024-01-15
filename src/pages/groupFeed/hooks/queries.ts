@@ -10,6 +10,7 @@ import {
 export const QUERY_KEY_GROUPFEED = {
   getGroupFeedAuth: 'getGroupFeedAuth',
   getTodayWritingStyle: 'getTodayWritingStyle',
+  getCuriousWriters: 'getCuriousWriters',
 };
 
 interface GroupFeedAuthQueryResult {
@@ -72,10 +73,10 @@ export const useTodayWritingStyle = (groupId: string) => {
 
 export const useCuriousWriters = (groupId: string) => {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getTodayWritingStyle, groupId],
+    queryKey: [QUERY_KEY_GROUPFEED.getCuriousWriters, groupId],
     queryFn: () => fetchCuriousWriters(groupId),
   });
 
-  const content = data && data.data.content;
+  const content = data && data.data;
   return { content, isLoading, isError, error };
 };
