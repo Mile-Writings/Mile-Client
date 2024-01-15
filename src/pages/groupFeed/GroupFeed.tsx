@@ -8,6 +8,7 @@ import EachArticle from './carousel/EachArticle';
 import CuriousArticle from './components/CuriousArticle';
 import CuriousProfile from './components/CuriousProfile';
 import GroupCuriousTitle from './components/GroupCuriousTitle';
+import { LogOutHeader, GroupFeedHeader } from './components/GroupFeedHeader';
 import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
 import { useGroupFeedAuth, useGroupInfo } from './hooks/queries';
@@ -16,16 +17,18 @@ import GroupFloatingBtn from '../../assets/svgs/groupFloatingBtn.svg';
 import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import GroupThumbnailImg from '../../assets/svgs/groupThumnailImg.svg';
 import Footer from '../../components/commons/Footer';
-import { GroupFeedHeader, LogOutHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
   const { groupId } = useParams();
-  const { isMember, isLoading, isError, error } = useGroupFeedAuth(groupId || '');
+  const accessToken = localStorage.getItem('accessToken');
+  const { isMember, isLoading, isError, error } = useGroupFeedAuth(
+    groupId || '',
+    accessToken || '',
+  );
   const { groupInfoData } = useGroupInfo(groupId || '');
 
   const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
-  const accessToken = localStorage.getItem('accessToken');
 
   const navigate = useNavigate();
 

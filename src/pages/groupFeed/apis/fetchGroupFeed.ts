@@ -16,6 +16,7 @@ export const fetchGroupFeedAuth = async (groupId: string) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+    console.log(response.data, 'fetchgRoup');
     return response.data; //"isMember" : boolean
   } catch (error) {
     console.error('에러:', error);
@@ -64,22 +65,16 @@ export const fetchTodayTopic = async (groupId: string) => {
 
 interface CuriousWriterPropTypes {
   data: {
-    popularWriters: [
-      {
-        writerName: string;
-        information: string;
-      },
-      {
-        writerName: string;
-        information: string;
-      },
-    ];
+    popularWriters: {
+      writerName: string;
+      information: string;
+    }[];
   };
   status: number;
   message: string;
 }
 
-export const fetchCuriousWriter = async (groupId: string) => {
+export const fetchCuriousWriters = async (groupId: string) => {
   try {
     const response = await client.get<CuriousWriterPropTypes>(
       `/api/moim/${groupId}/mostCuriousWriters`,

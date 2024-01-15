@@ -1,6 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchGroupFeedAuth, fetchTodayTopic, fetchGroupInfo } from '../apis/fetchGroupFeed';
+import {
+  fetchGroupFeedAuth,
+  fetchTodayTopic,
+  fetchGroupInfo,
+  fetchCuriousWriters,
+} from '../apis/fetchGroupFeed';
 
 export const QUERY_KEY_GROUPFEED = {
   getGroupFeedAuth: 'getGroupFeedAuth',
@@ -14,10 +19,14 @@ interface GroupFeedAuthQueryResult {
   error: Error | null;
 }
 
-export const useGroupFeedAuth = (groupId: string): GroupFeedAuthQueryResult => {
+export const useGroupFeedAuth = (
+  groupId: string,
+  accessToken: string | null,
+): GroupFeedAuthQueryResult => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getGroupFeedAuth, groupId],
     queryFn: () => fetchGroupFeedAuth(groupId),
+    enabled: !!accessToken,
   });
 
   const isMember = data && data.data.isMember;
@@ -55,6 +64,16 @@ export const useTodayWritingStyle = (groupId: string) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getTodayWritingStyle, groupId],
     queryFn: () => fetchTodayTopic(groupId),
+  });
+
+  const content = data && data.data.content;
+  return { content, isLoading, isError, error };
+};
+
+export const useCuriousWriters = (groupId: string) => {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: [QUERY_KEY_GROUPFEED.getTodayWritingStyle, groupId],
+    queryFn: () => fetchCuriousWriters(groupId),
   });
 
   const content = data && data.data.content;
