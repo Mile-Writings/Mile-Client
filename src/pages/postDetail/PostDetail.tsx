@@ -19,8 +19,7 @@ const PostDetail = () => {
   const { postId } = useParams();
 
   const { data, isError, isLoading } = useGetPostDetail(postId || '');
-  // const { data1, isError1, isLoading1 } = useGetCuriousInfo(postId || '');
-  // console.log(data1);
+
   const postData = data?.data;
   if (isError) {
     navigate('/error');

@@ -11,17 +11,14 @@ const CuriousBtn = () => {
   const [isClick, setIsClick] = useState(false);
   const { postId } = useParams();
   const { data } = useGetCuriousInfo(postId || '');
-  const { mutate } = usePostCurious(postId || '');
-
-  // const handleOnclickCurious=()=>{
-
-  // }
-  const handleIsClick = () => {
+  const { mutate: postCurious } = usePostCurious(postId || '');
+  const handleBtnClick = () => {
     setIsClick((prev) => !prev);
+    postCurious();
   };
   return (
     <>
-      <CuriousBtnWrapper onClick={handleIsClick} $isClick={isClick}>
+      <CuriousBtnWrapper onClick={handleBtnClick} $isClick={isClick}>
         <CuriousTextWrapper>
           <CuriousTextContainer>
             {isClick ? <DetailWhiteFavoriteIc /> : <DetailPurpleFavoriteIc />}

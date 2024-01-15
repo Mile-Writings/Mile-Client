@@ -43,6 +43,9 @@ export const usePostCurious = (postId: string) => {
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.postCurious],
     mutationFn: () => createPostCurious(postId),
+    onSuccess: () => {
+      console.log('post curious Success');
+    },
   });
   return data;
 };
