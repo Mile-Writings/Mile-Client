@@ -80,7 +80,7 @@ export const useCuriousPost = (groupId: string) => {
     queryFn: () => fetchCuriousPost(groupId),
   });
 
-  const curiousWriterData = data && data.data.postList;
+  const curiousPostData = data && data.data.postList;
 
-  return { curiousWriterData, isLoading, isError, error };
+  return { curiousPostData, isLoading, isError, error };
 };

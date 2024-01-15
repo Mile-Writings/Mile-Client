@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 
-import { CURIOUS_ARTICLE } from '../constants/CURIOUS_PROFILE';
 import { useCuriousPost } from '../hooks/queries';
 
 import { GroupNoDataImgIc } from '../../../assets/svgs';
@@ -21,7 +20,7 @@ const CuriousArticle = (props: CuriousArticlePropTypes) => {
   const { curiousPostData } = useCuriousPost(groupId || '');
   return (
     <CuriousArticleWrapper>
-      {CURIOUS_ARTICLE.postList.length == 0 ? (
+      {curiousPostData?.length == 0 ? (
         <NoCuriousArticleWrapper>
           <Spacing marginBottom="4" />
           <GroupNoDataImgIc />
@@ -30,7 +29,7 @@ const CuriousArticle = (props: CuriousArticlePropTypes) => {
           <Spacing marginBottom="4" />
         </NoCuriousArticleWrapper>
       ) : (
-        CURIOUS_ARTICLE.postList.map((article: ArticlePropTypes, index: number) => (
+        curiousPostData?.map((article: ArticlePropTypes, index: number) => (
           <CuriousArticleLayout key={index}>
             <ArticleThumbnail />
             <Spacing marginBottom="1.6" />
