@@ -59,7 +59,7 @@ const GroupFeed = () => {
             subText="매주 월요일마다 업데이트 됩니다"
           />
           <Spacing marginBottom="2" />
-          <CuriousProfile />
+          <CuriousProfile groupId={groupId} />
           <Spacing marginBottom="6.4" />
           <GroupCuriousTitle
             mainText="우리 모임에서 인기 있는 글이에요"

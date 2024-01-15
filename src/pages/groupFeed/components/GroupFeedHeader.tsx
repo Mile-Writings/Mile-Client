@@ -12,18 +12,18 @@ interface OnClickProps {
   onClick: () => void;
 }
 
-interface onClickEditProps {
-  onClickEditSave: () => void;
-}
+// interface onClickEditProps {
+//   onClickEditSave: () => void;
+// }
 
-interface OnClickTwoProps {
-  onClickTempSave: () => void;
-  onClickSubmit: () => void;
-}
+// interface OnClickTwoProps {
+//   onClickTempSave: () => void;
+//   onClickSubmit: () => void;
+// }
 
-interface OnClickTempExistProps {
-  onClickSubmit: () => void;
-}
+// interface OnClickTempExistProps {
+//   onClickSubmit: () => void;
+// }
 
 // 모임 피드 헤더
 export const GroupFeedHeader = () => {

@@ -1,18 +1,26 @@
 import styled from '@emotion/styled';
 
+import { CURIOUS_PROFILE } from '../constants/CURIOUS_PROFILE';
+import { useCuriousWriters } from '../hooks/queries';
+
 import { GroupBestProfileIc, GroupNoDataImgIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-import { CURIOUS_PROFILE } from '../constants/CURIOUS_PROFILE';
 
 interface ProfilePropTypes {
   writerName: string;
   information: string;
 }
 
-const CuriousProfile = () => {
+interface CuriousProfilePropTypes {
+  groupId: string | undefined;
+}
+
+const CuriousProfile = (props: CuriousProfilePropTypes) => {
+  const { groupId } = props;
+  const { curiousWriterData } = useCuriousWriters(groupId || '');
   return (
     <CuriousProfileWrapper>
-      {CURIOUS_PROFILE.popularWriters.length == 0 ? (
+      {curiousWriterData?.length == 0 ? (
         <NoCuriousProfileeWrapper>
           <Spacing marginBottom="4" />
           <GroupNoDataImgIc />
@@ -21,7 +29,7 @@ const CuriousProfile = () => {
           <Spacing marginBottom="4" />
         </NoCuriousProfileeWrapper>
       ) : (
-        CURIOUS_PROFILE.popularWriters.map((writer: ProfilePropTypes, index: number) => (
+        curiousWriterData?.map((writer: ProfilePropTypes, index: number) => (
           <CuriousProfileLayout key={index}>
             <GroupBestProfileIc />
             <ProfileWrapper>

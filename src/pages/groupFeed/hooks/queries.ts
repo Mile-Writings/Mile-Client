@@ -77,6 +77,8 @@ export const useCuriousWriters = (groupId: string) => {
     queryFn: () => fetchCuriousWriters(groupId),
   });
 
-  const content = data && data.data;
-  return { content, isLoading, isError, error };
+  const curiousWriterData = data && data.data.popularWriters;
+  console.log(curiousWriterData, 'datis');
+  console.log(curiousWriterData?.length, '길이');
+  return { curiousWriterData, isLoading, isError, error };
 };
