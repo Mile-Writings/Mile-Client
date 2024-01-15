@@ -49,6 +49,6 @@ export { default as QuestioHoverIc } from './questionHoverIc.svg?react';
 
 export { default as GroupThumnailImgIc } from './groupThumnailImg.svg?react';
 
-export { default as EditorThuminputIcnUnactive } from './editorThuminputIcnUnactive.svg?react';
-export { default as EditorThuminputIcnHover } from './editorThuminputIcnHover.svg?react';
-export { default as EditorThuminputIcnActive } from './editorThuminputIcnHover.svg?react';
+export { default as EditorThuminputIcnUnactiveIc } from './editorThuminputIcnUnactive.svg?react';
+export { default as EditorThuminputIcnHoverIc } from './editorThuminputIcnHover.svg?react';
+export { default as EditorThuminputIcnActiveIc } from './editorThuminputIcnHover.svg?react';
