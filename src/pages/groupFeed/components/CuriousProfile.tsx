@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 
-import { CURIOUS_PROFILE } from '../constants/CURIOUS_PROFILE';
 import { useCuriousWriters } from '../hooks/queries';
 
 import { GroupBestProfileIc, GroupNoDataImgIc } from '../../../assets/svgs';

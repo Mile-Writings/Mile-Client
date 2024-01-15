@@ -78,7 +78,6 @@ export const useCuriousWriters = (groupId: string) => {
   });
 
   const curiousWriterData = data && data.data.popularWriters;
-  console.log(curiousWriterData, 'datis');
-  console.log(curiousWriterData?.length, '길이');
+
   return { curiousWriterData, isLoading, isError, error };
 };

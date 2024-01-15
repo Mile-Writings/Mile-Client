@@ -4,7 +4,6 @@ import MakeGroupBtn from './MakeGroupBtn';
 import MyGroupBtn from './MyGroupBtn';
 
 import { HeaderLogoIc } from '../../../assets/svgs';
-import Button from '../../../components/commons/Button';
 import LogInOutBtn from '../../../components/commons/LogInOutBtn';
 import logout from '../../../utils/logout';
 
@@ -27,10 +26,6 @@ interface OnClickProps {
 
 // 모임 피드 헤더
 export const GroupFeedHeader = () => {
-  const logout2 = () => {
-    localStorage.removeItem('accessToken');
-    console.log('removed');
-  };
   return (
     <HeaderWrapper>
       <HeaderLogoIc />
@@ -38,7 +33,7 @@ export const GroupFeedHeader = () => {
         <MyGroupBtn />
         <CommonBtnLayout>
           <MakeGroupBtn />
-          <LogInOutBtn onClick={logout2}>로그아웃</LogInOutBtn>
+          <LogInOutBtn onClick={logout}>로그아웃</LogInOutBtn>
         </CommonBtnLayout>
       </HeaderBtnLayout>
     </HeaderWrapper>
