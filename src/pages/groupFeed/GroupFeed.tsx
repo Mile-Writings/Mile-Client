@@ -62,7 +62,11 @@ const GroupFeed = () => {
           <Spacing marginBottom="2" />
           <CuriousArticle />
           <Spacing marginBottom="6.4" />
-          <Carousel activeCategoryId={activeCategoryId} setActiveCategoryId={setActiveCategoryId} />
+          <Carousel
+            activeCategoryId={activeCategoryId}
+            setActiveCategoryId={setActiveCategoryId}
+            groupId={groupId}
+          />
           <Spacing marginBottom="3.2" />
           <Topic>글감자리입니다.최대 공백포함 15자입니다.</Topic>
           <Spacing marginBottom="0.8" />

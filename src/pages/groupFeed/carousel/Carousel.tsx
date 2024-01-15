@@ -8,6 +8,7 @@ import './slick.css';
 import CarouselContainer from './CarouselContainer';
 
 import { CAROUSEL_CATEGORY } from '../constants/CAROUSEL_DATA';
+import { useTopicList } from '../hooks/queries';
 
 import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
 import BeforeBtn from '../../../assets/svgs/groupTabBeforeBtnEnable.svg';
@@ -16,12 +17,13 @@ import NextBtn from '../../../assets/svgs/groupTabNextBtnEnable.svg';
 import NextBtnHover from '../../../assets/svgs/groupTabNextBtnHover.svg';
 
 interface CategoryIdPropTypes {
-  activeCategoryId: number;
-  setActiveCategoryId: Dispatch<SetStateAction<number>>;
+  activeCategoryId: string;
+  setActiveCategoryId: Dispatch<SetStateAction<string>>;
+  groupId: string | undefined;
 }
 
 const Carousel = (props: CategoryIdPropTypes) => {
-  const { activeCategoryId, setActiveCategoryId } = props;
+  const { activeCategoryId, setActiveCategoryId, groupId } = props;
 
   const settings = {
     dots: false,
@@ -37,21 +39,31 @@ const Carousel = (props: CategoryIdPropTypes) => {
     },
   };
 
-  const handleCategoryClick = (categoryId: number) => {
+  const handleCategoryClick = (categoryId: string) => {
     setActiveCategoryId(categoryId);
   };
+
+  const { groupFeedCategoryData, isLoading, isError, error } = useTopicList(groupId || '');
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error fetching data..{error?.message}</div>;
+  }
 
   return (
     <CarouselWrapper>
       <GroupTabBtnBaseBeforeIcon />
       <Slider {...settings} className="groupFeedCarousel">
-        {CAROUSEL_CATEGORY.categoryList.map((category) => (
+        {groupFeedCategoryData?.map((topic) => (
           <CarouselContainer
-            key={category.categoryId}
-            onClick={() => handleCategoryClick(category.categoryId)}
-            isActive={category.categoryId === activeCategoryId}
+            key={topic.topicId}
+            onClick={() => handleCategoryClick(topic.topicId)}
+            isActive={topic.topicId === activeCategoryId}
           >
-            {category.categoryName}
+            {topic.topicName}
           </CarouselContainer>
         ))}
       </Slider>
