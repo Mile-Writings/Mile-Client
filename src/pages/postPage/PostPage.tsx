@@ -58,6 +58,7 @@ const PostPage = () => {
         <Spacing marginBottom="2.4" />
         <Editor saveTitle={setTitle} saveContent={setContent} />
       </DropDownEditorWrapper>
+      <Spacing marginBottom="8" />
     </PostPageWrapper>
   );
 };
@@ -77,5 +78,4 @@ const DropDownEditorWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 0 27rem;
 `;

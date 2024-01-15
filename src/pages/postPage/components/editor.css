@@ -3,11 +3,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 82.6rem;
 }
 
 .ql-container {
   width: 82.5rem;
-  height: 64.5rem;
+  min-height: 64.5rem;
   padding: 2.8rem;
   border-radius: 0.8rem;
   background-color: white;
