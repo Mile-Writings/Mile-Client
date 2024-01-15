@@ -15,10 +15,10 @@ import { getGroupContent } from './../apis/getGroupContent';
 interface groupPropTypes {
   moimId: number;
   moimName: string;
-  moimPosts: moimPostTypes[];
+  moimPosts: groupPostTypes[];
 }
 
-export interface moimPostTypes {
+export interface groupPostTypes {
   topicName: string;
   imageUrl: string;
   postTitle: string;
