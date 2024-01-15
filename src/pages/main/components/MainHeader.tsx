@@ -10,11 +10,6 @@ import MyGroupBtn from '../../groupFeed/components/MyGroupBtn';
 
 // 메인 페이지 헤더
 export const MainHeader = () => {
-  const navigate = useNavigate();
-  const handleLogOut = () => {
-    logout();
-    navigate(`login`);
-  };
   return (
     <HeaderWrapper>
       <HeaderLogoIc />
@@ -22,7 +17,7 @@ export const MainHeader = () => {
         <MyGroupBtn />
         <CommonBtnLayout>
           <MakeGroupBtn />
-          <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
+          <LogInOutBtn onClick={logout}>로그아웃</LogInOutBtn>
         </CommonBtnLayout>
       </HeaderBtnLayout>
     </HeaderWrapper>
