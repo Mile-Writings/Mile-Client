@@ -12,7 +12,7 @@ import GroupNameButton from './GroupNameButton';
 import Spacing from './../../../components/commons/Spacing';
 import { getGroupContent } from './../apis/getGroupContent';
 
-interface groupPropTypes {
+export interface groupPropTypes {
   moimId: number;
   moimName: string;
   moimPosts: groupPostTypes[];
@@ -23,6 +23,7 @@ export interface groupPostTypes {
   imageUrl: string;
   postTitle: string;
   postContent: string;
+  postId: string;
 }
 
 const Carousel = () => {
@@ -53,29 +54,28 @@ const Carousel = () => {
       <Spacing marginBottom="3.6" />
       {groupData && (
         <section>
-          {groupData
-            .sort((previous, current) => previous.moimId - current.moimId)
-            .map((moim) => (
-              <CarouselWithButtonLayout key={moim.moimId}>
-                <GroupNameButton groupName={moim.moimName} groupId={moim.moimId} />
-                <Spacing marginBottom="1.6" />
-                <CarouselContainer>
-                  <CarouselBox {...settings} className="main">
-                    {moim.moimPosts.map((post, index) => (
-                      <GroupContent
-                        key={index}
-                        topicName={post.topicName}
-                        imageUrl={post.imageUrl}
-                        postTitle={post.postTitle}
-                        postContent={post.postContent}
-                        groupId={moim.moimId}
-                        isLast={index === moim.moimPosts.length - 1}
-                      />
-                    ))}
-                  </CarouselBox>
-                </CarouselContainer>
-              </CarouselWithButtonLayout>
-            ))}
+          {groupData.map((moim) => (
+            <CarouselWithButtonLayout key={moim.moimId}>
+              <GroupNameButton groupName={moim.moimName} groupId={moim.moimId} />
+              <Spacing marginBottom="1.6" />
+              <CarouselContainer>
+                <CarouselBox {...settings} className="main">
+                  {moim.moimPosts.map((post, index) => (
+                    <GroupContent
+                      key={index}
+                      topicName={post.topicName}
+                      imageUrl={post.imageUrl}
+                      postTitle={post.postTitle}
+                      postContent={post.postContent}
+                      postId={post.postId}
+                      groupId={moim.moimId}
+                      isLast={index === moim.moimPosts.length - 1}
+                    />
+                  ))}
+                </CarouselBox>
+              </CarouselContainer>
+            </CarouselWithButtonLayout>
+          ))}
         </section>
       )}
     </CarouselWrapper>
