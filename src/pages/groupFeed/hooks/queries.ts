@@ -1,10 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchGroupFeedAuth, fetchTodayWritingStyle, fetchGroupInfo } from '../apis/fetchGroupFeed';
+import {
+  fetchGroupFeedAuth,
+  fetchTodayWritingStyle,
+  fetchGroupInfo,
+  fetchCuriousPost,
+} from '../apis/fetchGroupFeed';
 
 export const QUERY_KEY_GROUPFEED = {
   getGroupFeedAuth: 'getGroupFeedAuth',
   getTodayWritingStyle: 'getTodayWritingStyle',
+  getCuriousPost: 'getCuriousPost',
 };
 
 interface GroupFeedAuthQueryResult {
@@ -66,4 +72,15 @@ export const useTodayWritingStyle = (groupId: string): WritingStyleQueryResult =
 
   const content = data && data.data.content;
   return { content, isLoading, isError, error };
+};
+
+export const useCuriousPost = (groupId: string) => {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: [QUERY_KEY_GROUPFEED.getCuriousPost, groupId],
+    queryFn: () => fetchCuriousPost(groupId),
+  });
+
+  const curiousWriterData = data && data.data.postList;
+
+  return { curiousWriterData, isLoading, isError, error };
 };

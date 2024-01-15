@@ -68,7 +68,7 @@ interface CuriousPostPropTypes {
   message: string;
 }
 
-export const fetchCuriousWriters = async (groupId: string) => {
+export const fetchCuriousPost = async (groupId: string) => {
   try {
     const response = await client.get<CuriousPostPropTypes>(`/api/moim/${groupId}/mostCuriousPost`);
     console.log(response.data, '데이터');
