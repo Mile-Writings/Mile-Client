@@ -25,7 +25,7 @@ const CuriousProfile = (props: CuriousProfilePropTypes) => {
           <Spacing marginBottom="4" />
           <GroupNoDataImgIc />
           <Spacing marginBottom="1.6" />
-          아직은 굼금해요를 많이 받은 작가가 없어요
+          아직 궁금해요를 받은 필명의 글쓴이가 없어요
           <Spacing marginBottom="4" />
         </NoCuriousProfileeWrapper>
       ) : (
