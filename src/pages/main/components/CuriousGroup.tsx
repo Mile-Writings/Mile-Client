@@ -1,12 +1,10 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
+import { groupContentPropTypes } from './GroupContent';
+
 import { MainGroupRoutingBtn as MainGroupRoutingBtnIcon } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-
-export interface groupContentPropTypes {
-  groupId: number;
-}
 
 const CuriousGroup = ({ groupId }: groupContentPropTypes) => {
   const navigate = useNavigate();
