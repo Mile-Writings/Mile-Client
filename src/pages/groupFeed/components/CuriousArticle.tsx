@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 
+import { CURIOUS_ARTICLE } from '../constants/CURIOUS_PROFILE';
+import { useCuriousPost } from '../hooks/queries';
+
 import { GroupNoDataImgIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-import { CURIOUS_ARTICLE } from '../constants/CURIOUS_PROFILE';
 
 interface ArticlePropTypes {
   topic: string;
@@ -10,7 +12,13 @@ interface ArticlePropTypes {
   content: string;
 }
 
-const CuriousArticle = () => {
+interface CuriousArticlePropTypes {
+  groupId: string | undefined;
+}
+
+const CuriousArticle = (props: CuriousArticlePropTypes) => {
+  const { groupId } = props;
+  const { curiousPostData } = useCuriousPost(groupId || '');
   return (
     <CuriousArticleWrapper>
       {CURIOUS_ARTICLE.postList.length == 0 ? (

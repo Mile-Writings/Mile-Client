@@ -60,7 +60,7 @@ const GroupFeed = () => {
           <Spacing marginBottom="6.4" />
           <GroupCuriousTitle mainText="궁금해요 버튼이 많은 2개의 글" subText="부연설명 텍스트" />
           <Spacing marginBottom="2" />
-          <CuriousArticle />
+          <CuriousArticle groupId={groupId} />
           <Spacing marginBottom="6.4" />
           <Carousel activeCategoryId={activeCategoryId} setActiveCategoryId={setActiveCategoryId} />
           <Spacing marginBottom="3.2" />
