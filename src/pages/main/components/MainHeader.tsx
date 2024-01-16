@@ -25,7 +25,7 @@ export const MainHeader = () => {
 };
 
 //아직 로그인을 하지 않았을 때 헤더
-export const LogOutHeader = () => {
+export const UnAuthorizationHeader = () => {
   const navigate = useNavigate();
   const handleLogIn = () => {
     navigate(`/login`);

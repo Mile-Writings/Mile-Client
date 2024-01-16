@@ -1,28 +1,30 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { QuestioHoverIc, QuestionDefaultIc } from './../../../assets/svgs';
+import { useGetCuriousInfo, usePostCurious } from '../hooks/queries';
 
-interface Curious {
-  curiousNum: number;
-}
-const CuriousBtn = ({ curiousNum }: Curious) => {
+import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets/svgs';
+
+const CuriousBtn = () => {
   const [isClick, setIsClick] = useState(false);
-
-  const handleIsClick = () => {
+  const { postId } = useParams();
+  const { data } = useGetCuriousInfo(postId || '');
+  const { mutate: postCurious } = usePostCurious(postId || '');
+  const handleBtnClick = () => {
     setIsClick((prev) => !prev);
+    postCurious();
   };
   return (
     <>
-      <CuriousBtnWrapper onClick={handleIsClick} $isClick={isClick}>
+      <CuriousBtnWrapper onClick={handleBtnClick} $isClick={isClick}>
         <CuriousTextWrapper>
           <CuriousTextContainer>
-            {isClick ? <QuestioHoverIc /> : <QuestionDefaultIc />}
+            {isClick ? <DetailWhiteFavoriteIc /> : <DetailPurpleFavoriteIc />}
             궁금해요
           </CuriousTextContainer>
-          <CuriousTextWrapper>{curiousNum}</CuriousTextWrapper>
+          <CuriousTextWrapper>{data?.data?.curiousCount}</CuriousTextWrapper>
         </CuriousTextWrapper>
       </CuriousBtnWrapper>
     </>
@@ -63,6 +65,7 @@ const CuriousTextWrapper = styled.div`
 
 const CuriousTextContainer = styled.div`
   display: flex;
+  gap: 0.2rem;
   align-items: center;
   justify-content: center;
 `;

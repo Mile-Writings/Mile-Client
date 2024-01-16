@@ -6,8 +6,6 @@ const loginService = async (code: string, socialType: string) => {
       socialType,
     });
 
-    console.log(data);
-
     return data.data;
   } catch (e) {
     console.error(e);
