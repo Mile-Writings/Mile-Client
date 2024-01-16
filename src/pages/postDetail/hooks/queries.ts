@@ -3,9 +3,9 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import createPostCurious from '../apis/createPostCurious';
+import deleteCurious from '../apis/deleteCurious';
 import fetchCuriousInfo from '../apis/fetchCuriousInfo';
 import fetchPostDetail from '../apis/fetchPostDetail';
-
 //쿼리키를 이렇게 두는 이유는 겹치지 않기위해 + 객체로 생성하여 자동완성 하기 위해
 export const QUERY_KEY_POST_DETAIL = {
   getPostDetail: 'getPostDetail',
@@ -45,6 +45,18 @@ export const usePostCurious = (postId: string) => {
     mutationFn: () => createPostCurious(postId),
     onSuccess: () => {
       console.log('post curious Success');
+    },
+  });
+  return data;
+};
+
+//궁금해요 삭제 api
+export const useDeleteCurious = (postId: string) => {
+  const data = useMutation({
+    mutationKey: [QUERY_KEY_POST_DETAIL.deleteCurious],
+    mutationFn: () => deleteCurious(postId),
+    onSuccess: () => {
+      console.log('data');
     },
   });
   return data;

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useGetCuriousInfo, usePostCurious } from '../hooks/queries';
+import { useDeleteCurious, useGetCuriousInfo, usePostCurious } from '../hooks/queries';
 
 import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets/svgs';
 
@@ -12,9 +12,14 @@ const CuriousBtn = () => {
   const { postId } = useParams();
   const { data } = useGetCuriousInfo(postId || '');
   const { mutate: postCurious } = usePostCurious(postId || '');
+  const { mutate: deleteCurious } = useDeleteCurious(postId || ' ');
   const handleBtnClick = () => {
     setIsClick((prev) => !prev);
-    postCurious();
+    if (isClick) {
+      deleteCurious();
+    } else {
+      postCurious();
+    }
   };
   return (
     <>
