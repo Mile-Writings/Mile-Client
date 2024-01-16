@@ -39,7 +39,11 @@ const Main = () => {
 export default Main;
 
 const MainPageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   width: 100%;
+  width: fit-content;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
