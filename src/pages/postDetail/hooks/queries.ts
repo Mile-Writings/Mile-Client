@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import checkPostAuth from '../apis/checkPostAuth';
 import createPostCurious from '../apis/createPostCurious';
 import deleteCurious from '../apis/deleteCurious';
 import fetchCuriousInfo from '../apis/fetchCuriousInfo';
@@ -60,6 +61,15 @@ export const useDeleteCurious = (postId: string) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId] });
     },
+  });
+  return data;
+};
+
+//글 삭제/수정 권한 확인
+export const useCheckPostAuth = (postId: string) => {
+  const data = useQuery({
+    queryKey: [QUERY_KEY_POST_DETAIL.getAuthorization, postId],
+    queryFn: () => checkPostAuth(postId),
   });
   return data;
 };

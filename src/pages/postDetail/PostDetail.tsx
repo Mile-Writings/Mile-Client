@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
-import { useGetPostDetail } from './hooks/queries';
+import { useCheckPostAuth, useGetPostDetail } from './hooks/queries';
 
 import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
@@ -19,7 +19,8 @@ const PostDetail = () => {
   const { postId } = useParams();
 
   const { data, isError, isLoading } = useGetPostDetail(postId || '');
-
+  const { data: postAuth } = useCheckPostAuth(postId || '');
+  console.log(postAuth?.data?.data.canEdit);
   const postData = data?.data;
   if (isError) {
     navigate('/error');
@@ -59,10 +60,12 @@ const PostDetail = () => {
             <TitleText>{postData?.title}</TitleText>
             <DateText>{postData?.createdAt}</DateText>
           </InfoTextBox>
-          <ButtonWrapper>
-            <Button typeName={'deleteTempType'}>글 삭제하기</Button>
-            <Button typeName={'submitEditType'}>글 수정하기</Button>
-          </ButtonWrapper>
+          {postAuth?.data?.data.canEdit && (
+            <ButtonWrapper>
+              <Button typeName={'deleteTempType'}>글 삭제하기</Button>
+              <Button typeName={'submitEditType'}>글 수정하기</Button>
+            </ButtonWrapper>
+          )}
         </PostDetailContainer>
         <PostWrapper>
           <TopicWrapper>
