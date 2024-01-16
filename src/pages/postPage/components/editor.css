@@ -3,11 +3,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 82.6rem;
 }
 
 .ql-container {
   width: 82.5rem;
-  height: 64.5rem;
+  min-height: 64.5rem;
   padding: 2.8rem;
   border-radius: 0.8rem;
   background-color: white;
@@ -58,6 +59,19 @@
   font-style: normal;
   font-weight: 400;
   color: #a5a5a5 !important;
+}
+
+/* 버튼 옆 보더 */
+.ql-picker.ql-size {
+  border-right: 1px solid #d3d3d3;
+}
+.ql-color > .ql-picker-label,
+.ql-background > .ql-picker-label {
+  width: 8.1rem;
+  border-right: 1px solid #d3d3d3;
+}
+.ql-toolbar > button {
+  border-right: 1px solid #d3d3d3;
 }
 
 /* 글자 크기 커스텀 */
@@ -414,16 +428,24 @@
   display: none;
 }
 
+.btn-wrapper {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  padding: 0.6rem;
+  border-right: 1px solid #d3d3d3 !important;
+}
+
 /* bold 커스텀 */
 .ql-editor strong {
   font-weight: bold;
 }
 button.ql-bold {
-  width: 2.4rem !important;
-  height: 2.4rem !important;
+  width: 2.6rem !important;
+  height: 2.5rem !important;
 }
 .ql-bold {
-  background-image: url(../../../assets/svgs/editorBoldSvgc.svg) !important;
+  background-image: url(../../../assets/svgs/editorBoldSvgEnable.svg) !important;
 }
 .ql-bold:hover {
   background-image: url(../../../assets/svgs/editorBoldSvgHover.svg) !important;
@@ -437,8 +459,9 @@ button.ql-bold {
 
 /* 밑줄 커스텀 */
 button.ql-underline {
-  width: 2.5rem !important;
+  width: 2.6rem !important;
   height: 2.5rem !important;
+  border-right: 1px solid #d3d3d3 !important;
 }
 .ql-underline {
   background-image: url(../../../assets/svgs/editorLineSvgEnable.svg) !important;
@@ -452,8 +475,9 @@ button.ql-underline {
 
 /* 취소선 커스텀 */
 button.ql-strike {
-  width: 2.5rem !important;
+  width: 2.6rem !important;
   height: 2.5rem !important;
+  border-right: 1px solid #d3d3d3 !important;
 }
 .ql-strike {
   background-image: url(../../../assets/svgs/editorStrikeSvgEnable.svg) !important;
@@ -470,8 +494,9 @@ button.ql-strike {
   font-style: italic;
 }
 button.ql-italic {
-  width: 2.5rem !important;
+  width: 2.6rem !important;
   height: 2.5rem !important;
+  border-right: 1px solid #d3d3d3 !important;
 }
 .ql-italic {
   background-image: url(../../../assets/svgs/editorItalicSvgEnable.svg) !important;
@@ -485,8 +510,9 @@ button.ql-italic {
 
 /* 왼쪽 정렬 커스텀 */
 button.ql-align {
-  width: 2.5rem !important;
+  width: 2.6rem !important;
   height: 2.5rem !important;
+  border-right: 1px solid #d3d3d3 !important;
 }
 .ql-align {
   background-image: url(../../../assets/svgs/editorLeftSvgEnable.svg) !important;
@@ -511,8 +537,9 @@ button.ql-align {
 
 /* bullet 리스트 커스텀 */
 button.ql-list {
-  width: 2.5rem !important;
+  width: 2.6rem !important;
   height: 2.5rem !important;
+  border-right: 1px solid #d3d3d3 !important;
 }
 .ql-list.ql-bullet {
   background-image: url(../../../assets/svgs/editorBulletSvgEnable.svg) !important;
@@ -537,8 +564,9 @@ button.ql-list {
 
 /* 인용구 커스텀 */
 button.ql-blockquote {
-  width: 2.5rem !important;
+  width: 2.6rem !important;
   height: 2.5rem !important;
+  border-right: 1px solid #d3d3d3 !important;
 }
 .ql-bubble .ql-editor blockquote {
   border-left: 4px solid #6139d1;
@@ -556,8 +584,9 @@ button.ql-blockquote {
 
 /* 구분선 커스텀 */
 .ql-divider {
-  width: 2.5rem !important;
+  width: 2.6rem !important;
   height: 2.5rem !important;
+  border-right: 1px solid #d3d3d3 !important;
 }
 .ql-divider {
   background-image: url(../../../assets/svgs/editorHorizonSvgEnable.svg) !important;
@@ -571,7 +600,7 @@ button.ql-blockquote {
 
 /* 리스트 앞에 글머리 커스텀 */
 li:has(.ql-size-large)::before {
-  font-size: 2.6rem !important;
+  font-size: 2.6 rem !important;
   line-height: 200% !important;
 }
 li:has(.ql-size-medium)::before {
