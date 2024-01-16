@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useDeleteCurious, useGetCuriousInfo, usePostCurious } from '../hooks/queries';
@@ -10,7 +10,7 @@ import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets
 const CuriousBtn = () => {
   const { postId } = useParams();
   const { data, isSuccess } = useGetCuriousInfo(postId || '');
-  const [isClick, setIsClick] = useState(!!data?.data?.isCurious);
+
   // if (isSuccess) {
   //   if (data?.data?.isCurious) {
   //     setIsClick(data?.data?.isCurious);
@@ -18,6 +18,9 @@ const CuriousBtn = () => {
   // }
   const { mutate: postCurious } = usePostCurious(postId || '');
   const { mutate: deleteCurious } = useDeleteCurious(postId || ' ');
+  const isCurious = data?.data?.isCurious;
+  const [isClick, setIsClick] = useState(!!isCurious);
+
   console.log(data);
   const handleBtnClick = () => {
     if (isClick) {
@@ -29,6 +32,10 @@ const CuriousBtn = () => {
     }
     setIsClick((prev) => !prev);
   };
+
+  useEffect(() => {
+    setIsClick(!!data?.data?.isCurious);
+  }, [data?.data?.isCurious]);
   return (
     <>
       <CuriousBtnWrapper onClick={handleBtnClick} $isClick={isClick}>
