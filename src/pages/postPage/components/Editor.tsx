@@ -1,15 +1,12 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
-import { useParams } from 'react-router-dom';
 
 import 'react-quill/dist/quill.bubble.css';
 
 import Spacing from '../../../components/commons/Spacing';
 import './editor.css';
-
-import { useTempSaveFlag } from '../hooks/queries';
 
 // 글자 크기 커스텀
 const Size = Quill.import('formats/size');
@@ -117,21 +114,13 @@ const CustomToolbar = () => {
   );
 };
 
+// 에디터 컴포넌트
 interface EditorPropTypes {
   saveTitle: (title: string) => void;
   saveContent: (content: string) => void;
 }
 
 const Editor = (props: EditorPropTypes) => {
-  const { groupId } = useParams();
-  const { isTemporaryPostExist, postId, isLoading, isError, error } = useTempSaveFlag(
-    groupId || '',
-  );
-
-  console.log(groupId);
-  console.log(isTemporaryPostExist);
-  console.log(postId);
-
   const { saveTitle, saveContent } = props;
   // 구분선 커스텀 동작 함수
   const quillRef = useRef<ReactQuill | null>(null);
