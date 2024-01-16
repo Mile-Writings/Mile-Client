@@ -115,6 +115,7 @@ interface CuriousPostPropTypes {
       topic: string;
       title: string;
       content: string;
+      isContainPhoto: boolean;
     }[];
   };
   status: number;
