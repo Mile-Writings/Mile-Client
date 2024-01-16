@@ -1,20 +1,19 @@
 import { client } from '../../../utils/apis/axios';
 
-interface GetCuriousInfoResponseTypes {
+interface PostCuriousResponseType {
   status: string;
   message: string;
   data: {
     isCurious: boolean;
-    curiousCount: number;
   };
 }
 
-const fetchCuriousInfo = async (postId: string) => {
+const createPostCurious = async (postId: string) => {
   try {
     const token = localStorage.getItem('accessToken');
-
-    const { data } = await client.get<GetCuriousInfoResponseTypes>(
-      `/api/post/${postId}/curiousInfo`,
+    const { data } = await client.post<PostCuriousResponseType>(
+      `api/post/${postId}/curious`,
+      {},
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -26,5 +25,4 @@ const fetchCuriousInfo = async (postId: string) => {
     console.log(err);
   }
 };
-
-export default fetchCuriousInfo;
+export default createPostCurious;
