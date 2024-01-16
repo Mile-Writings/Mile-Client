@@ -52,7 +52,7 @@ const PostPage = () => {
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
       <ImageUpload />
-      <Spacing marginBottom="3.4" />
+      {/* <Spacing marginBottom="3.4" /> */}
       <DropDownEditorWrapper>
         <DropDown />
         <Spacing marginBottom="2.4" />

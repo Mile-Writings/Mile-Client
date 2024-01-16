@@ -2,27 +2,22 @@ import styled from '@emotion/styled';
 
 import React, { useState } from 'react';
 
-import {
-  EditorThuminputIcnUnactiveIc,
-  EditorThuminputIcnHoverIc,
-  EditorThuminputIcnActiveIc,
-} from './../../../assets/svgs';
-import Spacing from '../../../components/commons/Spacing';
+import { EditorThuminputIcnUnactiveIc, EditorThuminputIcnActiveIc } from './../../../assets/svgs';
 
 const ImageUpload = () => {
   const [editorThumImg, setEditorThumImg] = useState('');
-  const onImageUpload = (e) => {
+  const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = (e) => {
-      setEditorThumImg(e.target.result);
+      const target = e.target as FileReader;
+      if (target) {
+        setEditorThumImg(target.result as string);
+      }
     };
-    reader.readAsDataURL(e.target.files[0]);
+    if (e.target.files && e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
   };
-
-  // 기본 이미지 박아넣기 (조건부 렌더링 - state하나 만들기)
-  // 이미지 업로드 버튼 위치 조정
-  // 이미지 업로드 버튼 호버, active 조정 (위에서 만든 state로 관리 가능)
-  // 이미지 업로드 함수 타입 지정해서 에러 없애기
 
   return (
     <>
@@ -32,9 +27,9 @@ const ImageUpload = () => {
       <ImageInput type="file" accept="image/*" id="editorImg" onChange={onImageUpload} />
       <ImageUploadBtn htmlFor="editorImg">
         {editorThumImg.length > 0 ? (
-          <EditorThuminputIcnActiveIc />
-        ) : (
           <EditorThuminputIcnActiveIcon />
+        ) : (
+          <EditorThuminputIcnUnactiveIcon />
         )}
       </ImageUploadBtn>
     </>
@@ -52,23 +47,27 @@ const ThumbNailImg = styled.img<{ $imgExist: string }>`
   display: inline-block;
   width: 100%;
   height: 30.7rem;
-  object-fit: cover;
-
+  object-fit: cover; //픽스
   background-color: #e4f4b5;
 
   ${({ $imgExist }) => $imgExist.length === 0 && 'content: "";'}
 `;
 
 const ImageUploadBtn = styled.label`
-  position: absolute;
-  top: 29.4rem;
-  right: 27.495rem;
+  position: relative;
+  top: -7.1rem;
+  right: 0;
   z-index: 3;
 
   cursor: pointer;
 `;
 
-const EditorThuminputIcnActiveIcon = styled(EditorThuminputIcnUnactiveIc)`
+const EditorThuminputIcnActiveIcon = styled(EditorThuminputIcnActiveIc)`
+  margin-left: 74%;
+`;
+
+const EditorThuminputIcnUnactiveIcon = styled(EditorThuminputIcnUnactiveIc)`
+  margin-left: 74%;
   :hover {
     path {
       fill: ${({ theme }) => theme.colors.mainViolet};

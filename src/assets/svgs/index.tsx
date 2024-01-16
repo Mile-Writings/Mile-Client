@@ -1,4 +1,3 @@
-export { default as EditorHorizonIcnUnactiveSvg } from './editorHorizonIcnUnactive.svg?react';
 export { default as EditorTextColorIcnBlackSvg } from './editorTextcolorIcnBlack.svg?react';
 export { default as DefaultProfileIc } from './defaultProfileIc.svg?react';
 export { default as DetailCommentMeatBallIc } from './detailCommentMeatBallIc.svg?react';

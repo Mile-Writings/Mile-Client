@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
 import TopicDropDown from './TopicDropDown';
 import WriterDropDown from './WriterDropDown';
