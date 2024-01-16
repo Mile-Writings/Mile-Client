@@ -9,7 +9,6 @@ const TextWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   padding-top: 7.2rem;
-  padding-left: 21.8rem;
 
   ${({ theme }) => theme.fonts.title3};
 `;
