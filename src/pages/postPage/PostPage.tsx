@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, To } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { Topics } from './apis/fetchEditorContent';
 import DropDown from './components/DropDown';
@@ -11,7 +11,6 @@ import ImageUpload from './components/ImageUpload';
 import { usePostContent, useGetTopic, useTempSaveFlag } from './hooks/queries';
 
 import {
-  // EditorEditHeader, // 수정하기 -> 헤더
   EditorTempNotExistHeader, // 임시저장 글 없음 -> 헤더
   EditorTempExistHeader, // 임시저장 글 있음 -> 헤더
 } from '../../components/commons/Header';
@@ -44,14 +43,6 @@ const PostPage = () => {
     }
   }, [topics]);
 
-  // const getTopicHandler = () => {
-  //   refetch();
-  // };
-
-  // useEffect(() => {
-  //   getTopicHandler();
-  // }, [topics]);
-
   // 최초 저장
   const { mutate: postContent } = usePostContent({
     groupId,
@@ -77,10 +68,8 @@ const PostPage = () => {
   useEffect(() => {
     if (isTemporaryPostExist) {
       if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
-        // refetch();
         console.log('임시 저장 fetch');
       } else {
-        // getTopicHandler();
         console.log('refetch 완료');
       }
     } else {
@@ -88,6 +77,7 @@ const PostPage = () => {
     }
   }, [isTemporaryPostExist]);
 
+  console.log(topicId);
   return (
     <PostPageWrapper>
       {isTemporaryPostExist ? (
@@ -96,9 +86,8 @@ const PostPage = () => {
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
       <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
-
       <DropDownEditorWrapper>
-        <DropDown topicList={topicList} />
+        <DropDown topicList={topicList} selectedTopicId={setTopicId} />
         <Spacing marginBottom="2.4" />
         <Editor saveTitle={setContentTitle} saveContent={setContentContent} />
       </DropDownEditorWrapper>

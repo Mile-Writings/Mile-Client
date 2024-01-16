@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import TopicDropDown from './TopicDropDown';
 import WriterDropDown from './WriterDropDown';
@@ -11,19 +11,21 @@ export interface DropDownPropsType {
   onClickListItem: (key: string, value: string) => void;
   selectedValue: string;
   topicList: Topics[];
+  selectedTopicId: (topicId: string) => void;
 }
 
 interface DropDownDataPropsType {
   topicList: Topics[];
+  selectedTopicId: (topicId: string) => void;
 }
 
 const DropDown = (props: DropDownDataPropsType) => {
-  const { topicList } = props;
+  const { topicList, selectedTopicId } = props;
   // 드롭다운에서 선택된 값 저장 state
   // 글감ID, 익명여부 저장 필요
   // 가장 최신값으로 초기값 업데이트
   const [selectedValues, setSelectedValues] = useState({
-    topic: '필명에 대하여',
+    topic: topicList[0]?.topicName,
     writer: '작자미상',
   });
 
@@ -32,17 +34,22 @@ const DropDown = (props: DropDownDataPropsType) => {
     setSelectedValues((prev) => ({ ...prev, [key]: value }));
   };
 
+  useEffect(() => {
+    setSelectedValues((prev) => ({ ...prev, topic: topicList[0]?.topicName }));
+  }, [topicList[0]?.topicName]);
   return (
     <DropDownWrapper>
       <TopicDropDown
         onClickListItem={handleListItem}
         selectedValue={selectedValues.topic}
         topicList={topicList}
+        selectedTopicId={selectedTopicId}
       />
       <WriterDropDown
         onClickListItem={handleListItem}
         selectedValue={selectedValues.writer}
         topicList={topicList}
+        selectedTopicId={selectedTopicId}
       />
     </DropDownWrapper>
   );

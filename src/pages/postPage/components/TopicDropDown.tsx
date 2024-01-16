@@ -10,7 +10,7 @@ import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../asset
 import useClickOutside from '../../../hooks/useClickOutside';
 
 const TopicDropDown = (props: DropDownPropsType) => {
-  const { onClickListItem, selectedValue, topicList } = props;
+  const { onClickListItem, selectedValue, topicList, selectedTopicId } = props;
   console.log(topicList);
 
   const [topicIsOpen, setTopicIsOpen] = useState(false);
@@ -46,6 +46,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 onClickHandler={onClickListItem}
                 selected={selectedValue === item.topicName}
                 onClickClose={setTopicIsOpen}
+                selectedTopicId={selectedTopicId}
               />
             );
           } else if (idx === 1) {
@@ -57,6 +58,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 onClickHandler={onClickListItem}
                 selected={selectedValue === item.topicName}
                 onClickClose={setTopicIsOpen}
+                selectedTopicId={selectedTopicId}
               />
             );
           } else {
@@ -68,6 +70,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 onClickHandler={onClickListItem}
                 selected={selectedValue === item.topicName}
                 onClickClose={setTopicIsOpen}
+                selectedTopicId={selectedTopicId}
               />
             );
           }

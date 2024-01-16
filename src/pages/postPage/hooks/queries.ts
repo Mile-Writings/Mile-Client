@@ -34,12 +34,11 @@ interface Topics {
   topicId: string | undefined;
   topicName: string | undefined;
 }
-// interface GetTopicQueryResult {
-//   topics: Topics[] | undefined;
-//   refetch: any;
-// }
+interface GetTopicQueryResult {
+  topics: Topics[] | undefined;
+}
 
-export const useGetTopic = (groupId: string) => {
+export const useGetTopic = (groupId: string): GetTopicQueryResult => {
   const { data } = useQuery({
     queryKey: [QUERY_KEY_POST.getTopic, groupId],
     queryFn: () => fetchTopic(groupId),
