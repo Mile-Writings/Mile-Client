@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
+import { usePostContent } from './hooks/queries';
 
 import {
   EditorEditHeader, // 수정하기 -> 헤더
@@ -16,8 +17,10 @@ import Spacing from '../../components/commons/Spacing';
 const PostPage = () => {
   const navigate = useNavigate();
   // 에디터 제목, 내용 저장 함수
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [contentTitle, setContentTitle] = useState('');
+  const [contentContent, setContentContent] = useState('');
+  const [topicId, setTopicId] = useState('');
+  const [anonymous, setAnonymous] = useState(false);
   // console.log(title);
   // console.log(content);
 
@@ -31,14 +34,16 @@ const PostPage = () => {
   const tempSaveExist = false;
 
   // 최초 저장
-  const saveHandler = () => {
-    // request parameter
-    // moimID
-    // topicId : 글감주제 드롭다운에서 가져오기
-    // anonymous : 필명/익명 드롭다운에서 가져오기
-    navigate('./');
 
-    alert('제출이 완료되었습니다.');
+  const saveHandler = () => {
+    const { postId, writerName } = usePostContent({
+      groupId,
+      topicId,
+      contentTitle,
+      contentContent,
+      imageUrl,
+      anonymous,
+    });
   };
 
   // 임시 저장 글 -> 저장하기
@@ -61,7 +66,7 @@ const PostPage = () => {
       <DropDownEditorWrapper>
         <DropDown />
         <Spacing marginBottom="2.4" />
-        <Editor saveTitle={setTitle} saveContent={setContent} />
+        <Editor saveTitle={setContentTitle} saveContent={setContentContent} />
       </DropDownEditorWrapper>
       <Spacing marginBottom="8" />
     </PostPageWrapper>
