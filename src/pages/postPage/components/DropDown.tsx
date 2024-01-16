@@ -5,12 +5,20 @@ import { useState } from 'react';
 import TopicDropDown from './TopicDropDown';
 import WriterDropDown from './WriterDropDown';
 
+import { Topics } from '../apis/fetchEditorContent';
+
 export interface DropDownPropsType {
   onClickListItem: (key: string, value: string) => void;
   selectedValue: string;
+  topicList: Topics[];
 }
 
-const DropDown = () => {
+interface DropDownDataPropsType {
+  topicList: Topics[];
+}
+
+const DropDown = (props: DropDownDataPropsType) => {
+  const { topicList } = props;
   // 드롭다운에서 선택된 값 저장 state
   // 글감ID, 익명여부 저장 필요
   // 가장 최신값으로 초기값 업데이트
@@ -26,8 +34,16 @@ const DropDown = () => {
 
   return (
     <DropDownWrapper>
-      <TopicDropDown onClickListItem={handleListItem} selectedValue={selectedValues.topic} />
-      <WriterDropDown onClickListItem={handleListItem} selectedValue={selectedValues.writer} />
+      <TopicDropDown
+        onClickListItem={handleListItem}
+        selectedValue={selectedValues.topic}
+        topicList={topicList}
+      />
+      <WriterDropDown
+        onClickListItem={handleListItem}
+        selectedValue={selectedValues.writer}
+        topicList={topicList}
+      />
     </DropDownWrapper>
   );
 };

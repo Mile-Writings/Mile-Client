@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 interface TopicPropTypes {
-  topicId: number;
+  topicId: string;
   topicName: string;
   onClickHandler: (key: string, value: string) => void;
   selected: boolean;

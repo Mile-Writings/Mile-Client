@@ -40,14 +40,13 @@ interface Topics {
 // }
 
 export const useGetTopic = (groupId: string) => {
-  const { data, refetch } = useQuery({
+  const { data } = useQuery({
     queryKey: [QUERY_KEY_POST.getTopic, groupId],
     queryFn: () => fetchTopic(groupId),
-    enabled: false,
   });
   const topics = data && data.data.topics;
 
-  return { topics, refetch };
+  return { topics };
 };
 
 // 임시저장 여부 확인 GET api

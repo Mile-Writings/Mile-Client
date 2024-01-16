@@ -23,6 +23,7 @@ const PostPage = () => {
   // 에디터 제목, 내용 저장 함수
   const [contentTitle, setContentTitle] = useState('');
   const [contentContent, setContentContent] = useState('');
+  const [topicList, setTopicList] = useState<Topics[]>([]);
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
@@ -36,16 +37,20 @@ const PostPage = () => {
   );
 
   // 글감 받아오기
-  const { topics, refetch } = useGetTopic(groupId || '');
-  const getTopicHandler = () => {
-    refetch();
-  };
-
+  const { topics } = useGetTopic(groupId || '');
   useEffect(() => {
-    getTopicHandler();
+    if (topics) {
+      setTopicList(topics);
+    }
   }, [topics]);
 
-  console.log(topics);
+  // const getTopicHandler = () => {
+  //   refetch();
+  // };
+
+  // useEffect(() => {
+  //   getTopicHandler();
+  // }, [topics]);
 
   // 최초 저장
   const { mutate: postContent } = usePostContent({
@@ -75,7 +80,7 @@ const PostPage = () => {
         // refetch();
         console.log('임시 저장 fetch');
       } else {
-        getTopicHandler();
+        // getTopicHandler();
         console.log('refetch 완료');
       }
     } else {
@@ -93,7 +98,7 @@ const PostPage = () => {
       <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
 
       <DropDownEditorWrapper>
-        <DropDown />
+        <DropDown topicList={topicList} />
         <Spacing marginBottom="2.4" />
         <Editor saveTitle={setContentTitle} saveContent={setContentContent} />
       </DropDownEditorWrapper>
