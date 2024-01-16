@@ -9,7 +9,6 @@ interface DeleteResponseType {
 }
 const deleteCurious = async (postId: string) => {
   const token = localStorage.getItem('accessToken');
-  console.log('12345');
   try {
     const data = client.delete<DeleteResponseType>(`/api/post/${postId}/curious`, {
       headers: {
