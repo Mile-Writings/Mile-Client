@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import { useParams, useNavigate } from 'react-router-dom';
-
 import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
@@ -74,6 +73,7 @@ export default PostPage;
 const PostPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   width: 100%;
 `;

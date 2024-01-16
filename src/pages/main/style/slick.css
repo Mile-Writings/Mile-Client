@@ -43,7 +43,7 @@
   transform: translate3d(0, 0, 0);
 }
 
-.slick-track {
+.main .slick-track {
   position: relative;
   top: 0;
   left: 0;

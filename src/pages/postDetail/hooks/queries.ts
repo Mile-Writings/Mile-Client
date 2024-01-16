@@ -17,6 +17,7 @@ export const QUERY_KEY_POST_DETAIL = {
   getCurious: 'getCurious',
 };
 
+// 글정보 조회 get api
 export const useGetPostDetail = (postId: string) => {
   const data = useQuery({
     queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail],
@@ -26,6 +27,7 @@ export const useGetPostDetail = (postId: string) => {
   return data;
 };
 
+//궁금해요 여부개수 get api
 export const useGetCuriousInfo = (postId: string) => {
   const data = useQuery({
     queryKey: [QUERY_KEY_POST_DETAIL.getCurious],
