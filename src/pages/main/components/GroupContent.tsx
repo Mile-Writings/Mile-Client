@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { groupPropTypes } from './Carousel';
 import CuriousGroup from './CuriousGroup';
+
+import { groupPropTypes } from '../apis/getGroupContent';
 
 import Spacing from './.././../../components/commons/Spacing';
 
@@ -12,7 +13,7 @@ export interface groupContentPropTypes {
   postTitle: string;
   postContent: string;
   postId: string;
-  groupId: number;
+  groupId: string;
   isLast: boolean;
 }
 

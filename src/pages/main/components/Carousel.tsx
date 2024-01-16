@@ -10,13 +10,7 @@ import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
 
 import Spacing from './../../../components/commons/Spacing';
-import { getGroupContent } from './../apis/getGroupContent';
-
-export interface groupPropTypes {
-  moimId: number;
-  moimName: string;
-  moimPosts: groupPostTypes[];
-}
+import { getGroupContent, groupPropTypes } from './../apis/getGroupContent';
 
 export interface groupPostTypes {
   topicName: string;
@@ -87,8 +81,6 @@ export default Carousel;
 const CarouselWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 `;
 
 const CarouselWithButtonLayout = styled.div`
