@@ -8,7 +8,6 @@ import ImageUpload from './components/ImageUpload';
 import { usePostContent } from './hooks/queries';
 
 import {
-  EditorEditHeader, // 수정하기 -> 헤더
   EditorTempNotExistHeader, // 임시저장 글 없음 -> 헤더
   EditorTempExistHeader, // 임시저장 글 있음 -> 헤더
 } from '../../components/commons/Header';
@@ -21,29 +20,25 @@ const PostPage = () => {
   const [contentContent, setContentContent] = useState('');
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
-  // console.log(title);
-  // console.log(content);
+  const [imageUrl, setImageUrl] = useState('');
 
   // 모임 ID url에서 받아오기
   const { groupId } = useParams();
 
   // 임시저장 값 여부 확인
-
-  // 헤더 조건부 렌더링 (임시값)
-  // 임시저장 값 있는지 확인 api
   const tempSaveExist = false;
 
   // 최초 저장
-
+  const { mutate: postContent } = usePostContent({
+    groupId,
+    topicId,
+    contentTitle,
+    contentContent,
+    imageUrl,
+    anonymous,
+  });
   const saveHandler = () => {
-    const { postId, writerName } = usePostContent({
-      groupId,
-      topicId,
-      contentTitle,
-      contentContent,
-      imageUrl,
-      anonymous,
-    });
+    postContent();
   };
 
   // 임시 저장 글 -> 저장하기
@@ -61,8 +56,7 @@ const PostPage = () => {
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
-      <ImageUpload />
-      {/* <Spacing marginBottom="3.4" /> */}
+      <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
       <DropDownEditorWrapper>
         <DropDown />
         <Spacing marginBottom="2.4" />
