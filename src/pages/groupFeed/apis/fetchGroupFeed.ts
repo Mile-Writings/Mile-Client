@@ -16,6 +16,7 @@ export const fetchGroupFeedAuth = async (groupId: string) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+    console.log(response.data, 'fetchgRoup');
     return response.data; //"isMember" : boolean
   } catch (error) {
     console.error('에러:', error);
@@ -45,9 +46,61 @@ export const fetchGroupInfo = async (groupId: string) => {
   }
 };
 
-export const fetchTodayWritingStyle = async (groupId: string) => {
+interface TodayTopicPropTypes {
+  data: {
+    content: string;
+  };
+  status: number;
+  message: string;
+}
+
+export const fetchTodayTopic = async (groupId: string) => {
   try {
-    const response = await client.get(`/api/moim/${groupId}/topic`);
+    const response = await client.get<TodayTopicPropTypes>(`/api/moim/${groupId}/topic`);
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
+
+interface CuriousWriterPropTypes {
+  data: {
+    popularWriters: {
+      writerName: string;
+      information: string;
+    }[];
+  };
+  status: number;
+  message: string;
+}
+
+export const fetchCuriousWriters = async (groupId: string) => {
+  try {
+    const response = await client.get<CuriousWriterPropTypes>(
+      `/api/moim/${groupId}/mostCuriousWriters`,
+    );
+    console.log(response.data, '데이터');
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
+
+interface TopicListPropTypes {
+  data: {
+    topicList: {
+      topicId: string;
+      topicName: string;
+    }[];
+  };
+  status: number;
+  message: string;
+}
+
+export const fetchTopicList = async (groupId: string) => {
+  try {
+    const response = await client.get<TopicListPropTypes>(`/api/moim/${groupId}/topicList`);
+    console.log(response.data, '데이터');
     return response.data;
   } catch (error) {
     console.error('에러:', error);

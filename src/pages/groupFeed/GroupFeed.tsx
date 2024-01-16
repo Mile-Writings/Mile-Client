@@ -8,6 +8,7 @@ import EachArticle from './carousel/EachArticle';
 import CuriousArticle from './components/CuriousArticle';
 import CuriousProfile from './components/CuriousProfile';
 import GroupCuriousTitle from './components/GroupCuriousTitle';
+import { LogOutHeader, GroupFeedHeader } from './components/GroupFeedHeader';
 import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
 import { useGroupFeedAuth, useGroupInfo } from './hooks/queries';
@@ -16,7 +17,6 @@ import GroupFloatingBtn from '../../assets/svgs/groupFloatingBtn.svg';
 import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import GroupThumbnailImg from '../../assets/svgs/groupThumnailImg.svg';
 import Footer from '../../components/commons/Footer';
-import { GroupFeedHeader, LogOutHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
@@ -55,17 +55,24 @@ const GroupFeed = () => {
           <GroupTodayWriteStyle isMember={isMember} groupId={groupId} />
           <Spacing marginBottom="6.4" />
           <GroupCuriousTitle
-            mainText="궁금해요 버튼이 많은 2명의 프로필"
-            subText="부연설명 텍스트"
+            mainText="우리 모임에서 궁금한 글쓴이에요"
+            subText="매주 월요일마다 업데이트 됩니다"
           />
           <Spacing marginBottom="2" />
-          <CuriousProfile />
+          <CuriousProfile groupId={groupId} />
           <Spacing marginBottom="6.4" />
-          <GroupCuriousTitle mainText="궁금해요 버튼이 많은 2개의 글" subText="부연설명 텍스트" />
+          <GroupCuriousTitle
+            mainText="우리 모임에서 인기 있는 글이에요"
+            subText="매주 월요일마다 업데이트 됩니다"
+          />
           <Spacing marginBottom="2" />
           <CuriousArticle groupId={groupId} />
           <Spacing marginBottom="6.4" />
-          <Carousel activeCategoryId={activeCategoryId} setActiveCategoryId={setActiveCategoryId} />
+          <Carousel
+            activeCategoryId={activeCategoryId}
+            setActiveCategoryId={setActiveCategoryId}
+            groupId={groupId}
+          />
           <Spacing marginBottom="3.2" />
           <Topic>글감자리입니다.최대 공백포함 15자입니다.</Topic>
           <Spacing marginBottom="0.8" />
