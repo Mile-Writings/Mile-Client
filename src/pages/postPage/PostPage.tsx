@@ -7,20 +7,16 @@ import { useParams, useNavigate } from 'react-router-dom';
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
-import { useTempSaveFlag } from './hooks/queries';
+import { useTempSaveFlag, useTempSaveContent } from './hooks/queries';
 
-import {
-  // EditorEditHeader, // 수정하기 -> 헤더
-  EditorTempNotExistHeader, // 임시저장 글 없음 -> 헤더
-  EditorTempExistHeader, // 임시저장 글 있음 -> 헤더
-} from '../../components/commons/Header';
+import { EditorTempNotExistHeader, EditorTempExistHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const PostPage = () => {
   const navigate = useNavigate();
   // 에디터 제목, 내용 저장 함수
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [contentTitle, setContentTitle] = useState('');
+  const [contentContent, setContentContent] = useState('');
 
   // 모임 ID url에서 받아오기
   const { groupId } = useParams();
@@ -29,7 +25,14 @@ const PostPage = () => {
   const { isTemporaryPostExist, postId, isLoading, isError, error } = useTempSaveFlag(
     groupId || '',
   );
+  // 임시저장 글 불러오기
+  const { topicList, title, content, imageUrl, anonymous } = useTempSaveContent(postId || '');
 
+  console.log(topicList);
+  console.log(title);
+  console.log(content);
+  console.log(imageUrl);
+  console.log(anonymous);
   // 최초 저장
   const saveHandler = () => {
     navigate('./');
@@ -45,6 +48,7 @@ const PostPage = () => {
     alert('홈으로 가기');
   };
 
+  // 임시저장 모달 띄우기
   useEffect(() => {
     if (isTemporaryPostExist) {
       if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
@@ -68,7 +72,7 @@ const PostPage = () => {
       <DropDownEditorWrapper>
         <DropDown />
         <Spacing marginBottom="2.4" />
-        <Editor saveTitle={setTitle} saveContent={setContent} />
+        <Editor saveTitle={setContentTitle} saveContent={setContentContent} />
       </DropDownEditorWrapper>
       <Spacing marginBottom="8" />
     </PostPageWrapper>
