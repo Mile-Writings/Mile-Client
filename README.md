@@ -12,6 +12,30 @@ MILE은 make it look easy의 줄임말로, 글쓰기를 더 쉽고, 편안하게
 <br/>
 <hr/>
 
+## 🖼️ View
+### 🖼️ Main View
+
+| <img width="1440" alt="onBoarding" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a25259cb-ac43-4caf-b9e7-9a5ed672fee2"> | <img width="1439" alt="Carousel" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/b44ae0a2-dea6-4b99-bef3-6474ab5dc267"> | <img width="1440" alt="q a" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/e1e28047-8aa7-498d-8e88-216b686277fa"> |
+| :---: | :---: | :---: |
+
+
+### 🖼️ Post View
+
+| <img width="904" alt="스크린샷 2024-01-16 오후 11 55 29" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/b1c2eb99-88b3-49da-89bf-2bdf3d1848b8"> | <img width="904" alt="스크린샷 2024-01-16 오후 11 03 12" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/28bfcf61-af14-4a7b-b5e0-b12aa3be162f"> |
+| :---: | :---: |
+
+
+### 🖼️ Post Editor View
+
+| <img width="1056" alt="스크린샷 2024-01-16 오후 11 59 26" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a8ae7703-0982-4141-b39e-7e2342b4fd8e"> | <img width="904" alt="스크린샷 2024-01-16 오후 11 09 39" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/80dd545a-bbe3-4fcf-a1fe-6ecb4968c594"> |
+| :---: | :---: |
+
+### 🖼️ Post Detail View
+
+| <img width="1056" alt="스크린샷 2024-01-16 오후 11 59 26" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a8ae7703-0982-4141-b39e-7e2342b4fd8e"> | <img width="904" alt="스크린샷 2024-01-16 오후 11 09 39" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/80dd545a-bbe3-4fcf-a1fe-6ecb4968c594"> |
+| :---: | :---: |
+
+
 <h2>👩🏻‍💻🧑🏻‍💻 MILE Web Developers </h2>
 <br/>
 
