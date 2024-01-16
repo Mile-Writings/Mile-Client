@@ -1,16 +1,26 @@
 import styled from '@emotion/styled';
 
+import CuriousGroup from './CuriousGroup';
+
 import Spacing from './.././../../components/commons/Spacing';
-import { MoimPostPropTypes } from './../constants/constants';
-import Curious from './CuriousGroup';
+
+export interface groupContentPropTypes {
+  topicName: string;
+  imageUrl: string | null;
+  postTitle: string;
+  postContent: string;
+  groupId: number;
+  isLast: boolean;
+}
 
 const GroupContent = ({
   topicName,
   imageUrl,
   postTitle,
   postContent,
+  groupId,
   isLast,
-}: MoimPostPropTypes & { isLast: boolean }) => {
+}: groupContentPropTypes) => {
   const hasImage = () => {
     return imageUrl !== null;
   };
@@ -26,7 +36,16 @@ const GroupContent = ({
         </SubText>
       </TextContainer>
       {imageUrl && <Image src={imageUrl} isLast={isLast} alt="group-content-image" />}
-      {isLast && <Curious />}
+      {isLast && (
+        <CuriousGroup
+          groupId={groupId}
+          topicName={topicName}
+          imageUrl={imageUrl}
+          postTitle={postTitle}
+          postContent={postContent}
+          isLast={isLast}
+        />
+      )}
     </ContentLayout>
   );
 };
@@ -57,7 +76,7 @@ const TextContainer = styled.div`
 `;
 
 const SubText = styled.p<{ isImage: boolean; isLast: boolean }>`
-  flex-shrink: 0;
+  display: -webkit-box;
   width: ${({ isImage, isLast }) =>
     isImage && isLast
       ? '47.8rem'
@@ -71,10 +90,17 @@ const SubText = styled.p<{ isImage: boolean; isLast: boolean }>`
 
   color: ${({ theme }) => theme.colors.gray80};
   text-overflow: ellipsis;
+
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+
   ${({ theme }) => theme.fonts.body3};
 `;
 
 const Image = styled.img<{ isLast: boolean }>`
   width: ${({ isLast }) => (isLast ? '16.8rem' : '22.4rem')};
   height: 16.8rem;
+  object-fit: cover;
+
+  border-radius: 8px;
 `;

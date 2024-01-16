@@ -1,11 +1,12 @@
+import styled from '@emotion/styled';
+
 import { useEffect, useState } from 'react';
 
-import styled from '@emotion/styled';
+import { getRecommendTopic } from '../apis/getRecommendTopic';
+import { recommendPropsTypes } from '../types/recommendTopic';
 
 import { MainGraphicGradationIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-import { getRecommendTopic } from '../apis/getRecommendTopic';
-import { recommendPropsTypes } from '../types/recommendTopic';
 
 const Ruler = () => {
   const [recommendTopicData, setRecommendTopicData] = useState<recommendPropsTypes>();
@@ -78,7 +79,9 @@ const RulerContentBox = styled.div`
 `;
 
 const TodayKeyWord = styled.span`
-  width: 30rem;
+  width: fit-content;
+
+  white-space: nowrap;
 `;
 
 const Pipe = styled.div`

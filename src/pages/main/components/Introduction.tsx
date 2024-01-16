@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import { INTRODUCTION_DATA } from '../constants/introductionData';
+
 import {
   MainIcnArrowWhite as MainArrowWhiteIc,
   MainGraphicLogo as MainGraphicLogoIc,
@@ -21,7 +23,7 @@ const Introduction = () => {
           마일 메이커들의 에피소드
         </MainText>
         <Spacing marginBottom="0.8" />
-        <SubText>메이커들의 글 모임에서 확인해 보세요</SubText>
+        <SubText>{INTRODUCTION_DATA[0].subText}</SubText>
         <Spacing marginBottom="8" />
         <GroupRoutingButtonBox onClick={handleOnClick}>
           마일 글 모임 바로가기
@@ -29,15 +31,11 @@ const Introduction = () => {
         </GroupRoutingButtonBox>
       </MileMakersTextLayout>
       <IntroduceZakmiBox>
-        <HookText>마일의 첫 번째 에피소드</HookText>
+        <HookText>{INTRODUCTION_DATA[0].hookText}</HookText>
         <Spacing marginBottom="0.4" />
-        <GreetingText>우리가 글쓰기 모임에 주목한 이유</GreetingText>
+        <GreetingText>{INTRODUCTION_DATA[0].greetingText}</GreetingText>
         <Spacing marginBottom="3" />
-        <DiscriptionText>
-          “체취가 느껴지는 글은 오랜만에 읽어보는 것 같아. 솔직담백해서 좋다!” 내가 처음으로 올린
-          블로그 글에 친구가 달아준 댓글이었다. 사실 글쓰기에 중요한 건, ‘잘’ 쓰는 것이 아니라 그냥
-          내 마음을 담아 쓰는 것이라는 걸 알게 됐었다. 그리고 그렇게 마음을 담은 글...
-        </DiscriptionText>
+        <DiscriptionText>{INTRODUCTION_DATA[0].discriptionText}</DiscriptionText>
       </IntroduceZakmiBox>
     </IntroductionWrapper>
   );

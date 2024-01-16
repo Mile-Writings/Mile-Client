@@ -12,11 +12,22 @@ import GroupNameButton from './GroupNameButton';
 
 import Spacing from './../../../components/commons/Spacing';
 import { getGroupContent } from './../apis/getGroupContent';
-import { MoimPropTypes } from './../types/moimPost';
+
+interface groupPropTypes {
+  moimId: number;
+  moimName: string;
+  moimPosts: groupPostTypes[];
+}
+
+export interface groupPostTypes {
+  topicName: string;
+  imageUrl: string;
+  postTitle: string;
+  postContent: string;
+}
 
 const Carousel = () => {
-  const [groupData, setGroupData] = useState<MoimPropTypes[]>([]);
-
+  const [groupData, setGroupData] = useState<groupPropTypes[]>();
   const settings = {
     arrow: false,
     dots: false,
@@ -30,7 +41,7 @@ const Carousel = () => {
     const getData = async () => {
       try {
         const response = await getGroupContent();
-        setGroupData(response?.data?.moim);
+        setGroupData(response);
       } catch (error) {
         console.log(error);
       }
@@ -43,26 +54,29 @@ const Carousel = () => {
       <Spacing marginBottom="3.6" />
       {groupData && (
         <section>
-          {groupData.map((moim) => (
-            <CarouselWithButtonLayout key={moim.moimId}>
-              <GroupNameButton buttonName={moim.moimName} />
-              <Spacing marginBottom="1.6" />
-              <CarouselContainer>
-                <CarouselBox {...settings} className="main">
-                  {moim.moimPosts.map((post, index) => (
-                    <GroupContent
-                      key={index}
-                      topicName={post.topicName}
-                      imageUrl={post.imageUrl}
-                      postTitle={post.postTitle}
-                      postContent={post.postContent}
-                      isLast={index === moim.moimPosts.length - 1}
-                    />
-                  ))}
-                </CarouselBox>
-              </CarouselContainer>
-            </CarouselWithButtonLayout>
-          ))}
+          {groupData
+            .sort((previous, current) => previous.moimId - current.moimId)
+            .map((moim) => (
+              <CarouselWithButtonLayout key={moim.moimId}>
+                <GroupNameButton groupName={moim.moimName} groupId={moim.moimId} />
+                <Spacing marginBottom="1.6" />
+                <CarouselContainer>
+                  <CarouselBox {...settings} className="main">
+                    {moim.moimPosts.map((post, index) => (
+                      <GroupContent
+                        key={index}
+                        topicName={post.topicName}
+                        imageUrl={post.imageUrl}
+                        postTitle={post.postTitle}
+                        postContent={post.postContent}
+                        groupId={moim.moimId}
+                        isLast={index === moim.moimPosts.length - 1}
+                      />
+                    ))}
+                  </CarouselBox>
+                </CarouselContainer>
+              </CarouselWithButtonLayout>
+            ))}
         </section>
       )}
     </CarouselWrapper>
