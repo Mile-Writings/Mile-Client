@@ -2,8 +2,9 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, To } from 'react-router-dom';
 
+import { Topics } from './apis/fetchEditorContent';
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
@@ -35,7 +36,15 @@ const PostPage = () => {
   );
 
   // 글감 받아오기
-  const { topics } = useGetTopic(groupId || '');
+  const { topics, refetch } = useGetTopic(groupId || '');
+  const getTopicHandler = () => {
+    refetch();
+  };
+
+  useEffect(() => {
+    getTopicHandler();
+  }, [topics]);
+
   console.log(topics);
 
   // 최초 저장
@@ -63,9 +72,11 @@ const PostPage = () => {
   useEffect(() => {
     if (isTemporaryPostExist) {
       if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
+        // refetch();
         console.log('임시 저장 fetch');
       } else {
-        console.log('글감 get');
+        getTopicHandler();
+        console.log('refetch 완료');
       }
     } else {
       return;
@@ -80,6 +91,7 @@ const PostPage = () => {
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
       <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
+
       <DropDownEditorWrapper>
         <DropDown />
         <Spacing marginBottom="2.4" />

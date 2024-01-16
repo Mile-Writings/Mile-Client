@@ -1,7 +1,7 @@
 import { client } from '../../../utils/apis/axios';
 
 // 에디터 상단 글감 조회 GET
-interface Topics {
+export interface Topics {
   topicId: string;
   topicName: string;
 }
@@ -22,6 +22,7 @@ export const fetchTopic = async (groupId: string) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+    console.log(response.data);
     return response.data;
   } catch (err) {
     console.log(err);

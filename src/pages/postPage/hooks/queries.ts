@@ -12,7 +12,7 @@ export const QUERY_KEY_POST = {
 
 // 글 작성하기
 export const usePostContent = ({
-  moimId,
+  groupId,
   topicId,
   title,
   content,
@@ -21,7 +21,7 @@ export const usePostContent = ({
 }: PostContentRequestTypes) => {
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST.postContent],
-    mutationFn: () => postContent({ moimId, topicId, title, content, imageUrl, anonymous }),
+    mutationFn: () => postContent({ groupId, topicId, title, content, imageUrl, anonymous }),
     onSuccess: () => {
       console.log('post content success');
     },
@@ -34,18 +34,20 @@ interface Topics {
   topicId: string | undefined;
   topicName: string | undefined;
 }
-interface GetTopicQueryResult {
-  topics: Topics[] | undefined;
-}
+// interface GetTopicQueryResult {
+//   topics: Topics[] | undefined;
+//   refetch: any;
+// }
 
-export const useGetTopic = (groupId: string): GetTopicQueryResult => {
-  const { data } = useQuery({
+export const useGetTopic = (groupId: string) => {
+  const { data, refetch } = useQuery({
     queryKey: [QUERY_KEY_POST.getTopic, groupId],
     queryFn: () => fetchTopic(groupId),
+    enabled: false,
   });
   const topics = data && data.data.topics;
 
-  return { topics };
+  return { topics, refetch };
 };
 
 // 임시저장 여부 확인 GET api

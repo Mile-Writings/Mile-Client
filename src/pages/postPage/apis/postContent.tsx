@@ -1,7 +1,7 @@
 import { client } from '../../../utils/apis/axios';
 
 export interface PostContentRequestTypes {
-  moimId: string;
+  groupId: string;
   topicId: string;
   title: string;
   content: string;
@@ -19,7 +19,7 @@ interface PostContentResponseType {
 }
 
 export const postContent = async ({
-  moimId,
+  groupId,
   topicId,
   title,
   content,
@@ -30,7 +30,7 @@ export const postContent = async ({
     const accessToken = localStorage.getItem('accessToken');
     const response = await client.post<PostContentResponseType>(
       `/api/post`,
-      { moimId, topicId, title, content, imageUrl, anonymous },
+      { groupId, topicId, title, content, imageUrl, anonymous },
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
