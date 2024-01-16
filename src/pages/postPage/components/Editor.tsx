@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
+import React, { useRef, useCallback } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 
-import React, { useRef, useCallback } from 'react';
 import 'react-quill/dist/quill.bubble.css';
 
 import Spacing from '../../../components/commons/Spacing';
