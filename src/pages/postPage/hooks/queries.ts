@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { fetchTopic } from '../apis/fetchEditorContent';
+import { fetchPresignedUrl } from '../apis/fetchPresignedUrl';
 import { fetchTempSaveFlag } from '../apis/fetchTempSaveFlag';
 import { postContent, PostContentRequestTypes } from '../apis/postContent';
 
@@ -8,6 +9,7 @@ export const QUERY_KEY_POST = {
   postContent: 'postContent',
   getTopic: 'getTopic',
   getTempSaveFlag: 'getTempSaveFlag',
+  getPresignedUrl: 'getPresignedUrl',
 };
 
 // 글 작성하기
@@ -67,4 +69,22 @@ export const useTempSaveFlag = (groupId: string): TempSaveFlagQueryResult => {
   const postId = data && data.data.postId;
 
   return { isTemporaryPostExist, postId, isLoading, isError, error };
+};
+
+// 이미지 저장 url GET api
+interface PresignedUrlQueryResult {
+  fileName: string | undefined;
+  url: string | undefined;
+}
+
+export const usePresignedUrl = (): PresignedUrlQueryResult => {
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY_POST.getPresignedUrl],
+    queryFn: () => fetchPresignedUrl(),
+  });
+
+  const fileName = data && data.data.fileName;
+  const url = data && data.data.url;
+
+  return { fileName, url };
 };
