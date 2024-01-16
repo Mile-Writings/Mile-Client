@@ -140,11 +140,12 @@ interface ArticleListPropTypes {
     };
     postList: {
       postId: string;
+      postTitle: string;
+      postContent: string;
+      writerName: string;
+      createdAt: string;
+      curiousCount: number;
       imageUrl: string;
-      topic: string;
-      title: string;
-      content: string;
-      isContainPhoto: boolean;
     }[];
   };
   status: number;

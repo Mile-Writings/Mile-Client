@@ -7,7 +7,7 @@ import './slick.css';
 import CarouselContainer from './CarouselContainer';
 import EachArticle from './EachArticle';
 
-import { useTopicList } from '../hooks/queries';
+import { useTopicList, useArticleList } from '../hooks/queries';
 
 import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
 import BeforeBtn from '../../../assets/svgs/groupTabBeforeBtnEnable.svg';
@@ -47,6 +47,7 @@ const Carousel = (props: CategoryIdPropTypes) => {
   };
 
   const { groupFeedCategoryData, isLoading, isError, error } = useTopicList(groupId || '');
+  const { topicInfo, postList } = useArticleList(selectedTopicId || '');
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -82,7 +83,7 @@ const Carousel = (props: CategoryIdPropTypes) => {
         최대 공백포함90자입니다.
       </TopicDescription>
       <Spacing marginBottom="2" />
-      <EachArticle activeCategoryId={activeCategoryId} />
+      <EachArticle selectedTopicId={selectedTopicId} />
     </>
   );
 };
