@@ -3,6 +3,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import createPostCurious from '../apis/createPostCurious';
+import fetchCommentList from '../apis/fetchCommentList';
 import fetchCuriousInfo from '../apis/fetchCuriousInfo';
 import fetchPostDetail from '../apis/fetchPostDetail';
 
@@ -46,6 +47,15 @@ export const usePostCurious = (postId: string) => {
     onSuccess: () => {
       console.log('post curious Success');
     },
+  });
+  return data;
+};
+
+//글에 해당하는 댓글 리스트 조회 api
+export const useGetCommentList = (postId: string) => {
+  const data = useQuery({
+    queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
+    queryFn: () => fetchCommentList(postId),
   });
   return data;
 };
