@@ -82,7 +82,18 @@ const ArticleTitle = styled.div`
 `;
 
 const ArticlePreview = styled.div`
+  display: -webkit-box;
+  width: 28.8rem;
+  height: 6.6rem;
+  overflow: hidden;
+
   color: ${({ theme }) => theme.colors.gray80};
+
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  white-space: wrap;
+  text-overflow: ellipsis;
   ${({ theme }) => theme.fonts.body3};
 `;
 
