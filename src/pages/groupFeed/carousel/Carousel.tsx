@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import Slider from 'react-slick';
-
 import { Dispatch, SetStateAction } from 'react';
+import Slider from 'react-slick';
 
 import './slick-theme.css';
 import './slick.css';
@@ -56,11 +55,11 @@ const Carousel = (props: CategoryIdPropTypes) => {
     <CarouselWrapper>
       <GroupTabBtnBaseBeforeIcon />
       <Slider {...settings} className="groupFeedCarousel">
-        {CAROUSEL_CATEGORY.categoryList.map((category, index) => (
+        {groupFeedCategoryData?.map((topic) => (
           <CarouselContainer
-            key={index}
-            onClick={() => handleCategoryClick(category.categoryId)}
-            isActive={category.categoryId === activeCategoryId}
+            key={topic.topicId}
+            onClick={() => handleCategoryClick(Number(topic.topicId))}
+            isActive={Number(topic.topicId) === activeCategoryId}
           >
             {topic.topicName}
           </CarouselContainer>

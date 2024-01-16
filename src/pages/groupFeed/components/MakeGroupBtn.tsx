@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
 import { MakeGroupPlusBtn, MakeGroupPlusHoverBtn } from '../../../assets/svgs';
 
