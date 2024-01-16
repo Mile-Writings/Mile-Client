@@ -7,6 +7,7 @@ import {
   fetchTodayTopic,
   fetchGroupInfo,
   fetchCuriousWriters,
+  fetchArticleList,
 } from '../apis/fetchGroupFeed';
 
 export const QUERY_KEY_GROUPFEED = {
@@ -106,4 +107,16 @@ export const useCuriousWriters = (groupId: string) => {
   const curiousWriterData = data && data.data.popularWriters;
 
   return { curiousWriterData, isLoading, isError, error };
+};
+
+export const useArticleList = (topicId: string) => {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: [QUERY_KEY_GROUPFEED.getCuriousWriters, topicId],
+    queryFn: () => fetchArticleList(topicId),
+  });
+
+  const topicInfo = data && data.data.topicInfo;
+
+  const postList = data && data.data.postList;
+  return { topicInfo, postList, isLoading, isError, error };
 };
