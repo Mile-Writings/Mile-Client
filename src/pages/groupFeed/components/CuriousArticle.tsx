@@ -69,7 +69,7 @@ const CuriousArticleWrapper = styled.div`
   gap: 1.6rem;
 `;
 
-const ArticleThumbnail = styled.div<{ imageUrl?: string }>`
+const ArticleThumbnail = styled.div<{ imageUrl: string }>`
   width: 28.8rem;
   height: 14rem;
 
