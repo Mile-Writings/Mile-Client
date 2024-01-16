@@ -58,7 +58,7 @@ const Carousel = (props: CategoryIdPropTypes) => {
         {groupFeedCategoryData?.map((topic, index) => (
           <CarouselContainer
             key={index}
-            onClick={() => handleCategoryClick(Number(topic.topicId))}
+            onClick={() => handleCategoryClick(index + 1)}
             isActive={index + 1 === activeCategoryId}
           >
             {topic.topicName}
