@@ -10,16 +10,24 @@ import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets
 const CuriousBtn = () => {
   const [isClick, setIsClick] = useState(false);
   const { postId } = useParams();
-  const { data } = useGetCuriousInfo(postId || '');
+  const { data, isSuccess } = useGetCuriousInfo(postId || '');
+  // if (isSuccess) {
+  //   if (data?.data?.isCurious) {
+  //     setIsClick(data?.data?.isCurious);
+  //   }
+  // }
   const { mutate: postCurious } = usePostCurious(postId || '');
   const { mutate: deleteCurious } = useDeleteCurious(postId || ' ');
+  console.log(data);
   const handleBtnClick = () => {
-    setIsClick((prev) => !prev);
     if (isClick) {
       deleteCurious();
+      console.log('좋아요 삭제');
     } else {
       postCurious();
+      console.log('좋아요 생성');
     }
+    setIsClick((prev) => !prev);
   };
   return (
     <>

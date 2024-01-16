@@ -1,6 +1,6 @@
 //한 파일에서 사용하는 쿼리키를 모아두고 쿼리를 선언해주세요
 
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import createPostCurious from '../apis/createPostCurious';
 import deleteCurious from '../apis/deleteCurious';
@@ -32,7 +32,7 @@ export const useGetPostDetail = (postId: string) => {
 //궁금해요 여부개수 get api
 export const useGetCuriousInfo = (postId: string) => {
   const data = useQuery({
-    queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId],
+    queryKey: [QUERY_KEY_POST_DETAIL.getCurious],
     queryFn: () => fetchCuriousInfo(postId),
   });
   return data;
@@ -40,10 +40,12 @@ export const useGetCuriousInfo = (postId: string) => {
 
 //궁금해요 생성 api
 export const usePostCurious = (postId: string) => {
+  const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.postCurious],
     mutationFn: () => createPostCurious(postId),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.postCurious] });
       console.log('post curious Success');
     },
   });
@@ -52,10 +54,12 @@ export const usePostCurious = (postId: string) => {
 
 //궁금해요 삭제 api
 export const useDeleteCurious = (postId: string) => {
+  const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.deleteCurious],
     mutationFn: () => deleteCurious(postId),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.deleteCurious] });
       console.log('data');
     },
   });
