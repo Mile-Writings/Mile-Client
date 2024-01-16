@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-
 import { useState } from 'react';
 
 import Editor from '../postPage/components/Editor';

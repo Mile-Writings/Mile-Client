@@ -12,6 +12,30 @@ MILE은 make it look easy의 줄임말로, 글쓰기를 더 쉽고, 편안하게
 <br/>
 <hr/>
 
+## 👀 View 소개
+### 🌱 Main View
+
+| <img width="500" alt="onBoarding" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a25259cb-ac43-4caf-b9e7-9a5ed672fee2"> | <img width="500" alt="Carousel" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/b44ae0a2-dea6-4b99-bef3-6474ab5dc267"> | <img width="500" alt="q a" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/e1e28047-8aa7-498d-8e88-216b686277fa"> |
+| :---: | :---: | :---: |
+
+
+### 🌱 Post View
+
+| <img width="500" alt="스크린샷 2024-01-16 오후 11 55 29" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/b1c2eb99-88b3-49da-89bf-2bdf3d1848b8"> | <img width="500" alt="스크린샷 2024-01-16 오후 11 03 12" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/28bfcf61-af14-4a7b-b5e0-b12aa3be162f"> |
+| :---: | :---: |
+
+
+### 🌱 Post Editor View
+
+| <img width="500" alt="스크린샷 2024-01-16 오후 11 59 26" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a8ae7703-0982-4141-b39e-7e2342b4fd8e"> | <img width="500" alt="스크린샷 2024-01-16 오후 11 09 39" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/80dd545a-bbe3-4fcf-a1fe-6ecb4968c594"> |
+| :---: | :---: |
+
+### 🌱 Post Detail View
+
+| <img width="500" alt="스크린샷 2024-01-16 오후 11 59 26" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a8ae7703-0982-4141-b39e-7e2342b4fd8e"> | <img width="500" alt="스크린샷 2024-01-16 오후 11 09 39" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/80dd545a-bbe3-4fcf-a1fe-6ecb4968c594"> |
+| :---: | :---: |
+
+
 <h2>👩🏻‍💻🧑🏻‍💻 MILE Web Developers </h2>
 <br/>
 
@@ -151,25 +175,51 @@ type과 콜론 후 한칸 띄고 subject
 |-- 📁 node_modules
 |-- 📁 public
 |-- 📁 src
-    |-- 📁 asset
+    |-- 📁 assets
 	  |   |-- 📁 svgs
 	  |   |-- 📁 images
     |-- 📁 components
 	  |   |-- 📁 commons (button , input 등 재사용의 가장 작은 단위
 	  |   |-- 📁 icons(React Icon Components)
     |-- 📁 pages
-   	|   |-- 📁onboarding
-    |   |   |-- 📁components
-    |   |   |-- 📁types
-    |   |   |-- 📁hooks
-    |   |   |-- 📁utils
-    |   |   |-- Onboarding.tsx
-    |   |-- 📁useFunnel
-    |       |-- 📁components
-    |       |-- 📁types
-    |       |-- 📁hooks
-    |       |-- 📁utils
-    |       |-- UseFunnel.tsx
+    |	|   |-- 📁error
+    |	|   |-- 📁login
+    |	|   |-- 📁main
+    |   |       |-- 📁apis
+    |   |    	|-- 📁components
+    |   |    	|-- 📁types
+    |   |    	|-- 📁constants
+    |   |    	|-- 📁styles
+    |   |	|-- 📁types
+    |   |    	|-- Main.tsx
+    |   |   |-- 📁postDetail
+    |   |       |-- 📁apis
+    |   |    	|-- 📁components
+    |   |    	|-- 📁constants
+    |   |	|-- 📁hooks
+    |   |    	|-- postDetail.tsx
+    |   |   |-- 📁postEditor
+    |   |       |-- 📁apis
+    |   |    	|-- 📁components
+    |   |    	|-- 📁constants
+    |   |	|-- 📁hooks
+    |   |    	|-- postEditor.tsx
+    |   |   |-- 📁postPage
+    |   |       |-- 📁apis
+    |   |    	|-- 📁components
+    |   |    	|-- 📁constants
+    |   |	|-- 📁types
+    |   |    	|-- postPage.tsx
+    |   |   |-- 📁groupFeed
+    |   |       |-- 📁apis
+    |   |    	|-- 📁carousels
+    |   |    	|-- 📁components
+    |   |    	|-- 📁constants
+    |   |	|-- 📁hooks
+    |   |    	|-- groupFeed.tsx
+    |   |  
+    |   |   
+    |   |
     |-- 📁 hooks (커스텀 훅을 담아두는 폴더)
     |-- 📁 styles ( GlobalStyles , theme.ts )
     |-- 📁 utils ( 재사용이 높은 함수모음 폴더 )
@@ -316,6 +366,7 @@ function checkIsUser({userName, userBirth}:userDataPropsTypes){
 <br/>
 <hr>
 
-| ✅ 사전 조사 |
-| :--------------: |
-| <ul><li><a href='https://lapis-margin-2db.notion.site/Emotion-518a0b3b11054afebf41e729e77712b2?pvs=4'>Emotion</a></li><li><a href='https://www.notion.so/Storybook-c60797fa06104848ac9e5f4e143bed15'>StoryBook</a></li><li><a href='https://flossy-salary-36e.notion.site/React-Query-6685216d402e4d5e9cbb6e2b2b28b10d?pvs=4'>React Query</a></li><li><a href='https://velog.io/@namdaeun/React-Context-API-파헤치기'>Context API</a></li></ul> |
+| 🪄 짜미들의 아티클 | 💥 짜미들의 트러블 슈팅 |
+| ---------------------- | ---------------------- |
+| <ul><li>[재훈이의 React Query 아티클](https://lapis-margin-2db.notion.site/92858409a2b64432821dad4ac58cd630?pvs=4)</li> <li>[다은이의 Context API 아티클](https://velog.io/@namdaeun/React-Context-API-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0)</li> <li>[다은이의 초기세팅(eslint & prettier) 아티클](https://velog.io/@namdaeun/eslint-prettier-초기세팅)</li> <li>[다현이의 ReactQuery 아티클](https://flossy-salary-36e.notion.site/React-Query-6685216d402e4d5e9cbb6e2b2b28b10d?pvs=4)</li> <li>[서진이의 StoryBook 아티클](https://www.notion.so/Storybook-c60797fa06104848ac9e5f4e143bed15)</li><li>[재훈 Typescript 아티클](https://lapis-margin-2db.notion.site/Typescript-3814d266b2094c12a7a9b241e983d0d9?pvs=4)</li><li>[재훈이의 Emotion 아티클](https://lapis-margin-2db.notion.site/Emotion-518a0b3b11054afebf41e729e77712b2?pvs=4)</li></ul> | <ul><li>[git pr 실수로 merge했을 때!](https://unnamedwritings.notion.site/git-pr-merge-682b85d88d6e43d08787cd4d3a53a2e3?pvs=4)</li> <li>[stylelint 몇가지 에러](https://unnamedwritings.notion.site/stylelint-231ec23fd0194163ae293e720aaaaeb7?pvs=4)</li> <li>[Pretendard 설정 안먹어? Variable은 뭐야?](https://unnamedwritings.notion.site/Pretendard-Variable-89309bc1f1c542179aa47a0175f5b4f7?pvs=4)</li> <li>[emotion style 변수 prop+hover적용하기](https://unnamedwritings.notion.site/emotion-style-prop-hover-2e135c5cdad54326a3af4b88f605f891?pvs=4)</li> <li>[\2022 이거 뭐게 ㅋ ?](https://unnamedwritings.notion.site/2022-93485ad8d0174ccabe1505e003f45ae9?pvs=4)</li> <li>[css의 has 속성에 대해 아시나요 ?](https://unnamedwritings.notion.site/css-has-9a8abb20eefb41a784cc6f88a7da478e?pvs=4)</li> <li>[image 값 null인지 확인](https://unnamedwritings.notion.site/image-null-679decbddbb143258375dac29e1ad195?pvs=4)</li> <li>[Quilljs 에디터의 모든 것](https://unnamedwritings.notion.site/Quilljs-02595395a67946c484ded69d09770210?pvs=4)</li> <li>[svg 리액트 컴포넌트화](https://unnamedwritings.notion.site/svg-3236297adf1940edbc9692b194d45103?pvs=4)</li> <li>[경우에 따라 컴포넌트 띄우기](https://unnamedwritings.notion.site/323ace14b26643a6a379ee3d48c6d1b4?pvs=4)</li> <li>[emotion styelint 초기세팅](https://unnamedwritings.notion.site/emotion-styelint-eca968031dac484bbf2db56a5bad25f5?pvs=4)</li> <li>[react-slick 사용기](https://unnamedwritings.notion.site/react-slick-096080a35b924241999b6012ce28a585?pvs=4)</li> <li>[캐러셀 마지막 슬라이드 이미지 크기 줄이기](https://unnamedwritings.notion.site/76185b44e0f74d83b99f49845e16ba10?pvs=4)</li> <li>[spacing component 만들기](https://unnamedwritings.notion.site/spacing-component-747b2d8bda3a49059fe4ec9210e0f18b?pvs=4)</li> <li>[hover 했더니 요소가 움직이면 ?](https://unnamedwritings.notion.site/hover-7903e6ae25f042f0b0343c945d6c6d32?pvs=4)</li> <li>[스크롤바에 여백 주고 싶은데요 ..](https://unnamedwritings.notion.site/5afdaf5a12864fdcb4aaf8a686fa09a1?pvs=4)</li> <li>[eslint import order ./ ../ 경로 순서 충돌](https://unnamedwritings.notion.site/eslint-import-order-cf70fdcebf184dc390d98dd9158c34c0?pvs=4)</li> <li>[React Query 쿼리키 사용방법 + 예시코드](https://unnamedwritings.notion.site/React-Query-0b3ef41c6eae4066b9464bf1ae520b64?pvs=4)</li> <li>[이중 객체에서 값 빼내오기](https://unnamedwritings.notion.site/5cd46f41f9b8410eb743791e53a13918?pvs=4)</li> 
+

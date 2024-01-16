@@ -22,7 +22,7 @@ interface CategoryIdPropTypes {
 
 const Carousel = (props: CategoryIdPropTypes) => {
   const { activeCategoryId, setActiveCategoryId, groupId } = props;
-
+  console.log(activeCategoryId);
   const settings = {
     dots: false,
     infinite: false,
@@ -55,11 +55,11 @@ const Carousel = (props: CategoryIdPropTypes) => {
     <CarouselWrapper>
       <GroupTabBtnBaseBeforeIcon />
       <Slider {...settings} className="groupFeedCarousel">
-        {CAROUSEL_CATEGORY.categoryList.map((category, index) => (
+        {groupFeedCategoryData?.map((topic, index) => (
           <CarouselContainer
             key={index}
-            onClick={() => handleCategoryClick(category.categoryId)}
-            isActive={category.categoryId === activeCategoryId}
+            onClick={() => handleCategoryClick(Number(topic.topicId))}
+            isActive={index + 1 === activeCategoryId}
           >
             {topic.topicName}
           </CarouselContainer>

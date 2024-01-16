@@ -97,6 +97,7 @@ export const useTopicList = (groupId: string) => {
 
   return { groupFeedCategoryData, isLoading, isError, error };
 };
+
 export const useCuriousWriters = (groupId: string) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getCuriousWriters, groupId],
