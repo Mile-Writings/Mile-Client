@@ -20,6 +20,7 @@ const EachArticle = (props: EachProfilePropTypes) => {
     createdAt: string;
     curiousCount: number;
     imageUrl: string;
+    isImageContained: string;
   }
 
   return (
@@ -29,20 +30,42 @@ const EachArticle = (props: EachProfilePropTypes) => {
       ) : (
         postListData?.map((list: ProfilePropTypes, index: number) => (
           <div key={index}>
-            <ArticleWrapper>
-              <ArticleTitle>{list.postTitle}</ArticleTitle>
-              <Spacing marginBottom="1.6" />
-              <ArticleContent>{list.postContent}</ArticleContent>
-              <Spacing marginBottom="1.2" />
-              <ArticleInfo>
-                <GroupListProfileIc />
-                <ProfileName>{list.writerName}</ProfileName>
-                <ArticleDetail>{list.createdAt}</ArticleDetail>
-                <ArticleDetail>·</ArticleDetail>
-                <ArticleDetail>궁금해요</ArticleDetail>
-                <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
-              </ArticleInfo>
-            </ArticleWrapper>
+            {list.isImageContained ? (
+              <ArticleWrapper>
+                <ArticleContainerWithImage>
+                  <ArticleTitle>{list.postTitle}</ArticleTitle>
+                  <Spacing marginBottom="1.6" />
+                  <ArticleContent>{list.postContent}</ArticleContent>
+                  <Spacing marginBottom="1.2" />
+                  <ArticleInfo>
+                    <GroupListProfileIc />
+                    <ProfileName>{list.writerName}</ProfileName>
+                    <ArticleDetail>{list.createdAt}</ArticleDetail>
+                    <ArticleDetail>·</ArticleDetail>
+                    <ArticleDetail>궁금해요</ArticleDetail>
+                    <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
+                  </ArticleInfo>
+                </ArticleContainerWithImage>
+                <ArticleThumbnail imageUrl={list.imageUrl} />
+              </ArticleWrapper>
+            ) : (
+              <ArticleWrapper>
+                <ArticleContainer>
+                  <ArticleTitle>{list.postTitle}</ArticleTitle>
+                  <Spacing marginBottom="1.6" />
+                  <ArticleContent>{list.postContent}</ArticleContent>
+                  <Spacing marginBottom="1.2" />
+                  <ArticleInfo>
+                    <GroupListProfileIc />
+                    <ProfileName>{list.writerName}</ProfileName>
+                    <ArticleDetail>{list.createdAt}</ArticleDetail>
+                    <ArticleDetail>·</ArticleDetail>
+                    <ArticleDetail>궁금해요</ArticleDetail>
+                    <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
+                  </ArticleInfo>
+                </ArticleContainer>
+              </ArticleWrapper>
+            )}
           </div>
         ))
       )}
@@ -58,9 +81,29 @@ const ArticlePostWrapper = styled.div`
   gap: 1.6rem;
 `;
 
-const ArticleWrapper = styled.div`
+const ArticleThumbnail = styled.div<{ imageUrl: string }>`
+  width: 20rem;
+  height: 14.9rem;
+
+  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
+  background-size: cover;
+  border-radius: 8px;
+`;
+
+const ArticleContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const ArticleContainerWithImage = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 42.4rem;
+`;
+
+const ArticleWrapper = styled.div`
+  display: flex;
+  gap: 3.2rem;
   width: 72rem;
   padding: 3.2rem;
 
