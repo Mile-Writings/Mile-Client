@@ -6,16 +6,18 @@ import Spacing from '../../../components/commons/Spacing';
 const OnBoarding = () => {
   return (
     <OnBoardingWrapper>
-      <TextLayout>
-        <MainText>글 모임을 위한 글쓰기 공간, 마일</MainText>
-        <SubText>
-          마일은 글쓰기를 쉽고 편안하게 만들어 주는 공간이에요.
-          <br />
-          모임원들과 함께 글을 쓰면서 여러분만의 공간을 만들어 보세요.
-        </SubText>
-      </TextLayout>
-      <Spacing marginBottom="8.86" />
-      <MainOnBoardingIc />
+      <OnBoardingIcWithTextLayout>
+        <TextLayout>
+          <MainText>글 모임을 위한 글쓰기 공간, 마일</MainText>
+          <SubText>
+            마일은 글쓰기를 쉽고 편안하게 만들어 주는 공간이에요.
+            <br />
+            모임원들과 함께 글을 쓰면서 여러분만의 공간을 만들어 보세요.
+          </SubText>
+        </TextLayout>
+        <Spacing marginBottom="8.86" />
+        <MainOnBoardingIc />
+      </OnBoardingIcWithTextLayout>
     </OnBoardingWrapper>
   );
 };
@@ -31,6 +33,11 @@ const OnBoardingWrapper = styled.section`
   padding: 4.2rem 21.7rem 4.25rem 21.8rem;
 
   background-color: ${({ theme }) => theme.colors.white};
+`;
+
+const OnBoardingIcWithTextLayout = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const TextLayout = styled.div`
