@@ -1,19 +1,43 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
+
+import { useCuriousPost } from '../hooks/queries';
 
 import { GroupNoDataImgIc } from '../../../assets/svgs';
+import GroupCardThumnailImgIc from '../../../assets/svgs/groupCardThumnailImg.svg';
 import Spacing from '../../../components/commons/Spacing';
-import { CURIOUS_ARTICLE } from '../constants/CURIOUS_PROFILE';
 
 interface ArticlePropTypes {
   topic: string;
   title: string;
   content: string;
+  imageUrl: string;
+  postId: string;
 }
 
-const CuriousArticle = () => {
+interface CuriousArticlePropTypes {
+  groupId: string | undefined;
+}
+
+const CuriousArticle = (props: CuriousArticlePropTypes) => {
+  const { groupId } = props;
+  const { curiousPostData, isLoading, isError, error } = useCuriousPost(groupId || '');
+  const navigate = useNavigate();
+  const handleGoPostDetail = (postId: string) => {
+    navigate(`/detail/${groupId}/${postId}`);
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error fetching data..{error?.message}</div>;
+  }
+
   return (
     <CuriousArticleWrapper>
-      {CURIOUS_ARTICLE.postList.length == 0 ? (
+      {curiousPostData?.length == 0 ? (
         <NoCuriousArticleWrapper>
           <Spacing marginBottom="4" />
           <GroupNoDataImgIc />
@@ -22,9 +46,9 @@ const CuriousArticle = () => {
           <Spacing marginBottom="4" />
         </NoCuriousArticleWrapper>
       ) : (
-        CURIOUS_ARTICLE.postList.map((article: ArticlePropTypes, index: number) => (
-          <CuriousArticleLayout key={index}>
-            <ArticleThumbnail />
+        curiousPostData?.map((article: ArticlePropTypes, index: number) => (
+          <CuriousArticleLayout key={index} onClick={() => handleGoPostDetail(article.postId)}>
+            <ArticleThumbnail imageUrl={article.imageUrl} />
             <Spacing marginBottom="1.6" />
             <ArticleWritingStyle>{article.topic}</ArticleWritingStyle>
             <Spacing marginBottom="0.4" />
@@ -45,15 +69,16 @@ const CuriousArticleWrapper = styled.div`
   gap: 1.6rem;
 `;
 
-const ArticleThumbnail = styled.div`
+const ArticleThumbnail = styled.div<{ imageUrl: string }>`
   width: 28.8rem;
   height: 14rem;
 
-  background-image: url('../../src/assets/images/image_area.png');
+  background-image: ${(props) =>
+    props.imageUrl ? `url(${props.imageUrl})` : `url(${GroupCardThumnailImgIc})`};
   border-radius: 8px;
 `;
 
-const CuriousArticleLayout = styled.div`
+const CuriousArticleLayout = styled.button`
   display: flex;
   flex-direction: column;
   width: 35.2rem;
@@ -70,12 +95,28 @@ const ArticleWritingStyle = styled.div`
 `;
 
 const ArticleTitle = styled.div`
+  display: -webkit-box;
+  overflow: hidden;
+
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.title7};
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 `;
 
 const ArticlePreview = styled.div`
+  display: -webkit-box;
+  width: 28.8rem;
+  height: 6.6rem;
+  overflow: hidden;
+
   color: ${({ theme }) => theme.colors.gray80};
+
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  white-space: wrap;
+  text-overflow: ellipsis;
   ${({ theme }) => theme.fonts.body3};
 `;
 

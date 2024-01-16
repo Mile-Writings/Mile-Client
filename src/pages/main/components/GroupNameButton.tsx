@@ -1,18 +1,21 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import { MainIcnArrowPurple as MainIcnArrowPurpleIcon } from '../../../assets/svgs';
 
 interface ButtonPropTypes {
-  buttonName: string;
+  groupName: string;
+  groupId: number;
 }
-const GroupNameButton = ({ buttonName }: ButtonPropTypes) => {
+const GroupNameButton = ({ groupId, groupName }: ButtonPropTypes) => {
+  const navigate = useNavigate();
   const handleButtonOnClick = () => {
-    alert('button clicked');
+    navigate(`/group/${groupId}`);
   };
 
   return (
     <GroupNameButtonWrapper onClick={handleButtonOnClick}>
-      {buttonName}
+      {groupName}
       <MainIcnArrowPurpleIcon />
     </GroupNameButtonWrapper>
   );
