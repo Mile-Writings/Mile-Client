@@ -25,13 +25,13 @@ const ImageUpload = () => {
         <ThumbNailImg src={editorThumImg} $imgExist={editorThumImg} />
       </ThumbNailGradient>
       <ImageInput type="file" accept="image/*" id="editorImg" onChange={onImageUpload} />
-      <ImageUploadBtn htmlFor="editorImg">
+      <ImageUploadLabel htmlFor="editorImg">
         {editorThumImg.length > 0 ? (
           <EditorThuminputIcnActiveIcon />
         ) : (
           <EditorThuminputIcnUnactiveIcon />
         )}
-      </ImageUploadBtn>
+      </ImageUploadLabel>
     </>
   );
 };
@@ -53,7 +53,7 @@ const ThumbNailImg = styled.img<{ $imgExist: string }>`
   ${({ $imgExist }) => $imgExist.length === 0 && 'content: "";'}
 `;
 
-const ImageUploadBtn = styled.label`
+const ImageUploadLabel = styled.label`
   position: relative;
   top: -7.1rem;
   right: 0;
@@ -63,11 +63,11 @@ const ImageUploadBtn = styled.label`
 `;
 
 const EditorThuminputIcnActiveIcon = styled(EditorThuminputIcnActiveIc)`
-  margin-left: 74%;
+  margin-left: 69%;
 `;
 
 const EditorThuminputIcnUnactiveIcon = styled(EditorThuminputIcnUnactiveIc)`
-  margin-left: 74%;
+  margin-left: 69%;
   :hover {
     path {
       fill: ${({ theme }) => theme.colors.mainViolet};

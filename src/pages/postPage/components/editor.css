@@ -428,6 +428,14 @@
   display: none;
 }
 
+.btn-wrapper {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  padding: 0.6rem;
+  border-right: 1px solid #d3d3d3 !important;
+}
+
 /* bold 커스텀 */
 .ql-editor strong {
   font-weight: bold;
@@ -435,7 +443,6 @@
 button.ql-bold {
   width: 2.6rem !important;
   height: 2.5rem !important;
-  border-right: 1px solid #d3d3d3 !important;
 }
 .ql-bold {
   background-image: url(../../../assets/svgs/editorBoldSvgEnable.svg) !important;
@@ -593,8 +600,7 @@ button.ql-blockquote {
 
 /* 리스트 앞에 글머리 커스텀 */
 li:has(.ql-size-large)::before {
-  font-size: 2.6
-  rem !important;
+  font-size: 2.6 rem !important;
   line-height: 200% !important;
 }
 li:has(.ql-size-medium)::before {

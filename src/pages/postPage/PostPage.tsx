@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
-import { useState, useReducer } from 'react';
+import { useState } from 'react';
 
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
@@ -15,6 +15,7 @@ import {
 import Spacing from '../../components/commons/Spacing';
 
 const PostPage = () => {
+  const navigate = useNavigate();
   // 에디터 제목, 내용 저장 함수
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -36,13 +37,18 @@ const PostPage = () => {
     // moimID
     // topicId : 글감주제 드롭다운에서 가져오기
     // anonymous : 필명/익명 드롭다운에서 가져오기
+    navigate('./');
+
+    alert('제출이 완료되었습니다.');
   };
 
   // 임시 저장 글 -> 저장하기
   const tempExistSaveHandler = () => {};
 
   // 임시 저장
-  const tempSaveHandler = () => {};
+  const tempSaveHandler = () => {
+    alert('홈으로 가기');
+  };
 
   return (
     <PostPageWrapper>
