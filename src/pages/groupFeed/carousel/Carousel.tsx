@@ -48,7 +48,6 @@ const Carousel = (props: CategoryIdPropTypes) => {
   };
 
   const handleCategoryClick = (categoryId: number, topicId: string) => {
-    console.log(topicId, '토픽아이디');
     setActiveCategoryId(categoryId);
     setSelectedTopicId(topicId);
   };
@@ -85,7 +84,7 @@ const Carousel = (props: CategoryIdPropTypes) => {
       <Spacing marginBottom="0.8" />
       <TopicDescription>{topicInfo?.topicDescription}</TopicDescription>
       <Spacing marginBottom="2" />
-      <EachArticle selectedTopicId={selectedTopicId} />
+      <EachArticle selectedTopicId={selectedTopicId} groupId={groupId || ''} />
     </>
   );
 };

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import { useArticleList } from '../hooks/queries';
 
@@ -6,11 +7,16 @@ import { GroupListProfileIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 interface EachProfilePropTypes {
+  groupId: string;
   selectedTopicId: string;
 }
 const EachArticle = (props: EachProfilePropTypes) => {
-  const { selectedTopicId } = props;
+  const { groupId, selectedTopicId } = props;
   const { postListData } = useArticleList(selectedTopicId || '');
+  const navigate = useNavigate();
+  const handleGoPostDetail = (postId: string) => {
+    navigate(`/detail/${groupId}/${postId}`);
+  };
 
   interface ProfilePropTypes {
     postId: string;
@@ -31,7 +37,7 @@ const EachArticle = (props: EachProfilePropTypes) => {
         postListData?.map((list: ProfilePropTypes, index: number) => (
           <div key={index}>
             {list.isImageContained ? (
-              <ArticleWrapper>
+              <ArticleWrapper onClick={() => handleGoPostDetail(list.postId)}>
                 <ArticleContainerWithImage>
                   <ArticleTitle>{list.postTitle}</ArticleTitle>
                   <Spacing marginBottom="1.6" />
@@ -101,11 +107,13 @@ const ArticleContainerWithImage = styled.div`
   width: 42.4rem;
 `;
 
-const ArticleWrapper = styled.div`
+const ArticleWrapper = styled.button`
   display: flex;
   gap: 3.2rem;
   width: 72rem;
   padding: 3.2rem;
+
+  text-align: left;
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;

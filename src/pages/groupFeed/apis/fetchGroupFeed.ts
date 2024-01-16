@@ -79,7 +79,6 @@ export const fetchCuriousWriters = async (groupId: string) => {
     const response = await client.get<CuriousWriterPropTypes>(
       `/api/moim/${groupId}/mostCuriousWriters`,
     );
-    console.log(response.data, '데이터');
     return response.data;
   } catch (error) {
     console.error('에러:', error);
@@ -100,7 +99,6 @@ interface TopicListPropTypes {
 export const fetchTopicList = async (groupId: string) => {
   try {
     const response = await client.get<TopicListPropTypes>(`/api/moim/${groupId}/topicList`);
-    console.log(response.data, '데이터');
     return response.data;
   } catch (error) {
     console.error('에러:', error);
@@ -125,7 +123,6 @@ interface CuriousPostPropTypes {
 export const fetchCuriousPost = async (groupId: string) => {
   try {
     const response = await client.get<CuriousPostPropTypes>(`/api/moim/${groupId}/mostCuriousPost`);
-    console.log(response.data, '데이터');
     return response.data;
   } catch (error) {
     console.error('에러:', error);
@@ -154,10 +151,8 @@ interface ArticleListPropTypes {
 }
 
 export const fetchArticleList = async (topicId: string) => {
-  console.log(topicId);
   try {
     const response = await client.get<ArticleListPropTypes>(`/api/topic/${topicId}`);
-    console.log(response.data, '데이터입니다');
     return response.data;
   } catch (error) {
     console.error('에러:', error);
