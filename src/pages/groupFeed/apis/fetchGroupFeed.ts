@@ -85,3 +85,24 @@ export const fetchCuriousWriters = async (groupId: string) => {
     console.error('에러:', error);
   }
 };
+
+interface TopicListPropTypes {
+  data: {
+    topicList: {
+      topicId: string;
+      topicName: string;
+    }[];
+  };
+  status: number;
+  message: string;
+}
+
+export const fetchTopicList = async (groupId: string) => {
+  try {
+    const response = await client.get<TopicListPropTypes>(`/api/moim/${groupId}/topicList`);
+    console.log(response.data, '데이터');
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
