@@ -5,7 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
-import { usePostContent } from './hooks/queries';
+import { usePostContent, useGetTopic } from './hooks/queries';
 
 import {
   EditorTempNotExistHeader, // 임시저장 글 없음 -> 헤더
@@ -27,6 +27,10 @@ const PostPage = () => {
 
   // 임시저장 값 여부 확인
   const tempSaveExist = false;
+
+  // 글감 받아오기
+  const { topics } = useGetTopic(groupId || '');
+  console.log(topics);
 
   // 최초 저장
   const { mutate: postContent } = usePostContent({
