@@ -3,12 +3,14 @@ import styled from '@emotion/styled';
 import { useCuriousPost } from '../hooks/queries';
 
 import { GroupNoDataImgIc } from '../../../assets/svgs';
+import GroupCardThumnailImgIc from '../../../assets/svgs/groupCardThumnailImg.svg';
 import Spacing from '../../../components/commons/Spacing';
 
 interface ArticlePropTypes {
   topic: string;
   title: string;
   content: string;
+  imageUrl: string;
 }
 
 interface CuriousArticlePropTypes {
@@ -31,7 +33,7 @@ const CuriousArticle = (props: CuriousArticlePropTypes) => {
       ) : (
         curiousPostData?.map((article: ArticlePropTypes, index: number) => (
           <CuriousArticleLayout key={index}>
-            <ArticleThumbnail />
+            <ArticleThumbnail imageUrl={article.imageUrl} />
             <Spacing marginBottom="1.6" />
             <ArticleWritingStyle>{article.topic}</ArticleWritingStyle>
             <Spacing marginBottom="0.4" />
@@ -52,11 +54,12 @@ const CuriousArticleWrapper = styled.div`
   gap: 1.6rem;
 `;
 
-const ArticleThumbnail = styled.div`
+const ArticleThumbnail = styled.div<{ imageUrl?: string }>`
   width: 28.8rem;
   height: 14rem;
 
-  background-image: url('../../src/assets/images/image_area.png');
+  background-image: ${(props) =>
+    props.imageUrl ? `url(${props.imageUrl})` : `url(${GroupCardThumnailImgIc})`};
   border-radius: 8px;
 `;
 
