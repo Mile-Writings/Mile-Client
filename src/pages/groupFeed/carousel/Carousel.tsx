@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import Slider from 'react-slick';
 
 import './slick-theme.css';
@@ -24,6 +24,7 @@ interface CategoryIdPropTypes {
 
 const Carousel = (props: CategoryIdPropTypes) => {
   const { activeCategoryId, setActiveCategoryId, groupId } = props;
+  const [selectedTopicId, setSelectedTopicId] = useState<string>();
   console.log(activeCategoryId, '활동Id');
   const settings = {
     dots: false,
@@ -39,8 +40,10 @@ const Carousel = (props: CategoryIdPropTypes) => {
     },
   };
 
-  const handleCategoryClick = (categoryId: number) => {
+  const handleCategoryClick = (categoryId: number, topicId: string) => {
+    console.log(topicId);
     setActiveCategoryId(categoryId);
+    setSelectedTopicId(topicId);
   };
 
   const { groupFeedCategoryData, isLoading, isError, error } = useTopicList(groupId || '');
@@ -61,7 +64,7 @@ const Carousel = (props: CategoryIdPropTypes) => {
           {groupFeedCategoryData?.map((topic, index) => (
             <CarouselContainer
               key={index}
-              onClick={() => handleCategoryClick(index + 1)}
+              onClick={() => handleCategoryClick(index + 1, topic.topicId)}
               isActive={index + 1 === activeCategoryId}
             >
               {topic.topicName}

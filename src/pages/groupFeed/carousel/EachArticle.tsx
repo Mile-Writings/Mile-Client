@@ -4,10 +4,11 @@ import { GroupListProfileIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 interface EachProfilePropTypes {
-  activeCategoryId: number;
+  selectedTopicId: number;
+  topicId: string;
 }
 const EachArticle = (props: EachProfilePropTypes) => {
-  const { activeCategoryId } = props;
+  const { selectedTopicId } = props;
   return (
     <ArticleWrapper>
       <ArticleTitle>글제목 부분입니다. 공백포함 최대 29자입니다.</ArticleTitle>
