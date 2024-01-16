@@ -1,15 +1,31 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
+
+import MakeGroupBtn from './MakeGroupBtn';
+import MyGroupBtn from './MyGroupBtn';
 
 import { HeaderLogoIc } from '../../../assets/svgs';
 import LogInOutBtn from '../../../components/commons/LogInOutBtn';
-import theme from '../../../styles/theme';
 import logout from '../../../utils/logout';
-import MakeGroupBtn from '../../groupFeed/components/MakeGroupBtn';
-import MyGroupBtn from '../../groupFeed/components/MyGroupBtn';
 
-// 메인 페이지 헤더
-export const MainHeader = () => {
+interface OnClickProps {
+  onClick: () => void;
+}
+
+// interface onClickEditProps {
+//   onClickEditSave: () => void;
+// }
+
+// interface OnClickTwoProps {
+//   onClickTempSave: () => void;
+//   onClickSubmit: () => void;
+// }
+
+// interface OnClickTempExistProps {
+//   onClickSubmit: () => void;
+// }
+
+// 모임 피드 헤더
+export const GroupFeedHeader = () => {
   return (
     <HeaderWrapper>
       <HeaderLogoIc />
@@ -25,19 +41,14 @@ export const MainHeader = () => {
 };
 
 //아직 로그인을 하지 않았을 때 헤더
-export const UnAuthorizationHeader = () => {
-  const navigate = useNavigate();
-  const handleLogIn = () => {
-    navigate(`/login`);
-  };
+export const LogOutHeader = ({ onClick }: OnClickProps) => {
   return (
     <HeaderWrapper>
       <HeaderLogoIc />
-      <LogInOutBtn onClick={handleLogIn}>로그인</LogInOutBtn>
+      <LogInOutBtn onClick={onClick}>로그인</LogInOutBtn>
     </HeaderWrapper>
   );
 };
-
 const HeaderWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -47,8 +58,7 @@ const HeaderWrapper = styled.div`
   padding-right: 6rem;
   padding-left: 6rem;
 
-  background-color: ${({ theme }) => theme.colors.white};
-  border-bottom: 1px solid ${theme.colors.gray30};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
 `;
 
 const HeaderBtnLayout = styled.div`

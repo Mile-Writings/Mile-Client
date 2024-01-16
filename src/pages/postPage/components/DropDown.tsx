@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { useState, useRef } from 'react';
-
 import styled from '@emotion/styled';
+
+import { useState } from 'react';
 
 import TopicDropDown from './TopicDropDown';
 import WriterDropDown from './WriterDropDown';
@@ -20,15 +20,13 @@ const DropDown = () => {
     writer: '작자미상',
   });
 
-  const dropDownRef = useRef(null);
-
   // 드롭다운 리스트 중 선택된 값 저장 이벤트 핸들러
   const handleListItem = (key: string, value: string) => {
     setSelectedValues((prev) => ({ ...prev, [key]: value }));
   };
 
   return (
-    <DropDownWrapper ref={dropDownRef}>
+    <DropDownWrapper>
       <TopicDropDown onClickListItem={handleListItem} selectedValue={selectedValues.topic} />
       <WriterDropDown onClickListItem={handleListItem} selectedValue={selectedValues.writer} />
     </DropDownWrapper>
