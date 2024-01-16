@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Carousel from './carousel/Carousel';
-import EachArticle from './carousel/EachArticle';
 import CuriousArticle from './components/CuriousArticle';
 import CuriousProfile from './components/CuriousProfile';
 import GroupCuriousTitle from './components/GroupCuriousTitle';
