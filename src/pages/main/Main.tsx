@@ -50,8 +50,6 @@ const MainPageWrapper = styled.div`
 const CarouselComponentLayout = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: fit-content;
   padding-bottom: 10rem;
 `;
