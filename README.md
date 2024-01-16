@@ -175,25 +175,30 @@ type과 콜론 후 한칸 띄고 subject
 |-- 📁 node_modules
 |-- 📁 public
 |-- 📁 src
-    |-- 📁 asset
+    |-- 📁 assets
 	  |   |-- 📁 svgs
 	  |   |-- 📁 images
     |-- 📁 components
 	  |   |-- 📁 commons (button , input 등 재사용의 가장 작은 단위
 	  |   |-- 📁 icons(React Icon Components)
     |-- 📁 pages
-   	|   |-- 📁onboarding
-    |   |   |-- 📁components
-    |   |   |-- 📁types
-    |   |   |-- 📁hooks
-    |   |   |-- 📁utils
-    |   |   |-- Onboarding.tsx
-    |   |-- 📁useFunnel
-    |       |-- 📁components
-    |       |-- 📁types
-    |       |-- 📁hooks
-    |       |-- 📁utils
-    |       |-- UseFunnel.tsx
+    |	|   |-- 📁error
+    |	|   |-- 📁login
+    |	|   |-- 📁main
+    |   |       |-- 📁apis
+    |   |    	|-- 📁components
+    |   |    	|-- 📁types
+    |   |    	|-- 📁constants
+    |   |    	|-- 📁styles
+    |   |	|-- 📁types
+    |   |    	|-- Main.tsx
+    |   |   |-- 📁postDetail
+    |   |   |-- 📁postEditor
+    |   |   |-- 📁postPage
+    |   |   |-- 📁groupFeed
+    |   |  
+    |   |   
+    |   |
     |-- 📁 hooks (커스텀 훅을 담아두는 폴더)
     |-- 📁 styles ( GlobalStyles , theme.ts )
     |-- 📁 utils ( 재사용이 높은 함수모음 폴더 )
