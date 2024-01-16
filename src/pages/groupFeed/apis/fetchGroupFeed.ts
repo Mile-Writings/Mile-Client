@@ -131,3 +131,32 @@ export const fetchCuriousPost = async (groupId: string) => {
     console.error('에러:', error);
   }
 };
+
+interface ArticleListPropTypes {
+  data: {
+    topicInfo: {
+      topic: string;
+      topicDescription: string;
+    };
+    postList: {
+      postId: string;
+      imageUrl: string;
+      topic: string;
+      title: string;
+      content: string;
+      isContainPhoto: boolean;
+    }[];
+  };
+  status: number;
+  message: string;
+}
+
+export const fetchArticleList = async (topicId: string) => {
+  try {
+    const response = await client.get<ArticleListPropTypes>(`api/topic/${topicId}`);
+    console.log(response.data, '데이터');
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};

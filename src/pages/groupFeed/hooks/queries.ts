@@ -93,7 +93,6 @@ export const useTopicList = (groupId: string) => {
   });
 
   const groupFeedCategoryData = data && data.data.topicList;
-  console.log(groupFeedCategoryData, 'feedCategory');
 
   return { groupFeedCategoryData, isLoading, isError, error };
 };

@@ -3,7 +3,11 @@ import styled from '@emotion/styled';
 import { GroupListProfileIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
-const EachArticle = () => {
+interface EachProfilePropTypes {
+  activeCategoryId: number;
+}
+const EachArticle = (props: EachProfilePropTypes) => {
+  const { activeCategoryId } = props;
   return (
     <ArticleWrapper>
       <ArticleTitle>글제목 부분입니다. 공백포함 최대 29자입니다.</ArticleTitle>
