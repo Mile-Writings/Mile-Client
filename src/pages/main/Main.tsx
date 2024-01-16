@@ -26,10 +26,12 @@ const Main = () => {
       <Ruler />
       <Introduction />
       <Manual />
-      <FaqTitle />
-      {FAQ_DATA.map(({ id, question, answer }) => (
-        <FaqDropdown key={id} id={id} question={question} answer={answer} />
-      ))}
+      <FaqTitleWithDropDownLayout>
+        <FaqTitle />
+        {FAQ_DATA.map(({ id, question, answer }) => (
+          <FaqDropdown key={id} id={id} question={question} answer={answer} />
+        ))}
+      </FaqTitleWithDropDownLayout>
       <Spacing marginBottom="17.3" />
       <Footer />
     </MainPageWrapper>
@@ -47,9 +49,15 @@ const MainPageWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
 
-const CarouselComponentLayout = styled.div`
+const CarouselComponentLayout = styled.section`
   display: flex;
   flex-direction: column;
   width: fit-content;
   padding-bottom: 10rem;
+`;
+
+const FaqTitleWithDropDownLayout = styled.section`
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
 `;
