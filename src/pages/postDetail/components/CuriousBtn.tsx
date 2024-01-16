@@ -9,26 +9,18 @@ import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets
 
 const CuriousBtn = () => {
   const { postId } = useParams();
-  const { data, isSuccess } = useGetCuriousInfo(postId || '');
+  const { data } = useGetCuriousInfo(postId || '');
 
-  // if (isSuccess) {
-  //   if (data?.data?.isCurious) {
-  //     setIsClick(data?.data?.isCurious);
-  //   }
-  // }
   const { mutate: postCurious } = usePostCurious(postId || '');
   const { mutate: deleteCurious } = useDeleteCurious(postId || ' ');
   const isCurious = data?.data?.isCurious;
   const [isClick, setIsClick] = useState(!!isCurious);
 
-  console.log(data);
   const handleBtnClick = () => {
     if (isClick) {
       deleteCurious();
-      console.log('좋아요 삭제');
     } else {
       postCurious();
-      console.log('좋아요 생성');
     }
     setIsClick((prev) => !prev);
   };
