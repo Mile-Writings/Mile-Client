@@ -16,6 +16,7 @@ export const QUERY_KEY_GROUPFEED = {
   getCuriousPost: 'getCuriousPost',
   getGroupFeedCategory: 'getGroupFeedCategory',
   getCuriousWriters: 'getCuriousWriters',
+  getArticleList: 'getArticleList',
 };
 
 interface GroupFeedAuthQueryResult {
@@ -111,12 +112,12 @@ export const useCuriousWriters = (groupId: string) => {
 
 export const useArticleList = (topicId: string) => {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getCuriousWriters, topicId],
+    queryKey: [QUERY_KEY_GROUPFEED.getArticleList, topicId],
     queryFn: () => fetchArticleList(topicId),
   });
 
   const topicInfo = data && data.data.topicInfo;
 
-  const postList = data && data.data.postList;
-  return { topicInfo, postList, isLoading, isError, error };
+  const postListData = data && data.data.postList;
+  return { topicInfo, postListData, isLoading, isError, error };
 };

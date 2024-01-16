@@ -153,9 +153,10 @@ interface ArticleListPropTypes {
 }
 
 export const fetchArticleList = async (topicId: string) => {
+  console.log(topicId);
   try {
-    const response = await client.get<ArticleListPropTypes>(`api/topic/${topicId}`);
-    console.log(response.data, '데이터');
+    const response = await client.get<ArticleListPropTypes>(`/api/topic/${topicId}`);
+    console.log(response.data, '데이터입니다');
     return response.data;
   } catch (error) {
     console.error('에러:', error);

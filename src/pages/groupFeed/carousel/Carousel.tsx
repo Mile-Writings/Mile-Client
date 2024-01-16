@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import Slider from 'react-slick';
 
 import './slick-theme.css';
@@ -24,8 +24,15 @@ interface CategoryIdPropTypes {
 
 const Carousel = (props: CategoryIdPropTypes) => {
   const { activeCategoryId, setActiveCategoryId, groupId } = props;
-  const [selectedTopicId, setSelectedTopicId] = useState<string>();
-  console.log(activeCategoryId, '활동Id');
+  const { groupFeedCategoryData, isLoading, isError, error } = useTopicList(groupId || '');
+  const [selectedTopicId, setSelectedTopicId] = useState<string>('');
+
+  useEffect(() => {
+    if (groupFeedCategoryData && groupFeedCategoryData.length > 0) {
+      setSelectedTopicId(groupFeedCategoryData[0].topicId);
+    }
+  }, [groupFeedCategoryData]);
+
   const settings = {
     dots: false,
     infinite: false,
@@ -41,13 +48,12 @@ const Carousel = (props: CategoryIdPropTypes) => {
   };
 
   const handleCategoryClick = (categoryId: number, topicId: string) => {
-    console.log(topicId);
+    console.log(topicId, '토픽아이디');
     setActiveCategoryId(categoryId);
     setSelectedTopicId(topicId);
   };
 
-  const { groupFeedCategoryData, isLoading, isError, error } = useTopicList(groupId || '');
-  const { topicInfo, postList } = useArticleList(selectedTopicId || '');
+  const { topicInfo } = useArticleList(selectedTopicId || '');
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -75,13 +81,9 @@ const Carousel = (props: CategoryIdPropTypes) => {
         <GroupTabBtnBaseNextIcon />
       </CarouselWrapper>
       <Spacing marginBottom="3.2" />
-      <Topic>글감자리입니다.최대 공백포함 15자입니다.</Topic>
+      <Topic>{topicInfo?.topic}</Topic>
       <Spacing marginBottom="0.8" />
-      <TopicDescription>
-        글감 소개 자리입니다. 최대 공백포함90자입니다. 글감 소개 자리입니다. 최대
-        공백포함90자입니다. 글감 소개 자리입니다. 최대 공백포함90자입니다. 글감 소개 자리입니다.
-        최대 공백포함90자입니다.
-      </TopicDescription>
+      <TopicDescription>{topicInfo?.topicDescription}</TopicDescription>
       <Spacing marginBottom="2" />
       <EachArticle selectedTopicId={selectedTopicId} />
     </>
