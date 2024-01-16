@@ -41,13 +41,17 @@ export default Main;
 const MainPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
   width: 100%;
-  width: fit-content;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
 
 const CarouselComponentLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
   padding-bottom: 10rem;
 `;

@@ -48,6 +48,7 @@ const IntroductionWrapper = styled.section`
   gap: 7.4rem;
   align-items: center;
   justify-content: center;
+  width: 100%;
   margin-top: 10rem;
   padding: 10.1rem 21.8rem 10rem 28.4rem;
 

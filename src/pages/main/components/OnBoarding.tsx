@@ -25,7 +25,9 @@ export default OnBoarding;
 const OnBoardingWrapper = styled.section`
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
+  width: 100%;
   padding: 4.2rem 21.7rem 4.25rem 21.8rem;
 
   background-color: ${({ theme }) => theme.colors.white};
@@ -35,9 +37,14 @@ const TextLayout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  justify-content: flex-start;
+  width: 100%;
+  width: fit-content;
 `;
 
 const MainText = styled.p`
+  justify-content: flex-start;
+  width: fit-content;
   ${({ theme }) => theme.fonts.title12};
 `;
 
