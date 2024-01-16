@@ -193,9 +193,30 @@ type과 콜론 후 한칸 띄고 subject
     |   |	|-- 📁types
     |   |    	|-- Main.tsx
     |   |   |-- 📁postDetail
+    |   |       |-- 📁apis
+    |   |    	|-- 📁components
+    |   |    	|-- 📁constants
+    |   |	|-- 📁hooks
+    |   |    	|-- postDetail.tsx
     |   |   |-- 📁postEditor
+    |   |       |-- 📁apis
+    |   |    	|-- 📁components
+    |   |    	|-- 📁constants
+    |   |	|-- 📁hooks
+    |   |    	|-- postEditor.tsx
     |   |   |-- 📁postPage
+    |   |       |-- 📁apis
+    |   |    	|-- 📁components
+    |   |    	|-- 📁constants
+    |   |	|-- 📁types
+    |   |    	|-- postPage.tsx
     |   |   |-- 📁groupFeed
+    |   |       |-- 📁apis
+    |   |    	|-- 📁carousels
+    |   |    	|-- 📁components
+    |   |    	|-- 📁constants
+    |   |	|-- 📁hooks
+    |   |    	|-- groupFeed.tsx
     |   |  
     |   |   
     |   |
