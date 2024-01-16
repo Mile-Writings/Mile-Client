@@ -22,7 +22,7 @@ export const QUERY_KEY_POST_DETAIL = {
 // 글정보 조회 get api
 export const useGetPostDetail = (postId: string) => {
   const data = useQuery({
-    queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail],
+    queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId],
     queryFn: () => fetchPostDetail(postId),
   });
 
@@ -46,7 +46,6 @@ export const usePostCurious = (postId: string) => {
     mutationFn: () => createPostCurious(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId] });
-      console.log('post curious Success');
     },
   });
   return data;
@@ -60,7 +59,6 @@ export const useDeleteCurious = (postId: string) => {
     mutationFn: () => deleteCurious(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId] });
-      console.log('data');
     },
   });
   return data;
