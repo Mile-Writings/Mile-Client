@@ -32,7 +32,7 @@ export const useGetPostDetail = (postId: string) => {
 //궁금해요 여부개수 get api
 export const useGetCuriousInfo = (postId: string) => {
   const data = useQuery({
-    queryKey: [QUERY_KEY_POST_DETAIL.getCurious],
+    queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId],
     queryFn: () => fetchCuriousInfo(postId),
   });
   return data;
@@ -45,7 +45,7 @@ export const usePostCurious = (postId: string) => {
     mutationKey: [QUERY_KEY_POST_DETAIL.postCurious],
     mutationFn: () => createPostCurious(postId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.postCurious] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId] });
       console.log('post curious Success');
     },
   });
@@ -56,10 +56,10 @@ export const usePostCurious = (postId: string) => {
 export const useDeleteCurious = (postId: string) => {
   const queryClient = useQueryClient();
   const data = useMutation({
-    mutationKey: [QUERY_KEY_POST_DETAIL.deleteCurious],
+    mutationKey: [QUERY_KEY_POST_DETAIL.deleteCurious, postId],
     mutationFn: () => deleteCurious(postId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.deleteCurious] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId] });
       console.log('data');
     },
   });

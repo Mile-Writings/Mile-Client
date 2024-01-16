@@ -1,11 +1,10 @@
 import styled from '@emotion/styled';
+import { Dispatch, SetStateAction } from 'react';
 import Slider from 'react-slick';
 
-import { Dispatch, SetStateAction } from 'react';
-
+import CarouselContainer from './CarouselContainer';
 import './slick-theme.css';
 import './slick.css';
-import CarouselContainer from './CarouselContainer';
 
 import { useTopicList } from '../hooks/queries';
 

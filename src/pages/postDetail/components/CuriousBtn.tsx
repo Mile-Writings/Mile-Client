@@ -8,9 +8,9 @@ import { useDeleteCurious, useGetCuriousInfo, usePostCurious } from '../hooks/qu
 import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets/svgs';
 
 const CuriousBtn = () => {
-  const [isClick, setIsClick] = useState(false);
   const { postId } = useParams();
   const { data, isSuccess } = useGetCuriousInfo(postId || '');
+  const [isClick, setIsClick] = useState(!!data?.data?.isCurious);
   // if (isSuccess) {
   //   if (data?.data?.isCurious) {
   //     setIsClick(data?.data?.isCurious);
