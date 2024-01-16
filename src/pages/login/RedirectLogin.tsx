@@ -1,11 +1,15 @@
+import { useEffect } from 'react';
+
 import useLoginService from './hooks/useLoginService';
 
 const RedirectLogin = () => {
   const code: string = new URL(window.location.href).searchParams.get('code') || '';
 
   const { mutate } = useLoginService({ code, socialType: 'KAKAO' });
-  mutate();
 
+  useEffect(() => {
+    mutate();
+  }, [mutate]);
   return <div>loading...</div>;
 };
 
