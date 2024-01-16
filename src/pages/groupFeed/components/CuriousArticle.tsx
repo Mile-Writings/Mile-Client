@@ -77,8 +77,13 @@ const ArticleWritingStyle = styled.div`
 `;
 
 const ArticleTitle = styled.div`
+  display: -webkit-box;
+  overflow: hidden;
+
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.title7};
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 `;
 
 const ArticlePreview = styled.div`
