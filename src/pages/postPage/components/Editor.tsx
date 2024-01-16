@@ -114,6 +114,7 @@ const CustomToolbar = () => {
   );
 };
 
+// 에디터 컴포넌트
 interface EditorPropTypes {
   saveTitle: (title: string) => void;
   saveContent: (content: string) => void;

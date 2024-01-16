@@ -13,11 +13,13 @@ import { LoginProps } from '../types/loginType';
 // }
 export const useLoginService = ({ code, socialType }: LoginProps) => {
   const navigate = useNavigate();
+  // const queryClient = useQueryClient();
   return useMutation({
     mutationFn: () => loginService(code, socialType),
     mutationKey: ['login'],
     onSuccess: (data) => {
       console.log('success');
+      // queryClient.invalidateQueries({ queryKey: ['products'] });
       localStorage.setItem('accessToken', data.accessToken);
       navigate('/');
     },

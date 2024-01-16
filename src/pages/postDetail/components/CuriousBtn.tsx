@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useGetCuriousInfo } from '../hooks/queries';
+import { useGetCuriousInfo, usePostCurious } from '../hooks/queries';
 
 import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets/svgs';
 
@@ -11,13 +11,14 @@ const CuriousBtn = () => {
   const [isClick, setIsClick] = useState(false);
   const { postId } = useParams();
   const { data } = useGetCuriousInfo(postId || '');
-
-  const handleIsClick = () => {
+  const { mutate: postCurious } = usePostCurious(postId || '');
+  const handleBtnClick = () => {
     setIsClick((prev) => !prev);
+    postCurious();
   };
   return (
     <>
-      <CuriousBtnWrapper onClick={handleIsClick} $isClick={isClick}>
+      <CuriousBtnWrapper onClick={handleBtnClick} $isClick={isClick}>
         <CuriousTextWrapper>
           <CuriousTextContainer>
             {isClick ? <DetailWhiteFavoriteIc /> : <DetailPurpleFavoriteIc />}

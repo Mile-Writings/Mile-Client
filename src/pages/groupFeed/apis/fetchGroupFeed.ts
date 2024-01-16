@@ -106,3 +106,27 @@ export const fetchTopicList = async (groupId: string) => {
     console.error('에러:', error);
   }
 };
+
+interface CuriousPostPropTypes {
+  data: {
+    postList: {
+      postId: string;
+      imageUrl: string;
+      topic: string;
+      title: string;
+      content: string;
+    }[];
+  };
+  status: number;
+  message: string;
+}
+
+export const fetchCuriousPost = async (groupId: string) => {
+  try {
+    const response = await client.get<CuriousPostPropTypes>(`/api/moim/${groupId}/mostCuriousPost`);
+    console.log(response.data, '데이터');
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};

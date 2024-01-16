@@ -55,3 +55,4 @@ export { default as GroupThumnailImgIc } from './groupThumnailImg.svg?react';
 export { default as EditorThuminputIcnUnactiveIc } from './editorThuminputIcnUnactive.svg?react';
 export { default as EditorThuminputIcnHoverIc } from './editorThuminputIcnHover.svg?react';
 export { default as EditorThuminputIcnActiveIc } from './editorThuminputIcnHover.svg?react';
+export { default as GroupCardThumnailImgIc } from './groupCardThumnailImg.svg';
