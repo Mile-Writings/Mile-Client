@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-
 import React, { useState } from 'react';
 
 import { MainToggleArrowOpenedIc, MainTogglearrowClosedIc } from './../../../assets/svgs';
