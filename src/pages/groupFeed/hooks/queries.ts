@@ -84,6 +84,7 @@ export const useTopicList = (groupId: string) => {
   console.log(groupFeedCategoryData, 'feedCategory');
 
   return { groupFeedCategoryData, isLoading, isError, error };
+}
   
 export const useCuriousWriters = (groupId: string) => {
   const { data, isLoading, isError, error } = useQuery({
