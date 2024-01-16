@@ -21,11 +21,19 @@ interface CuriousArticlePropTypes {
 
 const CuriousArticle = (props: CuriousArticlePropTypes) => {
   const { groupId } = props;
-  const { curiousPostData } = useCuriousPost(groupId || '');
+  const { curiousPostData, isLoading, isError, error } = useCuriousPost(groupId || '');
   const navigate = useNavigate();
   const handleGoPostDetail = (postId: string) => {
     navigate(`/detail/${groupId}/${postId}`);
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error fetching data..{error?.message}</div>;
+  }
 
   return (
     <CuriousArticleWrapper>
