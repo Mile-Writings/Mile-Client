@@ -39,6 +39,8 @@ const Main = () => {
 export default Main;
 
 const MainPageWrapper = styled.div`
+  width: 100%;
+
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
 
