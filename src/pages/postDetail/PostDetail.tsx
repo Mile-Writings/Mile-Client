@@ -20,7 +20,7 @@ const PostDetail = () => {
 
   const { data, isError, isLoading } = useGetPostDetail(postId || '');
   const { data: postAuth } = useCheckPostAuth(postId || '');
-  console.log(postAuth?.data?.data.canEdit);
+
   const postData = data?.data;
   if (isError) {
     navigate('/error');
@@ -28,6 +28,7 @@ const PostDetail = () => {
   if (isLoading) {
     <div>Loading~</div>;
   }
+
   // 리팩토링 전 코드
   // useEffect(() => {
   //   if (typeof postId === 'string') {
