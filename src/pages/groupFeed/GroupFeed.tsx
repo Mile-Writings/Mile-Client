@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import { useNavigate, useParams } from 'react-router-dom';
-
 import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Carousel from './carousel/Carousel';
 import EachArticle from './carousel/EachArticle';
