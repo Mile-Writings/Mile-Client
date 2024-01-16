@@ -1,9 +1,9 @@
+import styled from '@emotion/styled';
 import { ChangeEvent, useState } from 'react';
 
-import styled from '@emotion/styled';
+import CommentItem from './CommentItem';
 
 import { commentData } from './../constants/commentData';
-import CommentItem from './CommentItem';
 
 const Comment = () => {
   const [comment, setComment] = useState('');

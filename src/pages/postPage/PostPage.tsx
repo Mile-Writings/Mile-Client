@@ -1,15 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
-import GetTempSaveModal from './components/GetTempSaveModal';
 import ImageUpload from './components/ImageUpload';
 import { useTempSaveFlag } from './hooks/queries';
 
 import {
-  EditorEditHeader, // 수정하기 -> 헤더
+  // EditorEditHeader, // 수정하기 -> 헤더
   EditorTempNotExistHeader, // 임시저장 글 없음 -> 헤더
   EditorTempExistHeader, // 임시저장 글 있음 -> 헤더
 } from '../../components/commons/Header';
@@ -28,16 +29,6 @@ const PostPage = () => {
   const { isTemporaryPostExist, postId, isLoading, isError, error } = useTempSaveFlag(
     groupId || '',
   );
-  const [saveTempModalOpen, setSaveTempModalOpen] = useState(false);
-
-  // console.log(groupId);
-  // console.log(isTemporaryPostExist);
-  // console.log(postId);
-
-  // 임시 저장 모달 닫힘여부
-  const onClickModalHandler = () => {
-    setSaveTempModalOpen(!saveTempModalOpen);
-  };
 
   // 최초 저장
   const saveHandler = () => {
@@ -56,7 +47,13 @@ const PostPage = () => {
 
   useEffect(() => {
     if (isTemporaryPostExist) {
-      setSaveTempModalOpen(isTemporaryPostExist);
+      if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
+        console.log('임시 저장 fetch');
+      } else {
+        console.log('글감 get');
+      }
+    } else {
+      return;
     }
   }, [isTemporaryPostExist]);
 
@@ -67,12 +64,6 @@ const PostPage = () => {
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
-      {saveTempModalOpen && (
-        <ModalBackdrop>
-          <GetTempSaveModal onClickTempModal={setSaveTempModalOpen}></GetTempSaveModal>
-        </ModalBackdrop>
-      )}
-
       <ImageUpload />
       <DropDownEditorWrapper>
         <DropDown />
@@ -100,19 +91,4 @@ const DropDownEditorWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-`;
-
-export const ModalBackdrop = styled.div`
-  // Modal이 떴을 때의 배경을 깔아주는 CSS를 구현
-  z-index: 5; //위치지정 요소
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 `;
