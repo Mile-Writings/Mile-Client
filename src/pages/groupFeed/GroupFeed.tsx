@@ -66,7 +66,7 @@ const GroupFeed = () => {
             subText="매주 월요일마다 업데이트 됩니다"
           />
           <Spacing marginBottom="2" />
-          <CuriousArticle />
+          <CuriousArticle groupId={groupId} />
           <Spacing marginBottom="6.4" />
           <Carousel
             activeCategoryId={activeCategoryId}

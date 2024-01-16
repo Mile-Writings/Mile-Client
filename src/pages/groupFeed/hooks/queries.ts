@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import {
   fetchGroupFeedAuth,
+  fetchCuriousPost,
   fetchTopicList,
   fetchTodayTopic,
   fetchGroupInfo,
@@ -11,6 +12,7 @@ import {
 export const QUERY_KEY_GROUPFEED = {
   getGroupFeedAuth: 'getGroupFeedAuth',
   getTodayWritingStyle: 'getTodayWritingStyle',
+  getCuriousPost: 'getCuriousPost',
   getGroupFeedCategory: 'getGroupFeedCategory',
   getCuriousWriters: 'getCuriousWriters',
 };
@@ -73,6 +75,15 @@ export const useTodayWritingStyle = (groupId: string) => {
   return { content, isLoading, isError, error };
 };
 
+export const useCuriousPost = (groupId: string) => {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: [QUERY_KEY_GROUPFEED.getCuriousPost, groupId],
+    queryFn: () => fetchCuriousPost(groupId),
+  });
+
+  const curiousPostData = data && data.data.postList;
+
+  return { curiousPostData, isLoading, isError, error };
 
 export const useTopicList = (groupId: string) => {
   const { data, isLoading, isError, error } = useQuery({
