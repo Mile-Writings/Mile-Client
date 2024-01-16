@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useArticleList } from '../hooks/queries';
 
-import { GroupListProfileIc } from '../../../assets/svgs';
+import { GroupListProfileIc, GroupNoDataImgIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 interface EachProfilePropTypes {
@@ -32,7 +32,13 @@ const EachArticle = (props: EachProfilePropTypes) => {
   return (
     <ArticlePostWrapper>
       {postListData?.length === 0 ? (
-        <div>아무것도 없어요</div>
+        <NoPostWrapper>
+          <Spacing marginBottom="4" />
+          <GroupNoDataImgIc />
+          <Spacing marginBottom="1.6" />
+          아직 글이 없어요
+          <Spacing marginBottom="4" />
+        </NoPostWrapper>
       ) : (
         postListData?.map((list: ProfilePropTypes, index: number) => (
           <div key={index}>
@@ -55,7 +61,7 @@ const EachArticle = (props: EachProfilePropTypes) => {
                 <ArticleThumbnail imageUrl={list.imageUrl} />
               </ArticleWrapper>
             ) : (
-              <ArticleWrapper>
+              <ArticleWrapper onClick={() => handleGoPostDetail(list.postId)}>
                 <ArticleContainer>
                   <ArticleTitle>{list.postTitle}</ArticleTitle>
                   <Spacing marginBottom="1.6" />
@@ -85,6 +91,19 @@ const ArticlePostWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
+`;
+
+const NoPostWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 72rem;
+  height: 22rem;
+
+  color: ${({ theme }) => theme.colors.gray40};
+
+  ${({ theme }) => theme.fonts.subtitle3};
 `;
 
 const ArticleThumbnail = styled.div<{ imageUrl: string }>`
