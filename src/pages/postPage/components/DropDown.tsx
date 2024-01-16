@@ -35,8 +35,11 @@ const DropDown = (props: DropDownDataPropsType) => {
   };
 
   useEffect(() => {
-    setSelectedValues((prev) => ({ ...prev, topic: topicList[0]?.topicName }));
-  }, [topicList[0]?.topicName]);
+    if (topicList && topicList.length > 0) {
+      setSelectedValues((prev) => ({ ...prev, topic: topicList[0]?.topicName }));
+    }
+  }, [topicList]);
+
   return (
     <DropDownWrapper>
       <TopicDropDown
