@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import { useCuriousPost } from '../hooks/queries';
 
@@ -11,6 +12,7 @@ interface ArticlePropTypes {
   title: string;
   content: string;
   imageUrl: string;
+  postId: string;
 }
 
 interface CuriousArticlePropTypes {
@@ -20,6 +22,11 @@ interface CuriousArticlePropTypes {
 const CuriousArticle = (props: CuriousArticlePropTypes) => {
   const { groupId } = props;
   const { curiousPostData } = useCuriousPost(groupId || '');
+  const navigate = useNavigate();
+  const handleGoPostDetail = (postId: string) => {
+    navigate(`/detail/${groupId}/${postId}`);
+  };
+
   return (
     <CuriousArticleWrapper>
       {curiousPostData?.length == 0 ? (
@@ -32,7 +39,7 @@ const CuriousArticle = (props: CuriousArticlePropTypes) => {
         </NoCuriousArticleWrapper>
       ) : (
         curiousPostData?.map((article: ArticlePropTypes, index: number) => (
-          <CuriousArticleLayout key={index}>
+          <CuriousArticleLayout key={index} onClick={() => handleGoPostDetail(article.postId)}>
             <ArticleThumbnail imageUrl={article.imageUrl} />
             <Spacing marginBottom="1.6" />
             <ArticleWritingStyle>{article.topic}</ArticleWritingStyle>
@@ -63,7 +70,7 @@ const ArticleThumbnail = styled.div<{ imageUrl?: string }>`
   border-radius: 8px;
 `;
 
-const CuriousArticleLayout = styled.div`
+const CuriousArticleLayout = styled.button`
   display: flex;
   flex-direction: column;
   width: 35.2rem;
