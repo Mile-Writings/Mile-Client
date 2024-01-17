@@ -26,7 +26,12 @@ const PostPage = () => {
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
-  console.log(anonymous);
+
+  // console.log(contentTitle);
+  // console.log(contentContent);
+  // console.log(topicId);
+  // console.log(anonymous);
+  // console.log(imageUrl);
 
   // 모임 ID url에서 받아오기
   const { groupId } = useParams() as { groupId: string };
@@ -35,6 +40,7 @@ const PostPage = () => {
   const { isTemporaryPostExist, postId, isLoading, isError, error } = useTempSaveFlag(
     groupId || '',
   );
+  const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist);
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
@@ -74,6 +80,7 @@ const PostPage = () => {
   useEffect(() => {
     if (isTemporaryPostExist) {
       if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
+        setTemporaryExist(false);
         // console.log('임시 저장 fetch');
       } else {
         // console.log('refetch 완료');
@@ -82,10 +89,11 @@ const PostPage = () => {
       return;
     }
   }, [isTemporaryPostExist]);
+  console.log(isTemporaryPostExist);
 
   return (
     <PostPageWrapper>
-      {isTemporaryPostExist ? (
+      {temporaryExist ? (
         <EditorTempExistHeader onClickSubmit={tempExistSaveHandler} />
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
