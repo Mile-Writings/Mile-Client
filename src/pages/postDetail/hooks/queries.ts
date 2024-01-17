@@ -8,6 +8,7 @@ import deleteCurious from '../apis/deleteCurious';
 import deletePost from '../apis/deletePost';
 import fetchCommentList from '../apis/fetchCommentList';
 import fetchCuriousInfo from '../apis/fetchCuriousInfo';
+import fetchPostComment from '../apis/fetchPostComment';
 import fetchPostDetail from '../apis/fetchPostDetail';
 //쿼리키를 이렇게 두는 이유는 겹치지 않기위해 + 객체로 생성하여 자동완성 하기 위해
 export const QUERY_KEY_POST_DETAIL = {
@@ -94,4 +95,25 @@ export const useDeletePost = (postId: string) => {
     mutationFn: () => deletePost(postId),
   });
   return data;
+};
+interface UsePostComment {
+  postComment: (props: string) => void;
+}
+
+//댓글 생성 api
+export const usePostComment = (postId: string): UsePostComment => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
+    mutationFn: (comment: string) => fetchPostComment(postId, comment),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId] });
+    },
+  });
+
+  const postComment = (comment: string) => {
+    data.mutate(comment);
+  };
+
+  return { postComment };
 };
