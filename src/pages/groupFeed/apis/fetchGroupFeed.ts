@@ -79,7 +79,6 @@ export const fetchCuriousWriters = async (groupId: string) => {
     const response = await client.get<CuriousWriterPropTypes>(
       `/api/moim/${groupId}/mostCuriousWriters`,
     );
-    console.log(response.data, '데이터');
     return response.data;
   } catch (error) {
     console.error('에러:', error);
@@ -100,7 +99,6 @@ interface TopicListPropTypes {
 export const fetchTopicList = async (groupId: string) => {
   try {
     const response = await client.get<TopicListPropTypes>(`/api/moim/${groupId}/topicList`);
-    console.log(response.data, '데이터');
     return response.data;
   } catch (error) {
     console.error('에러:', error);
@@ -115,6 +113,7 @@ interface CuriousPostPropTypes {
       topic: string;
       title: string;
       content: string;
+      isContainPhoto: boolean;
     }[];
   };
   status: number;
@@ -124,7 +123,36 @@ interface CuriousPostPropTypes {
 export const fetchCuriousPost = async (groupId: string) => {
   try {
     const response = await client.get<CuriousPostPropTypes>(`/api/moim/${groupId}/mostCuriousPost`);
-    console.log(response.data, '데이터');
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
+
+interface ArticleListPropTypes {
+  data: {
+    topicInfo: {
+      topic: string;
+      topicDescription: string;
+    };
+    postList: {
+      postId: string;
+      postTitle: string;
+      postContent: string;
+      writerName: string;
+      createdAt: string;
+      curiousCount: number;
+      imageUrl: string;
+      isImageContained: boolean;
+    }[];
+  };
+  status: number;
+  message: string;
+}
+
+export const fetchArticleList = async (topicId: string) => {
+  try {
+    const response = await client.get<ArticleListPropTypes>(`/api/topic/${topicId}`);
     return response.data;
   } catch (error) {
     console.error('에러:', error);
