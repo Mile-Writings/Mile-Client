@@ -4,10 +4,10 @@ interface DeletePostResponseType {
   status: number;
   message: string;
 }
-const deletePost = (postId: string) => {
+const deletePost = async (postId: string) => {
   const token = localStorage.getItem('accessToken');
   try {
-    const data = client.delete<DeletePostResponseType>(`/api/post/${postId}`, {
+    const data = await client.delete<DeletePostResponseType>(`/api/post/${postId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

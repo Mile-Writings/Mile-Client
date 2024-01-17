@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Topics } from './apis/fetchEditorContent';
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
-import { usePostContent, useGetTopic, useTempSaveFlag } from './hooks/queries';
+import { useGetTopic, usePostContent, useTempSaveFlag } from './hooks/queries';
 
 import {
+  EditorTempExistHeader,
   EditorTempNotExistHeader, // 임시저장 글 없음 -> 헤더
-  EditorTempExistHeader, // 임시저장 글 있음 -> 헤더
 } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
@@ -22,18 +22,16 @@ const PostPage = () => {
   // 에디터 제목, 내용 저장 함수
   const [contentTitle, setContentTitle] = useState('');
   const [contentContent, setContentContent] = useState('');
-  const [topicList, setTopicList] = useState<Topics[]>([]);
+  const [topicList, setTopicList] = useState<Topics[] | undefined>([]);
   const [topicId, setTopicId] = useState('');
-  const [anonymous, setAnonymous] = useState(false);
+  const [anonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
 
   // 모임 ID url에서 받아오기
   const { groupId } = useParams() as { groupId: string };
 
   // 임시저장 값 여부 확인
-  const { isTemporaryPostExist, postId, isLoading, isError, error } = useTempSaveFlag(
-    groupId || '',
-  );
+  const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
