@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import checkPostAuth from '../apis/checkPostAuth';
 import createPostCurious from '../apis/createPostCurious';
 import deleteCurious from '../apis/deleteCurious';
+import fetchCommentList from '../apis/fetchCommentList';
 import fetchCuriousInfo from '../apis/fetchCuriousInfo';
 import fetchPostDetail from '../apis/fetchPostDetail';
 //쿼리키를 이렇게 두는 이유는 겹치지 않기위해 + 객체로 생성하여 자동완성 하기 위해
@@ -50,6 +51,18 @@ export const usePostCurious = (postId: string) => {
     },
   });
   return data;
+};
+
+//글에 해당하는 댓글 리스트 조회 api
+export const useGetCommentList = (postId: string) => {
+  const data = useQuery({
+    queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
+    queryFn: () => fetchCommentList(postId),
+  });
+
+  const commentListData = data.data?.data.comments;
+  console.log(commentListData, 'data');
+  return { commentListData };
 };
 
 //궁금해요 삭제 api
