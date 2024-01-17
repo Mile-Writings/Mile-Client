@@ -1,10 +1,6 @@
 import styled from '@emotion/styled';
 
-import {
-  DefaultProfileIc,
-  DetailCommentMeatBallIc,
-  TextCommentProfileIc,
-} from '../../../assets/svgs';
+import { DetailCommentMeatBallIc, TextCommentProfileIc } from '../../../assets/svgs';
 
 interface CommentItem {
   // id?: number;  추후 사용될지 모름
@@ -25,9 +21,11 @@ const CommentItem = ({ name, moimName, content, isMyComment }: CommentItem) => {
         </CommentInfoWrapper>
         <CommentText>{content}</CommentText>
       </CommentItemContainer>
-      <MeatBallWrapper>
-        <DetailCommentMeatBallIcon />
-      </MeatBallWrapper>
+      {isMyComment && (
+        <MeatBallWrapper>
+          <DetailCommentMeatBallIcon />
+        </MeatBallWrapper>
+      )}
     </CommentItemWrapper>
   );
 };
@@ -37,9 +35,9 @@ export default CommentItem;
 const CommentItemWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
-  justify-content: space-between;
   width: 100%;
   height: 8.4rem;
+  margin-left: 1.2rem;
   padding: 1.8rem 0;
 
   background-color: ${({ theme }) => theme.colors.white};

@@ -5,8 +5,6 @@ import CommentItem from './CommentItem';
 
 import { useGetCommentList } from '../hooks/queries';
 
-import { commentData } from './../constants/commentData';
-
 interface CommentPropTypes {
   postId: string | undefined;
 }
