@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { groupContentPropTypes } from '../../main/components/GroupContent';
+import { groupPropTypes } from '../../main/apis/getGroupContent';
 
-const MyGroupBtn = ({ groupId }: groupContentPropTypes) => {
+const MyGroupBtn = ({ moimId }: groupPropTypes) => {
   const navigate = useNavigate();
   const handleRoutingGroupFeed = () => {
-    navigate(`/group/${groupId}`);
+    navigate(`/group/${moimId}`);
   };
 
   return <MyGroupBtnWrapper onClick={handleRoutingGroupFeed}>내 글 모임</MyGroupBtnWrapper>;
