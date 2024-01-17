@@ -28,7 +28,6 @@ const PostDetail = () => {
   if (isLoading) {
     <div>Loading~</div>;
   }
-
   // 리팩토링 전 코드
   // useEffect(() => {
   //   if (typeof postId === 'string') {
@@ -188,6 +187,7 @@ const PostWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  width: 100%;
 `;
 const PostContainer = styled.div`
   width: 100%;
