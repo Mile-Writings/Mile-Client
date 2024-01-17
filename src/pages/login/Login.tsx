@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import { KakaoLoginBtnIc as KakaoLoginBtnIcon, LoginIc } from '../../assets/svgs';
+
 const Login = () => {
   const REDIRECT_URL = 'http://localhost:5173/redirect-kakao';
   // const REDIRECT_URL = 'https://milewriting.com/kakao/callback';
@@ -10,6 +12,7 @@ const Login = () => {
   const handleKakaoLogin = () => {
     window.location.href = KAKAO_URL;
   };
+
   return (
     <LoginWrapper>
       <LoginContainer>
@@ -17,8 +20,8 @@ const Login = () => {
           <HeadText>마일 시작하기</HeadText>
           <SubText>Make it look easy 글쓰기를 쉽고 편안하게</SubText>
         </LoginTextBox>
-        <LoginImageTemp />
-        <KakaoLoginBtn onClick={handleKakaoLogin} />
+        <LoginIc />
+        <KakaoLoginBtnIcon onClick={handleKakaoLogin} />
       </LoginContainer>
     </LoginWrapper>
   );
@@ -58,18 +61,4 @@ const HeadText = styled.h1`
 const SubText = styled.p`
   color: ${({ theme }) => theme.colors.gray90};
   ${({ theme }) => theme.fonts.subtitle4};
-`;
-
-const LoginImageTemp = styled.div`
-  width: 21rem;
-  height: 14rem;
-
-  background-color: pink;
-`;
-
-const KakaoLoginBtn = styled.button`
-  width: 30rem;
-  height: 4.5rem;
-
-  background-image: url('src/assets/images/kakao_login_medium_wide.png');
 `;

@@ -10,7 +10,7 @@ export interface PostContentRequestTypes {
 }
 
 interface PostContentResponseType {
-  status: string;
+  status: number;
   message: string;
   data: {
     postId: string;

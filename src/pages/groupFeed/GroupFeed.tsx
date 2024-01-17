@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Carousel from './carousel/Carousel';
-import EachArticle from './carousel/EachArticle';
 import CuriousArticle from './components/CuriousArticle';
 import CuriousProfile from './components/CuriousProfile';
 import GroupCuriousTitle from './components/GroupCuriousTitle';
@@ -72,16 +71,6 @@ const GroupFeed = () => {
             setActiveCategoryId={setActiveCategoryId}
             groupId={groupId}
           />
-          <Spacing marginBottom="3.2" />
-          <Topic>글감자리입니다.최대 공백포함 15자입니다.</Topic>
-          <Spacing marginBottom="0.8" />
-          <TopicDescription>
-            글감 소개 자리입니다. 최대 공백포함90자입니다. 글감 소개 자리입니다. 최대
-            공백포함90자입니다. 글감 소개 자리입니다. 최대 공백포함90자입니다. 글감 소개 자리입니다.
-            최대 공백포함90자입니다.
-          </TopicDescription>
-          <Spacing marginBottom="2" />
-          <EachArticle />
         </GroupInfo>
       </GroupInfoWrapper>
       <Spacing marginBottom="14" />
@@ -117,22 +106,6 @@ const GroupInfo = styled.div`
   flex-direction: column;
   width: 72rem;
 `;
-
-const Topic = styled.div`
-  width: 63.1rem;
-
-  color: ${({ theme }) => theme.colors.black};
-  ${({ theme }) => theme.fonts.title5};
-`;
-
-const TopicDescription = styled.div`
-  width: 63.1rem;
-
-  color: ${({ theme }) => theme.colors.gray70};
-
-  ${({ theme }) => theme.fonts.body3};
-`;
-
 const FloatingBtn = styled.div`
   position: fixed;
   right: calc((100vw - 136.6rem) / 2 + 6rem);

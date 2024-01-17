@@ -1,21 +1,29 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useGetCuriousInfo, usePostCurious } from '../hooks/queries';
+import { useDeleteCurious, useGetCuriousInfo, usePostCurious } from '../hooks/queries';
 
 import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets/svgs';
 
 const CuriousBtn = () => {
-  const [isClick, setIsClick] = useState(false);
   const { postId } = useParams();
   const { data } = useGetCuriousInfo(postId || '');
+
   const { mutate: postCurious } = usePostCurious(postId || '');
+  const { mutate: deleteCurious } = useDeleteCurious(postId || ' ');
+  const isCurious = data?.data?.isCurious;
+  const [isClick, setIsClick] = useState(!!isCurious);
+
   const handleBtnClick = () => {
+    isClick ? deleteCurious() : postCurious();
     setIsClick((prev) => !prev);
-    postCurious();
   };
+
+  useEffect(() => {
+    setIsClick(!!data?.data?.isCurious);
+  }, [data?.data?.isCurious]);
   return (
     <>
       <CuriousBtnWrapper onClick={handleBtnClick} $isClick={isClick}>
