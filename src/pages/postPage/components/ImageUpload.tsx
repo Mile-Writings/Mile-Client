@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { EditorThuminputIcnUnactiveIc, EditorThuminputIcnActiveIc } from './../../../assets/svgs';
 
@@ -43,6 +43,7 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
 export default ImageUpload;
 
 const ThumbNailGradient = styled.div`
+  width: 100%;
   background: ${({ theme }) => theme.colors.thumbnailGradient};
 `;
 
@@ -52,7 +53,7 @@ const ThumbNailImg = styled.img<{ $imgExist: string }>`
   width: 100%;
   height: 30.7rem;
   object-fit: cover; //픽스
-  background-color: #e4f4b5;
+  background-color: ${({ theme }) => theme.colors.secondGreen};
 
   ${({ $imgExist }) => $imgExist.length === 0 && 'content: "";'}
 `;
@@ -62,16 +63,17 @@ const ImageUploadLabel = styled.label`
   top: -7.1rem;
   right: 0;
   z-index: 3;
+  width: 100%;
 
   cursor: pointer;
 `;
 
 const EditorThuminputIcnActiveIcon = styled(EditorThuminputIcnActiveIc)`
-  margin-left: 69%;
+  margin-left: 74%;
 `;
 
 const EditorThuminputIcnUnactiveIcon = styled(EditorThuminputIcnUnactiveIc)`
-  margin-left: 69%;
+  margin-left: 74%;
   :hover {
     path {
       fill: ${({ theme }) => theme.colors.mainViolet};

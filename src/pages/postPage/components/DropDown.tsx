@@ -17,10 +17,11 @@ export interface DropDownPropsType {
 interface DropDownDataPropsType {
   topicList: Topics[];
   selectedTopicId: (topicId: string) => void;
+  isAnonymous: (anonymous: boolean) => void;
 }
 
 const DropDown = (props: DropDownDataPropsType) => {
-  const { topicList, selectedTopicId } = props;
+  const { topicList, selectedTopicId, isAnonymous } = props;
   // 드롭다운에서 선택된 값 저장 state
   // 글감ID, 익명여부 저장 필요
   // 가장 최신값으로 초기값 업데이트
@@ -28,6 +29,14 @@ const DropDown = (props: DropDownDataPropsType) => {
     topic: topicList[0]?.topicName,
     writer: '작자미상',
   });
+
+  useEffect(() => {
+    if (selectedValues.writer === '작자미상') {
+      isAnonymous(true);
+    } else {
+      isAnonymous(false);
+    }
+  }, [selectedValues.writer]);
 
   // 드롭다운 리스트 중 선택된 값 저장 이벤트 핸들러
   const handleListItem = (key: string, value: string) => {

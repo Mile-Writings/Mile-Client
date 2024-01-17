@@ -1,7 +1,13 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 const MyGroupBtn = () => {
-  return <MyGroupBtnWrapper>내 글 모임</MyGroupBtnWrapper>;
+  const navigate = useNavigate();
+  const handleRoutingGroupFeed = () => {
+    navigate(`/group/MQ==`);
+  };
+
+  return <MyGroupBtnWrapper onClick={handleRoutingGroupFeed}>내 글 모임</MyGroupBtnWrapper>;
 };
 
 export default MyGroupBtn;

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { DefaultProfileIc, DetailCommentMeatBallIc } from '../../../assets/svgs';
+import { DetailCommentMeatBallIc, TextCommentProfileIc } from '../../../assets/svgs';
 
 interface CommentItem {
   // id?: number;  추후 사용될지 모름
@@ -13,17 +13,19 @@ interface CommentItem {
 const CommentItem = ({ name, moimName, content, isMyComment }: CommentItem) => {
   return (
     <CommentItemWrapper>
-      <DefaultProfileIc />
+      <TextCommentProfileIc />
       <CommentItemContainer>
         <CommentInfoWrapper>
-          <CommenterNameText $isMyComment={isMyComment}>{name}</CommenterNameText>
+          <CommenterNameText $name={name}>{name}</CommenterNameText>
           <CommnertGroupNameText>{moimName}</CommnertGroupNameText>
         </CommentInfoWrapper>
         <CommentText>{content}</CommentText>
       </CommentItemContainer>
-      <MeatBallWrapper>
-        <DetailCommentMeatBallIcon />
-      </MeatBallWrapper>
+      {isMyComment && (
+        <MeatBallWrapper>
+          <DetailCommentMeatBallIcon />
+        </MeatBallWrapper>
+      )}
     </CommentItemWrapper>
   );
 };
@@ -33,9 +35,9 @@ export default CommentItem;
 const CommentItemWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
-  justify-content: space-between;
   width: 100%;
   height: 8.4rem;
+  margin-left: 1.2rem;
   padding: 1.8rem 0;
 
   background-color: ${({ theme }) => theme.colors.white};
@@ -56,10 +58,10 @@ const CommentInfoWrapper = styled.div`
   justify-content: start;
 `;
 
-const CommenterNameText = styled.p<{ $isMyComment: boolean }>`
+const CommenterNameText = styled.p<{ $name: string }>`
   color: ${({ theme }) => theme.colors.mainViolet};
-  color: ${({ $isMyComment, theme }) =>
-    $isMyComment ? theme.colors.mainViolet : theme.colors.black};
+  color: ${({ $name, theme }) =>
+    $name == '글쓴이' ? theme.colors.mainViolet : theme.colors.black};
   ${({ theme }) => theme.fonts.body5};
 `;
 
