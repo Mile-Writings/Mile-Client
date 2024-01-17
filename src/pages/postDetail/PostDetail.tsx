@@ -37,6 +37,10 @@ const PostDetail = () => {
     }
     console.log('삭제취소');
   };
+
+  const handleEditBtn = () => {
+    navigate(`/edit/${groupId}`);
+  };
   // 리팩토링 전 코드
   // useEffect(() => {
   //   if (typeof postId === 'string') {
@@ -74,7 +78,9 @@ const PostDetail = () => {
               <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
                 글 삭제하기
               </Button>
-              <Button typeName={'submitEditType'}>글 수정하기</Button>
+              <Button typeName={'submitEditType'} onClick={handleEditBtn}>
+                글 수정하기
+              </Button>
             </ButtonWrapper>
           )}
         </PostDetailContainer>
