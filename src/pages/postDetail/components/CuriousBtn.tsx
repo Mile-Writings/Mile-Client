@@ -17,11 +17,7 @@ const CuriousBtn = () => {
   const [isClick, setIsClick] = useState(!!isCurious);
 
   const handleBtnClick = () => {
-    if (isClick) {
-      deleteCurious();
-    } else {
-      postCurious();
-    }
+    isClick ? deleteCurious() : postCurious();
     setIsClick((prev) => !prev);
   };
 
