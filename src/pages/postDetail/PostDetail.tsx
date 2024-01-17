@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
-import { useCheckPostAuth, useGetPostDetail } from './hooks/queries';
+import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
 
 import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
@@ -17,10 +17,10 @@ import logout from './../../utils/logout';
 const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
-
+  const { groupId } = useParams();
   const { data, isError, isLoading } = useGetPostDetail(postId || '');
   const { data: postAuth } = useCheckPostAuth(postId || '');
-
+  const { mutate: deletePost } = useDeletePost(postId || '');
   const postData = data?.data;
   if (isError) {
     navigate('/error');
@@ -29,6 +29,18 @@ const PostDetail = () => {
     <div>Loading~</div>;
   }
 
+  const handleDeletePost = () => {
+    const userConfirmed = confirm('삭제하시겠습니까?');
+    if (userConfirmed) {
+      deletePost();
+      navigate(`/group/${groupId}`);
+    }
+    console.log('삭제취소');
+  };
+
+  const handleEditBtn = () => {
+    navigate(`/edit/${groupId}`);
+  };
   // 리팩토링 전 코드
   // useEffect(() => {
   //   if (typeof postId === 'string') {
@@ -63,8 +75,12 @@ const PostDetail = () => {
           </InfoTextBox>
           {postAuth?.data?.data.canEdit && (
             <ButtonWrapper>
-              <Button typeName={'deleteTempType'}>글 삭제하기</Button>
-              <Button typeName={'submitEditType'}>글 수정하기</Button>
+              <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
+                글 삭제하기
+              </Button>
+              <Button typeName={'submitEditType'} onClick={handleEditBtn}>
+                글 수정하기
+              </Button>
             </ButtonWrapper>
           )}
         </PostDetailContainer>
@@ -188,6 +204,7 @@ const PostWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  width: 100%;
 `;
 const PostContainer = styled.div`
   width: 100%;
