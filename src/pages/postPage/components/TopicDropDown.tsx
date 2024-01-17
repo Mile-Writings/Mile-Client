@@ -1,17 +1,16 @@
 import styled from '@emotion/styled';
-
 import { useRef, useState } from 'react';
 
 import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
 import { ThisWeekTopic, PrevFirstTopic, PrevTopic } from './Topic';
 
-import { TOPIC_DUMMY_DATA } from '../constants/topicConstants';
+// import { TOPIC_DUMMY_DATA } from '../constants/topicConstants';
 
 import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../assets/svgs';
 import useClickOutside from '../../../hooks/useClickOutside';
 
 const TopicDropDown = (props: DropDownPropsType) => {
-  const { onClickListItem, selectedValue } = props;
+  const { onClickListItem, selectedValue, topicList, selectedTopicId } = props;
 
   const [topicIsOpen, setTopicIsOpen] = useState(false);
 
@@ -36,7 +35,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
         {topicIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
       </DropDownToggle>
       <TopicListWrapper $isOpen={topicIsOpen}>
-        {TOPIC_DUMMY_DATA.map((item, idx) => {
+        {topicList.map((item, idx) => {
           if (idx === 0) {
             return (
               <ThisWeekTopic
@@ -46,6 +45,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 onClickHandler={onClickListItem}
                 selected={selectedValue === item.topicName}
                 onClickClose={setTopicIsOpen}
+                selectedTopicId={selectedTopicId}
               />
             );
           } else if (idx === 1) {
@@ -57,6 +57,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 onClickHandler={onClickListItem}
                 selected={selectedValue === item.topicName}
                 onClickClose={setTopicIsOpen}
+                selectedTopicId={selectedTopicId}
               />
             );
           } else {
@@ -68,6 +69,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 onClickHandler={onClickListItem}
                 selected={selectedValue === item.topicName}
                 onClickClose={setTopicIsOpen}
+                selectedTopicId={selectedTopicId}
               />
             );
           }
