@@ -89,7 +89,7 @@ const PostDetail = () => {
           <CuriousBtn />
         </WriterInfoWrapper>
 
-        <Comment />
+        <Comment postId={postId} />
         <Spacing marginBottom="8" />
       </PostDetailWrapper>
     </>
