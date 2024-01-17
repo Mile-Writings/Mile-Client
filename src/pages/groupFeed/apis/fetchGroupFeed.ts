@@ -143,7 +143,7 @@ interface ArticleListPropTypes {
       createdAt: string;
       curiousCount: number;
       imageUrl: string;
-      isImageContained: string;
+      isImageContained: boolean;
     }[];
   };
   status: number;

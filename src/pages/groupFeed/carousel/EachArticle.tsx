@@ -26,7 +26,7 @@ const EachArticle = (props: EachProfilePropTypes) => {
     createdAt: string;
     curiousCount: number;
     imageUrl: string;
-    isImageContained: string;
+    isImageContained: boolean;
   }
 
   return (
@@ -42,42 +42,23 @@ const EachArticle = (props: EachProfilePropTypes) => {
       ) : (
         postListData?.map((list: ProfilePropTypes, index: number) => (
           <div key={index}>
-            {list.isImageContained ? (
-              <ArticleWrapper onClick={() => handleGoPostDetail(list.postId)}>
-                <ArticleContainerWithImage>
-                  <ArticleTitle>{list.postTitle}</ArticleTitle>
-                  <Spacing marginBottom="1.6" />
-                  <ArticleContent>{list.postContent}</ArticleContent>
-                  <Spacing marginBottom="1.2" />
-                  <ArticleInfo>
-                    <GroupListProfileIc />
-                    <ProfileName>{list.writerName}</ProfileName>
-                    <ArticleDetail>{list.createdAt}</ArticleDetail>
-                    <ArticleDetail>·</ArticleDetail>
-                    <ArticleDetail>궁금해요</ArticleDetail>
-                    <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
-                  </ArticleInfo>
-                </ArticleContainerWithImage>
-                <ArticleThumbnail imageUrl={list.imageUrl} />
-              </ArticleWrapper>
-            ) : (
-              <ArticleWrapper onClick={() => handleGoPostDetail(list.postId)}>
-                <ArticleContainer>
-                  <ArticleTitle>{list.postTitle}</ArticleTitle>
-                  <Spacing marginBottom="1.6" />
-                  <ArticleContent>{list.postContent}</ArticleContent>
-                  <Spacing marginBottom="1.2" />
-                  <ArticleInfo>
-                    <GroupListProfileIc />
-                    <ProfileName>{list.writerName}</ProfileName>
-                    <ArticleDetail>{list.createdAt}</ArticleDetail>
-                    <ArticleDetail>·</ArticleDetail>
-                    <ArticleDetail>궁금해요</ArticleDetail>
-                    <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
-                  </ArticleInfo>
-                </ArticleContainer>
-              </ArticleWrapper>
-            )}
+            <ArticleWrapper onClick={() => handleGoPostDetail(list.postId)}>
+              <ArticleContainer isImageContained={list.isImageContained}>
+                <ArticleTitle>{list.postTitle}</ArticleTitle>
+                <Spacing marginBottom="1.6" />
+                <ArticleContent>{list.postContent}</ArticleContent>
+                <Spacing marginBottom="1.2" />
+                <ArticleInfo>
+                  <GroupListProfileIc />
+                  <ProfileName>{list.writerName}</ProfileName>
+                  <ArticleDetail>{list.createdAt}</ArticleDetail>
+                  <ArticleDetail>·</ArticleDetail>
+                  <ArticleDetail>궁금해요</ArticleDetail>
+                  <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
+                </ArticleInfo>
+              </ArticleContainer>
+              {list.isImageContained && <ArticleThumbnail imageUrl={list.imageUrl} />}
+            </ArticleWrapper>
           </div>
         ))
       )}
@@ -115,15 +96,10 @@ const ArticleThumbnail = styled.div<{ imageUrl: string }>`
   border-radius: 8px;
 `;
 
-const ArticleContainer = styled.div`
+const ArticleContainer = styled.div<{ isImageContained: boolean }>`
   display: flex;
   flex-direction: column;
-`;
-
-const ArticleContainerWithImage = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 42.4rem;
+  width: ${({ isImageContained }) => (isImageContained ? '42.4rem' : 'auto')};
 `;
 
 const ArticleWrapper = styled.button`
