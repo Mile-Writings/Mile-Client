@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction, useState, useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Slider from 'react-slick';
 
-import './slick-theme.css';
-import './slick.css';
 import CarouselContainer from './CarouselContainer';
 import EachArticle from './EachArticle';
+import './slick-theme.css';
+import './slick.css';
 
-import { useTopicList, useArticleList } from '../hooks/queries';
+import { useArticleList, useTopicList } from '../hooks/queries';
 
 import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
 import BeforeBtn from '../../../assets/svgs/groupTabBeforeBtnEnable.svg';

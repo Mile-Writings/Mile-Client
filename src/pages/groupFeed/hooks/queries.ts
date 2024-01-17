@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 
 import {
-  fetchGroupFeedAuth,
-  fetchCuriousPost,
-  fetchTopicList,
-  fetchTodayTopic,
-  fetchGroupInfo,
-  fetchCuriousWriters,
   fetchArticleList,
+  fetchCuriousPost,
+  fetchCuriousWriters,
+  fetchGroupFeedAuth,
+  fetchGroupInfo,
+  fetchTodayTopic,
+  fetchTopicList,
 } from '../apis/fetchGroupFeed';
 
 export const QUERY_KEY_GROUPFEED = {
@@ -114,7 +114,7 @@ export const useArticleList = (topicId: string) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getArticleList, topicId],
     queryFn: () => fetchArticleList(topicId),
-    staleTime: 20000, //20초 캐시
+    staleTime: 10000, //20초 캐시
   });
 
   const topicInfo = data && data.data.topicInfo;

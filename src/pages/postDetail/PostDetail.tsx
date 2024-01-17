@@ -144,6 +144,7 @@ const InfoTextBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.1rem;
+  width: 60rem;
 `;
 
 const TitleText = styled.h1`
@@ -160,6 +161,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
   align-items: flex-start;
+  width: 21rem;
 `;
 
 const TopicWrapper = styled.div`
