@@ -24,6 +24,7 @@ const GroupContent = ({
   groupId,
   postId,
   isLast,
+  isContainPhoto,
 }: groupContentPropTypes) => {
   const navigate = useNavigate();
   const handleOnClick = () => {
