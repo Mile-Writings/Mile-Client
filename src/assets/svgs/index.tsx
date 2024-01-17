@@ -57,4 +57,4 @@ export { default as EditorThuminputIcnHoverIc } from './editorThuminputIcnHover.
 export { default as EditorThuminputIcnActiveIc } from './editorThuminputIcnHover.svg?react';
 export { default as GroupCardThumnailImgIc } from './groupCardThumnailImg.svg';
 
-export { default as TextCommentProfileIc } from './textComentprofileSvg.svg';
+export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?react';

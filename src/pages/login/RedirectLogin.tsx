@@ -7,6 +7,8 @@ const RedirectLogin = () => {
 
   const { mutate } = useLoginService({ code, socialType: 'KAKAO' });
 
+  console.log(code, '코드');
+
   useEffect(() => {
     mutate();
   }, [mutate]);

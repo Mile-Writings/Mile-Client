@@ -1,6 +1,10 @@
 import styled from '@emotion/styled';
 
-import { DefaultProfileIc, DetailCommentMeatBallIc } from '../../../assets/svgs';
+import {
+  DefaultProfileIc,
+  DetailCommentMeatBallIc,
+  TextCommentProfileIc,
+} from '../../../assets/svgs';
 
 interface CommentItem {
   // id?: number;  추후 사용될지 모름
@@ -13,7 +17,7 @@ interface CommentItem {
 const CommentItem = ({ name, moimName, content, isMyComment }: CommentItem) => {
   return (
     <CommentItemWrapper>
-      <DefaultProfileIc />
+      <TextCommentProfileIc />
       <CommentItemContainer>
         <CommentInfoWrapper>
           <CommenterNameText $isMyComment={isMyComment}>{name}</CommenterNameText>
