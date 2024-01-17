@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import CuriousGroup from './CuriousGroup';
 
-import { groupPropTypes } from '../apis/getGroupContent';
-
 import Spacing from './.././../../components/commons/Spacing';
 
 export interface groupContentPropTypes {
@@ -17,13 +15,18 @@ export interface groupContentPropTypes {
   isLast: boolean;
 }
 
-const GroupContent = (
-  { topicName, imageUrl, postTitle, postContent, groupId, postId, isLast }: groupContentPropTypes,
-  { moimId }: groupPropTypes,
-) => {
+const GroupContent = ({
+  topicName,
+  imageUrl,
+  postTitle,
+  postContent,
+  postId,
+  groupId,
+  isLast,
+}: groupContentPropTypes) => {
   const navigate = useNavigate();
   const handleOnClick = () => {
-    navigate(`/detail/${moimId}/${postId}`);
+    navigate(`/detail/${groupId}/${postId}`);
   };
   const hasImage = () => {
     return imageUrl !== null;
@@ -40,17 +43,7 @@ const GroupContent = (
         </SubText>
       </TextContainer>
       {imageUrl && <Image src={imageUrl} isLast={isLast} alt="group-content-image" />}
-      {isLast && (
-        <CuriousGroup
-          groupId={groupId}
-          topicName={topicName}
-          imageUrl={imageUrl}
-          postTitle={postTitle}
-          postContent={postContent}
-          postId={postId}
-          isLast={isLast}
-        />
-      )}
+      {isLast && <CuriousGroup groupId={groupId} />}
     </ContentLayout>
   );
 };
