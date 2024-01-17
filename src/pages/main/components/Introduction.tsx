@@ -90,7 +90,7 @@ const GroupRoutingButtonBox = styled.button`
     color: ${({ theme }) => theme.colors.mainViolet};
     ${({ theme }) => theme.fonts.button1};
 
-    background-color: ${({ theme }) => theme.colors.mileViolet};
+    background-color: ${({ theme }) => theme.colors.middleViolet};
 
     & > svg {
       path {
