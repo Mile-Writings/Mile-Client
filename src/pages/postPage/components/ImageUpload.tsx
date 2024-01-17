@@ -3,14 +3,19 @@ import React, { useState } from 'react';
 
 import { EditorThuminputIcnUnactiveIc, EditorThuminputIcnActiveIc } from './../../../assets/svgs';
 
-const ImageUpload = () => {
-  const [editorThumImg, setEditorThumImg] = useState('');
+interface ImageUploadPropTypes {
+  saveImage: (imageUrl: string) => void;
+  imageUrl: string;
+}
+
+const ImageUpload = (props: ImageUploadPropTypes) => {
+  const { imageUrl, saveImage } = props;
   const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const target = e.target as FileReader;
       if (target) {
-        setEditorThumImg(target.result as string);
+        saveImage(target.result as string);
       }
     };
     if (e.target.files && e.target.files[0]) {
@@ -21,11 +26,11 @@ const ImageUpload = () => {
   return (
     <>
       <ThumbNailGradient>
-        <ThumbNailImg src={editorThumImg} $imgExist={editorThumImg} />
+        <ThumbNailImg src={imageUrl} $imgExist={imageUrl} />
       </ThumbNailGradient>
       <ImageInput type="file" accept="image/*" id="editorImg" onChange={onImageUpload} />
       <ImageUploadLabel htmlFor="editorImg">
-        {editorThumImg.length > 0 ? (
+        {imageUrl.length > 0 ? (
           <EditorThuminputIcnActiveIcon />
         ) : (
           <EditorThuminputIcnUnactiveIcon />

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import {
+  fetchArticleList,
   fetchCuriousPost,
   fetchCuriousWriters,
   fetchGroupFeedAuth,
@@ -15,6 +16,7 @@ export const QUERY_KEY_GROUPFEED = {
   getCuriousPost: 'getCuriousPost',
   getGroupFeedCategory: 'getGroupFeedCategory',
   getCuriousWriters: 'getCuriousWriters',
+  getArticleList: 'getArticleList',
 };
 
 interface GroupFeedAuthQueryResult {
@@ -93,7 +95,6 @@ export const useTopicList = (groupId: string) => {
   });
 
   const groupFeedCategoryData = data && data.data.topicList;
-  console.log(groupFeedCategoryData, 'feedCategory');
 
   return { groupFeedCategoryData, isLoading, isError, error };
 };
@@ -107,4 +108,17 @@ export const useCuriousWriters = (groupId: string) => {
   const curiousWriterData = data && data.data.popularWriters;
 
   return { curiousWriterData, isLoading, isError, error };
+};
+
+export const useArticleList = (topicId: string) => {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: [QUERY_KEY_GROUPFEED.getArticleList, topicId],
+    queryFn: () => fetchArticleList(topicId),
+    staleTime: 10000, //20초 캐시
+  });
+
+  const topicInfo = data && data.data.topicInfo;
+  const postListData = data && data.data.postList;
+
+  return { topicInfo, postListData, isLoading, isError, error };
 };

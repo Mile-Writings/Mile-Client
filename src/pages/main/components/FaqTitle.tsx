@@ -14,6 +14,5 @@ const FaqTitle = () => {
 export default FaqTitle;
 
 const TitleText = styled.p`
-  padding-left: 21.8rem;
   ${({ theme }) => theme.fonts.title3};
 `;
