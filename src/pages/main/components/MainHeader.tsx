@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { groupPropTypes } from '../apis/getGroupContent';
-
 import { HeaderLogoIc } from '../../../assets/svgs';
 import LogInOutBtn from '../../../components/commons/LogInOutBtn';
 import theme from '../../../styles/theme';
@@ -11,18 +9,18 @@ import MakeGroupBtn from '../../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../../groupFeed/components/MyGroupBtn';
 
 // 메인 페이지 헤더
-export const LogInHeader = ({ moimId, moimName, moimPosts }: groupPropTypes) => {
+export const LogInHeader = () => {
   const handleLogOut = () => {
     logout();
     alert('로그아웃 되었습니다');
     location.reload();
   };
-
+  //MQ==
   return (
     <HeaderWrapper>
       <HeaderLogoIc />
       <HeaderBtnLayout>
-        <MyGroupBtn moimId={moimId} moimName={moimName} moimPosts={moimPosts} />
+        <MyGroupBtn />
         <CommonBtnLayout>
           <MakeGroupBtn />
           <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
