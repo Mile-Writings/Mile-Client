@@ -13,6 +13,7 @@ interface ArticlePropTypes {
   content: string;
   imageUrl: string;
   postId: string;
+  isContainPhoto: boolean;
 }
 
 interface CuriousArticlePropTypes {
@@ -48,7 +49,7 @@ const CuriousArticle = (props: CuriousArticlePropTypes) => {
       ) : (
         curiousPostData?.map((article: ArticlePropTypes, index: number) => (
           <CuriousArticleLayout key={index} onClick={() => handleGoPostDetail(article.postId)}>
-            <ArticleThumbnail imageUrl={article.imageUrl} />
+            <ArticleThumbnail imageUrl={article.imageUrl} isContainPhoto={article.isContainPhoto} />
             <Spacing marginBottom="1.6" />
             <ArticleWritingStyle>{article.topic}</ArticleWritingStyle>
             <Spacing marginBottom="0.4" />
@@ -69,12 +70,12 @@ const CuriousArticleWrapper = styled.div`
   gap: 1.6rem;
 `;
 
-const ArticleThumbnail = styled.div<{ imageUrl: string }>`
+const ArticleThumbnail = styled.div<{ imageUrl: string; isContainPhoto: boolean }>`
   width: 28.8rem;
   height: 14rem;
 
   background-image: ${(props) =>
-    props.imageUrl ? `url(${props.imageUrl})` : `url(${GroupCardThumnailImgIc})`};
+    props.isContainPhoto ? `url(${props.imageUrl})` : `url(${GroupCardThumnailImgIc})`};
   border-radius: 8px;
 `;
 

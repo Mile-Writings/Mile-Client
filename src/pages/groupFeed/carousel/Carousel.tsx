@@ -1,18 +1,20 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import Slider from 'react-slick';
 
 import './slick-theme.css';
 import './slick.css';
 import CarouselContainer from './CarouselContainer';
+import EachArticle from './EachArticle';
 
-import { useTopicList } from '../hooks/queries';
+import { useTopicList, useArticleList } from '../hooks/queries';
 
 import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
 import BeforeBtn from '../../../assets/svgs/groupTabBeforeBtnEnable.svg';
 import BeforeBtnHover from '../../../assets/svgs/groupTabBeforeBtnHover.svg';
 import NextBtn from '../../../assets/svgs/groupTabNextBtnEnable.svg';
 import NextBtnHover from '../../../assets/svgs/groupTabNextBtnHover.svg';
+import Spacing from '../../../components/commons/Spacing';
 
 interface CategoryIdPropTypes {
   activeCategoryId: number;
@@ -22,7 +24,15 @@ interface CategoryIdPropTypes {
 
 const Carousel = (props: CategoryIdPropTypes) => {
   const { activeCategoryId, setActiveCategoryId, groupId } = props;
-  console.log(activeCategoryId);
+  const { groupFeedCategoryData, isLoading, isError, error } = useTopicList(groupId || '');
+  const [selectedTopicId, setSelectedTopicId] = useState<string>('');
+
+  useEffect(() => {
+    if (groupFeedCategoryData && groupFeedCategoryData.length > 0) {
+      setSelectedTopicId(groupFeedCategoryData[0].topicId);
+    }
+  }, [groupFeedCategoryData]);
+
   const settings = {
     dots: false,
     infinite: false,
@@ -37,11 +47,12 @@ const Carousel = (props: CategoryIdPropTypes) => {
     },
   };
 
-  const handleCategoryClick = (categoryId: number) => {
+  const handleCategoryClick = (categoryId: number, topicId: string) => {
     setActiveCategoryId(categoryId);
+    setSelectedTopicId(topicId);
   };
 
-  const { groupFeedCategoryData, isLoading, isError, error } = useTopicList(groupId || '');
+  const { topicInfo } = useArticleList(selectedTopicId || '');
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -52,21 +63,29 @@ const Carousel = (props: CategoryIdPropTypes) => {
   }
 
   return (
-    <CarouselWrapper>
-      <GroupTabBtnBaseBeforeIcon />
-      <Slider {...settings} className="groupFeedCarousel">
-        {groupFeedCategoryData?.map((topic, index) => (
-          <CarouselContainer
-            key={index}
-            onClick={() => handleCategoryClick(Number(topic.topicId))}
-            isActive={index + 1 === activeCategoryId}
-          >
-            {topic.topicName}
-          </CarouselContainer>
-        ))}
-      </Slider>
-      <GroupTabBtnBaseNextIcon />
-    </CarouselWrapper>
+    <>
+      <CarouselWrapper>
+        <GroupTabBtnBaseBeforeIcon />
+        <Slider {...settings} className="groupFeedCarousel">
+          {groupFeedCategoryData?.map((topic, index) => (
+            <CarouselContainer
+              key={index}
+              onClick={() => handleCategoryClick(index + 1, topic.topicId)}
+              isActive={index + 1 === activeCategoryId}
+            >
+              {topic.topicName}
+            </CarouselContainer>
+          ))}
+        </Slider>
+        <GroupTabBtnBaseNextIcon />
+      </CarouselWrapper>
+      <Spacing marginBottom="3.2" />
+      <Topic>{topicInfo?.topic}</Topic>
+      <Spacing marginBottom="0.8" />
+      <TopicDescription>{topicInfo?.topicDescription}</TopicDescription>
+      <Spacing marginBottom="2" />
+      <EachArticle selectedTopicId={selectedTopicId} groupId={groupId || ''} />
+    </>
   );
 };
 
@@ -120,4 +139,19 @@ const GroupTabBtnBaseNextIcon = styled(GroupTabBtnBaseNextIc)`
   z-index: 1;
 
   pointer-events: none;
+`;
+
+const Topic = styled.div`
+  width: 63.1rem;
+
+  color: ${({ theme }) => theme.colors.black};
+  ${({ theme }) => theme.fonts.title5};
+`;
+
+const TopicDescription = styled.div`
+  width: 63.1rem;
+
+  color: ${({ theme }) => theme.colors.gray70};
+
+  ${({ theme }) => theme.fonts.body3};
 `;
