@@ -9,7 +9,13 @@ import MakeGroupBtn from '../../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../../groupFeed/components/MyGroupBtn';
 
 // 메인 페이지 헤더
-export const MainHeader = () => {
+export const LogInHeader = () => {
+  const handleLogOut = () => {
+    logout();
+    alert('로그아웃 되었습니다');
+    location.reload();
+  };
+
   return (
     <HeaderWrapper>
       <HeaderLogoIc />
@@ -17,7 +23,7 @@ export const MainHeader = () => {
         <MyGroupBtn />
         <CommonBtnLayout>
           <MakeGroupBtn />
-          <LogInOutBtn onClick={logout}>로그아웃</LogInOutBtn>
+          <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
         </CommonBtnLayout>
       </HeaderBtnLayout>
     </HeaderWrapper>
