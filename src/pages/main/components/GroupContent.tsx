@@ -12,6 +12,7 @@ export interface groupContentPropTypes {
   postContent: string;
   postId: string;
   groupId: string;
+  isContainPhoto: boolean;
   isLast: boolean;
 }
 
@@ -28,21 +29,19 @@ const GroupContent = ({
   const handleOnClick = () => {
     navigate(`/detail/${groupId}/${postId}`);
   };
-  const hasImage = () => {
-    return imageUrl !== null;
-  };
-
   return (
     <ContentLayout onClick={handleOnClick}>
       <TextContainer>
         <Topic>{topicName}</Topic>
         <MainText>{postTitle}</MainText>
         <Spacing marginBottom="2" />
-        <SubText isImage={hasImage()} isLast={isLast}>
+        <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
           {postContent}
         </SubText>
       </TextContainer>
-      {imageUrl && <Image src={imageUrl} isLast={isLast} alt="group-content-image" />}
+      {isContainPhoto && imageUrl && (
+        <Image src={imageUrl} isLast={isLast} alt="group-content-image" />
+      )}
       {isLast && (
         <CuriousGroup
           groupId={groupId}
@@ -51,6 +50,7 @@ const GroupContent = ({
           postTitle={postTitle}
           postContent={postContent}
           postId={postId}
+          isContainPhoto={isContainPhoto}
           isLast={isLast}
         />
       )}
@@ -84,14 +84,14 @@ const TextContainer = styled.div`
   flex-direction: column;
 `;
 
-const SubText = styled.p<{ isImage: boolean; isLast: boolean }>`
+const SubText = styled.p<{ isContainPhoto: boolean; isLast: boolean }>`
   display: -webkit-box;
-  width: ${({ isImage, isLast }) =>
-    isImage && isLast
+  width: ${({ isContainPhoto, isLast }) =>
+    isContainPhoto && isLast
       ? '47.8rem'
-      : isImage && !isLast
+      : isContainPhoto && !isLast
         ? '59.8rem'
-        : !isImage && isLast
+        : !isContainPhoto && isLast
           ? '68.2rem'
           : '85.8rem'};
   height: 8.5rem;
