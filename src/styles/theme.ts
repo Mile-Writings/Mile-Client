@@ -11,6 +11,7 @@ export const theme = {
     mainGreen: '#2F7417',
     mileGreen: '#C5DB8F',
     middleGreen: '#CCE09B',
+    secondGreen: '#E4F4B5',
     lightGreen: '#F1F6E2',
     backGroundGray: '#F5F5F7',
     thumbnailGradient:

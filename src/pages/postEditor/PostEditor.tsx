@@ -7,8 +7,8 @@ import { EditorEditHeader } from '../../components/commons/Header';
 
 const PostEditor = () => {
   // 에디터 제목, 내용 저장 함수
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [, setTitle] = useState('');
+  const [, setContent] = useState('');
 
   // 수정하기 -> 저장하기
   const editSaveHandler = () => {};
