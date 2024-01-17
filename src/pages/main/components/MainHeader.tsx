@@ -9,7 +9,7 @@ import MakeGroupBtn from '../../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../../groupFeed/components/MyGroupBtn';
 
 // 메인 페이지 헤더
-export const LogInHeader = () => {
+export const AuthorizationHeader = () => {
   const handleLogOut = () => {
     logout();
     alert('로그아웃 되었습니다');
