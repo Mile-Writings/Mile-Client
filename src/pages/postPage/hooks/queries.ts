@@ -20,7 +20,10 @@ export const usePostContent = ({
   anonymous,
 }: PostContentRequestTypes) => {
   const data = useMutation({
-    mutationKey: [QUERY_KEY_POST.postContent],
+    mutationKey: [
+      QUERY_KEY_POST.postContent,
+      { groupId, topicId, title, content, imageUrl, anonymous },
+    ],
     mutationFn: () => postContent({ groupId, topicId, title, content, imageUrl, anonymous }),
     onSuccess: () => {
       console.log('post content success');

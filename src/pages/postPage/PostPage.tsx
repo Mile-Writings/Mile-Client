@@ -28,7 +28,7 @@ const PostPage = () => {
   const [imageUrl, setImageUrl] = useState('');
 
   // 모임 ID url에서 받아오기
-  const { groupId } = useParams();
+  const { groupId } = useParams() as { groupId: string };
 
   // 임시저장 값 여부 확인
   const { isTemporaryPostExist, postId, isLoading, isError, error } = useTempSaveFlag(
@@ -47,14 +47,14 @@ const PostPage = () => {
   const { mutate: postContent } = usePostContent({
     groupId,
     topicId,
-    contentTitle,
-    contentContent,
+    title: contentTitle,
+    content: contentContent,
     imageUrl,
     anonymous,
   });
   const saveHandler = () => {
     postContent();
-    navigate('./');
+    navigate(`/detail/${groupId}/${postId}`);
   };
 
   // 임시 저장 글 -> 저장하기
