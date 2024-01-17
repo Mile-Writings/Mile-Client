@@ -57,5 +57,8 @@ export const useGetCommentList = (postId: string) => {
     queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
     queryFn: () => fetchCommentList(postId),
   });
-  return data;
+
+  const commentListData = data.data?.data.comments;
+  console.log(commentListData, 'data');
+  return { commentListData };
 };

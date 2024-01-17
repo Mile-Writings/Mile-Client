@@ -1,13 +1,28 @@
+import styled from '@emotion/styled';
 import { ChangeEvent, useState } from 'react';
 
-import styled from '@emotion/styled';
-
-import { commentData } from './../constants/commentData';
 import CommentItem from './CommentItem';
 
-const Comment = () => {
-  const [comment, setComment] = useState('');
+import { useGetCommentList } from '../hooks/queries';
 
+import { commentData } from './../constants/commentData';
+
+interface CommentPropTypes {
+  postId: string | undefined;
+}
+
+interface CommentListPropTypes {
+  commentId: string;
+  name: string;
+  moimName: string;
+  content: string;
+  isMyComment: boolean;
+}
+
+const Comment = (props: CommentPropTypes) => {
+  const { postId } = props;
+  const { commentListData } = useGetCommentList(postId || '');
+  const [comment, setComment] = useState('');
   const handleCommentFrom = (e: ChangeEvent<HTMLInputElement>) => {
     setComment(e.target.value);
   };
@@ -22,10 +37,9 @@ const Comment = () => {
 
         <CommentPostBtn $isComment={comment}>등록</CommentPostBtn>
       </CommentPostWrapper>
-      {commentData.map((data) => (
+      {commentListData?.map((data: CommentListPropTypes) => (
         <CommentItem
           key={data.commentId}
-          id={data.commentId}
           name={data.name}
           moimName={data.moimName}
           content={data.content}
