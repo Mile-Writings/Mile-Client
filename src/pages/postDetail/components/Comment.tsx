@@ -3,11 +3,24 @@ import { ChangeEvent, useState } from 'react';
 
 import CommentItem from './CommentItem';
 
-import { commentData } from './../constants/commentData';
+import { useGetCommentList } from '../hooks/queries';
 
-const Comment = () => {
+interface CommentPropTypes {
+  postId: string | undefined;
+}
+
+interface CommentListPropTypes {
+  commentId: string;
+  name: string;
+  moimName: string;
+  content: string;
+  isMyComment: boolean;
+}
+
+const Comment = (props: CommentPropTypes) => {
+  const { postId } = props;
+  const { commentListData } = useGetCommentList(postId || '');
   const [comment, setComment] = useState('');
-
   const handleCommentFrom = (e: ChangeEvent<HTMLInputElement>) => {
     setComment(e.target.value);
   };
@@ -22,7 +35,7 @@ const Comment = () => {
 
         <CommentPostBtn $isComment={comment}>등록</CommentPostBtn>
       </CommentPostWrapper>
-      {commentData.map((data) => (
+      {commentListData?.map((data: CommentListPropTypes) => (
         <CommentItem
           key={data.commentId}
           name={data.name}
