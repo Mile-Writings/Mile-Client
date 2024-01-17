@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 import { Topics } from './apis/fetchEditorContent';
 import DropDown from './components/DropDown';
@@ -10,11 +10,15 @@ import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
 import { useGetTopic, usePostContent, usePresignedUrl, useTempSaveFlag } from './hooks/queries';
 
+// import { useGetPostDetail } from '../postDetail/hooks/queries';
+
 import { EditorTempExistHeader, EditorTempNotExistHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const PostPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.state);
 
   // 에디터 제목, 내용 저장 함수
   const [contentTitle, setContentTitle] = useState('');
@@ -23,10 +27,17 @@ const PostPage = () => {
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
+  // 글 수정하기 불러오기 위해 실행
+  const [renderType, setRenderType] = useState('');
+
+  // 내가 쓴 글 id
+  const [myPostId, setMyPostId] = useState(location.state);
 
   // 모임 ID url에서 받아오기
-  const { groupId } = useParams() as { groupId: string };
-  // console.log(groupId);
+  const { groupId, type } = useParams() as { groupId: string; type: string };
+
+  // 어떤 view인지에 따라 확인
+  // const { data } = useGetPostDetail(postId || '');
 
   // 임시저장 값 여부 확인
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
@@ -42,8 +53,8 @@ const PostPage = () => {
 
   // 이미지 보낼 url 받아오기
   const { fileName, url } = usePresignedUrl();
-  console.log(url);
-  console.log(fileName);
+  // console.log(url);
+  // console.log(fileName);
 
   // 최초저장
   const { mutate: postContent } = usePostContent({
@@ -54,6 +65,7 @@ const PostPage = () => {
     imageUrl: imageUrl,
     anonymous: anonymous,
   });
+
   const saveHandler = () => {
     postContent();
     navigate(`/detail/${groupId}/${postId}`);
@@ -68,7 +80,7 @@ const PostPage = () => {
   };
 
   useEffect(() => {
-    if (isTemporaryPostExist) {
+    if (isTemporaryPostExist && type != 'edit') {
       if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
         setTemporaryExist(true);
       } else {

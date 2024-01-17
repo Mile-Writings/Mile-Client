@@ -39,7 +39,7 @@ const PostDetail = () => {
   };
 
   const handleEditBtn = () => {
-    navigate(`/edit/${groupId}`);
+    navigate(`/post/${groupId}/edit`, { state: postId });
   };
   // 리팩토링 전 코드
   // useEffect(() => {
@@ -48,6 +48,7 @@ const PostDetail = () => {
   //     console.log(data);
   //   }
   // }, []);
+  // console.log(postAuth?.data?.data.canEdit);
 
   return (
     <>
@@ -73,7 +74,7 @@ const PostDetail = () => {
             <TitleText>{postData?.title}</TitleText>
             <DateText>{postData?.createdAt}</DateText>
           </InfoTextBox>
-          {postAuth?.data?.data.canEdit && (
+          {true && (
             <ButtonWrapper>
               <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
                 글 삭제하기
@@ -181,7 +182,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
   align-items: flex-start;
-  width: 21rem;
+  width: 22rem;
 `;
 
 const TopicWrapper = styled.div`

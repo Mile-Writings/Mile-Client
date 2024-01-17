@@ -44,8 +44,10 @@ export const usePostContent = ({
     mutationFn: () => createPostContent({ groupId, topicId, title, content, imageUrl, anonymous }),
     onSuccess: () => {
       console.log({ groupId, topicId, title, content, imageUrl, anonymous });
+      // console.log(data);
     },
   });
+  // console.log(data);
   return data;
 };
 
