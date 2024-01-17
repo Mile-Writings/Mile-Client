@@ -17,7 +17,7 @@ import Spacing from './../../components/commons/Spacing';
 const Main = () => {
   return (
     <MainPageWrapper>
-      {localStorage.getItem('accessToken') === null ? <UnAuthorizationHeader /> : <LogInHeader />}
+      {localStorage.getItem('accessToken') ? <LogInHeader /> : <UnAuthorizationHeader />}
       <OnBoarding />
       <CarouselComponentLayout>
         <GroupCarouselTitle />
