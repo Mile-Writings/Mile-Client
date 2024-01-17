@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import { INTRODUCTION_DATA } from '../constants/introductionData';
 
@@ -9,8 +10,9 @@ import {
 import Spacing from '../../../components/commons/Spacing';
 
 const Introduction = () => {
+  const navigate = useNavigate();
   const handleOnClick = () => {
-    alert('Button Clicked!');
+    navigate('/group/MQ==');
   };
 
   return (
