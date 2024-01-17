@@ -13,7 +13,9 @@ export const LogInHeader = () => {
   const handleLogOut = () => {
     logout();
     alert('로그아웃 되었습니다');
+    location.reload();
   };
+
   return (
     <HeaderWrapper>
       <HeaderLogoIc />
