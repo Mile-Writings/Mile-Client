@@ -4,8 +4,8 @@ import { client } from '../../../utils/apis/axios';
 
 export interface groupPropTypes {
   moimId: string;
-  moimName?: string;
-  moimPosts?: groupPostTypes[];
+  moimName: string;
+  moimPosts: groupPostTypes[];
 }
 
 interface getGroupContentResponseTypes {

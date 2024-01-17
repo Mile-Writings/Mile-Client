@@ -15,7 +15,7 @@ export const LogInHeader = () => {
     alert('로그아웃 되었습니다');
     location.reload();
   };
-  //MQ==
+
   return (
     <HeaderWrapper>
       <HeaderLogoIc />
