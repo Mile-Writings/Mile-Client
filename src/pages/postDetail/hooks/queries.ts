@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import checkPostAuth from '../apis/checkPostAuth';
 import createPostCurious from '../apis/createPostCurious';
 import deleteCurious from '../apis/deleteCurious';
+import fetchCommentList from '../apis/fetchCommentList';
 import fetchCuriousInfo from '../apis/fetchCuriousInfo';
 import fetchPostComment from '../apis/fetchPostComment';
 import fetchPostDetail from '../apis/fetchPostDetail';
@@ -53,6 +54,18 @@ export const usePostCurious = (postId: string) => {
   return data;
 };
 
+//글에 해당하는 댓글 리스트 조회 api
+export const useGetCommentList = (postId: string) => {
+  const data = useQuery({
+    queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
+    queryFn: () => fetchCommentList(postId),
+  });
+
+  const commentListData = data.data?.data.comments;
+  console.log(commentListData, 'data');
+  return { commentListData };
+};
+
 //궁금해요 삭제 api
 export const useDeleteCurious = (postId: string) => {
   const queryClient = useQueryClient();
@@ -75,13 +88,24 @@ export const useCheckPostAuth = (postId: string) => {
   return data;
 };
 
+interface UsePostComment {
+  postComment: (props: string) => void;
+}
+
 //댓글 생성 api
-export const usePostComment = (postId: string, comment: string) => {
+export const usePostComment = (postId: string): UsePostComment => {
+  const queryClient = useQueryClient();
   const data = useMutation({
-    mutationKey: [QUERY_KEY_POST_DETAIL.postComment, postId],
-    mutationFn: () => fetchPostComment(postId, comment),
-    onSuccess: () => console.log('success'),
+    mutationKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
+    mutationFn: (comment: string) => fetchPostComment(postId, comment),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId] });
+    },
   });
 
-  return data;
+  const postComment = (comment: string) => {
+    data.mutate(comment);
+  };
+
+  return { postComment };
 };

@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
-import { ChangeEvent, useState, MouseEvent, FormEvent, useEffect } from 'react';
+import { useState, FormEvent } from 'react';
 
 import CommentItem from './CommentItem';
 
-import { commentData } from '../constants/commentData';
-import { usePostComment } from '../hooks/queries';
+import { usePostComment, useGetCommentList } from '../hooks/queries';
 
 interface CommentPropTypes {
   postId: string | undefined;
@@ -13,15 +12,24 @@ interface CommentPropTypes {
 const Comment = (props: CommentPropTypes) => {
   const { postId } = props;
   const [comment, setComment] = useState('');
-  const { mutate: postComment } = usePostComment(postId || '', comment);
+  const { commentListData } = useGetCommentList(postId || '');
+  const { postComment } = usePostComment(postId || '');
 
   const handleCommentSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (comment.trim() !== '') {
-      postComment(postId || '', comment); //댓글 등록
+      postComment(comment); //댓글 등록
       setComment(''); // 댓글 등록 후 댓글 초기화
     }
   };
+
+  interface CommentListPropTypes {
+    commentId: string;
+    name: string;
+    moimName: string;
+    content: string;
+    isMyComment: boolean;
+  }
 
   return (
     <CommentWrapper>
@@ -36,10 +44,9 @@ const Comment = (props: CommentPropTypes) => {
           등록
         </CommentPostBtn>
       </CommentPostWrapper>
-      {commentData.map((data) => (
+      {commentListData?.map((data: CommentListPropTypes) => (
         <CommentItem
           key={data.commentId}
-          id={data.commentId}
           name={data.name}
           moimName={data.moimName}
           content={data.content}
