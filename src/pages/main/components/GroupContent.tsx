@@ -14,11 +14,21 @@ export interface groupContentPropTypes {
   postContent: string;
   postId: string;
   groupId: string;
+  isContainPhoto: boolean;
   isLast: boolean;
 }
 
 const GroupContent = (
-  { topicName, imageUrl, postTitle, postContent, groupId, postId, isLast }: groupContentPropTypes,
+  {
+    topicName,
+    imageUrl,
+    postTitle,
+    postContent,
+    groupId,
+    postId,
+    isContainPhoto,
+    isLast,
+  }: groupContentPropTypes,
   { moimId }: groupPropTypes,
 ) => {
   const navigate = useNavigate();
@@ -39,7 +49,9 @@ const GroupContent = (
           {postContent}
         </SubText>
       </TextContainer>
-      {imageUrl && <Image src={imageUrl} isLast={isLast} alt="group-content-image" />}
+      {isContainPhoto && imageUrl && (
+        <Image src={imageUrl} isLast={isLast} alt="group-content-image" />
+      )}
       {isLast && (
         <CuriousGroup
           groupId={groupId}
@@ -48,6 +60,7 @@ const GroupContent = (
           postTitle={postTitle}
           postContent={postContent}
           postId={postId}
+          isContainPhoto={isContainPhoto}
           isLast={isLast}
         />
       )}
