@@ -112,13 +112,15 @@ export const usePostComment = (postId: string): UsePostComment => {
 };
 
 //댓글 삭제 api
-export const useDeleteComment = (commentId: string) => {
+export const useDeleteComment = (commentId: string, postId: string) => {
   const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.getCommentList, commentId],
     mutationFn: () => fetchDeleteComment(commentId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
+      });
       console.log('성공');
     },
   });

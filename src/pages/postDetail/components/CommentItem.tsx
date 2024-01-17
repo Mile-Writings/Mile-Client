@@ -16,14 +16,13 @@ interface CommentItem {
 }
 
 const CommentItem = ({ name, moimName, content, isMyComment, postId, commentId }: CommentItem) => {
-  const { deleteComment } = useDeleteComment(commentId || '');
+  const { deleteComment } = useDeleteComment(commentId || '', postId || '');
   const [isClick, setIsClick] = useState(false);
 
   const handleBtnClick = () => {
     setIsClick((prev) => !prev);
     isClick ? console.log('클릭') : console.log('안클릭');
   };
-
   return (
     <CommentItemWrapper>
       <TextCommentProfileIc />
