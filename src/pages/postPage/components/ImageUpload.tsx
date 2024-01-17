@@ -43,6 +43,7 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
 export default ImageUpload;
 
 const ThumbNailGradient = styled.div`
+  width: 100%;
   background: ${({ theme }) => theme.colors.thumbnailGradient};
 `;
 
@@ -62,16 +63,17 @@ const ImageUploadLabel = styled.label`
   top: -7.1rem;
   right: 0;
   z-index: 3;
+  width: 100%;
 
   cursor: pointer;
 `;
 
 const EditorThuminputIcnActiveIcon = styled(EditorThuminputIcnActiveIc)`
-  margin-left: 69%;
+  margin-left: 74%;
 `;
 
 const EditorThuminputIcnUnactiveIcon = styled(EditorThuminputIcnUnactiveIc)`
-  margin-left: 69%;
+  margin-left: 74%;
   :hover {
     path {
       fill: ${({ theme }) => theme.colors.mainViolet};
