@@ -6,14 +6,20 @@ interface PostCommentResponseType {
   data: null;
 }
 
-const fetchPostComment = async (postId: string) => {
+const fetchPostComment = async (postId: string, comment: string) => {
   try {
     const token = localStorage.getItem('accessToken');
-    const response = await client.post<PostCommentResponseType>(`/api/post/${postId}/comment`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const response = await client.post<PostCommentResponseType>(
+      `/api/post/${postId}/comment`,
+      {
+        content: comment,
       },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
     return response.data;
   } catch (err) {
     console.log(err);

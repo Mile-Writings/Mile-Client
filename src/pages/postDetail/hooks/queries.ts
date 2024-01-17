@@ -76,12 +76,12 @@ export const useCheckPostAuth = (postId: string) => {
 };
 
 //댓글 생성 api
-export const usePostComment = (postId: string) => {
-  const { data, isPending, isError, error } = useMutation({
+export const usePostComment = (postId: string, comment: string) => {
+  const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.postComment, postId],
-    mutationFn: () => fetchPostComment(postId),
+    mutationFn: () => fetchPostComment(postId, comment),
+    onSuccess: () => console.log('success'),
   });
 
-  const commentData = data && data.data;
-  return { commentData, isPending, isError, error };
+  return data;
 };
