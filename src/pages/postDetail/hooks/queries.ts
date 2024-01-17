@@ -7,6 +7,7 @@ import createPostCurious from '../apis/createPostCurious';
 import deleteCurious from '../apis/deleteCurious';
 import fetchCommentList from '../apis/fetchCommentList';
 import fetchCuriousInfo from '../apis/fetchCuriousInfo';
+import fetchDeleteComment from '../apis/fetchDeleteComment';
 import fetchPostComment from '../apis/fetchPostComment';
 import fetchPostDetail from '../apis/fetchPostDetail';
 //쿼리키를 이렇게 두는 이유는 겹치지 않기위해 + 객체로 생성하여 자동완성 하기 위해
@@ -108,4 +109,17 @@ export const usePostComment = (postId: string): UsePostComment => {
   };
 
   return { postComment };
+};
+
+//궁금해요 삭제 api
+export const useDeleteComment = (postId: string) => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
+    mutationFn: () => fetchDeleteComment(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId] });
+    },
+  });
+  return data;
 };
