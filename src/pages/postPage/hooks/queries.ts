@@ -50,15 +50,16 @@ export const usePostContent = ({
 };
 
 // 에디터 상단 글감 조회
-interface Topics {
-  topicId: string | undefined;
-  topicName: string | undefined;
-}
-interface GetTopicQueryResult {
-  topics: Topics[] | undefined;
-}
+// response 타입 리펙토링 ...........
+// interface Topics {
+//   topicId: string | undefined;
+//   topicName: string | undefined;
+// }
+// interface GetTopicQueryResult {
+//   topics: Topics[] | undefined;
+// }
 
-export const useGetTopic = (groupId: string): GetTopicQueryResult => {
+export const useGetTopic = (groupId: string) => {
   const { data } = useQuery({
     queryKey: [QUERY_KEY_POST.getTopic, groupId],
     queryFn: () => fetchTopic(groupId),

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { EditorThuminputIcnUnactiveIc, EditorThuminputIcnActiveIc } from './../../../assets/svgs';
 
@@ -53,7 +53,7 @@ const ThumbNailImg = styled.img<{ $imgExist: string }>`
   width: 100%;
   height: 30.7rem;
   object-fit: cover; //픽스
-  background-color: #e4f4b5;
+  background-color: ${({ theme }) => theme.colors.secondGreen};
 
   ${({ $imgExist }) => $imgExist.length === 0 && 'content: "";'}
 `;

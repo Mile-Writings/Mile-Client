@@ -10,10 +10,7 @@ import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
 import { usePostContent, useGetTopic, useTempSaveFlag, usePresignedUrl } from './hooks/queries';
 
-import {
-  EditorTempNotExistHeader, // 임시저장 글 없음 -> 헤더
-  EditorTempExistHeader, // 임시저장 글 있음 -> 헤더
-} from '../../components/commons/Header';
+import { EditorTempNotExistHeader, EditorTempExistHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const PostPage = () => {
@@ -27,20 +24,12 @@ const PostPage = () => {
   const [anonymous, setAnonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
 
-  // console.log(contentTitle);
-  // console.log(contentContent);
-  // console.log(topicId);
-  // console.log(anonymous);
-  // console.log(imageUrl);
-
   // 모임 ID url에서 받아오기
   const { groupId } = useParams() as { groupId: string };
-  console.log(groupId);
+  // console.log(groupId);
 
   // 임시저장 값 여부 확인
-  const { isTemporaryPostExist, postId, isLoading, isError, error } = useTempSaveFlag(
-    groupId || '',
-  );
+  const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
   const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist);
 
   // 글감 받아오기
@@ -53,8 +42,8 @@ const PostPage = () => {
 
   // 이미지 보낼 url 받아오기
   const { fileName, url } = usePresignedUrl();
-  // console.log(url);
-  // console.log(fileName);
+  console.log(url);
+  console.log(fileName);
 
   // 최초저장
   const { mutate: postContent } = usePostContent({
@@ -67,7 +56,7 @@ const PostPage = () => {
   });
   const saveHandler = () => {
     postContent();
-    // navigate(`/detail/${groupId}/${postId}`);
+    navigate(`/detail/${groupId}/${postId}`);
   };
 
   // 임시 저장 글 -> 저장하기
@@ -89,7 +78,7 @@ const PostPage = () => {
       return;
     }
   }, [isTemporaryPostExist]);
-  console.log(isTemporaryPostExist);
+  // console.log(isTemporaryPostExist);
 
   return (
     <PostPageWrapper>

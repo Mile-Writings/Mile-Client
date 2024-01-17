@@ -25,7 +25,6 @@ const Comment = () => {
       {commentData.map((data) => (
         <CommentItem
           key={data.commentId}
-          id={data.commentId}
           name={data.name}
           moimName={data.moimName}
           content={data.content}
