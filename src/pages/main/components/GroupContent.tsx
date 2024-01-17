@@ -63,6 +63,7 @@ const ContentLayout = styled.div`
   padding: 3.6rem;
 
   background-color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
   border-radius: 8px;
 `;
 
