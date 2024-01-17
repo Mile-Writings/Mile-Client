@@ -8,7 +8,7 @@ import { Topics } from './apis/fetchEditorContent';
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
-import { usePostContent, useGetTopic, useTempSaveFlag } from './hooks/queries';
+import { usePostContent, useGetTopic, useTempSaveFlag, usePresignedUrl } from './hooks/queries';
 
 import {
   EditorTempNotExistHeader, // 임시저장 글 없음 -> 헤더
@@ -26,6 +26,7 @@ const PostPage = () => {
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
+  console.log(anonymous);
 
   // 모임 ID url에서 받아오기
   const { groupId } = useParams();
@@ -42,6 +43,11 @@ const PostPage = () => {
       setTopicList(topics);
     }
   }, [topics]);
+
+  // 이미지 보낼 url 받아오기
+  const { fileName, url } = usePresignedUrl();
+  // console.log(url);
+  // console.log(fileName);
 
   // 최초 저장
   const { mutate: postContent } = usePostContent({
@@ -68,16 +74,15 @@ const PostPage = () => {
   useEffect(() => {
     if (isTemporaryPostExist) {
       if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
-        console.log('임시 저장 fetch');
+        // console.log('임시 저장 fetch');
       } else {
-        console.log('refetch 완료');
+        // console.log('refetch 완료');
       }
     } else {
       return;
     }
   }, [isTemporaryPostExist]);
 
-  console.log(topicId);
   return (
     <PostPageWrapper>
       {isTemporaryPostExist ? (
@@ -87,7 +92,7 @@ const PostPage = () => {
       )}
       <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
       <DropDownEditorWrapper>
-        <DropDown topicList={topicList} selectedTopicId={setTopicId} />
+        <DropDown topicList={topicList} selectedTopicId={setTopicId} isAnonymous={setAnonymous} />
         <Spacing marginBottom="2.4" />
         <Editor saveTitle={setContentTitle} saveContent={setContentContent} />
       </DropDownEditorWrapper>

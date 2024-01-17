@@ -11,7 +11,7 @@ import useClickOutside from '../../../hooks/useClickOutside';
 
 const TopicDropDown = (props: DropDownPropsType) => {
   const { onClickListItem, selectedValue, topicList, selectedTopicId } = props;
-  console.log(topicList);
+  // console.log(topicList);
 
   const [topicIsOpen, setTopicIsOpen] = useState(false);
 
