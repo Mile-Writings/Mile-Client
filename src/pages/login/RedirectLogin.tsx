@@ -4,7 +4,7 @@ import useLoginService from './hooks/useLoginService';
 
 const RedirectLogin = () => {
   const code: string = new URL(window.location.href).searchParams.get('code') || '';
-
+  console.log(code);
   const { mutate } = useLoginService({ code, socialType: 'KAKAO' });
 
   useEffect(() => {
