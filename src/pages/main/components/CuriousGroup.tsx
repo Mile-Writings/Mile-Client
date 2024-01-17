@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { MainGroupRoutingBtn as MainGroupRoutingBtnIcon } from '../../../assets/svgs';
@@ -10,7 +11,7 @@ interface curiousGroupPropTypes {
 
 const CuriousGroup = ({ groupId }: curiousGroupPropTypes) => {
   const navigate = useNavigate();
-  const handleOnClick = (e: MouseEvent) => {
+  const handleOnClick = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
     e.stopPropagation();
     navigate(`/group/${groupId}`);
   };
@@ -23,7 +24,7 @@ const CuriousGroup = ({ groupId }: curiousGroupPropTypes) => {
       </CuriousGroupText>
       <Spacing marginBottom="1.6" />
       <GroupRoutingBtnBox>
-        <MainGroupRoutingBtnIcon onClick={handleOnClick} />
+        <MainGroupRoutingBtnIcon onClick={(e) => handleOnClick(e)} />
       </GroupRoutingBtnBox>
     </CuriousContentContainer>
   );
