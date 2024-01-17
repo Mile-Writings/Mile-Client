@@ -5,10 +5,10 @@ interface DeleteCommentResponseType {
   message: string;
   data: null;
 }
-const fetchDeleteComment = async (postId: string) => {
+const fetchDeleteComment = async (commentId: string) => {
   const token = localStorage.getItem('accessToken');
   try {
-    const data = client.delete<DeleteCommentResponseType>(`/api/delete/${postId}/comment`, {
+    const data = client.delete<DeleteCommentResponseType>(`/api/comment/${commentId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

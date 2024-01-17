@@ -51,6 +51,8 @@ const Comment = (props: CommentPropTypes) => {
           moimName={data.moimName}
           content={data.content}
           isMyComment={data.isMyComment}
+          postId={postId}
+          commentId={data.commentId}
         ></CommentItem>
       ))}
     </CommentWrapper>
