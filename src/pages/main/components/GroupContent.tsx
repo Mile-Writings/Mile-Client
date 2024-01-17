@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import CuriousGroup from './CuriousGroup';
+
+import { groupPropTypes } from '../apis/getGroupContent';
 
 import Spacing from './.././../../components/commons/Spacing';
 
@@ -9,24 +12,25 @@ export interface groupContentPropTypes {
   imageUrl: string | null;
   postTitle: string;
   postContent: string;
-  groupId: number;
+  postId: string;
+  groupId: string;
   isLast: boolean;
 }
 
-const GroupContent = ({
-  topicName,
-  imageUrl,
-  postTitle,
-  postContent,
-  groupId,
-  isLast,
-}: groupContentPropTypes) => {
+const GroupContent = (
+  { topicName, imageUrl, postTitle, postContent, groupId, postId, isLast }: groupContentPropTypes,
+  { moimId }: groupPropTypes,
+) => {
+  const navigate = useNavigate();
+  const handleOnClick = () => {
+    navigate(`/detail/${moimId}/${postId}`);
+  };
   const hasImage = () => {
     return imageUrl !== null;
   };
 
   return (
-    <ContentLayout>
+    <ContentLayout onClick={handleOnClick}>
       <TextContainer>
         <Topic>{topicName}</Topic>
         <MainText>{postTitle}</MainText>
@@ -43,6 +47,7 @@ const GroupContent = ({
           imageUrl={imageUrl}
           postTitle={postTitle}
           postContent={postContent}
+          postId={postId}
           isLast={isLast}
         />
       )}
@@ -58,6 +63,7 @@ const ContentLayout = styled.div`
   padding: 3.6rem;
 
   background-color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
   border-radius: 8px;
 `;
 

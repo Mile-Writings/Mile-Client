@@ -1,12 +1,13 @@
 //한 파일에서 사용하는 쿼리키를 모아두고 쿼리를 선언해주세요
 
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import checkPostAuth from '../apis/checkPostAuth';
 import createPostCurious from '../apis/createPostCurious';
+import deleteCurious from '../apis/deleteCurious';
 import fetchCommentList from '../apis/fetchCommentList';
 import fetchCuriousInfo from '../apis/fetchCuriousInfo';
 import fetchPostDetail from '../apis/fetchPostDetail';
-
 //쿼리키를 이렇게 두는 이유는 겹치지 않기위해 + 객체로 생성하여 자동완성 하기 위해
 export const QUERY_KEY_POST_DETAIL = {
   getPostDetail: 'getPostDetail',
@@ -23,7 +24,7 @@ export const QUERY_KEY_POST_DETAIL = {
 // 글정보 조회 get api
 export const useGetPostDetail = (postId: string) => {
   const data = useQuery({
-    queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail],
+    queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId],
     queryFn: () => fetchPostDetail(postId),
   });
 
@@ -41,11 +42,12 @@ export const useGetCuriousInfo = (postId: string) => {
 
 //궁금해요 생성 api
 export const usePostCurious = (postId: string) => {
+  const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.postCurious],
     mutationFn: () => createPostCurious(postId),
     onSuccess: () => {
-      console.log('post curious Success');
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId] });
     },
   });
   return data;
@@ -61,4 +63,26 @@ export const useGetCommentList = (postId: string) => {
   const commentListData = data.data?.data.comments;
   console.log(commentListData, 'data');
   return { commentListData };
+};
+
+//궁금해요 삭제 api
+export const useDeleteCurious = (postId: string) => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: [QUERY_KEY_POST_DETAIL.deleteCurious, postId],
+    mutationFn: () => deleteCurious(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId] });
+    },
+  });
+  return data;
+};
+
+//글 삭제/수정 권한 확인
+export const useCheckPostAuth = (postId: string) => {
+  const data = useQuery({
+    queryKey: [QUERY_KEY_POST_DETAIL.getAuthorization, postId],
+    queryFn: () => checkPostAuth(postId),
+  });
+  return data;
 };

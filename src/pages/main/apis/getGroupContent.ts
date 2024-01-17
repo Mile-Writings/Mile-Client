@@ -1,11 +1,11 @@
-import { moimPostTypes } from '../components/Carousel';
+import { groupPostTypes } from '../components/Carousel';
 
 import { client } from '../../../utils/apis/axios';
 
-interface groupPropTypes {
-  moimId: number;
+export interface groupPropTypes {
+  moimId: string;
   moimName: string;
-  moimPosts: moimPostTypes[];
+  moimPosts: groupPostTypes[];
 }
 
 interface getGroupContentResponseTypes {
