@@ -80,10 +80,9 @@ const PostPage = () => {
   useEffect(() => {
     if (isTemporaryPostExist) {
       if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
-        setTemporaryExist(false);
-        // console.log('임시 저장 fetch');
+        setTemporaryExist(true);
       } else {
-        // console.log('refetch 완료');
+        setTemporaryExist(false);
       }
     } else {
       return;
