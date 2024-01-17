@@ -94,7 +94,7 @@ const CarouselBox = styled(Slider)`
   width: 93rem;
   height: 24rem;
 
-  .slick-slide.slick-active:last-of-type {
+  .slick-slide.slick-active:last-child {
     width: 75.4rem !important;
   }
 `;
