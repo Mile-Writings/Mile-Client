@@ -10,7 +10,7 @@ import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
 import { useGetTopic, usePostContent, usePresignedUrl, useTempSaveFlag } from './hooks/queries';
 
-// import { useGetPostDetail } from '../postDetail/hooks/queries';
+import { useGetPostDetail } from '../postDetail/hooks/queries';
 
 import { EditorTempExistHeader, EditorTempNotExistHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
@@ -35,9 +35,9 @@ const PostPage = () => {
 
   // 모임 ID url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
-
-  // 어떤 view인지에 따라 확인
-  // const { data } = useGetPostDetail(postId || '');
+  // 수정하기로 들어온 글 정보 GET api
+  const { data: editPostData } = useGetPostDetail(myPostId || '');
+  console.log(editPostData?.data);
 
   // 임시저장 값 여부 확인
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
