@@ -35,17 +35,13 @@ const GroupContent = (
   const handleOnClick = () => {
     navigate(`/detail/${moimId}/${postId}`);
   };
-  const hasImage = () => {
-    return imageUrl !== null;
-  };
-
   return (
     <ContentLayout onClick={handleOnClick}>
       <TextContainer>
         <Topic>{topicName}</Topic>
         <MainText>{postTitle}</MainText>
         <Spacing marginBottom="2" />
-        <SubText isImage={hasImage()} isLast={isLast}>
+        <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
           {postContent}
         </SubText>
       </TextContainer>
@@ -94,14 +90,14 @@ const TextContainer = styled.div`
   flex-direction: column;
 `;
 
-const SubText = styled.p<{ isImage: boolean; isLast: boolean }>`
+const SubText = styled.p<{ isContainPhoto: boolean; isLast: boolean }>`
   display: -webkit-box;
-  width: ${({ isImage, isLast }) =>
-    isImage && isLast
+  width: ${({ isContainPhoto, isLast }) =>
+    isContainPhoto && isLast
       ? '47.8rem'
-      : isImage && !isLast
+      : isContainPhoto && !isLast
         ? '59.8rem'
-        : !isImage && isLast
+        : !isContainPhoto && isLast
           ? '68.2rem'
           : '85.8rem'};
   height: 8.5rem;
