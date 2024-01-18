@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import createPostContent from '../apis/createPostContent';
+import createTempSaveContent from '../apis/createTempSaveContent';
 import editPutContent from '../apis/editPutContent';
 import { fetchTopic } from '../apis/fetchEditorContent';
 import { fetchPresignedUrl } from '../apis/fetchPresignedUrl';
@@ -14,8 +16,10 @@ export const QUERY_KEY_POST = {
   getTempSaveFlag: 'getTempSaveFlag',
   getPresignedUrl: 'getPresignedUrl',
   putEditContent: 'putEditContent',
+  postSaveTempContent: 'postSaveTempContent',
 };
 
+// 글 최초 저장
 interface postContentType {
   groupId: string;
   topicId: string;
@@ -33,7 +37,8 @@ export const usePostContent = ({
   imageUrl,
   anonymous,
 }: postContentType) => {
-  const data = useMutation({
+  const navigate = useNavigate();
+  const { mutate, data } = useMutation({
     mutationKey: [
       QUERY_KEY_POST.postContent,
       {
@@ -46,14 +51,13 @@ export const usePostContent = ({
       },
     ],
     mutationFn: () => createPostContent({ groupId, topicId, title, content, imageUrl, anonymous }),
-    onSuccess: () => {
-      console.log({ groupId, topicId, title, content, imageUrl, anonymous });
+    onSuccess: (postData) => {
+      navigate(`/detail/${groupId}/${postData}`);
     },
   });
-  // console.log(data);
-  return data;
-};
 
+  return { mutate, data };
+};
 // 에디터 상단 글감 조회
 // response 타입 리펙토링 ...........
 // interface Topics {
@@ -148,6 +152,45 @@ export const usePutEditContent = ({
     onSuccess: () => {
       console.log({ topicId, title, content, imageUrl, anonymous });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
+    },
+  });
+  return data;
+};
+
+// 임시저장 POST
+interface postTempSaveType {
+  groupId: string;
+  topicId: string;
+  title: string;
+  content: string;
+  imageUrl: string;
+  anonymous: boolean;
+}
+
+export const usePostTempSaveContent = ({
+  groupId,
+  topicId,
+  title,
+  content,
+  imageUrl,
+  anonymous,
+}: postTempSaveType) => {
+  const data = useMutation({
+    mutationKey: [
+      QUERY_KEY_POST.postSaveTempContent,
+      {
+        groupId,
+        topicId,
+        title,
+        content,
+        imageUrl,
+        anonymous,
+      },
+    ],
+    mutationFn: () =>
+      createTempSaveContent({ groupId, topicId, title, content, imageUrl, anonymous }),
+    onSuccess: () => {
+      console.log({ groupId, topicId, title, content, imageUrl, anonymous });
     },
   });
   return data;

@@ -13,6 +13,7 @@ import {
   usePostContent,
   usePresignedUrl,
   usePutEditContent,
+  usePostTempSaveContent,
   useTempSaveFlag,
 } from './hooks/queries';
 
@@ -35,6 +36,7 @@ const PostPage = () => {
   const [anonymous, setAnonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [imageToServer, setImageToServer] = useState('');
+  
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
 
@@ -49,6 +51,7 @@ const PostPage = () => {
   // 임시저장 값 여부 확인
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
   const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist);
+  console.log(postId); // pr용 버셀 에러 방지
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
@@ -75,7 +78,6 @@ const PostPage = () => {
 
   const saveHandler = () => {
     postContent();
-    navigate(`/detail/${groupId}/${postId}`);
   };
 
   // 수정하기 제출하기
@@ -97,8 +99,16 @@ const PostPage = () => {
   const tempExistSaveHandler = () => {};
 
   // 임시 저장
+  const { mutate: postTempSaveContent } = usePostTempSaveContent({
+    groupId: groupId,
+    topicId: topicId,
+    title: contentTitle,
+    content: contentContent,
+    imageUrl: imageUrl,
+    anonymous: anonymous,
+  });
   const tempSaveHandler = () => {
-    alert('홈으로 가기');
+    postTempSaveContent();
   };
 
   useEffect(() => {

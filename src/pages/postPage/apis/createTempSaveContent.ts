@@ -1,6 +1,6 @@
 import { client } from '../../../utils/apis/axios';
 
-interface postContentType {
+interface PostTempSaveContent {
   groupId: string;
   topicId: string;
   title: string;
@@ -9,27 +9,23 @@ interface postContentType {
   anonymous: boolean;
 }
 
-interface PostContentResponseType {
+interface PostTempSaveResponseType {
   status: number;
   message: string;
-  data: {
-    postId: string;
-    writerName: string;
-  };
 }
 
-const createPostContent = async ({
+const createTempSaveContent = async ({
   groupId,
   topicId,
   title,
   content,
   imageUrl,
   anonymous,
-}: postContentType) => {
+}: PostTempSaveContent) => {
   try {
     const token = localStorage.getItem('accessToken');
-    const { data } = await client.post<PostContentResponseType>(
-      `/api/post`,
+    const { data } = await client.post<PostTempSaveResponseType>(
+      `/api/post/temporary`,
       {
         moimId: groupId,
         topicId: topicId,
@@ -44,11 +40,11 @@ const createPostContent = async ({
         },
       },
     );
-    console.log(`data: ${data.data.postId}`);
-    return data.data.postId;
+    console.log(data);
+    return data;
   } catch (err) {
     console.log(err);
   }
 };
 
-export default createPostContent;
+export default createTempSaveContent;
