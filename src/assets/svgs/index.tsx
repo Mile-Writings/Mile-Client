@@ -58,7 +58,7 @@ export {
   default as EditorThuminputIcnHoverIc,
 } from './editorThuminputIcnHover.svg?react';
 export { default as EditorThuminputIcnUnactiveIc } from './editorThuminputIcnUnactive.svg?react';
-export { default as GroupCardThumnailImgIc } from './groupCardThumnailImg.svg';
+export { default as GroupCardThumnailImgIc } from './groupCardThumnailImg.svg?react';
 
 export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?react';
 export { default as KakaoLoginBtnIc } from './kakaoLoginBtn.svg?react';
