@@ -35,7 +35,11 @@ const CommentItem = ({ name, moimName, content, isMyComment, postId, commentId }
       {isMyComment && (
         <MeatBallWrapper onClick={handleBtnClick}>
           <DetailCommentMeatBallIcon />
-          {isClick && <Modal onClick={deleteComment}>삭제</Modal>}
+          {isClick && (
+            <Modal onClick={deleteComment}>
+              <ModalContainer>삭제</ModalContainer>
+            </Modal>
+          )}
         </MeatBallWrapper>
       )}
     </CommentItemWrapper>
@@ -95,7 +99,7 @@ const Modal = styled.div`
   align-items: center;
   width: 10.6rem;
   height: 5.1rem;
-  padding: 1.6rem 2rem;
+  padding: 1rem;
 
   color: ${({ theme }) => theme.colors.gray90};
   text-align: left;
@@ -103,6 +107,17 @@ const Modal = styled.div`
 
   border: 1px solid ${({ theme }) => theme.colors.gray50};
   border-radius: 8px;
+`;
+
+const ModalContainer = styled.div`
+  width: 100%;
+  padding: 0.6rem 1rem;
+
+  border-radius: 6px;
+
+  :hover {
+    background-color: ${({ theme }) => theme.colors.gray20};
+  }
 `;
 const DetailCommentMeatBallIcon = styled(DetailCommentMeatBallIc)`
   cursor: pointer;
