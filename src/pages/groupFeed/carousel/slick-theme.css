@@ -41,13 +41,14 @@
 
 .groupFeedCarousel .slick-prev {
   left: -2.5rem;
+  background-image: url('/src/assets/svgs/groupTabBeforeBtnEnable.svg');
 }
 [dir='rtl'] .slick-prev {
   right: -2.5rem;
   left: auto;
 }
 .slick-prev:before {
-  content: '←';
+  content: url('/src/assets/svgs/groupTabBeforeBtnEnable.svg');
 }
 [dir='rtl'] .slick-prev:before {
   content: '→';
