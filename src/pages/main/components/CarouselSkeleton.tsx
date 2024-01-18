@@ -6,7 +6,7 @@ import Spacing from '../../../components/commons/Spacing';
 
 const CarouselSkeleton = () => {
   return (
-    <CarouselWithButtonLayout>
+    <>
       <Spacing marginBottom="3.6" />
       <Skeleton width={10.2} height={3.6} unit={'rem'} color={'#fffefe'} rounded />
       <Spacing marginBottom="1.6" />
@@ -24,49 +24,11 @@ const CarouselSkeleton = () => {
           </ImageContainer>
         </CarouselBox>
       </CarouselContainer>
-      <Spacing marginBottom="3.6" />
-      <Skeleton width={10.2} height={3.6} unit={'rem'} color={'#fffefe'} rounded />
-      <Spacing marginBottom="1.6" />
-      <CarouselContainer>
-        <CarouselBox>
-          <TextContainer>
-            <Skeleton width={59.8} height={1.7} unit={'rem'} color={'#efefef'} rounded />
-            <Spacing marginBottom="0.5" />
-            <Skeleton width={59.8} height={3.1} unit={'rem'} color={'#efefef'} rounded />
-            <Spacing marginBottom="3.2" />
-            <Skeleton width={59.8} height={8.4} unit={'rem'} color={'#efefef'} rounded />
-          </TextContainer>
-          <ImageContainer>
-            <Skeleton width={22.4} height={16.8} unit={'rem'} color={'#efefef'} rounded />
-          </ImageContainer>
-        </CarouselBox>
-      </CarouselContainer>
-      <Spacing marginBottom="3.6" />
-      <Skeleton width={10.2} height={3.6} unit={'rem'} color={'#fffefe'} rounded />
-      <Spacing marginBottom="1.6" />
-      <CarouselContainer>
-        <CarouselBox>
-          <TextContainer>
-            <Skeleton width={59.8} height={1.7} unit={'rem'} color={'#efefef'} rounded />
-            <Spacing marginBottom="0.5" />
-            <Skeleton width={59.8} height={3.1} unit={'rem'} color={'#efefef'} rounded />
-            <Spacing marginBottom="3.2" />
-            <Skeleton width={59.8} height={8.4} unit={'rem'} color={'#efefef'} rounded />
-          </TextContainer>
-          <ImageContainer>
-            <Skeleton width={22.4} height={16.8} unit={'rem'} color={'#efefef'} rounded />
-          </ImageContainer>
-        </CarouselBox>
-      </CarouselContainer>
-    </CarouselWithButtonLayout>
+    </>
   );
 };
 
 export default CarouselSkeleton;
-
-const CarouselWithButtonLayout = styled.div`
-  margin-bottom: 3.2rem;
-`;
 
 const CarouselContainer = styled.div`
   display: flex;

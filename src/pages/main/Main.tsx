@@ -34,6 +34,8 @@ const Main = () => {
           <>
             <GroupCarouselTitle />
             <CarouselSkeleton />
+            <CarouselSkeleton />
+            <CarouselSkeleton />
           </>
         ) : (
           <>
