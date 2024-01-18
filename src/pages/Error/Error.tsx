@@ -23,12 +23,40 @@ const Error = () => {
 
 export default Error;
 
-const ErrorWrapper = styled.div``;
+const ErrorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+`;
 
-const Title = styled.div``;
+const Title = styled.div`
+  color: ${({ theme }) => theme.colors.darkViolet};
+  ${({ theme }) => theme.fonts.title5};
+`;
 
-const SubTitle = styled.div``;
+const SubTitle = styled.div`
+  color: ${({ theme }) => theme.colors.gray80};
+  ${({ theme }) => theme.fonts.subtitle4};
+`;
 
-const HyperLinkText = styled.a``;
+const HyperLinkText = styled.a`
+  text-decoration: underline;
+  ${({ theme }) => theme.fonts.subtitle2};
+`;
 
-const BackToPrevPageButton = styled.button``;
+const BackToPrevPageButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 8rem;
+  max-width: 16rem;
+  padding: 1rem 1.6rem;
+
+  color: ${({ theme }) => theme.colors.mileViolet};
+
+  background-color: ${({ theme }) => theme.colors.mainViolet};
+  ${({ theme }) => theme.fonts.button3};
+  border-radius: 8px;
+`;
