@@ -15,7 +15,7 @@ const CarouselSkeleton = () => {
           <Skeleton width={93} height={24} unit={'rem'} color={'#fffefe'} rounded />
         </CarouselBox>
       </CarouselContainer>
-      <Spacing marginBottom="1.6" />
+      <Spacing marginBottom="3.6" />
       <Skeleton width={10.2} height={3.6} unit={'rem'} color={'#fffefe'} rounded />
       <Spacing marginBottom="1.6" />
       <CarouselContainer>
@@ -23,7 +23,7 @@ const CarouselSkeleton = () => {
           <Skeleton width={93} height={24} unit={'rem'} color={'#fffefe'} rounded />
         </CarouselBox>
       </CarouselContainer>
-      <Spacing marginBottom="1.6" />
+      <Spacing marginBottom="3.6" />
       <Skeleton width={10.2} height={3.6} unit={'rem'} color={'#fffefe'} rounded />
       <Spacing marginBottom="1.6" />
       <CarouselContainer>
