@@ -9,7 +9,7 @@ interface skeletonPropTypes {
   rounded: boolean;
   count?: number;
   unit: string;
-  animation?: boolean;
+  animation: boolean;
   color: string;
   style?: React.CSSProperties;
 }
