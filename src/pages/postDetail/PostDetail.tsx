@@ -22,6 +22,9 @@ const PostDetail = () => {
   const { data: postAuth } = useCheckPostAuth(postId || '');
   const { mutate: deletePost } = useDeletePost(postId || '');
   const postData = data?.data;
+
+  console.log(postData);
+  console.log(postAuth);
   if (isError) {
     navigate('/error');
   }
@@ -39,7 +42,16 @@ const PostDetail = () => {
   };
 
   const handleEditBtn = () => {
-    navigate(`/edit/${groupId}`);
+    navigate(`/post/${groupId}/edit`, {
+      state: {
+        postId: postId,
+        topic: postData?.topic,
+        writer: postData?.writerName,
+        title: postData?.title,
+        content: postData?.content,
+        imageUrl: postData?.imageUrl,
+      },
+    });
   };
   // 리팩토링 전 코드
   // useEffect(() => {
@@ -48,6 +60,7 @@ const PostDetail = () => {
   //     console.log(data);
   //   }
   // }, []);
+  // console.log(postAuth?.data?.data.canEdit);
 
   return (
     <>
@@ -73,7 +86,8 @@ const PostDetail = () => {
             <TitleText>{postData?.title}</TitleText>
             <DateText>{postData?.createdAt}</DateText>
           </InfoTextBox>
-          {postAuth?.data?.data.canEdit && (
+          {/* 여기 수정해야 함 */}
+          {postAuth?.data?.data?.canEdit && (
             <ButtonWrapper>
               <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
                 글 삭제하기
@@ -183,7 +197,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
   align-items: flex-start;
-  width: 21rem;
+  width: 22rem;
 `;
 
 const TopicWrapper = styled.div`
