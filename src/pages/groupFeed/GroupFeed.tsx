@@ -84,6 +84,7 @@ export default GroupFeed;
 
 const GroupFeedWrapper = styled.div`
   width: 100%;
+  height: 100vh;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
@@ -97,6 +98,7 @@ const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
 const GroupInfoWrapper = styled.div`
   display: flex;
   gap: 3.9rem;
+  justify-content: center;
   padding-right: 16.5rem;
   padding-left: 16.5rem;
 `;
