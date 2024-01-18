@@ -75,7 +75,7 @@ const GroupFeed = () => {
       </GroupInfoWrapper>
       <Spacing marginBottom="14" />
       <Footer />
-      {isMember !== undefined && isMember && <FloatingBtn />}
+      {isMember !== undefined && isMember && <FloatingBtn onClick={() => navigate(`/post/MQ==`)} />}
     </GroupFeedWrapper>
   );
 };
