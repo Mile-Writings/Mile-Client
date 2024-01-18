@@ -23,6 +23,7 @@ const PostDetail = () => {
   const { mutate: deletePost } = useDeletePost(postId || '');
   const postData = data?.data;
   console.log(postData);
+  console.log(postAuth);
   if (isError) {
     navigate('/error');
   }
@@ -84,7 +85,7 @@ const PostDetail = () => {
             <DateText>{postData?.createdAt}</DateText>
           </InfoTextBox>
           {/* 여기 수정해야 함 */}
-          {true && (
+          {postAuth?.data?.data?.canEdit && (
             <ButtonWrapper>
               <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
                 글 삭제하기

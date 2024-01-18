@@ -203,7 +203,7 @@ const Editor = (props: EditorPropTypes) => {
       />
       <CustomToolbar />
       <ReactQuill
-        dangerouslySetInnerHTML={{ __html: content || '' }}
+        // dangerouslySetInnerHTML={{ __html: content || '' }}
         ref={quillRef}
         theme="bubble"
         placeholder="글을 작성해 주세요"

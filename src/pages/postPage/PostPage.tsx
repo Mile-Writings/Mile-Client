@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Topics } from './apis/fetchEditorContent';
 import DropDown from './components/DropDown';
@@ -10,14 +10,11 @@ import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
 import { useGetTopic, usePostContent, usePresignedUrl, useTempSaveFlag } from './hooks/queries';
 
-import { useGetPostDetail } from '../postDetail/hooks/queries';
-
 import { EditorTempExistHeader, EditorTempNotExistHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const PostPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   // 에디터 제목, 내용 저장 함수
   const [contentTitle, setContentTitle] = useState('');
@@ -32,24 +29,6 @@ const PostPage = () => {
 
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
-  // 내가 쓴 글 id, topic
-  const [myPostId, setMyPostId] = useState('');
-  const [myTopicName, setMyTopicName] = useState('');
-  // 수정하기로 들어온 글 정보 GET api
-  const { data: editPostData } = useGetPostDetail(myPostId || '');
-  useEffect(() => {
-    if (type == 'edit') {
-      setMyPostId(location.state.postId);
-      setMyTopicName(location.state.topic);
-    } else {
-      return;
-    }
-  }, [type]);
-
-  // 내가 쓴 글에 대한 정보
-  const EditPostData = editPostData?.data;
-  // console.log(myPostId);
-  // console.log(myTopicName);
 
   // 임시저장 값 여부 확인
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
@@ -65,8 +44,8 @@ const PostPage = () => {
 
   // 이미지 보낼 url 받아오기
   const { fileName, url } = usePresignedUrl();
-  // console.log(url);
-  // console.log(fileName);
+  console.log(url);
+  console.log(fileName);
 
   // 최초저장
   const { mutate: postContent } = usePostContent({

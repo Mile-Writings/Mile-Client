@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import createPostContent from '../apis/createPostContent';
+import editPutContent from '../apis/editPutContent';
 import { fetchTopic } from '../apis/fetchEditorContent';
 import { fetchPresignedUrl } from '../apis/fetchPresignedUrl';
 import { fetchTempSaveFlag } from '../apis/fetchTempSaveFlag';
@@ -10,6 +11,7 @@ export const QUERY_KEY_POST = {
   getTopic: 'getTopic',
   getTempSaveFlag: 'getTempSaveFlag',
   getPresignedUrl: 'getPresignedUrl',
+  putEditContent: 'putEditContent',
 };
 
 interface postContentType {
@@ -107,4 +109,42 @@ export const usePresignedUrl = (): PresignedUrlQueryResult => {
   const url = data && data.data.url;
 
   return { fileName, url };
+};
+
+// 글 수정하기 Put
+interface putEditContentType {
+  topicId: string;
+  title: string;
+  content: string;
+  imageUrl: string;
+  anonymous: boolean;
+  postId: string;
+}
+
+export const usePutEditContent = ({
+  topicId,
+  title,
+  content,
+  imageUrl,
+  anonymous,
+  postId,
+}: putEditContentType) => {
+  const data = useMutation({
+    mutationKey: [
+      QUERY_KEY_POST.putEditContent,
+      {
+        topicId,
+        title,
+        content,
+        imageUrl,
+        anonymous,
+        postId,
+      },
+    ],
+    mutationFn: () => editPutContent({ topicId, title, content, imageUrl, anonymous }),
+    onSuccess: () => {
+      console.log({ topicId, title, content, imageUrl, anonymous });
+    },
+  });
+  return data;
 };

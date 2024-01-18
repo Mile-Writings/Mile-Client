@@ -28,10 +28,10 @@ const TopicDropDown = (props: DropDownPropsType) => {
   // 커스텀 훅 사용
   useClickOutside(dropDownRef, handleOutSideClick);
 
-  // 수정 뷰일 때 글감 ID 업데이트
+  //수정 뷰일 때 글감 ID 업데이트
   useEffect(() => {
-    const editViewSelectedTopicId = topicList.find((topic) => topic.topicName === selectedValue)
-      ?.topicId;
+    const editViewSelectedTopicId =
+      topicList.find((topic) => topic.topicName === selectedValue)?.topicId || '';
     selectedTopicId(editViewSelectedTopicId);
   }, [selectedValue]);
 
