@@ -7,6 +7,7 @@ import '../styles/slick.css';
 
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
+import Skeleton from './Skeleton';
 
 import Spacing from './../../../components/commons/Spacing';
 import { getGroupContent, groupPropTypes } from './../apis/getGroupContent';
@@ -46,7 +47,7 @@ const Carousel = () => {
   return (
     <CarouselWrapper>
       <Spacing marginBottom="3.6" />
-      {groupData && (
+      {groupData ? (
         <section>
           {groupData.map((moim) => (
             <CarouselWithButtonLayout key={moim.moimId}>
@@ -72,6 +73,16 @@ const Carousel = () => {
             </CarouselWithButtonLayout>
           ))}
         </section>
+      ) : (
+        <CarouselWithButtonLayout>
+          <Skeleton width={10.2} height={2.4} unit={'rem'} color={'#F4F4F4'} rounded />
+          <Spacing marginBottom="1.6" />
+          <CarouselContainer>
+            <CarouselBox>
+              <Skeleton width={93} height={24} unit={'rem'} color={'#F4F4F4'} rounded />
+            </CarouselBox>
+          </CarouselContainer>
+        </CarouselWithButtonLayout>
       )}
     </CarouselWrapper>
   );
