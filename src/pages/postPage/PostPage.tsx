@@ -50,6 +50,7 @@ const PostPage = () => {
   // 임시저장 값 여부 확인
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
   const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist);
+  console.log(postId); // pr용 버셀 에러 방지
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
@@ -61,8 +62,8 @@ const PostPage = () => {
 
   // 이미지 보낼 url 받아오기
   const { fileName, url } = usePresignedUrl();
-  // console.log(url);
-  // console.log(fileName);
+  console.log(url);
+  console.log(fileName);
 
   // 최초저장
   const { mutate: postContent } = usePostContent({
@@ -107,7 +108,6 @@ const PostPage = () => {
   });
   const tempSaveHandler = () => {
     postTempSaveContent();
-    
   };
 
   useEffect(() => {
