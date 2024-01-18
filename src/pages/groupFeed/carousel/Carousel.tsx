@@ -10,10 +10,12 @@ import './slick.css';
 import { useArticleList, useTopicList } from '../hooks/queries';
 
 import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
-import BeforeBtn from '../../../assets/svgs/groupTabBeforeBtnEnable.svg';
-import BeforeBtnHover from '../../../assets/svgs/groupTabBeforeBtnHover.svg';
-import NextBtn from '../../../assets/svgs/groupTabNextBtnEnable.svg';
-import NextBtnHover from '../../../assets/svgs/groupTabNextBtnHover.svg';
+
+import BeforeBtn from '/src/assets/svgs/groupTabBeforeBtnEnable.svg';
+import BeforeBtnHover from '/src/assets/svgs/groupTabBeforeBtnHover.svg';
+import NextBtn from '/src/assets/svgs/groupTabNextBtnEnable.svg';
+import NextBtnHover from '/src/assets/svgs/groupTabNextBtnHover.svg';
+
 import Spacing from '../../../components/commons/Spacing';
 
 interface CategoryIdPropTypes {

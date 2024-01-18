@@ -9,6 +9,7 @@ const MakeGroupBtn = () => {
     <MakeGroupBtnWrapper
       onMouseOver={() => setShowHoverIcon(true)}
       onMouseLeave={() => setShowHoverIcon(false)}
+      onClick={() => alert('아직 준비중인 기능이에요')}
     >
       {showHoverIcon ? <MakeGroupPlusHoverBtn /> : <MakeGroupPlusBtn />} 글모임 만들기
     </MakeGroupBtnWrapper>

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import { useTodayWritingStyle } from '../hooks/queries';
 
@@ -12,8 +13,9 @@ interface GroupTodayWriteStylePropTypes {
 const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
   const { isMember, groupId } = props;
   const { content, isLoading, isError, error } = useTodayWritingStyle(groupId || '');
-  const onHandleSubmit = () => {
-    // console.log('submit');
+  const navigate = useNavigate();
+  const handleNavigatePostPage = () => {
+    navigate(`/post/MQ==`);
   };
   if (isLoading) {
     return <div>Loading...</div>;
@@ -31,7 +33,7 @@ const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
         </SubText>
       </TextLayout>
       {isMember && (
-        <Button typeName="writingFlowType" onClick={onHandleSubmit}>
+        <Button typeName="writingFlowType" onClick={handleNavigatePostPage}>
           나의 글 작성하러가기
         </Button>
       )}
