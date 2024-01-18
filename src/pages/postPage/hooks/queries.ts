@@ -1,15 +1,19 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import createPostContent from '../apis/createPostContent';
+import editPutContent from '../apis/editPutContent';
 import { fetchTopic } from '../apis/fetchEditorContent';
 import { fetchPresignedUrl } from '../apis/fetchPresignedUrl';
 import { fetchTempSaveFlag } from '../apis/fetchTempSaveFlag';
+
+import { QUERY_KEY_POST_DETAIL } from '../../postDetail/hooks/queries';
 
 export const QUERY_KEY_POST = {
   postContent: 'postContent',
   getTopic: 'getTopic',
   getTempSaveFlag: 'getTempSaveFlag',
   getPresignedUrl: 'getPresignedUrl',
+  putEditContent: 'putEditContent',
 };
 
 interface postContentType {
@@ -46,6 +50,7 @@ export const usePostContent = ({
       console.log({ groupId, topicId, title, content, imageUrl, anonymous });
     },
   });
+  // console.log(data);
   return data;
 };
 
@@ -106,4 +111,44 @@ export const usePresignedUrl = (): PresignedUrlQueryResult => {
   const url = data && data.data.url;
 
   return { fileName, url };
+};
+
+// 글 수정하기 Put
+interface putEditContentType {
+  topicId: string;
+  title: string;
+  content: string;
+  imageUrl: string;
+  anonymous: boolean;
+  postId: string;
+}
+
+export const usePutEditContent = ({
+  topicId,
+  title,
+  content,
+  imageUrl,
+  anonymous,
+  postId,
+}: putEditContentType) => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: [
+      QUERY_KEY_POST.putEditContent,
+      {
+        topicId,
+        title,
+        content,
+        imageUrl,
+        anonymous,
+        postId,
+      },
+    ],
+    mutationFn: () => editPutContent({ topicId, title, content, imageUrl, anonymous, postId }),
+    onSuccess: () => {
+      console.log({ topicId, title, content, imageUrl, anonymous });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
+    },
+  });
+  return data;
 };
