@@ -1,9 +1,15 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import { ErrorIc } from '../../assets/svgs';
 import Spacing from '../../components/commons/Spacing';
 
 const Error = () => {
+  const navigate = useNavigate();
+  const handlePrevPage = () => {
+    navigate(-1);
+  };
+
   return (
     <ErrorWrapper>
       <ErrorIc />
@@ -16,7 +22,7 @@ const Error = () => {
         해결할게요.
       </SubTitle>
       <Spacing marginBottom="4.8" />
-      <BackToPrevPageButton>이전 페이지로 가기</BackToPrevPageButton>
+      <BackToPrevPageButton onClick={handlePrevPage}>이전 페이지로 가기</BackToPrevPageButton>
     </ErrorWrapper>
   );
 };
