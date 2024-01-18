@@ -31,11 +31,11 @@
 }
 .main .slick-prev:hover:before {
   display: block;
-  content: url('src/assets/svgs/mainBtnBeforeHover.svg');
+  content: url('../../../src/assets/svgs/mainBtnBeforeHover.svg');
 }
 .main .slick-next:hover:before {
   display: block;
-  content: url('src/assets/svgs/mainBtnNextHover.svg');
+  content: url('../../../src/assets/svgs/mainBtnNextHover.svg');
 }
 .main .slick-prev.slick-disabled:before,
 .main .slick-next.slick-disabled:before {
@@ -66,11 +66,11 @@
 }
 .main .slick-prev:before {
   display: block;
-  content: url('src/assets/svgs/mainBtnBefore.svg');
+  content: url('../../../src/assets/svgs/mainBtnBefore.svg');
 }
 [dir='rtl'] .slick-prev:before {
   display: block;
-  content: url('src/assets/svgs/mainBtnNext.svg');
+  content: url('../../../src/assets/svgs/mainBtnNext.svg');
 }
 
 .slick-next {
@@ -84,11 +84,11 @@
 }
 .main .slick-next:before {
   display: block;
-  content: url('src/assets/svgs/mainBtnNext.svg');
+  content: url('../../../src/assets/svgs/mainBtnNext.svg');
 }
 [dir='rtl'] .slick-next:before {
   display: block;
-  content: url('src/assets/svgs/mainBtnBefore.svg');
+  content: url('../../../src/assets/svgs/mainBtnBefore.svg');
 }
 
 /* Dots */
