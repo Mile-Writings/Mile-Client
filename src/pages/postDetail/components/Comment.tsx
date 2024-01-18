@@ -1,31 +1,52 @@
 import styled from '@emotion/styled';
-import { ChangeEvent, useState } from 'react';
+import { useState, FormEvent } from 'react';
 
 import CommentItem from './CommentItem';
 
-import { commentData } from './../constants/commentData';
+import { usePostComment, useGetCommentList } from '../hooks/queries';
 
-const Comment = () => {
+interface CommentPropTypes {
+  postId: string | undefined;
+}
+
+const Comment = (props: CommentPropTypes) => {
+  const { postId } = props;
   const [comment, setComment] = useState('');
+  const { commentListData } = useGetCommentList(postId || '');
+  const { postComment } = usePostComment(postId || '');
 
-  const handleCommentFrom = (e: ChangeEvent<HTMLInputElement>) => {
-    setComment(e.target.value);
+  const handleCommentSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (comment.trim() !== '') {
+      postComment(comment); //댓글 등록
+      setComment(''); // 댓글 등록 후 댓글 초기화
+    }
   };
+
+  interface CommentListPropTypes {
+    commentId: string;
+    name: string;
+    moimName: string;
+    content: string;
+    isMyComment: boolean;
+  }
+
   return (
     <CommentWrapper>
       <CommentPostWrapper>
         <CommentForm
           value={comment}
-          onChange={handleCommentFrom}
+          onChange={(e) => setComment(e.target.value)}
           placeholder="댓글을 남겨주세요."
         />
 
-        <CommentPostBtn $isComment={comment}>등록</CommentPostBtn>
+        <CommentPostBtn $isComment={comment} onClick={handleCommentSubmit}>
+          등록
+        </CommentPostBtn>
       </CommentPostWrapper>
-      {commentData.map((data) => (
+      {commentListData?.map((data: CommentListPropTypes) => (
         <CommentItem
           key={data.commentId}
-          id={data.commentId}
           name={data.name}
           moimName={data.moimName}
           content={data.content}
