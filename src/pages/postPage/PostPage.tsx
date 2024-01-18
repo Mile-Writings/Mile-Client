@@ -34,9 +34,6 @@ const PostPage = () => {
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
-  console.log(topicList);
-  console.log(topicId);
-  console.log(`메일페이지 ${anonymous}`);
 
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
@@ -63,8 +60,8 @@ const PostPage = () => {
 
   // 이미지 보낼 url 받아오기
   const { fileName, url } = usePresignedUrl();
-  console.log(url);
-  console.log(fileName);
+  // console.log(url);
+  // console.log(fileName);
 
   // 최초저장
   const { mutate: postContent } = usePostContent({
@@ -78,7 +75,6 @@ const PostPage = () => {
 
   const saveHandler = () => {
     postContent();
-    navigate(`/detail/${groupId}/${postId}`);
   };
 
   // 수정하기 제출하기
@@ -125,11 +121,6 @@ const PostPage = () => {
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
-      {/* {temporaryExist ? (
-        <EditorTempExistHeader onClickSubmit={tempExistSaveHandler} />
-      ) : (
-        <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
-      )} */}
       <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
       <DropDownEditorWrapper>
         <DropDown

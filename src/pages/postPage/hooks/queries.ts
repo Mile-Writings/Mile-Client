@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import createPostContent from '../apis/createPostContent';
 import editPutContent from '../apis/editPutContent';
@@ -33,7 +34,8 @@ export const usePostContent = ({
   imageUrl,
   anonymous,
 }: postContentType) => {
-  const data = useMutation({
+  const navigate = useNavigate();
+  const { mutate, data } = useMutation({
     mutationKey: [
       QUERY_KEY_POST.postContent,
       {
@@ -46,14 +48,13 @@ export const usePostContent = ({
       },
     ],
     mutationFn: () => createPostContent({ groupId, topicId, title, content, imageUrl, anonymous }),
-    onSuccess: () => {
-      console.log({ groupId, topicId, title, content, imageUrl, anonymous });
+    onSuccess: (postData) => {
+      navigate(`/detail/${groupId}/${postData}`);
     },
   });
-  // console.log(data);
-  return data;
-};
 
+  return { mutate, data };
+};
 // 에디터 상단 글감 조회
 // response 타입 리펙토링 ...........
 // interface Topics {
