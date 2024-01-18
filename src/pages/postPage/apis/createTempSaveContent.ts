@@ -40,6 +40,7 @@ const createTempSaveContent = async ({
         },
       },
     );
+    console.log(data);
     return data;
   } catch (err) {
     console.log(err);

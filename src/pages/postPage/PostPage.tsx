@@ -14,6 +14,7 @@ import {
   usePresignedUrl,
   useTempSaveFlag,
   usePutEditContent,
+  usePostTempSaveContent,
 } from './hooks/queries';
 
 import {
@@ -96,8 +97,17 @@ const PostPage = () => {
   const tempExistSaveHandler = () => {};
 
   // 임시 저장
+  const { mutate: postTempSaveContent } = usePostTempSaveContent({
+    groupId: groupId,
+    topicId: topicId,
+    title: contentTitle,
+    content: contentContent,
+    imageUrl: imageUrl,
+    anonymous: anonymous,
+  });
   const tempSaveHandler = () => {
-    alert('홈으로 가기');
+    postTempSaveContent();
+    
   };
 
   useEffect(() => {
