@@ -97,12 +97,9 @@ export const useDeletePost = (postId: string) => {
   });
   return data;
 };
-interface UsePostComment {
-  postComment: (props: string) => void;
-}
 
 //댓글 생성 api
-export const usePostComment = (postId: string): UsePostComment => {
+export const usePostComment = (postId: string) => {
   const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
@@ -129,7 +126,6 @@ export const useDeleteComment = (commentId: string, postId: string) => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
       });
-      console.log('성공');
     },
   });
 
