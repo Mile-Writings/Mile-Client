@@ -13,14 +13,14 @@ const CarouselSkeleton = () => {
       <CarouselContainer>
         <CarouselBox>
           <TextContainer>
-            <Skeleton width={59.8} height={1.7} unit={'rem'} color={'#efefef'} rounded />
+            <Skeleton width={59.8} height={1.7} unit={'rem'} color={'#efefef'} rounded animation />
             <Spacing marginBottom="0.5" />
-            <Skeleton width={59.8} height={3.1} unit={'rem'} color={'#efefef'} rounded />
+            <Skeleton width={59.8} height={3.1} unit={'rem'} color={'#efefef'} rounded animation />
             <Spacing marginBottom="3.2" />
-            <Skeleton width={59.8} height={8.4} unit={'rem'} color={'#efefef'} rounded />
+            <Skeleton width={59.8} height={8.4} unit={'rem'} color={'#efefef'} rounded animation />
           </TextContainer>
           <ImageContainer>
-            <Skeleton width={22.4} height={16.8} unit={'rem'} color={'#efefef'} rounded />
+            <Skeleton width={22.4} height={16.8} unit={'rem'} color={'#efefef'} rounded animation />
           </ImageContainer>
         </CarouselBox>
       </CarouselContainer>
