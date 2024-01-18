@@ -49,12 +49,12 @@ const GroupContent = ({
       ) : (
         <>
           <TextContainer>
-            <Skeleton width={59.8} height={1.7} unit={'rem'} color={'#F4F4F4'} rounded />
-            <Skeleton width={59.8} height={3.1} unit={'rem'} color={'#F4F4F4'} rounded />
+            <Skeleton width={59.8} height={1.7} unit={'rem'} color={'#dcdcdc'} rounded />
+            <Skeleton width={59.8} height={3.1} unit={'rem'} color={'#dcdcdc'} rounded />
             <Spacing marginBottom="2" />
-            <Skeleton width={59.8} height={8.4} unit={'rem'} color={'#F4F4F4'} rounded />
+            <Skeleton width={59.8} height={8.4} unit={'rem'} color={'#dcdcdc'} rounded />
           </TextContainer>
-          <Skeleton width={59.8} height={1.7} unit={'rem'} color={'#F4F4F4'} circle rounded />
+          <Skeleton width={59.8} height={1.7} unit={'rem'} color={'#dcdcdc'} circle rounded />
         </>
       )}
       {isLast && (
