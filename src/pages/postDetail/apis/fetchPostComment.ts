@@ -22,7 +22,7 @@ const fetchPostComment = async (postId: string, comment: string) => {
     );
     return response.data;
   } catch (err) {
-    console.log(err);
+    console.log(err, '에러');
   }
 };
 
