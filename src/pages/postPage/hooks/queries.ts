@@ -6,6 +6,7 @@ import createTempSaveContent from '../apis/createTempSaveContent';
 import editPutContent from '../apis/editPutContent';
 import { fetchTopic } from '../apis/fetchEditorContent';
 import { fetchPresignedUrl } from '../apis/fetchPresignedUrl';
+import { fetchTempSaveContent } from '../apis/fetchTempSaveContent';
 import { fetchTempSaveFlag } from '../apis/fetchTempSaveFlag';
 
 import { QUERY_KEY_POST_DETAIL } from '../../postDetail/hooks/queries';
@@ -17,6 +18,7 @@ export const QUERY_KEY_POST = {
   getPresignedUrl: 'getPresignedUrl',
   putEditContent: 'putEditContent',
   postSaveTempContent: 'postSaveTempContent',
+  getTempSaveContent: 'getTempSaveContent',
 };
 
 // 글 최초 저장
@@ -194,4 +196,20 @@ export const usePostTempSaveContent = ({
     },
   });
   return data;
+};
+
+// 임시저장 불러오기 GET
+export const useGetTempSaveContent = (postId: string) => {
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY_POST.getTempSaveContent, postId],
+    queryFn: () => fetchTempSaveContent(postId),
+  });
+
+  const topicList = data && data.data.topicList;
+  const title = data && data.data.title;
+  const content = data && data.data.content;
+  const imageUrl = data && data.data.imageUrl;
+  const anonymous = data && data.data.anonymous;
+
+  return { topicList, title, content, imageUrl, anonymous };
 };
