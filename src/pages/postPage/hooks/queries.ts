@@ -199,17 +199,18 @@ export const usePostTempSaveContent = ({
 };
 
 // 임시저장 불러오기 GET
-export const useGetTempSaveContent = (postId: string) => {
+export const useGetTempSaveContent = (postId: string, isTempClicked: boolean) => {
   const { data } = useQuery({
     queryKey: [QUERY_KEY_POST.getTempSaveContent, postId],
     queryFn: () => fetchTempSaveContent(postId),
+    enabled: !!isTempClicked,
   });
 
-  const topicList = data && data.data.topicList;
-  const title = data && data.data.title;
-  const content = data && data.data.content;
-  const imageUrl = data && data.data.imageUrl;
-  const anonymous = data && data.data.anonymous;
+  const tempTopicList = data && data.data.topicList;
+  const tempTitle = data && data.data.title;
+  const tempContent = data && data.data.content;
+  const tempImageUrl = data && data.data.imageUrl;
+  const tempAnonymous = data && data.data.anonymous;
 
-  return { topicList, title, content, imageUrl, anonymous };
+  return { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous };
 };

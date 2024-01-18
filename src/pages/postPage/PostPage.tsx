@@ -15,6 +15,7 @@ import {
   useTempSaveFlag,
   usePutEditContent,
   usePostTempSaveContent,
+  useGetTempSaveContent,
 } from './hooks/queries';
 
 import {
@@ -47,10 +48,10 @@ const PostPage = () => {
     }
   }, [type]);
 
-  // 임시저장 값 여부 확인
+  // 임시저장 값 여부 확인 (서버값)
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
+  // 조건부 처리용
   const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist);
-  console.log(postId); // pr용 버셀 에러 방지
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
@@ -94,9 +95,6 @@ const PostPage = () => {
     navigate(`/detail/${groupId}/${editPostId}`);
   };
 
-  // 임시 저장 글 -> 저장하기
-  const tempExistSaveHandler = () => {};
-
   // 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
     groupId: groupId,
@@ -121,6 +119,18 @@ const PostPage = () => {
       return;
     }
   }, [isTemporaryPostExist]);
+
+  // 임시저장 불러오기
+  const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
+    useGetTempSaveContent(postId || '', temporaryExist || false);
+  console.log(tempTopicList);
+  console.log(tempTitle);
+  console.log(tempContent);
+  console.log(tempImageUrl);
+  console.log(tempAnonymous);
+
+  // 임시 저장 글 -> 저장하기
+  const tempExistSaveHandler = () => {};
 
   return (
     <PostPageWrapper>
