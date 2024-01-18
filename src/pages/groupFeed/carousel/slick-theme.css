@@ -41,11 +41,14 @@
 
 .groupFeedCarousel .slick-prev {
   left: -2.5rem;
+  background-image: url('/src/assets/svgs/groupTabBeforeBtnEnable.svg');
 }
 
-.groupFeedCarousel .slick-prev:hover:before {
-  content: url('/src/assets/svgs/groupTabBeforeBtnHover.svg');
+.groupFeedCarousel .slick-prev:hover {
+  left: -2.5rem;
+  background-image: url('/src/assets/svgs/groupTabBeforeBtnHover.svg');
 }
+
 [dir='rtl'] .slick-prev {
   right: -2.5rem;
   left: auto;
@@ -59,19 +62,20 @@
 
 .groupFeedCarousel .slick-next {
   right: -2.5rem;
+  background-image: url('/src/assets/svgs/groupTabNextBtnEnable.svg');
+}
+
+.groupFeedCarousel .slick-next:hover {
+  right: -2.5rem;
+  background-image: url('/src/assets/svgs/groupTabNextBtnHover.svg');
 }
 [dir='rtl'] .slick-next {
   right: auto;
   left: -2.5rem;
 }
 .slick-next:before {
-  content: url('/src/assets/svgs/groupTabNextBtnEnable.svg');
+  content: '→';
 }
-
-.groupFeedCarousel .slick-next:hover:before {
-  content: url('/src/assets/svgs/groupTabNextBtnHover.svg');
-}
-
 [dir='rtl'] .slick-next:before {
   content: '←';
 }
