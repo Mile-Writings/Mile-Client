@@ -6,7 +6,7 @@ import Carousel from './carousel/Carousel';
 import CuriousArticle from './components/CuriousArticle';
 import CuriousProfile from './components/CuriousProfile';
 import GroupCuriousTitle from './components/GroupCuriousTitle';
-import { LogOutHeader, GroupFeedHeader } from './components/GroupFeedHeader';
+import { GroupFeedHeader, LogOutHeader } from './components/GroupFeedHeader';
 import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
 import { useGroupFeedAuth, useGroupInfo } from './hooks/queries';
@@ -83,11 +83,12 @@ const GroupFeed = () => {
 export default GroupFeed;
 
 const GroupFeedWrapper = styled.div`
+  width: 100%;
+
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
 
 const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
-  width: 136.6rem;
   height: 37rem;
 
   background-image: ${({ imageUrl }) => `url(${imageUrl || GroupThumbnailImg})`};
@@ -96,7 +97,6 @@ const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
 const GroupInfoWrapper = styled.div`
   display: flex;
   gap: 3.9rem;
-  width: 136.6rem;
   padding-right: 16.5rem;
   padding-left: 16.5rem;
 `;

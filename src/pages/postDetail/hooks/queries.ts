@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import checkPostAuth from '../apis/checkPostAuth';
 import createPostCurious from '../apis/createPostCurious';
 import deleteCurious from '../apis/deleteCurious';
+import deletePost from '../apis/deletePost';
 import fetchCommentList from '../apis/fetchCommentList';
 import fetchCuriousInfo from '../apis/fetchCuriousInfo';
 import fetchDeleteComment from '../apis/fetchDeleteComment';
@@ -46,7 +47,7 @@ export const useGetCuriousInfo = (postId: string) => {
 export const usePostCurious = (postId: string) => {
   const queryClient = useQueryClient();
   const data = useMutation({
-    mutationKey: [QUERY_KEY_POST_DETAIL.postCurious],
+    mutationKey: [QUERY_KEY_POST_DETAIL.postCurious, postId],
     mutationFn: () => createPostCurious(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId] });
@@ -63,7 +64,6 @@ export const useGetCommentList = (postId: string) => {
   });
 
   const commentListData = data.data?.data.comments;
-  console.log(commentListData, 'data');
   return { commentListData };
 };
 
@@ -89,6 +89,14 @@ export const useCheckPostAuth = (postId: string) => {
   return data;
 };
 
+// 글 삭제
+export const useDeletePost = (postId: string) => {
+  const data = useMutation({
+    mutationKey: [QUERY_KEY_POST_DETAIL.deletePost, postId],
+    mutationFn: () => deletePost(postId),
+  });
+  return data;
+};
 interface UsePostComment {
   postComment: (props: string) => void;
 }
