@@ -149,9 +149,9 @@ const PostPage = () => {
         />
         <Spacing marginBottom="2.4" />
         <Editor
-          title={isTemporaryPostExist ? tempTitle : contentTitle}
+          title={temporaryExist ? tempTitle : contentTitle}
           saveTitle={setContentTitle}
-          content={isTemporaryPostExist ? tempContent : contentContent}
+          content={temporaryExist ? tempContent : contentContent}
           saveContent={setContentContent}
         />
       </DropDownEditorWrapper>
