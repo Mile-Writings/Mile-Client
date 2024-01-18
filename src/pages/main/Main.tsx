@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
 
 import Carousel from './components/Carousel';
+import CarouselSkeleton from './components/CarouselSkeleton';
 import FaqDropdown from './components/FaqDropdown';
 import FaqTitle from './components/FaqTitle';
 import GroupCarouselTitle from './components/GroupCarouselTitle';
@@ -15,13 +17,30 @@ import Footer from './../../components/commons/Footer';
 import Spacing from './../../components/commons/Spacing';
 
 const Main = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <LogInHeader /> : <UnAuthorizationHeader />}
       <OnBoarding />
       <CarouselComponentLayout>
-        <GroupCarouselTitle />
-        <Carousel />
+        {isLoading ? (
+          <>
+            <GroupCarouselTitle />
+            <CarouselSkeleton />
+          </>
+        ) : (
+          <>
+            <GroupCarouselTitle />
+            <Carousel />
+          </>
+        )}
       </CarouselComponentLayout>
       <Ruler />
       <Introduction />
