@@ -33,7 +33,6 @@ const WriterDropDown = (props: DropDownPropsType) => {
   useEffect(() => {
     if (type == 'edit') {
       const writerName = location.state.writer;
-      console.log(writerName);
       if (writerName != '작자미상') {
         onClickListItem('writer', '필명');
       } else {

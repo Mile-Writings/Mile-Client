@@ -118,7 +118,12 @@ const PostPage = () => {
           updateAnonymous={setAnonymous}
         />
         <Spacing marginBottom="2.4" />
-        <Editor saveTitle={setContentTitle} saveContent={setContentContent} />
+        <Editor
+          title={contentTitle}
+          saveTitle={setContentTitle}
+          content={contentContent}
+          saveContent={setContentContent}
+        />
       </DropDownEditorWrapper>
       <Spacing marginBottom="8" />
     </PostPageWrapper>

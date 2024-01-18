@@ -41,7 +41,13 @@ const PostDetail = () => {
 
   const handleEditBtn = () => {
     navigate(`/post/${groupId}/edit`, {
-      state: { postId: postId, topic: postData?.topic, writer: postData?.writerName },
+      state: {
+        postId: postId,
+        topic: postData?.topic,
+        writer: postData?.writerName,
+        title: postData?.title,
+        content: postData?.content,
+      },
     });
   };
   // 리팩토링 전 코드
