@@ -141,7 +141,7 @@ export const usePutEditContent = ({
         postId,
       },
     ],
-    mutationFn: () => editPutContent({ topicId, title, content, imageUrl, anonymous }),
+    mutationFn: () => editPutContent({ topicId, title, content, imageUrl, anonymous, postId }),
     onSuccess: () => {
       console.log({ topicId, title, content, imageUrl, anonymous });
     },

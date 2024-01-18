@@ -2,19 +2,30 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 import { Topics } from './apis/fetchEditorContent';
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
-import { useGetTopic, usePostContent, usePresignedUrl, useTempSaveFlag } from './hooks/queries';
+import {
+  useGetTopic,
+  usePostContent,
+  usePresignedUrl,
+  useTempSaveFlag,
+  usePutEditContent,
+} from './hooks/queries';
 
-import { EditorTempExistHeader, EditorTempNotExistHeader } from '../../components/commons/Header';
+import {
+  EditorTempExistHeader,
+  EditorTempNotExistHeader,
+  EditorEditHeader,
+} from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const PostPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   // 에디터 제목, 내용 저장 함수
   const [contentTitle, setContentTitle] = useState('');
@@ -29,6 +40,13 @@ const PostPage = () => {
 
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
+
+  const [editPostId, setEditPostId] = useState('');
+  useEffect(() => {
+    if (type == 'edit') {
+      setEditPostId(location.state.postId);
+    }
+  }, [type]);
 
   // 임시저장 값 여부 확인
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
@@ -62,6 +80,21 @@ const PostPage = () => {
     navigate(`/detail/${groupId}/${postId}`);
   };
 
+  // 수정하기 제출하기
+  const { mutate: putEditContent } = usePutEditContent({
+    topicId: topicId,
+    title: contentTitle,
+    content: contentContent,
+    imageUrl: imageUrl,
+    anonymous: anonymous,
+    postId: editPostId,
+  });
+
+  const editSaveHandler = () => {
+    putEditContent();
+    navigate(`/detail/${groupId}/${editPostId}`);
+  };
+
   // 임시 저장 글 -> 저장하기
   const tempExistSaveHandler = () => {};
 
@@ -84,11 +117,18 @@ const PostPage = () => {
 
   return (
     <PostPageWrapper>
-      {temporaryExist ? (
+      {type == 'edit' ? (
+        <EditorEditHeader onClickEditSave={editSaveHandler} />
+      ) : temporaryExist ? (
         <EditorTempExistHeader onClickSubmit={tempExistSaveHandler} />
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
+      {/* {temporaryExist ? (
+        <EditorTempExistHeader onClickSubmit={tempExistSaveHandler} />
+      ) : (
+        <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
+      )} */}
       <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
       <DropDownEditorWrapper>
         <DropDown
