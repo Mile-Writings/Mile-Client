@@ -22,6 +22,7 @@ const PostDetail = () => {
   const { data: postAuth } = useCheckPostAuth(postId || '');
   const { mutate: deletePost } = useDeletePost(postId || '');
   const postData = data?.data;
+
   console.log(postData);
   console.log(postAuth);
   if (isError) {
@@ -48,6 +49,7 @@ const PostDetail = () => {
         writer: postData?.writerName,
         title: postData?.title,
         content: postData?.content,
+        imageUrl: postData?.imageUrl,
       },
     });
   };

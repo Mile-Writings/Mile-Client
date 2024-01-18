@@ -45,6 +45,7 @@ const PostPage = () => {
   useEffect(() => {
     if (type == 'edit') {
       setEditPostId(location.state.postId);
+      setImageUrl(location.state.imageUrl);
     }
   }, [type]);
 
