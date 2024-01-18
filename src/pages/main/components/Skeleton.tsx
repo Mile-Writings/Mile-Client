@@ -1,21 +1,21 @@
 import { css, keyframes } from '@emotion/react';
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import React, { useMemo } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 interface skeletonPropTypes {
   width: number;
-  height: number;
-  circle: boolean;
+  height?: number;
+  circle?: boolean;
   rounded: boolean;
   count?: number;
   unit: string; // 단위
-  animation: boolean;
+  animation?: boolean;
   color: string;
   style?: React.CSSProperties;
 }
 
-const CarouselSkeleton = ({
+const Skeleton = ({
   width,
   height,
   circle,
@@ -43,7 +43,7 @@ const CarouselSkeleton = ({
   );
 };
 
-export default CarouselSkeleton;
+export default Skeleton;
 
 const pulseKeyframe = keyframes`
   0% {
