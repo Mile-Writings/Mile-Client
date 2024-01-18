@@ -10,12 +10,12 @@ interface ImageUploadPropTypes {
   saveImage: Dispatch<SetStateAction<string>>;
   imageUrl: string;
   url: string;
-  setImageToserver: Dispatch<SetStateAction<string>>;
+  setImageToServer: Dispatch<SetStateAction<string>>;
   fileName: string;
 }
 
 const ImageUpload = (props: ImageUploadPropTypes) => {
-  const { imageUrl, saveImage, url, setImageToserver, fileName } = props;
+  const { imageUrl, saveImage, url, setImageToServer, fileName } = props;
   const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -36,7 +36,7 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
       const data = await postDirectlyS3(url, imageFile);
       const s3url = s3UrlPasing(url);
       const urlToServer = `${s3url + fileName}`;
-      setImageToserver(urlToServer);
+      setImageToServer(urlToServer);
       console.log(data);
     } catch (err) {
       console.log(err);

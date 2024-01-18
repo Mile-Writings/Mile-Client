@@ -34,7 +34,7 @@ const PostPage = () => {
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
-
+  const [imageToServer, setImageToServer] = useState('');
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
 
@@ -122,7 +122,13 @@ const PostPage = () => {
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
-      <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
+      <ImageUpload
+        saveImage={setImageUrl}
+        imageUrl={imageUrl}
+        setImageToServer={setImageToServer}
+        url={url || ''}
+        fileName={fileName || ''}
+      />
       <DropDownEditorWrapper>
         <DropDown
           topicList={topicList}
