@@ -19,6 +19,9 @@ const CarouselSkeleton = () => {
             <Spacing marginBottom="3.2" />
             <Skeleton width={59.8} height={8.4} unit={'rem'} color={'#efefef'} rounded />
           </TextContainer>
+          <ImageContainer>
+            <Skeleton width={22.4} height={16.8} unit={'rem'} color={'#efefef'} rounded />
+          </ImageContainer>
         </CarouselBox>
       </CarouselContainer>
       <Spacing marginBottom="3.6" />
@@ -33,6 +36,9 @@ const CarouselSkeleton = () => {
             <Spacing marginBottom="3.2" />
             <Skeleton width={59.8} height={8.4} unit={'rem'} color={'#efefef'} rounded />
           </TextContainer>
+          <ImageContainer>
+            <Skeleton width={22.4} height={16.8} unit={'rem'} color={'#efefef'} rounded />
+          </ImageContainer>
         </CarouselBox>
       </CarouselContainer>
       <Spacing marginBottom="3.6" />
@@ -47,6 +53,9 @@ const CarouselSkeleton = () => {
             <Spacing marginBottom="3.2" />
             <Skeleton width={59.8} height={8.4} unit={'rem'} color={'#efefef'} rounded />
           </TextContainer>
+          <ImageContainer>
+            <Skeleton width={22.4} height={16.8} unit={'rem'} color={'#efefef'} rounded />
+          </ImageContainer>
         </CarouselBox>
       </CarouselContainer>
     </CarouselWithButtonLayout>
@@ -64,6 +73,8 @@ const CarouselContainer = styled.div`
 `;
 
 const CarouselBox = styled.section`
+  display: flex;
+  gap: 3.6rem;
   width: 93rem;
   height: 24rem;
   padding: 3.6rem;
@@ -75,4 +86,8 @@ const CarouselBox = styled.section`
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
 `;
