@@ -5,6 +5,9 @@ import CommentItem from './CommentItem';
 
 import { usePostComment, useGetCommentList } from '../hooks/queries';
 
+import { EditorCatIc } from '../../../assets/svgs';
+import Spacing from '../../../components/commons/Spacing';
+
 interface CommentPropTypes {
   postId: string | undefined;
 }
@@ -44,17 +47,25 @@ const Comment = (props: CommentPropTypes) => {
           등록
         </CommentPostBtn>
       </CommentPostWrapper>
-      {commentListData?.map((data: CommentListPropTypes) => (
-        <CommentItem
-          key={data.commentId}
-          name={data.name}
-          moimName={data.moimName}
-          content={data.content}
-          isMyComment={data.isMyComment}
-          postId={postId}
-          commentId={data.commentId}
-        ></CommentItem>
-      ))}
+      {commentListData?.length == 0 ? (
+        <>
+          <Spacing marginBottom="4" />
+          <NoCommentText>아직 댓글이 없어요</NoCommentText>
+          <EditorCatIc />
+        </>
+      ) : (
+        commentListData?.map((data: CommentListPropTypes) => (
+          <CommentItem
+            key={data.commentId}
+            name={data.name}
+            moimName={data.moimName}
+            content={data.content}
+            isMyComment={data.isMyComment}
+            postId={postId}
+            commentId={data.commentId}
+          ></CommentItem>
+        ))
+      )}
     </CommentWrapper>
   );
 };
@@ -106,7 +117,6 @@ const CommentPostWrapper = styled.div`
 const CommentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
   align-items: center;
   width: 100%;
   height: fit-content;
@@ -114,4 +124,12 @@ const CommentWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
+`;
+
+const NoCommentText = styled.p`
+  margin-bottom: 3rem;
+
+  color: ${({ theme }) => theme.colors.gray50};
+
+  ${({ theme }) => theme.fonts.title8};
 `;

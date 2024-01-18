@@ -63,3 +63,5 @@ export { default as GroupCardThumnailImgIc } from './groupCardThumnailImg.svg?re
 export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?react';
 export { default as KakaoLoginBtnIc } from './kakaoLoginBtn.svg?react';
 export { default as LoginIc } from './loginIc.svg?react';
+
+export { default as EditorCatIc } from './editorCatSvg.svg?react';
