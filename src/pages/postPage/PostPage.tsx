@@ -26,6 +26,8 @@ const PostPage = () => {
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
+  console.log(topicList);
+  console.log(topicId);
 
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };

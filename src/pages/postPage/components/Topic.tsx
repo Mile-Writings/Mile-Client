@@ -30,7 +30,9 @@ const ThisWeekTopic = (props: TopicPropTypes) => {
   };
 
   useEffect(() => {
-    onClickHandler('topic', location.state.topic);
+    if (type == 'edit') {
+      onClickHandler('topic', location.state.topic);
+    }
   }, [urlType]);
   return (
     <>
@@ -60,7 +62,9 @@ const PrevFirstTopic = (props: TopicPropTypes) => {
   };
 
   useEffect(() => {
-    onClickHandler('topic', location.state.topic);
+    if (type == 'edit') {
+      onClickHandler('topic', location.state.topic);
+    }
   }, [urlType]);
   return (
     <>
@@ -91,7 +95,9 @@ const PrevTopic = (props: TopicPropTypes) => {
   };
 
   useEffect(() => {
-    onClickHandler('topic', location.state.topic);
+    if (type == 'edit') {
+      onClickHandler('topic', location.state.topic);
+    }
   }, [urlType]);
   return (
     <Topic onClick={handleListClick} $selected={selected}>
