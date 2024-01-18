@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import { Suspense, lazy } from 'react';
 
-import CarouselSkeletonPage from './components/CarouselSkeletonPage';
+import CarouselPage from './components/CarouselPage';
 import FaqDropdown from './components/FaqDropdown';
 import FaqTitle from './components/FaqTitle';
 import Introduction from './components/Introduction';
@@ -15,15 +14,11 @@ import Footer from './../../components/commons/Footer';
 import Spacing from './../../components/commons/Spacing';
 
 const Main = () => {
-  const CarouselPage = lazy(() => import('./components/CarouselPage'));
-
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <LogInHeader /> : <UnAuthorizationHeader />}
       <OnBoarding />
-      <Suspense fallback={<CarouselSkeletonPage />}>
-        <CarouselPage />
-      </Suspense>
+      <CarouselPage />
       <Ruler />
       <Introduction />
       <Manual />
