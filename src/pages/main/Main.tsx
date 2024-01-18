@@ -1,11 +1,9 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { Suspense, lazy } from 'react';
 
-import Carousel from './components/Carousel';
-import CarouselSkeleton from './components/CarouselSkeleton';
+import CarouselSkeletonPage from './components/CarouselSkeletonPage';
 import FaqDropdown from './components/FaqDropdown';
 import FaqTitle from './components/FaqTitle';
-import GroupCarouselTitle from './components/GroupCarouselTitle';
 import Introduction from './components/Introduction';
 import { LogInHeader, UnAuthorizationHeader } from './components/MainHeader';
 import Manual from './components/Manual';
@@ -17,33 +15,15 @@ import Footer from './../../components/commons/Footer';
 import Spacing from './../../components/commons/Spacing';
 
 const Main = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+  const CarouselPage = lazy(() => import('./components/CarouselPage'));
 
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <LogInHeader /> : <UnAuthorizationHeader />}
       <OnBoarding />
-      <CarouselComponentLayout>
-        {isLoading ? (
-          <>
-            <GroupCarouselTitle />
-            <CarouselSkeleton />
-            <CarouselSkeleton />
-            <CarouselSkeleton />
-          </>
-        ) : (
-          <>
-            <GroupCarouselTitle />
-            <Carousel />
-          </>
-        )}
-      </CarouselComponentLayout>
+      <Suspense fallback={<CarouselSkeletonPage />}>
+        <CarouselPage />
+      </Suspense>
       <Ruler />
       <Introduction />
       <Manual />
@@ -68,13 +48,6 @@ const MainPageWrapper = styled.div`
   width: 100%;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
-`;
-
-const CarouselComponentLayout = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-  padding-bottom: 10rem;
 `;
 
 const FaqTitleWithDropDownLayout = styled.section`
