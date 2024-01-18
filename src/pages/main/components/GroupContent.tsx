@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import CuriousGroup from './CuriousGroup';
+import Skeleton from './Skeleton';
 
 import Spacing from './.././../../components/commons/Spacing';
 
@@ -30,18 +31,31 @@ const GroupContent = ({
   const handleOnClick = () => {
     navigate(`/detail/${groupId}/${postId}`);
   };
+
   return (
     <ContentLayout onClick={handleOnClick}>
-      <TextContainer>
-        <Topic>{topicName}</Topic>
-        <MainText>{postTitle}</MainText>
-        <Spacing marginBottom="2" />
-        <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
-          {postContent}
-        </SubText>
-      </TextContainer>
-      {isContainPhoto && imageUrl && (
-        <Image src={imageUrl} isLast={isLast} alt="group-content-image" />
+      {imageUrl ? (
+        <>
+          <TextContainer>
+            <Topic>{topicName}</Topic>
+            <MainText>{postTitle}</MainText>
+            <Spacing marginBottom="2" />
+            <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
+              {postContent}
+            </SubText>
+          </TextContainer>
+          <Image src={imageUrl} isLast={isLast} alt="group-content-image" />
+        </>
+      ) : (
+        <>
+          <TextContainer>
+            <Skeleton width={59.8} height={1.7} unit={'rem'} color={'#F4F4F4'} rounded />
+            <Skeleton width={59.8} height={3.1} unit={'rem'} color={'#F4F4F4'} rounded />
+            <Spacing marginBottom="2" />
+            <Skeleton width={59.8} height={8.4} unit={'rem'} color={'#F4F4F4'} rounded />
+          </TextContainer>
+          <Skeleton width={59.8} height={1.7} unit={'rem'} color={'#F4F4F4'} circle rounded />
+        </>
       )}
       {isLast && (
         <CuriousGroup
