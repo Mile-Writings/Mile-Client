@@ -12,7 +12,13 @@ const CarouselSkeleton = () => {
       <Spacing marginBottom="1.6" />
       <CarouselContainer>
         <CarouselBox>
-          <Skeleton width={93} height={24} unit={'rem'} color={'#fffefe'} rounded />
+          <TextContainer>
+            <Skeleton width={59.8} height={1.7} unit={'rem'} color={'#efefef'} rounded />
+            <Spacing marginBottom="0.5" />
+            <Skeleton width={59.8} height={3.1} unit={'rem'} color={'#efefef'} rounded />
+            <Spacing marginBottom="3.2" />
+            <Skeleton width={59.8} height={8.4} unit={'rem'} color={'#efefef'} rounded />
+          </TextContainer>
         </CarouselBox>
       </CarouselContainer>
       <Spacing marginBottom="3.6" />
@@ -20,7 +26,13 @@ const CarouselSkeleton = () => {
       <Spacing marginBottom="1.6" />
       <CarouselContainer>
         <CarouselBox>
-          <Skeleton width={93} height={24} unit={'rem'} color={'#fffefe'} rounded />
+          <TextContainer>
+            <Skeleton width={59.8} height={1.7} unit={'rem'} color={'#efefef'} rounded />
+            <Spacing marginBottom="0.5" />
+            <Skeleton width={59.8} height={3.1} unit={'rem'} color={'#efefef'} rounded />
+            <Spacing marginBottom="3.2" />
+            <Skeleton width={59.8} height={8.4} unit={'rem'} color={'#efefef'} rounded />
+          </TextContainer>
         </CarouselBox>
       </CarouselContainer>
       <Spacing marginBottom="3.6" />
@@ -28,7 +40,13 @@ const CarouselSkeleton = () => {
       <Spacing marginBottom="1.6" />
       <CarouselContainer>
         <CarouselBox>
-          <Skeleton width={93} height={24} unit={'rem'} color={'#fffefe'} rounded />
+          <TextContainer>
+            <Skeleton width={59.8} height={1.7} unit={'rem'} color={'#efefef'} rounded />
+            <Spacing marginBottom="0.5" />
+            <Skeleton width={59.8} height={3.1} unit={'rem'} color={'#efefef'} rounded />
+            <Spacing marginBottom="3.2" />
+            <Skeleton width={59.8} height={8.4} unit={'rem'} color={'#efefef'} rounded />
+          </TextContainer>
         </CarouselBox>
       </CarouselContainer>
     </CarouselWithButtonLayout>
@@ -48,4 +66,13 @@ const CarouselContainer = styled.div`
 const CarouselBox = styled.section`
   width: 93rem;
   height: 24rem;
+  padding: 3.6rem;
+
+  background-color: #fffefe;
+  border-radius: 8px;
+`;
+
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
