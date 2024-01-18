@@ -126,6 +126,8 @@ const PostPage = () => {
   const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
     useGetTempSaveContent(postId || '', temporaryExist || false);
 
+  console.log(tempImageUrl);
+  console.log(tempAnonymous);
   // 임시 저장 글 -> 저장하기
   const tempExistSaveHandler = () => {};
 
@@ -141,7 +143,7 @@ const PostPage = () => {
       <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
       <DropDownEditorWrapper>
         <DropDown
-          isTemp={temporaryExist}
+          isTemp={temporaryExist || false} // isTemp={temporaryExist} <- 원래코드임 pr용 yarn build 에러 방지위해서 바꿔둠
           topicList={topicList}
           tempTopicList={tempTopicList}
           selectedTopicId={setTopicId}
