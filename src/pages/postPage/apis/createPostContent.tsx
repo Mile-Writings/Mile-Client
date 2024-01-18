@@ -1,6 +1,6 @@
 import { client } from '../../../utils/apis/axios';
 
-export interface PostContentRequestTypes {
+interface postContentType {
   groupId: string;
   topicId: string;
   title: string;
@@ -18,27 +18,37 @@ interface PostContentResponseType {
   };
 }
 
-export const postContent = async ({
+const createPostContent = async ({
   groupId,
   topicId,
   title,
   content,
   imageUrl,
   anonymous,
-}: PostContentRequestTypes) => {
+}: postContentType) => {
   try {
-    const accessToken = localStorage.getItem('accessToken');
-    const response = await client.post<PostContentResponseType>(
+    const token = localStorage.getItem('accessToken');
+    const { data } = await client.post<PostContentResponseType>(
       `/api/post`,
-      { groupId, topicId, title, content, imageUrl, anonymous },
+      {
+        moimId: groupId,
+        topicId: topicId,
+        title: title,
+        content: content,
+        imageUrl: imageUrl,
+        anonymous: anonymous,
+      },
       {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
       },
     );
-    return response.data;
+    console.log(data);
+    return data;
   } catch (err) {
     console.log(err);
   }
 };
+
+export default createPostContent;

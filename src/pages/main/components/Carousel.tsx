@@ -17,6 +17,7 @@ export interface groupPostTypes {
   postTitle: string;
   postContent: string;
   postId: string;
+  isContainPhoto: boolean;
 }
 
 const Carousel = () => {
@@ -61,6 +62,7 @@ const Carousel = () => {
                       postTitle={post.postTitle}
                       postContent={post.postContent}
                       postId={post.postId}
+                      isContainPhoto={post.isContainPhoto}
                       groupId={moim.moimId}
                       isLast={index === moim.moimPosts.length - 1}
                     />
