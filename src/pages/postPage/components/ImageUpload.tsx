@@ -1,13 +1,22 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
-import { EditorThuminputIcnUnactiveIc, EditorThuminputIcnActiveIc } from './../../../assets/svgs';
+import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 
 interface ImageUploadPropTypes {
-  saveImage: (imageUrl: string) => void;
+  saveImage: Dispatch<SetStateAction<string>>;
   imageUrl: string;
+  url: string;
 }
-
+// useEffect(() => {
+//   const postDirectlyS3Func = async () => {
+//     try {
+//       const data = await postDirectlyS3(url || '', fileName || '');
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+// }, [fileName]);
 const ImageUpload = (props: ImageUploadPropTypes) => {
   const { imageUrl, saveImage } = props;
   const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
