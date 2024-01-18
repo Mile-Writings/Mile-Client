@@ -50,20 +50,6 @@ const PostPage = () => {
   // console.log(myPostId);
   // console.log(myTopicName);
 
-  // if (type == 'edit') {
-  //   console.log(EditPostData?.topic);
-  //   console.log(EditPostData?.title);
-  //   console.log(EditPostData?.content);
-  //   console.log(EditPostData?.imageUrl);
-  //   console.log(EditPostData?.writerName);
-  //   console.log(EditPostData?.moimName);
-  //   console.log(EditPostData?.writerInfo);
-
-  //   // setContentContent(EditPostData?.content);
-  //   // setContentTitle(EditPostData?.title);
-  //   // setAnonymous(EditPostData?.writerName == '작자미상');
-  // }
-
   // 임시저장 값 여부 확인
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
   const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist);
@@ -125,7 +111,7 @@ const PostPage = () => {
       )}
       <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
       <DropDownEditorWrapper>
-        <DropDown topicList={topicList} selectedTopicId={setTopicId} isAnonymous={setAnonymous} />
+        <DropDown topicList={topicList} selectedTopicId={setTopicId} />
         <Spacing marginBottom="2.4" />
         <Editor saveTitle={setContentTitle} saveContent={setContentContent} />
       </DropDownEditorWrapper>

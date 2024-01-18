@@ -39,7 +39,9 @@ const PostDetail = () => {
   };
 
   const handleEditBtn = () => {
-    navigate(`/post/${groupId}/edit`, { state: { postId: postId, topic: postData?.topic } });
+    navigate(`/post/${groupId}/edit`, {
+      state: { postId: postId, topic: postData?.topic, writer: postData?.writerName },
+    });
   };
   // 리팩토링 전 코드
   // useEffect(() => {

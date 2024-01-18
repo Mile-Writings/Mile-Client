@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
 
 import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
 
@@ -8,8 +8,28 @@ import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../asset
 import useClickOutside from '../../../hooks/useClickOutside';
 
 const WriterDropDown = (props: DropDownPropsType) => {
+  const [urlType, setUrlType] = useState('');
   const { onClickListItem, selectedValue } = props;
   const [writerIsOpen, setWriterIsOpen] = useState(false);
+
+  // 수정뷰 전달값 받아오기
+  const location = useLocation();
+  const { type } = useParams() as { type: string };
+
+  // url 타입 업데이트
+  useEffect(() => {
+    setUrlType(type);
+  }, []);
+
+  // 수정 뷰일 때 필명여부 업데이트
+  useEffect(() => {
+    if (type == 'edit') {
+      const writerName = location.state.writer;
+      writerName == '작자미상'
+        ? onClickListItem('writer', '작자미상')
+        : onClickListItem('writer', '필명');
+    }
+  }, [urlType]);
 
   // 드롭다운 리스트 부분 잡아오기
   const dropDownRef = useRef(null);
