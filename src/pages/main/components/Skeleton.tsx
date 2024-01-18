@@ -5,11 +5,10 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 interface skeletonPropTypes {
   width: number;
-  height?: number;
-  circle?: boolean;
+  height: number;
   rounded: boolean;
   count?: number;
-  unit: string; // 단위
+  unit: string;
   animation?: boolean;
   color: string;
   style?: React.CSSProperties;
@@ -18,7 +17,6 @@ interface skeletonPropTypes {
 const Skeleton = ({
   width,
   height,
-  circle,
   rounded,
   count,
   unit,
@@ -28,10 +26,9 @@ const Skeleton = ({
 }: skeletonPropTypes) => {
   const content = useMemo(() => [...Array({ length: count })].map(() => '-').join(''), [count]);
   return (
-    <Base
+    <SkeletonWrapper
       style={style}
       rounded={rounded}
-      circle={circle}
       width={width}
       height={height}
       animation={animation}
@@ -39,7 +36,7 @@ const Skeleton = ({
       color={color}
     >
       <Content>{content}</Content>
-    </Base>
+    </SkeletonWrapper>
   );
 };
 
@@ -61,10 +58,9 @@ const pulseAnimation = css`
   animation: ${pulseKeyframe} 1.5s ease-in-out infinite;
 `;
 
-const Base = styled.div<skeletonPropTypes>`
+const SkeletonWrapper = styled.div<skeletonPropTypes>`
   ${({ color }) => color && `background: ${color}`};
   ${({ rounded }) => rounded && `border-radius: 8px`};
-  ${({ circle }) => circle && `border-radius: 50%`};
   ${({ width, height }) => (width || height) && 'display: block'};
   ${({ animation }) => animation && pulseAnimation};
   width: ${({ width, unit }) => width && unit && `${width}${unit}`};
