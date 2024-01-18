@@ -8,7 +8,7 @@ const CarouselSkeleton = () => {
   return (
     <>
       <Spacing marginBottom="3.6" />
-      <Skeleton width={10.2} height={3.6} unit={'rem'} color={'#fffefe'} rounded />
+      <Skeleton width={12.2} height={3.6} unit={'rem'} color={'#fffefe'} rounded animation />
       <Spacing marginBottom="1.6" />
       <CarouselContainer>
         <CarouselBox>

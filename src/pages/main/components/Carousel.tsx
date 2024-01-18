@@ -48,9 +48,9 @@ const Carousel = () => {
   return (
     <CarouselWrapper>
       <GroupCarouselTitle />
-      <Spacing marginBottom="3.6" />
       {groupData ? (
         <>
+          <Spacing marginBottom="3.6" />
           {groupData.map((moim) => (
             <CarouselWithButtonLayout key={moim.moimId}>
               <GroupNameButton groupName={moim.moimName} groupId={moim.moimId} />
