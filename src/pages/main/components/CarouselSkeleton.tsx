@@ -8,27 +8,27 @@ const CarouselSkeleton = () => {
   return (
     <CarouselWithButtonLayout>
       <Spacing marginBottom="3.6" />
-      <Skeleton width={10.2} height={3.6} unit={'rem'} color={'#dfdfdf'} rounded />
+      <Skeleton width={10.2} height={3.6} unit={'rem'} color={'#fffefe'} rounded />
       <Spacing marginBottom="1.6" />
       <CarouselContainer>
         <CarouselBox>
-          <Skeleton width={93} height={24} unit={'rem'} color={'#dfdfdf'} rounded />
+          <Skeleton width={93} height={24} unit={'rem'} color={'#fffefe'} rounded />
         </CarouselBox>
       </CarouselContainer>
       <Spacing marginBottom="1.6" />
-      <Skeleton width={10.2} height={3.6} unit={'rem'} color={'#dfdfdf'} rounded />
+      <Skeleton width={10.2} height={3.6} unit={'rem'} color={'#fffefe'} rounded />
       <Spacing marginBottom="1.6" />
       <CarouselContainer>
         <CarouselBox>
-          <Skeleton width={93} height={24} unit={'rem'} color={'#dfdfdf'} rounded />
+          <Skeleton width={93} height={24} unit={'rem'} color={'#fffefe'} rounded />
         </CarouselBox>
       </CarouselContainer>
       <Spacing marginBottom="1.6" />
-      <Skeleton width={10.2} height={3.6} unit={'rem'} color={'#dfdfdf'} rounded />
+      <Skeleton width={10.2} height={3.6} unit={'rem'} color={'#fffefe'} rounded />
       <Spacing marginBottom="1.6" />
       <CarouselContainer>
         <CarouselBox>
-          <Skeleton width={93} height={24} unit={'rem'} color={'#dfdfdf'} rounded />
+          <Skeleton width={93} height={24} unit={'rem'} color={'#fffefe'} rounded />
         </CarouselBox>
       </CarouselContainer>
     </CarouselWithButtonLayout>
