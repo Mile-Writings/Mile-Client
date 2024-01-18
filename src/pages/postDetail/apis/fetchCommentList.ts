@@ -24,13 +24,8 @@ const fetchCommentList = async (postId: string) => {
       },
     });
     return response.data;
-  } catch (err: any) {
-    if (err.response && err.response.status === 404) {
-      return { comments: [] }; // 빈 배열 반환
-    } else {
-      console.error('댓글 가져오기 실패:', err);
-      throw err;
-    }
+  } catch (err) {
+    console.log(err);
   }
 };
 
