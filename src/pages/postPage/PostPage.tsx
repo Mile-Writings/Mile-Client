@@ -88,10 +88,11 @@ const PostPage = () => {
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
       <ImageUpload
-        saveImage={setImageUrl}
         imageUrl={imageUrl}
+        saveImage={setImageUrl}
         url={url || ''}
         setImageToserver={setImageToserver}
+        fileName={fileName || ''}
       />
       <DropDownEditorWrapper>
         <DropDown topicList={topicList} selectedTopicId={setTopicId} isAnonymous={setAnonymous} />

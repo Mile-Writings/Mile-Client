@@ -11,32 +11,33 @@ interface ImageUploadPropTypes {
   imageUrl: string;
   url: string;
   setImageToserver: Dispatch<SetStateAction<string>>;
+  fileName: string;
 }
 
 const ImageUpload = (props: ImageUploadPropTypes) => {
-  const { imageUrl, saveImage, url, setImageToserver } = props;
+  const { imageUrl, saveImage, url, setImageToserver, fileName } = props;
   const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const target = e.target as FileReader;
       if (target) {
         saveImage(target.result as string);
-        postDirectlyS3Func(url, imageUrl); //url 파싱해서 넣기
       }
     };
     if (e.target.files && e.target.files[0]) {
+      postDirectlyS3Func(url, e.target.files[0]); //url 파싱해서 넣기
       reader.readAsDataURL(e.target.files[0]);
+      console.log(reader);
     }
   };
 
-  const postDirectlyS3Func = async (url: string, imageUrl: string) => {
+  const postDirectlyS3Func = async (url: string, imageFile: File) => {
     try {
-      const data = await postDirectlyS3(url, imageUrl || '');
+      const data = await postDirectlyS3(url, imageFile);
       const s3url = s3UrlPasing(url);
-      const urlToServer = `${s3url}${imageUrl}`;
+      const urlToServer = `${s3url + fileName}`;
       setImageToserver(urlToServer);
       console.log(data);
-      // const pasingedURL = url;
     } catch (err) {
       console.log(err);
     }
@@ -63,6 +64,7 @@ export default ImageUpload;
 
 const ThumbNailGradient = styled.div`
   width: 100%;
+
   background: ${({ theme }) => theme.colors.thumbnailGradient};
 `;
 
@@ -71,7 +73,8 @@ const ThumbNailImg = styled.img<{ $imgExist: string }>`
   display: inline-block;
   width: 100%;
   height: 30.7rem;
-  object-fit: cover; //픽스
+  object-fit: cover;
+
   background-color: ${({ theme }) => theme.colors.secondGreen};
 
   ${({ $imgExist }) => $imgExist.length === 0 && 'content: "";'}
@@ -93,6 +96,7 @@ const EditorThuminputIcnActiveIcon = styled(EditorThuminputIcnActiveIc)`
 
 const EditorThuminputIcnUnactiveIcon = styled(EditorThuminputIcnUnactiveIc)`
   margin-left: 74%;
+
   :hover {
     path {
       fill: ${({ theme }) => theme.colors.mainViolet};
