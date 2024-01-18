@@ -119,8 +119,10 @@ const FloatingBtn = styled.div`
   height: 7rem;
 
   background-image: url(${GroupFloatingBtn});
+  cursor: pointer;
 
   :hover {
     background-image: url(${GroupFloatingBtnHover});
+    cursor: pointer;
   }
 `;
