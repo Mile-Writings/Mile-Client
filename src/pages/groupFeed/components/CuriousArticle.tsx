@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useCuriousPost } from '../hooks/queries';
 
 import { GroupNoDataImgIc } from '../../../assets/svgs';
-import GroupCardThumnailImgIc from '../../../assets/svgs/groupCardThumnailImg.svg';
+
+import GroupCardThumnailImgIc from '/src/assets/svgs/groupCardThumnailImg.svg';
+
 import Spacing from '../../../components/commons/Spacing';
 
 interface ArticlePropTypes {
