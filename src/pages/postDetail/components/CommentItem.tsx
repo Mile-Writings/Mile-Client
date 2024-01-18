@@ -21,7 +21,6 @@ const CommentItem = ({ name, moimName, content, isMyComment, postId, commentId }
 
   const handleBtnClick = () => {
     setIsClick((prev) => !prev);
-    isClick ? console.log('클릭') : console.log('안클릭');
   };
   return (
     <CommentItemWrapper>
