@@ -1,12 +1,10 @@
 import styled from '@emotion/styled';
 
 import Carousel from './Carousel';
-import GroupCarouselTitle from './GroupCarouselTitle';
 
 const CarouselPage = () => {
   return (
     <CarouselComponentWrapper>
-      <GroupCarouselTitle />
       <Carousel />
     </CarouselComponentWrapper>
   );
