@@ -18,7 +18,6 @@ import Spacing from '../../components/commons/Spacing';
 const PostPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state);
 
   // 에디터 제목, 내용 저장 함수
   const [contentTitle, setContentTitle] = useState('');
@@ -27,17 +26,41 @@ const PostPage = () => {
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
-  // 글 수정하기 불러오기 위해 실행
-  const [renderType, setRenderType] = useState('');
 
-  // 내가 쓴 글 id
-  const [myPostId, setMyPostId] = useState(location.state);
-
-  // 모임 ID url에서 받아오기
+  // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
+  // 내가 쓴 글 id, topic
+  const [myPostId, setMyPostId] = useState('');
+  const [myTopicName, setMyTopicName] = useState('');
   // 수정하기로 들어온 글 정보 GET api
   const { data: editPostData } = useGetPostDetail(myPostId || '');
-  console.log(editPostData?.data);
+  useEffect(() => {
+    if (type == 'edit') {
+      setMyPostId(location.state.postId);
+      setMyTopicName(location.state.topic);
+    } else {
+      return;
+    }
+  }, [type]);
+
+  // 내가 쓴 글에 대한 정보
+  const EditPostData = editPostData?.data;
+  // console.log(myPostId);
+  // console.log(myTopicName);
+
+  // if (type == 'edit') {
+  //   console.log(EditPostData?.topic);
+  //   console.log(EditPostData?.title);
+  //   console.log(EditPostData?.content);
+  //   console.log(EditPostData?.imageUrl);
+  //   console.log(EditPostData?.writerName);
+  //   console.log(EditPostData?.moimName);
+  //   console.log(EditPostData?.writerInfo);
+
+  //   // setContentContent(EditPostData?.content);
+  //   // setContentTitle(EditPostData?.title);
+  //   // setAnonymous(EditPostData?.writerName == '작자미상');
+  // }
 
   // 임시저장 값 여부 확인
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
@@ -90,7 +113,6 @@ const PostPage = () => {
       return;
     }
   }, [isTemporaryPostExist]);
-  // console.log(isTemporaryPostExist);
 
   return (
     <PostPageWrapper>

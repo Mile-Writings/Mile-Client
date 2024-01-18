@@ -39,7 +39,7 @@ const PostDetail = () => {
   };
 
   const handleEditBtn = () => {
-    navigate(`/post/${groupId}/edit`, { state: postId });
+    navigate(`/post/${groupId}/edit`, { state: { postId: postId, topic: postData?.topic } });
   };
   // 리팩토링 전 코드
   // useEffect(() => {
@@ -74,6 +74,7 @@ const PostDetail = () => {
             <TitleText>{postData?.title}</TitleText>
             <DateText>{postData?.createdAt}</DateText>
           </InfoTextBox>
+          {/* 여기 수정해야 함 */}
           {true && (
             <ButtonWrapper>
               <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
