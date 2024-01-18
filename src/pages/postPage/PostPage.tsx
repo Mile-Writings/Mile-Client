@@ -23,7 +23,7 @@ const PostPage = () => {
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
-
+  const [imageToServer, setImageToserver] = useState('');
   // 모임 ID url에서 받아오기
   const { groupId } = useParams() as { groupId: string };
   // console.log(groupId);
@@ -51,7 +51,7 @@ const PostPage = () => {
     topicId: topicId,
     title: contentTitle,
     content: contentContent,
-    imageUrl: imageUrl,
+    imageUrl: imageToServer,
     anonymous: anonymous,
   });
   const saveHandler = () => {
@@ -87,7 +87,12 @@ const PostPage = () => {
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
-      <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
+      <ImageUpload
+        saveImage={setImageUrl}
+        imageUrl={imageUrl}
+        url={url || ''}
+        setImageToserver={setImageToserver}
+      />
       <DropDownEditorWrapper>
         <DropDown topicList={topicList} selectedTopicId={setTopicId} isAnonymous={setAnonymous} />
         <Spacing marginBottom="2.4" />
