@@ -115,6 +115,7 @@ export const useArticleList = (topicId: string) => {
     queryKey: [QUERY_KEY_GROUPFEED.getArticleList, topicId],
     queryFn: () => fetchArticleList(topicId),
     staleTime: 10000, //20초 캐시
+    enabled: !!topicId,
   });
 
   const topicInfo = data && data.data.topicInfo;
