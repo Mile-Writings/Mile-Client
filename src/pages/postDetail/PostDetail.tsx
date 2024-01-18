@@ -22,6 +22,7 @@ const PostDetail = () => {
   const { data: postAuth } = useCheckPostAuth(postId || '');
   const { mutate: deletePost } = useDeletePost(postId || '');
   const postData = data?.data;
+  console.log(postData);
   if (isError) {
     navigate('/error');
   }

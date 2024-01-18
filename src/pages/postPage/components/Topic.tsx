@@ -28,12 +28,12 @@ const ThisWeekTopic = (props: TopicPropTypes) => {
     onClickClose(false);
     selectedTopicId(topicId);
   };
-
   useEffect(() => {
     if (type == 'edit') {
       onClickHandler('topic', location.state.topic);
     }
   }, [urlType]);
+
   return (
     <>
       <TopicLog>최신 글감</TopicLog>

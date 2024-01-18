@@ -25,7 +25,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
   const handleOutSideClick = () => {
     setTopicIsOpen(false);
   };
-  //커스텀 훅 사용
+  // 커스텀 훅 사용
   useClickOutside(dropDownRef, handleOutSideClick);
 
   // 수정 뷰일 때 글감 ID 업데이트

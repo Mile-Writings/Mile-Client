@@ -28,6 +28,7 @@ const PostPage = () => {
   const [imageUrl, setImageUrl] = useState('');
   console.log(topicList);
   console.log(topicId);
+  console.log(`메일페이지 ${anonymous}`);
 
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
@@ -111,7 +112,11 @@ const PostPage = () => {
       )}
       <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
       <DropDownEditorWrapper>
-        <DropDown topicList={topicList} selectedTopicId={setTopicId} />
+        <DropDown
+          topicList={topicList}
+          selectedTopicId={setTopicId}
+          updateAnonymous={setAnonymous}
+        />
         <Spacing marginBottom="2.4" />
         <Editor saveTitle={setContentTitle} saveContent={setContentContent} />
       </DropDownEditorWrapper>
