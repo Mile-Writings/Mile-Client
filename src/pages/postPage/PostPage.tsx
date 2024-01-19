@@ -39,7 +39,9 @@ const PostPage = () => {
   const [imageUrl, setImageUrl] = useState(
     'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
   );
-  const [imageToServer, setImageToServer] = useState('');
+  const [imageToServer, setImageToServer] = useState(
+    'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
+  );
 
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
@@ -48,7 +50,7 @@ const PostPage = () => {
   useEffect(() => {
     if (type == 'edit') {
       setEditPostId(location.state.postId);
-      setImageUrl(location.state.imageUrl);
+      setImageToServer(location.state.imageUrl);
     }
   }, [type]);
 
@@ -87,7 +89,7 @@ const PostPage = () => {
     topicId: topicId,
     title: contentTitle,
     content: contentContent,
-    imageUrl: imageUrl,
+    imageUrl: imageToServer,
     anonymous: anonymous,
     postId: editPostId,
   });

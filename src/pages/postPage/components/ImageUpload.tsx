@@ -76,8 +76,6 @@ const ThumbNailImg = styled.img<{ $imgExist: string }>`
   height: 30.7rem;
   object-fit: cover;
 
-  background-color: ${({ theme }) => theme.colors.secondGreen};
-
   ${({ $imgExist }) => $imgExist && $imgExist.length === 0 && 'content: "";'}
 `;
 
