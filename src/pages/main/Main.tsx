@@ -1,13 +1,10 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
 
-import Carousel from './components/Carousel';
-import CarouselSkeleton from './components/CarouselSkeleton';
+import CarouselPage from './components/CarouselPage';
 import FaqDropdown from './components/FaqDropdown';
 import FaqTitle from './components/FaqTitle';
-import GroupCarouselTitle from './components/GroupCarouselTitle';
 import Introduction from './components/Introduction';
-import { LogInHeader, UnAuthorizationHeader } from './components/MainHeader';
+import { AuthorizationHeader, UnAuthorizationHeader } from './components/MainHeader';
 import Manual from './components/Manual';
 import OnBoarding from './components/OnBoarding';
 import Ruler from './components/Ruler';
@@ -17,31 +14,11 @@ import Footer from './../../components/commons/Footer';
 import Spacing from './../../components/commons/Spacing';
 
 const Main = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
-
   return (
     <MainPageWrapper>
-      {localStorage.getItem('accessToken') ? <LogInHeader /> : <UnAuthorizationHeader />}
+      {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <OnBoarding />
-      <CarouselComponentLayout>
-        {isLoading ? (
-          <>
-            <GroupCarouselTitle />
-            <CarouselSkeleton />
-          </>
-        ) : (
-          <>
-            <GroupCarouselTitle />
-            <Carousel />
-          </>
-        )}
-      </CarouselComponentLayout>
+      <CarouselPage />
       <Ruler />
       <Introduction />
       <Manual />
@@ -66,13 +43,6 @@ const MainPageWrapper = styled.div`
   width: 100%;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
-`;
-
-const CarouselComponentLayout = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-  padding-bottom: 10rem;
 `;
 
 const FaqTitleWithDropDownLayout = styled.section`

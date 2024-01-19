@@ -30,14 +30,19 @@ export const GroupFeedHeader = () => {
   const handleMainRouting = () => {
     navigate('/');
   };
+  const handleLogOut = () => {
+    logout();
+    alert('로그아웃 되었습니다');
+    location.reload();
+  };
   return (
     <HeaderWrapper>
-      <HeaderLogoIc onClick={handleMainRouting} />
+      <HeaderLogoIcon onClick={handleMainRouting} />
       <HeaderBtnLayout>
         <MyGroupBtn />
         <CommonBtnLayout>
           <MakeGroupBtn />
-          <LogInOutBtn onClick={logout}>로그아웃</LogInOutBtn>
+          <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
         </CommonBtnLayout>
       </HeaderBtnLayout>
     </HeaderWrapper>
@@ -52,7 +57,7 @@ export const LogOutHeader = ({ onClick }: OnClickProps) => {
   };
   return (
     <HeaderWrapper>
-      <HeaderLogoIc onClick={handleMainRouting} />
+      <HeaderLogoIcon onClick={handleMainRouting} />
       <LogInOutBtn onClick={onClick}>로그인</LogInOutBtn>
     </HeaderWrapper>
   );
@@ -80,4 +85,8 @@ const CommonBtnLayout = styled.div`
   gap: 1.2rem;
   align-items: center;
   height: 6.4rem;
+`;
+
+const HeaderLogoIcon = styled(HeaderLogoIc)`
+  cursor: pointer;
 `;

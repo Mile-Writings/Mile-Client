@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 
 interface TopicPropTypes {
   topicId: string;
@@ -12,12 +13,27 @@ interface TopicPropTypes {
 }
 
 const ThisWeekTopic = (props: TopicPropTypes) => {
+  const [urlType, setUrlType] = useState('');
   const { topicName, onClickHandler, selected, onClickClose, selectedTopicId, topicId } = props;
+  const location = useLocation();
+  const { type } = useParams() as { type: string };
+
+  useEffect(() => {
+    setUrlType(type);
+  }, []);
+
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
+
     onClickClose(false);
     selectedTopicId(topicId);
   };
+  useEffect(() => {
+    if (type == 'edit') {
+      onClickHandler('topic', location.state.topic);
+    }
+  }, [urlType]);
+
   return (
     <>
       <TopicLog>최신 글감</TopicLog>
@@ -29,12 +45,27 @@ const ThisWeekTopic = (props: TopicPropTypes) => {
 };
 
 const PrevFirstTopic = (props: TopicPropTypes) => {
+  const [urlType, setUrlType] = useState('');
   const { topicName, onClickHandler, selected, onClickClose, selectedTopicId, topicId } = props;
+  const location = useLocation();
+  const { type } = useParams() as { type: string };
+
+  useEffect(() => {
+    setUrlType(type);
+  }, []);
+
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
+
     onClickClose(false);
     selectedTopicId(topicId);
   };
+
+  useEffect(() => {
+    if (type == 'edit') {
+      onClickHandler('topic', location.state.topic);
+    }
+  }, [urlType]);
   return (
     <>
       <Divider />
@@ -47,12 +78,27 @@ const PrevFirstTopic = (props: TopicPropTypes) => {
 };
 
 const PrevTopic = (props: TopicPropTypes) => {
+  const [urlType, setUrlType] = useState('');
   const { topicName, onClickHandler, selected, onClickClose, selectedTopicId, topicId } = props;
+  const location = useLocation();
+  const { type } = useParams() as { type: string };
+
+  useEffect(() => {
+    setUrlType(type);
+  }, []);
+
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
+
     onClickClose(false);
     selectedTopicId(topicId);
   };
+
+  useEffect(() => {
+    if (type == 'edit') {
+      onClickHandler('topic', location.state.topic);
+    }
+  }, [urlType]);
   return (
     <Topic onClick={handleListClick} $selected={selected}>
       {topicName}

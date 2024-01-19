@@ -5,6 +5,8 @@ import Slider from 'react-slick';
 import '../styles/slick-theme.css';
 import '../styles/slick.css';
 
+import CarouselSkeletonPage from './CarouselSkeletonPage';
+import GroupCarouselTitle from './GroupCarouselTitle';
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
 
@@ -45,9 +47,10 @@ const Carousel = () => {
 
   return (
     <CarouselWrapper>
-      <Spacing marginBottom="3.6" />
-      {groupData && (
-        <section>
+      <GroupCarouselTitle />
+      {groupData ? (
+        <>
+          <Spacing marginBottom="3.6" />
           {groupData.map((moim) => (
             <CarouselWithButtonLayout key={moim.moimId}>
               <GroupNameButton groupName={moim.moimName} groupId={moim.moimId} />
@@ -71,7 +74,9 @@ const Carousel = () => {
               </CarouselContainer>
             </CarouselWithButtonLayout>
           ))}
-        </section>
+        </>
+      ) : (
+        <CarouselSkeletonPage />
       )}
     </CarouselWrapper>
   );

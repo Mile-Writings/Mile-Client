@@ -44,8 +44,8 @@ const createPostContent = async ({
         },
       },
     );
-    console.log(data);
-    return data;
+    console.log(`data: ${data.data.postId}`);
+    return data.data.postId;
   } catch (err) {
     console.log(err);
   }

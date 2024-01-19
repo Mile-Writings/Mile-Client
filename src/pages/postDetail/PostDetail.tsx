@@ -7,6 +7,7 @@ import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queri
 
 import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
+import { UnAuthorizationHeader } from '../main/components/MainHeader';
 
 import { CheckboxIc, DefaultProfileIc, HeaderLogoIc } from './../../assets/svgs';
 import Button from './../../components/commons/Button';
@@ -22,6 +23,10 @@ const PostDetail = () => {
   const { data: postAuth } = useCheckPostAuth(postId || '');
   const { mutate: deletePost } = useDeletePost(postId || '');
   const postData = data?.data;
+
+  const accessToken = localStorage.getItem('accessToken');
+  console.log(postData);
+  console.log(postAuth);
   if (isError) {
     navigate('/error');
   }
@@ -39,7 +44,16 @@ const PostDetail = () => {
   };
 
   const handleEditBtn = () => {
-    navigate(`/edit/${groupId}`);
+    navigate(`/post/${groupId}/edit`, {
+      state: {
+        postId: postId,
+        topic: postData?.topic,
+        writer: postData?.writerName,
+        title: postData?.title,
+        content: postData?.content,
+        imageUrl: postData?.imageUrl,
+      },
+    });
   };
   // 리팩토링 전 코드
   // useEffect(() => {
@@ -48,23 +62,29 @@ const PostDetail = () => {
   //     console.log(data);
   //   }
   // }, []);
+  // console.log(postAuth?.data?.data.canEdit);
 
   return (
     <>
-      <PostHeader>
-        <HeaderLogoIcon
-          onClick={() => {
-            navigate('/');
-          }}
-        />
-        <HeaderBtnLayout>
-          <MyGroupBtn />
-          <CommonBtnLayout>
-            <MakeGroupBtn />
-            <LogInOutBtn onClick={logout}>로그아웃</LogInOutBtn>
-          </CommonBtnLayout>
-        </HeaderBtnLayout>
-      </PostHeader>
+      {accessToken ? (
+        <PostHeader>
+          <HeaderLogoIcon
+            onClick={() => {
+              navigate('/');
+            }}
+          />
+          <HeaderBtnLayout>
+            <MyGroupBtn />
+            <CommonBtnLayout>
+              <MakeGroupBtn />
+              <LogInOutBtn onClick={logout}>로그아웃</LogInOutBtn>
+            </CommonBtnLayout>
+          </HeaderBtnLayout>
+        </PostHeader>
+      ) : (
+        <UnAuthorizationHeader />
+      )}
+
       <ThumnailImg src={postData?.imageUrl} alt={'썸네일 이미지'} />
       <Spacing marginBottom="4.8" />
       <PostDetailWrapper>
@@ -73,7 +93,8 @@ const PostDetail = () => {
             <TitleText>{postData?.title}</TitleText>
             <DateText>{postData?.createdAt}</DateText>
           </InfoTextBox>
-          {postAuth?.data?.data.canEdit && (
+          {/* 여기 수정해야 함 */}
+          {postAuth?.data?.data?.canEdit && (
             <ButtonWrapper>
               <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
                 글 삭제하기
@@ -89,7 +110,9 @@ const PostDetail = () => {
             <CheckboxIc />
             <TopicText>{postData?.topic}</TopicText>
           </TopicWrapper>
-          <PostContainer>{postData?.content}</PostContainer>
+          <PostContainer
+            dangerouslySetInnerHTML={{ __html: postData?.content || '' }}
+          ></PostContainer>
         </PostWrapper>
         <WriterInfoWrapper>
           <WriterInfoContainer>
@@ -122,7 +145,7 @@ const PostHeader = styled.header`
   height: 6.4rem;
   padding: 0 6rem;
 
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.white};
 `;
 const HeaderBtnLayout = styled.div`
   display: flex;
@@ -181,7 +204,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
   align-items: flex-start;
-  width: 21rem;
+  width: 22rem;
 `;
 
 const TopicWrapper = styled.div`

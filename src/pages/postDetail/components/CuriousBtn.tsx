@@ -10,15 +10,19 @@ import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets
 const CuriousBtn = () => {
   const { postId } = useParams();
   const { data } = useGetCuriousInfo(postId || '');
-
+  const token = localStorage.getItem('accessToken');
   const { mutate: postCurious } = usePostCurious(postId || '');
   const { mutate: deleteCurious } = useDeleteCurious(postId || ' ');
   const isCurious = data?.data?.isCurious;
   const [isClick, setIsClick] = useState(!!isCurious);
 
   const handleBtnClick = () => {
-    isClick ? deleteCurious() : postCurious();
-    setIsClick((prev) => !prev);
+    if (token) {
+      isClick ? deleteCurious() : postCurious();
+      setIsClick((prev) => !prev);
+    } else {
+      alert('모임의 유저가 아닙니다.');
+    }
   };
 
   useEffect(() => {

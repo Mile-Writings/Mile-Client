@@ -1,17 +1,27 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import createPostContent from '../apis/createPostContent';
+import createTempSaveContent from '../apis/createTempSaveContent';
+import editPutContent from '../apis/editPutContent';
 import { fetchTopic } from '../apis/fetchEditorContent';
 import { fetchPresignedUrl } from '../apis/fetchPresignedUrl';
+import { fetchTempSaveContent } from '../apis/fetchTempSaveContent';
 import { fetchTempSaveFlag } from '../apis/fetchTempSaveFlag';
+
+import { QUERY_KEY_POST_DETAIL } from '../../postDetail/hooks/queries';
 
 export const QUERY_KEY_POST = {
   postContent: 'postContent',
   getTopic: 'getTopic',
   getTempSaveFlag: 'getTempSaveFlag',
   getPresignedUrl: 'getPresignedUrl',
+  putEditContent: 'putEditContent',
+  postSaveTempContent: 'postSaveTempContent',
+  getTempSaveContent: 'getTempSaveContent',
 };
 
+// 글 최초 저장
 interface postContentType {
   groupId: string;
   topicId: string;
@@ -29,7 +39,8 @@ export const usePostContent = ({
   imageUrl,
   anonymous,
 }: postContentType) => {
-  const data = useMutation({
+  const navigate = useNavigate();
+  const { mutate, data } = useMutation({
     mutationKey: [
       QUERY_KEY_POST.postContent,
       {
@@ -42,13 +53,13 @@ export const usePostContent = ({
       },
     ],
     mutationFn: () => createPostContent({ groupId, topicId, title, content, imageUrl, anonymous }),
-    onSuccess: () => {
-      console.log({ groupId, topicId, title, content, imageUrl, anonymous });
+    onSuccess: (postData) => {
+      navigate(`/detail/${groupId}/${postData}`);
     },
   });
-  return data;
-};
 
+  return { mutate, data };
+};
 // 에디터 상단 글감 조회
 // response 타입 리펙토링 ...........
 // interface Topics {
@@ -106,4 +117,100 @@ export const usePresignedUrl = (): PresignedUrlQueryResult => {
   const url = data && data.data.url;
 
   return { fileName, url };
+};
+
+// 글 수정하기 Put
+interface putEditContentType {
+  topicId: string;
+  title: string;
+  content: string;
+  imageUrl: string;
+  anonymous: boolean;
+  postId: string;
+}
+
+export const usePutEditContent = ({
+  topicId,
+  title,
+  content,
+  imageUrl,
+  anonymous,
+  postId,
+}: putEditContentType) => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: [
+      QUERY_KEY_POST.putEditContent,
+      {
+        topicId,
+        title,
+        content,
+        imageUrl,
+        anonymous,
+        postId,
+      },
+    ],
+    mutationFn: () => editPutContent({ topicId, title, content, imageUrl, anonymous, postId }),
+    onSuccess: () => {
+      console.log({ topicId, title, content, imageUrl, anonymous });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
+    },
+  });
+  return data;
+};
+
+// 임시저장 POST
+interface postTempSaveType {
+  groupId: string;
+  topicId: string;
+  title: string;
+  content: string;
+  imageUrl: string;
+  anonymous: boolean;
+}
+
+export const usePostTempSaveContent = ({
+  groupId,
+  topicId,
+  title,
+  content,
+  imageUrl,
+  anonymous,
+}: postTempSaveType) => {
+  const data = useMutation({
+    mutationKey: [
+      QUERY_KEY_POST.postSaveTempContent,
+      {
+        groupId,
+        topicId,
+        title,
+        content,
+        imageUrl,
+        anonymous,
+      },
+    ],
+    mutationFn: () =>
+      createTempSaveContent({ groupId, topicId, title, content, imageUrl, anonymous }),
+    onSuccess: () => {
+      console.log({ groupId, topicId, title, content, imageUrl, anonymous });
+    },
+  });
+  return data;
+};
+
+// 임시저장 불러오기 GET
+export const useGetTempSaveContent = (postId: string, isTempClicked: boolean) => {
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY_POST.getTempSaveContent, postId],
+    queryFn: () => fetchTempSaveContent(postId),
+    enabled: !!isTempClicked,
+  });
+
+  const tempTopicList = data && data.data.topicList;
+  const tempTitle = data && data.data.title;
+  const tempContent = data && data.data.content;
+  const tempImageUrl = data && data.data.imageUrl;
+  const tempAnonymous = data && data.data.anonymous;
+
+  return { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous };
 };

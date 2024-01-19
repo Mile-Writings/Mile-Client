@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
 import { ThisWeekTopic, PrevFirstTopic, PrevTopic } from './Topic';
@@ -25,8 +25,15 @@ const TopicDropDown = (props: DropDownPropsType) => {
   const handleOutSideClick = () => {
     setTopicIsOpen(false);
   };
-  //커스텀 훅 사용
+  // 커스텀 훅 사용
   useClickOutside(dropDownRef, handleOutSideClick);
+
+  //수정 뷰일 때 글감 ID 업데이트
+  useEffect(() => {
+    const editViewSelectedTopicId =
+      topicList.find((topic) => topic.topicName === selectedValue)?.topicId || '';
+    selectedTopicId(editViewSelectedTopicId);
+  }, [selectedValue]);
 
   return (
     <TopicDropDownWrapper ref={dropDownRef}>

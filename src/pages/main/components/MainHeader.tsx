@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { HeaderLogoIc } from '../../../assets/svgs';
 import LogInOutBtn from '../../../components/commons/LogInOutBtn';
@@ -9,7 +9,7 @@ import MakeGroupBtn from '../../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../../groupFeed/components/MyGroupBtn';
 
 // 메인 페이지 헤더
-export const LogInHeader = () => {
+export const AuthorizationHeader = () => {
   const handleLogOut = () => {
     logout();
     alert('로그아웃 되었습니다');
@@ -33,8 +33,9 @@ export const LogInHeader = () => {
 //아직 로그인을 하지 않았을 때 헤더
 export const UnAuthorizationHeader = () => {
   const navigate = useNavigate();
+  const pathname = useLocation();
   const handleLogIn = () => {
-    navigate(`/login`);
+    navigate(`/login`, { state: pathname });
   };
   return (
     <HeaderWrapper>

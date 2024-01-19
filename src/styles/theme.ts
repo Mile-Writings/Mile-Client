@@ -8,6 +8,7 @@ export const theme = {
     lightViolet: '#F7F5FC',
     darkViolet: '#A29CAF',
     grayViolet: '#EDEDF5',
+    midGrayViolet: '#D6D6EB',
     mainGreen: '#2F7417',
     mileGreen: '#C5DB8F',
     middleGreen: '#CCE09B',

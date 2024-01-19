@@ -8,6 +8,7 @@ import deleteCurious from '../apis/deleteCurious';
 import deletePost from '../apis/deletePost';
 import fetchCommentList from '../apis/fetchCommentList';
 import fetchCuriousInfo from '../apis/fetchCuriousInfo';
+import fetchDeleteComment from '../apis/fetchDeleteComment';
 import fetchPostComment from '../apis/fetchPostComment';
 import fetchPostDetail from '../apis/fetchPostDetail';
 //쿼리키를 이렇게 두는 이유는 겹치지 않기위해 + 객체로 생성하여 자동완성 하기 위해
@@ -81,9 +82,11 @@ export const useDeleteCurious = (postId: string) => {
 
 //글 삭제/수정 권한 확인
 export const useCheckPostAuth = (postId: string) => {
+  const token = localStorage.getItem('accessToken');
   const data = useQuery({
     queryKey: [QUERY_KEY_POST_DETAIL.getAuthorization, postId],
     queryFn: () => checkPostAuth(postId),
+    enabled: !!token,
   });
   return data;
 };
@@ -96,18 +99,17 @@ export const useDeletePost = (postId: string) => {
   });
   return data;
 };
-interface UsePostComment {
-  postComment: (props: string) => void;
-}
 
 //댓글 생성 api
-export const usePostComment = (postId: string): UsePostComment => {
+export const usePostComment = (postId: string) => {
   const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
     mutationFn: (comment: string) => fetchPostComment(postId, comment),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
+      });
     },
   });
 
@@ -116,4 +118,23 @@ export const usePostComment = (postId: string): UsePostComment => {
   };
 
   return { postComment };
+};
+
+//댓글 삭제 api
+export const useDeleteComment = (commentId: string, postId: string) => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: [QUERY_KEY_POST_DETAIL.getCommentList, commentId],
+    mutationFn: () => fetchDeleteComment(commentId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
+      });
+    },
+  });
+
+  const deleteComment = () => {
+    data.mutate();
+  };
+  return { deleteComment };
 };
