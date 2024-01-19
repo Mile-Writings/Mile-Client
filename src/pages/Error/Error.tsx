@@ -7,7 +7,7 @@ import Spacing from '../../components/commons/Spacing';
 const Error = () => {
   const navigate = useNavigate();
   const handlePrevPage = () => {
-    navigate(-1);
+    navigate('/');
   };
 
   return (
