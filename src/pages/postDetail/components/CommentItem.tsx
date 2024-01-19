@@ -93,8 +93,9 @@ const CommentText = styled.p`
 
 const Modal = styled.div`
   position: absolute;
-  top: 4rem;
-  right: 1rem;
+  top: 3.2rem;
+  right: 0;
+
   display: flex;
   align-items: center;
   width: 10.6rem;
@@ -103,9 +104,9 @@ const Modal = styled.div`
 
   color: ${({ theme }) => theme.colors.gray90};
   text-align: left;
-  ${({ theme }) => theme.fonts.button2};
 
   border: 1px solid ${({ theme }) => theme.colors.gray50};
+  ${({ theme }) => theme.fonts.button2};
   border-radius: 8px;
 `;
 
@@ -127,6 +128,8 @@ const MeatBallWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 2.6rem;
   height: 2.6rem;
 
   border-radius: 4px;
