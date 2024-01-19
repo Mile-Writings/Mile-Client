@@ -36,7 +36,9 @@ const PostPage = () => {
   const [topicList, setTopicList] = useState<Topics[]>([]);
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState(
+    'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
+  );
   const [imageToServer, setImageToServer] = useState('');
 
   // 모임 ID, url에서 받아오기
@@ -53,7 +55,7 @@ const PostPage = () => {
   // 임시저장 값 여부 확인 (서버값)
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
   // 조건부 처리용
-  const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist);
+  const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist || false);
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
@@ -65,8 +67,6 @@ const PostPage = () => {
 
   // 이미지 보낼 url 받아오기
   const { fileName, url } = usePresignedUrl();
-  console.log(url);
-  console.log(fileName);
 
   // 최초저장
   const { mutate: postContent } = usePostContent({
@@ -103,7 +103,7 @@ const PostPage = () => {
     topicId: topicId,
     title: contentTitle,
     content: contentContent,
-    imageUrl: imageUrl,
+    imageUrl: imageToServer,
     anonymous: anonymous,
   });
   const tempSaveHandler = () => {
@@ -128,9 +128,7 @@ const PostPage = () => {
     } else {
       return;
     }
-  }, [isTemporaryPostExist, tempTitle, tempContent, tempImageUrl]);
-
-  // console.log(tempAnonymous);
+  }, [isTemporaryPostExist, tempTitle, tempContent]);
 
   // 임시 저장 글 -> 저장하기
   const { mutate: putTempSaveContent } = usePutTempSaveContent({
@@ -141,15 +139,10 @@ const PostPage = () => {
     anonymous: anonymous,
     postId: postId || '',
   });
-  console.log(contentContent);
-  console.log(contentTitle);
-  console.log(postId);
-  console.log(anonymous);
-  console.log(imageToServer);
 
   const tempExistSaveHandler = () => {
     putTempSaveContent();
-    navigate(``)
+    navigate(`/detail/${groupId}/${postId}`);
   };
 
   return (
@@ -163,7 +156,8 @@ const PostPage = () => {
       )}
       <ImageUpload
         saveImage={setImageUrl}
-        imageUrl={imageUrl}
+        imageUrl={imageToServer}
+        // imageUrl={imageToServer}
         setImageToServer={setImageToServer}
         url={url || ''}
         fileName={fileName || ''}

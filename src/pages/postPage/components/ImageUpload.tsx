@@ -37,6 +37,7 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
       const s3url = s3UrlPasing(url);
       const urlToServer = `${s3url + fileName}`;
       setImageToServer(urlToServer);
+      // saveImage(urlToServer);
       console.log(data);
     } catch (err) {
       console.log(err);
@@ -50,7 +51,7 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
       </ThumbNailGradient>
       <ImageInput type="file" accept="image/*" id="editorImg" onChange={onImageUpload} />
       <ImageUploadLabel htmlFor="editorImg">
-        {imageUrl.length > 0 ? (
+        {imageUrl && imageUrl.length > 0 ? (
           <EditorThuminputIcnActiveIcon />
         ) : (
           <EditorThuminputIcnUnactiveIcon />
@@ -77,7 +78,7 @@ const ThumbNailImg = styled.img<{ $imgExist: string }>`
 
   background-color: ${({ theme }) => theme.colors.secondGreen};
 
-  ${({ $imgExist }) => $imgExist.length === 0 && 'content: "";'}
+  ${({ $imgExist }) => $imgExist && $imgExist.length === 0 && 'content: "";'}
 `;
 
 const ImageUploadLabel = styled.label`

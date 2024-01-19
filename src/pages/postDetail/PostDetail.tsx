@@ -22,6 +22,7 @@ const PostDetail = () => {
   const { data: postAuth } = useCheckPostAuth(postId || '');
   const { mutate: deletePost } = useDeletePost(postId || '');
   const postData = data?.data;
+  console.log(postData?.imageUrl);
 
   console.log(postData);
   console.log(postAuth);
@@ -86,7 +87,6 @@ const PostDetail = () => {
             <TitleText>{postData?.title}</TitleText>
             <DateText>{postData?.createdAt}</DateText>
           </InfoTextBox>
-          {/* 여기 수정해야 함 */}
           {postAuth?.data?.data?.canEdit && (
             <ButtonWrapper>
               <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
