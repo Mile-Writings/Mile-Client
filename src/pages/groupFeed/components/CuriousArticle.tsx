@@ -5,7 +5,8 @@ import { useCuriousPost } from '../hooks/queries';
 
 import { GroupNoDataImgIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-import GroupThumbnailImg from '../../assets/svgs/groupThumnailImg.svg';
+
+import GroupThumbnailImg from '/src/assets/svgs/groupThumnailImg.svg';
 
 interface ArticlePropTypes {
   topic: string;
