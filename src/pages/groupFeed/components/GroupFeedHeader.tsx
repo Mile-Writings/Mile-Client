@@ -71,6 +71,7 @@ const HeaderWrapper = styled.div`
   padding-right: 6rem;
   padding-left: 6rem;
 
+  background-color: ${({ theme }) => theme.colors.white};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
 `;
 

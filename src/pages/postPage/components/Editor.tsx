@@ -127,6 +127,8 @@ interface EditorPropTypes {
 }
 
 const Editor = (props: EditorPropTypes) => {
+  console.log('에디터 실행됨');
+
   const { title, tempTitle, content, tempContent, saveTitle, saveContent, isTemp } = props;
 
   // 수정뷰 전달값 받아오기

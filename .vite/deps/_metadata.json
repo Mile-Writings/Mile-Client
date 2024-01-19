@@ -1,0 +1,91 @@
+{
+  "hash": "32f08c22",
+  "configHash": "db4af4f0",
+  "lockfileHash": "2ecaba4f",
+  "browserHash": "06a2d194",
+  "optimized": {
+    "@emotion/react/jsx-dev-runtime": {
+      "src": "../../node_modules/@emotion/react/jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.browser.esm.js",
+      "file": "@emotion_react_jsx-dev-runtime.js",
+      "fileHash": "a760a49d",
+      "needsInterop": false
+    },
+    "@emotion/react": {
+      "src": "../../node_modules/@emotion/react/dist/emotion-react.browser.esm.js",
+      "file": "@emotion_react.js",
+      "fileHash": "13429ff1",
+      "needsInterop": false
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "a5cb7e54",
+      "needsInterop": true
+    },
+    "@emotion/styled": {
+      "src": "../../node_modules/@emotion/styled/dist/emotion-styled.browser.esm.js",
+      "file": "@emotion_styled.js",
+      "fileHash": "f8c460be",
+      "needsInterop": false
+    },
+    "@tanstack/react-query": {
+      "src": "../../node_modules/@tanstack/react-query/build/modern/index.js",
+      "file": "@tanstack_react-query.js",
+      "fileHash": "474d9a11",
+      "needsInterop": false
+    },
+    "emotion-reset": {
+      "src": "../../node_modules/emotion-reset/dist/index.js",
+      "file": "emotion-reset.js",
+      "fileHash": "c8e472b2",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "5b0ae477",
+      "needsInterop": false
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "e508372b",
+      "needsInterop": true
+    },
+    "react-quill": {
+      "src": "../../node_modules/react-quill/lib/index.js",
+      "file": "react-quill.js",
+      "fileHash": "d64dea23",
+      "needsInterop": true
+    },
+    "react-slick": {
+      "src": "../../node_modules/react-slick/lib/index.js",
+      "file": "react-slick.js",
+      "fileHash": "c3810f16",
+      "needsInterop": true
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "4e607d01",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-HSCW62YB": {
+      "file": "chunk-HSCW62YB.js"
+    },
+    "chunk-XWHMKPPA": {
+      "file": "chunk-XWHMKPPA.js"
+    },
+    "chunk-ES3VS2V5": {
+      "file": "chunk-ES3VS2V5.js"
+    },
+    "chunk-YWBCN2AJ": {
+      "file": "chunk-YWBCN2AJ.js"
+    },
+    "chunk-7TNKEIRG": {
+      "file": "chunk-7TNKEIRG.js"
+    }
+  }
+}

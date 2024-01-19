@@ -145,7 +145,8 @@ const PostHeader = styled.header`
   height: 6.4rem;
   padding: 0 6rem;
 
-  border-bottom: 1px solid ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.white};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
 `;
 const HeaderBtnLayout = styled.div`
   display: flex;

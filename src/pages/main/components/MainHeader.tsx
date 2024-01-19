@@ -34,6 +34,7 @@ export const AuthorizationHeader = () => {
 
 //아직 로그인을 하지 않았을 때 헤더
 export const UnAuthorizationHeader = () => {
+  const { navigateToHome } = useNavigateToHome();
   const navigate = useNavigate();
   const pathname = useLocation();
   const handleLogIn = () => {
@@ -41,7 +42,7 @@ export const UnAuthorizationHeader = () => {
   };
   return (
     <HeaderWrapper>
-      <HeaderLogoIc />
+      <HeaderLogoIcon onClick={navigateToHome} />
       <LogInOutBtn onClick={handleLogIn}>로그인</LogInOutBtn>
     </HeaderWrapper>
   );
