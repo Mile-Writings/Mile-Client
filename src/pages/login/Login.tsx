@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import { KakaoLoginBtnIc as KakaoLoginBtnIcon, LoginIc } from '../../assets/svgs';
 
 const Login = () => {
-  // const REDIRECT_URL = 'http://localhost:5173/redirect-kakao';
+  const REDIRECT_URL = 'http://localhost:5173/redirect-kakao';
   // const REDIRECT_URL = 'https://mile-client-git-develop-seojinyoons-projects/redirect-kakao';
-  const REDIRECT_URL = 'https://www.milewriting.com/redirect-kakao';
+  //const REDIRECT_URL = 'https://www.milewriting.com/redirect-kakao';
   // const REDIRECT_URL = 'https://www.milewriting.com/kakao/callback';
   //const REDIRECT_URL = 'https://mile-client-git-develop-seojinyoons-projects/redirect-kakao';
   // const REDIRECT_URL = 'https://milewriting.com/kakao/callback';
