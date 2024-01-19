@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useCuriousPost } from '../hooks/queries';
 
 import { GroupNoDataImgIc } from '../../../assets/svgs';
-import GroupThumbnailImg from '../../../assets/svgs/groupCardThumnailImg.svg';
+
+import GroupThumbnailImg from '/src/assets/svgs/groupCardThumnailImg.svg';
+
 import Spacing from '../../../components/commons/Spacing';
 
 interface ArticlePropTypes {
@@ -49,7 +51,7 @@ const CuriousArticle = (props: CuriousArticlePropTypes) => {
       ) : (
         curiousPostData?.map((article: ArticlePropTypes, index: number) => (
           <CuriousArticleLayout key={index} onClick={() => handleGoPostDetail(article.postId)}>
-            <ArticleThumbnail imageUrl={article.imageUrl} isContainPhoto={article.isContainPhoto} />
+            <ArticleThumbnail />
             <Spacing marginBottom="1.6" />
             <ArticleWritingStyle>{article.topic}</ArticleWritingStyle>
             <Spacing marginBottom="0.4" />
@@ -70,7 +72,7 @@ const CuriousArticleWrapper = styled.div`
   gap: 1.6rem;
 `;
 
-const ArticleThumbnail = styled.div<{ imageUrl: string; isContainPhoto: boolean }>`
+const ArticleThumbnail = styled.div`
   width: 28.8rem;
   height: 14rem;
 
