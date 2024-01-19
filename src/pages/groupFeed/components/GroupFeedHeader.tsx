@@ -30,6 +30,11 @@ export const GroupFeedHeader = () => {
   const handleMainRouting = () => {
     navigate('/');
   };
+  const handleLogOut = () => {
+    logout();
+    alert('로그아웃 되었습니다');
+    location.reload();
+  };
   return (
     <HeaderWrapper>
       <HeaderLogoIc onClick={handleMainRouting} />
@@ -37,7 +42,7 @@ export const GroupFeedHeader = () => {
         <MyGroupBtn />
         <CommonBtnLayout>
           <MakeGroupBtn />
-          <LogInOutBtn onClick={logout}>로그아웃</LogInOutBtn>
+          <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
         </CommonBtnLayout>
       </HeaderBtnLayout>
     </HeaderWrapper>

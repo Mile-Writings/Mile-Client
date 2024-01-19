@@ -75,7 +75,7 @@ const GroupFeed = () => {
       </GroupInfoWrapper>
       <Spacing marginBottom="14" />
       <Footer />
-      {isMember !== undefined && isMember && <FloatingBtn />}
+      {isMember !== undefined && isMember && <FloatingBtn onClick={() => navigate(`/post/MQ==`)} />}
     </GroupFeedWrapper>
   );
 };
@@ -84,6 +84,7 @@ export default GroupFeed;
 
 const GroupFeedWrapper = styled.div`
   width: 100%;
+  height: 100vh;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
@@ -97,6 +98,7 @@ const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
 const GroupInfoWrapper = styled.div`
   display: flex;
   gap: 3.9rem;
+  justify-content: center;
   padding-right: 16.5rem;
   padding-left: 16.5rem;
 `;
@@ -117,8 +119,10 @@ const FloatingBtn = styled.div`
   height: 7rem;
 
   background-image: url(${GroupFloatingBtn});
+  cursor: pointer;
 
   :hover {
     background-image: url(${GroupFloatingBtnHover});
+    cursor: pointer;
   }
 `;
