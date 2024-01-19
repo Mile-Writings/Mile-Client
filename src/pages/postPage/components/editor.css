@@ -33,7 +33,7 @@
   display: flex;
   align-items: center;
 
-  width: 62.3rem;
+  width: 53.3rem;
   height: 3.6rem;
   padding: 0;
   margin: 0;
@@ -445,6 +445,7 @@
 button.ql-bold {
   width: 2.6rem !important;
   height: 2.5rem !important;
+  border-right: 1px solid #d3d3d3 !important;
 }
 .ql-bold {
   background-image: url(../../../assets/svgs/editorBoldSvgEnable.svg) !important;
