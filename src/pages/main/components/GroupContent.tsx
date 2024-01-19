@@ -43,18 +43,7 @@ const GroupContent = ({
       {isContainPhoto && imageUrl && (
         <Image src={imageUrl} isLast={isLast} alt="group-content-image" />
       )}
-      {isLast && (
-        <CuriousGroup
-          groupId={groupId}
-          topicName={topicName}
-          imageUrl={imageUrl}
-          postTitle={postTitle}
-          postContent={postContent}
-          postId={postId}
-          isContainPhoto={isContainPhoto}
-          isLast={isLast}
-        />
-      )}
+      {isLast && <CuriousGroup groupId={groupId} />}
     </ContentLayout>
   );
 };
