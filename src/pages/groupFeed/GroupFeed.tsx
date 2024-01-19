@@ -11,8 +11,6 @@ import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
 import { useGroupFeedAuth, useGroupInfo } from './hooks/queries';
 
-import GroupFloatingBtn from '/src/assets/svgs/groupFloatingBtn.svg';
-
 import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
 import GroupThumbnailImg from '../../assets/svgs/groupThumnailImg.svg';
 import Footer from '../../components/commons/Footer';
@@ -76,7 +74,9 @@ const GroupFeed = () => {
       </GroupInfoWrapper>
       <Spacing marginBottom="14" />
       <Footer />
-      {isMember !== undefined && isMember && <FloatingBtn onClick={() => navigate(`/post/MQ==`)} />}
+      {isMember !== undefined && isMember && (
+        <FloatingBtn onClick={() => navigate(`/post/MQ==/post`)} />
+      )}
     </GroupFeedWrapper>
   );
 };
@@ -119,7 +119,7 @@ const FloatingBtn = styled.div`
   width: 7rem;
   height: 7rem;
 
-  background: url(${GroupFloatingBtn});
+  background-image: url('/src/assets/svgs/groupFloatingBtn.svg');
   cursor: pointer;
 
   :hover {
