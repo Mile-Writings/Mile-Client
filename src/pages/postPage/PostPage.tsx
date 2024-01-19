@@ -108,7 +108,6 @@ const PostPage = () => {
     postTempSaveContent();
   };
 
-
   // 임시저장 불러오기
   const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
     useGetTempSaveContent(postId || '', temporaryExist || false);
@@ -127,11 +126,9 @@ const PostPage = () => {
     }
   }, [isTemporaryPostExist, tempTitle, tempContent]);
 
-  console.log(tempTitle, '임시저장 제목');
-  console.log(tempContent, '임시저장 목록');
   // console.log(tempImageUrl);
   // console.log(tempAnonymous);
-  
+
   // 임시 저장 글 -> 저장하기
   const tempExistSaveHandler = () => {};
 
@@ -147,17 +144,16 @@ const PostPage = () => {
       <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
       <DropDownEditorWrapper>
         <DropDown
-          isTemp={temporaryExist || false} // isTemp={temporaryExist} <- 원래코드임 pr용 yarn build 에러 방지위해서 바꿔둠
+          isTemp={temporaryExist || false}
           topicList={topicList}
           tempTopicList={tempTopicList}
           selectedTopicId={setTopicId}
           updateAnonymous={setAnonymous}
+          tempAnonymous={tempAnonymous}
         />
         <Spacing marginBottom="2.4" />
         <Editor
           isTemp={temporaryExist}
-          // title={temporaryExist ? tempTitle : contentTitle}
-          // content={temporaryExist ? tempContent : contentContent}
           title={contentTitle}
           tempTitle={tempTitle}
           saveTitle={setContentTitle}

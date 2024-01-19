@@ -149,9 +149,6 @@ const Editor = (props: EditorPropTypes) => {
     }
   }, [urlType]);
 
-  console.log(isTemp, '임시저장 클릭 여부');
-  console.log(title);
-  console.log(content);
   useEffect(() => {
     if (isTemp) {
       saveTitle(tempTitle);

@@ -26,17 +26,19 @@ interface DropDownDataPropsType {
   selectedTopicId: (topicId: string) => void;
   updateAnonymous: (anonymous: boolean) => void;
   isTemp: boolean;
+  tempAnonymous: boolean;
 }
 
 const DropDown = (props: DropDownDataPropsType) => {
-  const { topicList, selectedTopicId, updateAnonymous, isTemp, tempTopicList } = props;
+  const { topicList, selectedTopicId, updateAnonymous, isTemp, tempTopicList, tempAnonymous } =
+    props;
   // 드롭다운에서 선택된 값 저장 state
 
   const [selectedValues, setSelectedValues] = useState({
     topic: '',
     writer: '작자미상',
   });
-
+  console.log(tempAnonymous);
   // 익명 여부 저장
   useEffect(() => {
     if (selectedValues.writer == '작자미상') {
@@ -57,14 +59,14 @@ const DropDown = (props: DropDownDataPropsType) => {
       if (tempTopicList && tempTopicList.length > 0) {
         setSelectedValues({
           topic: tempTopicList?.find((topic) => topic.isSelected)?.topicName || '',
-          writer: '작자미상',
+          writer: tempAnonymous ? '작자미상' : '필명',
         });
       }
     } else {
       if (topicList && topicList.length > 0) {
         setSelectedValues({
           topic: topicList[0]?.topicName,
-          writer: '작자미상',
+          writer: selectedValues.writer,
         });
       }
     }

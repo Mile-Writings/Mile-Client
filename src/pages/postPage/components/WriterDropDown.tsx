@@ -8,8 +8,8 @@ import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../asset
 import useClickOutside from '../../../hooks/useClickOutside';
 
 const WriterDropDown = (props: DropDownPropsType) => {
-  const [urlType, setUrlType] = useState('');
   const { onClickListItem, selectedValue } = props;
+  const [urlType, setUrlType] = useState('');
   const [writerIsOpen, setWriterIsOpen] = useState(false);
 
   // 수정뷰 전달값 받아오기
