@@ -51,6 +51,7 @@ const PostPage = () => {
     if (type == 'edit') {
       setEditPostId(location.state.postId);
       setImageToServer(location.state.imageUrl);
+      setPreviewImgUrl(location.state.imageUrl);
       setContentTitle(location.state.title);
       setContentContent(location.state.content);
     }
