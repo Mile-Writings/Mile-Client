@@ -17,6 +17,8 @@ import NextBtn from '/src/assets/svgs/groupTabNextBtnEnable.svg';
 import NextBtnHover from '/src/assets/svgs/groupTabNextBtnHover.svg';
 
 import Spacing from '../../../components/commons/Spacing';
+import Error from '../../Error/Error';
+import Loading from '../../Loading/Loading';
 
 interface CategoryIdPropTypes {
   activeCategoryId: number;
@@ -57,11 +59,12 @@ const Carousel = (props: CategoryIdPropTypes) => {
   const { topicInfo } = useArticleList(selectedTopicId || '');
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (isError) {
-    return <div>Error fetching data..{error?.message}</div>;
+    console.log(error?.message, 'error');
+    return <Error />;
   }
 
   return (
