@@ -8,7 +8,6 @@
 
 .ql-container {
   width: 82.5rem;
-  min-height: 64.5rem;
   padding: 2.8rem;
   border-radius: 0.8rem;
   background-color: white;
@@ -17,6 +16,7 @@
 .ql-editor {
   font-family: 'Pretendard Variable';
   padding: 0;
+  min-height: 64.5rem;
 }
 
 /* 브라우저 텍스트 드래그 했을 때 색상 변경 */
