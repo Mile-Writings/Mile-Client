@@ -43,7 +43,7 @@ const GroupContent = ({
               {postContent}
             </SubText>
           </TextContainer>
-          <Image src={imageUrl} isLast={isLast} alt="group-content-image" />
+          {isContainPhoto && <Image src={imageUrl} isLast={isLast} alt="group-content-image" />}
         </>
       )}
       {isLast && <CuriousGroup groupId={groupId} />}
