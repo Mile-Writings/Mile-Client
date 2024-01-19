@@ -20,7 +20,7 @@ const FaqDropdown = ({ id, question, answer }: faqDataPropTypes) => {
             <Question>
               <QuestionMarkText>Q.</QuestionMarkText>
               <QuestionText>{question}</QuestionText>
-              {dropDownOpened ? <MainToggleArrowOpenedIc /> : <MainTogglearrowClosedIc />}
+              {dropDownOpened ? <MainTogglearrowClosedIc /> : <MainToggleArrowOpenedIc />}
             </Question>
             {dropDownOpened && <AnswerTextBox>{answer}</AnswerTextBox>}
           </QuestionAnswerBox>

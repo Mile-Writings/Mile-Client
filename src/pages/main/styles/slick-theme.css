@@ -55,7 +55,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.slick-prev {
+.main .slick-prev {
   display: block;
   position: absolute;
   left: -7.5rem;
@@ -73,7 +73,7 @@
   display: block;
 }
 
-.slick-next {
+.main .slick-next {
   display: block;
   position: absolute;
   right: -5rem;
