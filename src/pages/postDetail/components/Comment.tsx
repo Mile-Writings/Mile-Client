@@ -15,7 +15,7 @@ interface CommentPropTypes {
 const Comment = (props: CommentPropTypes) => {
   const { postId } = props;
   const [comment, setComment] = useState('');
-  const { commentListData, isError, error } = useGetCommentList(postId || '');
+  const { commentListData, error } = useGetCommentList(postId || '');
   const { postComment } = usePostComment(postId || '');
 
   const handleCommentSubmit = (e: FormEvent) => {
@@ -34,7 +34,9 @@ const Comment = (props: CommentPropTypes) => {
     isMyComment: boolean;
   }
 
-  return (
+  return error?.message == '403' ? (
+    <div></div>
+  ) : (
     <CommentWrapper>
       <CommentPostWrapper>
         <CommentForm
