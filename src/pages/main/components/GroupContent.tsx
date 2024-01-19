@@ -43,7 +43,14 @@ const GroupContent = ({
               {postContent}
             </SubText>
           </TextContainer>
-          {isContainPhoto && <Image src={imageUrl} isLast={isLast} alt="group-content-image" />}
+          {isContainPhoto && (
+            <Image
+              src={imageUrl}
+              isLast={isLast}
+              alt="group-content-image"
+              onClick={handleOnClick}
+            />
+          )}
         </>
       )}
       {isLast && <CuriousGroup groupId={groupId} />}
@@ -59,7 +66,6 @@ const ContentLayout = styled.div`
   padding: 3.6rem;
 
   background-color: ${({ theme }) => theme.colors.white};
-  cursor: pointer;
   border-radius: 8px;
 `;
 
@@ -75,6 +81,8 @@ const MainText = styled.p`
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  cursor: pointer;
 `;
 
 const SubText = styled.p<{ isContainPhoto: boolean; isLast: boolean }>`
@@ -104,5 +112,6 @@ const Image = styled.img<{ isLast: boolean }>`
   height: 16.8rem;
   object-fit: cover;
 
+  cursor: pointer;
   border-radius: 8px;
 `;
