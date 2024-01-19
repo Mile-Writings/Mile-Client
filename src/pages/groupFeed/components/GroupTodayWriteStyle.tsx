@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import { useTodayWritingStyle } from '../hooks/queries';
 
@@ -12,8 +13,10 @@ interface GroupTodayWriteStylePropTypes {
 const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
   const { isMember, groupId } = props;
   const { content, isLoading, isError, error } = useTodayWritingStyle(groupId || '');
+  const navigate = useNavigate();
   const onHandleSubmit = () => {
     // console.log('submit');
+    navigate(`/post/${groupId}/post`);
   };
   if (isLoading) {
     return <div>Loading...</div>;
