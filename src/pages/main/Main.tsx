@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
 
-import Carousel from './components/Carousel';
+import CarouselPage from './components/CarouselPage';
 import FaqDropdown from './components/FaqDropdown';
 import FaqTitle from './components/FaqTitle';
-import GroupCarouselTitle from './components/GroupCarouselTitle';
 import Introduction from './components/Introduction';
 import { AuthorizationHeader, UnAuthorizationHeader } from './components/MainHeader';
 import Manual from './components/Manual';
@@ -19,10 +18,7 @@ const Main = () => {
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <OnBoarding />
-      <CarouselComponentLayout>
-        <GroupCarouselTitle />
-        <Carousel />
-      </CarouselComponentLayout>
+      <CarouselPage />
       <Ruler />
       <Introduction />
       <Manual />
@@ -47,13 +43,6 @@ const MainPageWrapper = styled.div`
   width: 100%;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
-`;
-
-const CarouselComponentLayout = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-  padding-bottom: 10rem;
 `;
 
 const FaqTitleWithDropDownLayout = styled.section`

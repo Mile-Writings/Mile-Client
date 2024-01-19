@@ -70,7 +70,6 @@
 }
 [dir='rtl'] .slick-prev:before {
   display: block;
-  content: url('/src/assets/svgs/mainBtnNext.svg');
 }
 
 .slick-next {
@@ -88,7 +87,6 @@
 }
 [dir='rtl'] .slick-next:before {
   display: block;
-  content: url('/src/assets/svgs/mainBtnBefore.svg');
 }
 
 /* Dots */
