@@ -135,6 +135,7 @@ const PostPage = () => {
         setContentTitle(tempTitle);
         setContentContent(tempContent);
         setImageToServer(tempImageUrl);
+        setPreviewImgUrl(tempImageUrl);
       } else {
         setTemporaryExist(false);
       }

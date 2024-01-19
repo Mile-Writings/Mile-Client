@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Carousel from './carousel/Carousel';
@@ -35,6 +35,11 @@ const GroupFeed = () => {
   const handleLogin = () => {
     navigate(`/login`);
   };
+
+  //라우팅 했을 때 스크롤 맨 위로
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (isLoading) {
     return <Loading />;

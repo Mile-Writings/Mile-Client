@@ -84,6 +84,7 @@ const GroupSideHeaderDetailBox = styled.div`
   gap: 1.2rem;
 
   color: ${({ theme }) => theme.colors.gray70};
+  word-break: keep-all;
 
   ${({ theme }) => theme.fonts.body2};
 `;
