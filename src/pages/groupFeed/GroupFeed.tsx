@@ -16,6 +16,9 @@ import GroupThumbnailImg from '/src/assets/svgs/groupThumnailImg.svg';
 import Footer from '../../components/commons/Footer';
 import Spacing from '../../components/commons/Spacing';
 
+import Error from '../Error/Error';
+import Loading from '../Loading/Loading';
+
 const GroupFeed = () => {
   const { groupId } = useParams();
   const accessToken = localStorage.getItem('accessToken');
@@ -34,11 +37,12 @@ const GroupFeed = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (isError) {
-    return <div>Error fetching data..{error?.message}</div>;
+    console.log(error?.message, 'error');
+    return <Error />;
   }
 
   return (
