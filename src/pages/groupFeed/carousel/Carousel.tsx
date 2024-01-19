@@ -70,7 +70,9 @@ const Carousel = (props: CategoryIdPropTypes) => {
   return (
     <>
       <CarouselWrapper>
-        <GroupTabBtnBaseBeforeIcon />
+        {groupFeedCategoryData != undefined && groupFeedCategoryData?.length > 6 && (
+          <GroupTabBtnBaseBeforeIcon />
+        )}
         <Slider {...settings} className="groupFeedCarousel">
           {groupFeedCategoryData?.map((topic, index) => (
             <CarouselContainer
@@ -82,7 +84,9 @@ const Carousel = (props: CategoryIdPropTypes) => {
             </CarouselContainer>
           ))}
         </Slider>
-        <GroupTabBtnBaseNextIcon />
+        {groupFeedCategoryData != undefined && groupFeedCategoryData?.length > 6 && (
+          <GroupTabBtnBaseNextIcon />
+        )}
       </CarouselWrapper>
       <Spacing marginBottom="3.2" />
       <Topic>{topicInfo?.topic}</Topic>
