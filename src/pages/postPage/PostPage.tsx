@@ -106,6 +106,7 @@ const PostPage = () => {
   });
   const tempSaveHandler = () => {
     postTempSaveContent();
+    navigate(`/group/${groupId}`);
   };
 
   // 임시저장 불러오기
