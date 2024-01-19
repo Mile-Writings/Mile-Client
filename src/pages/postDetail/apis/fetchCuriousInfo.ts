@@ -1,3 +1,5 @@
+import { isAxiosError } from 'axios';
+
 import { client } from '../../../utils/apis/axios';
 
 interface GetCuriousInfoResponseTypes {
@@ -23,6 +25,11 @@ const fetchCuriousInfo = async (postId: string) => {
     );
     return data;
   } catch (err) {
+    if (isAxiosError(err) && err.response) {
+      if (err.response.status === 403) {
+        throw new Error(err.response.data.status);
+      }
+    }
     console.log(err);
   }
 };
