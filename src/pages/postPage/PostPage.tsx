@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { Topics } from './apis/fetchEditorContent';
 import DropDown from './components/DropDown';
@@ -12,16 +12,16 @@ import {
   useGetTopic,
   usePostContent,
   usePresignedUrl,
-  useTempSaveFlag,
   usePutEditContent,
   usePostTempSaveContent,
   useGetTempSaveContent,
+  useTempSaveFlag,
 } from './hooks/queries';
 
 import {
+  EditorEditHeader,
   EditorTempExistHeader,
   EditorTempNotExistHeader,
-  EditorEditHeader,
 } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
@@ -36,7 +36,8 @@ const PostPage = () => {
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
-
+  const [imageToServer, setImageToServer] = useState('');
+  
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
 
@@ -72,7 +73,7 @@ const PostPage = () => {
     topicId: topicId,
     title: contentTitle,
     content: contentContent,
-    imageUrl: imageUrl,
+    imageUrl: imageToServer,
     anonymous: anonymous,
   });
 
@@ -142,7 +143,13 @@ const PostPage = () => {
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
-      <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
+      <ImageUpload
+        saveImage={setImageUrl}
+        imageUrl={imageUrl}
+        setImageToServer={setImageToServer}
+        url={url || ''}
+        fileName={fileName || ''}
+      />
       <DropDownEditorWrapper>
         <DropDown
           isTemp={temporaryExist || false}
