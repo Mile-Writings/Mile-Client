@@ -38,7 +38,7 @@ const DropDown = (props: DropDownDataPropsType) => {
     topic: '',
     writer: '작자미상',
   });
-  console.log(tempAnonymous);
+  // console.log(tempAnonymous);
   // 익명 여부 저장
   useEffect(() => {
     if (selectedValues.writer == '작자미상') {

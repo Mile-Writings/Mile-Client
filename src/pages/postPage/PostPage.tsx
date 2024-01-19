@@ -16,6 +16,7 @@ import {
   usePostTempSaveContent,
   useGetTempSaveContent,
   useTempSaveFlag,
+  usePutTempSaveContent,
 } from './hooks/queries';
 
 import {
@@ -120,19 +121,36 @@ const PostPage = () => {
         setTemporaryExist(true);
         setContentTitle(tempTitle);
         setContentContent(tempContent);
+        setImageToServer(tempImageUrl);
       } else {
         setTemporaryExist(false);
       }
     } else {
       return;
     }
-  }, [isTemporaryPostExist, tempTitle, tempContent]);
+  }, [isTemporaryPostExist, tempTitle, tempContent, tempImageUrl]);
 
-  // console.log(tempImageUrl);
   // console.log(tempAnonymous);
 
   // 임시 저장 글 -> 저장하기
-  const tempExistSaveHandler = () => {};
+  const { mutate: putTempSaveContent } = usePutTempSaveContent({
+    topicId: topicId,
+    title: contentTitle,
+    content: contentContent,
+    imageUrl: imageToServer,
+    anonymous: anonymous,
+    postId: postId || '',
+  });
+  console.log(contentContent);
+  console.log(contentTitle);
+  console.log(postId);
+  console.log(anonymous);
+  console.log(imageToServer);
+
+  const tempExistSaveHandler = () => {
+    putTempSaveContent();
+    navigate(``)
+  };
 
   return (
     <PostPageWrapper>
