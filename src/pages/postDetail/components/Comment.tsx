@@ -15,7 +15,7 @@ interface CommentPropTypes {
 const Comment = (props: CommentPropTypes) => {
   const { postId } = props;
   const [comment, setComment] = useState('');
-  const { commentListData } = useGetCommentList(postId || '');
+  const { commentListData, isError, error } = useGetCommentList(postId || '');
   const { postComment } = usePostComment(postId || '');
 
   const handleCommentSubmit = (e: FormEvent) => {

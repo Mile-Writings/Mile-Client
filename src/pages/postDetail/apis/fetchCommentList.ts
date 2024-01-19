@@ -29,7 +29,8 @@ const fetchCommentList = async (postId: string) => {
   } catch (err) {
     if (isAxiosError(err) && err.response) {
       if (err.response.status === 403) {
-        console.log(err.response.data.message);
+        console.log(err.response.data.status, '403');
+        throw new Error(err.response.data.status);
       }
     }
   }

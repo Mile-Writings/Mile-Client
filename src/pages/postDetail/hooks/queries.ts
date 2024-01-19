@@ -64,6 +64,8 @@ export const useGetCommentList = (postId: string) => {
   });
 
   const commentListData = data?.data?.data.comments;
+  console.log(isError, 'iserror');
+  console.log(error, 'error');
   return { commentListData, isError, error };
 };
 
