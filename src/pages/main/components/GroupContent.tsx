@@ -30,18 +30,21 @@ const GroupContent = ({
   const handleOnClick = () => {
     navigate(`/detail/${groupId}/${postId}`);
   };
+
   return (
     <ContentLayout onClick={handleOnClick}>
-      <TextContainer>
-        <Topic>{topicName}</Topic>
-        <MainText>{postTitle}</MainText>
-        <Spacing marginBottom="2" />
-        <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
-          {postContent}
-        </SubText>
-      </TextContainer>
-      {isContainPhoto && imageUrl && (
-        <Image src={imageUrl} isLast={isLast} alt="group-content-image" />
+      {imageUrl && (
+        <>
+          <TextContainer>
+            <Topic>{topicName}</Topic>
+            <MainText>{postTitle}</MainText>
+            <Spacing marginBottom="2" />
+            <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
+              {postContent}
+            </SubText>
+          </TextContainer>
+          <Image src={imageUrl} isLast={isLast} alt="group-content-image" />
+        </>
       )}
       {isLast && <CuriousGroup groupId={groupId} />}
     </ContentLayout>

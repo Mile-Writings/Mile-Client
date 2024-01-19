@@ -82,9 +82,11 @@ export const useDeleteCurious = (postId: string) => {
 
 //글 삭제/수정 권한 확인
 export const useCheckPostAuth = (postId: string) => {
+  const token = localStorage.getItem('accessToken');
   const data = useQuery({
     queryKey: [QUERY_KEY_POST_DETAIL.getAuthorization, postId],
     queryFn: () => checkPostAuth(postId),
+    enabled: !!token,
   });
   return data;
 };
