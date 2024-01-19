@@ -47,6 +47,7 @@ const Comment = (props: CommentPropTypes) => {
           등록
         </CommentPostBtn>
       </CommentPostWrapper>
+      <Spacing marginBottom="2" />
       {commentListData?.length == 0 ? (
         <>
           <Spacing marginBottom="4" />
