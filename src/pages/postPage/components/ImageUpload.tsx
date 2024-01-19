@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from '@emotion/styled';
 import React, { Dispatch, SetStateAction } from 'react';
 
@@ -40,6 +39,7 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
       const s3url = s3UrlPasing(url);
       const urlToServer = `${s3url + fileName}`;
       setImageToServer(urlToServer);
+      return data;
       // saveImage(urlToServer);
       // console.log(data);
     } catch (err) {
