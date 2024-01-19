@@ -15,6 +15,7 @@ import {
   usePostTempSaveContent,
   usePresignedUrl,
   usePutEditContent,
+  usePutTempSaveContent,
   useTempSaveFlag,
 } from './hooks/queries';
 
@@ -35,8 +36,12 @@ const PostPage = () => {
   const [topicList, setTopicList] = useState<Topics[]>([]);
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
-  const [imageUrl, setImageUrl] = useState('');
-  const [imageToServer, setImageToServer] = useState('');
+  const [, setImageUrl] = useState(
+    'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
+  );
+  const [imageToServer, setImageToServer] = useState(
+    'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
+  );
 
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
@@ -45,14 +50,16 @@ const PostPage = () => {
   useEffect(() => {
     if (type == 'edit') {
       setEditPostId(location.state.postId);
-      setImageUrl(location.state.imageUrl);
+      setImageToServer(location.state.imageUrl);
+      setContentTitle(location.state.title);
+      setContentContent(location.state.content);
     }
   }, [type]);
 
   // 임시저장 값 여부 확인 (서버값)
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
   // 조건부 처리용
-  const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist);
+  const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist || false);
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
@@ -64,8 +71,6 @@ const PostPage = () => {
 
   // 이미지 보낼 url 받아오기
   const { fileName, url } = usePresignedUrl();
-  console.log(url);
-  console.log(fileName);
 
   // 최초저장
   const { mutate: postContent } = usePostContent({
@@ -86,10 +91,13 @@ const PostPage = () => {
     topicId: topicId,
     title: contentTitle,
     content: contentContent,
-    imageUrl: imageUrl,
+    imageUrl: imageToServer,
     anonymous: anonymous,
     postId: editPostId,
   });
+
+  console.log(contentContent);
+  console.log(contentTitle);
 
   const editSaveHandler = () => {
     putEditContent();
@@ -102,12 +110,17 @@ const PostPage = () => {
     topicId: topicId,
     title: contentTitle,
     content: contentContent,
-    imageUrl: imageUrl,
+    imageUrl: imageToServer,
     anonymous: anonymous,
   });
   const tempSaveHandler = () => {
     postTempSaveContent();
+    navigate(`/group/${groupId}`);
   };
+
+  // 임시저장 불러오기
+  const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
+    useGetTempSaveContent(postId || '', temporaryExist || false);
 
   useEffect(() => {
     if (isTemporaryPostExist && type != 'edit') {
@@ -115,22 +128,29 @@ const PostPage = () => {
         setTemporaryExist(true);
         setContentTitle(tempTitle);
         setContentContent(tempContent);
+        setImageToServer(tempImageUrl);
       } else {
         setTemporaryExist(false);
       }
     } else {
-      return;
+      setTemporaryExist(false);
     }
-  }, [isTemporaryPostExist]);
+  }, [isTemporaryPostExist, tempTitle, tempContent]);
 
-  // 임시저장 불러오기
-  const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
-    useGetTempSaveContent(postId || '', temporaryExist || false);
-
-  console.log(tempImageUrl);
-  console.log(tempAnonymous);
   // 임시 저장 글 -> 저장하기
-  const tempExistSaveHandler = () => {};
+  const { mutate: putTempSaveContent } = usePutTempSaveContent({
+    topicId: topicId,
+    title: contentTitle,
+    content: contentContent,
+    imageUrl: imageToServer,
+    anonymous: anonymous,
+    postId: postId || '',
+  });
+
+  const tempExistSaveHandler = () => {
+    putTempSaveContent();
+    navigate(`/detail/${groupId}/${postId}`);
+  };
 
   return (
     <PostPageWrapper>
@@ -143,24 +163,29 @@ const PostPage = () => {
       )}
       <ImageUpload
         saveImage={setImageUrl}
-        imageUrl={imageUrl}
+        imageUrl={imageToServer}
+        // imageUrl={imageToServer}
         setImageToServer={setImageToServer}
         url={url || ''}
         fileName={fileName || ''}
       />
       <DropDownEditorWrapper>
         <DropDown
-          isTemp={temporaryExist || false} // isTemp={temporaryExist} <- 원래코드임 pr용 yarn build 에러 방지위해서 바꿔둠
+          isTemp={temporaryExist || false}
           topicList={topicList}
           tempTopicList={tempTopicList}
           selectedTopicId={setTopicId}
           updateAnonymous={setAnonymous}
+          tempAnonymous={tempAnonymous}
         />
         <Spacing marginBottom="2.4" />
         <Editor
-          title={temporaryExist ? tempTitle : contentTitle}
+          isTemp={temporaryExist}
+          title={contentTitle}
+          tempTitle={tempTitle}
           saveTitle={setContentTitle}
-          content={temporaryExist ? tempContent : contentContent}
+          content={contentContent}
+          tempContent={tempContent}
           saveContent={setContentContent}
         />
       </DropDownEditorWrapper>

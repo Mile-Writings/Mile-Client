@@ -14,7 +14,8 @@ const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
   const navigate = useNavigate();
   const { isMember, groupId } = props;
   const { content, isLoading, isError, error } = useTodayWritingStyle(groupId || '');
-  const onClickRouting = () => {
+
+  const handleNavigatePostPage = () => {
     navigate(`/post/${groupId}/post`);
   };
   if (isLoading) {
@@ -33,7 +34,7 @@ const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
         </SubText>
       </TextLayout>
       {isMember && (
-        <Button typeName="writingFlowType" onClick={onClickRouting}>
+        <Button typeName="writingFlowType" onClick={handleNavigatePostPage}>
           나의 글 작성하러가기
         </Button>
       )}

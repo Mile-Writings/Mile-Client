@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import React, { useRef, useCallback, useState, useEffect } from 'react';
+import React, { useRef, useCallback, Dispatch, SetStateAction } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import 'react-quill/dist/quill.bubble.css';
 
@@ -120,31 +120,32 @@ interface EditorPropTypes {
   title: string;
   content: string;
   saveTitle: (title: string) => void;
-  saveContent: (content: string) => void;
+  saveContent: Dispatch<SetStateAction<string>>;
+  isTemp: boolean;
+  tempContent: string;
+  tempTitle: string;
 }
 
 const Editor = (props: EditorPropTypes) => {
-  const { title, content, saveTitle, saveContent } = props;
-  const [urlType, setUrlType] = useState('');
+  const { title, tempTitle, content, tempContent, saveTitle, saveContent, isTemp } = props;
 
   // 수정뷰 전달값 받아오기
-  const location = useLocation();
   const { type } = useParams() as { type: string };
+  console.log(type);
+  console.log(isTemp);
+  console.log(tempTitle);
+  console.log(tempContent);
 
-  // url 타입 업데이트
-  useEffect(() => {
-    setUrlType(type);
-  }, []);
-
-  // 수정 뷰일 때 필명여부 업데이트
-  useEffect(() => {
-    if (type == 'edit') {
-      const content = location.state.content;
-      const title = location.state.title;
-      saveTitle(title);
-      saveContent(content);
-    }
-  }, [urlType]);
+  //임시저장 빼고
+  // useEffect(() => {
+  //   if (isTemp) {
+  //     saveTitle(tempTitle);
+  //     saveContent(tempContent);
+  //   } else {
+  //     saveTitle(title);
+  //     saveContent(content);
+  //   }
+  // }, [isTemp]);
 
   // 구분선 커스텀 동작 함수
   const quillRef = useRef<ReactQuill | null>(null);
