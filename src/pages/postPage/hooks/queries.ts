@@ -8,6 +8,7 @@ import { fetchTopic } from '../apis/fetchEditorContent';
 import { fetchPresignedUrl } from '../apis/fetchPresignedUrl';
 import { fetchTempSaveContent } from '../apis/fetchTempSaveContent';
 import { fetchTempSaveFlag } from '../apis/fetchTempSaveFlag';
+import saveTempSavecontent from '../apis/saveTempSaveContent';
 
 import { QUERY_KEY_POST_DETAIL } from '../../postDetail/hooks/queries';
 
@@ -19,6 +20,7 @@ export const QUERY_KEY_POST = {
   putEditContent: 'putEditContent',
   postSaveTempContent: 'postSaveTempContent',
   getTempSaveContent: 'getTempSaveContent',
+  putSaveTempContent: 'putSaveTempContent',
 };
 
 // 글 최초 저장
@@ -213,4 +215,41 @@ export const useGetTempSaveContent = (postId: string, isTempClicked: boolean) =>
   const tempAnonymous = data && data.data.anonymous;
 
   return { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous };
+};
+
+// 임시저장 저장하기
+interface putEditContentType {
+  topicId: string;
+  title: string;
+  content: string;
+  imageUrl: string;
+  anonymous: boolean;
+  postId: string;
+}
+
+export const usePutTempSaveContent = ({
+  topicId,
+  title,
+  content,
+  imageUrl,
+  anonymous,
+  postId,
+}: putEditContentType) => {
+  const data = useMutation({
+    mutationKey: [
+      QUERY_KEY_POST.putSaveTempContent,
+      {
+        topicId,
+        title,
+        content,
+        imageUrl,
+        anonymous,
+      },
+    ],
+    mutationFn: () => saveTempSavecontent({ topicId, title, content, imageUrl, anonymous, postId }),
+    onSuccess: () => {
+      console.log({ topicId, title, content, imageUrl, anonymous, postId });
+    },
+  });
+  return data;
 };
