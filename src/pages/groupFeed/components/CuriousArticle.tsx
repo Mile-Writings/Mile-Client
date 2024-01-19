@@ -79,7 +79,7 @@ const ArticleThumbnail = styled.div<{ imageUrl: string }>`
   width: 28.8rem;
   height: 14rem;
 
-  background-image: ${(props) => `url(${props.imageUrl})`};
+  background-image: url('/src/assets/svgs/groupTabBeforeBtnEnable.svg');
   background-size: cover;
   border-radius: 8px;
 `;
