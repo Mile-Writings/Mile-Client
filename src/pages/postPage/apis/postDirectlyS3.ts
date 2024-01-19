@@ -5,8 +5,8 @@ const postDirectlyS3 = async (url: string, imageFile: File) => {
     const data = await axios.put(`${url}`, imageFile, {
       headers: {
         // 'Content-Type': 'application/octet-stream',
-        // 'Content-Type': 'image/jpeg',
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'image/jpeg',
+        //'Content-Type': 'multipart/form-data',
         'Access-Control-Allow-Origin': '*',
       },
     });
