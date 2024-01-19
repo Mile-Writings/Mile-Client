@@ -37,7 +37,7 @@ export const GroupFeedHeader = () => {
   };
   return (
     <HeaderWrapper>
-      <HeaderLogoIc onClick={handleMainRouting} />
+      <HeaderLogoIcon onClick={handleMainRouting} />
       <HeaderBtnLayout>
         <MyGroupBtn />
         <CommonBtnLayout>
@@ -57,7 +57,7 @@ export const LogOutHeader = ({ onClick }: OnClickProps) => {
   };
   return (
     <HeaderWrapper>
-      <HeaderLogoIc onClick={handleMainRouting} />
+      <HeaderLogoIcon onClick={handleMainRouting} />
       <LogInOutBtn onClick={onClick}>로그인</LogInOutBtn>
     </HeaderWrapper>
   );
@@ -85,4 +85,8 @@ const CommonBtnLayout = styled.div`
   gap: 1.2rem;
   align-items: center;
   height: 6.4rem;
+`;
+
+const HeaderLogoIcon = styled(HeaderLogoIc)`
+  cursor: pointer;
 `;
