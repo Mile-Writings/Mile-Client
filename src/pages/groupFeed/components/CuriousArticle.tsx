@@ -51,7 +51,7 @@ const CuriousArticle = (props: CuriousArticlePropTypes) => {
       ) : (
         curiousPostData?.map((article: ArticlePropTypes, index: number) => (
           <CuriousArticleLayout key={index} onClick={() => handleGoPostDetail(article.postId)}>
-            <ArticleThumbnail />
+            <ArticleThumbnail src={GroupThumbnailImg} />
             <Spacing marginBottom="1.6" />
             <ArticleWritingStyle>{article.topic}</ArticleWritingStyle>
             <Spacing marginBottom="0.4" />
@@ -72,11 +72,10 @@ const CuriousArticleWrapper = styled.div`
   gap: 1.6rem;
 `;
 
-const ArticleThumbnail = styled.div`
+const ArticleThumbnail = styled.img`
   width: 28.8rem;
   height: 14rem;
 
-  background-image: url(${GroupThumbnailImg});
   background-size: cover;
   border-radius: 8px;
 `;
