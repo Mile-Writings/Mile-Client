@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 
 import useLoginService from './hooks/useLoginService';
 
+import Loading from '../Loading/Loading';
+
 const RedirectLogin = () => {
   const code: string = new URL(window.location.href).searchParams.get('code') || '';
   console.log(code);
@@ -9,7 +11,7 @@ const RedirectLogin = () => {
   useEffect(() => {
     mutate();
   }, [mutate]);
-  return <div>loading...</div>;
+  return <Loading />;
 };
 
 export default RedirectLogin;
