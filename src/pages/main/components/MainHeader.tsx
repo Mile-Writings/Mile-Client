@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { HeaderLogoIc } from '../../../assets/svgs';
 import LogInOutBtn from '../../../components/commons/LogInOutBtn';
+import useNavigateToHome from '../../../hooks/useNavigateHome';
 import theme from '../../../styles/theme';
 import logout from '../../../utils/logout';
 import MakeGroupBtn from '../../groupFeed/components/MakeGroupBtn';
@@ -10,15 +11,15 @@ import MyGroupBtn from '../../groupFeed/components/MyGroupBtn';
 
 // 메인 페이지 헤더
 export const AuthorizationHeader = () => {
+  const { navigateToHome } = useNavigateToHome();
   const handleLogOut = () => {
     logout();
-    alert('로그아웃 되었습니다');
     location.reload();
   };
 
   return (
     <HeaderWrapper>
-      <HeaderLogoIc />
+      <HeaderLogoIcon onClick={navigateToHome} />
       <HeaderBtnLayout>
         <MyGroupBtn />
         <CommonBtnLayout>
@@ -33,13 +34,14 @@ export const AuthorizationHeader = () => {
 //아직 로그인을 하지 않았을 때 헤더
 export const UnAuthorizationHeader = () => {
   const navigate = useNavigate();
+  const { navigateToHome } = useNavigateToHome();
   const pathname = useLocation();
   const handleLogIn = () => {
     navigate(`/login`, { state: pathname });
   };
   return (
     <HeaderWrapper>
-      <HeaderLogoIc />
+      <HeaderLogoIcon onClick={navigateToHome} />
       <LogInOutBtn onClick={handleLogIn}>로그인</LogInOutBtn>
     </HeaderWrapper>
   );
@@ -69,4 +71,8 @@ const CommonBtnLayout = styled.div`
   gap: 1.2rem;
   align-items: center;
   height: 6.4rem;
+`;
+
+const HeaderLogoIcon = styled(HeaderLogoIc)`
+  cursor: pointer;
 `;
