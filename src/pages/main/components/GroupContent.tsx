@@ -32,10 +32,10 @@ const GroupContent = ({
   };
 
   return (
-    <ContentLayout onClick={handleOnClick}>
+    <ContentLayout>
       {imageUrl && (
         <>
-          <TextContainer>
+          <TextContainer onClick={handleOnClick}>
             <Topic>{topicName}</Topic>
             <MainText>{postTitle}</MainText>
             <Spacing marginBottom="2" />
