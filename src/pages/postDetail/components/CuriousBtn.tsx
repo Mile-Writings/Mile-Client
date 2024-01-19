@@ -9,7 +9,7 @@ import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets
 
 const CuriousBtn = () => {
   const { postId } = useParams();
-  const { data } = useGetCuriousInfo(postId || '');
+  const { data, error } = useGetCuriousInfo(postId || '');
   const token = localStorage.getItem('accessToken');
   const { mutate: postCurious } = usePostCurious(postId || '');
   const { mutate: deleteCurious } = useDeleteCurious(postId || ' ');
@@ -28,18 +28,19 @@ const CuriousBtn = () => {
   useEffect(() => {
     setIsClick(!!data?.data?.isCurious);
   }, [data?.data?.isCurious]);
-  return (
-    <>
-      <CuriousBtnWrapper onClick={handleBtnClick} $isClick={isClick}>
-        <CuriousTextWrapper>
-          <CuriousTextContainer>
-            {isClick ? <DetailWhiteFavoriteIc /> : <DetailPurpleFavoriteIc />}
-            궁금해요
-          </CuriousTextContainer>
-          <CuriousTextWrapper>{data?.data?.curiousCount}</CuriousTextWrapper>
-        </CuriousTextWrapper>
-      </CuriousBtnWrapper>
-    </>
+
+  return error?.message == '403' ? (
+    <div></div>
+  ) : (
+    <CuriousBtnWrapper onClick={handleBtnClick} $isClick={isClick}>
+      <CuriousTextWrapper>
+        <CuriousTextContainer>
+          {isClick ? <DetailWhiteFavoriteIc /> : <DetailPurpleFavoriteIc />}
+          궁금해요
+        </CuriousTextContainer>
+        <CuriousTextWrapper>{data?.data?.curiousCount}</CuriousTextWrapper>
+      </CuriousTextWrapper>
+    </CuriousBtnWrapper>
   );
 };
 
