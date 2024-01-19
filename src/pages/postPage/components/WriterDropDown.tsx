@@ -11,6 +11,7 @@ const WriterDropDown = (props: DropDownPropsType) => {
   const { onClickListItem, selectedValue } = props;
   const [urlType, setUrlType] = useState('');
   const [writerIsOpen, setWriterIsOpen] = useState(false);
+  const [editWriterName, setEditWriterName] = useState('');
 
   // 수정뷰 전달값 받아오기
   const location = useLocation();
@@ -32,14 +33,19 @@ const WriterDropDown = (props: DropDownPropsType) => {
   // 수정 뷰일 때 필명여부 업데이트
   useEffect(() => {
     if (type == 'edit') {
-      const writerName = location.state.writer;
-      if (writerName != '작자미상') {
+      setEditWriterName(location.state.writer);
+      // const writerName = location.state.writer;
+      if (location.state.writer != '작자미상') {
+        console.log('수정하기');
         onClickListItem('writer', '필명');
       } else {
+        console.log('수정하기 익명');
         onClickListItem('writer', '작자미상');
       }
     }
-  }, [urlType]);
+  }, [urlType, editWriterName]);
+  console.log(editWriterName);
+
   // 필명 드롭다운 버튼 누르면 열림/닫힘
   const handleOnClick = () => {
     setWriterIsOpen(!writerIsOpen);

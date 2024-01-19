@@ -128,7 +128,7 @@ const PostPage = () => {
         setTemporaryExist(false);
       }
     } else {
-      return;
+      setTemporaryExist(false);
     }
   }, [isTemporaryPostExist, tempTitle, tempContent]);
 

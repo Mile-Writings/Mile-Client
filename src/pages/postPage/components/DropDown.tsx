@@ -71,7 +71,8 @@ const DropDown = (props: DropDownDataPropsType) => {
       }
     }
   }, [tempTopicList, topicList, isTemp]);
-
+  console.log(isTemp);
+  console.log(selectedValues);
   return (
     <DropDownWrapper>
       <TopicDropDown
