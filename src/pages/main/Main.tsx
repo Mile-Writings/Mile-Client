@@ -4,7 +4,7 @@ import CarouselPage from './components/CarouselPage';
 import FaqDropdown from './components/FaqDropdown';
 import FaqTitle from './components/FaqTitle';
 import Introduction from './components/Introduction';
-import { LogInHeader, UnAuthorizationHeader } from './components/MainHeader';
+import { AuthorizationHeader, UnAuthorizationHeader } from './components/MainHeader';
 import Manual from './components/Manual';
 import OnBoarding from './components/OnBoarding';
 import Ruler from './components/Ruler';
@@ -16,7 +16,7 @@ import Spacing from './../../components/commons/Spacing';
 const Main = () => {
   return (
     <MainPageWrapper>
-      {localStorage.getItem('accessToken') ? <LogInHeader /> : <UnAuthorizationHeader />}
+      {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <OnBoarding />
       <CarouselPage />
       <Ruler />
