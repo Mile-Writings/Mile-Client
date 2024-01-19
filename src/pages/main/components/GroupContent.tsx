@@ -30,31 +30,30 @@ const GroupContent = ({
   const handleOnClick = () => {
     navigate(`/detail/${groupId}/${postId}`);
   };
+
   return (
-    <ContentLayout onClick={handleOnClick}>
-      <TextContainer>
-        <Topic>{topicName}</Topic>
-        <MainText>{postTitle}</MainText>
-        <Spacing marginBottom="2" />
-        <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
-          {postContent}
-        </SubText>
-      </TextContainer>
-      {isContainPhoto && imageUrl && (
-        <Image src={imageUrl} isLast={isLast} alt="group-content-image" />
+    <ContentLayout>
+      {imageUrl && (
+        <>
+          <TextContainer onClick={handleOnClick}>
+            <Topic>{topicName}</Topic>
+            <MainText>{postTitle}</MainText>
+            <Spacing marginBottom="2" />
+            <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
+              {postContent}
+            </SubText>
+          </TextContainer>
+          {isContainPhoto && (
+            <Image
+              src={imageUrl}
+              isLast={isLast}
+              alt="group-content-image"
+              onClick={handleOnClick}
+            />
+          )}
+        </>
       )}
-      {isLast && (
-        <CuriousGroup
-          groupId={groupId}
-          topicName={topicName}
-          imageUrl={imageUrl}
-          postTitle={postTitle}
-          postContent={postContent}
-          postId={postId}
-          isContainPhoto={isContainPhoto}
-          isLast={isLast}
-        />
-      )}
+      {isLast && <CuriousGroup groupId={groupId} />}
     </ContentLayout>
   );
 };
@@ -67,7 +66,6 @@ const ContentLayout = styled.div`
   padding: 3.6rem;
 
   background-color: ${({ theme }) => theme.colors.white};
-  cursor: pointer;
   border-radius: 8px;
 `;
 
@@ -83,6 +81,8 @@ const MainText = styled.p`
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  cursor: pointer;
 `;
 
 const SubText = styled.p<{ isContainPhoto: boolean; isLast: boolean }>`
@@ -112,5 +112,6 @@ const Image = styled.img<{ isLast: boolean }>`
   height: 16.8rem;
   object-fit: cover;
 
+  cursor: pointer;
   border-radius: 8px;
 `;

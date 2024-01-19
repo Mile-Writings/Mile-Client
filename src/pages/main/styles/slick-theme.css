@@ -59,6 +59,7 @@
   display: block;
   position: absolute;
   left: -7.5rem;
+  top: 11rem;
 }
 [dir='rtl'] .slick-prev {
   right: -25px;
@@ -70,13 +71,13 @@
 }
 [dir='rtl'] .slick-prev:before {
   display: block;
-  content: url('/src/assets/svgs/mainBtnNext.svg');
 }
 
 .slick-next {
   display: block;
   position: absolute;
   right: -5rem;
+  top: 11rem;
 }
 [dir='rtl'] .slick-next {
   right: auto;
@@ -88,7 +89,6 @@
 }
 [dir='rtl'] .slick-next:before {
   display: block;
-  content: url('/src/assets/svgs/mainBtnBefore.svg');
 }
 
 /* Dots */
