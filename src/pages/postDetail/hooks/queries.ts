@@ -63,7 +63,7 @@ export const useGetCommentList = (postId: string) => {
     queryFn: () => fetchCommentList(postId),
   });
 
-  const commentListData = data.data?.data.comments;
+  const commentListData = data?.data?.data.comments;
   return { commentListData, isError, error };
 };
 
