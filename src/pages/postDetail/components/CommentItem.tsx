@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
-import { DefaultProfileIc, DetailCommentMeatBallIc } from '../../../assets/svgs';
+import { useDeleteComment } from '../hooks/queries';
+
+import { DetailCommentMeatBallIc, TextCommentProfileIc } from '../../../assets/svgs';
 
 interface CommentItem {
   // id?: number;  추후 사용될지 모름
@@ -8,22 +11,37 @@ interface CommentItem {
   moimName: string;
   content: string;
   isMyComment: boolean;
+  postId: string | undefined;
+  commentId: string;
 }
 
-const CommentItem = ({ name, moimName, content, isMyComment }: CommentItem) => {
+const CommentItem = ({ name, moimName, content, isMyComment, postId, commentId }: CommentItem) => {
+  const { deleteComment } = useDeleteComment(commentId || '', postId || '');
+  const [isClick, setIsClick] = useState(false);
+
+  const handleBtnClick = () => {
+    setIsClick((prev) => !prev);
+  };
   return (
     <CommentItemWrapper>
-      <DefaultProfileIc />
+      <TextCommentProfileIc />
       <CommentItemContainer>
         <CommentInfoWrapper>
-          <CommenterNameText $isMyComment={isMyComment}>{name}</CommenterNameText>
+          <CommenterNameText $name={name}>{name}</CommenterNameText>
           <CommnertGroupNameText>{moimName}</CommnertGroupNameText>
         </CommentInfoWrapper>
         <CommentText>{content}</CommentText>
       </CommentItemContainer>
-      <MeatBallWrapper>
-        <DetailCommentMeatBallIcon />
-      </MeatBallWrapper>
+      {isMyComment && (
+        <MeatBallWrapper onClick={handleBtnClick}>
+          <DetailCommentMeatBallIcon />
+          {isClick && (
+            <Modal onClick={deleteComment}>
+              <ModalContainer>삭제</ModalContainer>
+            </Modal>
+          )}
+        </MeatBallWrapper>
+      )}
     </CommentItemWrapper>
   );
 };
@@ -33,9 +51,9 @@ export default CommentItem;
 const CommentItemWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
-  justify-content: space-between;
   width: 100%;
   height: 8.4rem;
+  margin-left: 1.2rem;
   padding: 1.8rem 0;
 
   background-color: ${({ theme }) => theme.colors.white};
@@ -56,10 +74,10 @@ const CommentInfoWrapper = styled.div`
   justify-content: start;
 `;
 
-const CommenterNameText = styled.p<{ $isMyComment: boolean }>`
+const CommenterNameText = styled.p<{ $name: string }>`
   color: ${({ theme }) => theme.colors.mainViolet};
-  color: ${({ $isMyComment, theme }) =>
-    $isMyComment ? theme.colors.mainViolet : theme.colors.black};
+  color: ${({ $name, theme }) =>
+    $name == '글쓴이' ? theme.colors.mainViolet : theme.colors.black};
   ${({ theme }) => theme.fonts.body5};
 `;
 
@@ -73,11 +91,41 @@ const CommentText = styled.p`
   ${({ theme }) => theme.fonts.body6};
 `;
 
-const MeatBallWrapper = styled.div`
+const Modal = styled.div`
+  position: absolute;
+  top: 4rem;
+  right: 1rem;
   display: flex;
   align-items: center;
-  height: 100%;
+  width: 10.6rem;
+  height: 5.1rem;
+  padding: 1rem;
+
+  color: ${({ theme }) => theme.colors.gray90};
+  text-align: left;
+  ${({ theme }) => theme.fonts.button2};
+
+  border: 1px solid ${({ theme }) => theme.colors.gray50};
+  border-radius: 8px;
+`;
+
+const ModalContainer = styled.div`
+  width: 100%;
+  padding: 0.6rem 1rem;
+
+  border-radius: 6px;
+
+  :hover {
+    background-color: ${({ theme }) => theme.colors.gray20};
+  }
 `;
 const DetailCommentMeatBallIcon = styled(DetailCommentMeatBallIc)`
   cursor: pointer;
+`;
+
+const MeatBallWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
 `;

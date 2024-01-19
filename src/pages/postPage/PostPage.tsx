@@ -1,23 +1,32 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { Topics } from './apis/fetchEditorContent';
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
-import { usePostContent, useGetTopic, useTempSaveFlag } from './hooks/queries';
+import {
+  useGetTopic,
+  usePostContent,
+  usePresignedUrl,
+  usePutEditContent,
+  usePostTempSaveContent,
+  useTempSaveFlag,
+} from './hooks/queries';
 
 import {
-  EditorTempNotExistHeader, // 임시저장 글 없음 -> 헤더
-  EditorTempExistHeader, // 임시저장 글 있음 -> 헤더
+  EditorEditHeader,
+  EditorTempExistHeader,
+  EditorTempNotExistHeader,
 } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const PostPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   // 에디터 제목, 내용 저장 함수
   const [contentTitle, setContentTitle] = useState('');
@@ -26,14 +35,23 @@ const PostPage = () => {
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
+  const [imageToServer, setImageToServer] = useState('');
+  
+  // 모임 ID, url에서 받아오기
+  const { groupId, type } = useParams() as { groupId: string; type: string };
 
-  // 모임 ID url에서 받아오기
-  const { groupId } = useParams() as { groupId: string };
+  const [editPostId, setEditPostId] = useState('');
+  useEffect(() => {
+    if (type == 'edit') {
+      setEditPostId(location.state.postId);
+      setImageUrl(location.state.imageUrl);
+    }
+  }, [type]);
 
   // 임시저장 값 여부 확인
-  const { isTemporaryPostExist, postId, isLoading, isError, error } = useTempSaveFlag(
-    groupId || '',
-  );
+  const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
+  const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist);
+  console.log(postId); // pr용 버셀 에러 방지
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
@@ -43,53 +61,97 @@ const PostPage = () => {
     }
   }, [topics]);
 
-  // 최초 저장
+  // 이미지 보낼 url 받아오기
+  const { fileName, url } = usePresignedUrl();
+  console.log(url);
+  console.log(fileName);
+
+  // 최초저장
   const { mutate: postContent } = usePostContent({
-    groupId,
-    topicId,
+    groupId: groupId,
+    topicId: topicId,
     title: contentTitle,
     content: contentContent,
-    imageUrl,
-    anonymous,
+    imageUrl: imageToServer,
+    anonymous: anonymous,
   });
+
   const saveHandler = () => {
     postContent();
-    navigate(`/detail/${groupId}/${postId}`);
+  };
+
+  // 수정하기 제출하기
+  const { mutate: putEditContent } = usePutEditContent({
+    topicId: topicId,
+    title: contentTitle,
+    content: contentContent,
+    imageUrl: imageUrl,
+    anonymous: anonymous,
+    postId: editPostId,
+  });
+
+  const editSaveHandler = () => {
+    putEditContent();
+    navigate(`/detail/${groupId}/${editPostId}`);
   };
 
   // 임시 저장 글 -> 저장하기
   const tempExistSaveHandler = () => {};
 
   // 임시 저장
+  const { mutate: postTempSaveContent } = usePostTempSaveContent({
+    groupId: groupId,
+    topicId: topicId,
+    title: contentTitle,
+    content: contentContent,
+    imageUrl: imageUrl,
+    anonymous: anonymous,
+  });
   const tempSaveHandler = () => {
-    alert('홈으로 가기');
+    postTempSaveContent();
   };
 
   useEffect(() => {
-    if (isTemporaryPostExist) {
+    if (isTemporaryPostExist && type != 'edit') {
       if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
-        console.log('임시 저장 fetch');
+        setTemporaryExist(true);
       } else {
-        console.log('refetch 완료');
+        setTemporaryExist(false);
       }
     } else {
       return;
     }
   }, [isTemporaryPostExist]);
 
-  console.log(topicId);
   return (
     <PostPageWrapper>
-      {isTemporaryPostExist ? (
+      {type == 'edit' ? (
+        <EditorEditHeader onClickEditSave={editSaveHandler} />
+      ) : temporaryExist ? (
         <EditorTempExistHeader onClickSubmit={tempExistSaveHandler} />
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
-      <ImageUpload saveImage={setImageUrl} imageUrl={imageUrl} />
+      <ImageUpload
+        saveImage={setImageUrl}
+        imageUrl={imageUrl}
+        setImageToServer={setImageToServer}
+        url={url || ''}
+        fileName={fileName || ''}
+      />
       <DropDownEditorWrapper>
-        <DropDown topicList={topicList} selectedTopicId={setTopicId} />
+        <DropDown
+          topicList={topicList}
+          selectedTopicId={setTopicId}
+          updateAnonymous={setAnonymous}
+        />
         <Spacing marginBottom="2.4" />
-        <Editor saveTitle={setContentTitle} saveContent={setContentContent} />
+        <Editor
+          title={contentTitle}
+          saveTitle={setContentTitle}
+          content={contentContent}
+          saveContent={setContentContent}
+        />
       </DropDownEditorWrapper>
       <Spacing marginBottom="8" />
     </PostPageWrapper>

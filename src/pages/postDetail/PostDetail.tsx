@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
-import { useCheckPostAuth, useGetPostDetail } from './hooks/queries';
+import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
 
 import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
@@ -17,11 +17,14 @@ import logout from './../../utils/logout';
 const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
-
+  const { groupId } = useParams();
   const { data, isError, isLoading } = useGetPostDetail(postId || '');
   const { data: postAuth } = useCheckPostAuth(postId || '');
-
+  const { mutate: deletePost } = useDeletePost(postId || '');
   const postData = data?.data;
+
+  console.log(postData);
+  console.log(postAuth);
   if (isError) {
     navigate('/error');
   }
@@ -29,6 +32,27 @@ const PostDetail = () => {
     <div>Loading~</div>;
   }
 
+  const handleDeletePost = () => {
+    const userConfirmed = confirm('삭제하시겠습니까?');
+    if (userConfirmed) {
+      deletePost();
+      navigate(`/group/${groupId}`);
+    }
+    console.log('삭제취소');
+  };
+
+  const handleEditBtn = () => {
+    navigate(`/post/${groupId}/edit`, {
+      state: {
+        postId: postId,
+        topic: postData?.topic,
+        writer: postData?.writerName,
+        title: postData?.title,
+        content: postData?.content,
+        imageUrl: postData?.imageUrl,
+      },
+    });
+  };
   // 리팩토링 전 코드
   // useEffect(() => {
   //   if (typeof postId === 'string') {
@@ -36,6 +60,7 @@ const PostDetail = () => {
   //     console.log(data);
   //   }
   // }, []);
+  // console.log(postAuth?.data?.data.canEdit);
 
   return (
     <>
@@ -61,10 +86,15 @@ const PostDetail = () => {
             <TitleText>{postData?.title}</TitleText>
             <DateText>{postData?.createdAt}</DateText>
           </InfoTextBox>
-          {postAuth?.data?.data.canEdit && (
+          {/* 여기 수정해야 함 */}
+          {postAuth?.data?.data?.canEdit && (
             <ButtonWrapper>
-              <Button typeName={'deleteTempType'}>글 삭제하기</Button>
-              <Button typeName={'submitEditType'}>글 수정하기</Button>
+              <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
+                글 삭제하기
+              </Button>
+              <Button typeName={'submitEditType'} onClick={handleEditBtn}>
+                글 수정하기
+              </Button>
             </ButtonWrapper>
           )}
         </PostDetailContainer>
@@ -73,7 +103,9 @@ const PostDetail = () => {
             <CheckboxIc />
             <TopicText>{postData?.topic}</TopicText>
           </TopicWrapper>
-          <PostContainer>{postData?.content}</PostContainer>
+          <PostContainer
+            dangerouslySetInnerHTML={{ __html: postData?.content || '' }}
+          ></PostContainer>
         </PostWrapper>
         <WriterInfoWrapper>
           <WriterInfoContainer>
@@ -89,7 +121,7 @@ const PostDetail = () => {
           <CuriousBtn />
         </WriterInfoWrapper>
 
-        <Comment />
+        <Comment postId={postId} />
         <Spacing marginBottom="8" />
       </PostDetailWrapper>
     </>
@@ -165,7 +197,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
   align-items: flex-start;
-  width: 21rem;
+  width: 22rem;
 `;
 
 const TopicWrapper = styled.div`
@@ -188,6 +220,7 @@ const PostWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  width: 100%;
 `;
 const PostContainer = styled.div`
   width: 100%;

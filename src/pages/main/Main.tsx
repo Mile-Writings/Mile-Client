@@ -18,7 +18,7 @@ const Main = () => {
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
-      <OnBoarding />ㄴ
+      <OnBoarding />
       <CarouselComponentLayout>
         <GroupCarouselTitle />
         <Carousel />
