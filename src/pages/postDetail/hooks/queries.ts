@@ -36,11 +36,12 @@ export const useGetPostDetail = (postId: string) => {
 
 //궁금해요 여부개수 get api
 export const useGetCuriousInfo = (postId: string) => {
-  const data = useQuery({
+  const { data, error } = useQuery({
     queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId],
     queryFn: () => fetchCuriousInfo(postId),
+    retry: false,
   });
-  return data;
+  return { data, error };
 };
 
 //궁금해요 생성 api

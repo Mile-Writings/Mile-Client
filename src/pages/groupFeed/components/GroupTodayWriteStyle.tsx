@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTodayWritingStyle } from '../hooks/queries';
 
 import Button from '../../../components/commons/Button';
+import Error from '../../Error/Error';
+import Loading from '../../Loading/Loading';
 
 interface GroupTodayWriteStylePropTypes {
   isMember: boolean | undefined; //나의 글 작성하기 권한 확인
@@ -19,11 +21,12 @@ const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
     navigate(`/post/${groupId}/post`);
   };
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (isError) {
-    return <div>Error fetching data..{error?.message}</div>;
+    console.log(error?.message, 'error');
+    return <Error />;
   }
   return (
     <TodayWriteStyleWrapper>

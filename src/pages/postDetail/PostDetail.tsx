@@ -5,8 +5,10 @@ import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
 import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
 
+import Error from '../Error/Error';
 import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
+import Loading from '../Loading/Loading';
 import { UnAuthorizationHeader } from '../main/components/MainHeader';
 
 import { CheckboxIc, DefaultProfileIc, HeaderLogoIc } from './../../assets/svgs';
@@ -23,16 +25,15 @@ const PostDetail = () => {
   const { data: postAuth } = useCheckPostAuth(postId || '');
   const { mutate: deletePost } = useDeletePost(postId || '');
   const postData = data?.data;
-  console.log(postData?.imageUrl);
 
   const accessToken = localStorage.getItem('accessToken');
-  console.log(postData);
-  console.log(postAuth);
-  if (isError) {
-    navigate('/error');
-  }
+
   if (isLoading) {
-    <div>Loading~</div>;
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <Error />;
   }
 
   const handleDeletePost = () => {
