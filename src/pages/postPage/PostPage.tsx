@@ -108,6 +108,11 @@ const PostPage = () => {
     postTempSaveContent();
   };
 
+
+  // 임시저장 불러오기
+  const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
+    useGetTempSaveContent(postId || '', temporaryExist || false);
+
   useEffect(() => {
     if (isTemporaryPostExist && type != 'edit') {
       if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
@@ -120,14 +125,13 @@ const PostPage = () => {
     } else {
       return;
     }
-  }, [isTemporaryPostExist]);
+  }, [isTemporaryPostExist, tempTitle, tempContent]);
 
-  // 임시저장 불러오기
-  const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
-    useGetTempSaveContent(postId || '', temporaryExist || false);
-
-  console.log(tempImageUrl);
-  console.log(tempAnonymous);
+  console.log(tempTitle, '임시저장 제목');
+  console.log(tempContent, '임시저장 목록');
+  // console.log(tempImageUrl);
+  // console.log(tempAnonymous);
+  
   // 임시 저장 글 -> 저장하기
   const tempExistSaveHandler = () => {};
 
@@ -151,9 +155,14 @@ const PostPage = () => {
         />
         <Spacing marginBottom="2.4" />
         <Editor
-          title={temporaryExist ? tempTitle : contentTitle}
+          isTemp={temporaryExist}
+          // title={temporaryExist ? tempTitle : contentTitle}
+          // content={temporaryExist ? tempContent : contentContent}
+          title={contentTitle}
+          tempTitle={tempTitle}
           saveTitle={setContentTitle}
-          content={temporaryExist ? tempContent : contentContent}
+          content={contentContent}
+          tempContent={tempContent}
           saveContent={setContentContent}
         />
       </DropDownEditorWrapper>

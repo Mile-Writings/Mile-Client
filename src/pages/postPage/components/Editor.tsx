@@ -121,10 +121,13 @@ interface EditorPropTypes {
   content: string;
   saveTitle: (title: string) => void;
   saveContent: (content: string) => void;
+  isTemp: boolean;
+  tempContent: string;
+  tempTitle: string;
 }
 
 const Editor = (props: EditorPropTypes) => {
-  const { title, content, saveTitle, saveContent } = props;
+  const { title, tempTitle, content, tempContent, saveTitle, saveContent, isTemp } = props;
   const [urlType, setUrlType] = useState('');
 
   // 수정뷰 전달값 받아오기
@@ -145,6 +148,19 @@ const Editor = (props: EditorPropTypes) => {
       saveContent(content);
     }
   }, [urlType]);
+
+  console.log(isTemp, '임시저장 클릭 여부');
+  console.log(title);
+  console.log(content);
+  useEffect(() => {
+    if (isTemp) {
+      saveTitle(tempTitle);
+      saveContent(tempContent);
+    } else {
+      saveTitle(title);
+      saveContent(content);
+    }
+  }, [isTemp]);
 
   // 구분선 커스텀 동작 함수
   const quillRef = useRef<ReactQuill | null>(null);
