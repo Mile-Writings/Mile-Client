@@ -5,6 +5,7 @@ import { useCuriousPost } from '../hooks/queries';
 
 import { GroupNoDataImgIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
+import GroupThumbnailImg from '../../assets/svgs/groupThumnailImg.svg';
 
 interface ArticlePropTypes {
   topic: string;
@@ -48,7 +49,7 @@ const CuriousArticle = (props: CuriousArticlePropTypes) => {
       ) : (
         curiousPostData?.map((article: ArticlePropTypes, index: number) => (
           <CuriousArticleLayout key={index} onClick={() => handleGoPostDetail(article.postId)}>
-            <ArticleThumbnail src="/src/assets/svgs/groupTabNextBtnHover.svg" />
+            <ArticleThumbnail imageUrl={article.imageUrl} isContainPhoto={article.isContainPhoto} />
             <Spacing marginBottom="1.6" />
             <ArticleWritingStyle>{article.topic}</ArticleWritingStyle>
             <Spacing marginBottom="0.4" />
@@ -69,11 +70,12 @@ const CuriousArticleWrapper = styled.div`
   gap: 1.6rem;
 `;
 
-const ArticleThumbnail = styled.img`
+const ArticleThumbnail = styled.div<{ imageUrl: string; isContainPhoto: boolean }>`
   width: 28.8rem;
   height: 14rem;
 
-  /* background-image: url('/src/assets/svgs/groupTabBeforeBtnEnable.svg'); */
+  background-image: ${(props) =>
+    props.isContainPhoto ? `url(${props.imageUrl})` : `url(${GroupThumbnailImg}`};
   background-size: cover;
   border-radius: 8px;
 `;
