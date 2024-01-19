@@ -36,7 +36,7 @@ const PostPage = () => {
   const [topicList, setTopicList] = useState<Topics[]>([]);
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
-  const [imageUrl, setImageUrl] = useState(
+  const [, setImageUrl] = useState(
     'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
   );
   const [imageToServer, setImageToServer] = useState(
