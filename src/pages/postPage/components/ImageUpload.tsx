@@ -7,38 +7,41 @@ import { s3UrlPasing } from '../utils/s3UrlPasing';
 import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 
 interface ImageUploadPropTypes {
-  saveImage: Dispatch<SetStateAction<string>>;
-  imageUrl: string;
+  setPreviewImgUrl: Dispatch<SetStateAction<string>>;
   url: string;
   setImageToServer: Dispatch<SetStateAction<string>>;
   fileName: string;
+  previewImgUrl: string;
 }
 
 const ImageUpload = (props: ImageUploadPropTypes) => {
-  const { imageUrl, saveImage, url, setImageToServer, fileName } = props;
+  const { previewImgUrl, setPreviewImgUrl, url, setImageToServer, fileName } = props;
   const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const target = e.target as FileReader;
       if (target) {
-        saveImage(target.result as string);
+        setPreviewImgUrl(target.result as string);
       }
     };
     if (e.target.files && e.target.files[0]) {
-      postDirectlyS3Func(url, e.target.files[0]); //url 파싱해서 넣기
       reader.readAsDataURL(e.target.files[0]);
+      postDirectlyS3Func(url, e.target.files[0]); //url 파싱해서 넣기
       console.log(reader);
+      console.log(e.target.files[0]);
     }
   };
 
   const postDirectlyS3Func = async (url: string, imageFile: File) => {
     try {
+      // eslint-disable-next-line no-unused-vars
       const data = await postDirectlyS3(url, imageFile);
       const s3url = s3UrlPasing(url);
       const urlToServer = `${s3url + fileName}`;
       setImageToServer(urlToServer);
+      return data;
       // saveImage(urlToServer);
-      console.log(data);
+      // console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -47,11 +50,11 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
   return (
     <>
       <ThumbNailGradient>
-        <ThumbNailImg src={imageUrl} $imgExist={imageUrl} />
+        <ThumbNailImg src={previewImgUrl} $imgExist={previewImgUrl} />
       </ThumbNailGradient>
       <ImageInput type="file" accept="image/*" id="editorImg" onChange={onImageUpload} />
       <ImageUploadLabel htmlFor="editorImg">
-        {imageUrl && imageUrl.length > 0 ? (
+        {previewImgUrl && previewImgUrl.length > 0 ? (
           <EditorThuminputIcnActiveIcon />
         ) : (
           <EditorThuminputIcnUnactiveIcon />

@@ -10,7 +10,6 @@ const postDirectlyS3 = async (url: string, imageFile: File) => {
         'Access-Control-Allow-Origin': '*',
       },
     });
-    console.log(imageFile);
     return data;
   } catch (err) {
     console.log(err);
