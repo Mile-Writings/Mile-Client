@@ -14,11 +14,17 @@ const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
   const navigate = useNavigate();
   const { isMember, groupId } = props;
   const { content, isLoading, isError, error } = useTodayWritingStyle(groupId || '');
+<<<<<<< HEAD
   // const { } = useParams();
 
   const onClickRouting = () => {
     // console.log('submit');
     navigate(`/post/${groupId}/post`);
+=======
+  const navigate = useNavigate();
+  const handleNavigatePostPage = () => {
+    navigate(`/post/MQ==`);
+>>>>>>> 6962a1183604a9e3466771b9c74f9981e14d9225
   };
   if (isLoading) {
     return <div>Loading...</div>;
@@ -36,7 +42,11 @@ const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
         </SubText>
       </TextLayout>
       {isMember && (
+<<<<<<< HEAD
         <Button typeName="writingFlowType" onClick={onClickRouting}>
+=======
+        <Button typeName="writingFlowType" onClick={handleNavigatePostPage}>
+>>>>>>> 6962a1183604a9e3466771b9c74f9981e14d9225
           나의 글 작성하러가기
         </Button>
       )}
