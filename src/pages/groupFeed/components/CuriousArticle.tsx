@@ -76,7 +76,7 @@ const ArticleThumbnail = styled.div<{ imageUrl: string; isContainPhoto: boolean 
   background-image: ${(props) =>
     props.isContainPhoto
       ? `url(${props.imageUrl})`
-      : `url('/src/assets/svgs/groupCardThumnailImg.svg')`};
+      : `url('src/assets/svgs/groupCardThumnailImg.svg')`};
   background-size: cover;
   border-radius: 8px;
 `;
