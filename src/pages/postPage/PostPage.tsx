@@ -57,6 +57,11 @@ const PostPage = () => {
     }
   }, [type]);
 
+  //라우팅 했을 때 스크롤 맨 위로
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // 임시저장 값 여부 확인 (서버값)
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
   // 조건부 처리용

@@ -12,7 +12,6 @@ import MyGroupBtn from '../../groupFeed/components/MyGroupBtn';
 export const AuthorizationHeader = () => {
   const handleLogOut = () => {
     logout();
-    alert('로그아웃 되었습니다');
     location.reload();
   };
 
