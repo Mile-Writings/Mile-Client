@@ -77,11 +77,14 @@ const ArticleThumbnail = styled.div<{ imageUrl: string; isContainPhoto: boolean 
   height: 14rem;
 
   background-image: ${(props) =>
-    props.isContainPhoto ? `url(${props.imageUrl})` : `url(${GroupCardThumnailImgIc})`};
+    props.isContainPhoto
+      ? `url(${props.imageUrl})`
+      : `url('/src/assets/svgs/groupCardThumnailImg.svg')`};
+  background-size: cover;
   border-radius: 8px;
 `;
 
-const CuriousArticleLayout = styled.button`
+const CuriousArticleLayout = styled.div`
   display: flex;
   flex-direction: column;
   width: 35.2rem;
