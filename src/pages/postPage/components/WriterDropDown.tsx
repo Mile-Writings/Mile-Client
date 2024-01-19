@@ -36,15 +36,15 @@ const WriterDropDown = (props: DropDownPropsType) => {
       setEditWriterName(location.state.writer);
       // const writerName = location.state.writer;
       if (location.state.writer != '작자미상') {
-        console.log('수정하기');
+        // console.log('수정하기');
         onClickListItem('writer', '필명');
       } else {
-        console.log('수정하기 익명');
+        // console.log('수정하기 익명');
         onClickListItem('writer', '작자미상');
       }
     }
   }, [urlType, editWriterName]);
-  console.log(editWriterName);
+  // console.log(editWriterName);
 
   // 필명 드롭다운 버튼 누르면 열림/닫힘
   const handleOnClick = () => {

@@ -102,8 +102,8 @@ const PostPage = () => {
     postId: editPostId,
   });
 
-  console.log(contentContent);
-  console.log(contentTitle);
+  // console.log(contentContent);
+  // console.log(contentTitle);
 
   const editSaveHandler = () => {
     putEditContent();
@@ -135,13 +135,14 @@ const PostPage = () => {
         setContentTitle(tempTitle);
         setContentContent(tempContent);
         setImageToServer(tempImageUrl);
+        setPreviewImgUrl(tempImageUrl);
       } else {
         setTemporaryExist(false);
       }
     } else {
       setTemporaryExist(false);
     }
-  }, [isTemporaryPostExist, tempTitle, tempContent]);
+  }, [isTemporaryPostExist, tempContent, tempTitle]);
 
   // 임시 저장 글 -> 저장하기
   const { mutate: putTempSaveContent } = usePutTempSaveContent({
@@ -170,7 +171,6 @@ const PostPage = () => {
       <ImageUpload
         setPreviewImgUrl={setPreviewImgUrl}
         previewImgUrl={previewImgUrl}
-        // imageUrl={imageToServer}
         setImageToServer={setImageToServer}
         url={url || ''}
         fileName={fileName || ''}
