@@ -8,6 +8,8 @@ import { GroupNoDataImgIc } from '../../../assets/svgs';
 import GroupThumbnailImg from '/src/assets/svgs/groupCardThumnailImg.svg';
 
 import Spacing from '../../../components/commons/Spacing';
+import Error from '../../Error/Error';
+import Loading from '../../Loading/Loading';
 
 interface ArticlePropTypes {
   topic: string;
@@ -31,11 +33,12 @@ const CuriousArticle = (props: CuriousArticlePropTypes) => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (isError) {
-    return <div>Error fetching data..{error?.message}</div>;
+    console.log(error?.message, 'error');
+    return <Error />;
   }
 
   return (
@@ -70,6 +73,8 @@ export default CuriousArticle;
 const CuriousArticleWrapper = styled.div`
   display: flex;
   gap: 1.6rem;
+
+  cursor: pointer;
 `;
 
 const ArticleThumbnail = styled.img`

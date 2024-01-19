@@ -36,7 +36,7 @@ const PostPage = () => {
   const [topicList, setTopicList] = useState<Topics[]>([]);
   const [topicId, setTopicId] = useState('');
   const [anonymous, setAnonymous] = useState(false);
-  const [, setImageUrl] = useState(
+  const [previewImgUrl, setPreviewImgUrl] = useState(
     'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
   );
   const [imageToServer, setImageToServer] = useState(
@@ -51,10 +51,16 @@ const PostPage = () => {
     if (type == 'edit') {
       setEditPostId(location.state.postId);
       setImageToServer(location.state.imageUrl);
+      setPreviewImgUrl(location.state.imageUrl);
       setContentTitle(location.state.title);
       setContentContent(location.state.content);
     }
   }, [type]);
+
+  //라우팅 했을 때 스크롤 맨 위로
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // 임시저장 값 여부 확인 (서버값)
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
@@ -162,8 +168,8 @@ const PostPage = () => {
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
       <ImageUpload
-        saveImage={setImageUrl}
-        imageUrl={imageToServer}
+        setPreviewImgUrl={setPreviewImgUrl}
+        previewImgUrl={previewImgUrl}
         // imageUrl={imageToServer}
         setImageToServer={setImageToServer}
         url={url || ''}

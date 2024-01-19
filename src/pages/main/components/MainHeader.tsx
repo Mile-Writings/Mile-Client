@@ -14,7 +14,6 @@ export const AuthorizationHeader = () => {
   const { navigateToHome } = useNavigateToHome();
   const handleLogOut = () => {
     logout();
-    alert('로그아웃 되었습니다');
     location.reload();
   };
 
@@ -36,6 +35,7 @@ export const AuthorizationHeader = () => {
 export const UnAuthorizationHeader = () => {
   const { navigateToHome } = useNavigateToHome();
   const navigate = useNavigate();
+  const { navigateToHome } = useNavigateToHome();
   const pathname = useLocation();
   const handleLogIn = () => {
     navigate(`/login`, { state: pathname });

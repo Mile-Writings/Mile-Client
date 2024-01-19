@@ -7,7 +7,7 @@ import Spacing from '../../components/commons/Spacing';
 const Error = () => {
   const navigate = useNavigate();
   const handlePrevPage = () => {
-    navigate(-1);
+    navigate('/');
   };
 
   return (
@@ -24,7 +24,7 @@ const Error = () => {
         남겨주시면 빠르게 해결할게요.
       </SubTitle>
       <Spacing marginBottom="4.8" />
-      <BackToPrevPageButton onClick={handlePrevPage}>이전 페이지로 가기</BackToPrevPageButton>
+      <BackToPrevPageButton onClick={handlePrevPage}>홈으로 가기</BackToPrevPageButton>
     </ErrorWrapper>
   );
 };
