@@ -9,11 +9,12 @@ import DropDown from './components/DropDown';
 import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
 import {
+  useGetTempSaveContent,
   useGetTopic,
   usePostContent,
+  usePostTempSaveContent,
   usePresignedUrl,
   usePutEditContent,
-  usePostTempSaveContent,
   useTempSaveFlag,
 } from './hooks/queries';
 
@@ -36,7 +37,7 @@ const PostPage = () => {
   const [anonymous, setAnonymous] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [imageToServer, setImageToServer] = useState('');
-  
+
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
 
@@ -48,10 +49,10 @@ const PostPage = () => {
     }
   }, [type]);
 
-  // 임시저장 값 여부 확인
+  // 임시저장 값 여부 확인 (서버값)
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
+  // 조건부 처리용
   const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist);
-  console.log(postId); // pr용 버셀 에러 방지
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
@@ -95,9 +96,6 @@ const PostPage = () => {
     navigate(`/detail/${groupId}/${editPostId}`);
   };
 
-  // 임시 저장 글 -> 저장하기
-  const tempExistSaveHandler = () => {};
-
   // 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
     groupId: groupId,
@@ -115,6 +113,8 @@ const PostPage = () => {
     if (isTemporaryPostExist && type != 'edit') {
       if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
         setTemporaryExist(true);
+        setContentTitle(tempTitle);
+        setContentContent(tempContent);
       } else {
         setTemporaryExist(false);
       }
@@ -122,6 +122,15 @@ const PostPage = () => {
       return;
     }
   }, [isTemporaryPostExist]);
+
+  // 임시저장 불러오기
+  const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
+    useGetTempSaveContent(postId || '', temporaryExist || false);
+
+  console.log(tempImageUrl);
+  console.log(tempAnonymous);
+  // 임시 저장 글 -> 저장하기
+  const tempExistSaveHandler = () => {};
 
   return (
     <PostPageWrapper>
@@ -141,15 +150,17 @@ const PostPage = () => {
       />
       <DropDownEditorWrapper>
         <DropDown
+          isTemp={temporaryExist || false} // isTemp={temporaryExist} <- 원래코드임 pr용 yarn build 에러 방지위해서 바꿔둠
           topicList={topicList}
+          tempTopicList={tempTopicList}
           selectedTopicId={setTopicId}
           updateAnonymous={setAnonymous}
         />
         <Spacing marginBottom="2.4" />
         <Editor
-          title={contentTitle}
+          title={temporaryExist ? tempTitle : contentTitle}
           saveTitle={setContentTitle}
-          content={contentContent}
+          content={temporaryExist ? tempContent : contentContent}
           saveContent={setContentContent}
         />
       </DropDownEditorWrapper>

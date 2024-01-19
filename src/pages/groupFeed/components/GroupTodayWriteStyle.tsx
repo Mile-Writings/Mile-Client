@@ -11,11 +11,11 @@ interface GroupTodayWriteStylePropTypes {
 }
 
 const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
+  const navigate = useNavigate();
   const { isMember, groupId } = props;
   const { content, isLoading, isError, error } = useTodayWritingStyle(groupId || '');
-  const navigate = useNavigate();
-  const handleNavigatePostPage = () => {
-    navigate(`/post/MQ==`);
+  const onClickRouting = () => {
+    navigate(`/post/${groupId}/post`);
   };
   if (isLoading) {
     return <div>Loading...</div>;
@@ -33,7 +33,7 @@ const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
         </SubText>
       </TextLayout>
       {isMember && (
-        <Button typeName="writingFlowType" onClick={handleNavigatePostPage}>
+        <Button typeName="writingFlowType" onClick={onClickRouting}>
           나의 글 작성하러가기
         </Button>
       )}

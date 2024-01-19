@@ -14,21 +14,28 @@ export interface DropDownPropsType {
   selectedTopicId: (topicId: string) => void;
 }
 
+interface DropDownTempPropsType {
+  topicId: string;
+  topicName: string;
+  isSelected: boolean;
+}
+
 interface DropDownDataPropsType {
   topicList: Topics[];
+  tempTopicList: DropDownTempPropsType[];
   selectedTopicId: (topicId: string) => void;
   updateAnonymous: (anonymous: boolean) => void;
+  isTemp: boolean;
 }
 
 const DropDown = (props: DropDownDataPropsType) => {
-  const { topicList, selectedTopicId, updateAnonymous } = props;
+  const { topicList, selectedTopicId, updateAnonymous, isTemp, tempTopicList } = props;
   // 드롭다운에서 선택된 값 저장 state
+
   const [selectedValues, setSelectedValues] = useState({
-    topic: topicList[0]?.topicName,
+    topic: '',
     writer: '작자미상',
   });
-
-  // console.log(selectedValues);
 
   // 익명 여부 저장
   useEffect(() => {
@@ -46,10 +53,22 @@ const DropDown = (props: DropDownDataPropsType) => {
 
   // 불러온 글감 중 가장 초기값 보여주기 위함
   useEffect(() => {
-    if (topicList && topicList.length > 0) {
-      setSelectedValues((prev) => ({ ...prev, topic: topicList[0]?.topicName }));
+    if (isTemp) {
+      if (tempTopicList && tempTopicList.length > 0) {
+        setSelectedValues({
+          topic: tempTopicList?.find((topic) => topic.isSelected)?.topicName || '',
+          writer: '작자미상',
+        });
+      }
+    } else {
+      if (topicList && topicList.length > 0) {
+        setSelectedValues({
+          topic: topicList[0]?.topicName,
+          writer: '작자미상',
+        });
+      }
     }
-  }, [topicList]);
+  }, [tempTopicList, topicList, isTemp]);
 
   return (
     <DropDownWrapper>
