@@ -1,3 +1,5 @@
+import { isAxiosError } from 'axios';
+
 import { client } from '../../../utils/apis/axios';
 
 interface GetCommentListResponseTypes {
@@ -25,7 +27,11 @@ const fetchCommentList = async (postId: string) => {
     });
     return response.data;
   } catch (err) {
-    console.log(err);
+    if (isAxiosError(err) && err.response) {
+      if (err.response.status === 403) {
+        throw new Error(err.response.data.status);
+      }
+    }
   }
 };
 

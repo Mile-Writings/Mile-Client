@@ -49,7 +49,11 @@ const CuriousGroupText = styled.p`
 `;
 
 const GroupRoutingBtnBox = styled.div`
-  &:hover {
+  & > svg {
+    cursor: pointer;
+  }
+
+  & > svg:hover {
     path {
       fill: ${({ theme }) => theme.colors.mileViolet};
     }

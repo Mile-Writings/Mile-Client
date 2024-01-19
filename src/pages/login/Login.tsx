@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { KakaoLoginBtnIc as KakaoLoginBtnIcon, LoginIc } from '../../assets/svgs';
+import { HeaderLogoIc, KakaoLoginBtnIc as KakaoLoginBtnIcon, LoginIc } from '../../assets/svgs';
 
 const Login = () => {
   //const REDIRECT_URL = 'https://www.milewriting.com/redirect-kakao';
@@ -15,14 +15,20 @@ const Login = () => {
 
   return (
     <LoginWrapper>
-      <LoginContainer>
-        <LoginTextBox>
-          <HeadText>마일 시작하기</HeadText>
-          <SubText>Make it look easy 글쓰기를 쉽고 편안하게</SubText>
-        </LoginTextBox>
-        <LoginIc />
-        <KakaoLoginBtnIcon onClick={handleKakaoLogin} />
-      </LoginContainer>
+      <HeaderWrapper>
+        <HeaderLogoIcon />
+        <HeaderBtnLayout />
+      </HeaderWrapper>
+      <LoginLayout>
+        <LoginContainer>
+          <LoginTextBox>
+            <HeadText>마일 시작하기</HeadText>
+            <SubText>Make it look easy 글쓰기를 쉽고 편안하게</SubText>
+          </LoginTextBox>
+          <LoginIc />
+          <KakaoLoginBtnIcon onClick={handleKakaoLogin} />
+        </LoginContainer>
+      </LoginLayout>
     </LoginWrapper>
   );
 };
@@ -33,7 +39,8 @@ const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 13.2rem;
+  width: 100%;
+  height: calc(100vh - 7.4rem);
 `;
 
 const LoginContainer = styled.div`
@@ -41,7 +48,9 @@ const LoginContainer = styled.div`
   flex-direction: column;
   gap: 2.4rem;
   align-items: center;
+  justify-content: center;
   padding: 4rem 0;
+  padding-top: 13.2rem;
 `;
 
 const LoginTextBox = styled.div`
@@ -61,4 +70,34 @@ const HeadText = styled.h1`
 const SubText = styled.p`
   color: ${({ theme }) => theme.colors.gray90};
   ${({ theme }) => theme.fonts.subtitle4};
+`;
+
+const HeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 6.4rem;
+  padding-right: 6rem;
+  padding-left: 6rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
+`;
+
+const HeaderBtnLayout = styled.div`
+  display: flex;
+  align-items: center;
+  height: 6.4rem;
+`;
+
+const HeaderLogoIcon = styled(HeaderLogoIc)`
+  cursor: pointer;
+`;
+
+const LoginLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 `;

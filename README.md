@@ -15,24 +15,24 @@ MILE은 make it look easy의 줄임말로, 글쓰기를 더 쉽고, 편안하게
 ## 👀 View 소개
 ### 🌱 Main View
 
-| <img width="500" alt="onBoarding" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a25259cb-ac43-4caf-b9e7-9a5ed672fee2"> | <img width="500" alt="Carousel" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/b44ae0a2-dea6-4b99-bef3-6474ab5dc267"> | <img width="500" alt="q a" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/e1e28047-8aa7-498d-8e88-216b686277fa"> |
+| <img width="350" height="150" alt="onBoarding" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a25259cb-ac43-4caf-b9e7-9a5ed672fee2"> | <img width="350" height="180" alt="Carousel" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/b44ae0a2-dea6-4b99-bef3-6474ab5dc267"> | <img width="350" height="150" alt="q a" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/e1e28047-8aa7-498d-8e88-216b686277fa"> |
 | :---: | :---: | :---: |
 
 
 ### 🌱 Post View
 
-| <img width="500" alt="스크린샷 2024-01-16 오후 11 55 29" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/b1c2eb99-88b3-49da-89bf-2bdf3d1848b8"> | <img width="500" alt="스크린샷 2024-01-16 오후 11 03 12" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/28bfcf61-af14-4a7b-b5e0-b12aa3be162f"> |
+| <img width="350" height="225" alt="스크린샷 2024-01-16 오후 11 55 29" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/b1c2eb99-88b3-49da-89bf-2bdf3d1848b8"> | <img width="350" height="225" alt="스크린샷 2024-01-16 오후 11 03 12" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/28bfcf61-af14-4a7b-b5e0-b12aa3be162f"> |
 | :---: | :---: |
 
 
 ### 🌱 Post Editor View
 
-| <img width="500" alt="2024-01-19_2 43 03" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a73d5f69-f05b-42dc-854a-f1a11ab860d2"> | <img width="500" alt="스크린샷 2024-01-18 오전 2 52 32" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/af436953-7232-4ee5-8980-94ecac1e0721"> | <img width="500" alt="스크린샷 2024-01-19 오후 5 53 11" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/2850e86f-9ad4-4ebb-be47-db506eef65ea"> |
+| <img width="300" height="175" alt="2024-01-19_2 43 03" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a73d5f69-f05b-42dc-854a-f1a11ab860d2"> | <img width="200" height="160" alt="스크린샷 2024-01-18 오전 2 52 32" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/af436953-7232-4ee5-8980-94ecac1e0721"> | <img width="300" height="175" alt="스크린샷 2024-01-19 오후 5 53 11" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/2850e86f-9ad4-4ebb-be47-db506eef65ea"> |
 | :---: | :---: | :---: |
 
 ### 🌱 Post Detail View
 
-| <img width="500" alt="스크린샷 2024-01-16 오후 11 59 26" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a8ae7703-0982-4141-b39e-7e2342b4fd8e"> | <img width="500" alt="스크린샷 2024-01-16 오후 11 09 39" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/80dd545a-bbe3-4fcf-a1fe-6ecb4968c594"> |
+| <img width="300" height="200" alt="스크린샷 2024-01-16 오후 11 59 26" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a8ae7703-0982-4141-b39e-7e2342b4fd8e"> | <img width="350" height="175" alt="스크린샷 2024-01-16 오후 11 09 39" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/80dd545a-bbe3-4fcf-a1fe-6ecb4968c594"> |
 | :---: | :---: |
 
 

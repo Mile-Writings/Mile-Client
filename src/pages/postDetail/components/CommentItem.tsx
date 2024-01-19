@@ -127,5 +127,11 @@ const MeatBallWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  height: 100%;
+  height: 2.6rem;
+
+  border-radius: 4px;
+
+  :hover {
+    background-color: ${({ theme }) => theme.colors.gray20};
+  }
 `;

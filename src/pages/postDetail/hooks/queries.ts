@@ -58,13 +58,14 @@ export const usePostCurious = (postId: string) => {
 
 //글에 해당하는 댓글 리스트 조회 api
 export const useGetCommentList = (postId: string) => {
-  const data = useQuery({
+  const { data, error } = useQuery({
     queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
     queryFn: () => fetchCommentList(postId),
+    retry: false,
   });
 
-  const commentListData = data.data?.data.comments;
-  return { commentListData };
+  const commentListData = data?.data?.comments;
+  return { commentListData, error };
 };
 
 //궁금해요 삭제 api
@@ -82,9 +83,11 @@ export const useDeleteCurious = (postId: string) => {
 
 //글 삭제/수정 권한 확인
 export const useCheckPostAuth = (postId: string) => {
+  const token = localStorage.getItem('accessToken');
   const data = useQuery({
     queryKey: [QUERY_KEY_POST_DETAIL.getAuthorization, postId],
     queryFn: () => checkPostAuth(postId),
+    enabled: !!token,
   });
   return data;
 };

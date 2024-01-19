@@ -15,7 +15,7 @@ interface CommentPropTypes {
 const Comment = (props: CommentPropTypes) => {
   const { postId } = props;
   const [comment, setComment] = useState('');
-  const { commentListData } = useGetCommentList(postId || '');
+  const { commentListData, error } = useGetCommentList(postId || '');
   const { postComment } = usePostComment(postId || '');
 
   const handleCommentSubmit = (e: FormEvent) => {
@@ -34,7 +34,9 @@ const Comment = (props: CommentPropTypes) => {
     isMyComment: boolean;
   }
 
-  return (
+  return error?.message == '403' ? (
+    <div></div>
+  ) : (
     <CommentWrapper>
       <CommentPostWrapper>
         <CommentForm
@@ -47,6 +49,7 @@ const Comment = (props: CommentPropTypes) => {
           등록
         </CommentPostBtn>
       </CommentPostWrapper>
+      <Spacing marginBottom="2" />
       {commentListData?.length == 0 ? (
         <>
           <Spacing marginBottom="4" />

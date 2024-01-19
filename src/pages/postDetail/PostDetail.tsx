@@ -7,6 +7,7 @@ import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queri
 
 import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
+import { UnAuthorizationHeader } from '../main/components/MainHeader';
 
 import { CheckboxIc, DefaultProfileIc, HeaderLogoIc } from './../../assets/svgs';
 import Button from './../../components/commons/Button';
@@ -24,6 +25,7 @@ const PostDetail = () => {
   const postData = data?.data;
   console.log(postData?.imageUrl);
 
+  const accessToken = localStorage.getItem('accessToken');
   console.log(postData);
   console.log(postAuth);
   if (isError) {
@@ -65,20 +67,25 @@ const PostDetail = () => {
 
   return (
     <>
-      <PostHeader>
-        <HeaderLogoIcon
-          onClick={() => {
-            navigate('/');
-          }}
-        />
-        <HeaderBtnLayout>
-          <MyGroupBtn />
-          <CommonBtnLayout>
-            <MakeGroupBtn />
-            <LogInOutBtn onClick={logout}>로그아웃</LogInOutBtn>
-          </CommonBtnLayout>
-        </HeaderBtnLayout>
-      </PostHeader>
+      {accessToken ? (
+        <PostHeader>
+          <HeaderLogoIcon
+            onClick={() => {
+              navigate('/');
+            }}
+          />
+          <HeaderBtnLayout>
+            <MyGroupBtn />
+            <CommonBtnLayout>
+              <MakeGroupBtn />
+              <LogInOutBtn onClick={logout}>로그아웃</LogInOutBtn>
+            </CommonBtnLayout>
+          </HeaderBtnLayout>
+        </PostHeader>
+      ) : (
+        <UnAuthorizationHeader />
+      )}
+
       <ThumnailImg src={postData?.imageUrl} alt={'썸네일 이미지'} />
       <Spacing marginBottom="4.8" />
       <PostDetailWrapper>
@@ -138,7 +145,7 @@ const PostHeader = styled.header`
   height: 6.4rem;
   padding: 0 6rem;
 
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.white};
 `;
 const HeaderBtnLayout = styled.div`
   display: flex;
