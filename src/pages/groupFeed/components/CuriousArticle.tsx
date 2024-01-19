@@ -4,9 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useCuriousPost } from '../hooks/queries';
 
 import { GroupNoDataImgIc } from '../../../assets/svgs';
+import GroupThumbnailImg from '../../../assets/svgs/groupCardThumnailImg.svg';
 import Spacing from '../../../components/commons/Spacing';
-
-import GroupThumbnailImg from '/src/assets/svgs/groupThumnailImg.svg';
 
 interface ArticlePropTypes {
   topic: string;
@@ -75,8 +74,7 @@ const ArticleThumbnail = styled.div<{ imageUrl: string; isContainPhoto: boolean 
   width: 28.8rem;
   height: 14rem;
 
-  background-image: ${(props) =>
-    props.isContainPhoto ? `url(${props.imageUrl})` : `url(${GroupThumbnailImg}`};
+  background-image: url(${GroupThumbnailImg});
   background-size: cover;
   border-radius: 8px;
 `;
