@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import TopicDropDown from './TopicDropDown';
 import WriterDropDown from './WriterDropDown';
@@ -39,6 +40,9 @@ const DropDown = (props: DropDownDataPropsType) => {
     writer: '작자미상',
   });
 
+  // 어느 뷰인지 확인
+  const { type } = useParams() as { type: string };
+
   // 익명 여부 저장
   useEffect(() => {
     if (selectedValues.writer == '작자미상') {
@@ -63,11 +67,13 @@ const DropDown = (props: DropDownDataPropsType) => {
         });
       }
     } else {
-      if (topicList && topicList.length > 0) {
-        setSelectedValues({
-          topic: topicList[0]?.topicName,
-          writer: selectedValues.writer,
-        });
+      if (type != 'edit') {
+        if (topicList && topicList.length > 0) {
+          setSelectedValues({
+            topic: topicList[0]?.topicName,
+            writer: selectedValues.writer,
+          });
+        }
       }
     }
   }, [tempTopicList, topicList, isTemp]);

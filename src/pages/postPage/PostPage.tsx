@@ -51,6 +51,8 @@ const PostPage = () => {
     if (type == 'edit') {
       setEditPostId(location.state.postId);
       setImageToServer(location.state.imageUrl);
+      setContentTitle(location.state.title);
+      setContentContent(location.state.content);
     }
   }, [type]);
 
@@ -93,6 +95,9 @@ const PostPage = () => {
     anonymous: anonymous,
     postId: editPostId,
   });
+
+  console.log(contentContent);
+  console.log(contentTitle);
 
   const editSaveHandler = () => {
     putEditContent();
