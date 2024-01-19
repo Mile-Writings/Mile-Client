@@ -66,6 +66,7 @@ const PostPage = () => {
   const { isTemporaryPostExist, postId } = useTempSaveFlag(groupId || '');
   // 조건부 처리용
   const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist || false);
+  console.log(isTemporaryPostExist, '임시저장 된 거 있는지 없는지 ~');
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
