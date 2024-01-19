@@ -11,8 +11,10 @@ import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
 import { useGroupFeedAuth, useGroupInfo } from './hooks/queries';
 
-import GroupFloatingBtnHover from '../../assets/svgs/groupFloatingBtnHover.svg';
-import GroupThumbnailImg from '../../assets/svgs/groupThumnailImg.svg';
+// import GroupFloatingBtn from '/src/assets/svgs/groupFloatingBtn.svg';
+import GroupFloatingBtnHover from '/src/assets/svgs/groupFloatingBtnHover.svg';
+import GroupThumbnailImg from '/src/assets/svgs/groupThumnailImg.svg';
+
 import Footer from '../../components/commons/Footer';
 import Spacing from '../../components/commons/Spacing';
 
@@ -119,7 +121,7 @@ const FloatingBtn = styled.div`
   width: 7rem;
   height: 7rem;
 
-  background-image: url('/src/assets/svgs/groupFloatingBtn.svg');
+  background-image: url('/src/assets/svgs/groupThumnailImg.svg');
   cursor: pointer;
 
   :hover {
