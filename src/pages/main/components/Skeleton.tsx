@@ -1,7 +1,6 @@
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import React, { useMemo } from 'react';
-import 'react-loading-skeleton/dist/skeleton.css';
 
 interface skeletonPropTypes {
   width: number;
