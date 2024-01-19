@@ -58,13 +58,13 @@ export const usePostCurious = (postId: string) => {
 
 //글에 해당하는 댓글 리스트 조회 api
 export const useGetCommentList = (postId: string) => {
-  const data = useQuery({
+  const { data, isError, error } = useQuery({
     queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
     queryFn: () => fetchCommentList(postId),
   });
 
   const commentListData = data.data?.data.comments;
-  return { commentListData };
+  return { commentListData, isError, error };
 };
 
 //궁금해요 삭제 api
