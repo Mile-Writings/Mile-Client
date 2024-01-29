@@ -10,6 +10,8 @@ import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../asset
 import useClickOutside from '../../../hooks/useClickOutside';
 
 const TopicDropDown = (props: DropDownPropsType) => {
+  console.log('Topic 드롭다운 실행됨');
+
   const { onClickListItem, selectedValue, topicList, selectedTopicId } = props;
 
   const [topicIsOpen, setTopicIsOpen] = useState(false);

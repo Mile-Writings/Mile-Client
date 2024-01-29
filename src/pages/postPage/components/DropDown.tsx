@@ -31,6 +31,8 @@ interface DropDownDataPropsType {
 }
 
 const DropDown = (props: DropDownDataPropsType) => {
+  console.log('dropDown 컴포넌트 실행됨');
+
   const { topicList, selectedTopicId, updateAnonymous, isTemp, tempTopicList, tempAnonymous } =
     props;
   // 드롭다운에서 선택된 값 저장 state
@@ -77,8 +79,7 @@ const DropDown = (props: DropDownDataPropsType) => {
       }
     }
   }, [tempTopicList, topicList, isTemp]);
-  console.log(isTemp);
-  console.log(selectedValues);
+
   return (
     <DropDownWrapper>
       <TopicDropDown

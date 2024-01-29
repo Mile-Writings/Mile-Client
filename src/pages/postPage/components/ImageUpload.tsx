@@ -15,6 +15,8 @@ interface ImageUploadPropTypes {
 }
 
 const ImageUpload = (props: ImageUploadPropTypes) => {
+  console.log('ImageUpload 컴포넌트 실행됨');
+
   const { previewImgUrl, setPreviewImgUrl, url, setImageToServer, fileName } = props;
   const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
@@ -27,8 +29,8 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
     if (e.target.files && e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
       postDirectlyS3Func(url, e.target.files[0]); //url 파싱해서 넣기
-      console.log(reader);
-      console.log(e.target.files[0]);
+      // console.log(reader);
+      // console.log(e.target.files[0]);
     }
   };
 
@@ -40,10 +42,9 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
       const urlToServer = `${s3url + fileName}`;
       setImageToServer(urlToServer);
       return data;
-      // saveImage(urlToServer);
       // console.log(data);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

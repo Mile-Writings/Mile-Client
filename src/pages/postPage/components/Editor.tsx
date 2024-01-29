@@ -131,10 +131,11 @@ const Editor = (props: EditorPropTypes) => {
 
   // 수정뷰 전달값 받아오기
   const { type } = useParams() as { type: string };
-  console.log(type);
-  console.log(isTemp);
-  console.log(tempTitle);
-  console.log(tempContent);
+  // console.log(type);
+  // console.log(isTemp);
+  // console.log(tempTitle);
+  // console.log(tempContent);
+  console.log('Editor 컴포넌트 실행됨');
 
   //임시저장 빼고
   // useEffect(() => {

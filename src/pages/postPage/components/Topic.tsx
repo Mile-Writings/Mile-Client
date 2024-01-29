@@ -13,6 +13,7 @@ interface TopicPropTypes {
 }
 
 const ThisWeekTopic = (props: TopicPropTypes) => {
+  console.log('최신글감 컴포넌트 실행됨');
   const [urlType, setUrlType] = useState('');
   const { topicName, onClickHandler, selected, onClickClose, selectedTopicId, topicId } = props;
   const location = useLocation();
@@ -45,6 +46,7 @@ const ThisWeekTopic = (props: TopicPropTypes) => {
 };
 
 const PrevFirstTopic = (props: TopicPropTypes) => {
+  console.log('이전글감 첫번째 컴포넌트 실행됨');
   const [urlType, setUrlType] = useState('');
   const { topicName, onClickHandler, selected, onClickClose, selectedTopicId, topicId } = props;
   const location = useLocation();
@@ -78,6 +80,8 @@ const PrevFirstTopic = (props: TopicPropTypes) => {
 };
 
 const PrevTopic = (props: TopicPropTypes) => {
+  console.log('이전글감 컴포넌트 실행됨');
+
   const [urlType, setUrlType] = useState('');
   const { topicName, onClickHandler, selected, onClickClose, selectedTopicId, topicId } = props;
   const location = useLocation();
