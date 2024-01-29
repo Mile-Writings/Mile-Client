@@ -5,7 +5,7 @@ import Slider from 'react-slick';
 import '../styles/slick-theme.css';
 import '../styles/slick.css';
 
-import CarouselSkeletonPage from './CarouselSkeletonPage';
+import CarouselSkeleton from './CarouselSkeleton';
 import GroupCarouselTitle from './GroupCarouselTitle';
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
@@ -76,7 +76,7 @@ const Carousel = () => {
           ))}
         </>
       ) : (
-        <CarouselSkeletonPage />
+        <CarouselSkeleton />
       )}
     </CarouselWrapper>
   );
