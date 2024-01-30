@@ -1,51 +1,45 @@
+/* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import React, { useRef, useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
+// import { useLocation } from 'react-router-dom';
 
-import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
+import { DropDownToggle, DropDownContent } from './DropDown';
 
 import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../assets/svgs';
 import useClickOutside from '../../../hooks/useClickOutside';
 
-const WriterDropDown = (props: DropDownPropsType) => {
+interface WriterPropType {
+  setWriter: (e: React.MouseEvent<HTMLDivElement>) => void;
+  selectedWriter: string;
+  pageType: string;
+}
+
+const WriterDropDown = (props: WriterPropType) => {
   console.log('Writer 드롭다운 실행됨');
 
-  const { onClickListItem, selectedValue } = props;
-  const [urlType, setUrlType] = useState('');
+  const { setWriter, selectedWriter } = props;
   const [writerIsOpen, setWriterIsOpen] = useState(false);
-  const [editWriterName, setEditWriterName] = useState('');
 
   // 수정뷰 전달값 받아오기
-  const location = useLocation();
-  const { type } = useParams() as { type: string };
-
-  // url 타입 업데이트
-  useEffect(() => {
-    setUrlType(type);
-  }, []);
+  // const location = useLocation();
 
   // 드롭다운 리스트 부분 잡아오기
   const dropDownRef = useRef(null);
-  // 선택된 값 저장
-  const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    onClickListItem('writer', e.currentTarget.innerText);
-    setWriterIsOpen(false);
-  };
 
   // 수정 뷰일 때 필명여부 업데이트
-  useEffect(() => {
-    if (type == 'edit') {
-      setEditWriterName(location.state.writer);
-      // const writerName = location.state.writer;
-      if (location.state.writer != '작자미상') {
-        // console.log('수정하기');
-        onClickListItem('writer', '필명');
-      } else {
-        // console.log('수정하기 익명');
-        onClickListItem('writer', '작자미상');
-      }
-    }
-  }, [urlType, editWriterName]);
+  // useEffect(() => {
+  //   if (pageType == 'edit') {
+  //     setEditWriterName(location.state.writer);
+  //     // const writerName = location.state.writer;
+  //     if (location.state.writer != '작자미상') {
+  //       // console.log('수정하기');
+  //       onClickListItem('writer', '필명');
+  //     } else {
+  //       // console.log('수정하기 익명');
+  //       onClickListItem('writer', '작자미상');
+  //     }
+  //   }
+  // }, [pageType, editWriterName]);
   // console.log(editWriterName);
 
   // 필명 드롭다운 버튼 누르면 열림/닫힘
@@ -62,14 +56,14 @@ const WriterDropDown = (props: DropDownPropsType) => {
   return (
     <WriterDropDownWrapper ref={dropDownRef}>
       <DropDownToggle onClick={handleOnClick}>
-        <DropDownContent $contentWidth={14.6}>{selectedValue}</DropDownContent>
+        <DropDownContent $contentWidth={14.6}>{selectedWriter}</DropDownContent>
         {writerIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
       </DropDownToggle>
       <WriterListWrapper $isOpen={writerIsOpen}>
-        <WriterList onClick={handleListClick} $selected={selectedValue == '작자미상'}>
+        <WriterList onClick={setWriter} $selected={selectedWriter == '작자미상'}>
           작자미상
         </WriterList>
-        <WriterList onClick={handleListClick} $selected={selectedValue == '필명'}>
+        <WriterList onClick={setWriter} $selected={selectedWriter == '필명'}>
           필명
         </WriterList>
       </WriterListWrapper>

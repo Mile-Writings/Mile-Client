@@ -2,7 +2,6 @@
 import styled from '@emotion/styled';
 import React, { Dispatch, SetStateAction, useCallback, useRef } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
-import { useParams } from 'react-router-dom';
 
 import 'react-quill/dist/quill.bubble.css';
 
@@ -129,8 +128,6 @@ interface EditorPropTypes {
 const Editor = (props: EditorPropTypes) => {
   const { title, tempTitle, content, tempContent, saveTitle, saveContent, isTemp } = props;
 
-  // 수정뷰 전달값 받아오기
-  const { type } = useParams() as { type: string };
   // console.log(type);
   // console.log(isTemp);
   // console.log(tempTitle);

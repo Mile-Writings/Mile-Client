@@ -4,15 +4,13 @@ import { useRef, useState, useEffect } from 'react';
 import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
 import { ThisWeekTopic, PrevFirstTopic, PrevTopic } from './Topic';
 
-// import { TOPIC_DUMMY_DATA } from '../constants/topicConstants';
-
 import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../assets/svgs';
 import useClickOutside from '../../../hooks/useClickOutside';
 
 const TopicDropDown = (props: DropDownPropsType) => {
   console.log('Topic 드롭다운 실행됨');
 
-  const { onClickListItem, selectedValue, topicList, selectedTopicId } = props;
+  const { onClickListItem, selectedValue, topicList, selectedTopicId, pageType } = props;
 
   const [topicIsOpen, setTopicIsOpen] = useState(false);
 
@@ -55,6 +53,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 selected={selectedValue === item.topicName}
                 onClickClose={setTopicIsOpen}
                 selectedTopicId={selectedTopicId}
+                pageType={pageType}
               />
             );
           } else if (idx === 1) {
@@ -67,6 +66,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 selected={selectedValue === item.topicName}
                 onClickClose={setTopicIsOpen}
                 selectedTopicId={selectedTopicId}
+                pageType={pageType}
               />
             );
           } else {
@@ -79,6 +79,7 @@ const TopicDropDown = (props: DropDownPropsType) => {
                 selected={selectedValue === item.topicName}
                 onClickClose={setTopicIsOpen}
                 selectedTopicId={selectedTopicId}
+                pageType={pageType}
               />
             );
           }

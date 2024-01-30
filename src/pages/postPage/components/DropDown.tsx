@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+// import { useParams } from 'react-router-dom';
 
 import TopicDropDown from './TopicDropDown';
 import WriterDropDown from './WriterDropDown';
@@ -13,6 +13,7 @@ export interface DropDownPropsType {
   selectedValue: string;
   topicList: Topics[];
   selectedTopicId: (topicId: string) => void;
+  pageType: string;
 }
 
 interface DropDownTempPropsType {
@@ -22,54 +23,41 @@ interface DropDownTempPropsType {
 }
 
 interface DropDownDataPropsType {
+  isTemp: boolean;
   topicList: Topics[];
   tempTopicList: DropDownTempPropsType[];
-  selectedTopicId: (topicId: string) => void;
-  updateAnonymous: (anonymous: boolean) => void;
-  isTemp: boolean;
-  tempAnonymous: boolean;
+  setTopic: (e: React.MouseEvent<HTMLDivElement>) => void;
+  setWriter: (e: React.MouseEvent<HTMLDivElement>) => void;
+  selectedTopic: string;
+  selectedWriter: string;
+  pageType: string;
 }
 
 const DropDown = (props: DropDownDataPropsType) => {
   console.log('dropDown 컴포넌트 실행됨');
 
-  const { topicList, selectedTopicId, updateAnonymous, isTemp, tempTopicList, tempAnonymous } =
-    props;
-  // 드롭다운에서 선택된 값 저장 state
-
-  const [selectedValues, setSelectedValues] = useState({
-    topic: '',
-    writer: '작자미상',
-  });
-
-  // 어느 뷰인지 확인
-  const { type } = useParams() as { type: string };
-
-  // 익명 여부 저장
-  useEffect(() => {
-    if (selectedValues.writer == '작자미상') {
-      updateAnonymous(true);
-    } else {
-      updateAnonymous(false);
-    }
-  }, [selectedValues.writer]);
-
-  // 드롭다운 리스트 중 선택된 값 저장 이벤트 핸들러
-  const handleListItem = (key: string, value: string) => {
-    setSelectedValues((prev) => ({ ...prev, [key]: value }));
-  };
+  const {
+    isTemp,
+    topicList,
+    tempTopicList,
+    setTopic,
+    setWriter,
+    selectedTopic,
+    selectedWriter,
+    pageType,
+  } = props;
 
   // 불러온 글감 중 가장 초기값 보여주기 위함
   useEffect(() => {
     if (isTemp) {
       if (tempTopicList && tempTopicList.length > 0) {
-        setSelectedValues({
-          topic: tempTopicList?.find((topic) => topic.isSelected)?.topicName || '',
-          writer: tempAnonymous ? '작자미상' : '필명',
-        });
+          setSelectedValues({
+            topic: tempTopicList?.find((topic) => topic.isSelected)?.topicName || '',
+            writer: tempAnonymous ? '작자미상' : '필명',
+          });
       }
     } else {
-      if (type != 'edit') {
+      if (pageType != 'edit') {
         if (topicList && topicList.length > 0) {
           setSelectedValues({
             topic: topicList[0]?.topicName,
@@ -87,12 +75,13 @@ const DropDown = (props: DropDownDataPropsType) => {
         selectedValue={selectedValues.topic}
         topicList={topicList}
         selectedTopicId={selectedTopicId}
+        pageType={pageType}
       />
       <WriterDropDown
-        onClickListItem={handleListItem}
-        selectedValue={selectedValues.writer}
         topicList={topicList}
-        selectedTopicId={selectedTopicId}
+        setWriter={setWriter}
+        selectedWriter={selectedWriter}
+        pageType={pageType}
       />
     </DropDownWrapper>
   );

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface TopicPropTypes {
   topicId: string;
@@ -10,18 +10,14 @@ interface TopicPropTypes {
   selected: boolean;
   onClickClose: (state: boolean) => void;
   selectedTopicId: (topicId: string) => void;
+  pageType: string;
 }
 
 const ThisWeekTopic = (props: TopicPropTypes) => {
   console.log('최신글감 컴포넌트 실행됨');
-  const [urlType, setUrlType] = useState('');
-  const { topicName, onClickHandler, selected, onClickClose, selectedTopicId, topicId } = props;
+  const { topicName, onClickHandler, selected, onClickClose, selectedTopicId, topicId, pageType } =
+    props;
   const location = useLocation();
-  const { type } = useParams() as { type: string };
-
-  useEffect(() => {
-    setUrlType(type);
-  }, []);
 
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
@@ -30,10 +26,10 @@ const ThisWeekTopic = (props: TopicPropTypes) => {
     selectedTopicId(topicId);
   };
   useEffect(() => {
-    if (type == 'edit') {
+    if (pageType == 'edit') {
       onClickHandler('topic', location.state.topic);
     }
-  }, [urlType]);
+  }, [pageType]);
 
   return (
     <>
@@ -47,14 +43,9 @@ const ThisWeekTopic = (props: TopicPropTypes) => {
 
 const PrevFirstTopic = (props: TopicPropTypes) => {
   console.log('이전글감 첫번째 컴포넌트 실행됨');
-  const [urlType, setUrlType] = useState('');
-  const { topicName, onClickHandler, selected, onClickClose, selectedTopicId, topicId } = props;
+  const { topicName, onClickHandler, selected, onClickClose, selectedTopicId, topicId, pageType } =
+    props;
   const location = useLocation();
-  const { type } = useParams() as { type: string };
-
-  useEffect(() => {
-    setUrlType(type);
-  }, []);
 
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
@@ -64,10 +55,10 @@ const PrevFirstTopic = (props: TopicPropTypes) => {
   };
 
   useEffect(() => {
-    if (type == 'edit') {
+    if (pageType == 'edit') {
       onClickHandler('topic', location.state.topic);
     }
-  }, [urlType]);
+  }, [pageType]);
   return (
     <>
       <Divider />
@@ -82,14 +73,9 @@ const PrevFirstTopic = (props: TopicPropTypes) => {
 const PrevTopic = (props: TopicPropTypes) => {
   console.log('이전글감 컴포넌트 실행됨');
 
-  const [urlType, setUrlType] = useState('');
-  const { topicName, onClickHandler, selected, onClickClose, selectedTopicId, topicId } = props;
+  const { topicName, onClickHandler, selected, onClickClose, selectedTopicId, topicId, pageType } =
+    props;
   const location = useLocation();
-  const { type } = useParams() as { type: string };
-
-  useEffect(() => {
-    setUrlType(type);
-  }, []);
 
   const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
     onClickHandler('topic', e.currentTarget.innerText);
@@ -99,10 +85,10 @@ const PrevTopic = (props: TopicPropTypes) => {
   };
 
   useEffect(() => {
-    if (type == 'edit') {
+    if (pageType == 'edit') {
       onClickHandler('topic', location.state.topic);
     }
-  }, [urlType]);
+  }, [pageType]);
   return (
     <Topic onClick={handleListClick} $selected={selected}>
       {topicName}

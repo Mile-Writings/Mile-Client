@@ -85,7 +85,7 @@ export const useGetTopic = (groupId: string) => {
 // 임시저장 여부 확인 GET api
 interface TempSaveFlagQueryResult {
   isTemporaryPostExist: boolean | undefined;
-  postId: string | undefined;
+  tempPostId: string | undefined;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
@@ -98,9 +98,9 @@ export const useTempSaveFlag = (groupId: string): TempSaveFlagQueryResult => {
   });
 
   const isTemporaryPostExist = data && data.data.isTemporaryPostExist;
-  const postId = data && data.data.postId;
+  const tempPostId = data && data.data.postId;
 
-  return { isTemporaryPostExist, postId, isLoading, isError, error };
+  return { isTemporaryPostExist, tempPostId, isLoading, isError, error };
 };
 
 // 이미지 저장 url GET api
