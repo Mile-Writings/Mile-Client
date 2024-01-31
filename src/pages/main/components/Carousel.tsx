@@ -8,7 +8,7 @@ import '../styles/slick.css';
 import GroupCarouselTitle from './GroupCarouselTitle';
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
-import SkeletonComponent from './SkeletonComponent';
+import SkeletonComponent from './skeletons/SkeletonComponent';
 
 import { useFetchDataLength } from '../hooks/useFetchDataLength';
 

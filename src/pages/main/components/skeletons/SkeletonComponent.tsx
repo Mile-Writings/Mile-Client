@@ -1,4 +1,4 @@
-import CarouselSkeleton from './CarouselSkeleton';
+import CarouselSkeleton from '../CarouselSkeleton';
 
 interface dataLengthPropsTypes {
   groupLength: number;
