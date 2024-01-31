@@ -1,18 +1,12 @@
-import React from 'react';
-
 import CarouselSkeleton from './CarouselSkeleton';
 
 interface dataLengthPropsTypes {
-  dataLength: number;
+  groupLength: number;
 }
 
-const SkeletonComponent: React.FC<dataLengthPropsTypes> = ({ dataLength }) => {
+const SkeletonComponent = ({ groupLength }: dataLengthPropsTypes) => {
   return (
-    <>
-      {Array.from({ length: dataLength }).map((_, index) => (
-        <CarouselSkeleton key={index} />
-      ))}
-    </>
+    <>{...Array({ length: groupLength }).map((_, index) => <CarouselSkeleton key={index} />)}</>
   );
 };
 
