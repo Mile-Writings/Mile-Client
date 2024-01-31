@@ -5,10 +5,10 @@ import Slider from 'react-slick';
 import '../styles/slick-theme.css';
 import '../styles/slick.css';
 
+import CarouselSkeleton from './CarouselSkeleton';
 import GroupCarouselTitle from './GroupCarouselTitle';
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
-import SkeletonComponent from './skeletons/SkeletonComponent';
 
 import { useFetchDataLength } from '../hooks/useFetchDataLength';
 
@@ -24,6 +24,10 @@ export interface groupPostTypes {
   isContainPhoto: boolean;
 }
 
+// interface dataLengthPropsTypes {
+//   groupLength: number;
+// }
+
 const Carousel = () => {
   const [groupData, setGroupData] = useState<groupPropTypes[]>();
   const groupLength = useFetchDataLength();
@@ -34,6 +38,12 @@ const Carousel = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+  };
+
+  const SkeletonComponent = () => {
+    return (
+      <>{...Array({ length: groupLength }).map((_, index) => <CarouselSkeleton key={index} />)}</>
+    );
   };
 
   useEffect(() => {
@@ -79,7 +89,7 @@ const Carousel = () => {
           ))}
         </>
       ) : (
-        <SkeletonComponent groupLength={groupLength} />
+        SkeletonComponent()
       )}
     </CarouselWrapper>
   );
