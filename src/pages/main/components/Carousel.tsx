@@ -42,7 +42,7 @@ const Carousel = () => {
         const response = await getGroupContent();
         setGroupData(response);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     getData();

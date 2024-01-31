@@ -11,7 +11,7 @@ export const useFetchDataLength = () => {
         const response = await getGroupContent();
         if (response !== undefined) setDataLength(response.length);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     getData();
