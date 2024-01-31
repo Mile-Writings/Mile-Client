@@ -26,7 +26,7 @@ export interface groupPostTypes {
 
 const Carousel = () => {
   const [groupData, setGroupData] = useState<groupPropTypes[]>();
-  const dataLength = useFetchDataLength();
+  const groupLength = useFetchDataLength();
   const settings = {
     arrow: false,
     dots: false,
@@ -79,7 +79,7 @@ const Carousel = () => {
           ))}
         </>
       ) : (
-        <SkeletonComponent dataLength={dataLength} />
+        <SkeletonComponent groupLength={groupLength} />
       )}
     </CarouselWrapper>
   );
