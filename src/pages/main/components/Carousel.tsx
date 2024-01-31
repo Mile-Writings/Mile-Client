@@ -10,6 +10,8 @@ import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
 import SkeletonComponent from './SkeletonComponent';
 
+import { useFetchDataLength } from '../hooks/useFetchDataLength';
+
 import Spacing from './../../../components/commons/Spacing';
 import { getGroupContent, groupPropTypes } from './../apis/getGroupContent';
 
@@ -22,27 +24,9 @@ export interface groupPostTypes {
   isContainPhoto: boolean;
 }
 
-const useFetchLength = () => {
-  const [dataLength, setDataLength] = useState<number>(0);
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await getGroupContent();
-        if (response !== undefined) setDataLength(response.length);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getData();
-  }, []);
-
-  return dataLength;
-};
-
 const Carousel = () => {
   const [groupData, setGroupData] = useState<groupPropTypes[]>();
-  const dataLength = useFetchLength();
+  const dataLength = useFetchDataLength();
   const settings = {
     arrow: false,
     dots: false,
