@@ -102,9 +102,6 @@ const PostPage = () => {
     postId: editPostId,
   });
 
-  console.log(contentContent);
-  console.log(contentTitle);
-
   const editSaveHandler = () => {
     putEditContent();
     navigate(`/detail/${groupId}/${editPostId}`);

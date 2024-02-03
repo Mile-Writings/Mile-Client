@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import TopicDropDown from './TopicDropDown';
@@ -77,8 +77,6 @@ const DropDown = (props: DropDownDataPropsType) => {
       }
     }
   }, [tempTopicList, topicList, isTemp]);
-  console.log(isTemp);
-  console.log(selectedValues);
   return (
     <DropDownWrapper>
       <TopicDropDown
