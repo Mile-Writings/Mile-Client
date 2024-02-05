@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import React, { useEffect, useState, useReducer } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { Topics } from './apis/fetchEditorContent';
+import { Topics } from './apis/fetchTopic';
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
@@ -34,15 +34,19 @@ interface editorStateType {
   imageUrl: string;
 }
 
-interface Action {
+interface editorActionType {
   type: string;
-  value: string;
+  topic?: string;
+  writer?: string;
+  title?: string;
+  content?: string;
+  imageUrl?: string;
 }
 
 // reducer 초기값
 const editorState: editorStateType = {
   topic: '',
-  writer: '',
+  writer: '작자미상',
   title: '',
   content: '',
   imageUrl:
@@ -50,11 +54,50 @@ const editorState: editorStateType = {
 };
 
 // reducer 함수
-const reducerFn = (state: editorStateType, action: Action): editorStateType => {
+const reducerFn = (state: editorStateType, action: editorActionType): editorStateType => {
   switch (action.type) {
-    case '':
+    case 'setTopic':
       return {
         ...state,
+        topic: action.topic,
+      };
+    case 'setWriter':
+      return {
+        ...state,
+        writer: action.writer,
+      };
+    case 'setTitle':
+      return {
+        ...state,
+        title: action.title,
+      };
+    case 'setContent':
+      return {
+        ...state,
+        content: action.content,
+      };
+    case 'setInitialTopic':
+      return {
+        ...state,
+        topic: action.topic,
+      };
+    case 'setEditValue':
+      return {
+        ...state,
+        topic: action.topic,
+        writer: action.writer,
+        title: action.title,
+        content: action.content,
+        imageUrl: action.imageUrl,
+      };
+    case 'setTempValue':
+      return {
+        ...state,
+        topic: action.topic,
+        writer: action.writer,
+        title: action.title,
+        content: action.content,
+        imageUrl: action.imageUrl,
       };
     default:
       return state;
@@ -65,24 +108,26 @@ const PostPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 에디터 제목, 내용 저장 함수
+  //라우팅 했을 때 스크롤 맨 위로
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [editorVal, dispatch] = useReducer(reducerFn, editorState);
-  // dispatch 함수들
+
+  // dispatch prop 함수들
   const setTopic = (e: React.MouseEvent<HTMLDivElement>) => {
-    dispatch({ type: 'setTopic', value: e.currentTarget.innerText });
+    dispatch({ type: 'setTopic', topic: e.currentTarget.innerText });
   };
   const setWriter = (e: React.MouseEvent<HTMLDivElement>) => {
-    dispatch({ type: 'setWriter', value: e.currentTarget.innerText });
+    dispatch({ type: 'setWriter', writer: e.currentTarget.innerText });
   };
   const setTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'setTitle', value: e.target.value });
+    dispatch({ type: 'setTitle', title: e.target.value });
   };
   const setContent = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'setContent', value: e.target.value });
+    dispatch({ type: 'setContent', content: e.target.value });
   };
-  // 글감 리스트 get
-  const [topicList, setTopicList] = useState<Topics[]>([]);
-
   // 이미지
   const [previewImgUrl, setPreviewImgUrl] = useState(
     'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
@@ -93,32 +138,35 @@ const PostPage = () => {
 
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
+  // 글감 리스트
+  // const [topicList, setTopicList] = useState<Topics[]>([]);
   // 임시저장 값 여부 확인 (서버값)
   const { isTemporaryPostExist, tempPostId } = useTempSaveFlag(groupId || '');
-  // 조건부 처리용
+  // 임시저장 이어쓰기 yes 인 경우 판별
   const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist || false);
   // 수정하기, 임시저장 postId 저장
   const [editPostId, setEditPostId] = useState('');
-  // postId 업데이트
-  if (type == 'edit') {
-    setEditPostId(location.state.postId);
-  }
-  if (type == 'post' && temporaryExist) {
-    setEditPostId(tempPostId);
-  }
 
-  //라우팅 했을 때 스크롤 맨 위로
+  // 최초 뷰 들어왔을 때 임시저장 이어쓸지 confirm 창
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (isTemporaryPostExist && type != 'edit') {
+      if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
+        setTemporaryExist(true);
+      } else {
+        setTemporaryExist(false);
+      }
+    } else {
+      setTemporaryExist(false);
+    }
   }, []);
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
   useEffect(() => {
     if (topics) {
-      setTopicList(topics);
+      dispatch({ type: 'setInitialTopic', topic: topics[0].topicName });
     }
-  }, [topics]);
+  }, []);
 
   // 이미지 보낼 url 받아오기
   const { fileName, url } = usePresignedUrl();
@@ -137,6 +185,21 @@ const PostPage = () => {
     postContent();
   };
 
+  // 수정하기에서 넘어온 view일 경우 값 업데이트
+  useEffect(() => {
+    if (type == 'edit') {
+      setEditPostId(location.state.postId);
+      dispatch({
+        type: 'setEditValue',
+        topic: location.state.topic,
+        imageUrl: location.state.imageUrl,
+        title: location.state.title,
+        writer: location.state.writer == '작자미상' ? '작자미상' : '필명',
+        content: location.state.content,
+      });
+    }
+  }, [type]);
+
   // 수정하기 제출하기
   const { mutate: putEditContent } = usePutEditContent({
     topicId: editorVal.topic,
@@ -152,7 +215,7 @@ const PostPage = () => {
     navigate(`/detail/${groupId}/${editPostId}`);
   };
 
-  // 임시 저장
+  // 최초 글 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
     groupId: groupId,
     topicId: editorVal.topic,
@@ -170,17 +233,18 @@ const PostPage = () => {
   const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
     useGetTempSaveContent(tempPostId || '', temporaryExist || false);
 
-  useEffect(() => {
-    if (isTemporaryPostExist && type != 'edit') {
-      if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
-        setTemporaryExist(true);
-      } else {
-        setTemporaryExist(false);
-      }
-    } else {
-      setTemporaryExist(false);
-    }
-  }, [isTemporaryPostExist, tempTitle, tempContent]);
+  // 임시저장된 값으로 업데이트
+  if (type == 'post' && temporaryExist) {
+    setEditPostId(tempPostId);
+    dispatch({
+      type: 'setTempValue',
+      topic: tempTopicList?.find((topicEl) => topicEl.isSelected)?.topicName || '',
+      title: tempTitle,
+      content: tempContent,
+      imageUrl: tempImageUrl,
+      writer: tempAnonymous ? '작자미상' : '필명',
+    });
+  }
 
   // 임시 저장 글 -> 저장하기
   const { mutate: putTempSaveContent } = usePutTempSaveContent({
@@ -206,17 +270,16 @@ const PostPage = () => {
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
-      <ImageUpload
+      {/* <ImageUpload
         setPreviewImgUrl={setPreviewImgUrl}
         previewImgUrl={previewImgUrl}
         setImageToServer={setImageToServer}
         url={url || ''}
         fileName={fileName || ''}
-      />
+      /> */}
       <DropDownEditorWrapper>
         <DropDown
-          isTemp={temporaryExist || false}
-          topicList={topicList}
+          topicList={topics}
           tempTopicList={tempTopicList}
           setTopic={setTopic}
           setWriter={setWriter}
@@ -225,7 +288,7 @@ const PostPage = () => {
           pageType={type}
         />
         <Spacing marginBottom="2.4" />
-        <Editor
+        {/* <Editor
           isTemp={temporaryExist}
           title={contentTitle}
           tempTitle={tempTitle}
@@ -233,7 +296,7 @@ const PostPage = () => {
           content={contentContent}
           tempContent={tempContent}
           saveContent={setContentContent}
-        />
+        /> */}
       </DropDownEditorWrapper>
       <Spacing marginBottom="8" />
     </PostPageWrapper>

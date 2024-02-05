@@ -15,32 +15,11 @@ interface WriterPropType {
 }
 
 const WriterDropDown = (props: WriterPropType) => {
-  console.log('Writer 드롭다운 실행됨');
-
   const { setWriter, selectedWriter } = props;
   const [writerIsOpen, setWriterIsOpen] = useState(false);
 
-  // 수정뷰 전달값 받아오기
-  // const location = useLocation();
-
   // 드롭다운 리스트 부분 잡아오기
   const dropDownRef = useRef(null);
-
-  // 수정 뷰일 때 필명여부 업데이트
-  // useEffect(() => {
-  //   if (pageType == 'edit') {
-  //     setEditWriterName(location.state.writer);
-  //     // const writerName = location.state.writer;
-  //     if (location.state.writer != '작자미상') {
-  //       // console.log('수정하기');
-  //       onClickListItem('writer', '필명');
-  //     } else {
-  //       // console.log('수정하기 익명');
-  //       onClickListItem('writer', '작자미상');
-  //     }
-  //   }
-  // }, [pageType, editWriterName]);
-  // console.log(editWriterName);
 
   // 필명 드롭다운 버튼 누르면 열림/닫힘
   const handleOnClick = () => {

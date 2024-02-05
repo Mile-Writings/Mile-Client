@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import createPostContent from '../apis/createPostContent';
 import createTempSaveContent from '../apis/createTempSaveContent';
 import editPutContent from '../apis/editPutContent';
-import { fetchTopic } from '../apis/fetchEditorContent';
 import { fetchPresignedUrl } from '../apis/fetchPresignedUrl';
 import { fetchTempSaveContent } from '../apis/fetchTempSaveContent';
 import { fetchTempSaveFlag } from '../apis/fetchTempSaveFlag';
+import { fetchTopic } from '../apis/fetchTopic';
 import saveTempSavecontent from '../apis/saveTempSaveContent';
 
 import { QUERY_KEY_POST_DETAIL } from '../../postDetail/hooks/queries';
@@ -78,7 +78,7 @@ export const useGetTopic = (groupId: string) => {
     queryFn: () => fetchTopic(groupId),
   });
   const topics = data && data.data.topics;
-
+  // console.log('useGetTopic 실행됨');
   return { topics };
 };
 
@@ -117,7 +117,7 @@ export const usePresignedUrl = (): PresignedUrlQueryResult => {
 
   const fileName = data && data.data.fileName;
   const url = data && data.data.url;
-
+  // console.log('usePresignedUrl 실행됨');
   return { fileName, url };
 };
 
