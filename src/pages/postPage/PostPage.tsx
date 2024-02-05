@@ -278,15 +278,17 @@ const PostPage = () => {
         fileName={fileName || ''}
       /> */}
       <DropDownEditorWrapper>
-        <DropDown
-          topicList={topics}
-          tempTopicList={tempTopicList}
-          setTopic={setTopic}
-          setWriter={setWriter}
-          selectedTopic={editorVal.topic}
-          selectedWriter={editorVal.writer}
-          pageType={type}
-        />
+        {topics && (
+          <DropDown
+            topicList={topics}
+            tempTopicList={tempTopicList}
+            setTopic={setTopic}
+            setWriter={setWriter}
+            selectedTopic={editorVal.topic}
+            selectedWriter={editorVal.writer}
+            pageType={type}
+          />
+        )}
         <Spacing marginBottom="2.4" />
         {/* <Editor
           isTemp={temporaryExist}

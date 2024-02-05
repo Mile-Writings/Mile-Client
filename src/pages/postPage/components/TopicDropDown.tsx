@@ -1,23 +1,32 @@
 import styled from '@emotion/styled';
-import { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 
-import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
-import { ThisWeekTopic, PrevFirstTopic, PrevTopic } from './Topic';
+import { DropDownToggle, DropDownContent, DropDownTempPropsType } from './DropDown';
+// import { ThisWeekTopic, PrevFirstTopic, PrevTopic } from './Topic';
+import TopicType from './TopicType';
+
+import { Topics } from '../apis/fetchTopic';
 
 import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../assets/svgs';
 import useClickOutside from '../../../hooks/useClickOutside';
 
-const TopicDropDown = (props: DropDownPropsType) => {
-  console.log('Topic 드롭다운 실행됨');
+interface TopicPropTypes {
+  topicList: Topics[];
+  tempTopicList: DropDownTempPropsType[];
+  // eslint-disable-next-line no-unused-vars
+  setTopic: (e: React.MouseEvent<HTMLDivElement>) => void;
+  selectedTopic: string;
+  pageType: string;
+}
 
-  const { onClickListItem, selectedValue, topicList, selectedTopicId, pageType } = props;
-
+const TopicDropDown = (props: TopicPropTypes) => {
+  const { topicList, tempTopicList, setTopic, selectedTopic } = props;
   const [topicIsOpen, setTopicIsOpen] = useState(false);
 
   // 드롭다운 리스트 부분 잡아오기
   const dropDownRef = useRef(null);
 
-  // 토글 열림 닫힘만 핸들링하는 함수
+  // 주제 드롭다운 버튼 누르면 열림/닫힘
   const handleOnClick = () => {
     setTopicIsOpen(!topicIsOpen);
   };
@@ -28,61 +37,24 @@ const TopicDropDown = (props: DropDownPropsType) => {
   // 커스텀 훅 사용
   useClickOutside(dropDownRef, handleOutSideClick);
 
-  //수정 뷰일 때 글감 ID 업데이트
-  useEffect(() => {
-    const editViewSelectedTopicId =
-      topicList.find((topic) => topic.topicName === selectedValue)?.topicId || '';
-    selectedTopicId(editViewSelectedTopicId);
-  }, [selectedValue]);
-
   return (
     <TopicDropDownWrapper ref={dropDownRef}>
       <DropDownToggle onClick={handleOnClick}>
-        <DropDownContent $contentWidth={29}>{selectedValue}</DropDownContent>
+        <DropDownContent $contentWidth={29}>{selectedTopic}</DropDownContent>
         {topicIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
       </DropDownToggle>
       <TopicListWrapper $isOpen={topicIsOpen}>
         {topicList.map((item, idx) => {
-          if (idx === 0) {
-            return (
-              <ThisWeekTopic
-                key={item.topicId}
-                topicId={item.topicId}
-                topicName={item.topicName}
-                onClickHandler={onClickListItem}
-                selected={selectedValue === item.topicName}
-                onClickClose={setTopicIsOpen}
-                selectedTopicId={selectedTopicId}
-                pageType={pageType}
-              />
-            );
-          } else if (idx === 1) {
-            return (
-              <PrevFirstTopic
-                key={item.topicId}
-                topicId={item.topicId}
-                topicName={item.topicName}
-                onClickHandler={onClickListItem}
-                selected={selectedValue === item.topicName}
-                onClickClose={setTopicIsOpen}
-                selectedTopicId={selectedTopicId}
-                pageType={pageType}
-              />
-            );
-          } else {
-            return (
-              <PrevTopic
-                key={item.topicId}
-                topicId={item.topicId}
-                topicName={item.topicName}
-                onClickHandler={onClickListItem}
-                selected={selectedValue === item.topicName}
-                onClickClose={setTopicIsOpen}
-                selectedTopicId={selectedTopicId}
-                pageType={pageType}
-              />
-            );
-          }
+          return (
+            <TopicType
+              key={item.topicId}
+              idx={idx}
+              topicName={item.topicName}
+              setTopic={setTopic}
+              selected={selectedTopic == item.topicName}
+              setTopicIsOpen={setTopicIsOpen}
+            />
+          );
         })}
       </TopicListWrapper>
     </TopicDropDownWrapper>

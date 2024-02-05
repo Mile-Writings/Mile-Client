@@ -16,7 +16,7 @@ export interface DropDownPropsType {
   pageType: string;
 }
 
-interface DropDownTempPropsType {
+export interface DropDownTempPropsType {
   topicId: string;
   topicName: string;
   isSelected: boolean;
@@ -59,13 +59,13 @@ const DropDown = (props: DropDownDataPropsType) => {
 
   return (
     <DropDownWrapper>
-      {/* <TopicDropDown
-        onClickListItem={handleListItem}
-        selectedValue={selectedValues.topic}
+      <TopicDropDown
+        setTopic={setTopic}
+        selectedTopic={selectedTopic}
         topicList={topicList}
-        selectedTopicId={selectedTopicId}
+        tempTopicList={tempTopicList}
         pageType={pageType}
-      /> */}
+      />
       <WriterDropDown setWriter={setWriter} selectedWriter={selectedWriter} pageType={pageType} />
     </DropDownWrapper>
   );
