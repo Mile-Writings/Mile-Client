@@ -130,16 +130,13 @@ const PostPage = () => {
   const setTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'setTitle', title: e.target.value });
   };
-  const setContent = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'setContent', content: e.target.value });
+  const setContent = (content: string) => {
+    dispatch({ type: 'setContent', content: content });
   };
   const setPreviewImgUrl = (imageUrl: string) => {
     dispatch({ type: 'setPreviewImgUrl', imageUrl: imageUrl });
   };
-  // 이미지
-  // const [previewImgUrl, setPreviewImgUrl] = useState(
-  //   'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
-  // );
+
   const [imageToServer, setImageToServer] = useState(
     'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
   );
@@ -174,7 +171,7 @@ const PostPage = () => {
     if (topics) {
       dispatch({ type: 'setInitialTopic', topic: topics[0].topicName });
     }
-  }, []);
+  }, [topics]);
 
   // 이미지 보낼 url 받아오기
   const { fileName, url } = usePresignedUrl();
@@ -269,6 +266,8 @@ const PostPage = () => {
     navigate(`/detail/${groupId}/${tempPostId}`);
   };
 
+  console.log('postPage 실행됨');
+
   return (
     <PostPageWrapper>
       {type == 'edit' ? (
@@ -286,6 +285,7 @@ const PostPage = () => {
         fileName={fileName || ''}
       />
       <DropDownEditorWrapper>
+        {/* topics가 안 받아와질 경우도 생각해야 함 */}
         {topics && (
           <DropDown
             topicList={topics}
@@ -298,15 +298,12 @@ const PostPage = () => {
           />
         )}
         <Spacing marginBottom="2.4" />
-        {/* <Editor
-          isTemp={temporaryExist}
-          title={contentTitle}
-          tempTitle={tempTitle}
-          saveTitle={setContentTitle}
-          content={contentContent}
-          tempContent={tempContent}
-          saveContent={setContentContent}
-        /> */}
+        <Editor
+          title={editorVal.title}
+          setTitle={setTitle}
+          content={editorVal.content}
+          setContent={setContent}
+        />
       </DropDownEditorWrapper>
       <Spacing marginBottom="8" />
     </PostPageWrapper>

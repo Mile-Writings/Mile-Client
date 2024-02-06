@@ -7,7 +7,7 @@ import { s3UrlPasing } from '../utils/s3UrlPasing';
 import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 
 interface ImageUploadPropTypes {
-  // setPreviewImgUrl: Dispatch<SetStateAction<string>>;
+  // eslint-disable-next-line no-unused-vars
   setPreviewImgUrl: (imageUrl: string) => void;
   url: string;
   setImageToServer: Dispatch<SetStateAction<string>>;
@@ -16,8 +16,6 @@ interface ImageUploadPropTypes {
 }
 
 const ImageUpload = (props: ImageUploadPropTypes) => {
-  console.log('ImageUpload 컴포넌트 실행됨');
-
   const { previewImgUrl, setPreviewImgUrl, url, setImageToServer, fileName } = props;
   const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();

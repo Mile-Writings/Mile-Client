@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import React, { Dispatch, SetStateAction, useCallback, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 
 import 'react-quill/dist/quill.bubble.css';
@@ -114,36 +114,17 @@ const CustomToolbar = () => {
   );
 };
 
-// 에디터 컴포넌트
 interface EditorPropTypes {
   title: string;
+  setTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
   content: string;
-  saveTitle: (title: string) => void;
-  saveContent: Dispatch<SetStateAction<string>>;
-  isTemp: boolean;
-  tempContent: string;
-  tempTitle: string;
+  setContent: (content: string) => void;
 }
 
 const Editor = (props: EditorPropTypes) => {
-  const { title, tempTitle, content, tempContent, saveTitle, saveContent, isTemp } = props;
+  const { title, setTitle, content, setContent } = props;
 
-  // console.log(type);
-  // console.log(isTemp);
-  // console.log(tempTitle);
-  // console.log(tempContent);
   console.log('Editor 컴포넌트 실행됨');
-
-  //임시저장 빼고
-  // useEffect(() => {
-  //   if (isTemp) {
-  //     saveTitle(tempTitle);
-  //     saveContent(tempContent);
-  //   } else {
-  //     saveTitle(title);
-  //     saveContent(content);
-  //   }
-  // }, [isTemp]);
 
   // 구분선 커스텀 동작 함수
   const quillRef = useRef<ReactQuill | null>(null);
@@ -162,11 +143,6 @@ const Editor = (props: EditorPropTypes) => {
     quill.insertEmbed(index + 1, 'divider', true, 'user');
     quill.setSelection(index + 2, 0, 'user');
   }, []);
-
-  // 에디터 제목 저장
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    saveTitle(e.target.value);
-  };
 
   const modules = {
     toolbar: {
@@ -194,21 +170,16 @@ const Editor = (props: EditorPropTypes) => {
 
   return (
     <div className="text-editor">
-      <Title
-        type="text"
-        placeholder="제목을 적어주세요"
-        onChange={handleTitleChange}
-        value={title}
-      />
+      <Title type="text" placeholder="제목을 적어주세요" onChange={setTitle} value={title} />
       <CustomToolbar />
       <ReactQuill
-        // dangerouslySetInnerHTML={{ __html: content || '' }}
+        dangerouslySetInnerHTML={{ __html: content || '' }}
         ref={quillRef}
         theme="bubble"
         placeholder="글을 작성해 주세요"
         modules={modules}
         formats={formats}
-        onChange={saveContent} // 에디터 내용 저장
+        onChange={setContent} // 에디터 내용 저장
         value={content}
       />
     </div>
