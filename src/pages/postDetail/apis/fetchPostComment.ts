@@ -6,6 +6,14 @@ interface PostCommentResponseType {
   data: null;
 }
 
+interface unAuthorizationError extends Error {
+  response?: {
+    data: object;
+    message: string;
+    status: number;
+  };
+}
+
 const fetchPostComment = async (postId: string, comment: string) => {
   try {
     const token = localStorage.getItem('accessToken');
@@ -22,7 +30,8 @@ const fetchPostComment = async (postId: string, comment: string) => {
     );
     return response.data;
   } catch (err) {
-    console.log(err, '에러');
+    const unAuthorizationError = err as unAuthorizationError;
+    console.log(unAuthorizationError.response?.status); // 401
   }
 };
 
