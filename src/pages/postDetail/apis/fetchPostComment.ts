@@ -1,5 +1,3 @@
-import { isAxiosError } from 'axios';
-
 import { client } from '../../../utils/apis/axios';
 
 interface PostCommentResponseType {
@@ -24,9 +22,7 @@ const fetchPostComment = async (postId: string, comment: string) => {
     );
     return response.data;
   } catch (err) {
-    if (isAxiosError(err) && err.response) {
-      if (err.response.status === 401) console.log('실행됨');
-    }
+    console.error();
   }
 };
 

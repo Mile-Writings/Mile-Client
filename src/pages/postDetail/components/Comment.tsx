@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
-import { useState, FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import CommentItem from './CommentItem';
 
-import { usePostComment, useGetCommentList } from '../hooks/queries';
+import { useGetCommentList, usePostComment } from '../hooks/queries';
 
 import { EditorCatIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
@@ -17,12 +18,18 @@ const Comment = (props: CommentPropTypes) => {
   const [comment, setComment] = useState('');
   const { commentListData, error } = useGetCommentList(postId || '');
   const { postComment } = usePostComment(postId || '');
+  const token = localStorage.getItem('accessToken');
+  const navigate = useNavigate();
 
   const handleCommentSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (comment.trim() !== '') {
-      postComment(comment); //댓글 등록
-      setComment(''); // 댓글 등록 후 댓글 초기화
+    if (!token) {
+      navigate('/login');
+    } else {
+      if (comment.trim() !== '') {
+        postComment(comment); //댓글 등록
+        setComment(''); // 댓글 등록 후 댓글 초기화
+      }
     }
   };
 
