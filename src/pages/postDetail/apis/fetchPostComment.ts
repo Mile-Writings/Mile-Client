@@ -1,17 +1,11 @@
+import { isAxiosError } from 'axios';
+
 import { client } from '../../../utils/apis/axios';
 
 interface PostCommentResponseType {
   status: number;
   message: string;
   data: null;
-}
-
-interface unAuthorizationError extends Error {
-  response?: {
-    data: object;
-    message: string;
-    status: number;
-  };
 }
 
 const fetchPostComment = async (postId: string, comment: string) => {
@@ -30,8 +24,9 @@ const fetchPostComment = async (postId: string, comment: string) => {
     );
     return response.data;
   } catch (err) {
-    const unAuthorizationError = err as unAuthorizationError;
-    console.log(unAuthorizationError.response?.status); // 401
+    if (isAxiosError(err) && err.response) {
+      if (err.response.status === 401) console.log('실행됨');
+    }
   }
 };
 
