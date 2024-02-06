@@ -7,7 +7,8 @@ import { s3UrlPasing } from '../utils/s3UrlPasing';
 import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 
 interface ImageUploadPropTypes {
-  setPreviewImgUrl: Dispatch<SetStateAction<string>>;
+  // setPreviewImgUrl: Dispatch<SetStateAction<string>>;
+  setPreviewImgUrl: (imageUrl: string) => void;
   url: string;
   setImageToServer: Dispatch<SetStateAction<string>>;
   fileName: string;
@@ -36,7 +37,6 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
 
   const postDirectlyS3Func = async (url: string, imageFile: File) => {
     try {
-      // eslint-disable-next-line no-unused-vars
       const data = await postDirectlyS3(url, imageFile);
       const s3url = s3UrlPasing(url);
       const urlToServer = `${s3url + fileName}`;

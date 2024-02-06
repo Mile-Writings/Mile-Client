@@ -99,6 +99,11 @@ const reducerFn = (state: editorStateType, action: editorActionType): editorStat
         content: action.content,
         imageUrl: action.imageUrl,
       };
+    case 'setPreviewImgUrl':
+      return {
+        ...state,
+        imageUrl: action.imageUrl,
+      };
     default:
       return state;
   }
@@ -128,10 +133,13 @@ const PostPage = () => {
   const setContent = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'setContent', content: e.target.value });
   };
+  const setPreviewImgUrl = (imageUrl: string) => {
+    dispatch({ type: 'setPreviewImgUrl', imageUrl: imageUrl });
+  };
   // 이미지
-  const [previewImgUrl, setPreviewImgUrl] = useState(
-    'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
-  );
+  // const [previewImgUrl, setPreviewImgUrl] = useState(
+  //   'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
+  // );
   const [imageToServer, setImageToServer] = useState(
     'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
   );
@@ -270,13 +278,13 @@ const PostPage = () => {
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
-      {/* <ImageUpload
+      <ImageUpload
         setPreviewImgUrl={setPreviewImgUrl}
-        previewImgUrl={previewImgUrl}
+        previewImgUrl={editorVal.imageUrl}
         setImageToServer={setImageToServer}
         url={url || ''}
         fileName={fileName || ''}
-      /> */}
+      />
       <DropDownEditorWrapper>
         {topics && (
           <DropDown
