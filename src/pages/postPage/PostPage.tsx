@@ -8,6 +8,7 @@ import { Topics } from './apis/fetchTopic';
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
+import { EDITOR_DEFAULT_IMG } from './constants/editorDefaultImg';
 import {
   useGetTempSaveContent,
   useGetTopic,
@@ -49,8 +50,7 @@ const editorState: editorStateType = {
   writer: '작자미상',
   title: '',
   content: '',
-  imageUrl:
-    'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
+  imageUrl: EDITOR_DEFAULT_IMG,
 };
 
 // reducer 함수
@@ -99,7 +99,7 @@ const reducerFn = (state: editorStateType, action: editorActionType): editorStat
         content: action.content,
         imageUrl: action.imageUrl,
       };
-    case 'setPreviewImgUrl':
+    case 'setImageToServer':
       return {
         ...state,
         imageUrl: action.imageUrl,
@@ -133,13 +133,10 @@ const PostPage = () => {
   const setContent = (content: string) => {
     dispatch({ type: 'setContent', content: content });
   };
-  const setPreviewImgUrl = (imageUrl: string) => {
-    dispatch({ type: 'setPreviewImgUrl', imageUrl: imageUrl });
+  const setImageToServer = (imageUrl: string) => {
+    dispatch({ type: 'setImageToServer', imageUrl: imageUrl });
   };
-
-  const [imageToServer, setImageToServer] = useState(
-    'https://mile-s3.s3.ap-northeast-2.amazonaws.com/post/KakaoTalk_Photo_2024-01-14-15-52-49.png',
-  );
+  const [previewImgUrl, setPreviewImgUrl] = useState(EDITOR_DEFAULT_IMG);
 
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
@@ -179,7 +176,7 @@ const PostPage = () => {
   // 최초저장
   const { mutate: postContent } = usePostContent({
     groupId: groupId,
-    topicId: editorVal.topic,
+    topicId: topics ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId : '',
     title: editorVal.title,
     content: editorVal.content,
     imageUrl: editorVal.imageUrl,
@@ -190,24 +187,9 @@ const PostPage = () => {
     postContent();
   };
 
-  // 수정하기에서 넘어온 view일 경우 값 업데이트
-  useEffect(() => {
-    if (type == 'edit') {
-      setEditPostId(location.state.postId);
-      dispatch({
-        type: 'setEditValue',
-        topic: location.state.topic,
-        imageUrl: location.state.imageUrl,
-        title: location.state.title,
-        writer: location.state.writer == '작자미상' ? '작자미상' : '필명',
-        content: location.state.content,
-      });
-    }
-  }, [type]);
-
   // 수정하기 제출하기
   const { mutate: putEditContent } = usePutEditContent({
-    topicId: editorVal.topic,
+    topicId: topics ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId : '',
     title: editorVal.title,
     content: editorVal.content,
     imageUrl: editorVal.imageUrl,
@@ -238,18 +220,34 @@ const PostPage = () => {
   const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
     useGetTempSaveContent(tempPostId || '', temporaryExist || false);
 
-  // 임시저장된 값으로 업데이트
-  if (type == 'post' && temporaryExist) {
-    setEditPostId(tempPostId);
-    dispatch({
-      type: 'setTempValue',
-      topic: tempTopicList?.find((topicEl) => topicEl.isSelected)?.topicName || '',
-      title: tempTitle,
-      content: tempContent,
-      imageUrl: tempImageUrl,
-      writer: tempAnonymous ? '작자미상' : '필명',
-    });
-  }
+  useEffect(() => {
+    // 수정하기에서 넘어온 view일 경우 값 업데이트
+    if (type == 'edit') {
+      setEditPostId(location.state.postId);
+      setPreviewImgUrl(location.state.imageUrl);
+      dispatch({
+        type: 'setEditValue',
+        topic: location.state.topic,
+        imageUrl: location.state.imageUrl,
+        title: location.state.title,
+        writer: location.state.writer == '작자미상' ? '작자미상' : '필명',
+        content: location.state.content,
+      });
+    }
+    // 임시저장된 값으로 업데이트
+    if (type == 'post' && temporaryExist) {
+      setEditPostId(tempPostId);
+      setPreviewImgUrl(tempImageUrl);
+      dispatch({
+        type: 'setTempValue',
+        topic: tempTopicList?.find((topicEl) => topicEl.isSelected)?.topicName || '',
+        title: tempTitle,
+        content: tempContent,
+        imageUrl: tempImageUrl,
+        writer: tempAnonymous ? '작자미상' : '필명',
+      });
+    }
+  }, [type, temporaryExist]);
 
   // 임시 저장 글 -> 저장하기
   const { mutate: putTempSaveContent } = usePutTempSaveContent({
@@ -266,8 +264,6 @@ const PostPage = () => {
     navigate(`/detail/${groupId}/${tempPostId}`);
   };
 
-  console.log('postPage 실행됨');
-
   return (
     <PostPageWrapper>
       {type == 'edit' ? (
@@ -279,7 +275,7 @@ const PostPage = () => {
       )}
       <ImageUpload
         setPreviewImgUrl={setPreviewImgUrl}
-        previewImgUrl={editorVal.imageUrl}
+        previewImgUrl={previewImgUrl}
         setImageToServer={setImageToServer}
         url={url || ''}
         fileName={fileName || ''}

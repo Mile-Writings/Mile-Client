@@ -2,15 +2,16 @@ import styled from '@emotion/styled';
 import React, { Dispatch, SetStateAction } from 'react';
 
 import postDirectlyS3 from '../apis/postDirectlyS3';
+import { EDITOR_DEFAULT_IMG } from '../constants/editorDefaultImg';
 import { s3UrlPasing } from '../utils/s3UrlPasing';
 
 import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 
 interface ImageUploadPropTypes {
-  // eslint-disable-next-line no-unused-vars
-  setPreviewImgUrl: (imageUrl: string) => void;
+  setPreviewImgUrl: Dispatch<SetStateAction<string>>;
   url: string;
-  setImageToServer: Dispatch<SetStateAction<string>>;
+  // eslint-disable-next-line no-unused-vars
+  setImageToServer: (imageUrl: string) => void;
   fileName: string;
   previewImgUrl: string;
 }
@@ -53,7 +54,7 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
       </ThumbNailGradient>
       <ImageInput type="file" accept="image/*" id="editorImg" onChange={onImageUpload} />
       <ImageUploadLabel htmlFor="editorImg">
-        {previewImgUrl && previewImgUrl.length > 0 ? (
+        {previewImgUrl != EDITOR_DEFAULT_IMG && previewImgUrl.length > 0 ? (
           <EditorThuminputIcnActiveIcon />
         ) : (
           <EditorThuminputIcnUnactiveIcon />
