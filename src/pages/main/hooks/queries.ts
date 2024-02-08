@@ -17,11 +17,7 @@ export const useGetGroupContent = (moimId: string) => {
   return { data, isLoading, isError };
 };
 
-interface recommendPropsTypes {
-  content: string;
-}
-
-export const useGetRecommendTopic = ({ content }: recommendPropsTypes) => {
+export const useGetRecommendTopic = (content: string) => {
   const { data } = useQuery({
     queryKey: [QUERY_KEY_MAIN.getRecommendTopic, content],
     queryFn: () => getRecommendTopic(),
