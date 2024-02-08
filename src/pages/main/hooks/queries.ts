@@ -10,15 +10,17 @@ export const QUERY_KEY_MAIN = {
 
 interface moimPropTypes {
   moimId: string;
+  isLoading: boolean;
+  isError: boolean;
 }
 
 export const useGetGroupContent = ({ moimId }: moimPropTypes) => {
-  const { data } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEY_MAIN.getGroupContent, moimId],
     queryFn: () => getGroupContent(),
   });
 
-  return data;
+  return { data, isLoading, isError };
 };
 
 interface recommendPropsTypes {
