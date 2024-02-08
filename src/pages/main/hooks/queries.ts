@@ -8,13 +8,7 @@ export const QUERY_KEY_MAIN = {
   getRecommendTopic: 'getRecommendTopic',
 };
 
-interface moimPropTypes {
-  moimId: string;
-  isLoading: boolean;
-  isError: boolean;
-}
-
-export const useGetGroupContent = ({ moimId }: moimPropTypes) => {
+export const useGetGroupContent = (moimId: string) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEY_MAIN.getGroupContent, moimId],
     queryFn: () => getGroupContent(),
