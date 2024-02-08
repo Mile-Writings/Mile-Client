@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React, { useRef, useState } from 'react';
 
-import { DropDownToggle, DropDownContent, DropDownTempPropsType } from './DropDown';
+import { DropDownToggle, DropDownContent } from './DropDown';
 // import { ThisWeekTopic, PrevFirstTopic, PrevTopic } from './Topic';
 import TopicType from './TopicType';
 
@@ -12,15 +12,13 @@ import useClickOutside from '../../../hooks/useClickOutside';
 
 interface TopicPropTypes {
   topicList: Topics[];
-  tempTopicList: DropDownTempPropsType[];
   // eslint-disable-next-line no-unused-vars
   setTopic: (e: React.MouseEvent<HTMLDivElement>) => void;
   selectedTopic: string;
-  pageType: string;
 }
 
 const TopicDropDown = (props: TopicPropTypes) => {
-  const { topicList, tempTopicList, setTopic, selectedTopic } = props;
+  const { topicList, setTopic, selectedTopic } = props;
   const [topicIsOpen, setTopicIsOpen] = useState(false);
 
   // 드롭다운 리스트 부분 잡아오기

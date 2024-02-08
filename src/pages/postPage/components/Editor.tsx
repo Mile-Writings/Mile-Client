@@ -123,9 +123,8 @@ interface EditorPropTypes {
 
 const Editor = (props: EditorPropTypes) => {
   const { title, setTitle, content, setContent } = props;
-
-  console.log('Editor 컴포넌트 실행됨');
-
+  console.log('editor 실행됨');
+  console.log(content);
   // 구분선 커스텀 동작 함수
   const quillRef = useRef<ReactQuill | null>(null);
 
@@ -173,7 +172,7 @@ const Editor = (props: EditorPropTypes) => {
       <Title type="text" placeholder="제목을 적어주세요" onChange={setTitle} value={title} />
       <CustomToolbar />
       <ReactQuill
-        dangerouslySetInnerHTML={{ __html: content || '' }}
+        // dangerouslySetInnerHTML={{ __html: content || '' }}
         ref={quillRef}
         theme="bubble"
         placeholder="글을 작성해 주세요"

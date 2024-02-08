@@ -11,7 +11,6 @@ import useClickOutside from '../../../hooks/useClickOutside';
 interface WriterPropType {
   setWriter: (e: React.MouseEvent<HTMLDivElement>) => void;
   selectedWriter: string;
-  pageType: string;
 }
 
 const WriterDropDown = (props: WriterPropType) => {
@@ -31,6 +30,7 @@ const WriterDropDown = (props: WriterPropType) => {
   };
   // 커스텀 훅 사용
   useClickOutside(dropDownRef, handleOutSideClick);
+  console.log(writerIsOpen);
 
   return (
     <WriterDropDownWrapper ref={dropDownRef}>
@@ -39,10 +39,22 @@ const WriterDropDown = (props: WriterPropType) => {
         {writerIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
       </DropDownToggle>
       <WriterListWrapper $isOpen={writerIsOpen}>
-        <WriterList onClick={setWriter} $selected={selectedWriter == '작자미상'}>
+        <WriterList
+          onClick={(e) => {
+            setWriter(e);
+            setWriterIsOpen(false);
+          }}
+          $selected={selectedWriter == '작자미상'}
+        >
           작자미상
         </WriterList>
-        <WriterList onClick={setWriter} $selected={selectedWriter == '필명'}>
+        <WriterList
+          onClick={(e) => {
+            setWriter(e);
+            setWriterIsOpen(false);
+          }}
+          $selected={selectedWriter == '필명'}
+        >
           필명
         </WriterList>
       </WriterListWrapper>

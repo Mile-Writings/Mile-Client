@@ -1,72 +1,27 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import React, { useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
+import React from 'react';
 
 import TopicDropDown from './TopicDropDown';
 import WriterDropDown from './WriterDropDown';
 
 import { Topics } from '../apis/fetchTopic';
 
-export interface DropDownPropsType {
-  onClickListItem: (key: string, value: string) => void;
-  selectedValue: string;
-  topicList: Topics[];
-  selectedTopicId: (topicId: string) => void;
-  pageType: string;
-}
-
-export interface DropDownTempPropsType {
-  topicId: string;
-  topicName: string;
-  isSelected: boolean;
-}
-
 interface DropDownDataPropsType {
   topicList: Topics[];
-  tempTopicList: DropDownTempPropsType[];
   setTopic: (e: React.MouseEvent<HTMLDivElement>) => void;
   setWriter: (e: React.MouseEvent<HTMLDivElement>) => void;
   selectedTopic: string;
   selectedWriter: string;
-  pageType: string;
 }
 
 const DropDown = (props: DropDownDataPropsType) => {
-  const { topicList, tempTopicList, setTopic, setWriter, selectedTopic, selectedWriter, pageType } =
-    props;
-
-  // 불러온 글감 중 가장 초기값 보여주기 위함
-  // useEffect(() => {
-
-  //     if (tempTopicList && tempTopicList.length > 0) {
-  //         setSelectedValues({
-  //           topic: tempTopicList?.find((topic) => topic.isSelected)?.topicName || '',
-  //           writer: tempAnonymous ? '작자미상' : '필명',
-  //         });
-  //     }
-
-  //     if (pageType != 'edit') {
-  //       if (topicList && topicList.length > 0) {
-  //         setSelectedValues({
-  //           topic: topicList[0]?.topicName,
-  //           writer: selectedValues.writer,
-  //         });
-  //       }
-  //     }
-  //   }
-  // }, [tempTopicList, topicList, isTemp]);
+  const { topicList, setTopic, setWriter, selectedTopic, selectedWriter } = props;
 
   return (
     <DropDownWrapper>
-      <TopicDropDown
-        setTopic={setTopic}
-        selectedTopic={selectedTopic}
-        topicList={topicList}
-        tempTopicList={tempTopicList}
-        pageType={pageType}
-      />
-      <WriterDropDown setWriter={setWriter} selectedWriter={selectedWriter} pageType={pageType} />
+      <TopicDropDown setTopic={setTopic} selectedTopic={selectedTopic} topicList={topicList} />
+      <WriterDropDown setWriter={setWriter} selectedWriter={selectedWriter} />
     </DropDownWrapper>
   );
 };

@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import React, { useEffect, useState, useReducer } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { Topics } from './apis/fetchTopic';
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
@@ -140,29 +139,31 @@ const PostPage = () => {
 
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
-  // 글감 리스트
-  // const [topicList, setTopicList] = useState<Topics[]>([]);
   // 임시저장 값 여부 확인 (서버값)
   const { isTemporaryPostExist, tempPostId } = useTempSaveFlag(groupId || '');
   // 임시저장 이어쓰기 yes 인 경우 판별
-  const [temporaryExist, setTemporaryExist] = useState(false);
+  const [continueTempPost, setContinueTempPost] = useState(false);
   // 수정하기, 임시저장 postId 저장
   const [editPostId, setEditPostId] = useState('');
 
   // 임시저장 불러오기
   const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
-    useGetTempSaveContent(tempPostId || '', temporaryExist || false);
+    useGetTempSaveContent(tempPostId || '', continueTempPost || false);
+
+  console.log('isTemporaryPostExist ', isTemporaryPostExist);
+  console.log('type ', type);
+  console.log('continueTempPost ', continueTempPost);
 
   // 최초 뷰 들어왔을 때 임시저장 이어쓸지 confirm 창
   useEffect(() => {
-    if (type == 'post' && isTemporaryPostExist && !temporaryExist) {
+    if (type == 'post' && isTemporaryPostExist && !continueTempPost) {
       if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
-        setTemporaryExist(true);
+        setContinueTempPost(true);
       } else {
-        setTemporaryExist(false);
+        setContinueTempPost(false);
       }
     }
-  }, [isTemporaryPostExist, type, temporaryExist]);
+  }, [isTemporaryPostExist, type, continueTempPost]);
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
@@ -184,10 +185,10 @@ const PostPage = () => {
     imageUrl: editorVal.imageUrl,
     anonymous: editorVal.writer == '작자미상',
   });
-
   const saveHandler = () => {
     postContent();
   };
+
   useEffect(() => {
     // 수정하기에서 넘어온 view일 경우 값 업데이트
     if (type == 'edit') {
@@ -203,7 +204,7 @@ const PostPage = () => {
       });
     }
     // 임시저장된 값으로 업데이트
-    if (type == 'post' && temporaryExist) {
+    if (type == 'post' && continueTempPost) {
       setEditPostId(tempPostId);
       setPreviewImgUrl(tempImageUrl);
       dispatch({
@@ -215,7 +216,7 @@ const PostPage = () => {
         writer: tempAnonymous ? '작자미상' : '필명',
       });
     }
-  }, [type, temporaryExist, tempTitle]);
+  }, [type, continueTempPost, tempTitle]);
 
   // 수정하기 제출하기
   const { mutate: putEditContent } = usePutEditContent({
@@ -256,18 +257,21 @@ const PostPage = () => {
     postId: tempPostId || '',
   });
 
-  console.log(tempPostId);
-
   const tempExistSaveHandler = () => {
     putTempSaveContent();
     navigate(`/detail/${groupId}/${tempPostId}`);
   };
 
+  console.log('postPage실행됨');
+  if (type == 'edit') {
+    console.log(location.state.content);
+  }
+
   return (
     <PostPageWrapper>
       {type == 'edit' ? (
         <EditorEditHeader onClickEditSave={editSaveHandler} />
-      ) : temporaryExist ? (
+      ) : continueTempPost ? (
         <EditorTempExistHeader onClickSubmit={tempExistSaveHandler} />
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
@@ -280,16 +284,13 @@ const PostPage = () => {
         fileName={fileName || ''}
       />
       <DropDownEditorWrapper>
-        {/* topics가 안 받아와질 경우도 생각해야 함 */}
         {topics && (
           <DropDown
             topicList={topics}
-            tempTopicList={tempTopicList}
             setTopic={setTopic}
             setWriter={setWriter}
             selectedTopic={editorVal.topic}
             selectedWriter={editorVal.writer}
-            pageType={type}
           />
         )}
         <Spacing marginBottom="2.4" />
