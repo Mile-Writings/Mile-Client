@@ -145,22 +145,24 @@ const PostPage = () => {
   // 임시저장 값 여부 확인 (서버값)
   const { isTemporaryPostExist, tempPostId } = useTempSaveFlag(groupId || '');
   // 임시저장 이어쓰기 yes 인 경우 판별
-  const [temporaryExist, setTemporaryExist] = useState(isTemporaryPostExist || false);
+  const [temporaryExist, setTemporaryExist] = useState(false);
   // 수정하기, 임시저장 postId 저장
   const [editPostId, setEditPostId] = useState('');
 
+  // 임시저장 불러오기
+  const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
+    useGetTempSaveContent(tempPostId || '', temporaryExist || false);
+
   // 최초 뷰 들어왔을 때 임시저장 이어쓸지 confirm 창
   useEffect(() => {
-    if (isTemporaryPostExist && type != 'edit') {
+    if (type == 'post' && isTemporaryPostExist && !temporaryExist) {
       if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
         setTemporaryExist(true);
       } else {
         setTemporaryExist(false);
       }
-    } else {
-      setTemporaryExist(false);
     }
-  }, []);
+  }, [isTemporaryPostExist, type, temporaryExist]);
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
@@ -186,40 +188,6 @@ const PostPage = () => {
   const saveHandler = () => {
     postContent();
   };
-
-  // 수정하기 제출하기
-  const { mutate: putEditContent } = usePutEditContent({
-    topicId: topics ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId : '',
-    title: editorVal.title,
-    content: editorVal.content,
-    imageUrl: editorVal.imageUrl,
-    anonymous: editorVal.writer == '작자미상',
-    postId: editPostId,
-  });
-
-  const editSaveHandler = () => {
-    putEditContent();
-    navigate(`/detail/${groupId}/${editPostId}`);
-  };
-
-  // 최초 글 임시 저장
-  const { mutate: postTempSaveContent } = usePostTempSaveContent({
-    groupId: groupId,
-    topicId: editorVal.topic,
-    title: editorVal.title,
-    content: editorVal.content,
-    imageUrl: editorVal.imageUrl,
-    anonymous: editorVal.writer == '작자미상',
-  });
-  const tempSaveHandler = () => {
-    postTempSaveContent();
-    navigate(`/group/${groupId}`);
-  };
-
-  // 임시저장 불러오기
-  const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
-    useGetTempSaveContent(tempPostId || '', temporaryExist || false);
-
   useEffect(() => {
     // 수정하기에서 넘어온 view일 경우 값 업데이트
     if (type == 'edit') {
@@ -247,17 +215,48 @@ const PostPage = () => {
         writer: tempAnonymous ? '작자미상' : '필명',
       });
     }
-  }, [type, temporaryExist]);
+  }, [type, temporaryExist, tempTitle]);
+
+  // 수정하기 제출하기
+  const { mutate: putEditContent } = usePutEditContent({
+    topicId: topics ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId : '',
+    title: editorVal.title,
+    content: editorVal.content,
+    imageUrl: editorVal.imageUrl,
+    anonymous: editorVal.writer == '작자미상',
+    postId: editPostId,
+  });
+
+  const editSaveHandler = () => {
+    putEditContent();
+    navigate(`/detail/${groupId}/${editPostId}`);
+  };
+
+  // 최초 글 임시 저장
+  const { mutate: postTempSaveContent } = usePostTempSaveContent({
+    groupId: groupId,
+    topicId: topics ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId : '',
+    title: editorVal.title,
+    content: editorVal.content,
+    imageUrl: editorVal.imageUrl,
+    anonymous: editorVal.writer == '작자미상',
+  });
+  const tempSaveHandler = () => {
+    postTempSaveContent();
+    navigate(`/group/${groupId}`);
+  };
 
   // 임시 저장 글 -> 저장하기
   const { mutate: putTempSaveContent } = usePutTempSaveContent({
-    topicId: editorVal.topic,
+    topicId: topics ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId : '',
     title: editorVal.title,
     content: editorVal.content,
     imageUrl: editorVal.imageUrl,
     anonymous: editorVal.writer == '작자미상',
     postId: tempPostId || '',
   });
+
+  console.log(tempPostId);
 
   const tempExistSaveHandler = () => {
     putTempSaveContent();

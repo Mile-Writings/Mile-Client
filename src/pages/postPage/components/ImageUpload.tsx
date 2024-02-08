@@ -54,7 +54,7 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
       </ThumbNailGradient>
       <ImageInput type="file" accept="image/*" id="editorImg" onChange={onImageUpload} />
       <ImageUploadLabel htmlFor="editorImg">
-        {previewImgUrl != EDITOR_DEFAULT_IMG && previewImgUrl.length > 0 ? (
+        {previewImgUrl != EDITOR_DEFAULT_IMG ? (
           <EditorThuminputIcnActiveIcon />
         ) : (
           <EditorThuminputIcnUnactiveIcon />
