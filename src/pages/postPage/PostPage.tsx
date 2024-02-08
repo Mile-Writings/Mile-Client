@@ -150,10 +150,6 @@ const PostPage = () => {
   const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
     useGetTempSaveContent(tempPostId || '', continueTempPost || false);
 
-  console.log('isTemporaryPostExist ', isTemporaryPostExist);
-  console.log('type ', type);
-  console.log('continueTempPost ', continueTempPost);
-
   // 최초 뷰 들어왔을 때 임시저장 이어쓸지 confirm 창
   useEffect(() => {
     if (type == 'post' && isTemporaryPostExist && !continueTempPost) {
@@ -261,11 +257,6 @@ const PostPage = () => {
     putTempSaveContent();
     navigate(`/detail/${groupId}/${tempPostId}`);
   };
-
-  console.log('postPage실행됨');
-  if (type == 'edit') {
-    console.log(location.state.content);
-  }
 
   return (
     <PostPageWrapper>

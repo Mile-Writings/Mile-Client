@@ -30,7 +30,6 @@ const WriterDropDown = (props: WriterPropType) => {
   };
   // 커스텀 훅 사용
   useClickOutside(dropDownRef, handleOutSideClick);
-  console.log(writerIsOpen);
 
   return (
     <WriterDropDownWrapper ref={dropDownRef}>

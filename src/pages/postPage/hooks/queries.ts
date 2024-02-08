@@ -235,6 +235,7 @@ export const usePutTempSaveContent = ({
   anonymous,
   postId,
 }: putEditContentType) => {
+  const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [
       QUERY_KEY_POST.putSaveTempContent,
@@ -249,6 +250,7 @@ export const usePutTempSaveContent = ({
     mutationFn: () => saveTempSavecontent({ topicId, title, content, imageUrl, anonymous, postId }),
     onSuccess: () => {
       console.log({ topicId, title, content, imageUrl, anonymous, postId });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
     },
   });
   return data;
