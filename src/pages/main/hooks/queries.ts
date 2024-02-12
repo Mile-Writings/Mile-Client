@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 import { getGroupContent } from '../apis/getGroupContent';
 import { getRecommendTopic } from '../apis/getRecommendTopic';
@@ -9,12 +9,12 @@ export const QUERY_KEY_MAIN = {
 };
 
 export const useGetGroupContent = (moimId: string) => {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isError } = useSuspenseQuery({
     queryKey: [QUERY_KEY_MAIN.getGroupContent, moimId],
     queryFn: () => getGroupContent(),
   });
 
-  return { data, isLoading, isError };
+  return { data, isError };
 };
 
 export const useGetRecommendTopic = (content: string) => {
