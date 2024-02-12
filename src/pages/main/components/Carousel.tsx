@@ -20,10 +20,6 @@ export interface groupPostTypes {
   isContainPhoto: boolean;
 }
 
-// interface dataLengthPropsTypes {
-//   groupLength: number;
-// }
-
 const Carousel = () => {
   const [groupData, setGroupData] = useState<groupPropTypes[]>();
   const settings = {
