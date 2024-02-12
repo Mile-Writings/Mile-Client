@@ -14,7 +14,7 @@ interface TopicPropTypes {
   topicList: Topics[];
   // eslint-disable-next-line no-unused-vars
   setTopic: (e: React.MouseEvent<HTMLDivElement>) => void;
-  selectedTopic: string;
+  selectedTopic: string | undefined;
 }
 
 const TopicDropDown = (props: TopicPropTypes) => {

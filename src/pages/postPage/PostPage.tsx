@@ -27,11 +27,11 @@ import {
 import Spacing from '../../components/commons/Spacing';
 
 interface editorStateType {
-  topic: string;
-  writer: string;
-  title: string;
-  content: string;
-  imageUrl: string;
+  topic: string | undefined;
+  writer: string | undefined;
+  title: string | undefined;
+  content: string | undefined;
+  imageUrl: string | undefined;
 }
 
 interface editorActionType {
@@ -147,6 +147,11 @@ const PostPage = () => {
   const [editPostId, setEditPostId] = useState('');
 
   // 임시저장 불러오기
+  interface tempTopicListType {
+    topicId: string;
+    topicName: string;
+    isSelected: boolean;
+  }
   const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
     useGetTempSaveContent(tempPostId || '', continueTempPost || false);
 
@@ -175,10 +180,12 @@ const PostPage = () => {
   // 최초저장
   const { mutate: postContent } = usePostContent({
     groupId: groupId,
-    topicId: topics ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId : '',
-    title: editorVal.title,
-    content: editorVal.content,
-    imageUrl: editorVal.imageUrl,
+    topicId: topics
+      ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId ?? ''
+      : '',
+    title: editorVal.title || '',
+    content: editorVal.content || '',
+    imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer == '작자미상',
   });
   const saveHandler = () => {
@@ -201,11 +208,12 @@ const PostPage = () => {
     }
     // 임시저장된 값으로 업데이트
     if (type == 'post' && continueTempPost) {
-      setEditPostId(tempPostId);
+      setEditPostId(tempPostId || '');
       setPreviewImgUrl(tempImageUrl);
       dispatch({
         type: 'setTempValue',
-        topic: tempTopicList?.find((topicEl) => topicEl.isSelected)?.topicName || '',
+        topic:
+          tempTopicList?.find((topicEl: tempTopicListType) => topicEl.isSelected)?.topicName || '',
         title: tempTitle,
         content: tempContent,
         imageUrl: tempImageUrl,
@@ -216,10 +224,12 @@ const PostPage = () => {
 
   // 수정하기 제출하기
   const { mutate: putEditContent } = usePutEditContent({
-    topicId: topics ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId : '',
-    title: editorVal.title,
-    content: editorVal.content,
-    imageUrl: editorVal.imageUrl,
+    topicId: topics
+      ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId ?? ''
+      : '',
+    title: editorVal.title || '',
+    content: editorVal.content || '',
+    imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer == '작자미상',
     postId: editPostId,
   });
@@ -232,10 +242,12 @@ const PostPage = () => {
   // 최초 글 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
     groupId: groupId,
-    topicId: topics ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId : '',
-    title: editorVal.title,
-    content: editorVal.content,
-    imageUrl: editorVal.imageUrl,
+    topicId: topics
+      ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId ?? ''
+      : '',
+    title: editorVal.title || '',
+    content: editorVal.content || '',
+    imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer == '작자미상',
   });
   const tempSaveHandler = () => {
@@ -245,10 +257,12 @@ const PostPage = () => {
 
   // 임시 저장 글 -> 저장하기
   const { mutate: putTempSaveContent } = usePutTempSaveContent({
-    topicId: topics ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId : '',
-    title: editorVal.title,
-    content: editorVal.content,
-    imageUrl: editorVal.imageUrl,
+    topicId: topics
+      ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId ?? ''
+      : '',
+    title: editorVal.title || '',
+    content: editorVal.content || '',
+    imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer == '작자미상',
     postId: tempPostId || '',
   });

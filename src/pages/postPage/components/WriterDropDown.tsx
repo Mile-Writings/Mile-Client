@@ -10,7 +10,7 @@ import useClickOutside from '../../../hooks/useClickOutside';
 
 interface WriterPropType {
   setWriter: (e: React.MouseEvent<HTMLDivElement>) => void;
-  selectedWriter: string;
+  selectedWriter: string | undefined;
 }
 
 const WriterDropDown = (props: WriterPropType) => {

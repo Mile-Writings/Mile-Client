@@ -11,8 +11,8 @@ interface DropDownDataPropsType {
   topicList: Topics[];
   setTopic: (e: React.MouseEvent<HTMLDivElement>) => void;
   setWriter: (e: React.MouseEvent<HTMLDivElement>) => void;
-  selectedTopic: string;
-  selectedWriter: string;
+  selectedTopic: string | undefined;
+  selectedWriter: string | undefined;
 }
 
 const DropDown = (props: DropDownDataPropsType) => {

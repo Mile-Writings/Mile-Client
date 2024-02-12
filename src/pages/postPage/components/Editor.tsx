@@ -115,9 +115,9 @@ const CustomToolbar = () => {
 };
 
 interface EditorPropTypes {
-  title: string;
+  title: string | undefined;
   setTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  content: string;
+  content: string | undefined;
   setContent: (content: string) => void;
 }
 
