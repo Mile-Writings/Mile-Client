@@ -154,7 +154,7 @@ export const usePutEditContent = ({
     ],
     mutationFn: () => editPutContent({ topicId, title, content, imageUrl, anonymous, postId }),
     onSuccess: () => {
-      console.log({ topicId, title, content, imageUrl, anonymous });
+      // console.log({ topicId, title, content, imageUrl, anonymous });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
     },
   });
@@ -194,7 +194,7 @@ export const usePostTempSaveContent = ({
     mutationFn: () =>
       createTempSaveContent({ groupId, topicId, title, content, imageUrl, anonymous }),
     onSuccess: () => {
-      console.log({ groupId, topicId, title, content, imageUrl, anonymous });
+      // console.log({ groupId, topicId, title, content, imageUrl, anonymous });
     },
   });
   return data;
@@ -249,7 +249,7 @@ export const usePutTempSaveContent = ({
     ],
     mutationFn: () => saveTempSavecontent({ topicId, title, content, imageUrl, anonymous, postId }),
     onSuccess: () => {
-      console.log({ topicId, title, content, imageUrl, anonymous, postId });
+      // console.log({ topicId, title, content, imageUrl, anonymous, postId });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
     },
   });

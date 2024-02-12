@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import React, { useRef, useState } from 'react';
-// import { useLocation } from 'react-router-dom';
 
 import { DropDownToggle, DropDownContent } from './DropDown';
 

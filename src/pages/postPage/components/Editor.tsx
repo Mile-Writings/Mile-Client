@@ -123,7 +123,6 @@ interface EditorPropTypes {
 
 const Editor = (props: EditorPropTypes) => {
   const { title, setTitle, content, setContent } = props;
-
   // 구분선 커스텀 동작 함수
   const quillRef = useRef<ReactQuill | null>(null);
 

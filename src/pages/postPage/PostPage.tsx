@@ -43,7 +43,6 @@ interface editorActionType {
   imageUrl?: string;
 }
 
-// reducer 초기값
 const editorState: editorStateType = {
   topic: '',
   writer: '작자미상',
@@ -52,7 +51,6 @@ const editorState: editorStateType = {
   imageUrl: EDITOR_DEFAULT_IMG,
 };
 
-// reducer 함수
 const reducerFn = (state: editorStateType, action: editorActionType): editorStateType => {
   switch (action.type) {
     case 'setTopic':
@@ -135,7 +133,6 @@ const PostPage = () => {
   const setImageToServer = (imageUrl: string) => {
     dispatch({ type: 'setImageToServer', imageUrl: imageUrl });
   };
-  const [previewImgUrl, setPreviewImgUrl] = useState(EDITOR_DEFAULT_IMG);
 
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
@@ -145,6 +142,7 @@ const PostPage = () => {
   const [continueTempPost, setContinueTempPost] = useState(false);
   // 수정하기, 임시저장 postId 저장
   const [editPostId, setEditPostId] = useState('');
+  const [previewImgUrl, setPreviewImgUrl] = useState(EDITOR_DEFAULT_IMG);
 
   // 임시저장 불러오기
   interface tempTopicListType {

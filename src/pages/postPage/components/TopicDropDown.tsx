@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import React, { useRef, useState } from 'react';
 
 import { DropDownToggle, DropDownContent } from './DropDown';
-// import { ThisWeekTopic, PrevFirstTopic, PrevTopic } from './Topic';
 import TopicType from './TopicType';
 
 import { Topics } from '../apis/fetchTopic';
