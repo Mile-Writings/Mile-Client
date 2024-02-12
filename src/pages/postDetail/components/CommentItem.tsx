@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import { useDeleteComment } from '../hooks/queries';
 
@@ -18,10 +18,25 @@ interface CommentItem {
 const CommentItem = ({ name, moimName, content, isMyComment, postId, commentId }: CommentItem) => {
   const { deleteComment } = useDeleteComment(commentId || '', postId || '');
   const [isClick, setIsClick] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const handleBtnClick = () => {
     setIsClick((prev) => !prev);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        setIsClick(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <CommentItemWrapper>
       <TextCommentProfileIc />
@@ -36,7 +51,7 @@ const CommentItem = ({ name, moimName, content, isMyComment, postId, commentId }
         <MeatBallWrapper onClick={handleBtnClick}>
           <DetailCommentMeatBallIcon />
           {isClick && (
-            <Modal onClick={deleteComment}>
+            <Modal onClick={deleteComment} ref={modalRef}>
               <ModalContainer>삭제</ModalContainer>
             </Modal>
           )}
