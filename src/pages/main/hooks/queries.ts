@@ -9,12 +9,12 @@ export const QUERY_KEY_MAIN = {
 };
 
 export const useGetGroupContent = (moimId: string) => {
-  const { data, isError } = useSuspenseQuery({
+  const { data } = useSuspenseQuery({
     queryKey: [QUERY_KEY_MAIN.getGroupContent, moimId],
     queryFn: () => getGroupContent(),
   });
 
-  return { data, isError };
+  return { data };
 };
 
 export const useGetRecommendTopic = (content: string) => {
