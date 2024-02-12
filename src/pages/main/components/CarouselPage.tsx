@@ -1,11 +1,18 @@
 import styled from '@emotion/styled';
+import { Suspense, lazy } from 'react';
 
-import Carousel from './Carousel';
+import GroupCarouselTitle from './GroupCarouselTitle';
+import { SkeletonComponent } from './skeletons/length';
 
 const CarouselPage = () => {
+  const LazyCarousel = lazy(() => import('./Carousel'));
+
   return (
     <CarouselComponentWrapper>
-      <Carousel />
+      <GroupCarouselTitle />
+      <Suspense fallback={<SkeletonComponent />}>
+        <LazyCarousel />
+      </Suspense>
     </CarouselComponentWrapper>
   );
 };
