@@ -13,17 +13,16 @@ interface TopicsPropType {
 const TopicType = (props: TopicsPropType) => {
   const { idx, topicName, setTopic, selected, setTopicIsOpen } = props;
 
+  const onClickTopic = (e: React.MouseEvent<HTMLDivElement>) => {
+    setTopic(e);
+    setTopicIsOpen(false);
+  };
+
   if (idx === 0) {
     return (
       <>
         <TopicLog>최신 글감</TopicLog>
-        <Topic
-          onClick={(e) => {
-            setTopic(e);
-            setTopicIsOpen(false);
-          }}
-          $selected={selected}
-        >
+        <Topic onClick={onClickTopic} $selected={selected}>
           {topicName}
         </Topic>
       </>
@@ -33,26 +32,14 @@ const TopicType = (props: TopicsPropType) => {
       <>
         <Divider />
         <TopicLog>이전 글감</TopicLog>
-        <Topic
-          onClick={(e) => {
-            setTopic(e);
-            setTopicIsOpen(false);
-          }}
-          $selected={selected}
-        >
+        <Topic onClick={onClickTopic} $selected={selected}>
           {topicName}
         </Topic>
       </>
     );
   } else {
     return (
-      <Topic
-        onClick={(e) => {
-          setTopic(e);
-          setTopicIsOpen(false);
-        }}
-        $selected={selected}
-      >
+      <Topic onClick={onClickTopic} $selected={selected}>
         {topicName}
       </Topic>
     );

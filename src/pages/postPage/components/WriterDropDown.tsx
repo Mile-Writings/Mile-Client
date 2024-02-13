@@ -30,6 +30,11 @@ const WriterDropDown = (props: WriterPropType) => {
   // 커스텀 훅 사용
   useClickOutside(dropDownRef, handleOutSideClick);
 
+  const onClickWriter = (e: React.MouseEvent<HTMLDivElement>) => {
+    setWriter(e);
+    setWriterIsOpen(false);
+  };
+
   return (
     <WriterDropDownWrapper ref={dropDownRef}>
       <DropDownToggle onClick={handleOnClick}>
@@ -37,22 +42,10 @@ const WriterDropDown = (props: WriterPropType) => {
         {writerIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
       </DropDownToggle>
       <WriterListWrapper $isOpen={writerIsOpen}>
-        <WriterList
-          onClick={(e) => {
-            setWriter(e);
-            setWriterIsOpen(false);
-          }}
-          $selected={selectedWriter == '작자미상'}
-        >
+        <WriterList onClick={onClickWriter} $selected={selectedWriter == '작자미상'}>
           작자미상
         </WriterList>
-        <WriterList
-          onClick={(e) => {
-            setWriter(e);
-            setWriterIsOpen(false);
-          }}
-          $selected={selectedWriter == '필명'}
-        >
+        <WriterList onClick={onClickWriter} $selected={selectedWriter == '필명'}>
           필명
         </WriterList>
       </WriterListWrapper>
