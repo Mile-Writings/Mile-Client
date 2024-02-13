@@ -7,6 +7,7 @@ import '../styles/slick.css';
 
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
+import { SkeletonComponent } from './skeletons/length';
 
 import Spacing from './../../../components/commons/Spacing';
 import { getGroupContent, groupPropTypes } from './../apis/getGroupContent';
@@ -45,30 +46,36 @@ const Carousel = () => {
 
   return (
     <CarouselWrapper>
-      <Spacing marginBottom="3.6" />
-      {groupData?.map((moim) => (
-        <CarouselWithButtonLayout key={moim.moimId}>
-          <GroupNameButton groupName={moim.moimName} groupId={moim.moimId} />
-          <Spacing marginBottom="1.6" />
-          <CarouselContainer>
-            <CarouselBox {...settings} className="main">
-              {moim.moimPosts.map((post, index) => (
-                <GroupContent
-                  key={index}
-                  topicName={post.topicName}
-                  imageUrl={post.imageUrl}
-                  postTitle={post.postTitle}
-                  postContent={post.postContent}
-                  postId={post.postId}
-                  isContainPhoto={post.isContainPhoto}
-                  groupId={moim.moimId}
-                  isLast={index === moim.moimPosts.length - 1}
-                />
-              ))}
-            </CarouselBox>
-          </CarouselContainer>
-        </CarouselWithButtonLayout>
-      ))}
+      {groupData ? (
+        groupData.map((moim) => (
+          <>
+            <Spacing marginBottom="3.6" />
+            <CarouselWithButtonLayout key={moim.moimId}>
+              <GroupNameButton groupName={moim.moimName} groupId={moim.moimId} />
+              <Spacing marginBottom="1.6" />
+              <CarouselContainer>
+                <CarouselBox {...settings} className="main">
+                  {moim.moimPosts.map((post, index) => (
+                    <GroupContent
+                      key={index}
+                      topicName={post.topicName}
+                      imageUrl={post.imageUrl}
+                      postTitle={post.postTitle}
+                      postContent={post.postContent}
+                      postId={post.postId}
+                      isContainPhoto={post.isContainPhoto}
+                      groupId={moim.moimId}
+                      isLast={index === moim.moimPosts.length - 1}
+                    />
+                  ))}
+                </CarouselBox>
+              </CarouselContainer>
+            </CarouselWithButtonLayout>
+          </>
+        ))
+      ) : (
+        <SkeletonComponent />
+      )}
     </CarouselWrapper>
   );
 };
