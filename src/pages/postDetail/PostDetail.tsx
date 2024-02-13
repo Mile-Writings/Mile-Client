@@ -5,10 +5,10 @@ import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
 import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
 
-import Error from '../Error/Error';
+import Error from '../error/Error';
 import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
-import Loading from '../Loading/Loading';
+import Loading from '../loading/Loading';
 import { UnAuthorizationHeader } from '../main/components/MainHeader';
 
 import { CheckboxIc, DefaultProfileIc, HeaderLogoIc } from './../../assets/svgs';
