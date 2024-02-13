@@ -5,7 +5,8 @@ import GroupCarouselTitle from './GroupCarouselTitle';
 import { SkeletonComponent } from './skeletons/length';
 
 const CarouselPage = () => {
-  const LazyCarousel = lazy(() => import('./Carousel'));
+  const lazyCarousel = import('./Carousel');
+  const LazyCarousel = lazy(() => lazyCarousel);
 
   return (
     <CarouselComponentWrapper>
