@@ -45,10 +45,10 @@ const Carousel = () => {
   }, []);
 
   return (
-    <CarouselWrapper>
+    <>
       {groupData ? (
         groupData.map((moim) => (
-          <>
+          <CarouselWrapper key={moim.moimId}>
             <Spacing marginBottom="3.6" />
             <CarouselWithButtonLayout key={moim.moimId}>
               <GroupNameButton groupName={moim.moimName} groupId={moim.moimId} />
@@ -71,12 +71,12 @@ const Carousel = () => {
                 </CarouselBox>
               </CarouselContainer>
             </CarouselWithButtonLayout>
-          </>
+          </CarouselWrapper>
         ))
       ) : (
         <SkeletonComponent />
       )}
-    </CarouselWrapper>
+    </>
   );
 };
 
