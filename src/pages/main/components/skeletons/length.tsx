@@ -6,6 +6,10 @@ export const SkeletonComponent = () => {
   const groupLength = useFetchDataLength();
 
   return (
-    <>{...Array({ length: groupLength }).map((_, index) => <CarouselSkeleton key={index} />)}</>
+    <>
+      {Array.from({ length: groupLength }).map((_, index) => (
+        <CarouselSkeleton key={index} />
+      ))}
+    </>
   );
 };
