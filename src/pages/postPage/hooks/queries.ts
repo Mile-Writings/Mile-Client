@@ -78,7 +78,6 @@ export const useGetTopic = (groupId: string) => {
     queryFn: () => fetchTopic(groupId),
   });
   const topics = data && data.data.topics;
-  // console.log('useGetTopic 실행됨');
   return { topics };
 };
 
@@ -117,7 +116,6 @@ export const usePresignedUrl = (): PresignedUrlQueryResult => {
 
   const fileName = data && data.data.fileName;
   const url = data && data.data.url;
-  // console.log('usePresignedUrl 실행됨');
   return { fileName, url };
 };
 
@@ -154,7 +152,6 @@ export const usePutEditContent = ({
     ],
     mutationFn: () => editPutContent({ topicId, title, content, imageUrl, anonymous, postId }),
     onSuccess: () => {
-      // console.log({ topicId, title, content, imageUrl, anonymous });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
     },
   });
@@ -193,9 +190,6 @@ export const usePostTempSaveContent = ({
     ],
     mutationFn: () =>
       createTempSaveContent({ groupId, topicId, title, content, imageUrl, anonymous }),
-    onSuccess: () => {
-      // console.log({ groupId, topicId, title, content, imageUrl, anonymous });
-    },
   });
   return data;
 };
@@ -249,7 +243,6 @@ export const usePutTempSaveContent = ({
     ],
     mutationFn: () => saveTempSavecontent({ topicId, title, content, imageUrl, anonymous, postId }),
     onSuccess: () => {
-      // console.log({ topicId, title, content, imageUrl, anonymous, postId });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
     },
   });
