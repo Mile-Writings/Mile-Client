@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import React, { useEffect, useState, useReducer } from 'react';
@@ -155,12 +154,10 @@ const PostPage = () => {
 
   // 최초 뷰 들어왔을 때 임시저장 이어쓸지 confirm 창
   useEffect(() => {
-    if (type == 'post' && isTemporaryPostExist && !continueTempPost) {
-      if (confirm('임시 저장된 글을 계속 이어 쓸까요?')) {
-        setContinueTempPost(true);
-      } else {
-        setContinueTempPost(false);
-      }
+    if (type === 'post' && isTemporaryPostExist && !continueTempPost) {
+      confirm('임시 저장된 글을 계속 이어 쓸까요?')
+        ? setContinueTempPost(true)
+        : setContinueTempPost(false);
     }
   }, [isTemporaryPostExist, type, continueTempPost]);
 
@@ -184,7 +181,7 @@ const PostPage = () => {
     title: editorVal.title || '',
     content: editorVal.content || '',
     imageUrl: editorVal.imageUrl || '',
-    anonymous: editorVal.writer == '작자미상',
+    anonymous: editorVal.writer === '작자미상',
   });
   const saveHandler = () => {
     postContent();
@@ -192,7 +189,7 @@ const PostPage = () => {
 
   useEffect(() => {
     // 수정하기에서 넘어온 view일 경우 값 업데이트
-    if (type == 'edit') {
+    if (type === 'edit') {
       setEditPostId(location.state.postId);
       setPreviewImgUrl(location.state.imageUrl);
       dispatch({
@@ -200,12 +197,12 @@ const PostPage = () => {
         topic: location.state.topic,
         imageUrl: location.state.imageUrl,
         title: location.state.title,
-        writer: location.state.writer == '작자미상' ? '작자미상' : '필명',
+        writer: location.state.writer === '작자미상' ? '작자미상' : '필명',
         content: location.state.content,
       });
     }
     // 임시저장된 값으로 업데이트
-    if (type == 'post' && continueTempPost) {
+    if (type === 'post' && continueTempPost) {
       setEditPostId(tempPostId || '');
       setPreviewImgUrl(tempImageUrl);
       dispatch({
@@ -228,7 +225,7 @@ const PostPage = () => {
     title: editorVal.title || '',
     content: editorVal.content || '',
     imageUrl: editorVal.imageUrl || '',
-    anonymous: editorVal.writer == '작자미상',
+    anonymous: editorVal.writer === '작자미상',
     postId: editPostId,
   });
 
@@ -246,7 +243,7 @@ const PostPage = () => {
     title: editorVal.title || '',
     content: editorVal.content || '',
     imageUrl: editorVal.imageUrl || '',
-    anonymous: editorVal.writer == '작자미상',
+    anonymous: editorVal.writer === '작자미상',
   });
   const tempSaveHandler = () => {
     postTempSaveContent();
@@ -261,7 +258,7 @@ const PostPage = () => {
     title: editorVal.title || '',
     content: editorVal.content || '',
     imageUrl: editorVal.imageUrl || '',
-    anonymous: editorVal.writer == '작자미상',
+    anonymous: editorVal.writer === '작자미상',
     postId: tempPostId || '',
   });
 
@@ -272,7 +269,7 @@ const PostPage = () => {
 
   return (
     <PostPageWrapper>
-      {type == 'edit' ? (
+      {type === 'edit' ? (
         <EditorEditHeader onClickEditSave={editSaveHandler} />
       ) : continueTempPost ? (
         <EditorTempExistHeader onClickSubmit={tempExistSaveHandler} />

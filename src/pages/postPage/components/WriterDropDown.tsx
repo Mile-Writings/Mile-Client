@@ -42,10 +42,10 @@ const WriterDropDown = (props: WriterPropType) => {
         {writerIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
       </DropDownToggle>
       <WriterListWrapper $isOpen={writerIsOpen}>
-        <WriterList onClick={onClickWriter} $selected={selectedWriter == '작자미상'}>
+        <WriterList onClick={onClickWriter} $selected={selectedWriter === '작자미상'}>
           작자미상
         </WriterList>
-        <WriterList onClick={onClickWriter} $selected={selectedWriter == '필명'}>
+        <WriterList onClick={onClickWriter} $selected={selectedWriter === '필명'}>
           필명
         </WriterList>
       </WriterListWrapper>

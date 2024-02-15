@@ -48,7 +48,7 @@ const TopicDropDown = (props: TopicPropTypes) => {
               idx={idx}
               topicName={item.topicName}
               setTopic={setTopic}
-              selected={selectedTopic == item.topicName}
+              selected={selectedTopic === item.topicName}
               setTopicIsOpen={setTopicIsOpen}
             />
           );

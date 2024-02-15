@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 
 import postDirectlyS3 from '../apis/postDirectlyS3';
 import { EDITOR_DEFAULT_IMG } from '../constants/editorDefaultImg';
-import { s3UrlPasing } from '../utils/s3UrlPasing';
+import { s3UrlParsing } from '../utils/s3UrlParsing';
 
 import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 
@@ -29,21 +29,18 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
     if (e.target.files && e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
       postDirectlyS3Func(url, e.target.files[0]); //url 파싱해서 넣기
-      // console.log(reader);
-      // console.log(e.target.files[0]);
     }
   };
 
   const postDirectlyS3Func = async (url: string, imageFile: File) => {
     try {
       const data = await postDirectlyS3(url, imageFile);
-      const s3url = s3UrlPasing(url);
+      const s3url = s3UrlParsing(url);
       const urlToServer = `${s3url + fileName}`;
       setImageToServer(urlToServer);
       return data;
-      // console.log(data);
     } catch (err) {
-      // console.log(err);
+      console.log(err);
     }
   };
 
@@ -54,7 +51,7 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
       </ThumbNailGradient>
       <ImageInput type="file" accept="image/*" id="editorImg" onChange={onImageUpload} />
       <ImageUploadLabel htmlFor="editorImg">
-        {previewImgUrl != EDITOR_DEFAULT_IMG ? (
+        {previewImgUrl !== EDITOR_DEFAULT_IMG ? (
           <EditorThuminputIcnActiveIcon />
         ) : (
           <EditorThuminputIcnUnactiveIcon />
