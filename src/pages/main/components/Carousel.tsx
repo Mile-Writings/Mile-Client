@@ -5,12 +5,9 @@ import Slider from 'react-slick';
 import '../styles/slick-theme.css';
 import '../styles/slick.css';
 
-import CarouselSkeleton from './CarouselSkeleton';
-import GroupCarouselTitle from './GroupCarouselTitle';
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
-
-import { useFetchDataLength } from '../hooks/useFetchDataLength';
+import { SkeletonComponent } from './skeletons/length';
 
 import Spacing from './../../../components/commons/Spacing';
 import { getGroupContent, groupPropTypes } from './../apis/getGroupContent';
@@ -26,7 +23,6 @@ export interface groupPostTypes {
 
 const Carousel = () => {
   const [groupData, setGroupData] = useState<groupPropTypes[]>();
-  const groupLength = useFetchDataLength();
   const settings = {
     arrow: false,
     dots: false,
@@ -34,12 +30,6 @@ const Carousel = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-  };
-
-  const SkeletonComponent = () => {
-    return (
-      <>{...Array({ length: groupLength }).map((_, index) => <CarouselSkeleton key={index} />)}</>
-    );
   };
 
   useEffect(() => {
@@ -55,12 +45,11 @@ const Carousel = () => {
   }, []);
 
   return (
-    <CarouselWrapper>
-      <GroupCarouselTitle />
+    <>
       {groupData ? (
-        <>
-          <Spacing marginBottom="3.6" />
-          {groupData.map((moim) => (
+        groupData.map((moim) => (
+          <CarouselWrapper key={moim.moimId}>
+            <Spacing marginBottom="3.6" />
             <CarouselWithButtonLayout key={moim.moimId}>
               <GroupNameButton groupName={moim.moimName} groupId={moim.moimId} />
               <Spacing marginBottom="1.6" />
@@ -82,12 +71,12 @@ const Carousel = () => {
                 </CarouselBox>
               </CarouselContainer>
             </CarouselWithButtonLayout>
-          ))}
-        </>
+          </CarouselWrapper>
+        ))
       ) : (
-        SkeletonComponent()
+        <SkeletonComponent />
       )}
-    </CarouselWrapper>
+    </>
   );
 };
 

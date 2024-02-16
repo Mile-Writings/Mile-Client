@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useParams } from 'react-router-dom';
 
 import CarouselPage from './components/CarouselPage';
 import FaqDropdown from './components/FaqDropdown';
@@ -10,22 +9,11 @@ import Manual from './components/Manual';
 import OnBoarding from './components/OnBoarding';
 import Ruler from './components/Ruler';
 import { FAQ_DATA } from './constants/faqData';
-import { useGetGroupContent } from './hooks/queries';
-
-import Error from '../Error/Error';
 
 import Footer from './../../components/commons/Footer';
 import Spacing from './../../components/commons/Spacing';
 
 const Main = () => {
-  const { moimId } = useParams();
-  const { isError } = useGetGroupContent(moimId || '');
-
-  if (isError) {
-    console.error();
-    return <Error />;
-  }
-
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
