@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Slider from 'react-slick';
 
 import '../styles/slick-theme.css';
@@ -9,17 +9,10 @@ import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
 import { SkeletonComponent } from './skeletons/length';
 
-import Spacing from './../../../components/commons/Spacing';
-import { getGroupContent, groupPropTypes } from './../apis/getGroupContent';
+import { groupPropTypes } from '../types/groupContent';
 
-export interface groupPostTypes {
-  topicName: string;
-  imageUrl: string;
-  postTitle: string;
-  postContent: string;
-  postId: string;
-  isContainPhoto: boolean;
-}
+import Spacing from './../../../components/commons/Spacing';
+import getGroupContentApi from './../../../utils/apis/getGroupContentApi';
 
 const Carousel = () => {
   const [groupData, setGroupData] = useState<groupPropTypes[]>();
@@ -32,17 +25,15 @@ const Carousel = () => {
     slidesToScroll: 1,
   };
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await getGroupContent();
-        setGroupData(response);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getData();
-  }, []);
+  const getData = async () => {
+    try {
+      const data = await getGroupContentApi();
+      setGroupData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  getData();
 
   return (
     <>

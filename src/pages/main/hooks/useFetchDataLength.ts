@@ -1,21 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { getGroupContent } from '../apis/getGroupContent';
+import getGroupContentApi from '../../../utils/apis/getGroupContentApi';
 
 export const useFetchDataLength = () => {
   const [dataLength, setDataLength] = useState<number>(0);
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await getGroupContent();
-        if (response !== undefined) setDataLength(response.length);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getData();
-  }, []);
+  const getData = async () => {
+    try {
+      const response = await getGroupContentApi();
+      if (response !== undefined) setDataLength(response.length);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  getData();
 
   return dataLength;
 };
