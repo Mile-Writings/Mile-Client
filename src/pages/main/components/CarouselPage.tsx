@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Suspense, lazy } from 'react';
 
 import GroupCarouselTitle from './GroupCarouselTitle';
-import { SkeletonComponent } from './skeletons/length';
+import { SkeletonComponent } from './skeletons/SkeletonComponent';
 
 const CarouselPage = () => {
   const lazyCarousel = import('./Carousel');

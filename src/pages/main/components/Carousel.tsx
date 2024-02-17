@@ -7,7 +7,7 @@ import '../styles/slick.css';
 
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
-import { SkeletonComponent } from './skeletons/length';
+import { SkeletonComponent } from './skeletons/SkeletonComponent';
 
 import { groupPropTypes } from '../types/groupContent';
 
