@@ -17,7 +17,7 @@ export const SkeletonComponent = () => {
       }
     };
     fetchGroupLength();
-  });
+  }, [groupLength]);
 
   return (
     <>
