@@ -10,17 +10,21 @@
   width: 82.6rem;
   min-height: 64.5rem;
   background-color: white;
+
   font-family: 'Pretendard Variable';
   font-size: 1.6rem;
   line-height: 160%;
-  font-weight: regular;
+  font-weight: 400;
 }
 .tiptap:focus-visible {
   outline: none;
 }
 
 .tiptap > * + * {
-  margin-top: 0.75em;
+  font-family: 'Pretendard Variable';
+  font-size: 1.6rem;
+  line-height: 160%;
+  font-weight: 400;
 }
 
 .tiptap strong {
@@ -49,30 +53,9 @@
   padding: 0 1rem;
 }
 
-.tiptap h4 {
-  font-size: 1.2rem;
-  line-height: 200%;
-  font-weight: regular;
-}
-.tiptap h3 {
-  font-size: 1.6rem;
-  line-height: 160%;
-  font-weight: regular;
-}
-.tiptap h2 {
-  font-size: 1.8rem;
-  line-height: 200%;
-  font-weight: bold;
-}
-.tiptap h1 {
-  font-size: 2.6rem;
-  line-height: 200%;
-  font-weight: bold;
-}
-
 .tiptap blockquote {
-  padding-left: 1rem;
-  border-left: 2px solid rgba(#0d0d0d, 0.1);
+  border-left: 4px solid #6139d1;
+  padding-left: 1.8rem;
 }
 
 .tiptap hr {
