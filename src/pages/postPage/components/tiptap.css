@@ -15,6 +15,9 @@
   line-height: 160%;
   font-weight: regular;
 }
+.tiptap:focus-visible {
+  outline: none;
+}
 
 .tiptap > * + * {
   margin-top: 0.75em;
