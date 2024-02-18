@@ -6,6 +6,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import DropDown from './components/DropDown';
 import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
+import TipTap from './components/TipTap';
 import { EDITOR_DEFAULT_IMG } from './constants/editorDefaultImg';
 import {
   useGetTempSaveContent,
@@ -294,12 +295,13 @@ const PostPage = () => {
           />
         )}
         <Spacing marginBottom="2.4" />
-        <Editor
+        {/* <Editor
           title={editorVal.title}
           setTitle={setTitle}
           content={editorVal.content}
           setContent={setContent}
-        />
+        /> */}
+        <TipTap />
       </DropDownEditorWrapper>
       <Spacing marginBottom="8" />
     </PostPageWrapper>

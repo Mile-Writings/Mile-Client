@@ -1,0 +1,72 @@
+/* 브라우저 텍스트 드래그 했을 때 색상 변경 */
+*::selection {
+  background-color: #d9cef6;
+}
+
+/* 에디터 content 영역 전체 css */
+.tiptap {
+  padding: 2.8rem;
+  border-radius: 0.8rem;
+  width: 82.6rem;
+  min-height: 64.5rem;
+  background-color: white;
+  font-family: 'Pretendard Variable';
+  font-size: 1.6rem;
+  line-height: 160%;
+  font-weight: regular;
+}
+
+.tiptap > * + * {
+  margin-top: 0.75em;
+}
+
+.tiptap strong {
+  font-weight: bold;
+}
+.tiptap em {
+  font-style: italic;
+}
+
+.tiptap span[style*='color'] strong {
+  font-weight: bold !important;
+}
+
+.tiptap span[style*='color'] em {
+  font-style: italic !important;
+}
+
+.tiptap ul,
+.tiptap ol {
+  padding: 0 1rem;
+}
+
+.tiptap h4 {
+  font-size: 1.2rem;
+  line-height: 200%;
+  font-weight: regular;
+}
+.tiptap h3 {
+  font-size: 1.6rem;
+  line-height: 160%;
+  font-weight: regular;
+}
+.tiptap h2 {
+  font-size: 1.8rem;
+  line-height: 200%;
+  font-weight: bold;
+}
+.tiptap h1 {
+  font-size: 2.6rem;
+  line-height: 200%;
+  font-weight: bold;
+}
+
+.tiptap blockquote {
+  padding-left: 1rem;
+  border-left: 2px solid rgba(#0d0d0d, 0.1);
+}
+
+.tiptap hr {
+  border-top: 2px solid rgba(#0d0d0d, 0.1);
+  margin: 2rem 0;
+}
