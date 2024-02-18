@@ -28,6 +28,8 @@ import React, { useCallback, useState } from 'react';
 
 // custom
 import { FontSize } from '../utils/fontSize';
+import { FontWeight } from '../utils/fontWeight';
+import { LineHeight } from '../utils/lineHeight';
 import './tiptap.css';
 
 const TipTap = () => {
@@ -66,6 +68,8 @@ const TipTap = () => {
       Text,
       TextStyle,
       FontSize.configure({ types: ['textStyle'] }),
+      FontWeight.configure({ types: ['textStyle'] }),
+      LineHeight.configure({ types: ['textStyle'] }),
       Color,
       Highlight.configure({ multicolor: true }),
       Bold,
@@ -89,15 +93,23 @@ const TipTap = () => {
   // 글자 크기 함수
   const toggleFontSizeContent2 = useCallback(() => {
     editor.chain().focus().setFontSize('1.2rem').run();
+    editor.chain().focus().setFontWeight('400').run();
+    editor.chain().focus().setLineHeight('200%').run();
   }, [editor]);
   const toggleFontSizeContent1 = useCallback(() => {
     editor.chain().focus().setFontSize('1.6rem').run();
+    editor.chain().focus().setFontWeight('400').run();
+    editor.chain().focus().setLineHeight('160%').run();
   }, [editor]);
   const toggleFontSizeTitle2 = useCallback(() => {
     editor.chain().focus().setFontSize('1.8rem').run();
+    editor.chain().focus().setFontWeight('700').run();
+    editor.chain().focus().setLineHeight('200%').run();
   }, [editor]);
   const toggleFontSizeTitle1 = useCallback(() => {
     editor.chain().focus().setFontSize('2.6rem').run();
+    editor.chain().focus().setFontWeight('700').run();
+    editor.chain().focus().setLineHeight('200%').run();
   }, [editor]);
 
   // 글자 색상 함수
