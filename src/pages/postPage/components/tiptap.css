@@ -3,6 +3,14 @@
   background-color: #d9cef6;
 }
 
+.text-editor {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 82.6rem;
+}
+
 /* 에디터 content 영역 전체 css */
 .tiptap {
   padding: 2.8rem;

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default */
 import styled from '@emotion/styled';
 import Blockquote from '@tiptap/extension-blockquote';
 import Bold from '@tiptap/extension-bold';
@@ -15,16 +16,9 @@ import Text from '@tiptap/extension-text';
 import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
-import {
-  useEditor,
-  useCurrentEditor,
-  EditorProvider,
-  EditorContent,
-  Editor,
-  BubbleMenu,
-} from '@tiptap/react';
+import { useEditor, EditorContent, Editor } from '@tiptap/react';
 import classNames from 'classnames';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 
 // custom
 import { FontSize } from '../utils/fontSize';
@@ -32,34 +26,16 @@ import { FontWeight } from '../utils/fontWeight';
 import { LineHeight } from '../utils/lineHeight';
 import './tiptap.css';
 
-const TipTap = () => {
-  const content = `
-  <h2>
-    Hi there,
-  </h2>
-  <p>
-    this is a <em>basic</em> example of <strong>tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
-  </p>
-  <ul>
-    <li>
-      That’s a bullet list with one …
-    </li>
-    <li>
-      … or two list items.
-    </li>
-  </ul>
-  <p>
-    Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
-  </p>
-  <p>
-    I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
-  </p>
-  <blockquote>
-    Wow, that’s amazing. Good work, boy! 👏
-    <br />
-    — Mom
-  </blockquote>
-  `;
+interface EditorPropTypes {
+  title: string | undefined;
+  setTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  content: string | undefined;
+  setContent: (content: string) => void;
+}
+
+const TipTap = (props: EditorPropTypes) => {
+  const { title, setTitle, content, setContent } = props;
+  const defaultContent = content;
 
   const editor = useEditor({
     extensions: [
@@ -87,7 +63,7 @@ const TipTap = () => {
       Blockquote,
       HorizontalRule,
     ],
-    content,
+    content: defaultContent,
   }) as Editor;
 
   // 글자 크기 함수
@@ -225,7 +201,8 @@ const TipTap = () => {
   }
 
   return (
-    <>
+    <div className="text-editor">
+      <Title type="text" placeholder="제목을 적어주세요" onChange={setTitle} value={title} />
       <ToolbarWrapper className="menu">
         {/* 글자 크기 */}
         <button
@@ -449,7 +426,7 @@ const TipTap = () => {
       <div className="editorWrapper">
         <EditorContent editor={editor} />
       </div>
-    </>
+    </div>
   );
 };
 
@@ -469,5 +446,22 @@ const ToolbarWrapper = styled.div`
 
   .is-active {
     color: pink;
+  }
+`;
+
+const Title = styled.input`
+  width: 82.6rem;
+  height: 9.4rem;
+  padding: 2.8rem;
+
+  color: ${({ theme }) => theme.colors.grayBlack};
+
+  border: 0;
+  border-radius: 0.8rem;
+
+  ${({ theme }) => theme.fonts.title3};
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.gray40};
   }
 `;
