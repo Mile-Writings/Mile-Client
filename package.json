@@ -20,6 +20,7 @@
     "@tiptap/extension-highlight": "^2.2.3",
     "@tiptap/extension-horizontal-rule": "^2.2.3",
     "@tiptap/extension-list-item": "^2.2.3",
+    "@tiptap/extension-placeholder": "^2.2.3",
     "@tiptap/extension-text-align": "^2.2.3",
     "@tiptap/extension-text-style": "^2.2.3",
     "@tiptap/extension-underline": "^2.2.3",

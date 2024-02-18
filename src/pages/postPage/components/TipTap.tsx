@@ -11,6 +11,7 @@ import Italic from '@tiptap/extension-italic';
 import ListItem from '@tiptap/extension-list-item';
 import OrderedList from '@tiptap/extension-ordered-list';
 import Paragraph from '@tiptap/extension-paragraph';
+import Placeholder from '@tiptap/extension-placeholder';
 import Strike from '@tiptap/extension-strike';
 import Text from '@tiptap/extension-text';
 import TextAlign from '@tiptap/extension-text-align';
@@ -43,6 +44,7 @@ const TipTap = (props: EditorPropTypes) => {
       Paragraph,
       Text,
       TextStyle,
+      Placeholder.configure({ placeholder: '글을 작성해 주세요' }),
       FontSize.configure({ types: ['textStyle'] }),
       FontWeight.configure({ types: ['textStyle'] }),
       LineHeight.configure({ types: ['textStyle'] }),
