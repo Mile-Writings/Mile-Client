@@ -42,7 +42,6 @@ const PostDetail = () => {
       deletePost();
       navigate(`/group/${groupId}`);
     }
-    console.log('삭제취소');
   };
 
   const handleEditBtn = () => {
@@ -57,14 +56,6 @@ const PostDetail = () => {
       },
     });
   };
-  // 리팩토링 전 코드
-  // useEffect(() => {
-  //   if (typeof postId === 'string') {
-  //     const data = fetchPostDetail(postId);
-  //     console.log(data);
-  //   }
-  // }, []);
-  // console.log(postAuth?.data?.data.canEdit);
 
   return (
     <>
@@ -128,7 +119,7 @@ const PostDetail = () => {
           </WriterInfoContainer>
           <CuriousBtn />
         </WriterInfoWrapper>
-        {localStorage.getItem('accessToken') ? <Comment postId={postId} /> : <></>}
+        {accessToken ? <Comment postId={postId} /> : <></>}
 
         <Spacing marginBottom="8" />
       </PostDetailWrapper>
