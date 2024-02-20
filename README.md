@@ -15,7 +15,7 @@ MILE은 make it look easy의 줄임말로, 글쓰기를 더 쉽고, 편안하게
 ## 👀 View 소개
 ### 🌱 Main View
 
-| <img width="350" height="150" alt="onBoarding" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a25259cb-ac43-4caf-b9e7-9a5ed672fee2"> | <img width="400" height="180" alt="Carousel" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/b44ae0a2-dea6-4b99-bef3-6474ab5dc267"> | <img width="350" height="150" alt="q a" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/e1e28047-8aa7-498d-8e88-216b686277fa"> |
+| <img width="400" height="180" alt="onBoarding" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a25259cb-ac43-4caf-b9e7-9a5ed672fee2"> | <img width="400" height="180" alt="Carousel" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/b44ae0a2-dea6-4b99-bef3-6474ab5dc267"> | <img width="400" height="180" alt="q a" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/e1e28047-8aa7-498d-8e88-216b686277fa"> |
 | :---: | :---: | :---: |
 
 
@@ -32,7 +32,7 @@ MILE은 make it look easy의 줄임말로, 글쓰기를 더 쉽고, 편안하게
 
 ### 🌱 Post Detail View
 
-| <img width="320" height="200" alt="스크린샷 2024-01-16 오후 11 59 26" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a8ae7703-0982-4141-b39e-7e2342b4fd8e"> | <img width="350" height="175" alt="스크린샷 2024-01-16 오후 11 09 39" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/80dd545a-bbe3-4fcf-a1fe-6ecb4968c594"> |
+| <img width="320" height="200" alt="스크린샷 2024-01-16 오후 11 59 26" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/a8ae7703-0982-4141-b39e-7e2342b4fd8e"> | <img width="350" height="180" alt="스크린샷 2024-01-16 오후 11 09 39" src="https://github.com/Mile-Writings/Mile-Client/assets/96781926/80dd545a-bbe3-4fcf-a1fe-6ecb4968c594"> |
 | :---: | :---: |
 
 
