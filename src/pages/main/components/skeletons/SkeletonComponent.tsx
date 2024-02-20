@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import CarouselSkeleton from '../CarouselSkeleton';
 
-import getGroupContentApi from '../../../../utils/apis/getGroupContentApi';
+import getGroupContentApi from '../../apis/getGroupContentApi';
 
 export const SkeletonComponent = () => {
   const [groupLength, setGroupLength] = useState<number>(0);

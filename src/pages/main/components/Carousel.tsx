@@ -9,10 +9,10 @@ import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
 import { SkeletonComponent } from './skeletons/SkeletonComponent';
 
+import getGroupContentApi from '../apis/getGroupContentApi';
 import { groupPropTypes } from '../types/groupContent';
 
 import Spacing from './../../../components/commons/Spacing';
-import getGroupContentApi from './../../../utils/apis/getGroupContentApi';
 
 const Carousel = () => {
   const [groupData, setGroupData] = useState<groupPropTypes[]>();
