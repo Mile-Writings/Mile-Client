@@ -11,7 +11,7 @@ export const SkeletonComponent = () => {
     const fetchGroupLength = async () => {
       try {
         const data = await getGroupContentApi();
-        if (data != undefined) setGroupLength(data?.length);
+        if (data) setGroupLength(data?.length);
       } catch (err) {
         console.error();
       }
