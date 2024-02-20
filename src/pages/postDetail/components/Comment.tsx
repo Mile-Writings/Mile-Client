@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import { useState, FormEvent } from 'react';
+import React, { FormEvent, useState } from 'react';
 
 import CommentItem from './CommentItem';
 
-import { usePostComment, useGetCommentList } from '../hooks/queries';
+import { useGetCommentList, usePostComment } from '../hooks/queries';
 
 import { EditorCatIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
@@ -26,6 +26,12 @@ const Comment = (props: CommentPropTypes) => {
     }
   };
 
+  const handleOnKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleCommentSubmit(e);
+    }
+  };
+
   interface CommentListPropTypes {
     commentId: string;
     name: string;
@@ -42,6 +48,7 @@ const Comment = (props: CommentPropTypes) => {
         <CommentForm
           value={comment}
           onChange={(e) => setComment(e.target.value)}
+          onKeyUp={(e) => handleOnKeyUp(e)}
           placeholder="댓글을 남겨주세요."
         />
 
