@@ -128,8 +128,8 @@ const PostDetail = () => {
           </WriterInfoContainer>
           <CuriousBtn />
         </WriterInfoWrapper>
+        {localStorage.getItem('accessToken') ? <Comment postId={postId} /> : <></>}
 
-        <Comment postId={postId} />
         <Spacing marginBottom="8" />
       </PostDetailWrapper>
     </>
@@ -178,6 +178,8 @@ const PostDetailWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 82.6rem;
+
+  word-break: keep-all;
 `;
 
 const PostDetailContainer = styled.div`
