@@ -1,8 +1,7 @@
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
+import getGroupContentApi from '../apis/getGroupContentApi';
 import { getRecommendTopic } from '../apis/getRecommendTopic';
-
-import getGroupContentApi from '../../../utils/apis/getGroupContentApi';
 
 export const QUERY_KEY_MAIN = {
   getGroupContent: 'getGroupContent',
