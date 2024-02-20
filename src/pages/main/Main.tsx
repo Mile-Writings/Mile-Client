@@ -18,16 +18,20 @@ const Main = () => {
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <OnBoarding />
-      <CarouselPage />
+      <CarouselLayout>
+        <CarouselPage />
+      </CarouselLayout>
       <Ruler />
       <Introduction />
       <Manual />
-      <FaqTitleWithDropDownLayout>
-        <FaqTitle />
-        {FAQ_DATA.map(({ id, question, answer }) => (
-          <FaqDropdown key={id} id={id} question={question} answer={answer} />
-        ))}
-      </FaqTitleWithDropDownLayout>
+      <FaqLayout>
+        <FaqTitleWithDropDownContainer>
+          <FaqTitle />
+          {FAQ_DATA.map(({ id, question, answer }) => (
+            <FaqDropdown key={id} id={id} question={question} answer={answer} />
+          ))}
+        </FaqTitleWithDropDownContainer>
+      </FaqLayout>
       <Spacing marginBottom="17.3" />
       <Footer />
     </MainPageWrapper>
@@ -39,13 +43,24 @@ export default Main;
 const MainPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
 
-const FaqTitleWithDropDownLayout = styled.section`
+const CarouselLayout = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const FaqLayout = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const FaqTitleWithDropDownContainer = styled.section`
   display: flex;
   flex-direction: column;
   width: fit-content;
