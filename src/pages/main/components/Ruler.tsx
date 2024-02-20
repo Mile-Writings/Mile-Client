@@ -11,7 +11,6 @@ interface rulerItemPropTypes {
 
 const Ruler = ({ content }: rulerItemPropTypes) => {
   const topic = useGetRecommendTopic(content || '');
-  console.log(topic?.data.content);
 
   return (
     <RulerWrapper>
