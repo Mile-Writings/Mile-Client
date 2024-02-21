@@ -31,11 +31,17 @@ const Carousel = (props: CategoryIdPropTypes) => {
   const { groupFeedCategoryData, isLoading, isError, error } = useTopicList(groupId || '');
   const [selectedTopicId, setSelectedTopicId] = useState<string>('');
 
+  const [categoryId, setCategoryId] = useState(
+    Number(sessionStorage.getItem('activeCategoryId')) - 1 || 0,
+  );
+
   useEffect(() => {
+    console.log(categoryId, 'id');
     if (groupFeedCategoryData && groupFeedCategoryData.length > 0) {
-      setSelectedTopicId(groupFeedCategoryData[0].topicId);
+      setSelectedTopicId(groupFeedCategoryData[categoryId].topicId);
     }
   }, [groupFeedCategoryData]);
+
   const settings = {
     dots: false,
     infinite: false,
