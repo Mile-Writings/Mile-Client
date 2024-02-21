@@ -9,14 +9,13 @@ import Spacing from '../../../components/commons/Spacing';
 interface EachProfilePropTypes {
   groupId: string;
   selectedTopicId: string;
-  topicId: string;
 }
 const EachArticle = (props: EachProfilePropTypes) => {
-  const { groupId, selectedTopicId, topicId } = props;
+  const { groupId, selectedTopicId } = props;
   const { postListData } = useArticleList(selectedTopicId || '');
   const navigate = useNavigate();
   const handleGoPostDetail = (postId: string) => {
-    navigate(`/detail/${groupId}/${postId}`);
+    navigate(`/detail/${groupId}/${postId}`, { state: { topicId: selectedTopicId } });
   };
 
   interface ProfilePropTypes {
