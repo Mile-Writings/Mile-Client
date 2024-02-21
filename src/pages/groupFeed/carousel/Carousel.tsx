@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction, useEffect, useLayoutEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Slider from 'react-slick';
 
 import CarouselContainer from './CarouselContainer';
@@ -31,11 +31,10 @@ const Carousel = (props: CategoryIdPropTypes) => {
   const { groupFeedCategoryData, isLoading, isError, error } = useTopicList(groupId || '');
   const [selectedTopicId, setSelectedTopicId] = useState<string>('');
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (groupFeedCategoryData && groupFeedCategoryData.length > 0) {
       setSelectedTopicId(groupFeedCategoryData[0].topicId);
     }
-    console.log(activeCategoryId, 'id');
   }, [groupFeedCategoryData]);
 
   const settings = {
@@ -55,7 +54,6 @@ const Carousel = (props: CategoryIdPropTypes) => {
   const handleCategoryClick = (categoryId: number, topicId: string) => {
     setActiveCategoryId(categoryId);
     setSelectedTopicId(topicId);
-    console.log(activeCategoryId, 'id');
   };
 
   const { topicInfo, isLoading: articleListLoading } = useArticleList(selectedTopicId || '');
