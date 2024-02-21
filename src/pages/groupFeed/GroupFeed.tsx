@@ -26,9 +26,17 @@ const GroupFeed = () => {
     groupId || '',
     accessToken || '',
   );
+
+  //sessionStorage에 저장된 카테고리 id 값을 가져옴
+  const sessionCategoryId = window.sessionStorage.getItem('activeCategoryId');
+
   const { groupInfoData } = useGroupInfo(groupId || '');
 
-  const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
+  const [activeCategoryId, setActiveCategoryId] = useState<number>(Number(sessionCategoryId) || 1);
+
+  useEffect(() => {
+    window.sessionStorage.setItem('activeCategoryId', String(activeCategoryId));
+  }, [activeCategoryId]);
 
   const navigate = useNavigate();
 

@@ -36,7 +36,6 @@ const Carousel = (props: CategoryIdPropTypes) => {
       setSelectedTopicId(groupFeedCategoryData[0].topicId);
     }
   }, [groupFeedCategoryData]);
-
   const settings = {
     dots: false,
     infinite: false,
