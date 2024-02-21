@@ -17,8 +17,8 @@ import NextBtn from '/src/assets/svgs/groupTabNextBtnEnable.svg';
 import NextBtnHover from '/src/assets/svgs/groupTabNextBtnHover.svg';
 
 import Spacing from '../../../components/commons/Spacing';
-import Error from '../../Error/Error';
-import Loading from '../../Loading/Loading';
+import Error from '../../error/Error';
+import Loading from '../../loading/Loading';
 
 interface CategoryIdPropTypes {
   activeCategoryId: number;
