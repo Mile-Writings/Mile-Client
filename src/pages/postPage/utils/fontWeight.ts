@@ -3,6 +3,7 @@ import '@tiptap/extension-text-style';
 
 export type FontWeightOptions = {
   types: string[];
+  defaultWeight: string;
 };
 
 declare module '@tiptap/core' {
@@ -27,6 +28,7 @@ export const FontWeight = Extension.create<FontWeightOptions>({
   addOptions() {
     return {
       types: ['textStyle'],
+      defaultWeight: '400',
     };
   },
 

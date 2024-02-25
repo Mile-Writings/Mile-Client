@@ -3,6 +3,7 @@ import '@tiptap/extension-text-style';
 
 export type LineHeightOptions = {
   types: string[];
+  defaultLineHeight: string;
 };
 
 declare module '@tiptap/core' {
@@ -27,6 +28,7 @@ export const LineHeight = Extension.create<LineHeightOptions>({
   addOptions() {
     return {
       types: ['textStyle'],
+      defaultLineHeight: '160%',
     };
   },
 

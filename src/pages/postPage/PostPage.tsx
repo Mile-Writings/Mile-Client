@@ -216,7 +216,7 @@ const PostPage = () => {
         writer: tempAnonymous ? '작자미상' : '필명',
       });
     }
-  }, [type, continueTempPost, tempTitle]);
+  }, [type, continueTempPost, tempTitle, tempContent]);
 
   // 수정하기 제출하기
   const { mutate: putEditContent } = usePutEditContent({
@@ -301,7 +301,13 @@ const PostPage = () => {
           content={editorVal.content}
           setContent={setContent}
         /> */}
-        <TipTap />
+        <TipTap
+          title={editorVal.title}
+          setTitle={setTitle}
+          tempContent={tempContent}
+          editContent={type === 'edit' ? location.state.content : ''}
+          setEditorContent={setContent}
+        />
       </DropDownEditorWrapper>
       <Spacing marginBottom="8" />
     </PostPageWrapper>
