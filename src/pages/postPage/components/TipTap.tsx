@@ -20,7 +20,7 @@ import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import { useEditor, EditorContent, Editor } from '@tiptap/react';
 import classNames from 'classnames';
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 // custom
 import { FontSize } from '../utils/fontSize';
@@ -211,12 +211,6 @@ const TipTap = (props: EditorPropTypes) => {
     editor.chain().focus().setHorizontalRule().run();
   }, [editor]);
 
-  const [dropDownClicked, setDropDownClicked] = useState(false);
-
-  const onClickDropDown = () => {
-    setDropDownClicked(!dropDownClicked);
-  };
-
   if (!editor) {
     return null;
   }
@@ -226,35 +220,30 @@ const TipTap = (props: EditorPropTypes) => {
       <Title type="text" placeholder="제목을 적어주세요" onChange={setTitle} value={title} />
       <ToolbarWrapper className="menu">
         {/* 글자 크기 */}
-        <DropDownToolbarWrapepr>
-          <DropDownToolbar onClick={onClickDropDown}>글자크기 변경</DropDownToolbar>
-          <DropDownContent $dropDownClicked={dropDownClicked}>
-            <button
-              className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
-              onClick={toggleFontSizeContent2}
-            >
-              본문2
-            </button>
-            <button
-              className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
-              onClick={toggleFontSizeContent1}
-            >
-              본문1
-            </button>
-            <button
-              className={editor.isActive('textStyle', { fontSize: '1.8rem' }) ? 'is-active' : ''}
-              onClick={toggleFontSizeTitle2}
-            >
-              제목2
-            </button>
-            <button
-              className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
-              onClick={toggleFontSizeTitle1}
-            >
-              제목1
-            </button>
-          </DropDownContent>
-        </DropDownToolbarWrapepr>
+        <button
+          className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
+          onClick={toggleFontSizeContent2}
+        >
+          본문2
+        </button>
+        <button
+          className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
+          onClick={toggleFontSizeContent1}
+        >
+          본문1
+        </button>
+        <button
+          className={editor.isActive('textStyle', { fontSize: '1.8rem' }) ? 'is-active' : ''}
+          onClick={toggleFontSizeTitle2}
+        >
+          제목2
+        </button>
+        <button
+          className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
+          onClick={toggleFontSizeTitle1}
+        >
+          제목1
+        </button>
         {/* 글자색 */}
         <button
           className={editor.isActive('textStyle', { color: '#010101' }) ? 'is-active' : ''}
@@ -456,32 +445,6 @@ const TipTap = (props: EditorPropTypes) => {
 };
 
 export default TipTap;
-
-const DropDownToolbarWrapepr = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-`;
-
-const DropDownToolbar = styled.div`
-  display: flex;
-  gap: 0.8rem;
-  align-items: center;
-  justify-content: space-between;
-  width: 10.1rem;
-  height: 3.6rem;
-`;
-
-const DropDownContent = styled.div<{ $dropDownClicked: boolean }>`
-  z-index: 2;
-  display: ${({ $dropDownClicked }) => ($dropDownClicked ? 'flex' : 'none')};
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 1rem;
-
-  background-color: yellow;
-`;
 
 const ToolbarWrapper = styled.div`
   display: flex;
