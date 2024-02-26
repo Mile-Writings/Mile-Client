@@ -1,15 +1,12 @@
 import styled from '@emotion/styled';
 
 import { useGetRecommendTopic } from '../hooks/queries';
+import { recommendPropsTypes } from '../types/recommendTopic';
 
 import { MainGraphicGradationIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
-interface rulerItemPropTypes {
-  content: string;
-}
-
-const Ruler = ({ content }: rulerItemPropTypes) => {
+const Ruler = ({ content }: recommendPropsTypes) => {
   const topic = useGetRecommendTopic(content || '');
 
   return (
