@@ -9,11 +9,12 @@ import Manual from './components/Manual';
 import OnBoarding from './components/OnBoarding';
 import Ruler from './components/Ruler';
 import { FAQ_DATA } from './constants/faqData';
+import { recommendPropsTypes } from './types/recommendTopic';
 
 import Footer from './../../components/commons/Footer';
 import Spacing from './../../components/commons/Spacing';
 
-const Main = () => {
+const Main = ({ content }: recommendPropsTypes) => {
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
@@ -21,7 +22,7 @@ const Main = () => {
       <CarouselLayout>
         <CarouselPage />
       </CarouselLayout>
-      <Ruler />
+      <Ruler content={content} />
       <Introduction />
       <Manual />
       <FaqLayout>
