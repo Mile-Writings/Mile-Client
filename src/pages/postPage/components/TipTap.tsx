@@ -38,7 +38,6 @@ interface EditorPropTypes {
 
 const TipTap = (props: EditorPropTypes) => {
   const { title, setTitle, tempContent, editContent, setEditorContent } = props;
-
   const editor = useEditor({
     extensions: [
       Document,
@@ -68,7 +67,6 @@ const TipTap = (props: EditorPropTypes) => {
     ],
     content: '',
     onUpdate: ({ editor }) => {
-      console.log(editor.getHTML());
       setEditorContent(editor.getHTML());
     },
   }) as Editor;
@@ -78,7 +76,7 @@ const TipTap = (props: EditorPropTypes) => {
     if (tempContent) {
       editor.commands.setContent(tempContent);
     }
-    if (editContent) {
+    if (editor && editContent) {
       editor.commands.setContent(editContent);
     }
   }, [editor, tempContent, editContent]);
