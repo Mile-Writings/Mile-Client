@@ -8,22 +8,6 @@ import { HeaderLogoIc } from '../../../assets/svgs';
 import LogInOutBtn from '../../../components/commons/LogInOutBtn';
 import logout from '../../../utils/logout';
 
-interface OnClickProps {
-  onClick: () => void;
-}
-// interface onClickEditProps {
-//   onClickEditSave: () => void;
-// }
-
-// interface OnClickTwoProps {
-//   onClickTempSave: () => void;
-//   onClickSubmit: () => void;
-// }
-
-// interface OnClickTempExistProps {
-//   onClickSubmit: () => void;
-// }
-
 // 모임 피드 헤더
 export const GroupFeedHeader = () => {
   const navigate = useNavigate();
@@ -50,7 +34,7 @@ export const GroupFeedHeader = () => {
 };
 
 //아직 로그인을 하지 않았을 때 헤더
-export const LogOutHeader = ({ onClick }: OnClickProps) => {
+export const LogOutHeader = () => {
   const navigate = useNavigate();
   const handleMainRouting = () => {
     navigate('/');
@@ -58,7 +42,7 @@ export const LogOutHeader = ({ onClick }: OnClickProps) => {
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={handleMainRouting} />
-      <LogInOutBtn onClick={onClick}>로그인</LogInOutBtn>
+      <LogInOutBtn onClick={() => navigate(`/login`)}>로그인</LogInOutBtn>
     </HeaderWrapper>
   );
 };
