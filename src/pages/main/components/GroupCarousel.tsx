@@ -6,19 +6,18 @@ import '../styles/slick.css';
 
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
-import { SkeletonComponent } from './skeletons/SkeletonComponent';
 
-import { useGetGroupContent } from '../hooks/queries';
+import { groupPropTypes } from '../types/groupContent';
 
 import Spacing from '../../../components/commons/Spacing';
 
 export interface carouselItemPropTypes {
-  moimId: string | undefined;
+  moimId?: string | undefined;
+  data: groupPropTypes[] | undefined;
+  groupLength: number | undefined;
 }
 
-const Carousel = ({ moimId }: carouselItemPropTypes) => {
-  const { data } = useGetGroupContent(moimId || '');
-
+const Carousel = ({ data }: carouselItemPropTypes) => {
   const settings = {
     arrow: false,
     dots: false,
@@ -30,36 +29,32 @@ const Carousel = ({ moimId }: carouselItemPropTypes) => {
 
   return (
     <>
-      {data ? (
-        data?.map((moim) => (
-          <CarouselWrapper key={moim.moimId}>
-            <Spacing marginBottom="3.6" />
-            <CarouselWithButtonLayout key={moim.moimId}>
-              <GroupNameButton groupName={moim.moimName} groupId={moim.moimId} />
-              <Spacing marginBottom="1.6" />
-              <CarouselContainer>
-                <CarouselBox {...settings} className="main">
-                  {moim.moimPosts.map((post, index) => (
-                    <GroupContent
-                      key={index}
-                      topicName={post.topicName}
-                      imageUrl={post.imageUrl}
-                      postTitle={post.postTitle}
-                      postContent={post.postContent}
-                      postId={post.postId}
-                      isContainPhoto={post.isContainPhoto}
-                      groupId={moim.moimId}
-                      isLast={index === moim.moimPosts.length - 1}
-                    />
-                  ))}
-                </CarouselBox>
-              </CarouselContainer>
-            </CarouselWithButtonLayout>
-          </CarouselWrapper>
-        ))
-      ) : (
-        <SkeletonComponent moimId={moimId} />
-      )}
+      {data?.map((moim) => (
+        <CarouselWrapper key={moim.moimId}>
+          <Spacing marginBottom="3.6" />
+          <CarouselWithButtonLayout key={moim.moimId}>
+            <GroupNameButton groupName={moim.moimName} groupId={moim.moimId} />
+            <Spacing marginBottom="1.6" />
+            <CarouselContainer>
+              <CarouselBox {...settings} className="main">
+                {moim.moimPosts.map((post, index) => (
+                  <GroupContent
+                    key={index}
+                    topicName={post.topicName}
+                    imageUrl={post.imageUrl}
+                    postTitle={post.postTitle}
+                    postContent={post.postContent}
+                    postId={post.postId}
+                    isContainPhoto={post.isContainPhoto}
+                    groupId={moim.moimId}
+                    isLast={index === moim.moimPosts.length - 1}
+                  />
+                ))}
+              </CarouselBox>
+            </CarouselContainer>
+          </CarouselWithButtonLayout>
+        </CarouselWrapper>
+      ))}
     </>
   );
 };
