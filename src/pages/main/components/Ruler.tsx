@@ -1,14 +1,11 @@
 import styled from '@emotion/styled';
 
-import { useGetRecommendTopic } from '../hooks/queries';
 import { recommendPropsTypes } from '../types/recommendTopic';
 
 import { MainGraphicGradationIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
-const Ruler = ({ content }: recommendPropsTypes) => {
-  const topic = useGetRecommendTopic(content || '');
-
+const Ruler = ({ data }: recommendPropsTypes) => {
   return (
     <RulerWrapper>
       <RulerLayout>
@@ -18,7 +15,7 @@ const Ruler = ({ content }: recommendPropsTypes) => {
           <RulerContentBox>
             <TodayKeyWord>오늘의 글감</TodayKeyWord>
             <Pipe />
-            <KeyWord>{topic?.data.content}</KeyWord>
+            <KeyWord>{data?.content}</KeyWord>
           </RulerContentBox>
           <Spacing marginBottom="1.2" />
         </RulerHeaderContainer>

@@ -10,6 +10,7 @@ import Manual from './components/Manual';
 import OnBoarding from './components/OnBoarding';
 import Ruler from './components/Ruler';
 import { FAQ_DATA } from './constants/faqData';
+import { useGetRecommendTopic } from './hooks/queries';
 
 import Footer from './../../components/commons/Footer';
 import Spacing from './../../components/commons/Spacing';
@@ -17,6 +18,7 @@ import Spacing from './../../components/commons/Spacing';
 const Main = () => {
   const { content } = useParams();
   const { moimId } = useParams();
+  const topic = useGetRecommendTopic(content || '');
 
   return (
     <MainPageWrapper>
@@ -25,7 +27,7 @@ const Main = () => {
       <CarouselLayout>
         <CarouselPage moimId={moimId} />
       </CarouselLayout>
-      <Ruler content={content} />
+      <Ruler data={topic?.data} />
       <Introduction />
       <Manual />
       <FaqLayout>
