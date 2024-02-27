@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import loginService from '../apis/loginService';
@@ -23,8 +24,10 @@ export const useLoginService = ({ code, socialType }: LoginProps) => {
       localStorage.setItem('accessToken', data.accessToken);
       navigate('/');
     },
-    onError: () => {
-      console.log('Error');
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status) {
+        err.response.status === 400 ? navigate('/login') : console.error();
+      }
     },
   });
 };

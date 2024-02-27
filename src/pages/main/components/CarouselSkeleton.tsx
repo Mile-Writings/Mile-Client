@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import Skeleton from './Skeleton';
+import Skeleton from './skeletons/Skeleton';
 
 import Spacing from '../../../components/commons/Spacing';
 
