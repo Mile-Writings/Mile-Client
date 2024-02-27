@@ -6,7 +6,6 @@ import Carousel from './carousel/Carousel';
 import CuriousArticle from './components/CuriousArticle';
 import CuriousProfile from './components/CuriousProfile';
 import GroupCuriousTitle from './components/GroupCuriousTitle';
-import { GroupFeedHeader, LogOutHeader } from './components/GroupFeedHeader';
 import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
 import { useGroupFeedAuth, useGroupInfo } from './hooks/queries';
@@ -32,10 +31,6 @@ const GroupFeed = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    navigate(`/login`);
-  };
-
   //라우팅 했을 때 스크롤 맨 위로
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -52,7 +47,6 @@ const GroupFeed = () => {
 
   return (
     <GroupFeedWrapper>
-      {accessToken ? <GroupFeedHeader /> : <LogOutHeader onClick={handleLogin} />}
       <GroupFeedThumnail imageUrl={groupInfoData?.imageUrl} />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
