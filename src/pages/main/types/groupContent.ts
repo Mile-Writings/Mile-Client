@@ -8,7 +8,7 @@ export interface groupPostTypes {
 }
 
 export interface groupPropTypes {
-  moimId: string;
+  moimId: string | undefined;
   moimName: string;
   moimPosts: groupPostTypes[];
 }

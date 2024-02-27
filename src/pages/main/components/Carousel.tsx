@@ -12,7 +12,7 @@ import { useGetGroupContent } from '../hooks/queries';
 import Spacing from './../../../components/commons/Spacing';
 
 export interface CarouselItemPropTypes {
-  moimId: string;
+  moimId: string | undefined;
 }
 
 const Carousel = ({ moimId }: CarouselItemPropTypes) => {
