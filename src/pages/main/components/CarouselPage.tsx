@@ -1,17 +1,17 @@
 import styled from '@emotion/styled';
 import { Suspense, lazy } from 'react';
 
-import { CarouselItemPropTypes } from './Carousel';
+import { carouselItemPropTypes } from './Carousel';
 import { SkeletonComponent } from './skeletons/SkeletonComponent';
 
-const CarouselPage = ({ moimId }: CarouselItemPropTypes) => {
+const CarouselPage = ({ moimId }: carouselItemPropTypes) => {
   const lazyCarousel = import('./Carousel');
   const LazyCarousel = lazy(() => lazyCarousel);
 
   return (
     <CarouselComponentWrapper>
       <TitleLayout>마일과 함께하고 있는 글 모임이에요</TitleLayout>
-      <Suspense fallback={<SkeletonComponent />}>
+      <Suspense fallback={<SkeletonComponent moimId={moimId} />}>
         <LazyCarousel moimId={moimId} />
       </Suspense>
     </CarouselComponentWrapper>

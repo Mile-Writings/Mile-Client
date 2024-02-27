@@ -12,11 +12,11 @@ import { useGetGroupContent } from '../hooks/queries';
 
 import Spacing from './../../../components/commons/Spacing';
 
-export interface CarouselItemPropTypes {
+export interface carouselItemPropTypes {
   moimId: string | undefined;
 }
 
-const Carousel = ({ moimId }: CarouselItemPropTypes) => {
+const Carousel = ({ moimId }: carouselItemPropTypes) => {
   const { data } = useGetGroupContent(moimId || '');
 
   const settings = {
@@ -58,7 +58,7 @@ const Carousel = ({ moimId }: CarouselItemPropTypes) => {
           </CarouselWrapper>
         ))
       ) : (
-        <SkeletonComponent />
+        <SkeletonComponent moimId={moimId} />
       )}
     </>
   );
