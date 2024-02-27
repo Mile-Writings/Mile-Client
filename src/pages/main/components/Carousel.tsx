@@ -14,6 +14,7 @@ import { groupPropTypes } from '../types/groupContent';
 import Spacing from './../../../components/commons/Spacing';
 import getGroupContentApi from './../../../utils/apis/getGroupContentApi';
 
+
 const Carousel = () => {
   const [groupData, setGroupData] = useState<groupPropTypes[]>();
   const settings = {
