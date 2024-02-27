@@ -8,8 +8,8 @@ import { GroupNoDataImgIc } from '../../../assets/svgs';
 import GroupThumbnailImg from '/src/assets/svgs/groupCardThumnailImg.svg';
 
 import Spacing from '../../../components/commons/Spacing';
-import Error from '../../Error/Error';
-import Loading from '../../Loading/Loading';
+import Error from '../../error/Error';
+import Loading from '../../loading/Loading';
 
 interface ArticlePropTypes {
   topic: string;
