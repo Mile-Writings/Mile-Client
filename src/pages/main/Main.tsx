@@ -47,8 +47,6 @@ const Main = () => {
 export default Main;
 
 const MainPageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 100%;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
