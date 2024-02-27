@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
+import { useParams } from 'react-router-dom';
 
-import { CarouselItemPropTypes } from './components/Carousel';
 import CarouselPage from './components/CarouselPage';
 import FaqDropdown from './components/FaqDropdown';
 import FaqTitle from './components/FaqTitle';
@@ -10,12 +10,14 @@ import Manual from './components/Manual';
 import OnBoarding from './components/OnBoarding';
 import Ruler from './components/Ruler';
 import { FAQ_DATA } from './constants/faqData';
-import { recommendPropsTypes } from './types/recommendTopic';
 
 import Footer from './../../components/commons/Footer';
 import Spacing from './../../components/commons/Spacing';
 
-const Main = ({ content }: recommendPropsTypes, { moimId }: CarouselItemPropTypes) => {
+const Main = () => {
+  const { content } = useParams();
+  const { moimId } = useParams();
+
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
