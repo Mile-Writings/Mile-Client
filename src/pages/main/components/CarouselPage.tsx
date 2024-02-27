@@ -1,18 +1,18 @@
 import styled from '@emotion/styled';
 import { Suspense, lazy } from 'react';
 
-import GroupCarouselTitle from './GroupCarouselTitle';
+import { CarouselItemPropTypes } from './Carousel';
 import { SkeletonComponent } from './skeletons/SkeletonComponent';
 
-const CarouselPage = () => {
+const CarouselPage = ({ moimId }: CarouselItemPropTypes) => {
   const lazyCarousel = import('./Carousel');
   const LazyCarousel = lazy(() => lazyCarousel);
 
   return (
     <CarouselComponentWrapper>
-      <GroupCarouselTitle />
+      <TitleLayout>마일과 함께하고 있는 글 모임이에요</TitleLayout>
       <Suspense fallback={<SkeletonComponent />}>
-        <LazyCarousel />
+        <LazyCarousel moimId={moimId} />
       </Suspense>
     </CarouselComponentWrapper>
   );
@@ -25,4 +25,11 @@ const CarouselComponentWrapper = styled.section`
   flex-direction: column;
   width: fit-content;
   padding-bottom: 10rem;
+`;
+
+const TitleLayout = styled.div`
+  display: flex;
+  padding-top: 7.2rem;
+
+  ${({ theme }) => theme.fonts.title3};
 `;

@@ -11,7 +11,7 @@ import { useGetGroupContent } from '../hooks/queries';
 
 import Spacing from './../../../components/commons/Spacing';
 
-interface CarouselItemPropTypes {
+export interface CarouselItemPropTypes {
   moimId: string;
 }
 

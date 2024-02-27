@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { CarouselItemPropTypes } from './components/Carousel';
 import CarouselPage from './components/CarouselPage';
 import FaqDropdown from './components/FaqDropdown';
 import FaqTitle from './components/FaqTitle';
@@ -14,13 +15,13 @@ import { recommendPropsTypes } from './types/recommendTopic';
 import Footer from './../../components/commons/Footer';
 import Spacing from './../../components/commons/Spacing';
 
-const Main = ({ content }: recommendPropsTypes) => {
+const Main = ({ content }: recommendPropsTypes, { moimId }: CarouselItemPropTypes) => {
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <OnBoarding />
       <CarouselLayout>
-        <CarouselPage />
+        <CarouselPage moimId={moimId} />
       </CarouselLayout>
       <Ruler content={content} />
       <Introduction />
