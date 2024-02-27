@@ -92,7 +92,6 @@ const TipTap = (props: EditorPropTypes) => {
   }, [editor, tempContent, editContent]);
 
   // 글자 크기 함수
-
   const toggleFontSizeContent2 = useCallback(() => {
     editor.chain().focus().setFontSize('1.2rem').run();
     editor.chain().focus().setFontWeight('400').run();
@@ -237,8 +236,18 @@ const TipTap = (props: EditorPropTypes) => {
         {/* 글자 크기 */}
         <FontSizeWrapper>
           <FontSizeToggle onClick={onClickFontSizeToggle}>
-            <FontSizeLabel>본문 1</FontSizeLabel>
-            <EditorDropIcnClose />
+            <FontSizeLabel>
+              {editor.isActive('textStyle', { fontSize: '1.2rem' })
+                ? '본문 2'
+                : editor.isActive('textStyle', { fontSize: '1.6rem' })
+                  ? '본문 1'
+                  : editor.isActive('textStyle', { fontSize: '1.8rem' })
+                    ? '제목 2'
+                    : editor.isActive('textStyle', { fontSize: '2.6rem' })
+                      ? '제목 1'
+                      : '본문 1'}
+            </FontSizeLabel>
+            {isFontSizeOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
           </FontSizeToggle>
           <FontSizeOptionList $isFontSizeOpen={isFontSizeOpen}>
             <FontSizeOption onClick={toggleFontSizeContent2}>
@@ -271,32 +280,6 @@ const TipTap = (props: EditorPropTypes) => {
             </FontSizeOption>
           </FontSizeOptionList>
         </FontSizeWrapper>
-        {/*
-        <button
-          className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
-          onClick={toggleFontSizeContent2}
-        >
-          본문2
-        </button>
-        <button
-          className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
-          onClick={toggleFontSizeContent1}
-        >
-          본문1
-        </button>
-        <button
-          className={editor.isActive('textStyle', { fontSize: '1.8rem' }) ? 'is-active' : ''}
-          onClick={toggleFontSizeTitle2}
-        >
-          제목2
-        </button>
-        <button
-          className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
-          onClick={toggleFontSizeTitle1}
-        >
-          제목1
-        </button>
-        */}
         {/* 글자색 */}
         <button
           className={editor.isActive('textStyle', { color: '#010101' }) ? 'is-active' : ''}
@@ -556,6 +539,7 @@ const FontSizeOptionList = styled.div<{ $isFontSizeOpen: boolean }>`
   width: 8.8rem;
   padding: 1rem;
 
+  background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.gray50};
   border-radius: 10px;
 `;
