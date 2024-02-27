@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import createPostContent from '../apis/createPostContent';
 import createTempSaveContent from '../apis/createTempSaveContent';
 import editPutContent from '../apis/editPutContent';
-import { fetchTopic } from '../apis/fetchEditorContent';
 import { fetchPresignedUrl } from '../apis/fetchPresignedUrl';
 import { fetchTempSaveContent } from '../apis/fetchTempSaveContent';
 import { fetchTempSaveFlag } from '../apis/fetchTempSaveFlag';
+import { fetchTopic } from '../apis/fetchTopic';
 import saveTempSavecontent from '../apis/saveTempSaveContent';
 
 import { QUERY_KEY_POST_DETAIL } from '../../postDetail/hooks/queries';
@@ -78,14 +78,13 @@ export const useGetTopic = (groupId: string) => {
     queryFn: () => fetchTopic(groupId),
   });
   const topics = data && data.data.topics;
-
   return { topics };
 };
 
 // 임시저장 여부 확인 GET api
 interface TempSaveFlagQueryResult {
   isTemporaryPostExist: boolean | undefined;
-  postId: string | undefined;
+  tempPostId: string | undefined;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
@@ -98,9 +97,9 @@ export const useTempSaveFlag = (groupId: string): TempSaveFlagQueryResult => {
   });
 
   const isTemporaryPostExist = data && data.data.isTemporaryPostExist;
-  const postId = data && data.data.postId;
+  const tempPostId = data && data.data.postId;
 
-  return { isTemporaryPostExist, postId, isLoading, isError, error };
+  return { isTemporaryPostExist, tempPostId, isLoading, isError, error };
 };
 
 // 이미지 저장 url GET api
@@ -117,7 +116,6 @@ export const usePresignedUrl = (): PresignedUrlQueryResult => {
 
   const fileName = data && data.data.fileName;
   const url = data && data.data.url;
-
   return { fileName, url };
 };
 
@@ -154,7 +152,6 @@ export const usePutEditContent = ({
     ],
     mutationFn: () => editPutContent({ topicId, title, content, imageUrl, anonymous, postId }),
     onSuccess: () => {
-      console.log({ topicId, title, content, imageUrl, anonymous });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
     },
   });
@@ -193,9 +190,6 @@ export const usePostTempSaveContent = ({
     ],
     mutationFn: () =>
       createTempSaveContent({ groupId, topicId, title, content, imageUrl, anonymous }),
-    onSuccess: () => {
-      console.log({ groupId, topicId, title, content, imageUrl, anonymous });
-    },
   });
   return data;
 };
@@ -235,6 +229,7 @@ export const usePutTempSaveContent = ({
   anonymous,
   postId,
 }: putEditContentType) => {
+  const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [
       QUERY_KEY_POST.putSaveTempContent,
@@ -248,7 +243,7 @@ export const usePutTempSaveContent = ({
     ],
     mutationFn: () => saveTempSavecontent({ topicId, title, content, imageUrl, anonymous, postId }),
     onSuccess: () => {
-      console.log({ topicId, title, content, imageUrl, anonymous, postId });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
     },
   });
   return data;
