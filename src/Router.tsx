@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import Error from './pages/Error/Error';
+import Error from './pages/error/Error';
 import GroupFeed from './pages/groupFeed/GroupFeed';
 import Login from './pages/login/Login';
 import RedirectLogin from './pages/login/RedirectLogin';

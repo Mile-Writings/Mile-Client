@@ -5,10 +5,10 @@ import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
 import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
 
-import Error from '../Error/Error';
+import Error from '../error/Error';
 import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
-import Loading from '../Loading/Loading';
+import Loading from '../loading/Loading';
 import { UnAuthorizationHeader } from '../main/components/MainHeader';
 
 import { CheckboxIc, DefaultProfileIc, HeaderLogoIc } from './../../assets/svgs';
@@ -42,7 +42,6 @@ const PostDetail = () => {
       deletePost();
       navigate(`/group/${groupId}`);
     }
-    console.log('삭제취소');
   };
 
   const handleEditBtn = () => {
@@ -57,14 +56,6 @@ const PostDetail = () => {
       },
     });
   };
-  // 리팩토링 전 코드
-  // useEffect(() => {
-  //   if (typeof postId === 'string') {
-  //     const data = fetchPostDetail(postId);
-  //     console.log(data);
-  //   }
-  // }, []);
-  // console.log(postAuth?.data?.data.canEdit);
 
   return (
     <>
@@ -128,8 +119,8 @@ const PostDetail = () => {
           </WriterInfoContainer>
           <CuriousBtn />
         </WriterInfoWrapper>
+        {accessToken ? <Comment postId={postId} /> : <></>}
 
-        <Comment postId={postId} />
         <Spacing marginBottom="8" />
       </PostDetailWrapper>
     </>
@@ -178,6 +169,8 @@ const PostDetailWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 82.6rem;
+
+  word-break: keep-all;
 `;
 
 const PostDetailContainer = styled.div`
