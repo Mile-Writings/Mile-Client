@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import { HeaderLogoIc, KakaoLoginBtnIc as KakaoLoginBtnIcon, LoginIc } from '../../assets/svgs';
 
 const Login = () => {
   //const REDIRECT_URL = 'https://www.milewriting.com/redirect-kakao';
+  const navigate = useNavigate();
 
   const KAKAO_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${
     import.meta.env.VITE_API_KEY
@@ -13,10 +15,14 @@ const Login = () => {
     window.location.href = KAKAO_URL;
   };
 
+  const handleNavigateMain = () => {
+    navigate('/');
+  };
+
   return (
     <LoginWrapper>
       <HeaderWrapper>
-        <HeaderLogoIcon />
+        <HeaderLogoIcon onClick={handleNavigateMain} />
         <HeaderBtnLayout />
       </HeaderWrapper>
       <LoginLayout>

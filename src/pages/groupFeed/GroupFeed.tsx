@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Carousel from './carousel/Carousel';
@@ -16,8 +16,8 @@ import GroupThumbnailImg from '/src/assets/svgs/groupThumnailImg.svg';
 import Footer from '../../components/commons/Footer';
 import Spacing from '../../components/commons/Spacing';
 
-import Error from '../Error/Error';
-import Loading from '../Loading/Loading';
+import Error from '../error/Error';
+import Loading from '../loading/Loading';
 
 const GroupFeed = () => {
   const { groupId } = useParams();
