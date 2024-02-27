@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import HeaderContainer from './HeaderContainer';
 import Error from './pages/error/Error';
 import GroupFeed from './pages/groupFeed/GroupFeed';
 import Login from './pages/login/Login';
@@ -13,9 +14,11 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/group/:groupId" element={<GroupFeed />} />
-        <Route path="/detail/:groupId/:postId" element={<PostDetail />} />
+        <Route element={<HeaderContainer />}>
+          <Route path="/" element={<Main />} />
+          <Route path="/group/:groupId" element={<GroupFeed />} />
+          <Route path="/detail/:groupId/:postId" element={<PostDetail />} />
+        </Route>
         <Route path="/post/:groupId/:type" element={<PostPage />} />
         {/* <Route path="/edit/:groupId" element={<PostEditor />} /> */}
         <Route path="/login" element={<Login />} />
