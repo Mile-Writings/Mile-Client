@@ -1,26 +1,18 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Slider from 'react-slick';
 
 import '../styles/slick-theme.css';
 import '../styles/slick.css';
 
-import CarouselSkeletonPage from './CarouselSkeletonPage';
-import GroupCarouselTitle from './GroupCarouselTitle';
 import GroupContent from './GroupContent';
 import GroupNameButton from './GroupNameButton';
+import { SkeletonComponent } from './skeletons/SkeletonComponent';
+
+import { groupPropTypes } from '../types/groupContent';
 
 import Spacing from './../../../components/commons/Spacing';
-import { getGroupContent, groupPropTypes } from './../apis/getGroupContent';
-
-export interface groupPostTypes {
-  topicName: string;
-  imageUrl: string;
-  postTitle: string;
-  postContent: string;
-  postId: string;
-  isContainPhoto: boolean;
-}
+import getGroupContentApi from './../../../utils/apis/getGroupContentApi';
 
 const Carousel = () => {
   const [groupData, setGroupData] = useState<groupPropTypes[]>();
@@ -33,25 +25,22 @@ const Carousel = () => {
     slidesToScroll: 1,
   };
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await getGroupContent();
-        setGroupData(response);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getData();
-  }, []);
+  const getData = async () => {
+    try {
+      const data = await getGroupContentApi();
+      setGroupData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  getData();
 
   return (
-    <CarouselWrapper>
-      <GroupCarouselTitle />
+    <>
       {groupData ? (
-        <>
-          <Spacing marginBottom="3.6" />
-          {groupData.map((moim) => (
+        groupData.map((moim) => (
+          <CarouselWrapper key={moim.moimId}>
+            <Spacing marginBottom="3.6" />
             <CarouselWithButtonLayout key={moim.moimId}>
               <GroupNameButton groupName={moim.moimName} groupId={moim.moimId} />
               <Spacing marginBottom="1.6" />
@@ -73,12 +62,12 @@ const Carousel = () => {
                 </CarouselBox>
               </CarouselContainer>
             </CarouselWithButtonLayout>
-          ))}
-        </>
+          </CarouselWrapper>
+        ))
       ) : (
-        <CarouselSkeletonPage />
+        <SkeletonComponent />
       )}
-    </CarouselWrapper>
+    </>
   );
 };
 
