@@ -230,29 +230,33 @@ const TipTap = (props: EditorPropTypes) => {
             <EditorDropIcnClose />
           </FontSizeToggle>
           <FontSizeOptionList>
-            <FontSizeOption
-              className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
-              onClick={toggleFontSizeContent2}
-            >
-              <FontSizeText>본문 2</FontSizeText>
+            <FontSizeOption onClick={toggleFontSizeContent2}>
+              <FontSizeText
+                className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
+              >
+                본문 2
+              </FontSizeText>
             </FontSizeOption>
-            <FontSizeOption
-              className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
-              onClick={toggleFontSizeContent1}
-            >
-              <FontSizeText>본문 1</FontSizeText>
+            <FontSizeOption onClick={toggleFontSizeContent1}>
+              <FontSizeText
+                className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
+              >
+                본문 1
+              </FontSizeText>
             </FontSizeOption>
-            <FontSizeOption
-              className={editor.isActive('textStyle', { fontSize: '1.8rem' }) ? 'is-active' : ''}
-              onClick={toggleFontSizeTitle2}
-            >
-              <FontSizeText>제목 2</FontSizeText>
+            <FontSizeOption onClick={toggleFontSizeTitle2}>
+              <FontSizeText
+                className={editor.isActive('textStyle', { fontSize: '1.8rem' }) ? 'is-active' : ''}
+              >
+                제목 2
+              </FontSizeText>
             </FontSizeOption>
-            <FontSizeOption
-              className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
-              onClick={toggleFontSizeTitle1}
-            >
-              <FontSizeText>제목 1</FontSizeText>
+            <FontSizeOption onClick={toggleFontSizeTitle1}>
+              <FontSizeText
+                className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
+              >
+                제목 1
+              </FontSizeText>
             </FontSizeOption>
           </FontSizeOptionList>
         </FontSizeWrapper>
@@ -554,6 +558,10 @@ const FontSizeOption = styled.div`
 
   :hover {
     background-color: ${({ theme }) => theme.colors.gray20};
+  }
+
+  .is-active {
+    color: ${({ theme }) => theme.colors.mainViolet};
   }
 `;
 
