@@ -20,7 +20,7 @@ import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import { useEditor, EditorContent, Editor } from '@tiptap/react';
 import classNames from 'classnames';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 // custom
 import { FontSize } from '../utils/fontSize';
@@ -41,6 +41,13 @@ interface EditorPropTypes {
 
 const TipTap = (props: EditorPropTypes) => {
   const { title, setTitle, tempContent, editContent, setEditorContent } = props;
+  // toolbar 드롭다운 핸들
+  const [isFontSizeOpen, setIsFontSizeOpen] = useState(false);
+
+  const onClickFontSizeToggle = () => {
+    setIsFontSizeOpen(!isFontSizeOpen);
+  };
+
   const editor = useEditor({
     extensions: [
       Document,
@@ -90,21 +97,25 @@ const TipTap = (props: EditorPropTypes) => {
     editor.chain().focus().setFontSize('1.2rem').run();
     editor.chain().focus().setFontWeight('400').run();
     editor.chain().focus().setLineHeight('200%').run();
+    setIsFontSizeOpen(false);
   }, [editor]);
   const toggleFontSizeContent1 = useCallback(() => {
     editor.chain().focus().setFontSize('1.6rem').run();
     editor.chain().focus().setFontWeight('400').run();
     editor.chain().focus().setLineHeight('160%').run();
+    setIsFontSizeOpen(false);
   }, [editor]);
   const toggleFontSizeTitle2 = useCallback(() => {
     editor.chain().focus().setFontSize('1.8rem').run();
     editor.chain().focus().setFontWeight('700').run();
     editor.chain().focus().setLineHeight('200%').run();
+    setIsFontSizeOpen(false);
   }, [editor]);
   const toggleFontSizeTitle1 = useCallback(() => {
     editor.chain().focus().setFontSize('2.6rem').run();
     editor.chain().focus().setFontWeight('700').run();
     editor.chain().focus().setLineHeight('200%').run();
+    setIsFontSizeOpen(false);
   }, [editor]);
 
   // 글자 색상 함수
@@ -225,11 +236,11 @@ const TipTap = (props: EditorPropTypes) => {
       <ToolbarWrapper className="menu">
         {/* 글자 크기 */}
         <FontSizeWrapper>
-          <FontSizeToggle>
+          <FontSizeToggle onClick={onClickFontSizeToggle}>
             <FontSizeLabel>본문 1</FontSizeLabel>
             <EditorDropIcnClose />
           </FontSizeToggle>
-          <FontSizeOptionList>
+          <FontSizeOptionList $isFontSizeOpen={isFontSizeOpen}>
             <FontSizeOption onClick={toggleFontSizeContent2}>
               <FontSizeText
                 className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
@@ -534,10 +545,10 @@ const FontSizeLabel = styled.p`
   ${({ theme }) => theme.fonts.body7}
 `;
 
-const FontSizeOptionList = styled.div`
+const FontSizeOptionList = styled.div<{ $isFontSizeOpen: boolean }>`
   position: absolute;
   top: 2.9rem;
-  display: flex;
+  display: ${({ $isFontSizeOpen }) => ($isFontSizeOpen ? 'flex' : 'none')};
   flex-direction: column;
   gap: 0.6rem;
   align-items: center;
