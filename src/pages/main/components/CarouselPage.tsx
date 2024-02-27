@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { Suspense, lazy } from 'react';
 
-import { carouselItemPropTypes } from './Carousel';
+import { carouselItemPropTypes } from './GroupCarousel';
 import { SkeletonComponent } from './skeletons/SkeletonComponent';
 
 const CarouselPage = ({ moimId }: carouselItemPropTypes) => {
-  const lazyCarousel = import('./Carousel');
+  const lazyCarousel = import('./GroupCarousel');
   const LazyCarousel = lazy(() => lazyCarousel);
 
   return (

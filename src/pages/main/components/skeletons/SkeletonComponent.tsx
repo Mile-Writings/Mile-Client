@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { carouselItemPropTypes } from '../Carousel';
 import CarouselSkeleton from '../CarouselSkeleton';
+import { carouselItemPropTypes } from '../GroupCarousel';
 
 import getGroupContentApi from '../../apis/getGroupContentApi';
 import { useGetGroupContent } from '../../hooks/queries';

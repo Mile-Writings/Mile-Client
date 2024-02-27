@@ -10,7 +10,7 @@ import { SkeletonComponent } from './skeletons/SkeletonComponent';
 
 import { useGetGroupContent } from '../hooks/queries';
 
-import Spacing from './../../../components/commons/Spacing';
+import Spacing from '../../../components/commons/Spacing';
 
 export interface carouselItemPropTypes {
   moimId: string | undefined;
