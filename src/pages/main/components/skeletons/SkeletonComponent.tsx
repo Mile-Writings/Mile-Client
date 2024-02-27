@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import CarouselSkeleton from '../CarouselSkeleton';
-import { carouselItemPropTypes } from '../GroupCarousel';
 
 import getGroupContentApi from '../../apis/getGroupContentApi';
-import { useGetGroupContent } from '../../hooks/queries';
 
-export const SkeletonComponent = ({ moimId }: carouselItemPropTypes) => {
+export const SkeletonComponent = () => {
   const [groupLength, setGroupLength] = useState<number>(0);
-  const { data } = useGetGroupContent(moimId || '');
-  console.log(data);
 
   useEffect(() => {
     const fetchGroupLength = async () => {

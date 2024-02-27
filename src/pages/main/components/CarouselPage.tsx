@@ -11,7 +11,7 @@ const CarouselPage = ({ moimId }: carouselItemPropTypes) => {
   return (
     <CarouselComponentWrapper>
       <TitleLayout>마일과 함께하고 있는 글 모임이에요</TitleLayout>
-      <Suspense fallback={<SkeletonComponent moimId={moimId} />}>
+      <Suspense fallback={<SkeletonComponent />}>
         <LazyCarousel moimId={moimId} />
       </Suspense>
     </CarouselComponentWrapper>
