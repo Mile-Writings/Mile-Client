@@ -28,6 +28,9 @@ import { FontWeight } from '../utils/fontWeight';
 import { LineHeight } from '../utils/lineHeight';
 import './tiptap.css';
 
+// editor svg
+import { EditorDropIcnOpen, EditorDropIcnClose } from '../../../assets/svgs';
+
 interface EditorPropTypes {
   title: string | undefined;
   setTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -82,6 +85,7 @@ const TipTap = (props: EditorPropTypes) => {
   }, [editor, tempContent, editContent]);
 
   // 글자 크기 함수
+
   const toggleFontSizeContent2 = useCallback(() => {
     editor.chain().focus().setFontSize('1.2rem').run();
     editor.chain().focus().setFontWeight('400').run();
@@ -220,6 +224,39 @@ const TipTap = (props: EditorPropTypes) => {
       <Title type="text" placeholder="제목을 적어주세요" onChange={setTitle} value={title} />
       <ToolbarWrapper className="menu">
         {/* 글자 크기 */}
+        <FontSizeWrapper>
+          <FontSizeToggle>
+            <FontSizeLabel>본문 1</FontSizeLabel>
+            <EditorDropIcnClose />
+          </FontSizeToggle>
+          <FontSizeOptionList>
+            <FontSizeOption
+              className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
+              onClick={toggleFontSizeContent2}
+            >
+              <FontSizeText>본문 2</FontSizeText>
+            </FontSizeOption>
+            <FontSizeOption
+              className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
+              onClick={toggleFontSizeContent1}
+            >
+              <FontSizeText>본문 1</FontSizeText>
+            </FontSizeOption>
+            <FontSizeOption
+              className={editor.isActive('textStyle', { fontSize: '1.8rem' }) ? 'is-active' : ''}
+              onClick={toggleFontSizeTitle2}
+            >
+              <FontSizeText>제목 2</FontSizeText>
+            </FontSizeOption>
+            <FontSizeOption
+              className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
+              onClick={toggleFontSizeTitle1}
+            >
+              <FontSizeText>제목 1</FontSizeText>
+            </FontSizeOption>
+          </FontSizeOptionList>
+        </FontSizeWrapper>
+        {/*
         <button
           className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
           onClick={toggleFontSizeContent2}
@@ -244,6 +281,7 @@ const TipTap = (props: EditorPropTypes) => {
         >
           제목1
         </button>
+        */}
         {/* 글자색 */}
         <button
           className={editor.isActive('textStyle', { color: '#010101' }) ? 'is-active' : ''}
@@ -446,6 +484,7 @@ const TipTap = (props: EditorPropTypes) => {
 
 export default TipTap;
 
+// 툴바 전체 감싸기
 const ToolbarWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -461,6 +500,66 @@ const ToolbarWrapper = styled.div`
   .is-active {
     color: pink;
   }
+`;
+
+// 글자 크기 드롭다운 리스트
+const FontSizeWrapper = styled.div`
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  cursor: pointer;
+`;
+
+const FontSizeToggle = styled.div`
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  justify-content: space-between;
+  width: 10.1rem;
+  padding: 0 1.3rem;
+
+  background-color: white;
+`;
+
+const FontSizeLabel = styled.p`
+  color: ${({ theme }) => theme.colors.gray90};
+  ${({ theme }) => theme.fonts.body7}
+`;
+
+const FontSizeOptionList = styled.div`
+  position: absolute;
+  top: 2.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: flex-start;
+  width: 8.8rem;
+  padding: 1rem;
+
+  border: 1px solid ${({ theme }) => theme.colors.gray50};
+  border-radius: 10px;
+`;
+
+const FontSizeOption = styled.div`
+  width: 6.8rem;
+  padding: 0.6rem 1rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 6px;
+
+  :hover {
+    background-color: ${({ theme }) => theme.colors.gray20};
+  }
+`;
+
+const FontSizeText = styled.p`
+  ${({ theme }) => theme.fonts.body7}
+  color: ${({ theme }) => theme.colors.gray90};
 `;
 
 const Title = styled.input`
