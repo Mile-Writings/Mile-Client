@@ -6,16 +6,11 @@ import CuriousBtn from './components/CuriousBtn';
 import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
 
 import Error from '../error/Error';
-import MakeGroupBtn from '../groupFeed/components/MakeGroupBtn';
-import MyGroupBtn from '../groupFeed/components/MyGroupBtn';
 import Loading from '../loading/Loading';
-import { UnAuthorizationHeader } from '../main/components/MainHeader';
 
-import { CheckboxIc, DefaultProfileIc, HeaderLogoIc } from './../../assets/svgs';
+import { CheckboxIc, DefaultProfileIc } from './../../assets/svgs';
 import Button from './../../components/commons/Button';
-import LogInOutBtn from './../../components/commons/LogInOutBtn';
 import Spacing from './../../components/commons/Spacing';
-import logout from './../../utils/logout';
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -25,8 +20,6 @@ const PostDetail = () => {
   const { data: postAuth } = useCheckPostAuth(postId || '');
   const { mutate: deletePost } = useDeletePost(postId || '');
   const postData = data?.data;
-
-  const accessToken = localStorage.getItem('accessToken');
 
   if (isLoading) {
     return <Loading />;
@@ -68,25 +61,6 @@ const PostDetail = () => {
 
   return (
     <>
-      {accessToken ? (
-        <PostHeader>
-          <HeaderLogoIcon
-            onClick={() => {
-              navigate('/');
-            }}
-          />
-          <HeaderBtnLayout>
-            <MyGroupBtn />
-            <CommonBtnLayout>
-              <MakeGroupBtn />
-              <LogInOutBtn onClick={logout}>로그아웃</LogInOutBtn>
-            </CommonBtnLayout>
-          </HeaderBtnLayout>
-        </PostHeader>
-      ) : (
-        <UnAuthorizationHeader />
-      )}
-
       <ThumnailImg src={postData?.imageUrl} alt={'썸네일 이미지'} />
       <Spacing marginBottom="4.8" />
       <PostDetailWrapper>
@@ -137,33 +111,6 @@ const PostDetail = () => {
 };
 
 export default PostDetail;
-
-const PostHeader = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 6.4rem;
-  padding: 0 6rem;
-
-  background-color: ${({ theme }) => theme.colors.white};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
-`;
-const HeaderBtnLayout = styled.div`
-  display: flex;
-  align-items: center;
-  height: 6.4rem;
-`;
-const CommonBtnLayout = styled.div`
-  display: flex;
-  gap: 1.2rem;
-  align-items: center;
-  height: 6.4rem;
-`;
-
-const HeaderLogoIcon = styled(HeaderLogoIc)`
-  cursor: pointer;
-`;
 
 const ThumnailImg = styled.img`
   width: 100%;

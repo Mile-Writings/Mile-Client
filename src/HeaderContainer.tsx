@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-import { GroupFeedHeader, LogOutHeader } from './pages/groupFeed/components/GroupFeedHeader';
+import { GroupFeedHeader, LogOutHeader } from './components/commons/Header';
 
 const HeaderContainer = () => {
   const accessToken = localStorage.getItem('accessToken');

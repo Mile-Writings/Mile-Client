@@ -10,10 +10,6 @@ import MakeGroupBtn from '../../pages/groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../../pages/groupFeed/components/MyGroupBtn';
 import logout from '../../utils/logout';
 
-interface OnClickProps {
-  onClick: () => void;
-}
-
 interface onClickEditProps {
   onClickEditSave: () => void;
 }
@@ -51,12 +47,13 @@ export const GroupFeedHeader = () => {
 };
 
 //아직 로그인을 하지 않았을 때 헤더
-export const LogOutHeader = ({ onClick }: OnClickProps) => {
+export const LogOutHeader = () => {
   const { navigateToHome } = useNavigateHome();
+  const navigate = useNavigate();
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
-      <LogInOutBtn onClick={onClick}>로그인</LogInOutBtn>
+      <LogInOutBtn onClick={() => navigate('/login')}>로그인</LogInOutBtn>
     </HeaderWrapper>
   );
 };
