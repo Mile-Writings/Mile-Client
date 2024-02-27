@@ -44,6 +44,7 @@ const TipTap = (props: EditorPropTypes) => {
   // toolbar 드롭다운 핸들
   const [isFontSizeOpen, setIsFontSizeOpen] = useState(false);
 
+  // 글자 크기 토글 열고 닫음
   const onClickFontSizeToggle = () => {
     setIsFontSizeOpen(!isFontSizeOpen);
   };
@@ -250,18 +251,11 @@ const TipTap = (props: EditorPropTypes) => {
             {isFontSizeOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
           </FontSizeToggle>
           <FontSizeOptionList $isFontSizeOpen={isFontSizeOpen}>
-            <FontSizeOption onClick={toggleFontSizeContent2}>
+            <FontSizeOption onClick={toggleFontSizeTitle1}>
               <FontSizeText
-                className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
+                className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
               >
-                본문 2
-              </FontSizeText>
-            </FontSizeOption>
-            <FontSizeOption onClick={toggleFontSizeContent1}>
-              <FontSizeText
-                className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
-              >
-                본문 1
+                제목 1
               </FontSizeText>
             </FontSizeOption>
             <FontSizeOption onClick={toggleFontSizeTitle2}>
@@ -271,11 +265,18 @@ const TipTap = (props: EditorPropTypes) => {
                 제목 2
               </FontSizeText>
             </FontSizeOption>
-            <FontSizeOption onClick={toggleFontSizeTitle1}>
+            <FontSizeOption onClick={toggleFontSizeContent1}>
               <FontSizeText
-                className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
+                className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
               >
-                제목 1
+                본문 1
+              </FontSizeText>
+            </FontSizeOption>
+            <FontSizeOption onClick={toggleFontSizeContent2}>
+              <FontSizeText
+                className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
+              >
+                본문 2
               </FontSizeText>
             </FontSizeOption>
           </FontSizeOptionList>
