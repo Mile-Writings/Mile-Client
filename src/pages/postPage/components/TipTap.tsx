@@ -304,34 +304,56 @@ const TipTap = (props: EditorPropTypes) => {
               <EditorTextColorBlackIcn
                 className={editor.isActive('textStyle', { color: '#010101' }) ? 'is-active' : ''}
               />
-              <TextColorText>black</TextColorText>
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#010101' }) ? 'is-active' : ''}
+              >
+                black
+              </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={toggleTextGray}>
               <EditorTextColorGrayIcn
                 className={editor.isActive('textStyle', { color: '#505050' }) ? 'is-active' : ''}
               />
-              <TextColorText>gray</TextColorText>
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#505050' }) ? 'is-active' : ''}
+              >
+                gray
+              </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={toggleTextRed}>
               <EditorTextColorRedIcn
                 className={editor.isActive('textStyle', { color: '#B81616' }) ? 'is-active' : ''}
               />
-              <TextColorText>red</TextColorText>
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#B81616' }) ? 'is-active' : ''}
+              >
+                red
+              </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={toggleTextOrange}>
               <EditorTextColorOrangeIcn
                 className={editor.isActive('textStyle', { color: '#DA5B24' }) ? 'is-active' : ''}
               />
-              <TextColorText>orange</TextColorText>
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#DA5B24' }) ? 'is-active' : ''}
+              >
+                orange
+              </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={toggleTextYellow}>
               <EditorTextColorYellowIcn
                 className={editor.isActive('textStyle', { color: '#C5B525' }) ? 'is-active' : ''}
               />
-              <TextColorText>yellow</TextColorText>
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#C5B525' }) ? 'is-active' : ''}
+              >
+                yellow
+              </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper>
-              <EditorTextColorGreenIcn onClick={toggleTextGreen} />
+            <TextColorOptionWrapper onClick={toggleTextGreen}>
+              <EditorTextColorGreenIcn
+                className={editor.isActive('textStyle', { color: '#2F7417' }) ? 'is-active' : ''}
+              />
               <TextColorText
                 className={editor.isActive('textStyle', { color: '#2F7417' }) ? 'is-active' : ''}
               >
@@ -342,19 +364,31 @@ const TipTap = (props: EditorPropTypes) => {
               <EditorTextColorBlueIcn
                 className={editor.isActive('textStyle', { color: '#172B74' }) ? 'is-active' : ''}
               />
-              <TextColorText>blue</TextColorText>
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#172B74' }) ? 'is-active' : ''}
+              >
+                blue
+              </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={toggleTextViolet}>
               <EditorTextColorVioletIcn
                 className={editor.isActive('textStyle', { color: '#6139D1' }) ? 'is-active' : ''}
               />
-              <TextColorText>violet</TextColorText>
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#6139D1' }) ? 'is-active' : ''}
+              >
+                violet
+              </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={toggleTextPink}>
               <EditorTextColorPinkIcn
                 className={editor.isActive('textStyle', { color: '#951479' }) ? 'is-active' : ''}
               />
-              <TextColorText>pink</TextColorText>
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#951479' }) ? 'is-active' : ''}
+              >
+                pink
+              </TextColorText>
             </TextColorOptionWrapper>
           </TextColorList>
         </ToolbarDropDownWrapper>
@@ -525,10 +559,6 @@ const ToolbarWrapper = styled.div`
   background-color: white;
   border: 1px solid #d3d3d3;
   border-radius: 0.8rem;
-
-  .is-active {
-    color: pink;
-  }
 `;
 
 // 글자 크기 드롭다운 리스트
@@ -597,15 +627,6 @@ const FontSizeText = styled.p`
 `;
 
 // 글자 색상 드롭다운
-const TextColorWrapper = styled.div`
-  position: relative;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-`;
-
 const TextColorToggle = styled.div`
   display: flex;
   gap: 0.5rem;
@@ -616,8 +637,6 @@ const TextColorToggle = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
 `;
-
-const TextColorLabel = styled.p``;
 
 const TextColorList = styled.div`
   position: absolute;
@@ -643,9 +662,17 @@ const TextColorOptionWrapper = styled.div`
   justify-content: flex-start;
   width: 9.6rem;
   padding: 0.6rem 1rem;
-`;
 
-const TextColorIcon = styled.div``;
+  border-radius: 6px;
+
+  :hover {
+    background-color: ${({ theme }) => theme.colors.gray20};
+  }
+
+  .is-active {
+    color: ${({ theme }) => theme.colors.mainViolet};
+  }
+`;
 
 const TextColorText = styled.p`
   color: ${({ theme }) => theme.colors.gray90};
