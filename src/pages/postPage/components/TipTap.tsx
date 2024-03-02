@@ -448,99 +448,100 @@ const TipTap = (props: EditorPropTypes) => {
             {isFontSizeOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
           </TextColorToggle>
           <TextColorList $isFontColorOpen={isFontColorOpen}>
-            <TextColorOptionWrapper>
-              <EditorTextBgColorWhiteIcn />
-              <TextColorText>white</TextColorText>
+            <TextColorOptionWrapper onClick={toggleHighLightWhite}>
+              <EditorTextBgColorWhiteIcn
+                className={editor.isActive('highlight', { color: '#FFFFFF' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#FFFFFF' }) ? 'is-active' : ''}
+              >
+                white
+              </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper>
-              <EditorTextBgColorGrayIcn />
-              <TextColorText>gray</TextColorText>
+            <TextColorOptionWrapper onClick={toggleHighLightGray}>
+              <EditorTextBgColorGrayIcn
+                className={editor.isActive('highlight', { color: '#EAEAEA' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#EAEAEA' }) ? 'is-active' : ''}
+              >
+                gray
+              </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper>
-              <EditorTextBgColorRedIcn />
-              <TextColorText>red</TextColorText>
+            <TextColorOptionWrapper onClick={toggleHighLightRed}>
+              <EditorTextBgColorRedIcn
+                className={editor.isActive('highlight', { color: '#F6E2E2' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#F6E2E2' }) ? 'is-active' : ''}
+              >
+                red
+              </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper>
-              <EditorTextBgColorOrangeIcn />
-              <TextColorText>orange</TextColorText>
+            <TextColorOptionWrapper onClick={toggleHighLightOrange}>
+              <EditorTextBgColorOrangeIcn
+                className={editor.isActive('highlight', { color: '#F6E7E2' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#F6E7E2' }) ? 'is-active' : ''}
+              >
+                orange
+              </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper>
-              <EditorTextBgColorYellowIcn />
-              <TextColorText>yellow</TextColorText>
+            <TextColorOptionWrapper onClick={toggleHighLightYellow}>
+              <EditorTextBgColorYellowIcn
+                className={editor.isActive('highlight', { color: '#F6F4E2' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#F6F4E2' }) ? 'is-active' : ''}
+              >
+                yellow
+              </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper>
-              <EditorTextBgColorGreenIcn />
-              <TextColorText>green</TextColorText>
+            <TextColorOptionWrapper onClick={toggleHighLightGreen}>
+              <EditorTextBgColorGreenIcn
+                className={editor.isActive('highlight', { color: '#F1F6E2' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#F1F6E2' }) ? 'is-active' : ''}
+              >
+                green
+              </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper>
-              <EditorTextBgColorBlueIcn />
-              <TextColorText>blue</TextColorText>
+            <TextColorOptionWrapper onClick={toggleHighLightBlue}>
+              <EditorTextBgColorBlueIcn
+                className={editor.isActive('highlight', { color: '#E2EAF6' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#E2EAF6' }) ? 'is-active' : ''}
+              >
+                blue
+              </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper>
-              <EditorTextBgColorVioletIcn />
-              <TextColorText>violet</TextColorText>
+            <TextColorOptionWrapper onClick={toggleHighLightViolet}>
+              <EditorTextBgColorVioletIcn
+                className={editor.isActive('highlight', { color: '#E9E3F8' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#E9E3F8' }) ? 'is-active' : ''}
+              >
+                violet
+              </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper>
-              <EditorTextBgColorPinkIcn />
-              <TextColorText>pink</TextColorText>
+            <TextColorOptionWrapper onClick={toggleHighLightPink}>
+              <EditorTextBgColorPinkIcn
+                className={editor.isActive('highlight', { color: '#F6E2F3' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#F6E2F3' }) ? 'is-active' : ''}
+              >
+                pink
+              </TextColorText>
             </TextColorOptionWrapper>
           </TextColorList>
         </ToolbarDropDownWrapper>
-        <button
-          className={editor.isActive('highlight', { color: '#FFFFFF' }) ? 'is-active' : ''}
-          onClick={toggleHighLightWhite}
-        >
-          white
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#EAEAEA' }) ? 'is-active' : ''}
-          onClick={toggleHighLightGray}
-        >
-          gray
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#F6E2E2' }) ? 'is-active' : ''}
-          onClick={toggleHighLightRed}
-        >
-          red
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#F6E7E2' }) ? 'is-active' : ''}
-          onClick={toggleHighLightOrange}
-        >
-          orange
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#F6F4E2' }) ? 'is-active' : ''}
-          onClick={toggleHighLightYellow}
-        >
-          yellow
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#F1F6E2' }) ? 'is-active' : ''}
-          onClick={toggleHighLightGreen}
-        >
-          green
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#E2EAF6' }) ? 'is-active' : ''}
-          onClick={toggleHighLightBlue}
-        >
-          blue
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#E9E3F8' }) ? 'is-active' : ''}
-          onClick={toggleHighLightViolet}
-        >
-          violet
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#F6E2F3' }) ? 'is-active' : ''}
-          onClick={toggleHighLightPink}
-        >
-          pink
-        </button>
 
+        {/* bold */}
         <button
           className={classNames('menu-button', {
             'is-active': editor.isActive('bold'),
