@@ -42,8 +42,6 @@ import {
   EditorTextColorVioletIcn,
   EditorTextColorYellowIcn,
 } from '../../../assets/svgs';
-// 밖 클릭해서 닫히게 하기
-import useClickOutside from '../../../hooks/useClickOutside';
 
 interface EditorPropTypes {
   title: string | undefined;
