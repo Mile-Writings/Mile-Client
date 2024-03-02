@@ -444,7 +444,27 @@ const TipTap = (props: EditorPropTypes) => {
         {/* 글자 배경색 */}
         <ToolbarDropDownWrapper>
           <TextColorToggle>
-            <EditorTextBgColorWhiteIcn />
+            {editor.isActive('highlight', { color: '#FFFFFF' }) ? (
+              <EditorTextBgColorWhiteIcn />
+            ) : editor.isActive('highlight', { color: '#EAEAEA' }) ? (
+              <EditorTextBgColorGrayIcn />
+            ) : editor.isActive('highlight', { color: '#F6E2E2' }) ? (
+              <EditorTextBgColorRedIcn />
+            ) : editor.isActive('highlight', { color: '#F6E7E2' }) ? (
+              <EditorTextBgColorOrangeIcn />
+            ) : editor.isActive('highlight', { color: '#F6F4E2' }) ? (
+              <EditorTextBgColorYellowIcn />
+            ) : editor.isActive('highlight', { color: '#F1F6E2' }) ? (
+              <EditorTextBgColorGreenIcn />
+            ) : editor.isActive('highlight', { color: '#E2EAF6' }) ? (
+              <EditorTextBgColorBlueIcn />
+            ) : editor.isActive('highlight', { color: '#E9E3F8' }) ? (
+              <EditorTextBgColorVioletIcn />
+            ) : editor.isActive('highlight', { color: '#F6E2F3' }) ? (
+              <EditorTextBgColorPinkIcn />
+            ) : (
+              <EditorTextBgColorWhiteIcn />
+            )}
             {isFontSizeOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
           </TextColorToggle>
           <TextColorList $isFontColorOpen={isFontColorOpen}>
