@@ -68,6 +68,8 @@ const TipTap = (props: EditorPropTypes) => {
   const [isFontSizeOpen, setIsFontSizeOpen] = useState(false);
   // font color drop down
   const [isFontColorOpen, setIsFontColorOpen] = useState(false);
+  // font background color drop down
+  const [isFontBgColorOpen, setIsFontBgColorOpen] = useState(false);
 
   const onClickFontSizeToggle = () => {
     setIsFontSizeOpen(!isFontSizeOpen);
@@ -76,6 +78,11 @@ const TipTap = (props: EditorPropTypes) => {
 
   const onClickFontColorToggle = () => {
     setIsFontColorOpen(!isFontColorOpen);
+    setIsToggleOpen(!isToggleOpen);
+  };
+
+  const onClickFontBgColorToggle = () => {
+    setIsFontBgColorOpen(!isFontBgColorOpen);
     setIsToggleOpen(!isToggleOpen);
   };
 
@@ -189,30 +196,39 @@ const TipTap = (props: EditorPropTypes) => {
   // 글자 배경색 함수
   const toggleHighLightWhite = useCallback(() => {
     editor.chain().focus().toggleHighlight({ color: '#FFFFFF' }).run();
+    setIsFontBgColorOpen(false);
   }, [editor]);
   const toggleHighLightGray = useCallback(() => {
     editor.chain().focus().toggleHighlight({ color: '#EAEAEA' }).run();
+    setIsFontBgColorOpen(false);
   }, [editor]);
   const toggleHighLightRed = useCallback(() => {
     editor.chain().focus().toggleHighlight({ color: '#F6E2E2' }).run();
+    setIsFontBgColorOpen(false);
   }, [editor]);
   const toggleHighLightOrange = useCallback(() => {
     editor.chain().focus().toggleHighlight({ color: '#F6E7E2' }).run();
+    setIsFontBgColorOpen(false);
   }, [editor]);
   const toggleHighLightYellow = useCallback(() => {
     editor.chain().focus().toggleHighlight({ color: '#F6F4E2' }).run();
+    setIsFontBgColorOpen(false);
   }, [editor]);
   const toggleHighLightGreen = useCallback(() => {
     editor.chain().focus().toggleHighlight({ color: '#F1F6E2' }).run();
+    setIsFontBgColorOpen(false);
   }, [editor]);
   const toggleHighLightBlue = useCallback(() => {
     editor.chain().focus().toggleHighlight({ color: '#E2EAF6' }).run();
+    setIsFontBgColorOpen(false);
   }, [editor]);
   const toggleHighLightViolet = useCallback(() => {
     editor.chain().focus().toggleHighlight({ color: '#E9E3F8' }).run();
+    setIsFontBgColorOpen(false);
   }, [editor]);
   const toggleHighLightPink = useCallback(() => {
     editor.chain().focus().toggleHighlight({ color: '#F6E2F3' }).run();
+    setIsFontBgColorOpen(false);
   }, [editor]);
 
   // bold 함수
@@ -443,7 +459,7 @@ const TipTap = (props: EditorPropTypes) => {
 
         {/* 글자 배경색 */}
         <ToolbarDropDownWrapper>
-          <TextColorToggle>
+          <TextColorToggle onClick={onClickFontBgColorToggle}>
             {editor.isActive('highlight', { color: '#FFFFFF' }) ? (
               <EditorTextBgColorWhiteIcn />
             ) : editor.isActive('highlight', { color: '#EAEAEA' }) ? (
@@ -465,9 +481,9 @@ const TipTap = (props: EditorPropTypes) => {
             ) : (
               <EditorTextBgColorWhiteIcn />
             )}
-            {isFontSizeOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
+            {isFontBgColorOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
           </TextColorToggle>
-          <TextColorList $isFontColorOpen={isFontColorOpen}>
+          <TextColorBgList $isFontBgColorOpen={isFontBgColorOpen}>
             <TextColorOptionWrapper onClick={toggleHighLightWhite}>
               <EditorTextBgColorWhiteIcn
                 className={editor.isActive('highlight', { color: '#FFFFFF' }) ? 'is-active' : ''}
@@ -558,7 +574,7 @@ const TipTap = (props: EditorPropTypes) => {
                 pink
               </TextColorText>
             </TextColorOptionWrapper>
-          </TextColorList>
+          </TextColorBgList>
         </ToolbarDropDownWrapper>
 
         {/* bold */}
@@ -757,6 +773,23 @@ const TextColorList = styled.div<{ $isFontColorOpen: boolean }>`
   top: 2.9rem;
 
   display: ${({ $isFontColorOpen }) => ($isFontColorOpen ? 'flex' : 'none')};
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: flex-start;
+  width: 11.6rem;
+  padding: 1rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.gray50};
+  border-radius: 10px;
+`;
+
+const TextColorBgList = styled.div<{ $isFontBgColorOpen: boolean }>`
+  position: absolute;
+  top: 2.9rem;
+
+  display: ${({ $isFontBgColorOpen }) => ($isFontBgColorOpen ? 'flex' : 'none')};
   flex-direction: column;
   gap: 0.6rem;
   align-items: center;

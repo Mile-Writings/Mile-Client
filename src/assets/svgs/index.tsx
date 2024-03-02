@@ -91,4 +91,4 @@ export { default as EditorTextBgColorPinkIcn } from './editorTextbasecolorIcnPin
 export { default as EditorTextBgColorRedIcn } from './editorTextbasecolorIcnRed.svg?react';
 export { default as EditorTextBgColorVioletIcn } from './editorTextbasecolorIcnViolet.svg?react';
 export { default as EditorTextBgColorWhiteIcn } from './editorTextbasecolorIcnWhite.svg?react';
-export { default as EditorTextBgColorYellowIcn } from './editorTextbasecolorIcnBlue.svg?react';
+export { default as EditorTextBgColorYellowIcn } from './editorTextbasecolorIcnYellow.svg?react';
