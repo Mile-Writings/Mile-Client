@@ -22,14 +22,14 @@ const Main = () => {
   const { content } = useParams();
   const { moimId } = useParams();
   const topic = useGetRecommendTopic(content || '');
-  const { data, groupLength, isLoading, isFetching } = useGetGroupContent(moimId || '');
+  const { data, groupLength, isFetching } = useGetGroupContent(moimId || '');
 
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <OnBoarding />
       <GroupCarouselLayout>
-        {!isLoading && !isFetching ? (
+        {!isFetching ? (
           <CarouselWithTitleContainer>
             <CarouselTitle>마일과 함께하고 있는 글 모임이에요</CarouselTitle>
             <CarouselComponentBox>
