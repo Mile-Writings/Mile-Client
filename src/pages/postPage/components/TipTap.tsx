@@ -26,8 +26,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { FontSize } from '../utils/fontSize';
 import { FontWeight } from '../utils/fontWeight';
 import { LineHeight } from '../utils/lineHeight';
-import './tiptap.css';
 
+import './tiptap.css';
 // editor svg
 import {
   EditorDropIcnOpen,
@@ -42,7 +42,6 @@ import {
   EditorTextColorVioletIcn,
   EditorTextColorYellowIcn,
 } from '../../../assets/svgs';
-
 // 밖 클릭해서 닫히게 하기
 import useClickOutside from '../../../hooks/useClickOutside';
 
@@ -62,8 +61,6 @@ const TipTap = (props: EditorPropTypes) => {
   const [isFontSizeOpen, setIsFontSizeOpen] = useState(false);
   // font color drop down
   const [isFontColorOpen, setIsFontColorOpen] = useState(false);
-  // font background color drop down
-  const [isFontBgColorOpen, setIsFontBgColorOpen] = useState(false);
 
   const onClickFontSizeToggle = () => {
     setIsFontSizeOpen(!isFontSizeOpen);
