@@ -23,7 +23,6 @@ const Main = () => {
   const { moimId } = useParams();
   const topic = useGetRecommendTopic(content || '');
   const { data, groupLength, isLoading } = useGetGroupContent(moimId || '');
-  console.log(data);
 
   return (
     <MainPageWrapper>
