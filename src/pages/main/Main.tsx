@@ -29,7 +29,15 @@ const Main = () => {
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <OnBoarding />
       <GroupCarouselLayout>
-        {!isFetching ? (
+        {isFetching ? (
+          <CarouselComponentBox>
+            {groupLength && (
+              <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
+                <LazyCarousel data={data} groupLength={groupLength} />
+              </Suspense>
+            )}
+          </CarouselComponentBox>
+        ) : (
           <CarouselWithTitleContainer>
             <CarouselTitle>마일과 함께하고 있는 글 모임이에요</CarouselTitle>
             <CarouselComponentBox>
@@ -40,14 +48,6 @@ const Main = () => {
               )}
             </CarouselComponentBox>
           </CarouselWithTitleContainer>
-        ) : (
-          <CarouselComponentBox>
-            {groupLength && (
-              <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
-                <LazyCarousel data={data} groupLength={groupLength} />
-              </Suspense>
-            )}
-          </CarouselComponentBox>
         )}
       </GroupCarouselLayout>
 
