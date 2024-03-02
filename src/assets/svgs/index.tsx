@@ -93,6 +93,8 @@ export { default as EditorTextBgColorVioletIcn } from './editorTextbasecolorIcnV
 export { default as EditorTextBgColorWhiteIcn } from './editorTextbasecolorIcnWhite.svg?react';
 export { default as EditorTextBgColorYellowIcn } from './editorTextbasecolorIcnYellow.svg?react';
 // bold
+export { default as Test } from './format_bold.svg?react';
+export { default as TestActive } from './format_bold_active.svg?react';
 export { default as EditorBoldDefaultIcn } from './editorBoldSvgEnable.svg?react';
 export { default as EditorBoldHoverIcn } from './editorBoldSvgHover.svg?react';
 export { default as EditorBoldActiveIcn } from './editorBoldSvgActive.svg?react';
