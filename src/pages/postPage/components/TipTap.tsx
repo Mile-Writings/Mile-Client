@@ -113,9 +113,6 @@ const TipTap = (props: EditorPropTypes) => {
   // font background color drop down
   const [isFontBgColorOpen, setIsFontBgColorOpen] = useState(false);
 
-  // bold active hover 처리
-  const [isBoldClicked, setIsBoldClicked] = useState(false);
-
   const onClickFontSizeToggle = () => {
     setIsFontSizeOpen(!isFontSizeOpen);
     setIsToggleOpen(!isToggleOpen);
@@ -279,8 +276,7 @@ const TipTap = (props: EditorPropTypes) => {
   // bold 함수
   const toggleBold = useCallback(() => {
     editor.chain().focus().toggleBold().run();
-    setIsBoldClicked(!isBoldClicked);
-  }, [editor, isBoldClicked]);
+  }, [editor]);
 
   // 밑줄 함수
   const toggleUnderline = useCallback(() => {
@@ -631,20 +627,11 @@ const TipTap = (props: EditorPropTypes) => {
           })}
         >
           <ToolbarSvg>
-            {isBoldClicked ? (
-              <TestActive
-                className={classNames('menu-button', {
-                  'is-active': editor.isActive('bold'),
-                })}
-              />
-            ) : (
-              <Test
-                className={classNames('menu-button', {
-                  'is-active': editor.isActive('bold'),
-                })}
-                fill="#6139D1"
-              />
-            )}
+            <Test
+              className={classNames('menu-button', {
+                'is-active': editor.isActive('bold'),
+              })}
+            />
           </ToolbarSvg>
         </ToolbarSvgBtn>
         <button
@@ -906,7 +893,16 @@ const ToolbarSvg = styled.button`
   height: 2.6rem;
   margin: 0.6rem;
 
+  border-left: 1px transparent;
   border-radius: 0.4rem;
+
+  & > svg {
+    fill: ${({ theme }) => theme.colors.black};
+  }
+
+  & > svg.is-active {
+    fill: ${({ theme }) => theme.colors.mainViolet};
+  }
 
   :hover {
     background-color: ${({ theme }) => theme.colors.mileViolet};
