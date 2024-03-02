@@ -95,50 +95,50 @@ export { default as EditorTextBgColorYellowIcn } from './editorTextbasecolorIcnY
 // bold
 export { default as EditorBoldDefaultIcn } from './editorBoldSvgEnable.svg?react';
 export { default as EditorBoldHoverIcn } from './editorBoldSvgHover.svg?react';
-export { default as EditorBoldActivIcn } from './editorBoldSvgActive.svg?react';
+export { default as EditorBoldActiveIcn } from './editorBoldSvgActive.svg?react';
 export { default as EditorBoldActiveHoverIcn } from './editorBoldSvgActivehover.svg?react';
 // underline
 export { default as EditorUnderlineDefaultIcn } from './editorLineSvgEnable.svg?react';
 export { default as EditorUnderlineHoverIcn } from './editorLineSvgHover.svg?react';
-export { default as EditorUnderlineActivIcn } from './editorLineSvgActive.svg?react';
+export { default as EditorUnderlineActiveIcn } from './editorLineSvgActive.svg?react';
 export { default as EditorUnderlineActiveHoverIcn } from './editorLineSvgActivehover.svg?react';
 // strike
 export { default as EditorStrikeDefaultIcn } from './editorStrikeSvgEnable.svg?react';
 export { default as EditorStrikeHoverIcn } from './editorStrikeSvgHover.svg?react';
-export { default as EditorStrikeActivIcn } from './editorStrikeSvgActive.svg?react';
+export { default as EditorStrikeActiveIcn } from './editorStrikeSvgActive.svg?react';
 export { default as EditorStrikeActiveHoverIcn } from './editorStrikeSvgActivehover.svg?react';
 // Italic
 export { default as EditorItalicDefaultIcn } from './editorItalicSvgEnable.svg?react';
 export { default as EditorItalicHoverIcn } from './editorItalicSvgHover.svg?react';
-export { default as EditorItalicActivIcn } from './editorItalicSvgActive.svg?react';
+export { default as EditorItalicActiveIcn } from './editorItalicSvgActive.svg?react';
 export { default as EditorItalicActiveHoverIcn } from './editorItalicSvgActivehover.svg?react';
 // Center
 export { default as EditorCenterDefaultIcn } from './editorCenterSvgEnable.svg?react';
 export { default as EditorCenterHoverIcn } from './editorCenterSvgHover.svg?react';
-export { default as EditorCenterActivIcn } from './editorCenterSvgActive.svg?react';
+export { default as EditorCenterActiveIcn } from './editorCenterSvgActive.svg?react';
 export { default as EditorCenterActiveHoverIcn } from './editorCenterSvgActivehover.svg?react';
 // left
 export { default as EditorLeftDefaultIcn } from './editorLeftSvgEnable.svg?react';
 export { default as EditorLeftHoverIcn } from './editorLeftSvgHover.svg?react';
-export { default as EditorLeftActivIcn } from './editorLeftSvgActive.svg?react';
+export { default as EditorLeftActiveIcn } from './editorLeftSvgActive.svg?react';
 export { default as EditorLeftActiveHoverIcn } from './editorLeftSvgActivehover.svg?react';
 // bullet List
 export { default as EditorBulletDefaultIcn } from './editorBulletSvgEnable.svg?react';
 export { default as EditorBulletHoverIcn } from './editorBulletSvgHover.svg?react';
-export { default as EditorBulletActivIcn } from './editorBulletSvgActive.svg?react';
+export { default as EditorBulletActiveIcn } from './editorBulletSvgActive.svg?react';
 export { default as EditorBulletActiveHoverIcn } from './editorBulletSvgActivehover.svg?react';
 // number list
 export { default as EditorNumberDefaultIcn } from './editorNumberSvgEnable.svg?react';
 export { default as EditorNumberHoverIcn } from './editorNumberSvgHover.svg?react';
-export { default as EditorNumberActivIcn } from './editorNumberSvgActive.svg?react';
+export { default as EditorNumberActiveIcn } from './editorNumberSvgActive.svg?react';
 export { default as EditorNumberActiveHoverIcn } from './editorNumberSvgActivehover.svg?react';
 // Quote
 export { default as EditorQuoteDefaultIcn } from './editorQuoteSvgEnable.svg?react';
 export { default as EditorQuoteHoverIcn } from './editorQuoteSvgHover.svg?react';
-export { default as EditorQuoteActivIcn } from './editorQuoteSvgActive.svg?react';
+export { default as EditorQuoteActiveIcn } from './editorQuoteSvgActive.svg?react';
 export { default as EditorQuoteActiveHoverIcn } from './editorQuoteSvgActivehover.svg?react';
 // Divider
 export { default as EditorDividerDefaultIcn } from './editorHorizonSvgEnable.svg?react';
 export { default as EditorDividerHoverIcn } from './editorHorizonSvgHover.svg?react';
-export { default as EditorDividerActivIcn } from './editorHorizonSvgActive.svg?react';
+export { default as EditorDividerActiveIcn } from './editorHorizonSvgActive.svg?react';
 export { default as EditorDividerActiveHoverIcn } from './editorHorizonSvgActivehover.svg?react';
