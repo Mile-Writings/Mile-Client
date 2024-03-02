@@ -41,6 +41,15 @@ import {
   EditorTextColorRedIcn,
   EditorTextColorVioletIcn,
   EditorTextColorYellowIcn,
+  EditorTextBgColorBlueIcn,
+  EditorTextBgColorGrayIcn,
+  EditorTextBgColorGreenIcn,
+  EditorTextBgColorOrangeIcn,
+  EditorTextBgColorPinkIcn,
+  EditorTextBgColorRedIcn,
+  EditorTextBgColorVioletIcn,
+  EditorTextBgColorWhiteIcn,
+  EditorTextBgColorYellowIcn,
 } from '../../../assets/svgs';
 
 interface EditorPropTypes {
@@ -433,6 +442,50 @@ const TipTap = (props: EditorPropTypes) => {
         </ToolbarDropDownWrapper>
 
         {/* 글자 배경색 */}
+        <ToolbarDropDownWrapper>
+          <TextColorToggle>
+            <EditorTextBgColorWhiteIcn />
+            {isFontSizeOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
+          </TextColorToggle>
+          <TextColorList $isFontColorOpen={isFontColorOpen}>
+            <TextColorOptionWrapper>
+              <EditorTextBgColorWhiteIcn />
+              <TextColorText>white</TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper>
+              <EditorTextBgColorGrayIcn />
+              <TextColorText>gray</TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper>
+              <EditorTextBgColorRedIcn />
+              <TextColorText>red</TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper>
+              <EditorTextBgColorOrangeIcn />
+              <TextColorText>orange</TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper>
+              <EditorTextBgColorYellowIcn />
+              <TextColorText>yellow</TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper>
+              <EditorTextBgColorGreenIcn />
+              <TextColorText>green</TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper>
+              <EditorTextBgColorBlueIcn />
+              <TextColorText>blue</TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper>
+              <EditorTextBgColorVioletIcn />
+              <TextColorText>violet</TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper>
+              <EditorTextBgColorPinkIcn />
+              <TextColorText>pink</TextColorText>
+            </TextColorOptionWrapper>
+          </TextColorList>
+        </ToolbarDropDownWrapper>
         <button
           className={editor.isActive('highlight', { color: '#FFFFFF' }) ? 'is-active' : ''}
           onClick={toggleHighLightWhite}
@@ -600,7 +653,7 @@ const ToolbarWrapper = styled.div`
   border-radius: 0.8rem;
 `;
 
-// 글자 크기 드롭다운 리스트
+// 드롭다운 리스트
 const ToolbarDropDownWrapper = styled.div`
   position: relative;
   z-index: 3;
@@ -612,6 +665,7 @@ const ToolbarDropDownWrapper = styled.div`
   cursor: pointer;
 `;
 
+// 글자 크기 드롭다운 리스트
 const FontSizeToggle = styled.div`
   display: flex;
   gap: 0.8rem;
