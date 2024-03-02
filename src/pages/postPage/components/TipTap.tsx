@@ -296,7 +296,27 @@ const TipTap = (props: EditorPropTypes) => {
         {/* 글자색 */}
         <ToolbarDropDownWrapper>
           <TextColorToggle>
-            <EditorTextColorBlackIcn />
+            {editor.isActive('textStyle', { color: '#010101' }) ? (
+              <EditorTextColorBlackIcn />
+            ) : editor.isActive('textStyle', { color: '#505050' }) ? (
+              <EditorTextColorGrayIcn />
+            ) : editor.isActive('textStyle', { color: '#B81616' }) ? (
+              <EditorTextColorRedIcn />
+            ) : editor.isActive('textStyle', { color: '#DA5B24' }) ? (
+              <EditorTextColorOrangeIcn />
+            ) : editor.isActive('textStyle', { color: '#C5B525' }) ? (
+              <EditorTextColorYellowIcn />
+            ) : editor.isActive('textStyle', { color: '#2F7417' }) ? (
+              <EditorTextColorGreenIcn />
+            ) : editor.isActive('textStyle', { color: '#172B74' }) ? (
+              <EditorTextColorBlueIcn />
+            ) : editor.isActive('textStyle', { color: '#6139D1' }) ? (
+              <EditorTextColorVioletIcn />
+            ) : editor.isActive('textStyle', { color: '#951479' }) ? (
+              <EditorTextColorPinkIcn />
+            ) : (
+              <EditorTextColorBlackIcn />
+            )}
             {isFontSizeOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
           </TextColorToggle>
           <TextColorList>
