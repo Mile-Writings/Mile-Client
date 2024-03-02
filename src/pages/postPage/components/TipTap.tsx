@@ -43,6 +43,9 @@ import {
   EditorTextColorYellowIcn,
 } from '../../../assets/svgs';
 
+// 밖 클릭해서 닫히게 하기
+import useClickOutside from '../../../hooks/useClickOutside';
+
 interface EditorPropTypes {
   title: string | undefined;
   setTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -53,11 +56,23 @@ interface EditorPropTypes {
 
 const TipTap = (props: EditorPropTypes) => {
   const { title, setTitle, tempContent, editContent, setEditorContent } = props;
-  // toolbar 드롭다운 핸들
+  // toolbar 드롭다운 전체 핸들
+  const [isToggleOpen, setIsToggleOpen] = useState(false);
+  // font size drop down
   const [isFontSizeOpen, setIsFontSizeOpen] = useState(false);
+  // font color drop down
+  const [isFontColorOpen, setIsFontColorOpen] = useState(false);
+  // font background color drop down
+  const [isFontBgColorOpen, setIsFontBgColorOpen] = useState(false);
 
   const onClickFontSizeToggle = () => {
     setIsFontSizeOpen(!isFontSizeOpen);
+    setIsToggleOpen(!isToggleOpen);
+  };
+
+  const onClickFontColorToggle = () => {
+    setIsFontColorOpen(!isFontColorOpen);
+    setIsToggleOpen(!isToggleOpen);
   };
 
   const editor = useEditor({
@@ -132,30 +147,39 @@ const TipTap = (props: EditorPropTypes) => {
   // 글자 색상 함수
   const toggleTextBlack = useCallback(() => {
     editor.chain().focus().setColor('#010101').run();
+    setIsFontColorOpen(false);
   }, [editor]);
   const toggleTextGray = useCallback(() => {
     editor.chain().focus().setColor('#505050').run();
+    setIsFontColorOpen(false);
   }, [editor]);
   const toggleTextRed = useCallback(() => {
     editor.chain().focus().setColor('#B81616').run();
+    setIsFontColorOpen(false);
   }, [editor]);
   const toggleTextOrange = useCallback(() => {
     editor.chain().focus().setColor('#DA5B24').run();
+    setIsFontColorOpen(false);
   }, [editor]);
   const toggleTextYellow = useCallback(() => {
     editor.chain().focus().setColor('#C5B525').run();
+    setIsFontColorOpen(false);
   }, [editor]);
   const toggleTextGreen = useCallback(() => {
     editor.chain().focus().setColor('#2F7417').run();
+    setIsFontColorOpen(false);
   }, [editor]);
   const toggleTextBlue = useCallback(() => {
     editor.chain().focus().setColor('#172B74').run();
+    setIsFontColorOpen(false);
   }, [editor]);
   const toggleTextViolet = useCallback(() => {
     editor.chain().focus().setColor('#6139D1').run();
+    setIsFontColorOpen(false);
   }, [editor]);
   const toggleTextPink = useCallback(() => {
     editor.chain().focus().setColor('#951479').run();
+    setIsFontColorOpen(false);
   }, [editor]);
 
   // 글자 배경색 함수
@@ -295,7 +319,7 @@ const TipTap = (props: EditorPropTypes) => {
 
         {/* 글자색 */}
         <ToolbarDropDownWrapper>
-          <TextColorToggle>
+          <TextColorToggle onClick={onClickFontColorToggle}>
             {editor.isActive('textStyle', { color: '#010101' }) ? (
               <EditorTextColorBlackIcn />
             ) : editor.isActive('textStyle', { color: '#505050' }) ? (
@@ -317,9 +341,9 @@ const TipTap = (props: EditorPropTypes) => {
             ) : (
               <EditorTextColorBlackIcn />
             )}
-            {isFontSizeOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
+            {isFontColorOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
           </TextColorToggle>
-          <TextColorList>
+          <TextColorList $isFontColorOpen={isFontColorOpen}>
             <TextColorOptionWrapper onClick={toggleTextBlack}>
               <EditorTextColorBlackIcn
                 className={editor.isActive('textStyle', { color: '#010101' }) ? 'is-active' : ''}
@@ -658,11 +682,11 @@ const TextColorToggle = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
-const TextColorList = styled.div`
+const TextColorList = styled.div<{ $isFontColorOpen: boolean }>`
   position: absolute;
   top: 2.9rem;
 
-  display: flex;
+  display: ${({ $isFontColorOpen }) => ($isFontColorOpen ? 'flex' : 'none')};
   flex-direction: column;
   gap: 0.6rem;
   align-items: center;
