@@ -624,27 +624,29 @@ const TipTap = (props: EditorPropTypes) => {
         </ToolbarDropDownWrapper>
 
         {/* bold */}
-        <ToolbarSvg
+        <ToolbarSvgBtn
           onClick={toggleBold}
           className={classNames('menu-button', {
             'is-active': editor.isActive('bold'),
           })}
         >
-          {isBoldClicked ? (
-            <TestActive
-              className={classNames('menu-button', {
-                'is-active': editor.isActive('bold'),
-              })}
-            />
-          ) : (
-            <Test
-              className={classNames('menu-button', {
-                'is-active': editor.isActive('bold'),
-              })}
-              fill="#6139D1"
-            />
-          )}
-        </ToolbarSvg>
+          <ToolbarSvg>
+            {isBoldClicked ? (
+              <TestActive
+                className={classNames('menu-button', {
+                  'is-active': editor.isActive('bold'),
+                })}
+              />
+            ) : (
+              <Test
+                className={classNames('menu-button', {
+                  'is-active': editor.isActive('bold'),
+                })}
+                fill="#6139D1"
+              />
+            )}
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
         <button
           className={classNames('menu-button', {
             'is-active': editor.isActive('underline'),
@@ -758,6 +760,7 @@ const ToolbarDropDownWrapper = styled.div`
   justify-content: center;
 
   cursor: pointer;
+  border-right: 1px solid ${({ theme }) => theme.colors.gray30};
 `;
 
 // 글자 크기 드롭다운 리스트
@@ -767,9 +770,11 @@ const FontSizeToggle = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 10.1rem;
+  height: 3.4rem;
   padding: 0 1.3rem;
 
   background-color: white;
+  border-radius: 0.8rem;
 `;
 
 const FontSizeLabel = styled.p`
@@ -821,6 +826,7 @@ const TextColorToggle = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 8.1rem;
+  height: 3.4rem;
   padding: 0 1.3rem;
 
   background-color: ${({ theme }) => theme.colors.white};
@@ -886,12 +892,19 @@ const TextColorText = styled.p`
 `;
 
 // 기본 svg 커스텀
-const ToolbarSvg = styled.button`
+const ToolbarSvgBtn = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 3.4rem;
+
+  border-right: 1px solid ${({ theme }) => theme.colors.gray30};
+`;
+
+const ToolbarSvg = styled.button`
   width: 2.6rem;
   height: 2.6rem;
+  margin: 0.6rem;
 
   border-radius: 0.4rem;
 
