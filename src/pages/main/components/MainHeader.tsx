@@ -8,7 +8,6 @@ import theme from '../../../styles/theme';
 import logout from '../../../utils/logout';
 import MakeGroupBtn from '../../groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../../groupFeed/components/MyGroupBtn';
-
 // 메인 페이지 헤더
 export const AuthorizationHeader = () => {
   const { navigateToHome } = useNavigateToHome();
@@ -35,9 +34,10 @@ export const AuthorizationHeader = () => {
 export const UnAuthorizationHeader = () => {
   const navigate = useNavigate();
   const { navigateToHome } = useNavigateToHome();
-  const pathname = useLocation();
+  const { pathname } = useLocation();
+  localStorage.setItem('history', pathname);
   const handleLogIn = () => {
-    navigate(`/login`, { state: pathname });
+    navigate(`/login`);
   };
   return (
     <HeaderWrapper>

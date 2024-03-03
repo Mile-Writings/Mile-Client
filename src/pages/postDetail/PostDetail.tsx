@@ -57,14 +57,6 @@ const PostDetail = () => {
       },
     });
   };
-  // 리팩토링 전 코드
-  // useEffect(() => {
-  //   if (typeof postId === 'string') {
-  //     const data = fetchPostDetail(postId);
-  //     console.log(data);
-  //   }
-  // }, []);
-  // console.log(postAuth?.data?.data.canEdit);
 
   return (
     <>
