@@ -118,10 +118,9 @@ const PostDetail = () => {
               <WriterDesc>{postData?.writerInfo && '아직 작가소개를 작성하지 않았어요'}</WriterDesc>
             </InfoWrapper>
           </WriterInfoContainer>
-          <CuriousBtn />
+          {localStorage.accessToken && <CuriousBtn />}
         </WriterInfoWrapper>
-
-        <Comment postId={postId} />
+        {localStorage.accessToken && <Comment postId={postId} />}
         <Spacing marginBottom="8" />
       </PostDetailWrapper>
     </>
