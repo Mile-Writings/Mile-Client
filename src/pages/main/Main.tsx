@@ -22,14 +22,14 @@ const Main = () => {
   const { content } = useParams();
   const { moimId } = useParams();
   const topic = useGetRecommendTopic(content || '');
-  const { data, groupLength, isFetching } = useGetGroupContent(moimId || '');
+  const { data, groupLength, isFetching, isLoading } = useGetGroupContent(moimId || '');
 
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <OnBoarding />
       <GroupCarouselLayout>
-        {isFetching ? (
+        {isLoading || isFetching ? (
           <CarouselComponentBox>
             {groupLength && (
               <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
