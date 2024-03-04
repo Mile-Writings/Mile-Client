@@ -24,8 +24,8 @@ interface OnClickTwoProps {
 interface OnClickTempExistProps {
   onClickSubmit: () => void;
 }
-// 모임 피드 헤더
-export const GroupFeedHeader = ({ onClick }: OnClickProps) => {
+// 로그인 했을 경우 헤더
+export const AuthorizationHeader = ({ onClick }: OnClickProps) => {
   const { navigateToHome } = useNavigateHome();
   return (
     <HeaderWrapper>
@@ -42,7 +42,7 @@ export const GroupFeedHeader = ({ onClick }: OnClickProps) => {
 };
 
 //아직 로그인을 하지 않았을 때 헤더
-export const LogOutHeader = ({ onClick }: OnClickProps) => {
+export const UnAuthorizationHeader = ({ onClick }: OnClickProps) => {
   const { navigateToHome } = useNavigateHome();
   return (
     <HeaderWrapper>
