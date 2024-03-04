@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
@@ -7,10 +8,7 @@ import { HeaderLogoIc } from '../../assets/svgs';
 import useNavigateHome from '../../hooks/useNavigateHome';
 import MakeGroupBtn from '../../pages/groupFeed/components/MakeGroupBtn';
 import MyGroupBtn from '../../pages/groupFeed/components/MyGroupBtn';
-
-interface OnClickProps {
-  onClick: () => void;
-}
+import logout from '../../utils/logout';
 
 interface onClickEditProps {
   onClickEditSave: () => void;
@@ -25,8 +23,13 @@ interface OnClickTempExistProps {
   onClickSubmit: () => void;
 }
 // 로그인 했을 경우 헤더
-export const AuthorizationHeader = ({ onClick }: OnClickProps) => {
+export const AuthorizationHeader = () => {
   const { navigateToHome } = useNavigateHome();
+  const handleLogOut = () => {
+    logout();
+    location.reload();
+  };
+
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
@@ -34,7 +37,7 @@ export const AuthorizationHeader = ({ onClick }: OnClickProps) => {
         <MyGroupBtn />
         <CommonBtnLayout>
           <MakeGroupBtn />
-          <LogInOutBtn onClick={onClick}>로그아웃</LogInOutBtn>
+          <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
         </CommonBtnLayout>
       </HeaderBtnLayout>
     </HeaderWrapper>
@@ -42,12 +45,18 @@ export const AuthorizationHeader = ({ onClick }: OnClickProps) => {
 };
 
 //아직 로그인을 하지 않았을 때 헤더
-export const UnAuthorizationHeader = ({ onClick }: OnClickProps) => {
+export const UnAuthorizationHeader = () => {
+  const navigate = useNavigate();
+  const pathname = useLocation();
   const { navigateToHome } = useNavigateHome();
+  const handleLogIn = () => {
+    navigate(`/login`, { state: pathname });
+  };
+
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
-      <LogInOutBtn onClick={onClick}>로그인</LogInOutBtn>
+      <LogInOutBtn onClick={handleLogIn}>로그인</LogInOutBtn>
     </HeaderWrapper>
   );
 };
