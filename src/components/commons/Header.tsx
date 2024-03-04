@@ -22,7 +22,8 @@ interface OnClickTwoProps {
 interface OnClickTempExistProps {
   onClickSubmit: () => void;
 }
-// 로그인 했을 경우 헤더
+
+// 로그인된 경우 헤더
 export const AuthorizationHeader = () => {
   const { navigateToHome } = useNavigateHome();
   const handleLogOut = () => {
@@ -44,7 +45,7 @@ export const AuthorizationHeader = () => {
   );
 };
 
-//아직 로그인을 하지 않았을 때 헤더
+// 로그아웃된 경우 헤더
 export const UnAuthorizationHeader = () => {
   const navigate = useNavigate();
   const pathname = useLocation();
@@ -61,7 +62,7 @@ export const UnAuthorizationHeader = () => {
   );
 };
 
-//에디터 창에서 글을 수정하고 있을 때 헤더
+// 에디터 창에서 글을 수정하고 있을 때 헤더
 export const EditorEditHeader = ({ onClickEditSave }: onClickEditProps) => {
   const { navigateToHome } = useNavigateHome();
   return (
