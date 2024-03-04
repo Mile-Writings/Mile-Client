@@ -6,7 +6,7 @@ import LogInOutBtn from './LogInOutBtn';
 
 import { HeaderLogoIc } from '../../assets/svgs';
 import useNavigateHome from '../../hooks/useNavigateHome';
-import MakeGroupBtn from '../../pages/groupFeed/components/MakeGroupBtn';
+import CreateGroupBtn from '../../pages/groupFeed/components/CreateGroupBtn';
 import MyGroupBtn from '../../pages/groupFeed/components/MyGroupBtn';
 import logout from '../../utils/logout';
 
@@ -34,13 +34,13 @@ export const AuthorizationHeader = () => {
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
-      <HeaderBtnLayout>
+      <HeaderLayout>
         <MyGroupBtn />
-        <CommonBtnLayout>
-          <MakeGroupBtn />
+        <HeaderBtnContainer>
+          <CreateGroupBtn />
           <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
-        </CommonBtnLayout>
-      </HeaderBtnLayout>
+        </HeaderBtnContainer>
+      </HeaderLayout>
     </HeaderWrapper>
   );
 };
@@ -81,14 +81,14 @@ export const EditorTempNotExistHeader = ({ onClickTempSave, onClickSubmit }: OnC
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
-      <CommonBtnLayout>
+      <HeaderBtnContainer>
         <Button typeName="deleteTempType" onClick={onClickTempSave}>
           임시저장
         </Button>
         <Button typeName="submitEditType" onClick={onClickSubmit}>
           글 제출하기
         </Button>
-      </CommonBtnLayout>
+      </HeaderBtnContainer>
     </HeaderWrapper>
   );
 };
@@ -99,11 +99,11 @@ export const EditorTempExistHeader = ({ onClickSubmit }: OnClickTempExistProps) 
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
-      <CommonBtnLayout>
+      <HeaderBtnContainer>
         <Button typeName="submitEditType" onClick={onClickSubmit}>
           글 제출하기
         </Button>
-      </CommonBtnLayout>
+      </HeaderBtnContainer>
     </HeaderWrapper>
   );
 };
@@ -121,13 +121,13 @@ const HeaderWrapper = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
 `;
 
-const HeaderBtnLayout = styled.div`
+const HeaderLayout = styled.div`
   display: flex;
   align-items: center;
   height: 6.4rem;
 `;
 
-const CommonBtnLayout = styled.div`
+const HeaderBtnContainer = styled.div`
   display: flex;
   gap: 1.2rem;
   align-items: center;
