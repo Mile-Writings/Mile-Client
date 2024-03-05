@@ -1,24 +1,10 @@
-import { useEffect, useState } from 'react';
-
 import CarouselSkeleton from '../CarouselSkeleton';
 
-import getGroupContentApi from '../../../../utils/apis/getGroupContentApi';
+interface groupLengthPropTypes {
+  groupLength: number;
+}
 
-export const SkeletonComponent = () => {
-  const [groupLength, setGroupLength] = useState<number>(0);
-
-  useEffect(() => {
-    const fetchGroupLength = async () => {
-      try {
-        const data = await getGroupContentApi();
-        if (data != undefined) setGroupLength(data?.length);
-      } catch (err) {
-        console.error();
-      }
-    };
-    fetchGroupLength();
-  });
-
+export const SkeletonComponent = ({ groupLength }: groupLengthPropTypes) => {
   return (
     <>
       {Array.from({ length: groupLength }).map((_, index) => (

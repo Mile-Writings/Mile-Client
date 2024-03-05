@@ -1,27 +1,11 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
 
-import { getRecommendTopic } from '../apis/getRecommendTopic';
 import { recommendPropsTypes } from '../types/recommendTopic';
 
 import { MainGraphicGradationIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
-const Ruler = () => {
-  const [recommendTopicData, setRecommendTopicData] = useState<recommendPropsTypes>();
-
-  useEffect(() => {
-    const getRecommendData = async () => {
-      try {
-        const response = await getRecommendTopic();
-        setRecommendTopicData(response?.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getRecommendData();
-  }, []);
-
+const Ruler = ({ data }: recommendPropsTypes) => {
   return (
     <RulerWrapper>
       <RulerLayout>
@@ -31,7 +15,7 @@ const Ruler = () => {
           <RulerContentBox>
             <TodayKeyWord>오늘의 글감</TodayKeyWord>
             <Pipe />
-            <KeyWord>{recommendTopicData?.content}</KeyWord>
+            <KeyWord>{data?.content}</KeyWord>
           </RulerContentBox>
           <Spacing marginBottom="1.2" />
         </RulerHeaderContainer>
