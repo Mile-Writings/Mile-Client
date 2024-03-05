@@ -52,16 +52,22 @@ const TipTap = (props: EditorPropTypes) => {
 
   const onClickFontSizeToggle = () => {
     setIsFontSizeOpen(!isFontSizeOpen);
+    setIsFontColorOpen(false);
+    setIsFontBgColorOpen(false);
     setIsToggleOpen(!isToggleOpen);
   };
 
   const onClickFontColorToggle = () => {
     setIsFontColorOpen(!isFontColorOpen);
+    setIsFontSizeOpen(false);
+    setIsFontBgColorOpen(false);
     setIsToggleOpen(!isToggleOpen);
   };
 
   const onClickFontBgColorToggle = () => {
     setIsFontBgColorOpen(!isFontBgColorOpen);
+    setIsFontSizeOpen(false);
+    setIsFontColorOpen(false);
     setIsToggleOpen(!isToggleOpen);
   };
 
