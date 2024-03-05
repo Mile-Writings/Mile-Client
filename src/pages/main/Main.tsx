@@ -23,7 +23,6 @@ const Main = () => {
   const { moimId } = useParams();
   const topic = useGetRecommendTopic(content || '');
   const { data, groupLength, isFetching, isLoading } = useGetGroupContent(moimId || '');
-
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
