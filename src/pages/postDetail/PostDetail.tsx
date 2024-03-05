@@ -65,6 +65,7 @@ const PostDetail = () => {
   return (
     <>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
+      <Spacing marginBottom="6.4" />
       <ThumnailImg src={postData?.imageUrl} alt={'썸네일 이미지'} />
       <Spacing marginBottom="4.8" />
       <PostDetailWrapper>

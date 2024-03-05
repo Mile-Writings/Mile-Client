@@ -17,6 +17,7 @@ const Main = () => {
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
+      <Spacing marginBottom="6.4" />
       <OnBoarding />
       <CarouselPage />
       <Ruler />
