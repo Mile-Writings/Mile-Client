@@ -1,3 +1,4 @@
+// fontWeight.ts
 import { Extension } from '@tiptap/core';
 import '@tiptap/extension-text-style';
 

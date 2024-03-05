@@ -6,7 +6,7 @@ import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 
 import Spacing from '../../../components/commons/Spacing';
-// import './editor.css';
+import './editor.css';
 
 // 글자 크기 커스텀
 const Size = Quill.import('formats/size');
