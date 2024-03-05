@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
@@ -276,6 +276,7 @@ const PostPage = () => {
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
+      <Spacing marginBottom="6.4" />
       <ImageUpload
         setPreviewImgUrl={setPreviewImgUrl}
         previewImgUrl={previewImgUrl}
