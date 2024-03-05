@@ -44,6 +44,7 @@ const TipTap = (props: EditorPropTypes) => {
   // toolbar 드롭다운 핸들
   const [isFontSizeOpen, setIsFontSizeOpen] = useState(false);
 
+  // 글자 크기 토글 열고 닫음
   const onClickFontSizeToggle = () => {
     setIsFontSizeOpen(!isFontSizeOpen);
   };
