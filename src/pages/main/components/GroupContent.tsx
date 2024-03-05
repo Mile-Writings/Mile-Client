@@ -11,7 +11,7 @@ export interface groupContentPropTypes {
   postTitle: string;
   postContent: string;
   postId: string;
-  groupId: string | undefined;
+  groupId: string;
   isContainPhoto: boolean;
   isLast: boolean;
 }

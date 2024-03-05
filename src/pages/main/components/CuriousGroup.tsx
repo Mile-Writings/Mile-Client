@@ -6,7 +6,7 @@ import { MainGroupRoutingBtn as MainGroupRoutingBtnIcon } from '../../../assets/
 import Spacing from '../../../components/commons/Spacing';
 
 interface curiousGroupPropTypes {
-  groupId: string | undefined;
+  groupId: string;
 }
 
 const CuriousGroup = ({ groupId }: curiousGroupPropTypes) => {

@@ -12,7 +12,7 @@ import { groupPropTypes } from '../types/groupContent';
 import Spacing from '../../../components/commons/Spacing';
 
 export interface carouselItemPropTypes {
-  moimId?: string | undefined;
+  moimId?: string;
   data: groupPropTypes[] | undefined;
   groupLength: number | undefined;
 }
