@@ -17,7 +17,7 @@ export interface carouselItemPropTypes {
   groupLength: number | undefined;
 }
 
-const Carousel = ({ data }: carouselItemPropTypes) => {
+const GroupCarousel = ({ data }: carouselItemPropTypes) => {
   const settings = {
     arrow: false,
     dots: false,
@@ -59,7 +59,7 @@ const Carousel = ({ data }: carouselItemPropTypes) => {
   );
 };
 
-export default Carousel;
+export default GroupCarousel;
 
 const CarouselWrapper = styled.div`
   display: flex;
