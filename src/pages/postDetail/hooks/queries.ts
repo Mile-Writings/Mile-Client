@@ -94,11 +94,18 @@ export const useCheckPostAuth = (postId: string) => {
 };
 
 // 글 삭제
-export const useDeletePost = (postId: string) => {
+export const useDeletePost = (postId: string, topicId: string) => {
+  const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.deletePost, postId],
     mutationFn: () => deletePost(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['getArticleList', topicId],
+      });
+    },
   });
+
   return data;
 };
 

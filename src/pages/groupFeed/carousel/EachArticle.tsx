@@ -15,7 +15,7 @@ const EachArticle = (props: EachProfilePropTypes) => {
   const { postListData } = useArticleList(selectedTopicId || '');
   const navigate = useNavigate();
   const handleGoPostDetail = (postId: string) => {
-    navigate(`/detail/${groupId}/${postId}`);
+    navigate(`/detail/${groupId}/${postId}`, { state: { topicId: selectedTopicId } });
   };
 
   interface ProfilePropTypes {

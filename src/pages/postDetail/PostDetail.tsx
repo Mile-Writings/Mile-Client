@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
@@ -21,9 +21,14 @@ const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
   const { groupId } = useParams();
+
+  //글 삭제시 쿼리키 가져오기 위해서
+  const location = useLocation();
+  const topicId = location.state?.topicId;
+
   const { data, isError, isLoading } = useGetPostDetail(postId || '');
   const { data: postAuth } = useCheckPostAuth(postId || '');
-  const { mutate: deletePost } = useDeletePost(postId || '');
+  const { mutate: deletePost } = useDeletePost(postId || '', topicId);
   const postData = data?.data;
 
   const accessToken = localStorage.getItem('accessToken');
