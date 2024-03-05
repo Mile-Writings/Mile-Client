@@ -100,7 +100,7 @@ const TipTap = (props: EditorPropTypes) => {
 
   // 에디터 content 업데이트
   useEffect(() => {
-    if (tempContent) {
+    if (editor && tempContent) {
       editor.commands.setContent(tempContent);
     }
     if (editor && editContent) {
@@ -741,7 +741,7 @@ const ToolbarWrapper = styled.div`
 // 드롭다운 리스트
 const ToolbarDropDownWrapper = styled.div`
   position: relative;
-  z-index: 3;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -772,7 +772,7 @@ const FontSizeLabel = styled.p`
 
 const FontSizeOptionList = styled.div<{ $isFontSizeOpen: boolean }>`
   position: absolute;
-  top: 2.9rem;
+  top: 3.5rem;
   display: ${({ $isFontSizeOpen }) => ($isFontSizeOpen ? 'flex' : 'none')};
   flex-direction: column;
   gap: 0.6rem;
@@ -822,7 +822,7 @@ const TextColorToggle = styled.div`
 
 const TextColorList = styled.div<{ $isFontColorOpen: boolean }>`
   position: absolute;
-  top: 2.9rem;
+  top: 3.5rem;
 
   display: ${({ $isFontColorOpen }) => ($isFontColorOpen ? 'flex' : 'none')};
   flex-direction: column;
@@ -839,7 +839,7 @@ const TextColorList = styled.div<{ $isFontColorOpen: boolean }>`
 
 const TextColorBgList = styled.div<{ $isFontBgColorOpen: boolean }>`
   position: absolute;
-  top: 2.9rem;
+  top: 3.5rem;
 
   display: ${({ $isFontBgColorOpen }) => ($isFontBgColorOpen ? 'flex' : 'none')};
   flex-direction: column;
