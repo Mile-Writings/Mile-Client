@@ -194,42 +194,13 @@ const TipTap = (props: EditorPropTypes) => {
   }, [editor]);
 
   // 글자 배경색 함수
-  const toggleHighLightWhite = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#FFFFFF' }).run();
-    setIsFontBgColorOpen(false);
-  }, [editor]);
-  const toggleHighLightGray = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#EAEAEA' }).run();
-    setIsFontBgColorOpen(false);
-  }, [editor]);
-  const toggleHighLightRed = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#F6E2E2' }).run();
-    setIsFontBgColorOpen(false);
-  }, [editor]);
-  const toggleHighLightOrange = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#F6E7E2' }).run();
-    setIsFontBgColorOpen(false);
-  }, [editor]);
-  const toggleHighLightYellow = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#F6F4E2' }).run();
-    setIsFontBgColorOpen(false);
-  }, [editor]);
-  const toggleHighLightGreen = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#F1F6E2' }).run();
-    setIsFontBgColorOpen(false);
-  }, [editor]);
-  const toggleHighLightBlue = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#E2EAF6' }).run();
-    setIsFontBgColorOpen(false);
-  }, [editor]);
-  const toggleHighLightViolet = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#E9E3F8' }).run();
-    setIsFontBgColorOpen(false);
-  }, [editor]);
-  const toggleHighLightPink = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#F6E2F3' }).run();
-    setIsFontBgColorOpen(false);
-  }, [editor]);
+  const toggleTextBgColor = useCallback(
+    (color: string) => {
+      editor.chain().focus().toggleHighlight({ color: color }).run();
+      setIsFontBgColorOpen(false);
+    },
+    [editor],
+  );
 
   // bold 함수
   const toggleBold = useCallback(() => {
@@ -484,7 +455,7 @@ const TipTap = (props: EditorPropTypes) => {
             {isFontBgColorOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
           </TextColorToggle>
           <TextColorBgList $isFontBgColorOpen={isFontBgColorOpen}>
-            <TextColorOptionWrapper onClick={toggleHighLightWhite}>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#FFFFFF')}>
               <EditorTextBgColorWhiteIcn
                 className={editor.isActive('highlight', { color: '#FFFFFF' }) ? 'is-active' : ''}
               />
@@ -494,7 +465,7 @@ const TipTap = (props: EditorPropTypes) => {
                 white
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleHighLightGray}>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#EAEAEA')}>
               <EditorTextBgColorGrayIcn
                 className={editor.isActive('highlight', { color: '#EAEAEA' }) ? 'is-active' : ''}
               />
@@ -504,7 +475,7 @@ const TipTap = (props: EditorPropTypes) => {
                 gray
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleHighLightRed}>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6E2E2')}>
               <EditorTextBgColorRedIcn
                 className={editor.isActive('highlight', { color: '#F6E2E2' }) ? 'is-active' : ''}
               />
@@ -514,7 +485,7 @@ const TipTap = (props: EditorPropTypes) => {
                 red
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleHighLightOrange}>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6E7E2')}>
               <EditorTextBgColorOrangeIcn
                 className={editor.isActive('highlight', { color: '#F6E7E2' }) ? 'is-active' : ''}
               />
@@ -524,7 +495,7 @@ const TipTap = (props: EditorPropTypes) => {
                 orange
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleHighLightYellow}>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6F4E2')}>
               <EditorTextBgColorYellowIcn
                 className={editor.isActive('highlight', { color: '#F6F4E2' }) ? 'is-active' : ''}
               />
@@ -534,7 +505,7 @@ const TipTap = (props: EditorPropTypes) => {
                 yellow
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleHighLightGreen}>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F1F6E2')}>
               <EditorTextBgColorGreenIcn
                 className={editor.isActive('highlight', { color: '#F1F6E2' }) ? 'is-active' : ''}
               />
@@ -544,7 +515,7 @@ const TipTap = (props: EditorPropTypes) => {
                 green
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleHighLightBlue}>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#E2EAF6')}>
               <EditorTextBgColorBlueIcn
                 className={editor.isActive('highlight', { color: '#E2EAF6' }) ? 'is-active' : ''}
               />
@@ -554,7 +525,7 @@ const TipTap = (props: EditorPropTypes) => {
                 blue
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleHighLightViolet}>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#E9E3F8')}>
               <EditorTextBgColorVioletIcn
                 className={editor.isActive('highlight', { color: '#E9E3F8' }) ? 'is-active' : ''}
               />
@@ -564,7 +535,7 @@ const TipTap = (props: EditorPropTypes) => {
                 violet
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleHighLightPink}>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6E2F3')}>
               <EditorTextBgColorPinkIcn
                 className={editor.isActive('highlight', { color: '#F6E2F3' }) ? 'is-active' : ''}
               />
