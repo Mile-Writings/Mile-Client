@@ -140,42 +140,13 @@ const TipTap = (props: EditorPropTypes) => {
   }, [editor]);
 
   // 글자 색상 함수
-  const toggleTextBlack = useCallback(() => {
-    editor.chain().focus().setColor('#010101').run();
-    setIsFontColorOpen(false);
-  }, [editor]);
-  const toggleTextGray = useCallback(() => {
-    editor.chain().focus().setColor('#505050').run();
-    setIsFontColorOpen(false);
-  }, [editor]);
-  const toggleTextRed = useCallback(() => {
-    editor.chain().focus().setColor('#B81616').run();
-    setIsFontColorOpen(false);
-  }, [editor]);
-  const toggleTextOrange = useCallback(() => {
-    editor.chain().focus().setColor('#DA5B24').run();
-    setIsFontColorOpen(false);
-  }, [editor]);
-  const toggleTextYellow = useCallback(() => {
-    editor.chain().focus().setColor('#C5B525').run();
-    setIsFontColorOpen(false);
-  }, [editor]);
-  const toggleTextGreen = useCallback(() => {
-    editor.chain().focus().setColor('#2F7417').run();
-    setIsFontColorOpen(false);
-  }, [editor]);
-  const toggleTextBlue = useCallback(() => {
-    editor.chain().focus().setColor('#172B74').run();
-    setIsFontColorOpen(false);
-  }, [editor]);
-  const toggleTextViolet = useCallback(() => {
-    editor.chain().focus().setColor('#6139D1').run();
-    setIsFontColorOpen(false);
-  }, [editor]);
-  const toggleTextPink = useCallback(() => {
-    editor.chain().focus().setColor('#951479').run();
-    setIsFontColorOpen(false);
-  }, [editor]);
+  const toggleTextColor = useCallback(
+    (color: string) => {
+      editor.chain().focus().setColor(color).run();
+      setIsFontColorOpen(false);
+    },
+    [editor],
+  );
 
   // 글자 배경색 함수
   const toggleHighLightWhite = useCallback(() => {
@@ -339,7 +310,7 @@ const TipTap = (props: EditorPropTypes) => {
             {isFontColorOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
           </TextColorToggle>
           <TextColorList $isFontColorOpen={isFontColorOpen}>
-            <TextColorOptionWrapper onClick={toggleTextBlack}>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#010101')}>
               <EditorTextColorBlackIcn
                 className={editor.isActive('textStyle', { color: '#010101' }) ? 'is-active' : ''}
               />
@@ -349,7 +320,7 @@ const TipTap = (props: EditorPropTypes) => {
                 black
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleTextGray}>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#505050')}>
               <EditorTextColorGrayIcn
                 className={editor.isActive('textStyle', { color: '#505050' }) ? 'is-active' : ''}
               />
@@ -359,7 +330,7 @@ const TipTap = (props: EditorPropTypes) => {
                 gray
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleTextRed}>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#B81616')}>
               <EditorTextColorRedIcn
                 className={editor.isActive('textStyle', { color: '#B81616' }) ? 'is-active' : ''}
               />
@@ -369,7 +340,7 @@ const TipTap = (props: EditorPropTypes) => {
                 red
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleTextOrange}>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#DA5B24')}>
               <EditorTextColorOrangeIcn
                 className={editor.isActive('textStyle', { color: '#DA5B24' }) ? 'is-active' : ''}
               />
@@ -379,7 +350,7 @@ const TipTap = (props: EditorPropTypes) => {
                 orange
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleTextYellow}>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#C5B525')}>
               <EditorTextColorYellowIcn
                 className={editor.isActive('textStyle', { color: '#C5B525' }) ? 'is-active' : ''}
               />
@@ -389,7 +360,7 @@ const TipTap = (props: EditorPropTypes) => {
                 yellow
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleTextGreen}>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#2F7417')}>
               <EditorTextColorGreenIcn
                 className={editor.isActive('textStyle', { color: '#2F7417' }) ? 'is-active' : ''}
               />
@@ -399,7 +370,7 @@ const TipTap = (props: EditorPropTypes) => {
                 green
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleTextBlue}>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#172B74')}>
               <EditorTextColorBlueIcn
                 className={editor.isActive('textStyle', { color: '#172B74' }) ? 'is-active' : ''}
               />
@@ -409,7 +380,7 @@ const TipTap = (props: EditorPropTypes) => {
                 blue
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleTextViolet}>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#6139D1')}>
               <EditorTextColorVioletIcn
                 className={editor.isActive('textStyle', { color: '#6139D1' }) ? 'is-active' : ''}
               />
@@ -419,7 +390,7 @@ const TipTap = (props: EditorPropTypes) => {
                 violet
               </TextColorText>
             </TextColorOptionWrapper>
-            <TextColorOptionWrapper onClick={toggleTextPink}>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#951479')}>
               <EditorTextColorPinkIcn
                 className={editor.isActive('textStyle', { color: '#951479' }) ? 'is-active' : ''}
               />
