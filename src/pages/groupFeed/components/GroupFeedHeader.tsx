@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import MakeGroupBtn from './MakeGroupBtn';
 import MyGroupBtn from './MyGroupBtn';
@@ -52,6 +52,8 @@ export const GroupFeedHeader = () => {
 //아직 로그인을 하지 않았을 때 헤더
 export const LogOutHeader = ({ onClick }: OnClickProps) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  localStorage.setItem('history', pathname);
   const handleMainRouting = () => {
     navigate('/');
   };

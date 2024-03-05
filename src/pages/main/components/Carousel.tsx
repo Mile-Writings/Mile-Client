@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 
 import '../styles/slick-theme.css';
@@ -14,7 +14,6 @@ import { groupPropTypes } from '../types/groupContent';
 import Spacing from './../../../components/commons/Spacing';
 import getGroupContentApi from './../../../utils/apis/getGroupContentApi';
 
-
 const Carousel = () => {
   const [groupData, setGroupData] = useState<groupPropTypes[]>();
   const settings = {
@@ -25,17 +24,19 @@ const Carousel = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await getGroupContentApi();
+        setGroupData(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getData();
+  }, []);
 
-  const getData = async () => {
-    try {
-      const data = await getGroupContentApi();
-      setGroupData(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  getData();
-
+  console.log('first');
   return (
     <>
       {groupData ? (
