@@ -21,24 +21,34 @@ const Main = () => {
   const LazyCarousel = lazy(() => lazyCarousel);
   const { content, moimId } = useParams();
   const topic = useGetRecommendTopic(content || '');
-  const { data, groupLength, isLoading } = useGetGroupContent(moimId || '');
-
+  const { data, groupLength, isFetching, isLoading } = useGetGroupContent(moimId || '');
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <OnBoarding />
-      <CarouselComponentWrapper>
-        <TitleLayout>마일과 함께하고 있는 글 모임이에요</TitleLayout>
-        {isLoading && groupLength ? (
-          <SkeletonComponent groupLength={groupLength} />
+      <GroupCarouselLayout>
+        {isLoading || isFetching ? (
+          <CarouselComponentBox>
+            {groupLength && (
+              <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
+                <LazyCarousel data={data} groupLength={groupLength} />
+              </Suspense>
+            )}
+          </CarouselComponentBox>
         ) : (
-          groupLength && (
-            <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
-              <LazyCarousel data={data} groupLength={groupLength} />
-            </Suspense>
-          )
+          <CarouselWithTitleContainer>
+            <CarouselTitle>마일과 함께하고 있는 글 모임이에요</CarouselTitle>
+            <CarouselComponentBox>
+              {groupLength && (
+                <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
+                  <LazyCarousel data={data} groupLength={groupLength} />
+                </Suspense>
+              )}
+            </CarouselComponentBox>
+          </CarouselWithTitleContainer>
         )}
-      </CarouselComponentWrapper>
+      </GroupCarouselLayout>
+
       <Ruler data={topic?.data} />
       <Introduction />
       <Manual />
@@ -61,25 +71,37 @@ export default Main;
 const MainPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 100%;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
 
-const CarouselComponentWrapper = styled.section`
+const GroupCarouselLayout = styled.section`
   display: flex;
   flex-direction: column;
-  width: fit-content;
-  padding-bottom: 10rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `;
 
-const TitleLayout = styled.div`
+const CarouselWithTitleContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+`;
+
+const CarouselTitle = styled.p`
+  justify-content: flex-start;
+  width: fit-content;
   padding-top: 7.2rem;
 
   ${({ theme }) => theme.fonts.title3};
+`;
+
+const CarouselComponentBox = styled.section`
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10rem;
 `;
 
 const FaqLayout = styled.section`
