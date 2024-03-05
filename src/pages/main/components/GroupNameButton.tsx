@@ -5,7 +5,7 @@ import { MainIcnArrowPurple as MainIcnArrowPurpleIcon } from '../../../assets/sv
 
 interface ButtonPropTypes {
   groupName: string;
-  groupId: string;
+  groupId: string | undefined;
 }
 const GroupNameButton = ({ groupId, groupName }: ButtonPropTypes) => {
   const navigate = useNavigate();

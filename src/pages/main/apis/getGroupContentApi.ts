@@ -1,6 +1,6 @@
-import { client } from './axios';
+import { groupPropTypes } from '../types/groupContent';
 
-import { groupPropTypes } from '../../pages/main/types/groupContent';
+import { client } from '../../../utils/apis/axios';
 
 interface getGroupContentResponseTypes {
   status: number;

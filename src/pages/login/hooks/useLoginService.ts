@@ -23,7 +23,11 @@ export const useLoginService = ({ code, socialType }: LoginProps) => {
     },
     onError: (err) => {
       if (isAxiosError(err) && err.response?.status) {
-        err.response.status === 400 ? navigate('/login') : console.error();
+        if (err.response.status === 400) {
+          navigate('/login');
+        } else {
+          console.error();
+        }
       }
     },
   });
