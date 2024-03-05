@@ -19,8 +19,7 @@ import Spacing from './../../components/commons/Spacing';
 const Main = () => {
   const lazyCarousel = import('./components/GroupCarousel');
   const LazyCarousel = lazy(() => lazyCarousel);
-  const { content } = useParams();
-  const { moimId } = useParams();
+  const { content, moimId } = useParams();
   const topic = useGetRecommendTopic(content || '');
   const { data, groupLength, isLoading } = useGetGroupContent(moimId || '');
 
