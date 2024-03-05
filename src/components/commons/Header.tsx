@@ -110,7 +110,8 @@ export const EditorTempExistHeader = ({ onClickSubmit }: OnClickTempExistProps) 
 
 const HeaderWrapper = styled.div`
   position: fixed;
-  z-index: 1;
+  top: 0%;
+  z-index: 4;
   display: flex;
   align-items: center;
   justify-content: space-between;
