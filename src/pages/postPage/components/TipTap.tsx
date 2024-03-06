@@ -447,7 +447,7 @@ const TipTap = (props: EditorPropTypes) => {
           </TextColorToggle>
           <TextColorBgList $isFontBgColorOpen={isFontBgColorOpen}>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#FFFFFF')}>
-              <EditorTextBgColorWhiteIcn
+              <ToolbarIcon.EditorTextBgColorWhiteIcn
                 className={editor.isActive('highlight', { color: '#FFFFFF' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -457,7 +457,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#EAEAEA')}>
-              <EditorTextBgColorGrayIcn
+              <ToolbarIcon.EditorTextBgColorGrayIcn
                 className={editor.isActive('highlight', { color: '#EAEAEA' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -467,7 +467,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6E2E2')}>
-              <EditorTextBgColorRedIcn
+              <ToolbarIcon.EditorTextBgColorRedIcn
                 className={editor.isActive('highlight', { color: '#F6E2E2' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -477,7 +477,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6E7E2')}>
-              <EditorTextBgColorOrangeIcn
+              <ToolbarIcon.EditorTextBgColorOrangeIcn
                 className={editor.isActive('highlight', { color: '#F6E7E2' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -487,7 +487,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6F4E2')}>
-              <EditorTextBgColorYellowIcn
+              <ToolbarIcon.EditorTextBgColorYellowIcn
                 className={editor.isActive('highlight', { color: '#F6F4E2' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -497,7 +497,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F1F6E2')}>
-              <EditorTextBgColorGreenIcn
+              <ToolbarIcon.EditorTextBgColorGreenIcn
                 className={editor.isActive('highlight', { color: '#F1F6E2' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -507,7 +507,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#E2EAF6')}>
-              <EditorTextBgColorBlueIcn
+              <ToolbarIcon.EditorTextBgColorBlueIcn
                 className={editor.isActive('highlight', { color: '#E2EAF6' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -517,7 +517,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#E9E3F8')}>
-              <EditorTextBgColorVioletIcn
+              <ToolbarIcon.EditorTextBgColorVioletIcn
                 className={editor.isActive('highlight', { color: '#E9E3F8' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -527,7 +527,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6E2F3')}>
-              <EditorTextBgColorPinkIcn
+              <ToolbarIcon.EditorTextBgColorPinkIcn
                 className={editor.isActive('highlight', { color: '#F6E2F3' }) ? 'is-active' : ''}
               />
               <TextColorText
