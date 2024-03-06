@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import { Suspense, lazy } from 'react';
 import { useParams } from 'react-router-dom';
 
+import DailyKeyword from './components/DailyKeyword';
 import FaqDropdown from './components/FaqDropdown';
 import Introduction from './components/Introduction';
 import Manual from './components/Manual';
 import OnBoarding from './components/OnBoarding';
-import Ruler from './components/Ruler';
 import { SkeletonComponent } from './components/skeletons/SkeletonComponent';
 import { FAQ_DATA } from './constants/faqData';
 import { useGetGroupContent, useGetRecommendTopic } from './hooks/queries';
@@ -48,8 +48,7 @@ const Main = () => {
           </CarouselWithTitleContainer>
         )}
       </GroupCarouselLayout>
-
-      <Ruler data={topic?.data} />
+      <DailyKeyword data={topic?.data} />
       <Introduction />
       <Manual />
       <FaqLayout>
