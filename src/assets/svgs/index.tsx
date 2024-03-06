@@ -70,14 +70,3 @@ export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?reac
 
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
 export { default as faviconMileIc } from './faviconMile.svg?react';
-
-// 에디터 툴바 아이콘
-export { default as EditorTextColorBlackIcn } from './editorTextcolorIcnBlack.svg?react';
-export { default as EditorTextColorBlueIcn } from './editorTextcolorIcnBlue.svg?react';
-export { default as EditorTextColorGrayIcn } from './editorTextcolorIcnGray.svg?react';
-export { default as EditorTextColorGreenIcn } from './editorTextcolorIcnGreen.svg?react';
-export { default as EditorTextColorOrangeIcn } from './editorTextcolorIcnOrange.svg?react';
-export { default as EditorTextColorPinkIcn } from './editorTextcolorIcnPink.svg?react';
-export { default as EditorTextColorRedIcn } from './editorTextcolorIcnRed.svg?react';
-export { default as EditorTextColorVioletIcn } from './editorTextcolorIcnViolet.svg?react';
-export { default as EditorTextColorYellowIcn } from './editorTextcolorIcnYellow.svg?react';
