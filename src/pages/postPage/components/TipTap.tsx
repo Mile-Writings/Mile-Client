@@ -109,30 +109,15 @@ const TipTap = (props: EditorPropTypes) => {
   }, [editor, tempContent, editContent]);
 
   // 글자 크기 함수
-  const toggleFontSizeContent2 = useCallback(() => {
-    editor.chain().focus().setFontSize('1.2rem').run();
-    editor.chain().focus().setFontWeight('400').run();
-    editor.chain().focus().setLineHeight('200%').run();
-    setIsFontSizeOpen(false);
-  }, [editor]);
-  const toggleFontSizeContent1 = useCallback(() => {
-    editor.chain().focus().setFontSize('1.6rem').run();
-    editor.chain().focus().setFontWeight('400').run();
-    editor.chain().focus().setLineHeight('160%').run();
-    setIsFontSizeOpen(false);
-  }, [editor]);
-  const toggleFontSizeTitle2 = useCallback(() => {
-    editor.chain().focus().setFontSize('1.8rem').run();
-    editor.chain().focus().setFontWeight('700').run();
-    editor.chain().focus().setLineHeight('200%').run();
-    setIsFontSizeOpen(false);
-  }, [editor]);
-  const toggleFontSizeTitle1 = useCallback(() => {
-    editor.chain().focus().setFontSize('2.6rem').run();
-    editor.chain().focus().setFontWeight('700').run();
-    editor.chain().focus().setLineHeight('200%').run();
-    setIsFontSizeOpen(false);
-  }, [editor]);
+  const toggleFontSize = useCallback(
+    (fontSize: string, fontWeight: string, lineHeight: string) => {
+      editor.chain().focus().setFontSize(fontSize).run();
+      editor.chain().focus().setFontWeight(fontWeight).run();
+      editor.chain().focus().setLineHeight(lineHeight).run();
+      setIsFontSizeOpen(false);
+    },
+    [editor],
+  );
 
   // 글자 색상 함수
   const toggleTextColor = useCallback(
@@ -231,28 +216,28 @@ const TipTap = (props: EditorPropTypes) => {
             )}
           </FontSizeToggle>
           <FontSizeOptionList $isFontSizeOpen={isFontSizeOpen}>
-            <FontSizeOption onClick={toggleFontSizeContent2}>
+            <FontSizeOption onClick={() => toggleFontSize('1.2rem', '400', '200%')}>
               <FontSizeText
                 className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
               >
                 본문 2
               </FontSizeText>
             </FontSizeOption>
-            <FontSizeOption onClick={toggleFontSizeContent1}>
+            <FontSizeOption onClick={() => toggleFontSize('1.6rem', '400', '160%')}>
               <FontSizeText
                 className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
               >
                 본문 1
               </FontSizeText>
             </FontSizeOption>
-            <FontSizeOption onClick={toggleFontSizeTitle2}>
+            <FontSizeOption onClick={() => toggleFontSize('1.8rem', '700', '200%')}>
               <FontSizeText
                 className={editor.isActive('textStyle', { fontSize: '1.8rem' }) ? 'is-active' : ''}
               >
                 제목 2
               </FontSizeText>
             </FontSizeOption>
-            <FontSizeOption onClick={toggleFontSizeTitle1}>
+            <FontSizeOption onClick={() => toggleFontSize('2.6rem', '700', '200%')}>
               <FontSizeText
                 className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
               >
