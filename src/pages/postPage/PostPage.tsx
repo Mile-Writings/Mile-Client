@@ -4,8 +4,8 @@ import React, { useEffect, useState, useReducer } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
-import Editor from './components/Editor';
 import ImageUpload from './components/ImageUpload';
+import TipTap from './components/TipTap';
 import { EDITOR_DEFAULT_IMG } from './constants/editorDefaultImg';
 import {
   useGetTempSaveContent,
@@ -215,7 +215,7 @@ const PostPage = () => {
         writer: tempAnonymous ? '작자미상' : '필명',
       });
     }
-  }, [type, continueTempPost, tempTitle]);
+  }, [type, continueTempPost, tempTitle, tempContent]);
 
   // 수정하기 제출하기
   const { mutate: putEditContent } = usePutEditContent({
@@ -294,11 +294,12 @@ const PostPage = () => {
           />
         )}
         <Spacing marginBottom="2.4" />
-        <Editor
+        <TipTap
           title={editorVal.title}
           setTitle={setTitle}
-          content={editorVal.content}
-          setContent={setContent}
+          tempContent={tempContent}
+          editContent={type === 'edit' ? location.state.content : ''}
+          setEditorContent={setContent}
         />
       </DropDownEditorWrapper>
       <Spacing marginBottom="8" />

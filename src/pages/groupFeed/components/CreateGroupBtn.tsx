@@ -3,22 +3,22 @@ import { useState } from 'react';
 
 import { MakeGroupPlusBtn, MakeGroupPlusHoverBtn } from '../../../assets/svgs';
 
-const MakeGroupBtn = () => {
+const CreateGroupBtn = () => {
   const [showHoverIcon, setShowHoverIcon] = useState(false);
   return (
-    <MakeGroupBtnWrapper
+    <CreateGroupBtnWrapper
       onMouseOver={() => setShowHoverIcon(true)}
       onMouseLeave={() => setShowHoverIcon(false)}
       onClick={() => alert('아직 준비중인 기능이에요')}
     >
       {showHoverIcon ? <MakeGroupPlusHoverBtn /> : <MakeGroupPlusBtn />} 글모임 만들기
-    </MakeGroupBtnWrapper>
+    </CreateGroupBtnWrapper>
   );
 };
 
-export default MakeGroupBtn;
+export default CreateGroupBtn;
 
-const MakeGroupBtnWrapper = styled.button`
+const CreateGroupBtnWrapper = styled.button`
   display: flex;
   gap: 0.6rem;
   align-items: center;

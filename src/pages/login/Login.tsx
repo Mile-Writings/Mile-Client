@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import { HeaderLogoIc, KakaoLoginBtnIc as KakaoLoginBtnIcon, LoginIc } from '../../assets/svgs';
+import Spacing from '../../components/commons/Spacing';
 
 const Login = () => {
   //const REDIRECT_URL = 'https://www.milewriting.com/redirect-kakao';
@@ -25,6 +26,7 @@ const Login = () => {
         <HeaderLogoIcon onClick={handleNavigateMain} />
         <HeaderBtnLayout />
       </HeaderWrapper>
+      <Spacing marginBottom="6.4" />
       <LoginLayout>
         <LoginContainer>
           <LoginTextBox>
