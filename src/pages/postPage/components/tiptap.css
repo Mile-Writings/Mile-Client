@@ -1,0 +1,91 @@
+/* 브라우저 텍스트 드래그 했을 때 색상 변경 */
+*::selection {
+  background-color: #d9cef6;
+}
+
+.text-editor {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 82.6rem;
+}
+
+/* 에디터 content 영역 전체 css */
+.tiptap {
+  padding: 2.8rem;
+  border-radius: 0.8rem;
+  width: 82.6rem;
+  min-height: 64.5rem;
+  background-color: white;
+
+  font-family: 'Pretendard Variable';
+  font-size: 1.6rem;
+  line-height: 160%;
+  font-weight: 400;
+}
+.tiptap:focus-visible {
+  outline: none;
+}
+
+.tiptap > * + * {
+  font-family: 'Pretendard Variable';
+  font-size: 1.6rem;
+  line-height: 160%;
+  font-weight: 400;
+}
+
+/* bold 커스텀 */
+.tiptap strong {
+  font-weight: bold;
+}
+/* 기울기 커스텀 */
+.tiptap em {
+  font-style: italic;
+}
+/* list 커스텀 */
+.tiptap ul,
+.tiptap ol {
+  padding: 0 1rem;
+}
+/* bullet list 커스텀 */
+.tiptap ul {
+  list-style-type: disc;
+}
+/* ordered list 커스텀 */
+.tiptap ol {
+  list-style: decimal;
+}
+
+/* 색상 입히고 bold 해도 적용 되도록 */
+.tiptap span[style*='color'] strong {
+  font-weight: bold !important;
+}
+/* 색상 입히고 italic 해도 적용 되도록 */
+.tiptap span[style*='color'] em {
+  font-style: italic !important;
+}
+/* 인용구 커스텀 */
+.tiptap blockquote {
+  border-left: 4px solid #6139d1;
+  padding-left: 1.8rem;
+}
+/* 줄바꿈 커스텀 */
+.tiptap hr {
+  border-top: 2px solid rgba(#0d0d0d, 0.1);
+  margin: 2rem 0;
+}
+
+/* placeholder 커스텀 */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+/* 리스트 앞에 글머리 커스텀 */
+li::marker {
+  font-size: inherit;
+}
