@@ -20,13 +20,16 @@ import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import { useEditor, EditorContent, Editor } from '@tiptap/react';
 import classNames from 'classnames';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 // custom
 import { FontSize } from '../utils/fontSize';
 import { FontWeight } from '../utils/fontWeight';
 import { LineHeight } from '../utils/lineHeight';
+
 import './tiptap.css';
+// editor svg
+import * as ToolbarIcon from '../../../assets/svgs/editorSVG';
 
 interface EditorPropTypes {
   title: string | undefined;
@@ -38,6 +41,30 @@ interface EditorPropTypes {
 
 const TipTap = (props: EditorPropTypes) => {
   const { title, setTitle, tempContent, editContent, setEditorContent } = props;
+  // toolbar 드롭다운 전체 핸들
+  const [isToggleOpen, setIsToggleOpen] = useState(false);
+  // font size drop down
+  const [isFontSizeOpen, setIsFontSizeOpen] = useState(false);
+  // font color drop down
+  const [isFontColorOpen, setIsFontColorOpen] = useState(false);
+  // font background color drop down
+  const [isFontBgColorOpen, setIsFontBgColorOpen] = useState(false);
+
+  const onClickFontSizeToggle = () => {
+    setIsFontSizeOpen(!isFontSizeOpen);
+    setIsToggleOpen(!isToggleOpen);
+  };
+
+  const onClickFontColorToggle = () => {
+    setIsFontColorOpen(!isFontColorOpen);
+    setIsToggleOpen(!isToggleOpen);
+  };
+
+  const onClickFontBgColorToggle = () => {
+    setIsFontBgColorOpen(!isFontBgColorOpen);
+    setIsToggleOpen(!isToggleOpen);
+  };
+
   const editor = useEditor({
     extensions: [
       Document,
@@ -73,7 +100,7 @@ const TipTap = (props: EditorPropTypes) => {
 
   // 에디터 content 업데이트
   useEffect(() => {
-    if (tempContent) {
+    if (editor && tempContent) {
       editor.commands.setContent(tempContent);
     }
     if (editor && editContent) {
@@ -86,80 +113,44 @@ const TipTap = (props: EditorPropTypes) => {
     editor.chain().focus().setFontSize('1.2rem').run();
     editor.chain().focus().setFontWeight('400').run();
     editor.chain().focus().setLineHeight('200%').run();
+    setIsFontSizeOpen(false);
   }, [editor]);
   const toggleFontSizeContent1 = useCallback(() => {
     editor.chain().focus().setFontSize('1.6rem').run();
     editor.chain().focus().setFontWeight('400').run();
     editor.chain().focus().setLineHeight('160%').run();
+    setIsFontSizeOpen(false);
   }, [editor]);
   const toggleFontSizeTitle2 = useCallback(() => {
     editor.chain().focus().setFontSize('1.8rem').run();
     editor.chain().focus().setFontWeight('700').run();
     editor.chain().focus().setLineHeight('200%').run();
+    setIsFontSizeOpen(false);
   }, [editor]);
   const toggleFontSizeTitle1 = useCallback(() => {
     editor.chain().focus().setFontSize('2.6rem').run();
     editor.chain().focus().setFontWeight('700').run();
     editor.chain().focus().setLineHeight('200%').run();
+    setIsFontSizeOpen(false);
   }, [editor]);
 
   // 글자 색상 함수
-  const toggleTextBlack = useCallback(() => {
-    editor.chain().focus().setColor('#010101').run();
-  }, [editor]);
-  const toggleTextGray = useCallback(() => {
-    editor.chain().focus().setColor('#505050').run();
-  }, [editor]);
-  const toggleTextRed = useCallback(() => {
-    editor.chain().focus().setColor('#B81616').run();
-  }, [editor]);
-  const toggleTextOrange = useCallback(() => {
-    editor.chain().focus().setColor('#DA5B24').run();
-  }, [editor]);
-  const toggleTextYellow = useCallback(() => {
-    editor.chain().focus().setColor('#C5B525').run();
-  }, [editor]);
-  const toggleTextGreen = useCallback(() => {
-    editor.chain().focus().setColor('#2F7417').run();
-  }, [editor]);
-  const toggleTextBlue = useCallback(() => {
-    editor.chain().focus().setColor('#172B74').run();
-  }, [editor]);
-  const toggleTextViolet = useCallback(() => {
-    editor.chain().focus().setColor('#6139D1').run();
-  }, [editor]);
-  const toggleTextPink = useCallback(() => {
-    editor.chain().focus().setColor('#951479').run();
-  }, [editor]);
+  const toggleTextColor = useCallback(
+    (color: string) => {
+      editor.chain().focus().setColor(color).run();
+      setIsFontColorOpen(false);
+    },
+    [editor],
+  );
 
   // 글자 배경색 함수
-  const toggleHighLightWhite = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#FFFFFF' }).run();
-  }, [editor]);
-  const toggleHighLightGray = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#EAEAEA' }).run();
-  }, [editor]);
-  const toggleHighLightRed = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#F6E2E2' }).run();
-  }, [editor]);
-  const toggleHighLightOrange = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#F6E7E2' }).run();
-  }, [editor]);
-  const toggleHighLightYellow = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#F6F4E2' }).run();
-  }, [editor]);
-  const toggleHighLightGreen = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#F1F6E2' }).run();
-  }, [editor]);
-  const toggleHighLightBlue = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#E2EAF6' }).run();
-  }, [editor]);
-  const toggleHighLightViolet = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#E9E3F8' }).run();
-  }, [editor]);
-  const toggleHighLightPink = useCallback(() => {
-    editor.chain().focus().toggleHighlight({ color: '#F6E2F3' }).run();
-  }, [editor]);
+  const toggleTextBgColor = useCallback(
+    (color: string) => {
+      editor.chain().focus().toggleHighlight({ color: color }).run();
+      setIsFontBgColorOpen(false);
+    },
+    [editor],
+  );
 
   // bold 함수
   const toggleBold = useCallback(() => {
@@ -220,222 +211,435 @@ const TipTap = (props: EditorPropTypes) => {
       <Title type="text" placeholder="제목을 적어주세요" onChange={setTitle} value={title} />
       <ToolbarWrapper className="menu">
         {/* 글자 크기 */}
-        <button
-          className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
-          onClick={toggleFontSizeContent2}
-        >
-          본문2
-        </button>
-        <button
-          className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
-          onClick={toggleFontSizeContent1}
-        >
-          본문1
-        </button>
-        <button
-          className={editor.isActive('textStyle', { fontSize: '1.8rem' }) ? 'is-active' : ''}
-          onClick={toggleFontSizeTitle2}
-        >
-          제목2
-        </button>
-        <button
-          className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
-          onClick={toggleFontSizeTitle1}
-        >
-          제목1
-        </button>
+        <ToolbarDropDownWrapper>
+          <FontSizeToggle onClick={onClickFontSizeToggle}>
+            <FontSizeLabel>
+              {editor.isActive('textStyle', { fontSize: '1.2rem' })
+                ? '본문 2'
+                : editor.isActive('textStyle', { fontSize: '1.6rem' })
+                  ? '본문 1'
+                  : editor.isActive('textStyle', { fontSize: '1.8rem' })
+                    ? '제목 2'
+                    : editor.isActive('textStyle', { fontSize: '2.6rem' })
+                      ? '제목 1'
+                      : '본문 1'}
+            </FontSizeLabel>
+            {isFontSizeOpen ? (
+              <ToolbarIcon.EditorDropIcnOpen />
+            ) : (
+              <ToolbarIcon.EditorDropIcnClose />
+            )}
+          </FontSizeToggle>
+          <FontSizeOptionList $isFontSizeOpen={isFontSizeOpen}>
+            <FontSizeOption onClick={toggleFontSizeContent2}>
+              <FontSizeText
+                className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
+              >
+                본문 2
+              </FontSizeText>
+            </FontSizeOption>
+            <FontSizeOption onClick={toggleFontSizeContent1}>
+              <FontSizeText
+                className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
+              >
+                본문 1
+              </FontSizeText>
+            </FontSizeOption>
+            <FontSizeOption onClick={toggleFontSizeTitle2}>
+              <FontSizeText
+                className={editor.isActive('textStyle', { fontSize: '1.8rem' }) ? 'is-active' : ''}
+              >
+                제목 2
+              </FontSizeText>
+            </FontSizeOption>
+            <FontSizeOption onClick={toggleFontSizeTitle1}>
+              <FontSizeText
+                className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
+              >
+                제목 1
+              </FontSizeText>
+            </FontSizeOption>
+          </FontSizeOptionList>
+        </ToolbarDropDownWrapper>
+
         {/* 글자색 */}
-        <button
-          className={editor.isActive('textStyle', { color: '#010101' }) ? 'is-active' : ''}
-          onClick={toggleTextBlack}
-          data-testid="setBlack"
-        >
-          black
-        </button>
-        <button
-          className={editor.isActive('textStyle', { color: '#505050' }) ? 'is-active' : ''}
-          onClick={toggleTextGray}
-          data-testid="setGray"
-        >
-          gray
-        </button>
-        <button
-          className={editor.isActive('textStyle', { color: '#B81616' }) ? 'is-active' : ''}
-          onClick={toggleTextRed}
-          data-testid="setRed"
-        >
-          red
-        </button>
-        <button
-          className={editor.isActive('textStyle', { color: '#DA5B24' }) ? 'is-active' : ''}
-          onClick={toggleTextOrange}
-          data-testid="setOrange"
-        >
-          orange
-        </button>
-        <button
-          className={editor.isActive('textStyle', { color: '#C5B525' }) ? 'is-active' : ''}
-          onClick={toggleTextYellow}
-          data-testid="setYellow"
-        >
-          yellow
-        </button>
-        <button
-          className={editor.isActive('textStyle', { color: '#2F7417' }) ? 'is-active' : ''}
-          onClick={toggleTextGreen}
-          data-testid="setGreen"
-        >
-          green
-        </button>
-        <button
-          className={editor.isActive('textStyle', { color: '#172B74' }) ? 'is-active' : ''}
-          onClick={toggleTextBlue}
-          data-testid="setBlue"
-        >
-          blue
-        </button>
-        <button
-          className={editor.isActive('textStyle', { color: '#6139D1' }) ? 'is-active' : ''}
-          onClick={toggleTextViolet}
-          data-testid="setViolet"
-        >
-          violet
-        </button>
-        <button
-          className={editor.isActive('textStyle', { color: '#951479' }) ? 'is-active' : ''}
-          onClick={toggleTextPink}
-          data-testid="setPink"
-        >
-          pink
-        </button>
+        <ToolbarDropDownWrapper>
+          <TextColorToggle onClick={onClickFontColorToggle}>
+            {editor.isActive('textStyle', { color: '#010101' }) ? (
+              <ToolbarIcon.EditorTextColorBlackIcn />
+            ) : editor.isActive('textStyle', { color: '#505050' }) ? (
+              <ToolbarIcon.EditorTextColorGrayIcn />
+            ) : editor.isActive('textStyle', { color: '#B81616' }) ? (
+              <ToolbarIcon.EditorTextColorRedIcn />
+            ) : editor.isActive('textStyle', { color: '#DA5B24' }) ? (
+              <ToolbarIcon.EditorTextColorOrangeIcn />
+            ) : editor.isActive('textStyle', { color: '#C5B525' }) ? (
+              <ToolbarIcon.EditorTextColorYellowIcn />
+            ) : editor.isActive('textStyle', { color: '#2F7417' }) ? (
+              <ToolbarIcon.EditorTextColorGreenIcn />
+            ) : editor.isActive('textStyle', { color: '#172B74' }) ? (
+              <ToolbarIcon.EditorTextColorBlueIcn />
+            ) : editor.isActive('textStyle', { color: '#6139D1' }) ? (
+              <ToolbarIcon.EditorTextColorVioletIcn />
+            ) : editor.isActive('textStyle', { color: '#951479' }) ? (
+              <ToolbarIcon.EditorTextColorPinkIcn />
+            ) : (
+              <ToolbarIcon.EditorTextColorBlackIcn />
+            )}
+            {isFontColorOpen ? (
+              <ToolbarIcon.EditorDropIcnOpen />
+            ) : (
+              <ToolbarIcon.EditorDropIcnClose />
+            )}
+          </TextColorToggle>
+          <TextColorList $isFontColorOpen={isFontColorOpen}>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#010101')}>
+              <ToolbarIcon.EditorTextColorBlackIcn
+                className={editor.isActive('textStyle', { color: '#010101' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#010101' }) ? 'is-active' : ''}
+              >
+                black
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#505050')}>
+              <ToolbarIcon.EditorTextColorGrayIcn
+                className={editor.isActive('textStyle', { color: '#505050' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#505050' }) ? 'is-active' : ''}
+              >
+                gray
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#B81616')}>
+              <ToolbarIcon.EditorTextColorRedIcn
+                className={editor.isActive('textStyle', { color: '#B81616' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#B81616' }) ? 'is-active' : ''}
+              >
+                red
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#DA5B24')}>
+              <ToolbarIcon.EditorTextColorOrangeIcn
+                className={editor.isActive('textStyle', { color: '#DA5B24' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#DA5B24' }) ? 'is-active' : ''}
+              >
+                orange
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#C5B525')}>
+              <ToolbarIcon.EditorTextColorYellowIcn
+                className={editor.isActive('textStyle', { color: '#C5B525' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#C5B525' }) ? 'is-active' : ''}
+              >
+                yellow
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#2F7417')}>
+              <ToolbarIcon.EditorTextColorGreenIcn
+                className={editor.isActive('textStyle', { color: '#2F7417' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#2F7417' }) ? 'is-active' : ''}
+              >
+                green
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#172B74')}>
+              <ToolbarIcon.EditorTextColorBlueIcn
+                className={editor.isActive('textStyle', { color: '#172B74' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#172B74' }) ? 'is-active' : ''}
+              >
+                blue
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#6139D1')}>
+              <ToolbarIcon.EditorTextColorVioletIcn
+                className={editor.isActive('textStyle', { color: '#6139D1' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#6139D1' }) ? 'is-active' : ''}
+              >
+                violet
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextColor('#951479')}>
+              <ToolbarIcon.EditorTextColorPinkIcn
+                className={editor.isActive('textStyle', { color: '#951479' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('textStyle', { color: '#951479' }) ? 'is-active' : ''}
+              >
+                pink
+              </TextColorText>
+            </TextColorOptionWrapper>
+          </TextColorList>
+        </ToolbarDropDownWrapper>
 
         {/* 글자 배경색 */}
-        <button
-          className={editor.isActive('highlight', { color: '#FFFFFF' }) ? 'is-active' : ''}
-          onClick={toggleHighLightWhite}
-        >
-          white
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#EAEAEA' }) ? 'is-active' : ''}
-          onClick={toggleHighLightGray}
-        >
-          gray
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#F6E2E2' }) ? 'is-active' : ''}
-          onClick={toggleHighLightRed}
-        >
-          red
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#F6E7E2' }) ? 'is-active' : ''}
-          onClick={toggleHighLightOrange}
-        >
-          orange
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#F6F4E2' }) ? 'is-active' : ''}
-          onClick={toggleHighLightYellow}
-        >
-          yellow
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#F1F6E2' }) ? 'is-active' : ''}
-          onClick={toggleHighLightGreen}
-        >
-          green
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#E2EAF6' }) ? 'is-active' : ''}
-          onClick={toggleHighLightBlue}
-        >
-          blue
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#E9E3F8' }) ? 'is-active' : ''}
-          onClick={toggleHighLightViolet}
-        >
-          violet
-        </button>
-        <button
-          className={editor.isActive('highlight', { color: '#F6E2F3' }) ? 'is-active' : ''}
-          onClick={toggleHighLightPink}
-        >
-          pink
-        </button>
+        <ToolbarDropDownWrapper>
+          <TextColorToggle onClick={onClickFontBgColorToggle}>
+            {editor.isActive('highlight', { color: '#FFFFFF' }) ? (
+              <ToolbarIcon.EditorTextBgColorWhiteIcn />
+            ) : editor.isActive('highlight', { color: '#EAEAEA' }) ? (
+              <ToolbarIcon.EditorTextBgColorGrayIcn />
+            ) : editor.isActive('highlight', { color: '#F6E2E2' }) ? (
+              <ToolbarIcon.EditorTextBgColorRedIcn />
+            ) : editor.isActive('highlight', { color: '#F6E7E2' }) ? (
+              <ToolbarIcon.EditorTextBgColorOrangeIcn />
+            ) : editor.isActive('highlight', { color: '#F6F4E2' }) ? (
+              <ToolbarIcon.EditorTextBgColorYellowIcn />
+            ) : editor.isActive('highlight', { color: '#F1F6E2' }) ? (
+              <ToolbarIcon.EditorTextBgColorGreenIcn />
+            ) : editor.isActive('highlight', { color: '#E2EAF6' }) ? (
+              <ToolbarIcon.EditorTextBgColorBlueIcn />
+            ) : editor.isActive('highlight', { color: '#E9E3F8' }) ? (
+              <ToolbarIcon.EditorTextBgColorVioletIcn />
+            ) : editor.isActive('highlight', { color: '#F6E2F3' }) ? (
+              <ToolbarIcon.EditorTextBgColorPinkIcn />
+            ) : (
+              <ToolbarIcon.EditorTextBgColorWhiteIcn />
+            )}
+            {isFontBgColorOpen ? (
+              <ToolbarIcon.EditorDropIcnOpen />
+            ) : (
+              <ToolbarIcon.EditorDropIcnClose />
+            )}
+          </TextColorToggle>
+          <TextColorBgList $isFontBgColorOpen={isFontBgColorOpen}>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#FFFFFF')}>
+              <ToolbarIcon.EditorTextBgColorWhiteIcn
+                className={editor.isActive('highlight', { color: '#FFFFFF' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#FFFFFF' }) ? 'is-active' : ''}
+              >
+                white
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#EAEAEA')}>
+              <ToolbarIcon.EditorTextBgColorGrayIcn
+                className={editor.isActive('highlight', { color: '#EAEAEA' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#EAEAEA' }) ? 'is-active' : ''}
+              >
+                gray
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6E2E2')}>
+              <ToolbarIcon.EditorTextBgColorRedIcn
+                className={editor.isActive('highlight', { color: '#F6E2E2' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#F6E2E2' }) ? 'is-active' : ''}
+              >
+                red
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6E7E2')}>
+              <ToolbarIcon.EditorTextBgColorOrangeIcn
+                className={editor.isActive('highlight', { color: '#F6E7E2' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#F6E7E2' }) ? 'is-active' : ''}
+              >
+                orange
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6F4E2')}>
+              <ToolbarIcon.EditorTextBgColorYellowIcn
+                className={editor.isActive('highlight', { color: '#F6F4E2' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#F6F4E2' }) ? 'is-active' : ''}
+              >
+                yellow
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F1F6E2')}>
+              <ToolbarIcon.EditorTextBgColorGreenIcn
+                className={editor.isActive('highlight', { color: '#F1F6E2' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#F1F6E2' }) ? 'is-active' : ''}
+              >
+                green
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#E2EAF6')}>
+              <ToolbarIcon.EditorTextBgColorBlueIcn
+                className={editor.isActive('highlight', { color: '#E2EAF6' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#E2EAF6' }) ? 'is-active' : ''}
+              >
+                blue
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#E9E3F8')}>
+              <ToolbarIcon.EditorTextBgColorVioletIcn
+                className={editor.isActive('highlight', { color: '#E9E3F8' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#E9E3F8' }) ? 'is-active' : ''}
+              >
+                violet
+              </TextColorText>
+            </TextColorOptionWrapper>
+            <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6E2F3')}>
+              <ToolbarIcon.EditorTextBgColorPinkIcn
+                className={editor.isActive('highlight', { color: '#F6E2F3' }) ? 'is-active' : ''}
+              />
+              <TextColorText
+                className={editor.isActive('highlight', { color: '#F6E2F3' }) ? 'is-active' : ''}
+              >
+                pink
+              </TextColorText>
+            </TextColorOptionWrapper>
+          </TextColorBgList>
+        </ToolbarDropDownWrapper>
 
-        <button
+        {/* bold */}
+        <ToolbarSvgBtn
+          onClick={toggleBold}
           className={classNames('menu-button', {
             'is-active': editor.isActive('bold'),
           })}
-          onClick={toggleBold}
         >
-          bold
-        </button>
-        <button
+          <ToolbarSvg>
+            <ToolbarIcon.EditorBoldIcn
+              className={classNames('menu-button', {
+                'is-active': editor.isActive('bold'),
+              })}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
+
+        {/* underline */}
+        <ToolbarSvgBtn
+          onClick={toggleUnderline}
           className={classNames('menu-button', {
             'is-active': editor.isActive('underline'),
           })}
-          onClick={toggleUnderline}
         >
-          underline
-        </button>
-        <button
+          <ToolbarSvg>
+            <ToolbarIcon.EditorLineIcn
+              className={classNames('menu-button', {
+                'is-active': editor.isActive('underline'),
+              })}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
+
+        {/* strike */}
+        <ToolbarSvgBtn
+          onClick={toggleStrike}
           className={classNames('menu-button', {
             'is-active': editor.isActive('strike'),
           })}
-          onClick={toggleStrike}
         >
-          strike
-        </button>
-        <button
+          <ToolbarSvg>
+            <ToolbarIcon.EditorStrikeIcn
+              className={classNames('menu-button', {
+                'is-active': editor.isActive('strike'),
+              })}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
+
+        {/* Italic */}
+        <ToolbarSvgBtn
+          onClick={toggleItalic}
           className={classNames('menu-button', {
             'is-active': editor.isActive('italic'),
           })}
-          onClick={toggleItalic}
         >
-          italic
-        </button>
+          <ToolbarSvg>
+            <ToolbarIcon.EditorItalicIcn
+              className={classNames('menu-button', {
+                'is-active': editor.isActive('italic'),
+              })}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
 
-        {/* 정렬 */}
-        <button
-          className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}
+        {/* Left */}
+        <ToolbarSvgBtn
           onClick={toggleAlignLeft}
+          className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}
         >
-          left
-        </button>
-        <button
-          className={editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}
+          <ToolbarSvg>
+            <ToolbarIcon.EditorLeftIcn
+              className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
+
+        {/* Center */}
+        <ToolbarSvgBtn
           onClick={toggleAlignCenter}
+          className={editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}
         >
-          center
-        </button>
+          <ToolbarSvg>
+            <ToolbarIcon.EditorCenterIcn
+              className={editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
 
-        {/* 리스트 */}
-        <button
-          className={editor.isActive('bulletList') ? 'is-active' : ''}
+        {/* bullet List */}
+        <ToolbarSvgBtn
           onClick={toggleBulletList}
+          className={editor.isActive('bulletList') ? 'is-active' : ''}
         >
-          bulletList
-        </button>
-        <button
-          className={editor.isActive('orderedList') ? 'is-active' : ''}
+          <ToolbarSvg>
+            <ToolbarIcon.EditorBulletListIcn
+              className={editor.isActive('bulletList') ? 'is-active' : ''}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
+
+        {/* number List */}
+        <ToolbarSvgBtn
           onClick={toggleOrderedList}
+          className={editor.isActive('orderedList') ? 'is-active' : ''}
         >
-          orderedList
-        </button>
+          <ToolbarSvg>
+            <ToolbarIcon.EditorNumberListIcn
+              className={editor.isActive('orderedList') ? 'is-active' : ''}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
 
-        {/* 인용구 */}
-        <button
-          className={editor.isActive('blockquote') ? 'is-active' : ''}
+        {/* Quote */}
+        <ToolbarSvgBtn
           onClick={toggleBlockQuote}
+          className={editor.isActive('blockquote') ? 'is-active' : ''}
         >
-          blockquote
-        </button>
+          <ToolbarSvg>
+            <ToolbarIcon.EditorQuoteIcn
+              className={editor.isActive('blockquote') ? 'is-active' : ''}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
 
-        {/* 구분선 */}
-        <button onClick={toggleHorizontalRule}>구분선</button>
+        {/* Divider */}
+        <ToolbarSvgBtnLast onClick={toggleHorizontalRule}>
+          <ToolbarSvg>
+            <ToolbarIcon.EditorDividerIcn />
+          </ToolbarSvg>
+        </ToolbarSvgBtnLast>
       </ToolbarWrapper>
       <div className="editorWrapper">
         <EditorContent editor={editor} />
@@ -445,23 +649,6 @@ const TipTap = (props: EditorPropTypes) => {
 };
 
 export default TipTap;
-
-const ToolbarWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  width: 53.3rem;
-  height: 3.6rem;
-  margin: 0;
-  padding: 0;
-
-  background-color: white;
-  border: 1px solid #d3d3d3;
-  border-radius: 0.8rem;
-
-  .is-active {
-    color: pink;
-  }
-`;
 
 const Title = styled.input`
   width: 82.6rem;
@@ -477,5 +664,200 @@ const Title = styled.input`
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray40};
+  }
+`;
+
+// 툴바 전체 감싸기
+const ToolbarWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  height: 3.6rem;
+  margin: 0;
+  padding: 0;
+
+  background-color: white;
+  border: 1px solid #d3d3d3;
+  border-radius: 0.8rem;
+`;
+
+// 드롭다운 리스트
+const ToolbarDropDownWrapper = styled.div`
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  cursor: pointer;
+  border-right: 1px solid ${({ theme }) => theme.colors.gray30};
+`;
+
+// 글자 크기 드롭다운 리스트
+const FontSizeToggle = styled.div`
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  justify-content: space-between;
+  width: 10.1rem;
+  height: 3.4rem;
+  padding: 0 1.3rem;
+
+  background-color: white;
+  border-radius: 0.8rem;
+`;
+
+const FontSizeLabel = styled.p`
+  color: ${({ theme }) => theme.colors.gray90};
+  ${({ theme }) => theme.fonts.body7}
+`;
+
+const FontSizeOptionList = styled.div<{ $isFontSizeOpen: boolean }>`
+  position: absolute;
+  top: 3.5rem;
+  display: ${({ $isFontSizeOpen }) => ($isFontSizeOpen ? 'flex' : 'none')};
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: flex-start;
+  width: 8.8rem;
+  padding: 1rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.gray50};
+  border-radius: 10px;
+`;
+
+const FontSizeOption = styled.div`
+  width: 6.8rem;
+  padding: 0.6rem 1rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 6px;
+
+  :hover {
+    background-color: ${({ theme }) => theme.colors.gray20};
+  }
+
+  .is-active {
+    color: ${({ theme }) => theme.colors.mainViolet};
+  }
+`;
+
+const FontSizeText = styled.p`
+  ${({ theme }) => theme.fonts.body7}
+  color: ${({ theme }) => theme.colors.gray90};
+`;
+
+// 글자 색상 드롭다운
+const TextColorToggle = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+  width: 8.1rem;
+  height: 3.4rem;
+  padding: 0 1.3rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+`;
+
+const TextColorList = styled.div<{ $isFontColorOpen: boolean }>`
+  position: absolute;
+  top: 3.5rem;
+
+  display: ${({ $isFontColorOpen }) => ($isFontColorOpen ? 'flex' : 'none')};
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: flex-start;
+  width: 11.6rem;
+  padding: 1rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.gray50};
+  border-radius: 10px;
+`;
+
+const TextColorBgList = styled.div<{ $isFontBgColorOpen: boolean }>`
+  position: absolute;
+  top: 3.5rem;
+
+  display: ${({ $isFontBgColorOpen }) => ($isFontBgColorOpen ? 'flex' : 'none')};
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: flex-start;
+  width: 11.6rem;
+  padding: 1rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.gray50};
+  border-radius: 10px;
+`;
+
+const TextColorOptionWrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: flex-start;
+  width: 9.6rem;
+  padding: 0.6rem 1rem;
+
+  border-radius: 6px;
+
+  :hover {
+    background-color: ${({ theme }) => theme.colors.gray20};
+  }
+
+  .is-active {
+    color: ${({ theme }) => theme.colors.mainViolet};
+  }
+`;
+
+const TextColorText = styled.p`
+  color: ${({ theme }) => theme.colors.gray90};
+
+  ${({ theme }) => theme.fonts.body7};
+`;
+
+// 기본 svg 커스텀
+const ToolbarSvgBtn = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.4rem;
+
+  border-right: 1px solid ${({ theme }) => theme.colors.gray30};
+`;
+
+const ToolbarSvgBtnLast = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.4rem;
+`;
+
+const ToolbarSvg = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin: 0.6rem;
+
+  border-left: 1px transparent;
+  border-radius: 0.4rem;
+
+  & > svg {
+    fill: ${({ theme }) => theme.colors.black};
+  }
+
+  & > svg.is-active {
+    fill: ${({ theme }) => theme.colors.mainViolet};
+  }
+
+  :hover {
+    background-color: ${({ theme }) => theme.colors.mileViolet};
   }
 `;
