@@ -18,7 +18,7 @@ import Text from '@tiptap/extension-text';
 import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
-import { useEditor, EditorContent, Editor } from '@tiptap/react';
+import { Editor, EditorContent, useEditor } from '@tiptap/react';
 import classNames from 'classnames';
 import React, { useCallback, useEffect, useState } from 'react';
 
@@ -118,7 +118,7 @@ const TipTap = (props: EditorPropTypes) => {
     },
     [editor],
   );
-
+  //git test
   // 글자 색상 함수
   const toggleTextColor = useCallback(
     (color: string) => {
