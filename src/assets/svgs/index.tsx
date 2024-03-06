@@ -70,25 +70,3 @@ export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?reac
 
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
 export { default as faviconMileIc } from './faviconMile.svg?react';
-
-// 에디터 툴바 아이콘
-// 글자색
-export { default as EditorTextColorBlackIcn } from './editorTextcolorIcnBlack.svg?react';
-export { default as EditorTextColorBlueIcn } from './editorTextcolorIcnBlue.svg?react';
-export { default as EditorTextColorGrayIcn } from './editorTextcolorIcnGray.svg?react';
-export { default as EditorTextColorGreenIcn } from './editorTextcolorIcnGreen.svg?react';
-export { default as EditorTextColorOrangeIcn } from './editorTextcolorIcnOrange.svg?react';
-export { default as EditorTextColorPinkIcn } from './editorTextcolorIcnPink.svg?react';
-export { default as EditorTextColorRedIcn } from './editorTextcolorIcnRed.svg?react';
-export { default as EditorTextColorVioletIcn } from './editorTextcolorIcnViolet.svg?react';
-export { default as EditorTextColorYellowIcn } from './editorTextcolorIcnYellow.svg?react';
-// 글자 배경색
-export { default as EditorTextBgColorBlueIcn } from './editorTextbasecolorIcnBlue.svg?react';
-export { default as EditorTextBgColorGrayIcn } from './editorTextbasecolorIcnGray.svg?react';
-export { default as EditorTextBgColorGreenIcn } from './editorTextbasecolorIcnGreen.svg?react';
-export { default as EditorTextBgColorOrangeIcn } from './editorTextbasecolorIcnOrange.svg?react';
-export { default as EditorTextBgColorPinkIcn } from './editorTextbasecolorIcnPink.svg?react';
-export { default as EditorTextBgColorRedIcn } from './editorTextbasecolorIcnRed.svg?react';
-export { default as EditorTextBgColorVioletIcn } from './editorTextbasecolorIcnViolet.svg?react';
-export { default as EditorTextBgColorWhiteIcn } from './editorTextbasecolorIcnWhite.svg?react';
-export { default as EditorTextBgColorYellowIcn } from './editorTextbasecolorIcnYellow.svg?react';

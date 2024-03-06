@@ -29,28 +29,7 @@ import { LineHeight } from '../utils/lineHeight';
 
 import './tiptap.css';
 // editor svg
-import {
-  EditorDropIcnOpen,
-  EditorDropIcnClose,
-  EditorTextColorBlackIcn,
-  EditorTextColorBlueIcn,
-  EditorTextColorGrayIcn,
-  EditorTextColorGreenIcn,
-  EditorTextColorOrangeIcn,
-  EditorTextColorPinkIcn,
-  EditorTextColorRedIcn,
-  EditorTextColorVioletIcn,
-  EditorTextColorYellowIcn,
-  EditorTextBgColorBlueIcn,
-  EditorTextBgColorGrayIcn,
-  EditorTextBgColorGreenIcn,
-  EditorTextBgColorOrangeIcn,
-  EditorTextBgColorPinkIcn,
-  EditorTextBgColorRedIcn,
-  EditorTextBgColorVioletIcn,
-  EditorTextBgColorWhiteIcn,
-  EditorTextBgColorYellowIcn,
-} from '../../../assets/svgs';
+import * as ToolbarIcon from '../../../assets/svgs/editorSVG';
 
 interface EditorPropTypes {
   title: string | undefined;
@@ -121,7 +100,7 @@ const TipTap = (props: EditorPropTypes) => {
 
   // 에디터 content 업데이트
   useEffect(() => {
-    if (tempContent) {
+    if (editor && tempContent) {
       editor.commands.setContent(tempContent);
     }
     if (editor && editContent) {
@@ -274,7 +253,11 @@ const TipTap = (props: EditorPropTypes) => {
                       ? '제목 1'
                       : '본문 1'}
             </FontSizeLabel>
-            {isFontSizeOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
+            {isFontSizeOpen ? (
+              <ToolbarIcon.EditorDropIcnOpen />
+            ) : (
+              <ToolbarIcon.EditorDropIcnClose />
+            )}
           </FontSizeToggle>
           <FontSizeOptionList $isFontSizeOpen={isFontSizeOpen}>
             <FontSizeOption onClick={toggleFontSizeContent2}>
@@ -312,31 +295,35 @@ const TipTap = (props: EditorPropTypes) => {
         <ToolbarDropDownWrapper>
           <TextColorToggle onClick={onClickFontColorToggle}>
             {editor.isActive('textStyle', { color: '#010101' }) ? (
-              <EditorTextColorBlackIcn />
+              <ToolbarIcon.EditorTextColorBlackIcn />
             ) : editor.isActive('textStyle', { color: '#505050' }) ? (
-              <EditorTextColorGrayIcn />
+              <ToolbarIcon.EditorTextColorGrayIcn />
             ) : editor.isActive('textStyle', { color: '#B81616' }) ? (
-              <EditorTextColorRedIcn />
+              <ToolbarIcon.EditorTextColorRedIcn />
             ) : editor.isActive('textStyle', { color: '#DA5B24' }) ? (
-              <EditorTextColorOrangeIcn />
+              <ToolbarIcon.EditorTextColorOrangeIcn />
             ) : editor.isActive('textStyle', { color: '#C5B525' }) ? (
-              <EditorTextColorYellowIcn />
+              <ToolbarIcon.EditorTextColorYellowIcn />
             ) : editor.isActive('textStyle', { color: '#2F7417' }) ? (
-              <EditorTextColorGreenIcn />
+              <ToolbarIcon.EditorTextColorGreenIcn />
             ) : editor.isActive('textStyle', { color: '#172B74' }) ? (
-              <EditorTextColorBlueIcn />
+              <ToolbarIcon.EditorTextColorBlueIcn />
             ) : editor.isActive('textStyle', { color: '#6139D1' }) ? (
-              <EditorTextColorVioletIcn />
+              <ToolbarIcon.EditorTextColorVioletIcn />
             ) : editor.isActive('textStyle', { color: '#951479' }) ? (
-              <EditorTextColorPinkIcn />
+              <ToolbarIcon.EditorTextColorPinkIcn />
             ) : (
-              <EditorTextColorBlackIcn />
+              <ToolbarIcon.EditorTextColorBlackIcn />
             )}
-            {isFontColorOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
+            {isFontColorOpen ? (
+              <ToolbarIcon.EditorDropIcnOpen />
+            ) : (
+              <ToolbarIcon.EditorDropIcnClose />
+            )}
           </TextColorToggle>
           <TextColorList $isFontColorOpen={isFontColorOpen}>
             <TextColorOptionWrapper onClick={toggleTextBlack}>
-              <EditorTextColorBlackIcn
+              <ToolbarIcon.EditorTextColorBlackIcn
                 className={editor.isActive('textStyle', { color: '#010101' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -346,7 +333,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={toggleTextGray}>
-              <EditorTextColorGrayIcn
+              <ToolbarIcon.EditorTextColorGrayIcn
                 className={editor.isActive('textStyle', { color: '#505050' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -356,7 +343,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={toggleTextRed}>
-              <EditorTextColorRedIcn
+              <ToolbarIcon.EditorTextColorRedIcn
                 className={editor.isActive('textStyle', { color: '#B81616' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -366,7 +353,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={toggleTextOrange}>
-              <EditorTextColorOrangeIcn
+              <ToolbarIcon.EditorTextColorOrangeIcn
                 className={editor.isActive('textStyle', { color: '#DA5B24' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -376,7 +363,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={toggleTextYellow}>
-              <EditorTextColorYellowIcn
+              <ToolbarIcon.EditorTextColorYellowIcn
                 className={editor.isActive('textStyle', { color: '#C5B525' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -386,7 +373,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={toggleTextGreen}>
-              <EditorTextColorGreenIcn
+              <ToolbarIcon.EditorTextColorGreenIcn
                 className={editor.isActive('textStyle', { color: '#2F7417' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -396,7 +383,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={toggleTextBlue}>
-              <EditorTextColorBlueIcn
+              <ToolbarIcon.EditorTextColorBlueIcn
                 className={editor.isActive('textStyle', { color: '#172B74' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -406,7 +393,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={toggleTextViolet}>
-              <EditorTextColorVioletIcn
+              <ToolbarIcon.EditorTextColorVioletIcn
                 className={editor.isActive('textStyle', { color: '#6139D1' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -416,7 +403,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={toggleTextPink}>
-              <EditorTextColorPinkIcn
+              <ToolbarIcon.EditorTextColorPinkIcn
                 className={editor.isActive('textStyle', { color: '#951479' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -432,31 +419,35 @@ const TipTap = (props: EditorPropTypes) => {
         <ToolbarDropDownWrapper>
           <TextColorToggle onClick={onClickFontBgColorToggle}>
             {editor.isActive('highlight', { color: '#FFFFFF' }) ? (
-              <EditorTextBgColorWhiteIcn />
+              <ToolbarIcon.EditorTextBgColorWhiteIcn />
             ) : editor.isActive('highlight', { color: '#EAEAEA' }) ? (
-              <EditorTextBgColorGrayIcn />
+              <ToolbarIcon.EditorTextBgColorGrayIcn />
             ) : editor.isActive('highlight', { color: '#F6E2E2' }) ? (
-              <EditorTextBgColorRedIcn />
+              <ToolbarIcon.EditorTextBgColorRedIcn />
             ) : editor.isActive('highlight', { color: '#F6E7E2' }) ? (
-              <EditorTextBgColorOrangeIcn />
+              <ToolbarIcon.EditorTextBgColorOrangeIcn />
             ) : editor.isActive('highlight', { color: '#F6F4E2' }) ? (
-              <EditorTextBgColorYellowIcn />
+              <ToolbarIcon.EditorTextBgColorYellowIcn />
             ) : editor.isActive('highlight', { color: '#F1F6E2' }) ? (
-              <EditorTextBgColorGreenIcn />
+              <ToolbarIcon.EditorTextBgColorGreenIcn />
             ) : editor.isActive('highlight', { color: '#E2EAF6' }) ? (
-              <EditorTextBgColorBlueIcn />
+              <ToolbarIcon.EditorTextBgColorBlueIcn />
             ) : editor.isActive('highlight', { color: '#E9E3F8' }) ? (
-              <EditorTextBgColorVioletIcn />
+              <ToolbarIcon.EditorTextBgColorVioletIcn />
             ) : editor.isActive('highlight', { color: '#F6E2F3' }) ? (
-              <EditorTextBgColorPinkIcn />
+              <ToolbarIcon.EditorTextBgColorPinkIcn />
             ) : (
-              <EditorTextBgColorWhiteIcn />
+              <ToolbarIcon.EditorTextBgColorWhiteIcn />
             )}
-            {isFontBgColorOpen ? <EditorDropIcnOpen /> : <EditorDropIcnClose />}
+            {isFontBgColorOpen ? (
+              <ToolbarIcon.EditorDropIcnOpen />
+            ) : (
+              <ToolbarIcon.EditorDropIcnClose />
+            )}
           </TextColorToggle>
           <TextColorBgList $isFontBgColorOpen={isFontBgColorOpen}>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#FFFFFF')}>
-              <EditorTextBgColorWhiteIcn
+              <ToolbarIcon.EditorTextBgColorWhiteIcn
                 className={editor.isActive('highlight', { color: '#FFFFFF' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -466,7 +457,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#EAEAEA')}>
-              <EditorTextBgColorGrayIcn
+              <ToolbarIcon.EditorTextBgColorGrayIcn
                 className={editor.isActive('highlight', { color: '#EAEAEA' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -476,7 +467,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6E2E2')}>
-              <EditorTextBgColorRedIcn
+              <ToolbarIcon.EditorTextBgColorRedIcn
                 className={editor.isActive('highlight', { color: '#F6E2E2' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -486,7 +477,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6E7E2')}>
-              <EditorTextBgColorOrangeIcn
+              <ToolbarIcon.EditorTextBgColorOrangeIcn
                 className={editor.isActive('highlight', { color: '#F6E7E2' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -496,7 +487,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6F4E2')}>
-              <EditorTextBgColorYellowIcn
+              <ToolbarIcon.EditorTextBgColorYellowIcn
                 className={editor.isActive('highlight', { color: '#F6F4E2' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -506,7 +497,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F1F6E2')}>
-              <EditorTextBgColorGreenIcn
+              <ToolbarIcon.EditorTextBgColorGreenIcn
                 className={editor.isActive('highlight', { color: '#F1F6E2' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -516,7 +507,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#E2EAF6')}>
-              <EditorTextBgColorBlueIcn
+              <ToolbarIcon.EditorTextBgColorBlueIcn
                 className={editor.isActive('highlight', { color: '#E2EAF6' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -526,7 +517,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#E9E3F8')}>
-              <EditorTextBgColorVioletIcn
+              <ToolbarIcon.EditorTextBgColorVioletIcn
                 className={editor.isActive('highlight', { color: '#E9E3F8' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -536,7 +527,7 @@ const TipTap = (props: EditorPropTypes) => {
               </TextColorText>
             </TextColorOptionWrapper>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#F6E2F3')}>
-              <EditorTextBgColorPinkIcn
+              <ToolbarIcon.EditorTextBgColorPinkIcn
                 className={editor.isActive('highlight', { color: '#F6E2F3' }) ? 'is-active' : ''}
               />
               <TextColorText
@@ -549,77 +540,135 @@ const TipTap = (props: EditorPropTypes) => {
         </ToolbarDropDownWrapper>
 
         {/* bold */}
-        <button
+        <ToolbarSvgBtn
+          onClick={toggleBold}
           className={classNames('menu-button', {
             'is-active': editor.isActive('bold'),
           })}
-          onClick={toggleBold}
         >
-          bold
-        </button>
-        <button
+          <ToolbarSvg>
+            <ToolbarIcon.EditorBoldIcn
+              className={classNames('menu-button', {
+                'is-active': editor.isActive('bold'),
+              })}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
+
+        {/* underline */}
+        <ToolbarSvgBtn
+          onClick={toggleUnderline}
           className={classNames('menu-button', {
             'is-active': editor.isActive('underline'),
           })}
-          onClick={toggleUnderline}
         >
-          underline
-        </button>
-        <button
+          <ToolbarSvg>
+            <ToolbarIcon.EditorLineIcn
+              className={classNames('menu-button', {
+                'is-active': editor.isActive('underline'),
+              })}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
+
+        {/* strike */}
+        <ToolbarSvgBtn
+          onClick={toggleStrike}
           className={classNames('menu-button', {
             'is-active': editor.isActive('strike'),
           })}
-          onClick={toggleStrike}
         >
-          strike
-        </button>
-        <button
+          <ToolbarSvg>
+            <ToolbarIcon.EditorStrikeIcn
+              className={classNames('menu-button', {
+                'is-active': editor.isActive('strike'),
+              })}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
+
+        {/* Italic */}
+        <ToolbarSvgBtn
+          onClick={toggleItalic}
           className={classNames('menu-button', {
             'is-active': editor.isActive('italic'),
           })}
-          onClick={toggleItalic}
         >
-          italic
-        </button>
+          <ToolbarSvg>
+            <ToolbarIcon.EditorItalicIcn
+              className={classNames('menu-button', {
+                'is-active': editor.isActive('italic'),
+              })}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
 
-        {/* 정렬 */}
-        <button
-          className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}
+        {/* Left */}
+        <ToolbarSvgBtn
           onClick={toggleAlignLeft}
+          className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}
         >
-          left
-        </button>
-        <button
-          className={editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}
+          <ToolbarSvg>
+            <ToolbarIcon.EditorLeftIcn
+              className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
+
+        {/* Center */}
+        <ToolbarSvgBtn
           onClick={toggleAlignCenter}
+          className={editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}
         >
-          center
-        </button>
+          <ToolbarSvg>
+            <ToolbarIcon.EditorCenterIcn
+              className={editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
 
-        {/* 리스트 */}
-        <button
-          className={editor.isActive('bulletList') ? 'is-active' : ''}
+        {/* bullet List */}
+        <ToolbarSvgBtn
           onClick={toggleBulletList}
+          className={editor.isActive('bulletList') ? 'is-active' : ''}
         >
-          bulletList
-        </button>
-        <button
-          className={editor.isActive('orderedList') ? 'is-active' : ''}
+          <ToolbarSvg>
+            <ToolbarIcon.EditorBulletListIcn
+              className={editor.isActive('bulletList') ? 'is-active' : ''}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
+
+        {/* number List */}
+        <ToolbarSvgBtn
           onClick={toggleOrderedList}
+          className={editor.isActive('orderedList') ? 'is-active' : ''}
         >
-          orderedList
-        </button>
+          <ToolbarSvg>
+            <ToolbarIcon.EditorNumberListIcn
+              className={editor.isActive('orderedList') ? 'is-active' : ''}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
 
-        {/* 인용구 */}
-        <button
-          className={editor.isActive('blockquote') ? 'is-active' : ''}
+        {/* Quote */}
+        <ToolbarSvgBtn
           onClick={toggleBlockQuote}
+          className={editor.isActive('blockquote') ? 'is-active' : ''}
         >
-          blockquote
-        </button>
+          <ToolbarSvg>
+            <ToolbarIcon.EditorQuoteIcn
+              className={editor.isActive('blockquote') ? 'is-active' : ''}
+            />
+          </ToolbarSvg>
+        </ToolbarSvgBtn>
 
-        {/* 구분선 */}
-        <button onClick={toggleHorizontalRule}>구분선</button>
+        {/* Divider */}
+        <ToolbarSvgBtnLast onClick={toggleHorizontalRule}>
+          <ToolbarSvg>
+            <ToolbarIcon.EditorDividerIcn />
+          </ToolbarSvg>
+        </ToolbarSvgBtnLast>
       </ToolbarWrapper>
       <div className="editorWrapper">
         <EditorContent editor={editor} />
@@ -651,7 +700,6 @@ const Title = styled.input`
 const ToolbarWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 53.3rem;
   height: 3.6rem;
   margin: 0;
   padding: 0;
@@ -664,13 +712,14 @@ const ToolbarWrapper = styled.div`
 // 드롭다운 리스트
 const ToolbarDropDownWrapper = styled.div`
   position: relative;
-  z-index: 3;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
 
   cursor: pointer;
+  border-right: 1px solid ${({ theme }) => theme.colors.gray30};
 `;
 
 // 글자 크기 드롭다운 리스트
@@ -680,9 +729,11 @@ const FontSizeToggle = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 10.1rem;
+  height: 3.4rem;
   padding: 0 1.3rem;
 
   background-color: white;
+  border-radius: 0.8rem;
 `;
 
 const FontSizeLabel = styled.p`
@@ -692,7 +743,7 @@ const FontSizeLabel = styled.p`
 
 const FontSizeOptionList = styled.div<{ $isFontSizeOpen: boolean }>`
   position: absolute;
-  top: 2.9rem;
+  top: 3.5rem;
   display: ${({ $isFontSizeOpen }) => ($isFontSizeOpen ? 'flex' : 'none')};
   flex-direction: column;
   gap: 0.6rem;
@@ -734,6 +785,7 @@ const TextColorToggle = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 8.1rem;
+  height: 3.4rem;
   padding: 0 1.3rem;
 
   background-color: ${({ theme }) => theme.colors.white};
@@ -741,7 +793,7 @@ const TextColorToggle = styled.div`
 
 const TextColorList = styled.div<{ $isFontColorOpen: boolean }>`
   position: absolute;
-  top: 2.9rem;
+  top: 3.5rem;
 
   display: ${({ $isFontColorOpen }) => ($isFontColorOpen ? 'flex' : 'none')};
   flex-direction: column;
@@ -758,7 +810,7 @@ const TextColorList = styled.div<{ $isFontColorOpen: boolean }>`
 
 const TextColorBgList = styled.div<{ $isFontBgColorOpen: boolean }>`
   position: absolute;
-  top: 2.9rem;
+  top: 3.5rem;
 
   display: ${({ $isFontBgColorOpen }) => ($isFontBgColorOpen ? 'flex' : 'none')};
   flex-direction: column;
@@ -796,4 +848,45 @@ const TextColorText = styled.p`
   color: ${({ theme }) => theme.colors.gray90};
 
   ${({ theme }) => theme.fonts.body7};
+`;
+
+// 기본 svg 커스텀
+const ToolbarSvgBtn = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.4rem;
+
+  border-right: 1px solid ${({ theme }) => theme.colors.gray30};
+`;
+
+const ToolbarSvgBtnLast = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.4rem;
+`;
+
+const ToolbarSvg = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin: 0.6rem;
+
+  border-left: 1px transparent;
+  border-radius: 0.4rem;
+
+  & > svg {
+    fill: ${({ theme }) => theme.colors.black};
+  }
+
+  & > svg.is-active {
+    fill: ${({ theme }) => theme.colors.mainViolet};
+  }
+
+  :hover {
+    background-color: ${({ theme }) => theme.colors.mileViolet};
+  }
 `;
