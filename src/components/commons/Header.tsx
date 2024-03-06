@@ -1,16 +1,14 @@
 import styled from '@emotion/styled';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
 
 import { HeaderLogoIc } from '../../assets/svgs';
 import useNavigateHome from '../../hooks/useNavigateHome';
-import MakeGroupBtn from '../../pages/groupFeed/components/MakeGroupBtn';
+import CreateGroupBtn from '../../pages/groupFeed/components/CreateGroupBtn';
 import MyGroupBtn from '../../pages/groupFeed/components/MyGroupBtn';
-
-interface OnClickProps {
-  onClick: () => void;
-}
+import logout from '../../utils/logout';
 
 interface onClickEditProps {
   onClickEditSave: () => void;
@@ -24,35 +22,47 @@ interface OnClickTwoProps {
 interface OnClickTempExistProps {
   onClickSubmit: () => void;
 }
-// 모임 피드 헤더
-export const GroupFeedHeader = ({ onClick }: OnClickProps) => {
+
+// 로그인된 경우 헤더
+export const AuthorizationHeader = () => {
   const { navigateToHome } = useNavigateHome();
+  const handleLogOut = () => {
+    logout();
+    location.reload();
+  };
+
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
-      <HeaderBtnLayout>
+      <HeaderLayout>
         <MyGroupBtn />
-        <CommonBtnLayout>
-          <MakeGroupBtn />
-          <LogInOutBtn onClick={onClick}>로그아웃</LogInOutBtn>
-        </CommonBtnLayout>
-      </HeaderBtnLayout>
+        <HeaderBtnContainer>
+          <CreateGroupBtn />
+          <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
+        </HeaderBtnContainer>
+      </HeaderLayout>
     </HeaderWrapper>
   );
 };
 
-//아직 로그인을 하지 않았을 때 헤더
-export const LogOutHeader = ({ onClick }: OnClickProps) => {
+// 로그아웃된 경우 헤더
+export const UnAuthorizationHeader = () => {
+  const navigate = useNavigate();
+  const pathname = useLocation();
   const { navigateToHome } = useNavigateHome();
+  const handleLogIn = () => {
+    navigate(`/login`, { state: pathname });
+  };
+
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
-      <LogInOutBtn onClick={onClick}>로그인</LogInOutBtn>
+      <LogInOutBtn onClick={handleLogIn}>로그인</LogInOutBtn>
     </HeaderWrapper>
   );
 };
 
-//에디터 창에서 글을 수정하고 있을 때 헤더
+// 에디터 창에서 글을 수정하고 있을 때 헤더
 export const EditorEditHeader = ({ onClickEditSave }: onClickEditProps) => {
   const { navigateToHome } = useNavigateHome();
   return (
@@ -71,14 +81,14 @@ export const EditorTempNotExistHeader = ({ onClickTempSave, onClickSubmit }: OnC
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
-      <CommonBtnLayout>
+      <HeaderBtnContainer>
         <Button typeName="deleteTempType" onClick={onClickTempSave}>
           임시저장
         </Button>
         <Button typeName="submitEditType" onClick={onClickSubmit}>
           글 제출하기
         </Button>
-      </CommonBtnLayout>
+      </HeaderBtnContainer>
     </HeaderWrapper>
   );
 };
@@ -89,16 +99,19 @@ export const EditorTempExistHeader = ({ onClickSubmit }: OnClickTempExistProps) 
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
-      <CommonBtnLayout>
+      <HeaderBtnContainer>
         <Button typeName="submitEditType" onClick={onClickSubmit}>
           글 제출하기
         </Button>
-      </CommonBtnLayout>
+      </HeaderBtnContainer>
     </HeaderWrapper>
   );
 };
 
 const HeaderWrapper = styled.div`
+  position: fixed;
+  top: 0%;
+  z-index: 4;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -111,13 +124,13 @@ const HeaderWrapper = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
 `;
 
-const HeaderBtnLayout = styled.div`
+const HeaderLayout = styled.div`
   display: flex;
   align-items: center;
   height: 6.4rem;
 `;
 
-const CommonBtnLayout = styled.div`
+const HeaderBtnContainer = styled.div`
   display: flex;
   gap: 1.2rem;
   align-items: center;

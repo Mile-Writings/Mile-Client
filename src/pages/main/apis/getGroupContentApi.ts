@@ -1,12 +1,6 @@
-import { groupPostTypes } from '../components/Carousel';
+import { groupPropTypes } from '../types/groupContent';
 
 import { client } from '../../../utils/apis/axios';
-
-export interface groupPropTypes {
-  moimId: string;
-  moimName: string;
-  moimPosts: groupPostTypes[];
-}
 
 interface getGroupContentResponseTypes {
   status: number;
@@ -16,7 +10,7 @@ interface getGroupContentResponseTypes {
   };
 }
 
-export const getGroupContent = async () => {
+const getGroupContentApi = async () => {
   try {
     const { data } = await client.get<getGroupContentResponseTypes>('/api/moim/best');
     return data.data.moim;
@@ -24,3 +18,5 @@ export const getGroupContent = async () => {
     console.error(error);
   }
 };
+
+export default getGroupContentApi;

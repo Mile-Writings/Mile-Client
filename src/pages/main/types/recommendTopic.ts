@@ -1,3 +1,5 @@
 export interface recommendPropsTypes {
-  content: string;
+  data: {
+    content: string | undefined;
+  };
 }
