@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-import Skeleton from './skeletons/Skeleton';
+import Skeleton from './Skeleton';
 
-import Spacing from '../../../components/commons/Spacing';
+import Spacing from '../../../../components/commons/Spacing';
 
 const CarouselSkeleton = () => {
   return (
