@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import CuriousGroup from './CuriousGroup';
+import GroupRoutingButton from './GroupRoutingButton';
 
 import Spacing from './.././../../components/commons/Spacing';
 
@@ -53,7 +53,7 @@ const GroupContent = ({
           )}
         </>
       )}
-      {isLast && <CuriousGroup groupId={groupId} />}
+      {isLast && <GroupRoutingButton groupId={groupId} />}
     </ContentLayout>
   );
 };

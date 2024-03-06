@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { MainGroupRoutingBtn as MainGroupRoutingBtnIcon } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
-interface curiousGroupPropTypes {
+interface groupRoutingPropTypes {
   groupId: string;
 }
 
-const CuriousGroup = ({ groupId }: curiousGroupPropTypes) => {
+const GroupRoutingButton = ({ groupId }: groupRoutingPropTypes) => {
   const navigate = useNavigate();
   const handleOnClick = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
     e.stopPropagation();
@@ -17,22 +17,22 @@ const CuriousGroup = ({ groupId }: curiousGroupPropTypes) => {
   };
 
   return (
-    <CuriousContentContainer>
+    <GroupRoutingWrapper>
       <CuriousGroupText>
         이 모임에 대해서
         <br /> 더 궁금하신가요?
       </CuriousGroupText>
       <Spacing marginBottom="1.6" />
-      <GroupRoutingBtnBox>
+      <GroupRoutingBtnLayout>
         <MainGroupRoutingBtnIcon onClick={(e) => handleOnClick(e)} />
-      </GroupRoutingBtnBox>
-    </CuriousContentContainer>
+      </GroupRoutingBtnLayout>
+    </GroupRoutingWrapper>
   );
 };
 
-export default CuriousGroup;
+export default GroupRoutingButton;
 
-const CuriousContentContainer = styled.section`
+const GroupRoutingWrapper = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -48,7 +48,7 @@ const CuriousGroupText = styled.p`
   ${({ theme }) => theme.fonts.title8};
 `;
 
-const GroupRoutingBtnBox = styled.div`
+const GroupRoutingBtnLayout = styled.div`
   & > svg {
     cursor: pointer;
   }
