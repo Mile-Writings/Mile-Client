@@ -34,7 +34,6 @@ const Carousel = (props: CategoryIdPropTypes) => {
   const [categoryId] = useState(Number(sessionStorage.getItem('activeCategoryId')) - 1 || 0);
 
   useEffect(() => {
-    console.log(categoryId, 'id');
     if (groupFeedCategoryData && groupFeedCategoryData.length > 0) {
       setSelectedTopicId(groupFeedCategoryData[categoryId].topicId);
     }
