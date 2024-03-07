@@ -142,7 +142,7 @@ const TipTap = (props: EditorPropTypes) => {
     },
     [editor],
   );
-
+ console.log('test');
   // bold 함수
   const toggleBold = useCallback(() => {
     editor.chain().focus().toggleBold().run();
