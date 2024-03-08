@@ -31,9 +31,11 @@ const Carousel = (props: CategoryIdPropTypes) => {
   const { groupFeedCategoryData, isLoading, isError, error } = useTopicList(groupId || '');
   const [selectedTopicId, setSelectedTopicId] = useState<string>('');
 
+  const [categoryId] = useState(Number(sessionStorage.getItem('activeCategoryId')) - 1 || 0);
+
   useEffect(() => {
     if (groupFeedCategoryData && groupFeedCategoryData.length > 0) {
-      setSelectedTopicId(groupFeedCategoryData[0].topicId);
+      setSelectedTopicId(groupFeedCategoryData[categoryId].topicId);
     }
   }, [groupFeedCategoryData]);
 
@@ -56,9 +58,9 @@ const Carousel = (props: CategoryIdPropTypes) => {
     setSelectedTopicId(topicId);
   };
 
-  const { topicInfo } = useArticleList(selectedTopicId || '');
+  const { topicInfo, isLoading: articleListLoading } = useArticleList(selectedTopicId || '');
 
-  if (isLoading) {
+  if (isLoading || articleListLoading) {
     return <Loading />;
   }
 
