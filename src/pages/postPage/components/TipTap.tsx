@@ -142,7 +142,6 @@ const TipTap = (props: EditorPropTypes) => {
     },
     [editor],
   );
- console.log('test');
   // bold 함수
   const toggleBold = useCallback(() => {
     editor.chain().focus().toggleBold().run();
@@ -827,6 +826,7 @@ const ToolbarSvgBtnLast = styled.div`
   align-items: center;
   justify-content: center;
   height: 3.4rem;
+  margin-right: 2.7rem;
 `;
 
 const ToolbarSvg = styled.button`
