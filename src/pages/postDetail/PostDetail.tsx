@@ -202,6 +202,10 @@ const PostContainer = styled.div`
 
     border-left: 4px solid #6139d1;
   }
+
+  & > p {
+    min-height: 2.5rem;
+  }
 `;
 
 const WriterInfoWrapper = styled.div`

@@ -192,6 +192,7 @@ const PostPage = () => {
     if (type === 'edit') {
       setEditPostId(location.state.postId);
       setPreviewImgUrl(location.state.imageUrl);
+      console.log(location.state.content);
       dispatch({
         type: 'setEditValue',
         topic: location.state.topic,
