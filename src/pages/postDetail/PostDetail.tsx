@@ -182,7 +182,16 @@ const PostContainer = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 10px;
+
   ${({ theme }) => theme.fonts.body2};
+
+  & > ul {
+    list-style-type: disc;
+  }
+
+  & > ol {
+    list-style: decimal;
+  }
 `;
 
 const WriterInfoWrapper = styled.div`
