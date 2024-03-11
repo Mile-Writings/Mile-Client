@@ -186,11 +186,21 @@ const PostContainer = styled.div`
   ${({ theme }) => theme.fonts.body2};
 
   & > ul {
+    padding-left: 17px;
+
     list-style-type: disc;
   }
 
   & > ol {
+    padding-left: 17px;
+
     list-style: decimal;
+  }
+
+  & > blockquote {
+    padding-left: 1.8rem;
+
+    border-left: 4px solid #6139d1;
   }
 `;
 
