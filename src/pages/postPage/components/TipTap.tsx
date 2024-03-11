@@ -787,7 +787,7 @@ const TextColorBgList = styled.div<{ $isFontBgColorOpen: boolean }>`
   gap: 0.6rem;
   align-items: center;
   justify-content: flex-start;
-  width: 11.6rem;
+  width: 12.6rem;
   padding: 1rem;
 
   background-color: ${({ theme }) => theme.colors.white};
@@ -800,7 +800,7 @@ const TextColorOptionWrapper = styled.div`
   gap: 1rem;
   align-items: center;
   justify-content: flex-start;
-  width: 9.6rem;
+  width: 11rem;
   padding: 0.6rem 1rem;
 
   border-radius: 6px;
