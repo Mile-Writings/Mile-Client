@@ -125,7 +125,7 @@ const TipTap = (props: EditorPropTypes) => {
     },
     [editor],
   );
-  //git test
+
   // 글자 색상 함수
   const toggleTextColor = useCallback(
     (color: string) => {
