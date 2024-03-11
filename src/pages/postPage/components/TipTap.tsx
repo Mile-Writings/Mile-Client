@@ -28,8 +28,9 @@ import { FontWeight } from '../utils/fontWeight';
 import { LineHeight } from '../utils/lineHeight';
 
 import './tiptap.css';
-// editor svg
 import * as ToolbarIcon from '../../../assets/svgs/editorSVG';
+import Spacing from '../../../components/commons/Spacing';
+// editor svg
 
 interface EditorPropTypes {
   title: string | undefined;
@@ -199,6 +200,7 @@ const TipTap = (props: EditorPropTypes) => {
   return (
     <div className="text-editor">
       <Title type="text" placeholder="제목을 적어주세요" onChange={setTitle} value={title} />
+      <Spacing marginBottom="2.4" />
       <ToolbarWrapper className="menu">
         {/* 글자 크기 */}
         <ToolbarDropDownWrapper>
@@ -221,18 +223,11 @@ const TipTap = (props: EditorPropTypes) => {
             )}
           </FontSizeToggle>
           <FontSizeOptionList $isFontSizeOpen={isFontSizeOpen}>
-            <FontSizeOption onClick={() => toggleFontSize('1.2rem', '400', '200%')}>
+            <FontSizeOption onClick={() => toggleFontSize('2.6rem', '700', '200%')}>
               <FontSizeText
-                className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
+                className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
               >
-                본문 2
-              </FontSizeText>
-            </FontSizeOption>
-            <FontSizeOption onClick={() => toggleFontSize('1.6rem', '400', '160%')}>
-              <FontSizeText
-                className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
-              >
-                본문 1
+                제목 1
               </FontSizeText>
             </FontSizeOption>
             <FontSizeOption onClick={() => toggleFontSize('1.8rem', '700', '200%')}>
@@ -242,11 +237,18 @@ const TipTap = (props: EditorPropTypes) => {
                 제목 2
               </FontSizeText>
             </FontSizeOption>
-            <FontSizeOption onClick={() => toggleFontSize('2.6rem', '700', '200%')}>
+            <FontSizeOption onClick={() => toggleFontSize('1.6rem', '400', '200%')}>
               <FontSizeText
-                className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
+                className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
               >
-                제목 1
+                본문 1
+              </FontSizeText>
+            </FontSizeOption>
+            <FontSizeOption onClick={() => toggleFontSize('1.2rem', '400', '200%')}>
+              <FontSizeText
+                className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
+              >
+                본문 2
               </FontSizeText>
             </FontSizeOption>
           </FontSizeOptionList>
@@ -631,6 +633,7 @@ const TipTap = (props: EditorPropTypes) => {
           </ToolbarSvg>
         </ToolbarSvgBtnLast>
       </ToolbarWrapper>
+      <Spacing marginBottom="2.4" />
       <div className="editorWrapper">
         <EditorContent editor={editor} />
       </div>
@@ -661,12 +664,12 @@ const Title = styled.input`
 const ToolbarWrapper = styled.div`
   display: flex;
   align-items: center;
-  height: 3.6rem;
+  width: 82.6rem;
+  height: 4.6rem;
   margin: 0;
   padding: 0;
 
   background-color: white;
-  border: 1px solid #d3d3d3;
   border-radius: 0.8rem;
 `;
 
@@ -678,6 +681,7 @@ const ToolbarDropDownWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  height: 4.6rem;
 
   cursor: pointer;
   border-right: 1px solid ${({ theme }) => theme.colors.gray30};
@@ -686,10 +690,9 @@ const ToolbarDropDownWrapper = styled.div`
 // 글자 크기 드롭다운 리스트
 const FontSizeToggle = styled.div`
   display: flex;
-  gap: 0.8rem;
   align-items: center;
   justify-content: space-between;
-  width: 10.1rem;
+  width: 12.9rem;
   height: 3.4rem;
   padding: 0 1.3rem;
 
@@ -698,19 +701,22 @@ const FontSizeToggle = styled.div`
 `;
 
 const FontSizeLabel = styled.p`
+  width: 5.622rem;
+  margin-right: 1.02rem;
+
   color: ${({ theme }) => theme.colors.gray90};
-  ${({ theme }) => theme.fonts.body7}
+  ${({ theme }) => theme.fonts.body1}
 `;
 
 const FontSizeOptionList = styled.div<{ $isFontSizeOpen: boolean }>`
   position: absolute;
-  top: 3.5rem;
+  top: 4.65rem;
   display: ${({ $isFontSizeOpen }) => ($isFontSizeOpen ? 'flex' : 'none')};
   flex-direction: column;
   gap: 0.6rem;
   align-items: center;
   justify-content: flex-start;
-  width: 8.8rem;
+  width: 13.2rem;
   padding: 1rem;
 
   background-color: ${({ theme }) => theme.colors.white};
@@ -719,8 +725,11 @@ const FontSizeOptionList = styled.div<{ $isFontSizeOpen: boolean }>`
 `;
 
 const FontSizeOption = styled.div`
-  width: 6.8rem;
-  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  width: 11.2rem;
+  height: 3.5rem;
+  padding: 0.8rem 1.2rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 6px;
@@ -735,7 +744,7 @@ const FontSizeOption = styled.div`
 `;
 
 const FontSizeText = styled.p`
-  ${({ theme }) => theme.fonts.body7}
+  ${({ theme }) => theme.fonts.body1}
   color: ${({ theme }) => theme.colors.gray90};
 `;
 
@@ -745,16 +754,16 @@ const TextColorToggle = styled.div`
   gap: 0.5rem;
   align-items: center;
   justify-content: space-between;
-  width: 8.1rem;
+  width: 10.4rem;
   height: 3.4rem;
-  padding: 0 1.3rem;
+  padding: 0 1.66rem;
 
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const TextColorList = styled.div<{ $isFontColorOpen: boolean }>`
   position: absolute;
-  top: 3.5rem;
+  top: 4.65rem;
 
   display: ${({ $isFontColorOpen }) => ($isFontColorOpen ? 'flex' : 'none')};
   flex-direction: column;
@@ -771,7 +780,7 @@ const TextColorList = styled.div<{ $isFontColorOpen: boolean }>`
 
 const TextColorBgList = styled.div<{ $isFontBgColorOpen: boolean }>`
   position: absolute;
-  top: 3.5rem;
+  top: 4.65rem;
 
   display: ${({ $isFontBgColorOpen }) => ($isFontBgColorOpen ? 'flex' : 'none')};
   flex-direction: column;
@@ -816,9 +825,10 @@ const ToolbarSvgBtn = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 3.4rem;
+  width: 4.6rem;
+  height: 4.6rem;
 
-  border-right: 1px solid ${({ theme }) => theme.colors.gray30};
+  border-right: 0.96px solid ${({ theme }) => theme.colors.gray30};
 `;
 
 const ToolbarSvgBtnLast = styled.div`
@@ -833,8 +843,8 @@ const ToolbarSvg = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 3.2rem;
+  height: 3.2rem;
   margin: 0.6rem;
 
   border-left: 1px transparent;
