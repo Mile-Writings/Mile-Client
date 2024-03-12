@@ -5,7 +5,7 @@ import Slider from 'react-slick';
 import '../styles/slick-theme.css';
 import '../styles/slick.css';
 
-import GroupContent from './GroupContent';
+import CarouselContent from './CarouselContent';
 
 import { groupPropTypes } from '../types/groupContent';
 
@@ -47,7 +47,7 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
             <CarouselContainer>
               <CarouselBox {...settings} className="main">
                 {moim.moimPosts.map((post, index) => (
-                  <GroupContent
+                  <CarouselContent
                     key={index}
                     topicName={post.topicName}
                     imageUrl={post.imageUrl}
