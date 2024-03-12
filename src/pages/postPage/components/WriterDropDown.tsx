@@ -28,7 +28,7 @@ const WriterDropDown = (props: WriterPropType) => {
     setWriterIsOpen(false);
   };
   // 커스텀 훅 사용
-  useClickOutside(dropDownRef, handleOutSideClick);
+  // useClickOutside(dropDownRef, handleOutSideClick);
 
   const onClickWriter = (e: React.MouseEvent<HTMLDivElement>) => {
     setWriter(e);
