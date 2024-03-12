@@ -40,7 +40,6 @@ const TopicDropDown = (props: TopicPropTypes) => {
         <DropDownContent $contentWidth={29}>{selectedTopic}</DropDownContent>
         <EditorDropIcnActiveIcon isOpen={topicIsOpen} />
         <EditorDropIcnActiveOpenIcon isOpen={topicIsOpen} />
-        {/* {topicIsOpen ? <EditorDropIcnActiveOpenIcon /> : <EditorDropIcnActiveIcon />} */}
       </DropDownToggle>
       <TopicListWrapper $isOpen={topicIsOpen}>
         {topicList.map((item, idx) => {

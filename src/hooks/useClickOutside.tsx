@@ -3,18 +3,8 @@ import React, { useEffect } from 'react';
 const useClickOutside = (ref: React.RefObject<HTMLElement>, callback: () => void) => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const refCurrent = ref.current?.innerHTML;
-      const eventTarget = event.target as HTMLElement;
-      // console.log(ref.current?.innerHTML, ' ref.current');
-      // console.log(eventTarget.outerHTML, ' eventTarget');
-      console.log(ref.current?.contains(eventTarget), ' contains?');
-      console.log(ref.current?.innerHTML.includes(eventTarget.outerHTML), ' includes?');
       // 드롭다운이 열려있고, 드롭다운 외부가 클릭됐을 경우
-      // if (ref.current && !ref.current.contains(event.target as HTMLElement)) {
-      //   // 실행할 함수를 인자로 받아와서 실행시켜 줌
-      //   callback();
-      // }
-      if (ref.current && !ref.current?.innerHTML.includes(eventTarget.outerHTML)) {
+      if (ref.current && !ref.current.contains(event.target as HTMLElement)) {
         // 실행할 함수를 인자로 받아와서 실행시켜 줌
         callback();
       }

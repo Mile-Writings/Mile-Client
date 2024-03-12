@@ -28,7 +28,7 @@ const WriterDropDown = (props: WriterPropType) => {
     setWriterIsOpen(false);
   };
   // 커스텀 훅 사용
-  // useClickOutside(dropDownRef, handleOutSideClick);
+  useClickOutside(dropDownRef, handleOutSideClick);
 
   const onClickWriter = (e: React.MouseEvent<HTMLDivElement>) => {
     setWriter(e);
@@ -39,7 +39,9 @@ const WriterDropDown = (props: WriterPropType) => {
     <WriterDropDownWrapper ref={dropDownRef}>
       <DropDownToggle onClick={handleOnClick}>
         <DropDownContent $contentWidth={14.6}>{selectedWriter}</DropDownContent>
-        {writerIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
+        <EditorDropIcnActiveIcon isOpen={writerIsOpen} />
+        <EditorDropIcnActiveOpenIcon isOpen={writerIsOpen} />
+        {/* {writerIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />} */}
       </DropDownToggle>
       <WriterListWrapper $isOpen={writerIsOpen}>
         <WriterList onClick={onClickWriter} $selected={selectedWriter === '작자미상'}>
@@ -95,4 +97,16 @@ const WriterList = styled.div<{ $selected: boolean }>`
   &:hover {
     background-color: ${({ theme }) => theme.colors.gray20};
   }
+`;
+
+const EditorDropIcnActiveOpenIcon = styled(EditorDropIcnActiveOpenIc)<{ isOpen: boolean }>`
+  display: ${({ isOpen }) => (isOpen ? 'inline' : 'none')};
+  width: 2.8rem;
+  height: 2.8rem;
+`;
+
+const EditorDropIcnActiveIcon = styled(EditorDropIcnActiveIc)<{ isOpen: boolean }>`
+  display: ${({ isOpen }) => (isOpen ? 'none' : 'inline')};
+  width: 2.8rem;
+  height: 2.8rem;
 `;
