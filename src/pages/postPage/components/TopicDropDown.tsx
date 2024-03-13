@@ -38,8 +38,12 @@ const TopicDropDown = (props: TopicPropTypes) => {
     <TopicDropDownWrapper ref={topicListDropDownRef}>
       <DropDownToggle onClick={handleOnClick}>
         <DropDownContent $contentWidth={29}>{selectedTopic}</DropDownContent>
-        <EditorDropIcnActiveIcon isOpen={topicIsOpen} />
-        <EditorDropIcnActiveOpenIcon isOpen={topicIsOpen} />
+        <EditorDropIcnActiveWrapper $isOpen={topicIsOpen}>
+          <EditorDropIcnActiveIcon />
+        </EditorDropIcnActiveWrapper>
+        <EditorDropIcnActiveOpenWrapper $isOpen={topicIsOpen}>
+          <EditorDropIcnActiveOpenIcon />
+        </EditorDropIcnActiveOpenWrapper>
       </DropDownToggle>
       <TopicListWrapper $isOpen={topicIsOpen}>
         {topicList.map((item, idx) => {
@@ -99,14 +103,21 @@ const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
     border-radius: 4px;
   }
 `;
-const EditorDropIcnActiveOpenIcon = styled(EditorDropIcnActiveOpenIc)<{ isOpen: boolean }>`
-  display: ${({ isOpen }) => (isOpen ? 'inline' : 'none')};
+
+const EditorDropIcnActiveOpenWrapper = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'inline' : 'none')};
+`;
+
+const EditorDropIcnActiveOpenIcon = styled(EditorDropIcnActiveOpenIc)`
   width: 2.8rem;
   height: 2.8rem;
 `;
 
-const EditorDropIcnActiveIcon = styled(EditorDropIcnActiveIc)<{ isOpen: boolean }>`
-  display: ${({ isOpen }) => (isOpen ? 'none' : 'inline')};
+const EditorDropIcnActiveWrapper = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'none' : 'inline')};
+`;
+
+const EditorDropIcnActiveIcon = styled(EditorDropIcnActiveIc)`
   width: 2.8rem;
   height: 2.8rem;
 `;
