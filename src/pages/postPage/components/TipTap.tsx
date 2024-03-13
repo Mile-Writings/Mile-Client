@@ -185,7 +185,10 @@ const TipTap = (props: EditorPropTypes) => {
 
   // 인용구 함수
   const toggleBlockQuote = useCallback(() => {
-    editor.chain().focus().toggleBlockquote().run();
+    const current = editor.view.state.selection.$head.pos - 1;
+    // 제일 처음에 인용구 누를 경우 예외처리
+    const focusPos = current ? current : 'start';
+    editor.chain().focus().toggleBlockquote().enter().unsetBlockquote().focus(focusPos).run();
   }, [editor]);
 
   // 구분선 함수
