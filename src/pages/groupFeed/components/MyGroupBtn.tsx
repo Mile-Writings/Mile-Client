@@ -18,7 +18,6 @@ const MyGroupBtnWrapper = styled.button`
   justify-content: center;
   width: 9.5rem;
   height: 4rem;
-  margin-right: 2rem;
   padding: 1rem 1.6rem;
 
   color: ${({ theme }) => theme.colors.gray70};

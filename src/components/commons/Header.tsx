@@ -126,13 +126,14 @@ const HeaderWrapper = styled.div`
 
 const HeaderLayout = styled.div`
   display: flex;
+  gap: 2rem;
   align-items: center;
   height: 6.4rem;
 `;
 
 const HeaderBtnContainer = styled.div`
   display: flex;
-  gap: 1.2rem;
+  gap: 2rem;
   align-items: center;
   height: 6.4rem;
 `;
