@@ -65,7 +65,16 @@ const MyGroupBtnLayout = styled.button`
     color: ${({ theme }) => theme.colors.mainViolet};
 
     background-color: ${({ theme }) => theme.colors.gray10};
+    transform: scale(0.95);
     border-radius: 0.8rem;
+
+    transition: 0.5s;
+  }
+
+  :active {
+    transform: scale(1.1);
+
+    transition: 0.5s;
   }
 `;
 

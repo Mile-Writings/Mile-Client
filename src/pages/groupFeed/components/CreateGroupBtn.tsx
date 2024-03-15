@@ -38,6 +38,15 @@ const CreateGroupBtnWrapper = styled.button`
 
     background-color: ${({ theme }) => theme.colors.white};
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 16%);
+    transform: scale(0.95);
+
+    transition: 0.5s;
   }
   ${({ theme }) => theme.fonts.button3};
+
+  :active {
+    transform: scale(1.1);
+
+    transition: 0.5s;
+  }
 `;

@@ -19,12 +19,20 @@ const LogInOutWrapper = styled.button`
 
   cursor: pointer;
   border-radius: 8px;
+  ${({ theme }) => theme.fonts.button3};
 
   :hover {
     color: ${({ theme }) => theme.colors.mainViolet};
 
     background-color: ${({ theme }) => theme.colors.gray10};
+    transform: scale(0.95);
+
+    transition: 0.5s;
   }
 
-  ${({ theme }) => theme.fonts.button3}
+  :active {
+    transform: scale(1.1);
+
+    transition: 0.5s;
+  }
 `;
