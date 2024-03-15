@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { FetchGroupResponseTypes, Groups, MYGROUP } from '../constants/MYGROUP';
 
+import useClickOutside from '../../../hooks/useClickOutside';
+
 const MyGroupBtn = () => {
   const navigate = useNavigate();
   const handleRoutingGroupFeed = (groupId: string) => {
@@ -14,6 +16,11 @@ const MyGroupBtn = () => {
   const handleOnClick = () => {
     setIsOpen(!isOpen);
   };
+  const handleOutSideClick = () => {
+    setIsOpen(false);
+  };
+
+  useClickOutside(dropDownRef, handleOutSideClick);
 
   return (
     <MyGroupDropDownWrapper ref={dropDownRef}>
