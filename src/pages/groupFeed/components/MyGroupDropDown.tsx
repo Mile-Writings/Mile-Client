@@ -6,7 +6,7 @@ import { FetchGroupResponseTypes, Groups, MYGROUP } from '../constants/MYGROUP';
 
 import useClickOutside from '../../../hooks/useClickOutside';
 
-const MyGroupBtn = () => {
+const MyGroupDropDown = () => {
   const navigate = useNavigate();
   const handleRoutingGroupFeed = (groupId: string) => {
     navigate(`/group/${groupId}`);
@@ -38,7 +38,7 @@ const MyGroupBtn = () => {
   );
 };
 
-export default MyGroupBtn;
+export default MyGroupDropDown;
 
 const MyGroupDropDownWrapper = styled.section`
   display: flex;

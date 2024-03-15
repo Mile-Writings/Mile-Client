@@ -7,7 +7,7 @@ import LogInOutBtn from './LogInOutBtn';
 import { HeaderLogoIc } from '../../assets/svgs';
 import useNavigateHome from '../../hooks/useNavigateHome';
 import CreateGroupBtn from '../../pages/groupFeed/components/CreateGroupBtn';
-import MyGroupBtn from '../../pages/groupFeed/components/MyGroupBtn';
+import MyGroupDropDown from '../../pages/groupFeed/components/MyGroupDropDown';
 import logout from '../../utils/logout';
 
 interface onClickEditProps {
@@ -35,7 +35,7 @@ export const AuthorizationHeader = () => {
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
       <HeaderLayout>
-        <MyGroupBtn />
+        <MyGroupDropDown />
         <HeaderBtnContainer>
           <CreateGroupBtn />
           <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
