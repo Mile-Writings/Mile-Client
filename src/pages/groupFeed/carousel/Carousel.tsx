@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 
 import CarouselContainer from './CarouselContainer';
@@ -20,18 +21,26 @@ import Spacing from '../../../components/commons/Spacing';
 import Error from '../../error/Error';
 import Loading from '../../loading/Loading';
 
-interface CategoryIdPropTypes {
-  activeCategoryId: number;
-  setActiveCategoryId: Dispatch<SetStateAction<number>>;
-  groupId: string | undefined;
-}
+// interface CategoryIdPropTypes {
+//   activeCategoryId: number;
+//   setActiveCategoryId: Dispatch<SetStateAction<number>>;
+// }
 
-const Carousel = (props: CategoryIdPropTypes) => {
-  const { activeCategoryId, setActiveCategoryId, groupId } = props;
+const Carousel = () => {
+  // const { activeCategoryId, setActiveCategoryId } = props;
+  const { groupId } = useParams();
   const { groupFeedCategoryData, isLoading, isError, error } = useTopicList(groupId || '');
   const [selectedTopicId, setSelectedTopicId] = useState<string>('');
 
   const [categoryId] = useState(Number(sessionStorage.getItem('activeCategoryId')) - 1 || 0);
+
+  const sessionCategoryId = window.sessionStorage.getItem('activeCategoryId');
+
+  const [activeCategoryId, setActiveCategoryId] = useState<number>(Number(sessionCategoryId) || 1);
+
+  useEffect(() => {
+    window.sessionStorage.setItem('activeCategoryId', String(activeCategoryId));
+  }, [activeCategoryId]);
 
   useEffect(() => {
     if (groupFeedCategoryData && groupFeedCategoryData.length > 0) {
