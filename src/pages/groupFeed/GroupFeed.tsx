@@ -57,7 +57,6 @@ const GroupFeed = () => {
   return (
     <GroupFeedWrapper>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
-      <Spacing marginBottom="6.4" />
       <GroupFeedThumnail imageUrl={groupInfoData?.imageUrl} />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
