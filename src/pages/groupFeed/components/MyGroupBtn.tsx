@@ -1,13 +1,14 @@
 import styled from '@emotion/styled';
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { MYGROUP } from '../constants/MYGROUP';
+import { FetchGroupResponseTypes, Groups, MYGROUP } from '../constants/MYGROUP';
 
 const MyGroupBtn = () => {
-  // const navigate = useNavigate();
-  // const handleRoutingGroupFeed = () => {
-  //   navigate(`/group/MQ==`);
-  // };
+  const navigate = useNavigate();
+  const handleRoutingGroupFeed = (groupId: string) => {
+    navigate(`/group/${groupId}`);
+  };
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropDownRef = useRef(null);
   const handleOnClick = () => {
@@ -18,9 +19,11 @@ const MyGroupBtn = () => {
     <MyGroupDropDownWrapper ref={dropDownRef}>
       <MyGroupBtnLayout onClick={handleOnClick}>내 글 모임</MyGroupBtnLayout>
       <MyGroupListLayout $isOpen={isOpen}>
-        {MYGROUP.map(({ data }) =>
-          data.groups.map(({ groupId, groupName }) => (
-            <GroupContentContainer key={groupId}>{groupName}</GroupContentContainer>
+        {MYGROUP.map(({ data }: FetchGroupResponseTypes) =>
+          data.groups.map(({ groupId, groupName }: Groups) => (
+            <GroupContentContainer key={groupId} onClick={() => handleRoutingGroupFeed(groupId)}>
+              {groupName}
+            </GroupContentContainer>
           )),
         )}
       </MyGroupListLayout>
