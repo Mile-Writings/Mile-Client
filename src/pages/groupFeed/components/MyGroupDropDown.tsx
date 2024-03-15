@@ -20,6 +20,7 @@ const MyGroupDropDown = () => {
     setIsOpen(false);
   };
 
+  // 기존 커스텀 훅 재사용 - 바깥 영역 클릭시 드롭다운 닫힘
   useClickOutside(dropDownRef, handleOutSideClick);
 
   return (
