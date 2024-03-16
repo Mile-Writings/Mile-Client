@@ -21,13 +21,7 @@ import Spacing from '../../../components/commons/Spacing';
 import Error from '../../error/Error';
 import Loading from '../../loading/Loading';
 
-// interface CategoryIdPropTypes {
-//   activeCategoryId: number;
-//   setActiveCategoryId: Dispatch<SetStateAction<number>>;
-// }
-
 const Carousel = () => {
-  // const { activeCategoryId, setActiveCategoryId } = props;
   const { groupId } = useParams();
   const { groupFeedCategoryData, isLoading, isError, error } = useTopicList(groupId || '');
   const [selectedTopicId, setSelectedTopicId] = useState<string>('');

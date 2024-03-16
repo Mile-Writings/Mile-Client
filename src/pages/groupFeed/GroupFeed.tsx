@@ -53,7 +53,7 @@ const GroupFeed = () => {
     console.log(error?.message, 'error');
     return <Error />;
   }
-  console.log('ektl');
+
   return (
     <GroupFeedWrapper>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}

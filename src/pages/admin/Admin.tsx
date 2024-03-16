@@ -10,8 +10,6 @@ const Admin = () => {
   const accessToken = localStorage.getItem('accessToken');
   const [admin, setAdmin] = useState('topic');
 
-  //함수 호출
-
   return (
     <AdminWrapper>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
