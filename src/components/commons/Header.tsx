@@ -109,7 +109,7 @@ export const EditorTempExistHeader = ({ onClickSubmit }: OnClickTempExistProps) 
 };
 
 const HeaderWrapper = styled.div`
-  /* position: fixed; */
+  position: fixed;
   top: 0%;
   z-index: 4;
   display: flex;

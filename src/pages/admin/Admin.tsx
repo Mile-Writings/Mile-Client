@@ -13,7 +13,7 @@ const Admin = () => {
   return (
     <AdminWrapper>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
-      <Spacing marginBottom="7.2" />
+      <Spacing marginBottom="13.6" />
       <AdminLayout>
         <SideNavbar>
           <AdminMenu>
