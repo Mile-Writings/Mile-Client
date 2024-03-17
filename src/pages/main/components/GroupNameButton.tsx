@@ -1,7 +1,11 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { MainIcnArrowBlack as MainIcnArrowBlackIcon } from '../../../assets/svgs';
+import {
+  MainIcnArrowBlack as MainIcnArrowBlackIcon,
+  MainIcnArrowPurple as MainIcnArrowPurpleIcon,
+} from '../../../assets/svgs';
 
 interface ButtonPropTypes {
   groupName: string;
@@ -12,11 +16,16 @@ const GroupNameButton = ({ groupId, groupName }: ButtonPropTypes) => {
   const handleButtonOnClick = () => {
     navigate(`/group/${groupId}`);
   };
+  const [IsHovered, setIsHovered] = useState<boolean>(false);
 
   return (
-    <GroupNameButtonWrapper onClick={handleButtonOnClick}>
+    <GroupNameButtonWrapper
+      onClick={handleButtonOnClick}
+      onMouseOver={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {groupName}
-      <MainIcnArrowBlackIcon />
+      {IsHovered ? <MainIcnArrowPurpleIcon /> : <MainIcnArrowBlackIcon />}
     </GroupNameButtonWrapper>
   );
 };
@@ -36,4 +45,11 @@ const GroupNameButtonWrapper = styled.button`
   border-radius: 0.8rem;
 
   ${({ theme }) => theme.fonts.subtitle2};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+
+    background-color: ${({ theme }) => theme.colors.white};
+    border: 1px solid ${({ theme }) => theme.colors.white};
+  }
 `;
