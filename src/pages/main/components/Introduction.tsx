@@ -54,7 +54,7 @@ const IntroductionWrapper = styled.section`
   margin-top: 10rem;
   padding: 10.1rem 21.8rem 10rem 28.4rem;
 
-  background-color: ${({ theme }) => theme.colors.mileViolet};
+  background-color: ${({ theme }) => theme.colors.backGroundViolet};
 `;
 
 const MileMakersTextLayout = styled.div`
@@ -85,14 +85,14 @@ const GroupRoutingButtonBox = styled.button`
   color: ${({ theme }) => theme.colors.white};
   ${({ theme }) => theme.fonts.button1};
 
-  background-color: ${({ theme }) => theme.colors.mainViolet};
+  background-color: ${({ theme }) => theme.colors.black};
   border-radius: 0.8rem;
 
   &:hover {
     color: ${({ theme }) => theme.colors.mainViolet};
     ${({ theme }) => theme.fonts.button1};
 
-    background-color: ${({ theme }) => theme.colors.middleViolet};
+    background-color: ${({ theme }) => theme.colors.white};
 
     & > svg {
       path {
