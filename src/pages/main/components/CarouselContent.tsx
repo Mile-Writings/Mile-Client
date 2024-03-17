@@ -144,7 +144,7 @@ const GroupRoutingBtnLayout = styled.section`
 const GroupRoutingBox = styled.p`
   width: 12.3rem;
 
-  color: ${({ theme }) => theme.colors.mainViolet};
+  color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.title8};
 `;
 
