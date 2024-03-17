@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { MainIcnArrowPurple as MainIcnArrowPurpleIcon } from '../../../assets/svgs';
+import { MainIcnArrowBlack as MainIcnArrowBlackIcon } from '../../../assets/svgs';
 
 interface ButtonPropTypes {
   groupName: string;
@@ -16,7 +16,7 @@ const GroupNameButton = ({ groupId, groupName }: ButtonPropTypes) => {
   return (
     <GroupNameButtonWrapper onClick={handleButtonOnClick}>
       {groupName}
-      <MainIcnArrowPurpleIcon />
+      <MainIcnArrowBlackIcon />
     </GroupNameButtonWrapper>
   );
 };
@@ -30,9 +30,9 @@ const GroupNameButtonWrapper = styled.button`
   justify-content: flex-start;
   padding: 0.6rem 1rem;
 
-  color: ${({ theme }) => theme.colors.mainViolet};
+  color: ${({ theme }) => theme.colors.black};
 
-  border: 1px solid ${({ theme }) => theme.colors.mainViolet};
+  border: 1px solid ${({ theme }) => theme.colors.black};
   border-radius: 0.8rem;
 
   ${({ theme }) => theme.fonts.subtitle2};
