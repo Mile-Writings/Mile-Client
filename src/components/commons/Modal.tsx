@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import Spacing from './Spacing';
+
 interface modalPropTypes {
   modalContent: string;
 }
@@ -14,6 +16,7 @@ export const NegativeModal = ({ modalContent }: modalPropTypes) => {
   return (
     <ModalWrapper>
       <ModalContentLayout>{modalContent}</ModalContentLayout>
+      <Spacing marginBottom="3.2" />
       <ModalBtnLayout>
         <ModalButton buttonContent={'예'} isRightButton={false} />
         <ModalButton buttonContent={'아니오'} isRightButton={true} />
@@ -27,6 +30,7 @@ export const PositiveModal = ({ modalContent }: modalPropTypes) => {
   return (
     <ModalWrapper>
       <ModalContentLayout>{modalContent}</ModalContentLayout>
+      <Spacing marginBottom="3.2" />
       <ModalBtnLayout>
         <ModalButton buttonContent={'아니오'} isRightButton={false} />
         <ModalButton buttonContent={'예'} isRightButton={true} />
@@ -46,15 +50,23 @@ const ModalWrapper = styled.section`
   justify-content: center;
   width: 40rem;
   height: 18.1rem;
+  padding: 3.2rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 1rem;
 `;
 
 const ModalContentLayout = styled.div`
-  gap: 1.2rem;
-  align-items: center;
+  color: ${({ theme }) => theme.colors.gray100};
+  white-space: pre-line;
+  text-align: center;
+
+  ${({ theme }) => theme.fonts.title8};
 `;
 
 const ModalBtnLayout = styled.div`
   display: flex;
+  gap: 1.2rem;
 `;
 
 const ModalBtnWrapper = styled.button<{ $isRightButton: boolean }>`
@@ -67,11 +79,16 @@ const ModalBtnWrapper = styled.button<{ $isRightButton: boolean }>`
 
   background-color: ${({ $isRightButton, theme }) =>
     $isRightButton ? theme.colors.mainViolet : theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.mainViolet};
+  border: 1px solid
+    ${({ $isRightButton, theme }) =>
+      $isRightButton ? theme.colors.mileViolet : theme.colors.mainViolet};
+  border-radius: 0.8rem;
 
   ${({ theme }) => theme.fonts.button2};
 
   &:hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+
     background-color: ${({ theme }) => theme.colors.mileViolet};
   }
 `;
