@@ -5,6 +5,7 @@ interface modalPropTypes {
 }
 
 interface ButtonPropTypes {
+  buttonContent: string;
   isRightButton: boolean;
 }
 
@@ -14,8 +15,8 @@ export const NegativeModal = ({ modalContent }: modalPropTypes) => {
     <ModalWrapper>
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <ModalBtnLayout>
-        <PositiveBtn isRightButton={false} />
-        <NegativeBtn isRightButton={true} />
+        <ModalButton buttonContent={'예'} isRightButton={false} />
+        <ModalButton buttonContent={'아니오'} isRightButton={true} />
       </ModalBtnLayout>
     </ModalWrapper>
   );
@@ -27,19 +28,15 @@ export const PositiveModal = ({ modalContent }: modalPropTypes) => {
     <ModalWrapper>
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <ModalBtnLayout>
-        <NegativeBtn isRightButton={false} />
-        <PositiveBtn isRightButton={true} />
+        <ModalButton buttonContent={'아니오'} isRightButton={false} />
+        <ModalButton buttonContent={'예'} isRightButton={true} />
       </ModalBtnLayout>
     </ModalWrapper>
   );
 };
 
-export const PositiveBtn = ({ isRightButton }: ButtonPropTypes) => {
-  return <ModalBtnWrapper $isRightButton={isRightButton}>예</ModalBtnWrapper>;
-};
-
-export const NegativeBtn = ({ isRightButton }: ButtonPropTypes) => {
-  return <ModalBtnWrapper $isRightButton={isRightButton}>아니오</ModalBtnWrapper>;
+export const ModalButton = ({ buttonContent, isRightButton }: ButtonPropTypes) => {
+  return <ModalBtnWrapper $isRightButton={isRightButton}>{buttonContent}</ModalBtnWrapper>;
 };
 
 const ModalWrapper = styled.section`
