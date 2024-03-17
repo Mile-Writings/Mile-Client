@@ -36,8 +36,4 @@ const GroupNameButtonWrapper = styled.button`
   border-radius: 0.8rem;
 
   ${({ theme }) => theme.fonts.subtitle2};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.mileViolet};
-  }
 `;
