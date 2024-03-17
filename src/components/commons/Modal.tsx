@@ -1,46 +1,84 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import Spacing from './Spacing';
 
-interface modalPropTypes {
+interface modalContentPropTypes {
   modalContent: string;
+  confirmRoutingTo: string; // '예' 버튼이 라우팅 되는 곳을 나타냄
+  cancelRoutingTo: string;
 }
 
 interface ButtonPropTypes {
   buttonContent: string;
-  isRightButton: boolean;
+  isRightButton: boolean; // 어느 버튼이 오른쪽에 있는지 나타냄
+  confirmRoutingTo?: string; // '예' 버튼이 라우팅 되는 곳을 나타냄
+  cancelRoutingTo?: string; // '아니오' 버튼이 라우팅 되는 곳을 나타냄
 }
 
 // '아니오'를 유도하는 모달
-export const NegativeModal = ({ modalContent }: modalPropTypes) => {
+export const NegativeModal = (props: modalContentPropTypes) => {
+  const { confirmRoutingTo, cancelRoutingTo, modalContent } = props;
+
   return (
     <ModalWrapper>
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <Spacing marginBottom="3.2" />
       <ModalBtnLayout>
-        <ModalButton buttonContent={'예'} isRightButton={false} />
-        <ModalButton buttonContent={'아니오'} isRightButton={true} />
+        <ModalButton
+          confirmRoutingTo={confirmRoutingTo}
+          buttonContent={'예'}
+          isRightButton={false}
+        />
+        <ModalButton
+          cancelRoutingTo={cancelRoutingTo}
+          buttonContent={'아니오'}
+          isRightButton={true}
+        />
       </ModalBtnLayout>
     </ModalWrapper>
   );
 };
 
 // '예'를 유도하는 모달
-export const PositiveModal = ({ modalContent }: modalPropTypes) => {
+export const PositiveModal = (props: modalContentPropTypes) => {
+  const { confirmRoutingTo, cancelRoutingTo, modalContent } = props;
+
   return (
     <ModalWrapper>
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <Spacing marginBottom="3.2" />
       <ModalBtnLayout>
-        <ModalButton buttonContent={'아니오'} isRightButton={false} />
-        <ModalButton buttonContent={'예'} isRightButton={true} />
+        <ModalButton
+          cancelRoutingTo={cancelRoutingTo}
+          buttonContent={'아니오'}
+          isRightButton={false}
+        />
+        <ModalButton
+          confirmRoutingTo={confirmRoutingTo}
+          buttonContent={'예'}
+          isRightButton={true}
+        />
       </ModalBtnLayout>
     </ModalWrapper>
   );
 };
 
 export const ModalButton = ({ buttonContent, isRightButton }: ButtonPropTypes) => {
-  return <ModalBtnWrapper $isRightButton={isRightButton}>{buttonContent}</ModalBtnWrapper>;
+  const navigate = useNavigate();
+  const handleOnClick = ({ confirmRoutingTo, cancelRoutingTo }: ButtonPropTypes) => {
+    if (confirmRoutingTo) {
+      navigate(`${confirmRoutingTo}`);
+    } else if (cancelRoutingTo) {
+      navigate(`${cancelRoutingTo}`);
+    }
+  };
+
+  return (
+    <ModalBtnWrapper onClick={() => handleOnClick} $isRightButton={isRightButton}>
+      {buttonContent}
+    </ModalBtnWrapper>
+  );
 };
 
 const ModalWrapper = styled.section`
