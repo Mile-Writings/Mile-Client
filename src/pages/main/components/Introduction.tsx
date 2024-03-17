@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { INTRODUCTION_DATA } from '../constants/introductionData';
@@ -6,6 +7,7 @@ import { INTRODUCTION_DATA } from '../constants/introductionData';
 import {
   MainIcnArrowWhite as MainArrowWhiteIc,
   MainGraphicLogo as MainGraphicLogoIc,
+  MainIcnArrowPurple as MainIcnArrowPurpleIcon,
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
@@ -14,6 +16,7 @@ const Introduction = () => {
   const handleOnClick = () => {
     navigate('/group/MQ==');
   };
+  const [IsHovered, setIsHovered] = useState<boolean>(false);
 
   return (
     <IntroductionWrapper>
@@ -27,9 +30,13 @@ const Introduction = () => {
         <Spacing marginBottom="0.8" />
         <SubText>{INTRODUCTION_DATA[0].subText}</SubText>
         <Spacing marginBottom="8" />
-        <GroupRoutingButtonBox onClick={handleOnClick}>
+        <GroupRoutingButtonBox
+          onClick={handleOnClick}
+          onMouseOver={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           마일 글 모임 바로가기
-          <MainArrowWhiteIc />
+          {IsHovered ? <MainIcnArrowPurpleIcon /> : <MainArrowWhiteIc />}
         </GroupRoutingButtonBox>
       </MileMakersTextLayout>
       <IntroduceZakmiBox>
@@ -93,12 +100,6 @@ const GroupRoutingButtonBox = styled.button`
     ${({ theme }) => theme.fonts.button1};
 
     background-color: ${({ theme }) => theme.colors.white};
-
-    & > svg {
-      path {
-        stroke: ${({ theme }) => theme.colors.mainViolet};
-      }
-    }
   }
 `;
 
