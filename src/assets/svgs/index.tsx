@@ -5,7 +5,6 @@ export { default as EditorTextColorIcnBlackSvg } from './editorTextcolorIcnBlack
 export { default as HeaderLogoSvg } from './headerLogoSvg.svg?react';
 export { default as MainGroupRoutingBtn } from './mainGroupRoutingBtn.svg?react';
 export { default as MainGroupRoutingBtnHover } from './mainGroupRoutingBtnHover.svg?react';
-export { default as MainIcnArrowPurple } from './mainIcnArrowPurple.svg?react';
 
 export { default as DetailPurpleFavoriteIc } from './detailPurplefavorite.svg?react';
 export { default as DetailWhiteFavoriteIc } from './detailWhitefavorite.svg?react';
