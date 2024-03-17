@@ -5,15 +5,15 @@ import Spacing from './Spacing';
 
 interface modalContentPropTypes {
   modalContent: string;
-  confirmRoutingTo: string; // '예' 버튼이 라우팅 되는 곳을 나타냄
+  confirmRoutingTo: string;
   cancelRoutingTo: string;
 }
 
 interface ButtonPropTypes {
   buttonContent: string;
-  isRightButton: boolean; // 어느 버튼이 오른쪽에 있는지 나타냄
-  confirmRoutingTo?: string; // '예' 버튼이 라우팅 되는 곳을 나타냄
-  cancelRoutingTo?: string; // '아니오' 버튼이 라우팅 되는 곳을 나타냄
+  isRightButton: boolean; // 버튼이 오른쪽에 있는지 여부
+  confirmRoutingTo?: string | undefined; // '예' 버튼이 라우팅 되는 곳을 나타냄
+  cancelRoutingTo?: string | undefined; // '아니오' 버튼이 라우팅 되는 곳을 나타냄
 }
 
 // '아니오'를 유도하는 모달
@@ -64,9 +64,10 @@ export const PositiveModal = (props: modalContentPropTypes) => {
   );
 };
 
-export const ModalButton = ({ buttonContent, isRightButton }: ButtonPropTypes) => {
+export const ModalButton = (props: ButtonPropTypes) => {
+  const { confirmRoutingTo, cancelRoutingTo, buttonContent, isRightButton } = props;
   const navigate = useNavigate();
-  const handleOnClick = ({ confirmRoutingTo, cancelRoutingTo }: ButtonPropTypes) => {
+  const handleOnClick = () => {
     if (confirmRoutingTo) {
       navigate(`${confirmRoutingTo}`);
     } else if (cancelRoutingTo) {
@@ -75,7 +76,7 @@ export const ModalButton = ({ buttonContent, isRightButton }: ButtonPropTypes) =
   };
 
   return (
-    <ModalBtnWrapper onClick={() => handleOnClick} $isRightButton={isRightButton}>
+    <ModalBtnWrapper onClick={handleOnClick} $isRightButton={isRightButton}>
       {buttonContent}
     </ModalBtnWrapper>
   );
