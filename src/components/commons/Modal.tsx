@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
 
-import { NegativeBtn, PositiveBtn } from './ModalBtn';
-
 interface modalPropTypes {
   modalContent: string;
+}
+
+interface ButtonPropTypes {
+  isRightButton: boolean;
 }
 
 // '아니오'를 유도하는 모달
@@ -12,8 +14,8 @@ export const NegativeModal = ({ modalContent }: modalPropTypes) => {
     <ModalWrapper>
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <ModalBtnLayout>
-        <PositiveBtn />
-        <NegativeBtn />
+        <PositiveBtn isRightButton={false} />
+        <NegativeBtn isRightButton={true} />
       </ModalBtnLayout>
     </ModalWrapper>
   );
@@ -25,11 +27,19 @@ export const PositiveModal = ({ modalContent }: modalPropTypes) => {
     <ModalWrapper>
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <ModalBtnLayout>
-        <NegativeBtn >
-        <PositiveBtn />
+        <NegativeBtn isRightButton={false} />
+        <PositiveBtn isRightButton={true} />
       </ModalBtnLayout>
     </ModalWrapper>
   );
+};
+
+export const PositiveBtn = ({ isRightButton }: ButtonPropTypes) => {
+  return <ModalBtnWrapper $isRightButton={isRightButton}>예</ModalBtnWrapper>;
+};
+
+export const NegativeBtn = ({ isRightButton }: ButtonPropTypes) => {
+  return <ModalBtnWrapper $isRightButton={isRightButton}>아니오</ModalBtnWrapper>;
 };
 
 const ModalWrapper = styled.section`
@@ -48,4 +58,23 @@ const ModalContentLayout = styled.div`
 
 const ModalBtnLayout = styled.div`
   display: flex;
+`;
+
+const ModalBtnWrapper = styled.button<{ $isRightButton: boolean }>`
+  width: 15.4rem;
+  height: 3.9rem;
+  padding: 1rem 0;
+
+  color: ${({ $isRightButton, theme }) =>
+    $isRightButton ? theme.colors.white : theme.colors.mainViolet};
+
+  background-color: ${({ $isRightButton, theme }) =>
+    $isRightButton ? theme.colors.mainViolet : theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.mainViolet};
+
+  ${({ theme }) => theme.fonts.button2};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.mileViolet};
+  }
 `;
