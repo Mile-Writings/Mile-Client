@@ -76,6 +76,8 @@ const MemberItemContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 1.6rem 0;
+
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray10};
 `;
 
 const Profile = styled.img`
