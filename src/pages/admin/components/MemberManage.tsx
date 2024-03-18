@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import { FetchMemberPropTypes, MEMBER, Members } from '../constants/MEMBER';
 
+import { adminEmptyMemberIc as AdminEmptyMemberIcon } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 const MemberManage = () => {
@@ -14,17 +15,25 @@ const MemberManage = () => {
       </TableHeaderLayout>
       <Spacing marginBottom="0.4" />
       <MemberLayout>
-        {MEMBER.map(({ data }: FetchMemberPropTypes) => {
-          return data.members.map(({ profileImage, penName, email }: Members) => {
-            return (
-              <MemberItemContainer key={email}>
-                <Profile src={profileImage} />
-                <Name>{penName}</Name>
-                <Email>{email}</Email>
-                <ExpelBtn>삭제하기</ExpelBtn>
-              </MemberItemContainer>
-            );
-          });
+        {MEMBER.map(({ data }: FetchMemberPropTypes, index) => {
+          return data.members.length !== 0 ? (
+            data.members.map(({ profileImage, penName, email }: Members) => {
+              return (
+                <MemberItemContainer key={penName}>
+                  <Profile src={profileImage} />
+                  <Name>{penName}</Name>
+                  <Email>{email}</Email>
+                  <ExpelBtn>삭제하기</ExpelBtn>
+                </MemberItemContainer>
+              );
+            })
+          ) : (
+            <EmptyContainer key={index}>
+              <EmptyMemberText>아직 멤버가 없습니다.</EmptyMemberText>
+              <Spacing marginBottom="3" />
+              <AdminEmptyMemberIcon />
+            </EmptyContainer>
+          );
         })}
       </MemberLayout>
     </MemberTableWrapper>
@@ -57,11 +66,11 @@ const Header = styled.p`
   display: flex;
   align-items: flex-start;
 
-  &:first-child {
+  &:first-of-type {
     margin-right: 7.75rem;
   }
 
-  &:nth-child(2) {
+  &:nth-of-type(2) {
     margin-right: 8.4rem;
   }
 `;
@@ -107,4 +116,23 @@ const ExpelBtn = styled.button`
 
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.button2};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+  }
+`;
+
+const EmptyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 78.1rem;
+  height: 36.8rem;
+  padding: 0.4rem 1.8rem;
+`;
+
+const EmptyMemberText = styled.div`
+  color: ${({ theme }) => theme.colors.gray50};
+  ${({ theme }) => theme.fonts.title8};
 `;
