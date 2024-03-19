@@ -6,35 +6,29 @@ import Spacing from './Spacing';
 interface modalContentPropTypes {
   modalContent: string;
   confirmRoutingTo: string;
-  cancelRoutingTo: string;
+  // cancelRoutingTo: string;
 }
 
 interface ButtonPropTypes {
-  buttonContent: string;
+  children: string;
   isRightButton: boolean; // 버튼이 오른쪽에 있는지 여부
   confirmRoutingTo?: string | undefined; // '예' 버튼이 라우팅 되는 곳을 나타냄
-  cancelRoutingTo?: string | undefined; // '아니오' 버튼이 라우팅 되는 곳을 나타냄
+  // cancelRoutingTo?: string | undefined; // '아니오' 버튼이 라우팅 되는 곳을 나타냄
 }
 
 // '아니오'를 유도하는 모달
 export const NegativeModal = (props: modalContentPropTypes) => {
-  const { confirmRoutingTo, cancelRoutingTo, modalContent } = props;
+  const { confirmRoutingTo, modalContent } = props;
 
   return (
     <ModalWrapper>
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <Spacing marginBottom="3.2" />
       <ModalBtnLayout>
-        <ModalButton
-          confirmRoutingTo={confirmRoutingTo}
-          buttonContent={'예'}
-          isRightButton={false}
-        />
-        <ModalButton
-          cancelRoutingTo={cancelRoutingTo}
-          buttonContent={'아니오'}
-          isRightButton={true}
-        />
+        <ModalButton confirmRoutingTo={confirmRoutingTo} isRightButton={false}>
+          예
+        </ModalButton>
+        <ModalButton isRightButton={true}>아니오</ModalButton>
       </ModalBtnLayout>
     </ModalWrapper>
   );
@@ -42,42 +36,34 @@ export const NegativeModal = (props: modalContentPropTypes) => {
 
 // '예'를 유도하는 모달
 export const PositiveModal = (props: modalContentPropTypes) => {
-  const { confirmRoutingTo, cancelRoutingTo, modalContent } = props;
+  const { confirmRoutingTo, modalContent } = props;
 
   return (
     <ModalWrapper>
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <Spacing marginBottom="3.2" />
       <ModalBtnLayout>
-        <ModalButton
-          cancelRoutingTo={cancelRoutingTo}
-          buttonContent={'아니오'}
-          isRightButton={false}
-        />
-        <ModalButton
-          confirmRoutingTo={confirmRoutingTo}
-          buttonContent={'예'}
-          isRightButton={true}
-        />
+        <ModalButton isRightButton={false}>아니오</ModalButton>
+        <ModalButton confirmRoutingTo={confirmRoutingTo} isRightButton={true}>
+          예
+        </ModalButton>
       </ModalBtnLayout>
     </ModalWrapper>
   );
 };
 
 export const ModalButton = (props: ButtonPropTypes) => {
-  const { confirmRoutingTo, cancelRoutingTo, buttonContent, isRightButton } = props;
+  const { confirmRoutingTo, children, isRightButton } = props;
   const navigate = useNavigate();
   const handleOnClick = () => {
     if (confirmRoutingTo) {
       navigate(`${confirmRoutingTo}`);
-    } else if (cancelRoutingTo) {
-      navigate(`${cancelRoutingTo}`);
     }
   };
 
   return (
     <ModalBtnWrapper onClick={handleOnClick} $isRightButton={isRightButton}>
-      {buttonContent}
+      {children}
     </ModalBtnWrapper>
   );
 };
