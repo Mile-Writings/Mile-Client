@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { FetchGroupResponseTypes, Groups, MYGROUP } from '../constants/MYGROUP';
+import { FetchGroupResponseTypes, Groups, MYGROUP } from '../constants/myGroupName';
 
 import useClickOutside from '../../../hooks/useClickOutside';
 
