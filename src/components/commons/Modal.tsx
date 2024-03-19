@@ -11,7 +11,6 @@ interface modalContentPropTypes {
 
 interface ButtonPropTypes {
   children: string;
-  isRightButton: boolean; // 버튼이 오른쪽에 있는지 여부
   confirmRoutingTo?: string | undefined; // '예' 버튼이 라우팅 되는 곳을 나타냄
   // cancelRoutingTo?: string | undefined; // '아니오' 버튼이 라우팅 되는 곳을 나타냄
 }
@@ -25,10 +24,8 @@ export const NegativeModal = (props: modalContentPropTypes) => {
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <Spacing marginBottom="3.2" />
       <ModalBtnLayout>
-        <ModalButton confirmRoutingTo={confirmRoutingTo} isRightButton={false}>
-          예
-        </ModalButton>
-        <ModalButton isRightButton={true}>아니오</ModalButton>
+        <LeftBtn confirmRoutingTo={confirmRoutingTo}>예</LeftBtn>
+        <RightBtn>아니오</RightBtn>
       </ModalBtnLayout>
     </ModalWrapper>
   );
@@ -43,17 +40,15 @@ export const PositiveModal = (props: modalContentPropTypes) => {
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <Spacing marginBottom="3.2" />
       <ModalBtnLayout>
-        <ModalButton isRightButton={false}>아니오</ModalButton>
-        <ModalButton confirmRoutingTo={confirmRoutingTo} isRightButton={true}>
-          예
-        </ModalButton>
+        <LeftBtn>아니오</LeftBtn>
+        <RightBtn confirmRoutingTo={confirmRoutingTo}>예</RightBtn>
       </ModalBtnLayout>
     </ModalWrapper>
   );
 };
 
-export const ModalButton = (props: ButtonPropTypes) => {
-  const { confirmRoutingTo, children, isRightButton } = props;
+export const RightBtn = (props: ButtonPropTypes) => {
+  const { confirmRoutingTo, children } = props;
   const navigate = useNavigate();
   const handleOnClick = () => {
     if (confirmRoutingTo) {
@@ -61,11 +56,19 @@ export const ModalButton = (props: ButtonPropTypes) => {
     }
   };
 
-  return (
-    <ModalBtnWrapper onClick={handleOnClick} $isRightButton={isRightButton}>
-      {children}
-    </ModalBtnWrapper>
-  );
+  return <RightBtnWrapper onClick={handleOnClick}>{children}</RightBtnWrapper>;
+};
+
+export const LeftBtn = (props: ButtonPropTypes) => {
+  const { confirmRoutingTo, children } = props;
+  const navigate = useNavigate();
+  const handleOnClick = () => {
+    if (confirmRoutingTo) {
+      navigate(`${confirmRoutingTo}`);
+    }
+  };
+
+  return <LeftBtnWrapper onClick={handleOnClick}>{children}</LeftBtnWrapper>;
 };
 
 const ModalWrapper = styled.section`
@@ -94,19 +97,34 @@ const ModalBtnLayout = styled.div`
   gap: 1.2rem;
 `;
 
-const ModalBtnWrapper = styled.button<{ $isRightButton: boolean }>`
+const RightBtnWrapper = styled.button`
   width: 15.4rem;
   height: 3.9rem;
   padding: 1rem 0;
 
-  color: ${({ $isRightButton, theme }) =>
-    $isRightButton ? theme.colors.white : theme.colors.mainViolet};
+  color: ${({ theme }) => theme.colors.white};
 
-  background-color: ${({ $isRightButton, theme }) =>
-    $isRightButton ? theme.colors.mainViolet : theme.colors.white};
-  border: 1px solid
-    ${({ $isRightButton, theme }) =>
-      $isRightButton ? theme.colors.mileViolet : theme.colors.mainViolet};
+  background-color: ${({ theme }) => theme.colors.mainViolet};
+  border-radius: 0.8rem;
+
+  ${({ theme }) => theme.fonts.button2};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+
+    background-color: ${({ theme }) => theme.colors.mileViolet};
+  }
+`;
+
+const LeftBtnWrapper = styled.button`
+  width: 15.4rem;
+  height: 3.9rem;
+  padding: 1rem 0;
+
+  color: ${({ theme }) => theme.colors.mainViolet};
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.mainViolet};
   border-radius: 0.8rem;
 
   ${({ theme }) => theme.fonts.button2};
