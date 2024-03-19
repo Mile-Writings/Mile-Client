@@ -20,17 +20,19 @@ import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import { Editor, EditorContent, useEditor } from '@tiptap/react';
 import classNames from 'classnames';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 
 // custom
 import { FontSize } from '../utils/fontSize';
 import { FontWeight } from '../utils/fontWeight';
 import { LineHeight } from '../utils/lineHeight';
 
+// custom editor css
 import './tiptap.css';
+// editor svg
 import * as ToolbarIcon from '../../../assets/svgs/editorSVG';
 import Spacing from '../../../components/commons/Spacing';
-// editor svg
+import useClickOutside from '../../../hooks/useClickOutside';
 
 interface EditorPropTypes {
   title: string | undefined;
@@ -50,6 +52,24 @@ const TipTap = (props: EditorPropTypes) => {
   const [isFontColorOpen, setIsFontColorOpen] = useState(false);
   // font background color drop down
   const [isFontBgColorOpen, setIsFontBgColorOpen] = useState(false);
+
+  const fontSizeDropDownRef = useRef(null);
+  const fontColorDropDownRef = useRef(null);
+  const fontBgColorDropDownRef = useRef(null);
+  // 커스텀 훅 전달 함수
+  const handleFontSizeOutSideClick = () => {
+    setIsFontSizeOpen(false);
+  };
+  const handleFontColorOutSideClick = () => {
+    setIsFontColorOpen(false);
+  };
+  const handleFontBgColorOutSideClick = () => {
+    setIsFontBgColorOpen(false);
+  };
+  // 커스텀 훅 사용
+  useClickOutside(fontSizeDropDownRef, handleFontSizeOutSideClick);
+  useClickOutside(fontColorDropDownRef, handleFontColorOutSideClick);
+  useClickOutside(fontBgColorDropDownRef, handleFontBgColorOutSideClick);
 
   const onClickFontSizeToggle = () => {
     setIsFontSizeOpen(!isFontSizeOpen);
@@ -207,7 +227,7 @@ const TipTap = (props: EditorPropTypes) => {
       <Spacing marginBottom="2.4" />
       <ToolbarWrapper className="menu">
         {/* 글자 크기 */}
-        <ToolbarDropDownWrapper>
+        <ToolbarDropDownWrapper ref={fontSizeDropDownRef}>
           <FontSizeToggle onClick={onClickFontSizeToggle}>
             <FontSizeLabel>
               {editor.isActive('textStyle', { fontSize: '1.2rem' })
@@ -220,11 +240,12 @@ const TipTap = (props: EditorPropTypes) => {
                       ? '제목 1'
                       : '본문 1'}
             </FontSizeLabel>
-            {isFontSizeOpen ? (
+            <ToolbarFontSizeDropDonwOpen $isOpen={isFontSizeOpen}>
               <ToolbarIcon.EditorDropIcnOpen />
-            ) : (
+            </ToolbarFontSizeDropDonwOpen>
+            <ToolbarFontSizeDropDonwClose $isOpen={isFontSizeOpen}>
               <ToolbarIcon.EditorDropIcnClose />
-            )}
+            </ToolbarFontSizeDropDonwClose>
           </FontSizeToggle>
           <FontSizeOptionList $isFontSizeOpen={isFontSizeOpen}>
             <FontSizeOption onClick={() => toggleFontSize('2.6rem', '700', '200%')}>
@@ -259,7 +280,7 @@ const TipTap = (props: EditorPropTypes) => {
         </ToolbarDropDownWrapper>
 
         {/* 글자색 */}
-        <ToolbarDropDownWrapper>
+        <ToolbarDropDownWrapper ref={fontColorDropDownRef}>
           <TextColorToggle onClick={onClickFontColorToggle}>
             {editor.isActive('textStyle', { color: '#010101' }) ? (
               <ToolbarIcon.EditorTextColorBlackIcn />
@@ -282,11 +303,12 @@ const TipTap = (props: EditorPropTypes) => {
             ) : (
               <ToolbarIcon.EditorTextColorBlackIcn />
             )}
-            {isFontColorOpen ? (
+            <ToolbarFontColorDropDonwOpen $isOpen={isFontColorOpen}>
               <ToolbarIcon.EditorDropIcnOpen />
-            ) : (
+            </ToolbarFontColorDropDonwOpen>
+            <ToolbarFontColorDropDonwClose $isOpen={isFontColorOpen}>
               <ToolbarIcon.EditorDropIcnClose />
-            )}
+            </ToolbarFontColorDropDonwClose>
           </TextColorToggle>
           <TextColorList $isFontColorOpen={isFontColorOpen}>
             <TextColorOptionWrapper onClick={() => toggleTextColor('#010101')}>
@@ -383,7 +405,7 @@ const TipTap = (props: EditorPropTypes) => {
         </ToolbarDropDownWrapper>
 
         {/* 글자 배경색 */}
-        <ToolbarDropDownWrapper>
+        <ToolbarDropDownWrapper ref={fontBgColorDropDownRef}>
           <TextColorToggle onClick={onClickFontBgColorToggle}>
             {editor.isActive('highlight', { color: '#FFFFFF' }) ? (
               <ToolbarIcon.EditorTextBgColorWhiteIcn />
@@ -406,11 +428,12 @@ const TipTap = (props: EditorPropTypes) => {
             ) : (
               <ToolbarIcon.EditorTextBgColorWhiteIcn />
             )}
-            {isFontBgColorOpen ? (
+            <ToolbarFontBgColorDropDonwOpen $isOpen={isFontBgColorOpen}>
               <ToolbarIcon.EditorDropIcnOpen />
-            ) : (
+            </ToolbarFontBgColorDropDonwOpen>
+            <ToolbarFontBgColorDropDonwClose $isOpen={isFontBgColorOpen}>
               <ToolbarIcon.EditorDropIcnClose />
-            )}
+            </ToolbarFontBgColorDropDonwClose>
           </TextColorToggle>
           <TextColorBgList $isFontBgColorOpen={isFontBgColorOpen}>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#FFFFFF')}>
@@ -865,4 +888,24 @@ const ToolbarSvg = styled.button`
   :hover {
     background-color: ${({ theme }) => theme.colors.mileViolet};
   }
+`;
+
+// svg 조건부 렌더링용
+const ToolbarFontSizeDropDonwOpen = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'inline' : 'none')};
+`;
+const ToolbarFontSizeDropDonwClose = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'none' : 'inline')};
+`;
+const ToolbarFontColorDropDonwOpen = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'inline' : 'none')};
+`;
+const ToolbarFontColorDropDonwClose = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'none' : 'inline')};
+`;
+const ToolbarFontBgColorDropDonwOpen = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'inline' : 'none')};
+`;
+const ToolbarFontBgColorDropDonwClose = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'none' : 'inline')};
 `;
