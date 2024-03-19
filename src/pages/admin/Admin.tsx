@@ -19,22 +19,22 @@ const Admin = () => {
           <AdminMenu>
             <Title>관리자 페이지</Title>
             <Spacing marginBottom="1.6" />
-            <MenuBox>
-              <EachMenu
+            <MenuList>
+              <Menu
                 onClick={() => {
                   setAdmin('topic');
                 }}
                 isActive={admin === 'topic'}
               >
                 글감 설정
-              </EachMenu>
-              <EachMenu onClick={() => setAdmin('member')} isActive={admin === 'member'}>
+              </Menu>
+              <Menu onClick={() => setAdmin('member')} isActive={admin === 'member'}>
                 멤버 관리
-              </EachMenu>
-              <EachMenu onClick={() => setAdmin('groupInfo')} isActive={admin === 'groupInfo'}>
+              </Menu>
+              <Menu onClick={() => setAdmin('groupInfo')} isActive={admin === 'groupInfo'}>
                 모임 정보 수정
-              </EachMenu>
-            </MenuBox>
+              </Menu>
+            </MenuList>
           </AdminMenu>
           <Spacing marginBottom="1.6" />
           <AdminInviteBtn>초대링크 복사하기</AdminInviteBtn>
@@ -92,13 +92,13 @@ const Title = styled.div`
   color: ${({ theme }) => theme.colors.mainViolet};
 `;
 
-const MenuBox = styled.div`
+const MenuList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
 `;
 
-const EachMenu = styled.div<{ isActive: boolean }>`
+const Menu = styled.div<{ isActive: boolean }>`
   padding: 1rem 1.6rem;
 
   ${({ theme }) => theme.fonts.subtitle3};

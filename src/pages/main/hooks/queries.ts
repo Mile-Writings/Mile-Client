@@ -13,6 +13,7 @@ export const useGetGroupContent = (moimId: string) => {
     queryKey: [QUERY_KEY_MAIN.getGroupContent, moimId],
     queryFn: () => getGroupContentApi(),
   });
+
   const groupLength = data?.length;
 
   return { data, isFetching, isLoading, groupLength };
