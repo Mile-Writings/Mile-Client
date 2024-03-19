@@ -6,13 +6,11 @@ import Spacing from './Spacing';
 interface modalContentPropTypes {
   modalContent: string;
   confirmRoutingTo: string;
-  // cancelRoutingTo: string;
 }
 
 interface ButtonPropTypes {
   children: string;
   confirmRoutingTo?: string | undefined; // '예' 버튼이 라우팅 되는 곳을 나타냄
-  // cancelRoutingTo?: string | undefined; // '아니오' 버튼이 라우팅 되는 곳을 나타냄
 }
 
 // '아니오'를 유도하는 모달
