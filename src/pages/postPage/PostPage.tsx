@@ -276,6 +276,7 @@ const PostPage = () => {
       ) : (
         <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
       )}
+      <Spacing marginBottom="6.4" />
       <ImageUpload
         setPreviewImgUrl={setPreviewImgUrl}
         previewImgUrl={previewImgUrl}
