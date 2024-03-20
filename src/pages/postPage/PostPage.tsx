@@ -4,6 +4,7 @@ import React, { useEffect, useState, useReducer } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
+import EditorFlowModal from './components/EditorFlowModal';
 import ImageUpload from './components/ImageUpload';
 import TipTap from './components/TipTap';
 import { EDITOR_DEFAULT_IMG } from './constants/editorDefaultImg';
@@ -269,6 +270,7 @@ const PostPage = () => {
 
   return (
     <PostPageWrapper>
+      <EditorFlowModal />
       {type === 'edit' ? (
         <EditorEditHeader onClickEditSave={editSaveHandler} />
       ) : continueTempPost ? (
