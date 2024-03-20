@@ -44,12 +44,12 @@ const AdminContainer = styled.div`
   width: 78.1rem;
 `;
 
-const Title = styled.div`
+const Title = styled.h1`
   ${({ theme }) => theme.fonts.title9};
   color: ${({ theme }) => theme.colors.mainViolet};
 `;
 
-const SubTitle = styled.p`
+const SubTitle = styled.h2`
   ${({ theme }) => theme.fonts.body4};
   color: ${({ theme }) => theme.colors.gray70};
 `;

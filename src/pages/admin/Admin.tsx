@@ -57,7 +57,7 @@ const AdminLayout = styled.div`
   padding: 0 16.5rem;
 `;
 
-const SideNavbar = styled.div`
+const SideNavbar = styled.nav`
   display: flex;
   flex-direction: column;
   width: 19.5rem;
@@ -73,7 +73,7 @@ const AdminMenu = styled.div`
   border-radius: 8px;
 `;
 
-const AdminInviteBtn = styled.div`
+const AdminInviteBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,7 +87,7 @@ const AdminInviteBtn = styled.div`
   border-radius: 8px;
 `;
 
-const Title = styled.div`
+const Title = styled.h1`
   ${({ theme }) => theme.fonts.title9};
   color: ${({ theme }) => theme.colors.mainViolet};
 `;
