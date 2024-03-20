@@ -28,12 +28,12 @@ const GroupFeed = () => {
   );
 
   //sessionStorage에 저장된 카테고리 id 값을 가져옴
-  const sessionCategoryId = window.sessionStorage.getItem('activeCategoryId');
+  const sessionCategoryId = sessionStorage.getItem('activeCategoryId');
 
   const [activeCategoryId] = useState<number>(Number(sessionCategoryId) || 1);
 
   useEffect(() => {
-    window.sessionStorage.setItem('activeCategoryId', String(activeCategoryId));
+    sessionStorage.setItem('activeCategoryId', String(activeCategoryId));
   }, [activeCategoryId]);
 
   const { groupInfoData } = useGroupInfo(groupId || '');

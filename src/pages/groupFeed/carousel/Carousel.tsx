@@ -33,7 +33,7 @@ const Carousel = () => {
   const [activeCategoryId, setActiveCategoryId] = useState<number>(Number(sessionCategoryId) || 1);
 
   useEffect(() => {
-    window.sessionStorage.setItem('activeCategoryId', String(activeCategoryId));
+    sessionStorage.setItem('activeCategoryId', String(activeCategoryId));
   }, [activeCategoryId]);
 
   useEffect(() => {
