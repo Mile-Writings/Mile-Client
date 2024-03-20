@@ -720,7 +720,7 @@ const FontSizeToggle = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 12.9rem;
-  height: 3.4rem;
+  height: 4.6rem;
   padding: 0 1.3rem;
 
   background-color: white;
@@ -782,7 +782,7 @@ const TextColorToggle = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 10.4rem;
-  height: 3.4rem;
+  height: 4.6rem;
   padding: 0 1.66rem;
 
   background-color: ${({ theme }) => theme.colors.white};
