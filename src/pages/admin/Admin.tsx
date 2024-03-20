@@ -8,7 +8,7 @@ import Spacing from '../../components/commons/Spacing';
 
 const Admin = () => {
   const accessToken = localStorage.getItem('accessToken');
-  const [admin, setAdmin] = useState('topic');
+  const [admin, setAdmin] = useState<'topic' | 'member' | 'groupInfo'>('topic');
 
   return (
     <AdminWrapper>

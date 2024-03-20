@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import Spacing from '../../components/commons/Spacing';
 
-const RenderAdminContent = ({ admin }: { admin: string }) => {
+const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
   switch (admin) {
     case 'topic':
       return (
