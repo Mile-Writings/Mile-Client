@@ -13,7 +13,7 @@ interface modalContentPropTypes {
 interface ButtonPropTypes {
   setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
   children: string;
-  confirmRoutingTo?: string | undefined; // '예' 버튼이 라우팅 되는 곳을 나타냄
+  confirmRoutingTo?: string; // '예' 버튼이 라우팅 되는 곳을 나타냄
 }
 
 // '아니오'를 유도하는 모달
