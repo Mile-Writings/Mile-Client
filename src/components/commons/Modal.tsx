@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Spacing from './Spacing';
@@ -6,9 +7,11 @@ import Spacing from './Spacing';
 interface modalContentPropTypes {
   modalContent: string;
   confirmRoutingTo: string;
+  setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface ButtonPropTypes {
+  setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
   children: string;
   confirmRoutingTo?: string | undefined; // '예' 버튼이 라우팅 되는 곳을 나타냄
 }
@@ -16,14 +19,17 @@ interface ButtonPropTypes {
 // '아니오'를 유도하는 모달
 export const NegativeModal = (props: modalContentPropTypes) => {
   const { confirmRoutingTo, modalContent } = props;
+  const [isVisible, setIsVisible] = useState<boolean>(true);
 
   return (
-    <ModalWrapper>
+    <ModalWrapper $isVisible={isVisible}>
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <Spacing marginBottom="3.2" />
       <ModalBtnLayout>
-        <LeftBtn confirmRoutingTo={confirmRoutingTo}>예</LeftBtn>
-        <RightBtn>아니오</RightBtn>
+        <LeftBtn setIsVisible={setIsVisible} confirmRoutingTo={confirmRoutingTo}>
+          예
+        </LeftBtn>
+        <RightBtn setIsVisible={setIsVisible}>아니오</RightBtn>
       </ModalBtnLayout>
     </ModalWrapper>
   );
@@ -32,14 +38,17 @@ export const NegativeModal = (props: modalContentPropTypes) => {
 // '예'를 유도하는 모달
 export const PositiveModal = (props: modalContentPropTypes) => {
   const { confirmRoutingTo, modalContent } = props;
+  const [isVisible, setIsVisible] = useState<boolean>(true);
 
   return (
-    <ModalWrapper>
+    <ModalWrapper $isVisible={isVisible}>
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <Spacing marginBottom="3.2" />
       <ModalBtnLayout>
-        <LeftBtn>아니오</LeftBtn>
-        <RightBtn confirmRoutingTo={confirmRoutingTo}>예</RightBtn>
+        <LeftBtn setIsVisible={setIsVisible}>아니오</LeftBtn>
+        <RightBtn setIsVisible={setIsVisible} confirmRoutingTo={confirmRoutingTo}>
+          예
+        </RightBtn>
       </ModalBtnLayout>
     </ModalWrapper>
   );
@@ -48,29 +57,37 @@ export const PositiveModal = (props: modalContentPropTypes) => {
 export const RightBtn = (props: ButtonPropTypes) => {
   const { confirmRoutingTo, children } = props;
   const navigate = useNavigate();
+  const [, setIsVisible] = useState<boolean>(true);
+
   const handleOnClick = () => {
     if (confirmRoutingTo) {
       navigate(`${confirmRoutingTo}`);
+    } else {
+      setIsVisible(false);
     }
   };
 
-  return <RightBtnWrapper onClick={handleOnClick}>{children}</RightBtnWrapper>;
+  return <RightButton onClick={handleOnClick}>{children}</RightButton>;
 };
 
 export const LeftBtn = (props: ButtonPropTypes) => {
   const { confirmRoutingTo, children } = props;
+  const [, setIsVisible] = useState<boolean>(true);
   const navigate = useNavigate();
+
   const handleOnClick = () => {
     if (confirmRoutingTo) {
       navigate(`${confirmRoutingTo}`);
+    } else {
+      setIsVisible(true);
     }
   };
 
-  return <LeftBtnWrapper onClick={handleOnClick}>{children}</LeftBtnWrapper>;
+  return <LeftButton onClick={handleOnClick}>{children}</LeftButton>;
 };
 
-const ModalWrapper = styled.section`
-  display: flex;
+const ModalWrapper = styled.section<{ $isVisible: boolean }>`
+  display: ${({ $isVisible }) => ($isVisible ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -95,7 +112,7 @@ const ModalBtnLayout = styled.div`
   gap: 1.2rem;
 `;
 
-const RightBtnWrapper = styled.button`
+const RightButton = styled.button`
   width: 15.4rem;
   height: 3.9rem;
   padding: 1rem 0;
@@ -114,7 +131,7 @@ const RightBtnWrapper = styled.button`
   }
 `;
 
-const LeftBtnWrapper = styled.button`
+const LeftButton = styled.button`
   width: 15.4rem;
   height: 3.9rem;
   padding: 1rem 0;
