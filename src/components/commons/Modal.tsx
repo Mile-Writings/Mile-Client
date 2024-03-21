@@ -5,13 +5,13 @@ import Spacing from './Spacing';
 
 interface ModalContentPropTypes {
   modalContent: string;
-  positiveBtnHandler: () => void;
+  onClick: () => void;
   setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // '아니오'를 유도하는 모달
 export const NegativeModal = (props: ModalContentPropTypes) => {
-  const { modalContent, positiveBtnHandler } = props;
+  const { modalContent, onClick } = props;
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const negativeBtnHandler = () => {
     setIsVisible(false);
@@ -22,7 +22,7 @@ export const NegativeModal = (props: ModalContentPropTypes) => {
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <Spacing marginBottom="3.2" />
       <ModalBtnLayout>
-        <NegativeButton onClick={positiveBtnHandler}>예</NegativeButton>
+        <NegativeButton onClick={onClick}>예</NegativeButton>
         <PositiveButton onClick={negativeBtnHandler}>아니오</PositiveButton>
       </ModalBtnLayout>
     </ModalWrapper>
@@ -31,7 +31,7 @@ export const NegativeModal = (props: ModalContentPropTypes) => {
 
 // '예'를 유도하는 모달
 export const PositiveModal = (props: ModalContentPropTypes) => {
-  const { modalContent, positiveBtnHandler } = props;
+  const { modalContent, onClick } = props;
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const negativeBtnHandler = () => {
     setIsVisible(false);
@@ -44,7 +44,7 @@ export const PositiveModal = (props: ModalContentPropTypes) => {
       <Spacing marginBottom="3.2" />
       <ModalBtnLayout>
         <NegativeButton onClick={negativeBtnHandler}>아니오</NegativeButton>
-        <PositiveButton onClick={positiveBtnHandler}>예</PositiveButton>
+        <PositiveButton onClick={onClick}>예</PositiveButton>
       </ModalBtnLayout>
     </ModalWrapper>
   );
