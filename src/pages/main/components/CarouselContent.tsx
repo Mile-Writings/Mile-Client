@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { MainGroupRoutingBtn as MainGroupRoutingBtnIcon } from '../../../assets/svgs';
@@ -31,8 +30,7 @@ const CarouselContent = ({
     navigate(`/detail/${groupId}/${postId}`);
   };
 
-  const handleRoutingGroup = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
-    e.stopPropagation();
+  const handleRoutingGroup = () => {
     navigate(`/group/${groupId}`);
   };
 
@@ -66,7 +64,7 @@ const CarouselContent = ({
           </GroupRoutingBox>
           <Spacing marginBottom="1.6" />
           <GroupRoutingBtnBox>
-            <MainGroupRoutingBtnIcon onClick={(e) => handleRoutingGroup(e)} />
+            <MainGroupRoutingBtnIcon onClick={() => handleRoutingGroup()} />
           </GroupRoutingBtnBox>
         </GroupRoutingBtnLayout>
       )}
