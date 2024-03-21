@@ -35,7 +35,6 @@ export const PositiveModal = (props: ModalContentPropTypes) => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const negativeBtnHandler = () => {
     setIsVisible(false);
-    console.log('close');
   };
 
   return (
