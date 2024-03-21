@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import Spacing from './Spacing';
+
+import useClickOutside from '../../hooks/useClickOutside';
 
 interface ModalContentPropTypes {
   modalContent: string;
@@ -13,17 +15,19 @@ interface ModalContentPropTypes {
 export const NegativeModal = (props: ModalContentPropTypes) => {
   const { modalContent, onClick } = props;
   const [isVisible, setIsVisible] = useState<boolean>(true);
-  const negativeBtnHandler = () => {
+  const modalRef = useRef(null);
+  const closeModalHandler = () => {
     setIsVisible(false);
   };
+  useClickOutside(modalRef, closeModalHandler);
 
   return (
-    <ModalWrapper $isVisible={isVisible}>
+    <ModalWrapper ref={modalRef} $isVisible={isVisible}>
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <Spacing marginBottom="3.2" />
       <ModalBtnLayout>
         <NegativeButton onClick={onClick}>예</NegativeButton>
-        <PositiveButton onClick={negativeBtnHandler}>아니오</PositiveButton>
+        <PositiveButton onClick={closeModalHandler}>아니오</PositiveButton>
       </ModalBtnLayout>
     </ModalWrapper>
   );
@@ -33,16 +37,20 @@ export const NegativeModal = (props: ModalContentPropTypes) => {
 export const PositiveModal = (props: ModalContentPropTypes) => {
   const { modalContent, onClick } = props;
   const [isVisible, setIsVisible] = useState<boolean>(true);
-  const negativeBtnHandler = () => {
+  const modalRef = useRef(null);
+
+  const closeModalHandler = () => {
     setIsVisible(false);
   };
 
+  useClickOutside(modalRef, closeModalHandler);
+
   return (
-    <ModalWrapper $isVisible={isVisible}>
+    <ModalWrapper ref={modalRef} $isVisible={isVisible}>
       <ModalContentLayout>{modalContent}</ModalContentLayout>
       <Spacing marginBottom="3.2" />
       <ModalBtnLayout>
-        <NegativeButton onClick={negativeBtnHandler}>아니오</NegativeButton>
+        <NegativeButton onClick={closeModalHandler}>아니오</NegativeButton>
         <PositiveButton onClick={onClick}>예</PositiveButton>
       </ModalBtnLayout>
     </ModalWrapper>
