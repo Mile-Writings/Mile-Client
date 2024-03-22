@@ -11,7 +11,9 @@ const EachTopic = () => {
           <TopicDate>2023.03.04</TopicDate>
         </Topic>
         <TopicTag>인생</TopicTag>
-        <TopicDescription>본인의 인생 사는 기준을 말해주세요</TopicDescription>
+        <TopicDescription>
+          안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이
+        </TopicDescription>
       </TopicData>
       <TopicAction>
         <EditIc />
@@ -66,7 +68,12 @@ const TopicTag = styled.p`
 `;
 
 const TopicDescription = styled.p`
+  display: -webkit-box;
   width: 29rem;
+  height: 4.8rem;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 
   color: ${({ theme }) => theme.colors.gray100};
   ${({ theme }) => theme.fonts.body8};
