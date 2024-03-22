@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import React from 'react';
 
 import EachTopic from './EachTopic';
 
@@ -33,6 +32,7 @@ const TopicAdminCategory = styled.ul`
   display: flex;
   gap: 4rem;
   align-items: center;
+  width: 78.1rem;
   height: 4.8rem;
   padding: 0 1.8rem;
 
@@ -63,5 +63,6 @@ const TopicList = styled.div`
   width: 78.1rem;
   padding: 0.4rem 1.8rem;
 
+  background-color: ${({ theme }) => theme.colors.white};
   border-radius: 0 0 8px 8px;
 `;

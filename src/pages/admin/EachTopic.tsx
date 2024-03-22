@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import React from 'react';
+
+import { EditIc, DeleteIc } from '../../assets/svgs';
 
 const EachTopic = () => {
   return (
@@ -12,6 +13,10 @@ const EachTopic = () => {
         <TopicTag>인생</TopicTag>
         <TopicDescription>본인의 인생 사는 기준을 말해주세요</TopicDescription>
       </TopicData>
+      <TopicAction>
+        <EditIc />
+        <DeleteIc />
+      </TopicAction>
     </TopicWrapper>
   );
 };
@@ -20,9 +25,8 @@ export default EachTopic;
 
 const TopicWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   gap: 2.4rem;
-  justify-content: center;
+  align-items: center;
   width: 74.5rem;
   height: 8.4rem;
 `;
@@ -41,8 +45,6 @@ const Topic = styled.div`
   gap: 0.4rem;
   width: 20.8rem;
   padding: 0.6rem 0;
-
-  border: 1px solid red;
 `;
 
 const TopicTitle = styled.p`
@@ -68,4 +70,9 @@ const TopicDescription = styled.p`
 
   color: ${({ theme }) => theme.colors.gray100};
   ${({ theme }) => theme.fonts.body8};
+`;
+
+const TopicAction = styled.div`
+  display: flex;
+  gap: 0.8rem;
 `;

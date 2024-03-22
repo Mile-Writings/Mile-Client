@@ -71,5 +71,5 @@ export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?reac
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
 export { default as faviconMileIc } from './faviconMile.svg?react';
 
-export { default as deleteIc } from './deleteBtn.svg?react';
-export { default as editIc } from './editBtn.svg?react';
+export { default as DeleteIc } from './deleteBtn.svg?react';
+export { default as EditIc } from './editBtn.svg?react';
