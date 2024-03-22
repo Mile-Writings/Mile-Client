@@ -1,6 +1,5 @@
 export { default as DefaultProfileIc } from './defaultProfileIc.svg?react';
 export { default as DetailCommentMeatBallIc } from './detailCommentMeatBallIc.svg?react';
-export { default as EditorTextColorIcnBlackSvg } from './editorTextcolorIcnBlack.svg?react';
 
 export { default as HeaderLogoSvg } from './headerLogoSvg.svg?react';
 export { default as MainGroupRoutingBtn } from './mainGroupRoutingBtn.svg?react';

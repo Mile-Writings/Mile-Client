@@ -39,7 +39,12 @@ const WriterDropDown = (props: WriterPropType) => {
     <WriterDropDownWrapper ref={dropDownRef}>
       <DropDownToggle onClick={handleOnClick}>
         <DropDownContent $contentWidth={14.6}>{selectedWriter}</DropDownContent>
-        {writerIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
+        <EditorDropIcnActiveWrapper $isOpen={writerIsOpen}>
+          <EditorDropIcnActiveIcon />
+        </EditorDropIcnActiveWrapper>
+        <EditorDropIcnActiveOpenWrapper $isOpen={writerIsOpen}>
+          <EditorDropIcnActiveOpenIcon />
+        </EditorDropIcnActiveOpenWrapper>
       </DropDownToggle>
       <WriterListWrapper $isOpen={writerIsOpen}>
         <WriterList onClick={onClickWriter} $selected={selectedWriter === '작자미상'}>
@@ -95,4 +100,22 @@ const WriterList = styled.div<{ $selected: boolean }>`
   &:hover {
     background-color: ${({ theme }) => theme.colors.gray20};
   }
+`;
+
+const EditorDropIcnActiveOpenWrapper = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'inline' : 'none')};
+`;
+
+const EditorDropIcnActiveOpenIcon = styled(EditorDropIcnActiveOpenIc)`
+  width: 2.8rem;
+  height: 2.8rem;
+`;
+
+const EditorDropIcnActiveWrapper = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'none' : 'inline')};
+`;
+
+const EditorDropIcnActiveIcon = styled(EditorDropIcnActiveIc)`
+  width: 2.8rem;
+  height: 2.8rem;
 `;
