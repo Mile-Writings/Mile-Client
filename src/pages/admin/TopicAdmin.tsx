@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
+import EachTopic from './EachTopic';
+
 const TopicAdmin = () => {
   return (
     <TopicListWrapper>
@@ -9,6 +11,9 @@ const TopicAdmin = () => {
         <TopicTag>글감 태그</TopicTag>
         <TopicDescription>글감 설명</TopicDescription>
       </TopicAdminCategory>
+      <TopicList>
+        <EachTopic />
+      </TopicList>
     </TopicListWrapper>
   );
 };
@@ -50,4 +55,13 @@ const TopicTag = styled.li`
 
 const TopicDescription = styled.li`
   width: 21.3rem;
+`;
+
+const TopicList = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 78.1rem;
+  padding: 0.4rem 1.8rem;
+
+  border-radius: 0 0 8px 8px;
 `;
