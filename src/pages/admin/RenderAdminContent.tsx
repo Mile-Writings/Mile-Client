@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import TopicAdmin from './TopicAdmin';
+
 import Spacing from '../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
@@ -11,6 +13,7 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
           <Spacing marginBottom="1.2" />
           <SubTitle>{`개의 글감이 저장되어있어요`}</SubTitle>
           <Spacing marginBottom="3.6" />
+          <TopicAdmin />
         </AdminContainer>
       );
 
