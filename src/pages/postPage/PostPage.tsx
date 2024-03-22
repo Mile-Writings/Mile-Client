@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import React, { useEffect, useState, useReducer } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, NavigateFunction } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
 import EditorFlowModal from './components/EditorFlowModal';
@@ -110,6 +110,16 @@ const PostPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // interface editorModalFlowStateType {
+  //   title: string;
+  //   leftBtnFn?: NavigateFunction;
+  // }
+
+  // const editorModalFlowState: editorModalFlowStateType = {
+  //   title: '',
+  //   leftBtnFn: navigate('/'),
+  // };
+
   //라우팅 했을 때 스크롤 맨 위로
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -143,6 +153,9 @@ const PostPage = () => {
   // 수정하기, 임시저장 postId 저장
   const [editPostId, setEditPostId] = useState('');
   const [previewImgUrl, setPreviewImgUrl] = useState(EDITOR_DEFAULT_IMG);
+  // modal 열고닫음
+  const [showModal, setShowModal] = useState(false);
+  const [editorFlowModalType, setEditorFlowModalType] = useState('');
 
   // 임시저장 불러오기
   interface tempTopicListType {
@@ -247,8 +260,14 @@ const PostPage = () => {
     anonymous: editorVal.writer === '작자미상',
   });
   const tempSaveHandler = () => {
-    postTempSaveContent();
-    navigate(`/group/${groupId}`);
+    // postTempSaveContent();
+    setShowModal(true);
+    setEditorFlowModalType('tempSave');
+    // 스크롤 방지
+    // document.body.style.overflow = 'hidden';
+    // document.body.style.height = '100vh';
+
+    // navigate(`/group/${groupId}`);
   };
 
   // 임시 저장 글 -> 저장하기
@@ -270,7 +289,11 @@ const PostPage = () => {
 
   return (
     <PostPageWrapper>
-      <EditorFlowModal />
+      {/* <EditorFlowModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        editorFlowModalType={editorFlowModalType}
+      /> */}
       {type === 'edit' ? (
         <EditorEditHeader onClickEditSave={editSaveHandler} />
       ) : continueTempPost ? (
