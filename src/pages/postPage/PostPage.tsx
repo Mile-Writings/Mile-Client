@@ -259,16 +259,26 @@ const PostPage = () => {
     imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
   });
+
   const tempSaveHandler = () => {
     // postTempSaveContent();
     setShowModal(true);
     setEditorFlowModalType('tempSave');
     // 스크롤 방지
-    // document.body.style.overflow = 'hidden';
-    // document.body.style.height = '100vh';
+    document.body.style.overflow = 'hidden';
 
     // navigate(`/group/${groupId}`);
   };
+
+  // 스크롤 방지 지우기
+  useEffect(() => {
+    if (showModal) {
+      tempSaveHandler();
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [showModal]);
 
   // 임시 저장 글 -> 저장하기
   const { mutate: putTempSaveContent } = usePutTempSaveContent({
@@ -289,11 +299,11 @@ const PostPage = () => {
 
   return (
     <PostPageWrapper>
-      {/* <EditorFlowModal
+      <EditorFlowModal
         showModal={showModal}
         setShowModal={setShowModal}
         editorFlowModalType={editorFlowModalType}
-      /> */}
+      />
       {type === 'edit' ? (
         <EditorEditHeader onClickEditSave={editSaveHandler} />
       ) : continueTempPost ? (
