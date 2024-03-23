@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 
 import EachTopic from './EachTopic';
 
+import Spacing from '../../components/commons/Spacing';
+
 const TopicAdmin = () => {
   return (
     <TopicListWrapper>
@@ -13,6 +15,7 @@ const TopicAdmin = () => {
       <TopicList>
         <EachTopic />
       </TopicList>
+      <Spacing marginBottom="3.2" />
     </TopicListWrapper>
   );
 };
