@@ -12,10 +12,10 @@ export const countPage = (count: number) => {
 };
 
 export const slicePage = (count: number, page: number) => {
-  const resultArray: number[] = [];
-  for (let i = 0; i < count; i++) {
-    resultArray.push(page * 5 + i);
-  }
+  const resultArray: number[] = [1, 2, 3, 4, 5];
+  //   for (let i = 0; i < count; i++) {
+  //     resultArray.push(page * 5 + i);
+  //   }
   const isExistNextPage = resultArray[length - 1] < count ? true : false;
   const isExistPreviousPage = resultArray[0] === 1 ? false : true;
   return { resultArray, isExistNextPage, isExistPreviousPage };

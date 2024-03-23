@@ -3,20 +3,24 @@ import styled from '@emotion/styled';
 import EachTopic from './EachTopic';
 
 import Spacing from '../../components/commons/Spacing';
+import Pagenation from '../../utils/Pagenation';
 
 const TopicAdmin = () => {
   return (
-    <TopicListWrapper>
-      <TopicAdminCategory>
-        <Topic>글감</Topic>
-        <TopicTag>글감 태그</TopicTag>
-        <TopicDescription>글감 설명</TopicDescription>
-      </TopicAdminCategory>
-      <TopicList>
-        <EachTopic />
-      </TopicList>
+    <>
+      <TopicListWrapper>
+        <TopicAdminCategory>
+          <Topic>글감</Topic>
+          <TopicTag>글감 태그</TopicTag>
+          <TopicDescription>글감 설명</TopicDescription>
+        </TopicAdminCategory>
+        <TopicList>
+          <EachTopic />
+        </TopicList>
+      </TopicListWrapper>
       <Spacing marginBottom="3.2" />
-    </TopicListWrapper>
+      <Pagenation count={6} />
+    </>
   );
 };
 
