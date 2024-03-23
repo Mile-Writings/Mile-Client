@@ -16,6 +16,12 @@ const Pagenation = ({ count }: { count: number }) => {
     setActiveCount(5 * (activePage - 1) + 1);
   }, [activePage]);
 
+  useEffect(() => {
+    fetch('/api/moim/moimId/topicList?page=1')
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  }, []);
+
   return (
     <PageWrapper>
       {activeCount != 1 && (
