@@ -1,10 +1,16 @@
 import styled from '@emotion/styled';
+import { useEffect } from 'react';
 
 import TopicAdmin from './TopicAdmin';
 
 import Spacing from '../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
+  useEffect(() => {
+    fetch('/api/moim/moimId/topicList?page=1')
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  }, []);
   switch (admin) {
     case 'topic':
       return (
