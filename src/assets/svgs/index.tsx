@@ -73,3 +73,6 @@ export { default as faviconMileIc } from './faviconMile.svg?react';
 
 export { default as DeleteIc } from './deleteBtn.svg?react';
 export { default as EditIc } from './editBtn.svg?react';
+
+export { default as ArrowLeftIc } from './arrowLeft.svg?react';
+export { default as ArrowRightIc } from './arrowRight.svg?react';
