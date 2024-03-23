@@ -4,20 +4,24 @@ import React, { useState } from 'react';
 import { slicePage } from './countPage';
 import PageNumber from './PageNumber';
 
+import { ArrowLeftIc, ArrowRightIc } from '../assets/svgs';
+
 const Pagenation = ({ count }: { count: number }) => {
-  const { resultArray } = slicePage(count, 2);
+  const { resultArray, isExistNextPage, isExistPreviousPage } = slicePage(count, 1);
   const [activeCount, setActiveCount] = useState(1);
   return (
     <PageWrapper>
+      {isExistPreviousPage && <ArrowLeftIc />}
       {resultArray.map((index) => (
         <PageNumber
-          key={index}
+          key={index + 1}
           isActive={activeCount === index}
           onClick={() => setActiveCount(index)}
         >
           {index}
         </PageNumber>
       ))}
+      {isExistNextPage && <ArrowRightIc />}
     </PageWrapper>
   );
 };

@@ -19,7 +19,7 @@ const TopicAdmin = () => {
         </TopicList>
       </TopicListWrapper>
       <Spacing marginBottom="3.2" />
-      <Pagenation count={6} />
+      <Pagenation count={8} />
     </>
   );
 };
