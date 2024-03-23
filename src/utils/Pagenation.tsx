@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { slicePage } from './countPage';
 import PageNumber from './PageNumber';
@@ -7,11 +7,29 @@ import PageNumber from './PageNumber';
 import { ArrowLeftIc, ArrowRightIc } from '../assets/svgs';
 
 const Pagenation = ({ count }: { count: number }) => {
-  const { resultArray, isExistNextPage, isExistPreviousPage } = slicePage(count, 1);
+  const [activePage, setActivePage] = useState(1);
   const [activeCount, setActiveCount] = useState(1);
+
+  const { resultArray, isExistNextPage, isExistPreviousPage } = slicePage(count, activePage);
+
+  useEffect(() => {
+    setActiveCount(5 * (activePage - 1) + 1);
+  }, [activePage]);
+
   return (
     <PageWrapper>
-      {isExistPreviousPage && <ArrowLeftIc />}
+      {activeCount != 1 && (
+        <ArrowLeftIc
+          onClick={() =>
+            isExistPreviousPage
+              ? setActivePage(activePage - 1)
+              : setActiveCount((prev) => {
+                  return prev - 1;
+                })
+          }
+          style={{ cursor: 'pointer' }}
+        />
+      )}
       {resultArray.map((index) => (
         <PageNumber
           key={index + 1}
@@ -21,7 +39,14 @@ const Pagenation = ({ count }: { count: number }) => {
           {index}
         </PageNumber>
       ))}
-      {isExistNextPage && <ArrowRightIc />}
+      {isExistNextPage && (
+        <ArrowRightIc
+          onClick={() => {
+            setActivePage(activePage + 1);
+          }}
+          style={{ cursor: 'pointer' }}
+        />
+      )}
     </PageWrapper>
   );
 };
