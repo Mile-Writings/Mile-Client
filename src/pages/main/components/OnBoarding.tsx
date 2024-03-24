@@ -45,7 +45,6 @@ const TextLayout = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   justify-content: flex-start;
-  width: 100%;
   width: fit-content;
 `;
 
