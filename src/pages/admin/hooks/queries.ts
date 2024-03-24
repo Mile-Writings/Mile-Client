@@ -10,10 +10,10 @@ export const useAdminTopic = () => {
 
   console.log(data, 'datas');
 
-  const topicCount = data && data?.topicCount;
+  const topicCount = data && data.data.topicCount;
   console.log(topicCount, 'count');
 
-  const adminTopicData = data && data[0];
+  const adminTopicData = data && data.data;
   console.log(adminTopicData, 'adim');
 
   return { topicCount, adminTopicData, isLoading, isError, error };
