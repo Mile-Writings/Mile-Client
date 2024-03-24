@@ -18,6 +18,7 @@ import {
   usePutTempSaveContent,
   useTempSaveFlag,
 } from './hooks/queries';
+import { preventScroll, allowScroll } from './utils/modalPreventScroll';
 
 import {
   EditorEditHeader,
@@ -265,8 +266,7 @@ const PostPage = () => {
     setShowModal(true);
     setEditorFlowModalType('tempSave');
     // 스크롤 방지
-    document.body.style.overflow = 'hidden';
-
+    preventScroll();
     // navigate(`/group/${groupId}`);
   };
 
@@ -276,7 +276,7 @@ const PostPage = () => {
       tempSaveHandler();
     }
     return () => {
-      document.body.style.overflow = 'auto';
+      allowScroll();
     };
   }, [showModal]);
 
