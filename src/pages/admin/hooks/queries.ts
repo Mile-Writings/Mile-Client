@@ -10,7 +10,7 @@ export const useAdminTopic = () => {
 
   console.log(data, 'datas');
 
-  const topicCount = data && data[0].topicCount;
+  const topicCount = data && data?.topicCount;
   console.log(topicCount, 'count');
 
   const adminTopicData = data && data[0];

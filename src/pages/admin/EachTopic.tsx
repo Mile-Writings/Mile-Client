@@ -11,7 +11,7 @@ interface AdminTopicPropTypes {
 }
 
 const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
-  const { topicId, topicName, topicTag, topicDescription, createdAt } = data;
+  const { topicName, topicTag, topicDescription, createdAt } = data;
   return (
     <TopicWrapper>
       <TopicData>

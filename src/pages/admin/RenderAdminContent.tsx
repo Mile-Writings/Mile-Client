@@ -6,7 +6,7 @@ import TopicAdmin from './TopicAdmin';
 import Spacing from '../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
-  const { topicCount, adminTopicData, isLoading, isError, error } = useAdminTopic();
+  const { topicCount, adminTopicData } = useAdminTopic();
   switch (admin) {
     case 'topic':
       return (
