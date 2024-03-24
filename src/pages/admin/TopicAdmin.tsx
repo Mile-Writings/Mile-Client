@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 
 import EachTopic from './EachTopic';
 
+import Pagenation from '../../components/commons/Pagenation';
 import Spacing from '../../components/commons/Spacing';
-import Pagenation from '../../utils/Pagenation';
 
 interface AdminTopicPropTypes {
   topicCount: number;
@@ -30,7 +30,7 @@ const TopicAdmin = ({ data }: { data?: AdminTopicPropTypes }) => {
         </TopicList>
       </TopicListWrapper>
       <Spacing marginBottom="3.2" />
-      {data && data.topicCount && <Pagenation count={data.topicCount} />}
+      {data && data.topicCount && <Pagenation count={data.topicCount} allocatedCount={4} />}
     </>
   );
 };

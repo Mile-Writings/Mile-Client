@@ -1,16 +1,19 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
-import { slicePage } from './countPage';
-import PageNumber from './PageNumber';
+import { ArrowLeftIc, ArrowRightIc } from '../../assets/svgs';
+import { slicePage } from '../../utils/countPage';
+import PageNumber from '../../utils/PageNumber';
 
-import { ArrowLeftIc, ArrowRightIc } from '../assets/svgs';
-
-const Pagenation = ({ count }: { count: number }) => {
+const Pagenation = ({ count, allocatedCount }: { count: number; allocatedCount: number }) => {
   const [activePage, setActivePage] = useState(1);
   const [activeCount, setActiveCount] = useState(1);
 
-  const { resultArray, isExistNextPage, isExistPreviousPage } = slicePage(count, activePage);
+  const { resultArray, isExistNextPage, isExistPreviousPage } = slicePage(
+    count,
+    activePage,
+    allocatedCount,
+  );
 
   useEffect(() => {
     setActiveCount(5 * (activePage - 1) + 1);
