@@ -8,13 +8,8 @@ export const useAdminTopic = () => {
     queryFn: () => fetchAdminTopic(),
   });
 
-  console.log(data, 'datas');
-
   const topicCount = data && data.data.topicCount;
-  console.log(topicCount, 'count');
-
   const adminTopicData = data && data.data;
-  console.log(adminTopicData, 'adim');
 
   return { topicCount, adminTopicData, isLoading, isError, error };
 };

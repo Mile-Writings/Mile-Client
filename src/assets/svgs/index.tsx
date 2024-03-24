@@ -76,3 +76,5 @@ export { default as EditIc } from './editBtn.svg?react';
 
 export { default as ArrowLeftIc } from './arrowLeft.svg?react';
 export { default as ArrowRightIc } from './arrowRight.svg?react';
+
+export { default as MakeGroupAdminIc } from './btn_makegroup.svg?react';

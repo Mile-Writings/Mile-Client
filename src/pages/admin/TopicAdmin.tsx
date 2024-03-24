@@ -17,8 +17,6 @@ interface AdminTopicPropTypes {
 }
 
 const TopicAdmin = ({ data }: { data?: AdminTopicPropTypes }) => {
-  console.log(data, '데이터입니다');
-
   return (
     <>
       <TopicListWrapper>
@@ -44,8 +42,6 @@ const TopicListWrapper = styled.div`
   flex-direction: column;
   width: 78.1rem;
   height: 39.2rem;
-
-  border: 1px solid red;
 `;
 
 const TopicAdminCategory = styled.ul`

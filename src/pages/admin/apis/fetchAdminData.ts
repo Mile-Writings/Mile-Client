@@ -4,8 +4,6 @@ export const fetchAdminTopic = async () => {
   try {
     const response = await axios.get<AdminTopicPropTypes>('/api/moim/moimId/topicList?page=1');
     const data = await response;
-    console.log(data, 'res');
-
     return data;
   } catch (error) {
     console.log('에러:', error);
