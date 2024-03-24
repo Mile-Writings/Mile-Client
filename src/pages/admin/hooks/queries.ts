@@ -6,12 +6,15 @@ export const useAdminTopic = () => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['adminTopic'],
     queryFn: () => fetchAdminTopic(),
-    //enabled: !!topicId,
   });
 
-  const topicCount = data && data.data.topicCount;
+  console.log(data, 'datas');
 
-  const adminTopicData = data && data.data;
+  const topicCount = data && data[0].topicCount;
+  console.log(topicCount, 'count');
+
+  const adminTopicData = data && data[0];
+  console.log(adminTopicData, 'adim');
 
   return { topicCount, adminTopicData, isLoading, isError, error };
 };

@@ -2,18 +2,25 @@ import styled from '@emotion/styled';
 
 import { EditIc, DeleteIc } from '../../assets/svgs';
 
-const EachTopic = () => {
+interface AdminTopicPropTypes {
+  topicId: string;
+  topicName: string;
+  topicTag: string;
+  topicDescription: string;
+  createdAt: string;
+}
+
+const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
+  const { topicId, topicName, topicTag, topicDescription, createdAt } = data;
   return (
     <TopicWrapper>
       <TopicData>
         <Topic>
-          <TopicTitle>인생을 똑바로 사는법</TopicTitle>
-          <TopicDate>2023.03.04</TopicDate>
+          <TopicTitle>{topicName}</TopicTitle>
+          <TopicDate>{createdAt}</TopicDate>
         </Topic>
-        <TopicTag>인생</TopicTag>
-        <TopicDescription>
-          안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이야.안녕나는서채원이
-        </TopicDescription>
+        <TopicTag>{topicTag}</TopicTag>
+        <TopicDescription>{topicDescription}</TopicDescription>
       </TopicData>
       <TopicAction>
         <EditIc />
@@ -70,7 +77,6 @@ const TopicTag = styled.p`
 const TopicDescription = styled.p`
   display: -webkit-box;
   width: 29rem;
-  height: 4.8rem;
   overflow: hidden;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;

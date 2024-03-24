@@ -5,7 +5,25 @@ import EachTopic from './EachTopic';
 import Spacing from '../../components/commons/Spacing';
 import Pagenation from '../../utils/Pagenation';
 
-const TopicAdmin = () => {
+interface AdminTopicPropTypes {
+  data: {
+    topicCount: number;
+    topics: {
+      topicId: string;
+      topicName: string;
+      topicTag: string;
+      topicDescription: string;
+      createdAt: string;
+    }[];
+  };
+
+  status: number;
+  message: string;
+}
+
+const TopicAdmin = (data: AdminTopicPropTypes) => {
+  console.log(data.data, '데이터입니다');
+
   return (
     <>
       <TopicListWrapper>
@@ -15,7 +33,9 @@ const TopicAdmin = () => {
           <TopicDescription>글감 설명</TopicDescription>
         </TopicAdminCategory>
         <TopicList>
-          <EachTopic />
+          {data &&
+            data.data &&
+            data.data.topics.map((topic) => <EachTopic key={topic.topicId} data={topic} />)}
         </TopicList>
       </TopicListWrapper>
       <Spacing marginBottom="3.2" />

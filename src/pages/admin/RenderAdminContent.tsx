@@ -1,25 +1,21 @@
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
 
+import { useAdminTopic } from './hooks/queries';
 import TopicAdmin from './TopicAdmin';
 
 import Spacing from '../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
-  useEffect(() => {
-    fetch('/api/moim/moimId/topicList?page=1')
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-  }, []);
+  const { topicCount, adminTopicData, isLoading, isError, error } = useAdminTopic();
   switch (admin) {
     case 'topic':
       return (
         <AdminContainer>
           <Title>글감 설정</Title>
           <Spacing marginBottom="1.2" />
-          <SubTitle>{`개의 글감이 저장되어있어요`}</SubTitle>
+          <SubTitle>{`${topicCount}개의 글감이 저장되어있어요`}</SubTitle>
           <Spacing marginBottom="3.6" />
-          <TopicAdmin />
+          <TopicAdmin data={adminTopicData} />
         </AdminContainer>
       );
 
