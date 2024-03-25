@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import Admin from './pages/admin/Admin';
 import Error from './pages/error/Error';
 import GroupFeed from './pages/groupFeed/GroupFeed';
 import Login from './pages/login/Login';
@@ -22,6 +23,7 @@ const Router = () => {
         <Route path="/redirect-kakao" element={<RedirectLogin />} />
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<Error />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>
   );

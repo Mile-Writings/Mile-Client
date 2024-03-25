@@ -139,7 +139,7 @@ const PostPage = () => {
 
   //라우팅 했을 때 스크롤 맨 위로
   useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollTo(0, 0);
   }, []);
 
   // editor content API 관련
