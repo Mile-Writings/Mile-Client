@@ -5,7 +5,7 @@ export const slicePage = (totalCount: number, chunk: number, allocatedCount: num
   const pageArray = Array.from({ length: pageCount }, (_, index) => index + 1);
   const resultArray: number[] = [];
 
-  for (let i = 1; i < allocatedCount + 1; i++) {
+  for (let i = 1; i < 6; i++) {
     //값이 마지막 페이지값보다 작거나 같고, 0보다 클때
     if (
       allocatedCount * (chunk - 1) + i <= pageArray[pageArray.length - 1] &&

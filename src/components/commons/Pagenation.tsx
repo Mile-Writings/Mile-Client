@@ -6,27 +6,27 @@ import { slicePage } from '../../utils/countPage';
 import PageNumber from '../../utils/PageNumber';
 
 const Pagenation = ({ count, allocatedCount }: { count: number; allocatedCount: number }) => {
+  const [activeChunk, setActiveChunk] = useState(1);
   const [activePage, setActivePage] = useState(1);
-  const [activeCount, setActiveCount] = useState(1);
 
   const { resultArray, isExistNextPage, isExistPreviousPage } = slicePage(
     count,
-    activePage,
+    activeChunk,
     allocatedCount,
   );
 
   useEffect(() => {
-    setActiveCount(5 * (activePage - 1) + 1);
-  }, [activePage]);
+    setActivePage(5 * (activeChunk - 1) + 1);
+  }, [activeChunk]);
 
   return (
     <PageWrapper>
-      {activeCount != 1 && (
+      {activePage != 1 && (
         <ArrowLeftIc
           onClick={() =>
             isExistPreviousPage
-              ? setActivePage(activePage - 1)
-              : setActiveCount((prev) => {
+              ? setActiveChunk(activeChunk - 1)
+              : setActivePage((prev) => {
                   return prev - 1;
                 })
           }
@@ -36,8 +36,8 @@ const Pagenation = ({ count, allocatedCount }: { count: number; allocatedCount: 
       {resultArray.map((index) => (
         <PageNumber
           key={index + 1}
-          isActive={activeCount === index}
-          onClick={() => setActiveCount(index)}
+          isActive={activePage === index}
+          onClick={() => setActivePage(index)}
         >
           {index}
         </PageNumber>
@@ -45,7 +45,7 @@ const Pagenation = ({ count, allocatedCount }: { count: number; allocatedCount: 
       {isExistNextPage && (
         <ArrowRightIc
           onClick={() => {
-            setActivePage(activePage + 1);
+            setActiveChunk(activeChunk + 1);
           }}
           style={{ cursor: 'pointer' }}
         />

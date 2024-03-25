@@ -30,7 +30,7 @@ const TopicAdmin = ({ data }: { data?: AdminTopicPropTypes }) => {
         </TopicList>
       </TopicListWrapper>
       <Spacing marginBottom="3.2" />
-      {data && data.topicCount && <Pagenation count={data.topicCount} allocatedCount={4} />}
+      {data && data.topicCount && <Pagenation count={data.topicCount} allocatedCount={5} />}
     </>
   );
 };

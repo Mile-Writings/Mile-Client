@@ -7,7 +7,7 @@ export const handlers = [
     const page = url.searchParams.get('page');
     console.log(page, 'page'); //빌드용
     return HttpResponse.json({
-      topicCount: 4,
+      topicCount: 35,
       topics: [
         {
           topicId: 'MQ==',
