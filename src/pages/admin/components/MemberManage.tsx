@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
 
-import { Members } from '../constants/MEMBER';
+import { Members } from '../apis/getMemberInfo';
 import { useGetMemberInfo } from '../hooks/queries';
 
 import { adminEmptyMemberIc as AdminEmptyMemberIcon } from '../../../assets/svgs';
