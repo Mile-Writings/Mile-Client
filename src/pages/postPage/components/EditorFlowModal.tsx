@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useRef, Dispatch, SetStateAction } from 'react';
+import { useRef, Dispatch, SetStateAction, useState } from 'react';
 
 import { EditorCatIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
@@ -14,14 +14,25 @@ interface EditorFlowModalProps {
 const EditorFlowModal = (props: EditorFlowModalProps) => {
   const modalRef = useRef(null);
   const { showModal, setShowModal, editorFlowModalType } = props;
-
-
+  // custom hook handle용 state
+  const [isModalOpen, setIsModalOpen] = useState(showModal);
 
   const onClickModalBtn = () => {
     setShowModal(false);
+    setIsModalOpen(false);
   };
 
-  //   useClickOutside(modalRef, onClickOutside);
+  const handleOutSideClick = () => {
+    if (!isModalOpen) {
+      setShowModal(true);
+      setIsModalOpen(true);
+    } else {
+      setShowModal(false);
+      setIsModalOpen(false);
+    }
+  };
+
+  useClickOutside(modalRef, handleOutSideClick);
   return (
     <ModalBackground $showModal={showModal}>
       <ModalWrapper ref={modalRef}>
