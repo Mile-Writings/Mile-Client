@@ -9,7 +9,7 @@ import Spacing from '../../../components/commons/Spacing';
 
 const MemberManage = () => {
   const { writerNameId } = useParams();
-  const { data } = useGetMemberInfo(writerNameId || '');
+  const { data } = useGetMemberInfo();
   return (
     <MemberTableWrapper>
       <TableHeaderLayout>
