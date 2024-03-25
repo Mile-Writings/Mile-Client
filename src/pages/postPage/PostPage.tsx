@@ -4,6 +4,7 @@ import React, { useEffect, useState, useReducer } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
+import EditorContinueTempModal from './components/EditorContinueTempModal';
 import EditorFlowModal from './components/EditorFlowModal';
 import ImageUpload from './components/ImageUpload';
 import TipTap from './components/TipTap';
@@ -173,7 +174,7 @@ const PostPage = () => {
   // modal 열고닫음
   const [showModal, setShowModal] = useState(false);
   // 어떤 모달 열려야 하는지 handling
-  const [editorFlowModalType, setEditorFlowModalType] = useState('');
+  const [editorModalType, setEditorModalType] = useState('');
 
   // 임시저장 불러오기
   interface tempTopicListType {
@@ -226,7 +227,7 @@ const PostPage = () => {
     if (postContentId !== undefined) {
       setShowModal(true);
       editorFlowModalDispatch({ type: 'postContent' });
-      setEditorFlowModalType('postContent');
+      setEditorModalType('postContent');
       preventScroll();
     }
   }, [postContentId]);
@@ -276,7 +277,7 @@ const PostPage = () => {
   const onClickEditSaveBtn = () => {
     putEditContent();
     setShowModal(true);
-    setEditorFlowModalType('editContent');
+    setEditorModalType('editContent');
     editorFlowModalDispatch({ type: 'editContent' });
     preventScroll();
   };
@@ -296,7 +297,7 @@ const PostPage = () => {
   // 임시저장 버튼 누르면 열리는 모달
   const onClickTempSaveBtn = () => {
     setShowModal(true);
-    setEditorFlowModalType('tempSave');
+    setEditorModalType('tempSave');
     editorFlowModalDispatch({ type: 'tempSave' });
     preventScroll();
   };
@@ -323,7 +324,7 @@ const PostPage = () => {
     putTempSaveContent();
     setShowModal(true);
     editorFlowModalDispatch({ type: 'putTempSaveContent' });
-    setEditorFlowModalType('putTempSaveContent');
+    setEditorModalType('putTempSaveContent');
     preventScroll();
   };
 
@@ -386,7 +387,7 @@ const PostPage = () => {
   // 모달 스크롤 방지 제거
   useEffect(() => {
     if (showModal) {
-      switch (editorFlowModalType) {
+      switch (editorModalType) {
         case 'tempSave':
           onClickTempSaveBtn();
           break;
@@ -405,15 +406,16 @@ const PostPage = () => {
     return () => {
       allowScroll();
     };
-  }, [showModal, editorFlowModalType]);
+  }, [showModal, editorModalType]);
 
   return (
     <PostPageWrapper>
+      <EditorContinueTempModal showModal={showModal} />
       <EditorFlowModal
         showModal={showModal}
         setShowModal={setShowModal}
         editorFlowModalContent={editorFlowModalVal}
-        editorFlowModalType={editorFlowModalType}
+        editorModalType={editorModalType}
       />
       {type === 'edit' ? (
         <EditorEditHeader onClickEditSave={onClickEditSaveBtn} />

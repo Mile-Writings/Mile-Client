@@ -13,15 +13,15 @@ interface editorFlowModalType {
   rightBtnFn: () => void;
 }
 
-interface EditorFlowModalProps {
+interface EditorFlowModalPropsType {
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
   editorFlowModalContent: editorFlowModalType;
-  editorFlowModalType: string;
+  editorModalType: string;
 }
 
-const EditorFlowModal = (props: EditorFlowModalProps) => {
-  const { showModal, setShowModal, editorFlowModalContent, editorFlowModalType } = props;
+const EditorFlowModal = (props: EditorFlowModalPropsType) => {
+  const { showModal, setShowModal, editorFlowModalContent, editorModalType } = props;
   const modalRef = useRef(null);
 
   // 커스텀 훅 활성화용 state
@@ -29,7 +29,7 @@ const EditorFlowModal = (props: EditorFlowModalProps) => {
 
   // 커스텀 훅 전달 함수
   const handleOutSideClick = () => {
-    if (showModal && editorFlowModalType === 'tempSave') {
+    if (showModal && editorModalType === 'tempSave') {
       setModalBgClickActive(true);
     }
     if (modalBgClickActive) {
