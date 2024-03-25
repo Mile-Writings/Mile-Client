@@ -15,22 +15,19 @@ const EditorFlowModal = (props: EditorFlowModalProps) => {
   const modalRef = useRef(null);
   const { showModal, setShowModal, editorFlowModalType } = props;
   // custom hook handle용 state
-  const [isModalOpen, setIsModalOpen] = useState(showModal);
-
-  console.log(showModal, ' prop으로 넘겨받은 모달 핸들');
-  console.log(isModalOpen, ' 커스텀훅 모달 핸들');
+  const [modalBgClickActive, setModalBgClickActive] = useState(showModal);
 
   const onClickModalBtn = () => {
     setShowModal(false);
-    setIsModalOpen(false);
   };
 
   const handleOutSideClick = () => {
-    if (!isModalOpen) {
+    if (showModal) {
+      setModalBgClickActive(true);
+    }
+    if (modalBgClickActive) {
       setShowModal(false);
-      setIsModalOpen(true);
-    } else {
-      setIsModalOpen(false);
+      setModalBgClickActive(!modalBgClickActive);
     }
   };
 
