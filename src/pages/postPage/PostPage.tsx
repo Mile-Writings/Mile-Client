@@ -189,7 +189,9 @@ const PostPage = () => {
   // 최초 뷰 들어왔을 때 임시저장 이어쓸지 confirm 창
   useEffect(() => {
     if (type === 'post' && isTemporaryPostExist && !continueTempPost) {
+      setEditorModalType('continueTempSave');
       setShowTempContinueModal(true);
+      preventScroll();
     }
   }, [isTemporaryPostExist, type, continueTempPost]);
 
@@ -227,7 +229,6 @@ const PostPage = () => {
       setShowModal(true);
       editorFlowModalDispatch({ type: 'postContent' });
       setEditorModalType('postContent');
-      preventScroll();
     }
   }, [postContentId]);
 
@@ -385,7 +386,7 @@ const PostPage = () => {
 
   // 모달 스크롤 방지 제거
   useEffect(() => {
-    if (showModal) {
+    if (showModal || showTempContinueModal) {
       switch (editorModalType) {
         case 'tempSave':
           onClickTempSaveBtn();
@@ -399,13 +400,17 @@ const PostPage = () => {
         case 'editContent':
           onClickEditSaveBtn();
           break;
+        case 'continueTempSave':
+          // 렌더링 되자마자 쿼리함수 실행되므로 prevent만 넣어줌
+          preventScroll();
+          break;
       }
     }
 
     return () => {
       allowScroll();
     };
-  }, [showModal, editorModalType]);
+  }, [showModal, showTempContinueModal, editorModalType]);
 
   return (
     <PostPageWrapper>
