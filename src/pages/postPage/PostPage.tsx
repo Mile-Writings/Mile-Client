@@ -373,6 +373,8 @@ const PostPage = () => {
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${editPostId}`),
         };
+      default:
+        return state;
     }
   };
 
