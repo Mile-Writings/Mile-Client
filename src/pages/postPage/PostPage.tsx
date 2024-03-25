@@ -272,9 +272,12 @@ const PostPage = () => {
     postId: editPostId,
   });
 
-  const editSaveHandler = () => {
+  const onClickEditSaveBtn = () => {
     putEditContent();
-    navigate(`/detail/${groupId}/${editPostId}`);
+    setShowModal(true);
+    setEditorFlowModalType('editContent');
+    editorFlowModalDispatch({ type: 'editContent' });
+    preventScroll();
   };
 
   // 최초 글 임시 저장
@@ -364,9 +367,9 @@ const PostPage = () => {
           ...state,
           title: '수정이 완료되었습니다.',
           leftBtnText: '홈으로 가기',
-          leftBtnFn: () => {},
+          leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
-          rightBtnFn: () => {},
+          rightBtnFn: () => navigate(`/detail/${groupId}/${editPostId}`),
         };
     }
   };
@@ -376,7 +379,7 @@ const PostPage = () => {
     editorFlowModalState,
   );
 
-  // 모달 스크롤 방지 지우기
+  // 모달 스크롤 방지 제거
   useEffect(() => {
     if (showModal) {
       switch (editorFlowModalType) {
@@ -388,6 +391,9 @@ const PostPage = () => {
           break;
         case 'putTempSaveContent':
           onClickTempExistSaveBtn();
+          break;
+        case 'editContent':
+          onClickEditSaveBtn();
           break;
       }
     }
@@ -405,7 +411,7 @@ const PostPage = () => {
         editorFlowModalContent={editorFlowModalVal}
       />
       {type === 'edit' ? (
-        <EditorEditHeader onClickEditSave={editSaveHandler} />
+        <EditorEditHeader onClickEditSave={onClickEditSaveBtn} />
       ) : continueTempPost ? (
         <EditorTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />
       ) : (

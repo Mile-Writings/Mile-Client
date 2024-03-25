@@ -20,8 +20,9 @@ interface EditorFlowModalProps {
 }
 
 const EditorFlowModal = (props: EditorFlowModalProps) => {
-  const modalRef = useRef(null);
   const { showModal, setShowModal, editorFlowModalContent } = props;
+  const modalRef = useRef(null);
+
   // 커스텀 훅 활성화용 state
   const [modalBgClickActive, setModalBgClickActive] = useState(showModal);
 
@@ -38,7 +39,6 @@ const EditorFlowModal = (props: EditorFlowModalProps) => {
 
   // 커스텀 훅 사용
   useClickOutside(modalRef, handleOutSideClick);
-  console.log(editorFlowModalContent);
 
   return (
     <ModalBackground $showModal={showModal}>
