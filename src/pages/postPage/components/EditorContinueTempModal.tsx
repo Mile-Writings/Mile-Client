@@ -1,21 +1,38 @@
 import styled from '@emotion/styled';
+import { Dispatch, SetStateAction } from 'react';
 
 import Spacing from '../../../components/commons/Spacing';
 
 interface editorConinueTempModalPropsType {
-  showModal: boolean;
+  showTempContinueModal: boolean;
+  setShowTempContinueModal: Dispatch<SetStateAction<boolean>>;
+  setContinueTempPost: Dispatch<SetStateAction<boolean>>;
 }
 
 const EditorContinueTempModal = (props: editorConinueTempModalPropsType) => {
-  const { showModal } = props;
+  const { showTempContinueModal, setShowTempContinueModal, setContinueTempPost } = props;
+  const onClickNewPostBtn = () => {
+    // 이어쓸지 여부
+    setContinueTempPost(false);
+    // 모달 띄울지 여부
+    setShowTempContinueModal(false);
+  };
+  const onClickContinueTempBtn = () => {
+    setContinueTempPost(true);
+    setShowTempContinueModal(false);
+  };
   return (
-    <ModalBackground $showModal={showModal}>
+    <ModalBackground $showTempContinueModal={showTempContinueModal}>
       <ModalWrapper>
         <ModalTitle>임시 저장된 글을 계속 이어 쓸까요?</ModalTitle>
         <Spacing marginBottom="2.8" />
         <BtnWrapper>
-          <ModalBtn $isTop={true}>새로 쓰기</ModalBtn>
-          <ModalBtn $isTop={false}>이어 쓰기</ModalBtn>
+          <ModalBtn $isTop={true} onClick={onClickNewPostBtn}>
+            새로 쓰기
+          </ModalBtn>
+          <ModalBtn $isTop={false} onClick={onClickContinueTempBtn}>
+            이어 쓰기
+          </ModalBtn>
         </BtnWrapper>
         <Spacing marginBottom="1.4" />
         <DeleteTempContentBtn>임시 저장 삭제하기</DeleteTempContentBtn>
@@ -26,11 +43,11 @@ const EditorContinueTempModal = (props: editorConinueTempModalPropsType) => {
 
 export default EditorContinueTempModal;
 
-const ModalBackground = styled.div<{ $showModal: boolean }>`
+const ModalBackground = styled.div<{ $showTempContinueModal: boolean }>`
   position: fixed;
   top: 0;
   z-index: 5;
-  display: ${({ $showModal }) => ($showModal ? 'flex' : 'none')};
+  display: ${({ $showTempContinueModal }) => ($showTempContinueModal ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   width: 100vw;

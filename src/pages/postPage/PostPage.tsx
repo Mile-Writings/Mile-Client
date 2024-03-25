@@ -173,6 +173,7 @@ const PostPage = () => {
   const [previewImgUrl, setPreviewImgUrl] = useState(EDITOR_DEFAULT_IMG);
   // modal 열고닫음
   const [showModal, setShowModal] = useState(false);
+  const [showTempContinueModal, setShowTempContinueModal] = useState(false);
   // 어떤 모달 열려야 하는지 handling
   const [editorModalType, setEditorModalType] = useState('');
 
@@ -188,9 +189,7 @@ const PostPage = () => {
   // 최초 뷰 들어왔을 때 임시저장 이어쓸지 confirm 창
   useEffect(() => {
     if (type === 'post' && isTemporaryPostExist && !continueTempPost) {
-      confirm('임시 저장된 글을 계속 이어 쓸까요?')
-        ? setContinueTempPost(true)
-        : setContinueTempPost(false);
+      setShowTempContinueModal(true);
     }
   }, [isTemporaryPostExist, type, continueTempPost]);
 
@@ -410,7 +409,11 @@ const PostPage = () => {
 
   return (
     <PostPageWrapper>
-      <EditorContinueTempModal showModal={showModal} />
+      <EditorContinueTempModal
+        showTempContinueModal={showTempContinueModal}
+        setShowTempContinueModal={setShowTempContinueModal}
+        setContinueTempPost={setContinueTempPost}
+      />
       <EditorFlowModal
         showModal={showModal}
         setShowModal={setShowModal}
