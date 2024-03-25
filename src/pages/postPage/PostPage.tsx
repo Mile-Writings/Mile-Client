@@ -113,7 +113,6 @@ const editorContentReducerFn = (
 
 // editor Flow Modal 관련
 interface editorFlowModalType {
-  type: string;
   title: string;
   leftBtnText: string;
   leftBtnFn: () => void;
@@ -126,7 +125,6 @@ interface editorFlowModalActionType {
 }
 
 const editorFlowModalState: editorFlowModalType = {
-  type: '',
   title: '',
   leftBtnText: '',
   leftBtnFn: () => {},
@@ -218,14 +216,6 @@ const PostPage = () => {
     anonymous: editorVal.writer === '작자미상',
   });
 
-  // // 최초저장 -> 제출하기 누르면 열리는 모달
-  // const onClickPostContentBtn = () => {
-  //   postContent();
-  //   setShowModal(true);
-  //   editorFlowModalDispatch({ type: 'postContent' });
-  //   preventScroll();
-  // };
-
   // 최초저장 -> 제출하기 누르면 열리는 모달
   const onClickPostContentBtn = () => {
     postContent();
@@ -313,24 +303,6 @@ const PostPage = () => {
     navigate(`/group/${groupId}`);
   };
 
-  // 스크롤 방지 지우기
-  useEffect(() => {
-    if (showModal) {
-      switch (editorFlowModalType) {
-        case 'tempSave':
-          onClickTempSaveBtn();
-          break;
-        case 'postContent':
-          onClickPostContentBtn();
-          break;
-      }
-    }
-
-    return () => {
-      allowScroll();
-    };
-  }, [showModal, editorFlowModalType]);
-
   // 임시 저장 글 -> 저장하기
   const { mutate: putTempSaveContent } = usePutTempSaveContent({
     topicId: topics
@@ -343,9 +315,11 @@ const PostPage = () => {
     postId: tempPostId || '',
   });
 
-  const tempExistSaveHandler = () => {
+  const onClickTempExistSaveBtn = () => {
     putTempSaveContent();
-    navigate(`/detail/${groupId}/${tempPostId}`);
+    setShowModal(true);
+    editorFlowModalDispatch({ type: 'putTempSaveContent' });
+    preventScroll();
   };
 
   // editor Flow Modal 관련
@@ -382,7 +356,7 @@ const PostPage = () => {
           leftBtnText: '홈으로 가기',
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
-          rightBtnFn: () => {},
+          rightBtnFn: () => navigate(`/detail/${groupId}/${tempPostId}`),
         };
       // 수정하기
       case 'editContent':
@@ -402,6 +376,27 @@ const PostPage = () => {
     editorFlowModalState,
   );
 
+  // 모달 스크롤 방지 지우기
+  useEffect(() => {
+    if (showModal) {
+      switch (editorFlowModalType) {
+        case 'tempSave':
+          onClickTempSaveBtn();
+          break;
+        case 'postContent':
+          onClickPostContentBtn();
+          break;
+        case 'putTempSaveContent':
+          onClickTempExistSaveBtn();
+          break;
+      }
+    }
+
+    return () => {
+      allowScroll();
+    };
+  }, [showModal, editorFlowModalType]);
+
   return (
     <PostPageWrapper>
       <EditorFlowModal
@@ -412,7 +407,7 @@ const PostPage = () => {
       {type === 'edit' ? (
         <EditorEditHeader onClickEditSave={editSaveHandler} />
       ) : continueTempPost ? (
-        <EditorTempExistHeader onClickSubmit={tempExistSaveHandler} />
+        <EditorTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />
       ) : (
         <EditorTempNotExistHeader
           onClickTempSave={onClickTempSaveBtn}
