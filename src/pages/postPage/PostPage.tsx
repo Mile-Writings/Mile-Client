@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import React, { useEffect, useState, useReducer } from 'react';
-import { useLocation, useNavigate, useParams, NavigateFunction } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
 import EditorFlowModal from './components/EditorFlowModal';
@@ -226,6 +226,7 @@ const PostPage = () => {
     if (postContentId !== undefined) {
       setShowModal(true);
       editorFlowModalDispatch({ type: 'postContent' });
+      setEditorFlowModalType('postContent');
       preventScroll();
     }
   }, [postContentId]);
@@ -322,6 +323,7 @@ const PostPage = () => {
     putTempSaveContent();
     setShowModal(true);
     editorFlowModalDispatch({ type: 'putTempSaveContent' });
+    setEditorFlowModalType('putTempSaveContent');
     preventScroll();
   };
 
@@ -409,6 +411,7 @@ const PostPage = () => {
         showModal={showModal}
         setShowModal={setShowModal}
         editorFlowModalContent={editorFlowModalVal}
+        editorFlowModalType={editorFlowModalType}
       />
       {type === 'edit' ? (
         <EditorEditHeader onClickEditSave={onClickEditSaveBtn} />

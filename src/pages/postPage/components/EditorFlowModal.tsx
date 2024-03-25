@@ -17,10 +17,11 @@ interface EditorFlowModalProps {
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
   editorFlowModalContent: editorFlowModalType;
+  editorFlowModalType: string;
 }
 
 const EditorFlowModal = (props: EditorFlowModalProps) => {
-  const { showModal, setShowModal, editorFlowModalContent } = props;
+  const { showModal, setShowModal, editorFlowModalContent, editorFlowModalType } = props;
   const modalRef = useRef(null);
 
   // 커스텀 훅 활성화용 state
@@ -28,7 +29,7 @@ const EditorFlowModal = (props: EditorFlowModalProps) => {
 
   // 커스텀 훅 전달 함수
   const handleOutSideClick = () => {
-    if (showModal) {
+    if (showModal && editorFlowModalType === 'tempSave') {
       setModalBgClickActive(true);
     }
     if (modalBgClickActive) {
