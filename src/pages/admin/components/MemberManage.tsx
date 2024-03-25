@@ -116,8 +116,8 @@ const Email = styled.pre`
 const ExpelBtn = styled.button`
   margin-left: auto;
 
-  color: ${({ theme }) => theme.colors.gray70};
-  ${({ theme }) => theme.fonts.button2};
+  color: ${({ theme }) => theme.colors.gray50};
+  ${({ theme }) => theme.fonts.body5};
 
   &:hover {
     color: ${({ theme }) => theme.colors.mainViolet};
