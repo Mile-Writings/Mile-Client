@@ -14,24 +14,28 @@ interface EditorFlowModalProps {
 const EditorFlowModal = (props: EditorFlowModalProps) => {
   const modalRef = useRef(null);
   const { showModal, setShowModal, editorFlowModalType } = props;
-  // custom hook handle용 state
+  // 커스텀 훅 활성화용 state
   const [modalBgClickActive, setModalBgClickActive] = useState(showModal);
 
+  // 모달 내부 예/아니오 버튼
   const onClickModalBtn = () => {
     setShowModal(false);
   };
 
+  // 커스텀 훅 전달 함수
   const handleOutSideClick = () => {
     if (showModal) {
       setModalBgClickActive(true);
     }
     if (modalBgClickActive) {
       setShowModal(false);
-      setModalBgClickActive(!modalBgClickActive);
+      setModalBgClickActive(false);
     }
   };
 
+  // 커스텀 훅 사용
   useClickOutside(modalRef, handleOutSideClick);
+
   return (
     <ModalBackground $showModal={showModal}>
       <ModalWrapper ref={modalRef}>
