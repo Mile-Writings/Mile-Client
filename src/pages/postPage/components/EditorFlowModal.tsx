@@ -5,22 +5,25 @@ import { EditorCatIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 import useClickOutside from '../../../hooks/useClickOutside';
 
+interface editorFlowModalType {
+  title: string;
+  leftBtnText: string;
+  leftBtnFn: () => void;
+  rightBtnText: string;
+  rightBtnFn: () => void;
+}
+
 interface EditorFlowModalProps {
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
-  editorFlowModalType: string;
+  editorFlowModalContent: editorFlowModalType;
 }
 
 const EditorFlowModal = (props: EditorFlowModalProps) => {
   const modalRef = useRef(null);
-  const { showModal, setShowModal, editorFlowModalType } = props;
+  const { showModal, setShowModal, editorFlowModalContent } = props;
   // 커스텀 훅 활성화용 state
   const [modalBgClickActive, setModalBgClickActive] = useState(showModal);
-
-  // 모달 내부 예/아니오 버튼
-  const onClickModalBtn = () => {
-    setShowModal(false);
-  };
 
   // 커스텀 훅 전달 함수
   const handleOutSideClick = () => {
@@ -35,20 +38,21 @@ const EditorFlowModal = (props: EditorFlowModalProps) => {
 
   // 커스텀 훅 사용
   useClickOutside(modalRef, handleOutSideClick);
+  console.log(editorFlowModalContent);
 
   return (
     <ModalBackground $showModal={showModal}>
       <ModalWrapper ref={modalRef}>
-        <ModalTitle>임시저장 하시겠습니까?</ModalTitle>
+        <ModalTitle>{editorFlowModalContent.title}</ModalTitle>
         <Spacing marginBottom="3.2" />
         <EditorCatIc />
         <Spacing marginBottom="3.2" />
         <BtnWrapper>
-          <ModalBtn $isLeft={true} onClick={onClickModalBtn}>
-            아니오
+          <ModalBtn $isLeft={true} onClick={editorFlowModalContent.leftBtnFn}>
+            {editorFlowModalContent.leftBtnText}
           </ModalBtn>
-          <ModalBtn $isLeft={false} onClick={onClickModalBtn}>
-            예
+          <ModalBtn $isLeft={false} onClick={editorFlowModalContent.rightBtnFn}>
+            {editorFlowModalContent.rightBtnText}
           </ModalBtn>
         </BtnWrapper>
       </ModalWrapper>

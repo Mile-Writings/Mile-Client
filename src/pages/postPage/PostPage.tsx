@@ -27,6 +27,7 @@ import {
 } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
+// editor content API 관련
 interface editorStateType {
   topic: string | undefined;
   writer: string | undefined;
@@ -52,7 +53,10 @@ const editorState: editorStateType = {
   imageUrl: EDITOR_DEFAULT_IMG,
 };
 
-const reducerFn = (state: editorStateType, action: editorActionType): editorStateType => {
+const editorContentReducerFn = (
+  state: editorStateType,
+  action: editorActionType,
+): editorStateType => {
   switch (action.type) {
     case 'setTopic':
       return {
@@ -107,42 +111,56 @@ const reducerFn = (state: editorStateType, action: editorActionType): editorStat
   }
 };
 
+// editor Flow Modal 관련
+interface editorFlowModalType {
+  type: string;
+  title: string;
+  leftBtnText: string;
+  leftBtnFn: () => void;
+  rightBtnText: string;
+  rightBtnFn: () => void;
+}
+
+interface editorFlowModalActionType {
+  type: string;
+}
+
+const editorFlowModalState: editorFlowModalType = {
+  type: '',
+  title: '',
+  leftBtnText: '',
+  leftBtnFn: () => {},
+  rightBtnText: '',
+  rightBtnFn: () => {},
+};
+
 const PostPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  // interface editorModalFlowStateType {
-  //   title: string;
-  //   leftBtnFn?: NavigateFunction;
-  // }
-
-  // const editorModalFlowState: editorModalFlowStateType = {
-  //   title: '',
-  //   leftBtnFn: navigate('/'),
-  // };
 
   //라우팅 했을 때 스크롤 맨 위로
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const [editorVal, dispatch] = useReducer(reducerFn, editorState);
+  // editor content API 관련
+  const [editorVal, editorContentDispatch] = useReducer(editorContentReducerFn, editorState);
 
-  // dispatch prop 함수들
+  // editorContentDispatch prop 함수들
   const setTopic = (e: React.MouseEvent<HTMLDivElement>) => {
-    dispatch({ type: 'setTopic', topic: e.currentTarget.innerText });
+    editorContentDispatch({ type: 'setTopic', topic: e.currentTarget.innerText });
   };
   const setWriter = (e: React.MouseEvent<HTMLDivElement>) => {
-    dispatch({ type: 'setWriter', writer: e.currentTarget.innerText });
+    editorContentDispatch({ type: 'setWriter', writer: e.currentTarget.innerText });
   };
   const setTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'setTitle', title: e.target.value });
+    editorContentDispatch({ type: 'setTitle', title: e.target.value });
   };
   const setContent = (content: string) => {
-    dispatch({ type: 'setContent', content: content });
+    editorContentDispatch({ type: 'setContent', content: content });
   };
   const setImageToServer = (imageUrl: string) => {
-    dispatch({ type: 'setImageToServer', imageUrl: imageUrl });
+    editorContentDispatch({ type: 'setImageToServer', imageUrl: imageUrl });
   };
 
   // 모임 ID, url에서 받아오기
@@ -156,6 +174,7 @@ const PostPage = () => {
   const [previewImgUrl, setPreviewImgUrl] = useState(EDITOR_DEFAULT_IMG);
   // modal 열고닫음
   const [showModal, setShowModal] = useState(false);
+  // 어떤 모달 열려야 하는지 handling
   const [editorFlowModalType, setEditorFlowModalType] = useState('');
 
   // 임시저장 불러오기
@@ -180,7 +199,7 @@ const PostPage = () => {
   const { topics } = useGetTopic(groupId || '');
   useEffect(() => {
     if (topics) {
-      dispatch({ type: 'setInitialTopic', topic: topics[0].topicName });
+      editorContentDispatch({ type: 'setInitialTopic', topic: topics[0].topicName });
     }
   }, [topics]);
 
@@ -188,7 +207,7 @@ const PostPage = () => {
   const { fileName, url } = usePresignedUrl();
 
   // 최초저장
-  const { mutate: postContent } = usePostContent({
+  const { mutate: postContent, postContentId } = usePostContent({
     groupId: groupId,
     topicId: topics
       ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId ?? ''
@@ -198,16 +217,35 @@ const PostPage = () => {
     imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
   });
-  const saveHandler = () => {
+
+  // // 최초저장 -> 제출하기 누르면 열리는 모달
+  // const onClickPostContentBtn = () => {
+  //   postContent();
+  //   setShowModal(true);
+  //   editorFlowModalDispatch({ type: 'postContent' });
+  //   preventScroll();
+  // };
+
+  // 최초저장 -> 제출하기 누르면 열리는 모달
+  const onClickPostContentBtn = () => {
     postContent();
   };
+
+  // 쿼리가 실행되고 postContentId를 받아온 후 모달 열리도록
+  useEffect(() => {
+    if (postContentId !== undefined) {
+      setShowModal(true);
+      editorFlowModalDispatch({ type: 'postContent' });
+      preventScroll();
+    }
+  }, [postContentId]);
 
   useEffect(() => {
     // 수정하기에서 넘어온 view일 경우 값 업데이트
     if (type === 'edit') {
       setEditPostId(location.state.postId);
       setPreviewImgUrl(location.state.imageUrl);
-      dispatch({
+      editorContentDispatch({
         type: 'setEditValue',
         topic: location.state.topic,
         imageUrl: location.state.imageUrl,
@@ -220,7 +258,7 @@ const PostPage = () => {
     if (type === 'post' && continueTempPost) {
       setEditPostId(tempPostId || '');
       setPreviewImgUrl(tempImageUrl);
-      dispatch({
+      editorContentDispatch({
         type: 'setTempValue',
         topic:
           tempTopicList?.find((topicEl: tempTopicListType) => topicEl.isSelected)?.topicName || '',
@@ -261,24 +299,37 @@ const PostPage = () => {
     anonymous: editorVal.writer === '작자미상',
   });
 
-  const tempSaveHandler = () => {
-    // postTempSaveContent();
+  // 임시저장 버튼 누르면 열리는 모달
+  const onClickTempSaveBtn = () => {
     setShowModal(true);
     setEditorFlowModalType('tempSave');
-    // 스크롤 방지
+    editorFlowModalDispatch({ type: 'tempSave' });
     preventScroll();
-    // navigate(`/group/${groupId}`);
+  };
+
+  // 임시저장 모달 -> '예' 누르면 쿼리 동작
+  const tempSaveHandler = () => {
+    postTempSaveContent();
+    navigate(`/group/${groupId}`);
   };
 
   // 스크롤 방지 지우기
   useEffect(() => {
     if (showModal) {
-      tempSaveHandler();
+      switch (editorFlowModalType) {
+        case 'tempSave':
+          onClickTempSaveBtn();
+          break;
+        case 'postContent':
+          onClickPostContentBtn();
+          break;
+      }
     }
+
     return () => {
       allowScroll();
     };
-  }, [showModal]);
+  }, [showModal, editorFlowModalType]);
 
   // 임시 저장 글 -> 저장하기
   const { mutate: putTempSaveContent } = usePutTempSaveContent({
@@ -297,19 +348,76 @@ const PostPage = () => {
     navigate(`/detail/${groupId}/${tempPostId}`);
   };
 
+  // editor Flow Modal 관련
+  const editorFlowModalReducerFn = (
+    state: editorFlowModalType,
+    action: editorFlowModalActionType,
+  ): editorFlowModalType => {
+    switch (action.type) {
+      // 최초 글 임시저장
+      case 'tempSave':
+        return {
+          ...state,
+          title: '임시저장 하시겠습니까?',
+          leftBtnText: '아니오',
+          leftBtnFn: () => setShowModal(false),
+          rightBtnText: '예',
+          rightBtnFn: tempSaveHandler,
+        };
+      // 최초 제출하기
+      case 'postContent':
+        return {
+          ...state,
+          title: '제출이 완료되었습니다',
+          leftBtnText: '홈으로 가기',
+          leftBtnFn: () => navigate('/'),
+          rightBtnText: '글 확인하기',
+          rightBtnFn: () => navigate(`/detail/${groupId}/${postContentId}`),
+        };
+      // 임시저장 이어쓰기 -> 제출하기
+      case 'putTempSaveContent':
+        return {
+          ...state,
+          title: '제출이 완료되었습니다',
+          leftBtnText: '홈으로 가기',
+          leftBtnFn: () => navigate('/'),
+          rightBtnText: '글 확인하기',
+          rightBtnFn: () => {},
+        };
+      // 수정하기
+      case 'editContent':
+        return {
+          ...state,
+          title: '수정이 완료되었습니다.',
+          leftBtnText: '홈으로 가기',
+          leftBtnFn: () => {},
+          rightBtnText: '글 확인하기',
+          rightBtnFn: () => {},
+        };
+    }
+  };
+
+  const [editorFlowModalVal, editorFlowModalDispatch] = useReducer(
+    editorFlowModalReducerFn,
+    editorFlowModalState,
+  );
+
   return (
     <PostPageWrapper>
       <EditorFlowModal
         showModal={showModal}
         setShowModal={setShowModal}
-        editorFlowModalType={editorFlowModalType}
+        editorFlowModalContent={editorFlowModalVal}
       />
       {type === 'edit' ? (
         <EditorEditHeader onClickEditSave={editSaveHandler} />
       ) : continueTempPost ? (
         <EditorTempExistHeader onClickSubmit={tempExistSaveHandler} />
       ) : (
-        <EditorTempNotExistHeader onClickTempSave={tempSaveHandler} onClickSubmit={saveHandler} />
+        <EditorTempNotExistHeader
+          onClickTempSave={onClickTempSaveBtn}
+          onClickSubmit={onClickPostContentBtn}
+        />
       )}
       <Spacing marginBottom="6.4" />
       <ImageUpload
