@@ -17,6 +17,9 @@ const EditorFlowModal = (props: EditorFlowModalProps) => {
   // custom hook handle용 state
   const [isModalOpen, setIsModalOpen] = useState(showModal);
 
+  console.log(showModal, ' prop으로 넘겨받은 모달 핸들');
+  console.log(isModalOpen, ' 커스텀훅 모달 핸들');
+
   const onClickModalBtn = () => {
     setShowModal(false);
     setIsModalOpen(false);
@@ -24,10 +27,9 @@ const EditorFlowModal = (props: EditorFlowModalProps) => {
 
   const handleOutSideClick = () => {
     if (!isModalOpen) {
-      setShowModal(true);
+      setShowModal(false);
       setIsModalOpen(true);
     } else {
-      setShowModal(false);
       setIsModalOpen(false);
     }
   };
