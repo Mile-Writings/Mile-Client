@@ -18,6 +18,7 @@ export interface FetchMemberPropTypes {
 
 const getMemberInfo = async () => {
   try {
+    // 이후에 수정할 예정
     const { data } = await client.get<FetchMemberPropTypes>(
       '/api/moim/:moimId/writerNameList?page=N',
     );
