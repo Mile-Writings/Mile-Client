@@ -1,11 +1,15 @@
 import styled from '@emotion/styled';
+import { useParams } from 'react-router-dom';
 
-import { FetchMemberPropTypes, MEMBER, Members } from '../constants/MEMBER';
+import { Members } from '../constants/MEMBER';
+import { useGetMemberInfo } from '../hooks/queries';
 
 import { adminEmptyMemberIc as AdminEmptyMemberIcon } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 const MemberManage = () => {
+  const { writerNameId } = useParams();
+  const { data } = useGetMemberInfo(writerNameId || '');
   return (
     <MemberTableWrapper>
       <TableHeaderLayout>
@@ -15,26 +19,24 @@ const MemberManage = () => {
       </TableHeaderLayout>
       <Spacing marginBottom="0.4" />
       <MemberLayout>
-        {MEMBER.map(({ data }: FetchMemberPropTypes, index) => {
-          return data.members.length !== 0 ? (
-            data.members.map(({ profileImage, penName, email }: Members) => {
-              return (
-                <MemberItemContainer key={penName}>
-                  <Profile src={profileImage} />
-                  <Name>{penName}</Name>
-                  <Email>{email}</Email>
-                  <ExpelBtn>삭제하기</ExpelBtn>
-                </MemberItemContainer>
-              );
-            })
-          ) : (
-            <EmptyContainer key={index}>
-              <EmptyMemberText>아직 멤버가 없습니다.</EmptyMemberText>
-              <Spacing marginBottom="3" />
-              <AdminEmptyMemberIcon />
-            </EmptyContainer>
-          );
-        })}
+        {data?.writerNameCount !== 0 ? (
+          data?.writerNameList.map(({ profileImage, writerNameId, writerName, email }: Members) => {
+            return (
+              <MemberItemContainer key={writerNameId}>
+                <Profile src={profileImage} />
+                <Name>{writerName}</Name>
+                <Email>{email}</Email>
+                <ExpelBtn>삭제하기</ExpelBtn>
+              </MemberItemContainer>
+            );
+          })
+        ) : (
+          <EmptyContainer key={writerNameId}>
+            <EmptyMemberText>아직 멤버가 없습니다.</EmptyMemberText>
+            <Spacing marginBottom="3" />
+            <AdminEmptyMemberIcon />
+          </EmptyContainer>
+        )}
       </MemberLayout>
     </MemberTableWrapper>
   );

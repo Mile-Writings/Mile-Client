@@ -2,13 +2,15 @@ import adminImgProfile from '../../../assets/images/adminImgProfile.png';
 
 export interface Members {
   profileImage: string;
-  penName: string;
+  writerNameId: string;
+  writerName: string;
   email: string;
 }
 
 export interface FetchMemberPropTypes {
   data: {
-    members: Members[];
+    writerNameCount: number;
+    writerNameList: Members[];
   };
   // status: number;
   // message: string;

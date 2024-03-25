@@ -1,8 +1,12 @@
 import styled from '@emotion/styled';
 
+import MemberManage from './components/MemberManage';
+import { useGetMemberInfo } from './hooks/queries';
+
 import Spacing from '../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
+  const { totalMember } = useGetMemberInfo();
   switch (admin) {
     case 'topic':
       return (
@@ -19,8 +23,9 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
         <AdminContainer>
           <Title>멤버 관리</Title>
           <Spacing marginBottom="1.2" />
-          <SubTitle>{`명의 멤버가 함께하고 있어요`}</SubTitle>
+          <SubTitle>{`${totalMember}명의 멤버가 함께하고 있어요`}</SubTitle>
           <Spacing marginBottom="3.6" />
+          <MemberManage />
         </AdminContainer>
       );
 
