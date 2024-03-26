@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
 
 import { Members } from '../apis/getMemberInfo';
-import { useGetMemberInfo } from '../hooks/queries';
+import { useDeleteMember, useGetMemberInfo } from '../hooks/queries';
 
 import { adminEmptyMemberIc as AdminEmptyMemberIcon } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
@@ -10,6 +10,7 @@ import Spacing from '../../../components/commons/Spacing';
 const MemberManage = () => {
   const { writerNameId, moimId } = useParams();
   const { data } = useGetMemberInfo(moimId || '');
+  const { deleteMember } = useDeleteMember(writerNameId || '');
   return (
     <MemberTableWrapper>
       <TableHeaderLayout>
@@ -26,7 +27,7 @@ const MemberManage = () => {
                 <Profile src={profileImage} />
                 <Name>{writerName}</Name>
                 <Email>{email}</Email>
-                <ExpelBtn>삭제하기</ExpelBtn>
+                <ExpelBtn onClick={deleteMember}>삭제하기</ExpelBtn>
               </MemberItemContainer>
             );
           })
