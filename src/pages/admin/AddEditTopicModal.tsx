@@ -8,21 +8,38 @@ const AddEditTopicModal = () => {
   const [topicTag, setTopicTag] = useState('');
   const [topicDescription, setTopicDescription] = useState('');
   const [topicDescriptionLength, setTopicDescriptionLength] = useState(0);
+  const [topicNameError, setTopicNameError] = useState(false);
+  const [topicTagError, setTopicTagError] = useState(false);
+  const [topicDescriptionError, setTopicDescriptionError] = useState(false);
   const limitLength = 90;
 
-  const handleTopicName = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTopicNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTopicName(e.target.value);
+    setTopicNameError(false);
   };
 
-  const handleTopicTag = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTopicTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTopicTag(e.target.value);
+    setTopicTagError(false);
   };
 
-  const handleTopicDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTopicDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newDescription = e.target.value;
     setTopicDescription(newDescription);
     setTopicDescriptionLength(newDescription.length);
+    setTopicDescriptionError(false);
   };
+
+  const handleSubmit = () => {
+    if (topicName.trim() === '' || topicTag.trim() === '' || topicDescription.trim() === '') {
+      setTopicNameError(topicName.trim() === '');
+      setTopicTagError(topicTag.trim() === '');
+      setTopicDescriptionError(topicDescription.trim() === '');
+    } else {
+      //api 통신
+    }
+  };
+
   return (
     <ModalWrapper>
       <div>
@@ -31,7 +48,8 @@ const AddEditTopicModal = () => {
         <TopicInput
           placeholder="함께 작성하고 싶은 글감을 입력해주세요. ex) 마음이 담긴 선물"
           value={topicName}
-          onChange={handleTopicName}
+          onChange={handleTopicNameChange}
+          isError={topicNameError}
         ></TopicInput>
       </div>
       <div>
@@ -40,7 +58,8 @@ const AddEditTopicModal = () => {
         <TopicInput
           placeholder="위에 적은 글감을 한 단어로 요약해주세요. ex) 선물"
           value={topicTag}
-          onChange={handleTopicTag}
+          onChange={handleTopicTagChange}
+          isError={topicTagError}
         ></TopicInput>
       </div>
       <div>
@@ -49,15 +68,17 @@ const AddEditTopicModal = () => {
         <TextAreaWrapper>
           <TopicDescriptionInput
             placeholder={`글감에 대해 자유롭게 소개해주세요\nex) 마음이 담긴 선물을 주거나 받은 기억을 떠올려보세요.\n그 순간이 당신에게 어떤 의미로 남았는지 이야기해주세요.`}
-            onChange={handleTopicDescription}
-            maxLength={91}
+            onChange={handleTopicDescriptionChange}
+            value={topicDescription}
+            maxLength={limitLength + 1}
+            isError={topicDescriptionError}
           ></TopicDescriptionInput>
           <TextCount>
             {topicDescriptionLength}/{limitLength}
           </TextCount>
         </TextAreaWrapper>
       </div>
-      <SubmitForm>글감 수정하기</SubmitForm>
+      <SubmitForm onClick={handleSubmit}>글감 수정하기</SubmitForm>
     </ModalWrapper>
   );
 };
@@ -77,7 +98,7 @@ const ModalWrapper = styled.div`
   border-radius: 8px;
 `;
 
-const TopicInput = styled.input`
+const TopicInput = styled.input<{ isError: boolean }>`
   width: 55.2rem;
   height: 3.9rem;
   padding: 1rem 1.2rem;
@@ -87,7 +108,7 @@ const TopicInput = styled.input`
   ${({ theme }) => theme.fonts.button2}
 
   background-color: ${({ theme }) => theme.colors.gray5};
-  border: 1px solid ${({ theme }) => theme.colors.gray50};
+  border: 1px solid ${({ theme, isError }) => (isError ? 'red' : theme.colors.gray50)};
   border-radius: 6px;
 
   ::placeholder {
@@ -107,14 +128,14 @@ const SubmitForm = styled.button`
   border-radius: 10px;
 `;
 
-const TopicDescriptionInput = styled.textarea`
+const TopicDescriptionInput = styled.textarea<{ isError: boolean }>`
   width: 52.8rem;
   height: 7.8rem;
 
   color: ${({ theme }) => theme.colors.gray100};
 
   background-color: ${({ theme }) => theme.colors.gray5};
-  ${({ theme }) => theme.fonts.button2}
+  border: 1px solid ${({ theme, isError }) => (isError ? 'red' : theme.colors.gray50)};
   border: none;
   border-radius: 6px;
 
