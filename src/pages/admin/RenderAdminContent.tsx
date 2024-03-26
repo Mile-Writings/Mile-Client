@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import AddEditTopicModal from './AddEditTopicModal';
 import { useAdminTopic } from './hooks/queries';
 import TopicAdmin from './TopicAdmin';
 
@@ -21,7 +22,8 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
             <MakeGroupAdminIc style={{ cursor: 'pointer' }} />
           </AdminLayout>
           <Spacing marginBottom="3.6" />
-          <TopicAdmin data={adminTopicData} />
+          <AddEditTopicModal />
+          {/* <TopicAdmin data={adminTopicData} /> */}
         </AdminContainer>
       );
 
