@@ -16,11 +16,11 @@ export interface FetchMemberPropTypes {
   // message: string;
 }
 
-const getMemberInfo = async () => {
+const getMemberInfo = async (moimId: string) => {
   try {
     // 이후에 수정할 예정
     const { data } = await client.get<FetchMemberPropTypes>(
-      '/api/moim/:moimId/writerNameList?page=N',
+      `/api/moim/:moimId/writerNameList?page=${moimId}`,
     );
     return data.data;
   } catch (error) {

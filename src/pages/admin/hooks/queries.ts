@@ -6,10 +6,10 @@ export const QUERY_KEY_ADMIN = {
   useMemberInfo: 'getMemberInfo',
 };
 
-export const useGetMemberInfo = () => {
+export const useGetMemberInfo = (moimId: string) => {
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEY_ADMIN.useMemberInfo],
-    queryFn: () => getMemberInfo(),
+    queryFn: () => getMemberInfo(moimId),
   });
   const totalMember = data?.writerNameCount;
 

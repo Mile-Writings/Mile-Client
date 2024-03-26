@@ -8,8 +8,8 @@ import { adminEmptyMemberIc as AdminEmptyMemberIcon } from '../../../assets/svgs
 import Spacing from '../../../components/commons/Spacing';
 
 const MemberManage = () => {
-  const { writerNameId } = useParams();
-  const { data } = useGetMemberInfo();
+  const { writerNameId, moimId } = useParams();
+  const { data } = useGetMemberInfo(moimId || '');
   return (
     <MemberTableWrapper>
       <TableHeaderLayout>
