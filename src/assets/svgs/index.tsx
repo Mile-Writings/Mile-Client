@@ -5,7 +5,6 @@ export { default as EditorTextColorIcnBlackSvg } from './editorTextcolorIcnBlack
 export { default as HeaderLogoSvg } from './headerLogoSvg.svg?react';
 export { default as MainGroupRoutingBtn } from './mainGroupRoutingBtn.svg?react';
 export { default as MainGroupRoutingBtnHover } from './mainGroupRoutingBtnHover.svg?react';
-export { default as MainIcnArrowPurple } from './mainIcnArrowPurple.svg?react';
 
 export { default as DetailPurpleFavoriteIc } from './detailPurplefavorite.svg?react';
 export { default as DetailWhiteFavoriteIc } from './detailWhitefavorite.svg?react';
@@ -31,6 +30,8 @@ export { default as GroupNoDataImgIc } from './groupNoDataImg.svg?react';
 export { default as HeaderLogoIc } from './headerLogoSvg.svg?react';
 export { default as MainGraphicGradationIc } from './mainGraphicGradation.svg?react';
 export { default as MainGraphicLogo } from './mainGraphicLogo.svg?react';
+export { default as MainIcnArrowBlack } from './mainIcnArrowBlack.svg?react';
+export { default as MainIcnArrowPurple } from './mainIcnArrowPurple.svg?react';
 export { default as MainIcnArrowWhite } from './mainIcnArrowWhite.svg?react';
 export { default as MakeGroupPlusBtn } from './mainMakeGroupBtnEnable.svg?react';
 export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?react';
@@ -49,8 +50,8 @@ export { default as CheckboxIc } from './postDetailCheckIc.svg?react';
 export { default as QuestionDefaultIc } from './questionDefaultIc.svg?react';
 export { default as QuestioHoverIc } from './questionHoverIc.svg?react';
 
-export { default as EditorDropIcnOpen } from './editorDropIcnOpen.svg?react';
 export { default as EditorDropIcnClose } from './editorDropIcnClose.svg?react';
+export { default as EditorDropIcnOpen } from './editorDropIcnOpen.svg?react';
 
 export { default as EditorDropIcnActiveIc } from './editorDropIcnActive.svg?react';
 export { default as EditorDropIcnActiveOpenIc } from './editorDropIcnActiveopen.svg?react';
