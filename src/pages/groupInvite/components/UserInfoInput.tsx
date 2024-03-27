@@ -1,8 +1,14 @@
 import styled from '@emotion/styled';
+import { useState, SyntheticEvent } from 'react';
 
 import Spacing from '../../../components/commons/Spacing';
 
 const UserInfoInput = () => {
+  const [charCount, setCharCount] = useState(0);
+
+  const onInputHandler = (e: SyntheticEvent<HTMLInputElement>) => {
+    setCharCount(e.currentTarget.value.length);
+  };
   return (
     <>
       <UserInfoInputWrapper>
@@ -15,8 +21,11 @@ const UserInfoInput = () => {
       <Spacing marginBottom="2.8" />
       <UserInfoInputWrapper>
         <UserInfoTitle>소개 글</UserInfoTitle>
-        <WriterIntroduceInput placeholder="모임원들에게 ‘나’에 대해 자유롭게 소개해주세요." />
-        <CharCount>7/100</CharCount>
+        <WriterIntroduceInput
+          placeholder="모임원들에게 ‘나’에 대해 자유롭게 소개해주세요."
+          onChange={onInputHandler}
+        />
+        <CharCount>{charCount}/100</CharCount>
       </UserInfoInputWrapper>
     </>
   );
