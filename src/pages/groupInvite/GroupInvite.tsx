@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import GroupInfo from './components/GroupInfo';
 import Title from './components/Title';
+import WriterName from './components/WriterName';
 
 import { DefaultHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
@@ -14,6 +15,8 @@ const GroupInvite = () => {
       <Title />
       <Spacing marginBottom="4.8" />
       <GroupInfo />
+      <Spacing marginBottom="2.8" />
+      <WriterName />
     </GroupInviteWrapper>
   );
 };
