@@ -6,7 +6,7 @@ import Spacing from '../../../components/commons/Spacing';
 const UserInfoInput = () => {
   const [charCount, setCharCount] = useState(0);
 
-  const onInputHandler = (e: SyntheticEvent<HTMLInputElement>) => {
+  const onInputHandler = (e: SyntheticEvent<HTMLTextAreaElement, Event>) => {
     setCharCount(e.currentTarget.value.length);
   };
   return (
