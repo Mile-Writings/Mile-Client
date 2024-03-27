@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import GroupInfo from './components/GroupInfo';
+import GroupJoinCongrats from './components/GroupJoinCongrats';
 import Title from './components/Title';
 import UserInfoInput from './components/UserInfoInput';
 
@@ -12,14 +13,15 @@ const GroupInvite = () => {
     <GroupInviteWrapper>
       <DefaultHeader />
       <Spacing marginBottom="11.4" />
-      <Title />
+      {/* <Title />
       <Spacing marginBottom="4.8" />
       <GroupInfo />
       <Spacing marginBottom="2.8" />
       <UserInfoInput />
       <Spacing marginBottom="2.8" />
       <SignUpBtn>가입하기</SignUpBtn>
-      <Spacing marginBottom="7.7" />
+      <Spacing marginBottom="7.7" /> */}
+      <GroupJoinCongrats />
     </GroupInviteWrapper>
   );
 };
