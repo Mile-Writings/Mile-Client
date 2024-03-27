@@ -45,5 +45,11 @@ const SignUpBtn = styled.button`
 
   background-color: ${({ theme }) => theme.colors.mainViolet};
   border-radius: 10px;
-  ${({ theme }) => theme.fonts.button2}
+  ${({ theme }) => theme.fonts.button2};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+
+    background-color: ${({ theme }) => theme.colors.mileViolet};
+  }
 `;
