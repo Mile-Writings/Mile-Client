@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import CuriousGroup from './CuriousGroup';
-
-import Spacing from './.././../../components/commons/Spacing';
+import { MainGroupRoutingBtn as MainGroupRoutingBtnIcon } from '../../../assets/svgs';
+import Spacing from '../../../components/commons/Spacing';
 
 export interface groupContentPropTypes {
   topicName: string;
@@ -16,7 +15,7 @@ export interface groupContentPropTypes {
   isLast: boolean;
 }
 
-const GroupContent = ({
+const CarouselContent = ({
   topicName,
   imageUrl,
   postTitle,
@@ -27,40 +26,55 @@ const GroupContent = ({
   isContainPhoto,
 }: groupContentPropTypes) => {
   const navigate = useNavigate();
-  const handleOnClick = () => {
+  const handleRoutingDetail = () => {
     navigate(`/detail/${groupId}/${postId}`);
   };
 
+  const handleRoutingGroup = () => {
+    navigate(`/group/${groupId}`);
+  };
+
   return (
-    <ContentLayout>
+    <CarouselContentWrapper>
       {imageUrl && (
         <>
-          <TextContainer onClick={handleOnClick}>
+          <ContentLayout onClick={handleRoutingDetail}>
             <Topic>{topicName}</Topic>
             <MainText>{postTitle}</MainText>
             <Spacing marginBottom="2" />
             <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
               {postContent}
             </SubText>
-          </TextContainer>
+          </ContentLayout>
           {isContainPhoto && (
             <Image
               src={imageUrl}
               isLast={isLast}
               alt="group-content-image"
-              onClick={handleOnClick}
+              onClick={handleRoutingDetail}
             />
           )}
         </>
       )}
-      {isLast && <CuriousGroup groupId={groupId} />}
-    </ContentLayout>
+      {isLast && (
+        <GroupRoutingBtnLayout>
+          <GroupRoutingBox>
+            이 모임에 대해서
+            <br /> 더 궁금하신가요?
+          </GroupRoutingBox>
+          <Spacing marginBottom="1.6" />
+          <GroupRoutingBtnBox>
+            <MainGroupRoutingBtnIcon onClick={() => handleRoutingGroup()} />
+          </GroupRoutingBtnBox>
+        </GroupRoutingBtnLayout>
+      )}
+    </CarouselContentWrapper>
   );
 };
 
-export default GroupContent;
+export default CarouselContent;
 
-const ContentLayout = styled.div`
+const CarouselContentWrapper = styled.div`
   display: flex;
   gap: 3.6rem;
   padding: 3.6rem;
@@ -78,7 +92,7 @@ const MainText = styled.p`
   ${({ theme }) => theme.fonts.title10};
 `;
 
-const TextContainer = styled.div`
+const ContentLayout = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -114,4 +128,32 @@ const Image = styled.img<{ isLast: boolean }>`
 
   cursor: pointer;
   border-radius: 8px;
+`;
+
+const GroupRoutingBtnLayout = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 4.2rem;
+
+  text-align: center;
+`;
+
+const GroupRoutingBox = styled.p`
+  width: 12.3rem;
+
+  color: ${({ theme }) => theme.colors.mainViolet};
+  ${({ theme }) => theme.fonts.title8};
+`;
+
+const GroupRoutingBtnBox = styled.div`
+  & > svg {
+    cursor: pointer;
+  }
+
+  & > svg:hover {
+    path {
+      fill: ${({ theme }) => theme.colors.mileViolet};
+    }
+  }
 `;
