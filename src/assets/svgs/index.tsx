@@ -32,8 +32,8 @@ export { default as HeaderLogoIc } from './headerLogoSvg.svg?react';
 export { default as MainGraphicGradationIc } from './mainGraphicGradation.svg?react';
 export { default as MainGraphicLogo } from './mainGraphicLogo.svg?react';
 export { default as MainIcnArrowWhite } from './mainIcnArrowWhite.svg?react';
-export { default as MakeGroupPlusBtn } from './mainMakeGroupBtnEnable.svg?react';
 export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?react';
+export { default as MakeGroupPlusBtn } from './mainMakeGroupPlusBtn.svg?react';
 
 export { default as MainTogglearrowClosedIc } from './mainTogglearrowClosedIc.svg?react';
 export { default as MainToggleArrowOpenedIc } from './mainTogglearrowOpenedIc.svg?react';
@@ -49,8 +49,8 @@ export { default as CheckboxIc } from './postDetailCheckIc.svg?react';
 export { default as QuestionDefaultIc } from './questionDefaultIc.svg?react';
 export { default as QuestioHoverIc } from './questionHoverIc.svg?react';
 
-export { default as EditorDropIcnOpen } from './editorDropIcnOpen.svg?react';
 export { default as EditorDropIcnClose } from './editorDropIcnClose.svg?react';
+export { default as EditorDropIcnOpen } from './editorDropIcnOpen.svg?react';
 
 export { default as EditorDropIcnActiveIc } from './editorDropIcnActive.svg?react';
 export { default as EditorDropIcnActiveOpenIc } from './editorDropIcnActiveopen.svg?react';
