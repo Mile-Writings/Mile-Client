@@ -32,8 +32,8 @@ export { default as HeaderLogoIc } from './headerLogoSvg.svg?react';
 export { default as MainGraphicGradationIc } from './mainGraphicGradation.svg?react';
 export { default as MainGraphicLogo } from './mainGraphicLogo.svg?react';
 export { default as MainIcnArrowWhite } from './mainIcnArrowWhite.svg?react';
-export { default as MakeGroupPlusBtn } from './mainMakeGroupBtnEnable.svg?react';
 export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?react';
+export { default as MakeGroupPlusBtn } from './mainMakeGroupPlusBtn.svg?react';
 
 export { default as MainTogglearrowClosedIc } from './mainTogglearrowClosedIc.svg?react';
 export { default as MainToggleArrowOpenedIc } from './mainTogglearrowOpenedIc.svg?react';
