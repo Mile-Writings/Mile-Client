@@ -50,7 +50,7 @@ const AddEditTopicModal = () => {
           value={topicName}
           onChange={handleTopicNameChange}
           isError={topicNameError}
-        ></TopicInput>
+        />
       </div>
       <div>
         글감 태그*
@@ -60,7 +60,7 @@ const AddEditTopicModal = () => {
           value={topicTag}
           onChange={handleTopicTagChange}
           isError={topicTagError}
-        ></TopicInput>
+        />
       </div>
       <div>
         글감 소개
@@ -70,9 +70,9 @@ const AddEditTopicModal = () => {
             placeholder={`글감에 대해 자유롭게 소개해주세요\nex) 마음이 담긴 선물을 주거나 받은 기억을 떠올려보세요.\n그 순간이 당신에게 어떤 의미로 남았는지 이야기해주세요.`}
             onChange={handleTopicDescriptionChange}
             value={topicDescription}
-            maxLength={limitLength + 1}
+            maxLength={limitLength}
             isError={topicDescriptionError}
-          ></TopicDescriptionInput>
+          />
           <TextCount>
             {topicDescriptionLength}/{limitLength}
           </TextCount>
@@ -133,6 +133,7 @@ const TopicDescriptionInput = styled.textarea<{ isError: boolean }>`
   height: 7.8rem;
 
   color: ${({ theme }) => theme.colors.gray100};
+  ${({ theme }) => theme.fonts.button2}
 
   background-color: ${({ theme }) => theme.colors.gray5};
   border: 1px solid ${({ theme, isError }) => (isError ? 'red' : theme.colors.gray50)};
