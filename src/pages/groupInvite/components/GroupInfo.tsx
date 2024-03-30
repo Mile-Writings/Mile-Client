@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { GroupLeaderIc, GroupMemberIc, GroupDateIc } from './../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 const GroupInfo = () => {
@@ -10,19 +11,19 @@ const GroupInfo = () => {
         <GroupName>그룹명자리입니다</GroupName>
         <Spacing marginBottom="1.8" />
         <GroupInfoContentWrapper>
-          {/* svg */}
+          <GroupLeaderIc />
           <GroupInfoContent>모임방장</GroupInfoContent>
           <GroupInfoText>방장입니다</GroupInfoText>
         </GroupInfoContentWrapper>
         <Spacing marginBottom="1.2" />
         <GroupInfoContentWrapper>
-          {/* svg */}
+          <GroupDateIc />
           <GroupInfoContent>설립날짜</GroupInfoContent>
           <GroupInfoText>24.01.08~</GroupInfoText>
         </GroupInfoContentWrapper>
         <Spacing marginBottom="1.2" />
         <GroupInfoContentWrapper>
-          {/* svg */}
+          <GroupMemberIc />
           <GroupInfoContent>모임인원</GroupInfoContent>
           <GroupInfoText>11명의 작가들</GroupInfoText>
         </GroupInfoContentWrapper>

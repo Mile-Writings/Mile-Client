@@ -70,7 +70,7 @@ const GoToGroupFeedBtn = styled.button`
   border-radius: 5px;
 
   /* 글자 크기 변경 필요 !!!! */
-  ${({ theme }) => theme.fonts.subtitle4};
+  ${({ theme }) => theme.fonts.subtitle4}
 
   &:hover {
     color: ${({ theme }) => theme.colors.mainViolet};
