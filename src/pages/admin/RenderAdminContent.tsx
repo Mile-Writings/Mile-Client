@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
 import AddEditTopicModal from './AddEditTopicModal';
 import { useAdminTopic } from './hooks/queries';
@@ -9,6 +10,8 @@ import Spacing from '../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
   const { topicCount, adminTopicData } = useAdminTopic();
+  const [showModal, setShowModal] = useState(false);
+
   switch (admin) {
     case 'topic':
       return (
@@ -19,11 +22,11 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
               <Spacing marginBottom="1.2" />
               <SubTitle>{`${topicCount}개의 글감이 저장되어있어요`}</SubTitle>
             </div>
-            <MakeGroupAdminIc style={{ cursor: 'pointer' }} />
+            <MakeGroupAdminIc style={{ cursor: 'pointer' }} onClick={() => setShowModal(true)} />
           </AdminLayout>
           <Spacing marginBottom="3.6" />
-          <AddEditTopicModal />
-          {/* <TopicAdmin data={adminTopicData} /> */}
+          {showModal && <AddEditTopicModal />}
+          <TopicAdmin data={adminTopicData} />
         </AdminContainer>
       );
 
