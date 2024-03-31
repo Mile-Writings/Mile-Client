@@ -41,67 +41,53 @@ const AddEditTopicModal = () => {
   };
 
   return (
-    <BackgroundWrapper>
-      <ModalWrapper>
-        <div>
-          글감*
-          <Spacing marginBottom="1.2" />
-          <TopicInput
-            placeholder="함께 작성하고 싶은 글감을 입력해주세요. ex) 마음이 담긴 선물"
-            value={topicName}
-            onChange={handleTopicNameChange}
-            isError={topicNameError}
+    <ModalWrapper>
+      <div>
+        글감*
+        <Spacing marginBottom="1.2" />
+        <TopicInput
+          placeholder="함께 작성하고 싶은 글감을 입력해주세요. ex) 마음이 담긴 선물"
+          value={topicName}
+          onChange={handleTopicNameChange}
+          isError={topicNameError}
+        />
+      </div>
+      <div>
+        글감 태그*
+        <Spacing marginBottom="1.2" />
+        <TopicInput
+          placeholder="위에 적은 글감을 한 단어로 요약해주세요. ex) 선물"
+          value={topicTag}
+          onChange={handleTopicTagChange}
+          isError={topicTagError}
+        />
+      </div>
+      <div>
+        글감 소개
+        <Spacing marginBottom="1.2" />
+        <TextAreaWrapper>
+          <TopicDescriptionInput
+            placeholder={`글감에 대해 자유롭게 소개해주세요\nex) 마음이 담긴 선물을 주거나 받은 기억을 떠올려보세요.\n그 순간이 당신에게 어떤 의미로 남았는지 이야기해주세요.`}
+            onChange={handleTopicDescriptionChange}
+            value={topicDescription}
+            maxLength={limitLength}
+            isError={topicDescriptionError}
           />
-        </div>
-        <div>
-          글감 태그*
-          <Spacing marginBottom="1.2" />
-          <TopicInput
-            placeholder="위에 적은 글감을 한 단어로 요약해주세요. ex) 선물"
-            value={topicTag}
-            onChange={handleTopicTagChange}
-            isError={topicTagError}
-          />
-        </div>
-        <div>
-          글감 소개
-          <Spacing marginBottom="1.2" />
-          <TextAreaWrapper>
-            <TopicDescriptionInput
-              placeholder={`글감에 대해 자유롭게 소개해주세요\nex) 마음이 담긴 선물을 주거나 받은 기억을 떠올려보세요.\n그 순간이 당신에게 어떤 의미로 남았는지 이야기해주세요.`}
-              onChange={handleTopicDescriptionChange}
-              value={topicDescription}
-              maxLength={limitLength}
-              isError={topicDescriptionError}
-            />
-            <TextCount>
-              {topicDescriptionLength}/{limitLength}
-            </TextCount>
-          </TextAreaWrapper>
-        </div>
-        <SubmitForm onClick={handleSubmit}>글감 수정하기</SubmitForm>
-      </ModalWrapper>
-    </BackgroundWrapper>
+          <TextCount>
+            {topicDescriptionLength}/{limitLength}
+          </TextCount>
+        </TextAreaWrapper>
+      </div>
+      <SubmitForm onClick={handleSubmit}>글감 수정하기</SubmitForm>
+    </ModalWrapper>
   );
 };
 
 export default AddEditTopicModal;
 
-const BackgroundWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-
-  background-color: #0009;
-`;
-
 const ModalWrapper = styled.div`
+  position: fixed;
+  z-index: 6;
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
