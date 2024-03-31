@@ -1,20 +1,67 @@
 import styled from '@emotion/styled';
-import { useState, SyntheticEvent } from 'react';
+import React, { useState, useReducer, SyntheticEvent, useEffect } from 'react';
 
 import Spacing from '../../../components/commons/Spacing';
 
+interface userInfoStateType {
+  writerName: string;
+  writerIntroduce: string;
+}
+
+interface userInfoActionType {
+  type: string;
+  writerName?: string;
+  writerIntroduce?: string;
+}
+
+const userInfoState: userInfoStateType = {
+  writerName: '',
+  writerIntroduce: '',
+};
+
+const reducerFn = (state: userInfoStateType, action: userInfoActionType): userInfoStateType => {
+  switch (action.type) {
+    case 'setWriterName':
+      return {
+        ...state,
+        writerName: action.writerName,
+      };
+    case 'setWriterIntroduce':
+      return {
+        ...state,
+        writerIntroduce: action.writerIntroduce,
+      };
+    default:
+      return state;
+  }
+};
+
 const UserInfoInput = () => {
   const [charCount, setCharCount] = useState(0);
+  const [charLimit, setCharLimit] = useState(false);
+  const [userInfoVal, dispatch] = useReducer(reducerFn, userInfoState);
 
-  const onInputHandler = (e: SyntheticEvent<HTMLTextAreaElement, Event>) => {
-    setCharCount(e.currentTarget.value.length);
+  const onChangeWriterName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: 'setWriterName', writerName: e.target.value });
   };
+
+  const onChageWriterIntroduce = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch({ type: 'setWriterIntroduce', writerIntroduce: e.currentTarget.value });
+  };
+
+  useEffect(() => {
+    userInfoVal.writerIntroduce.length > 100 ? setCharLimit(true) : setCharLimit(false);
+  }, [userInfoVal.writerIntroduce]);
+
   return (
     <>
       <UserInfoInputWrapper>
         <UserInfoTitle>모임에서 사용할 필명*</UserInfoTitle>
         <InputWrapper>
-          <WriterNameInput placeholder="띄어쓰기 포함 8자 이내로 입력해주세요." />
+          <WriterNameInput
+            placeholder="띄어쓰기 포함 8자 이내로 입력해주세요."
+            onChange={onChangeWriterName}
+          />
           <WriterExistCheckBtn>중복확인</WriterExistCheckBtn>
         </InputWrapper>
       </UserInfoInputWrapper>
@@ -23,9 +70,10 @@ const UserInfoInput = () => {
         <UserInfoTitle>소개 글</UserInfoTitle>
         <WriterIntroduceInput
           placeholder="모임원들에게 ‘나’에 대해 자유롭게 소개해주세요."
-          onChange={onInputHandler}
+          onChange={onChageWriterIntroduce}
+          $charLimit={charLimit}
         />
-        <CharCount>{charCount}/100</CharCount>
+        <CharCount>{userInfoVal.writerIntroduce.length}/100</CharCount>
       </UserInfoInputWrapper>
     </>
   );
@@ -89,7 +137,7 @@ const WriterExistCheckBtn = styled.button`
   ${({ theme }) => theme.fonts.button3};
 `;
 
-const WriterIntroduceInput = styled.textarea`
+const WriterIntroduceInput = styled.textarea<{ $charLimit: boolean }>`
   position: relative;
   width: 100%;
   height: 11rem;
@@ -105,7 +153,7 @@ const WriterIntroduceInput = styled.textarea`
   resize: none;
 
   &:focus {
-    outline-color: ${({ theme }) => theme.colors.gray50};
+    outline-color: ${({ $charLimit, theme }) => ($charLimit ? '#B81616' : theme.colors.gray50)};
   }
 
   &::placeholder {
