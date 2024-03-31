@@ -5,34 +5,34 @@ import { recommendPropsTypes } from '../types/recommendTopic';
 import { MainGraphicGradationIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
-const Ruler = ({ data }: recommendPropsTypes) => {
+const DailyKeyword = ({ data }: recommendPropsTypes) => {
   return (
-    <RulerWrapper>
-      <RulerLayout>
-        <RulerHeaderContainer>
+    <KeyWordWrapper>
+      <KeyWordLayout>
+        <KeywordHeaderContainer>
           <MainGraphicGradationIcon />
           <Spacing marginBottom="0.5" />
-          <RulerContentBox>
+          <KeywordContentBox>
             <TodayKeyWord>오늘의 글감</TodayKeyWord>
             <Pipe />
             <KeyWord>{data?.content}</KeyWord>
-          </RulerContentBox>
+          </KeywordContentBox>
           <Spacing marginBottom="1.2" />
-        </RulerHeaderContainer>
-      </RulerLayout>
-    </RulerWrapper>
+        </KeywordHeaderContainer>
+      </KeyWordLayout>
+    </KeyWordWrapper>
   );
 };
 
-export default Ruler;
+export default DailyKeyword;
 
-const RulerWrapper = styled.div`
+const KeyWordWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-const RulerLayout = styled.div`
+const KeyWordLayout = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,7 +40,7 @@ const RulerLayout = styled.div`
   height: 8.4rem;
 `;
 
-const RulerHeaderContainer = styled.section`
+const KeywordHeaderContainer = styled.section`
   display: flex;
   flex-direction: column;
 
@@ -53,7 +53,7 @@ const MainGraphicGradationIcon = styled(MainGraphicGradationIc)`
   margin-left: 2.1rem;
 `;
 
-const RulerContentBox = styled.div`
+const KeywordContentBox = styled.div`
   display: flex;
   gap: 4.8rem;
   align-items: center;
