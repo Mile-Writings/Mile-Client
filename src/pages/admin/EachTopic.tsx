@@ -38,14 +38,13 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
         <DeleteIc />
       </TopicAction>
       {showModal && (
-        <>
-          <ModalOverlay onClick={closeModal} />
+        <ModalOverlay onClick={closeModal}>
           <AddEditTopicModal
             topicStored={topicName}
             topicTagStored={topicTag}
             topicDescriptionStored={topicDescription}
           />
-        </>
+        </ModalOverlay>
       )}
     </TopicWrapper>
   );
@@ -57,7 +56,10 @@ const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 4; /* 모달보다 더 위에 위치 */
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
 
