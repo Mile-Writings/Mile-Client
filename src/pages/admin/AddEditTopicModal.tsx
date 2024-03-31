@@ -1,11 +1,27 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { usePostAdminTopic } from './hooks/queries';
 
 import Spacing from '../../components/commons/Spacing';
 
-const AddEditTopicModal = () => {
+interface topicPropTypes {
+  topicStored?: string;
+  topicTagStored?: string;
+  topicDescriptionStored?: string;
+}
+
+const AddEditTopicModal = ({
+  topicStored,
+  topicTagStored,
+  topicDescriptionStored,
+}: topicPropTypes) => {
+  useEffect(() => {
+    setTopic(topicStored || '');
+    setTopicTag(topicTagStored || '');
+    setTopicDescription(topicDescriptionStored || '');
+    console.log(topicStored, 'Df');
+  }, []);
   const [topic, setTopic] = useState('');
   const [topicTag, setTopicTag] = useState('');
   const [topicDescription, setTopicDescription] = useState('');

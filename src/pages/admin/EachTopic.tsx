@@ -29,13 +29,22 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
         <TopicDescription>{topicDescription}</TopicDescription>
       </TopicData>
       <TopicAction>
-        <EditIc onClick={() => openModal()} />
+        <EditIc
+          onClick={() => {
+            console.log(topicId, 'api요청에서 필요함');
+            openModal();
+          }}
+        />
         <DeleteIc />
       </TopicAction>
       {showModal && (
         <>
           <ModalOverlay onClick={closeModal} />
-          <AddEditTopicModal />
+          <AddEditTopicModal
+            topicStored={topicName}
+            topicTagStored={topicTag}
+            topicDescriptionStored={topicDescription}
+          />
         </>
       )}
     </TopicWrapper>

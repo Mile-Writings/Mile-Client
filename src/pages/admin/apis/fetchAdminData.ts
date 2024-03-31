@@ -48,9 +48,17 @@ export const postAdminTopic = async ({
 };
 
 //[PUT] 관리자 페이지 글감 수정
-export const editAdminTopic = async () => {
+export const editAdminTopic = async ({
+  topic,
+  topicTag,
+  topicDescription,
+}: postAdminTopicPropTypes) => {
   try {
-    const response = await axios.post('/api/topic/topicId');
+    const response = await axios.put('/api/topic/topicId', {
+      topic: topic,
+      topicTag: topicTag,
+      topicDescription: topicDescription,
+    });
     const data = response;
     return data;
   } catch (error) {
