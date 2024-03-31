@@ -20,7 +20,6 @@ const AddEditTopicModal = ({
     setTopic(topicStored || '');
     setTopicTag(topicTagStored || '');
     setTopicDescription(topicDescriptionStored || '');
-    console.log(topicStored, 'Df');
   }, []);
   const [topic, setTopic] = useState('');
   const [topicTag, setTopicTag] = useState('');
@@ -96,7 +95,9 @@ const AddEditTopicModal = ({
           </TextCount>
         </TextAreaWrapper>
       </div>
-      <SubmitForm onClick={handleSubmit}>글감 수정하기</SubmitForm>
+      <SubmitForm onClick={handleSubmit}>
+        {topicStored ? '글감 수정하기' : '글감 생성하기'}
+      </SubmitForm>
     </ModalWrapper>
   );
 };

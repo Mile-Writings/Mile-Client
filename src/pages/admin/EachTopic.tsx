@@ -4,6 +4,7 @@ import { useState } from 'react';
 import AddEditTopicModal from './AddEditTopicModal';
 
 import { EditIc, DeleteIc } from '../../assets/svgs';
+import { NegativeModal } from '../../components/commons/Modal';
 
 interface AdminTopicPropTypes {
   topicId: string;
@@ -18,6 +19,8 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   return (
     <TopicWrapper>
       <TopicData>
@@ -35,7 +38,7 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
             openModal();
           }}
         />
-        <DeleteIc />
+        <DeleteIc onClick={() => setShowDeleteModal(true)} />
       </TopicAction>
       {showModal && (
         <ModalOverlay onClick={closeModal}>
@@ -45,6 +48,13 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
             topicDescriptionStored={topicDescription}
           />
         </ModalOverlay>
+      )}
+      {showDeleteModal && (
+        <NegativeModal
+          modalContent="dk"
+          onClick={() => console.log('hi')}
+          setIsVisible={setShowDeleteModal}
+        />
       )}
     </TopicWrapper>
   );
