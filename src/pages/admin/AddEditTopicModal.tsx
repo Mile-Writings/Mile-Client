@@ -6,7 +6,7 @@ import { usePostAdminTopic } from './hooks/queries';
 import Spacing from '../../components/commons/Spacing';
 
 const AddEditTopicModal = () => {
-  const [topicName, setTopicName] = useState('');
+  const [topic, setTopic] = useState('');
   const [topicTag, setTopicTag] = useState('');
   const [topicDescription, setTopicDescription] = useState('');
   const [topicDescriptionLength, setTopicDescriptionLength] = useState(0);
@@ -16,7 +16,7 @@ const AddEditTopicModal = () => {
   const limitLength = 90;
   const { post1AdminTopic } = usePostAdminTopic();
   const handleTopicNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTopicName(e.target.value);
+    setTopic(e.target.value);
     setTopicNameError(false);
   };
 
@@ -33,12 +33,12 @@ const AddEditTopicModal = () => {
   };
 
   const handleSubmit = () => {
-    if (topicName.trim() === '' || topicTag.trim() === '' || topicDescription.trim() === '') {
-      setTopicNameError(topicName.trim() === '');
+    if (topic.trim() === '' || topicTag.trim() === '' || topicDescription.trim() === '') {
+      setTopicNameError(topic.trim() === '');
       setTopicTagError(topicTag.trim() === '');
       setTopicDescriptionError(topicDescription.trim() === '');
     } else {
-      post1AdminTopic();
+      post1AdminTopic({ topic, topicTag, topicDescription });
     }
   };
 
@@ -49,7 +49,7 @@ const AddEditTopicModal = () => {
         <Spacing marginBottom="1.2" />
         <TopicInput
           placeholder="함께 작성하고 싶은 글감을 입력해주세요. ex) 마음이 담긴 선물"
-          value={topicName}
+          value={topic}
           onChange={handleTopicNameChange}
           isError={topicNameError}
         />

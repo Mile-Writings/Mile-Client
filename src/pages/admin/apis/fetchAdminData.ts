@@ -21,10 +21,37 @@ interface AdminTopicPropTypes {
   }[];
 }
 
-export const postAdminTopic = async () => {
+export interface postAdminTopicPropTypes {
+  topic: string;
+  topicTag: string;
+  topicDescription: string;
+}
+
+//[POST] 관리자페이지 글감 생성
+export const postAdminTopic = async ({
+  topic,
+  topicTag,
+  topicDescription,
+}: postAdminTopicPropTypes) => {
   try {
-    const response = await axios.post('/api/moim/moimId/topic');
+    const response = await axios.post('/api/moim/moimId/topic', {
+      topic: topic,
+      topicTag: topicTag,
+      topicDescription: topicDescription,
+    });
     const data = await response;
+    console.log(data, 'data');
+    return data;
+  } catch (error) {
+    console.log('에러:', error);
+  }
+};
+
+//[PUT] 관리자 페이지 글감 수정
+export const editAdminTopic = async () => {
+  try {
+    const response = await axios.post('/api/topic/topicId');
+    const data = response;
     return data;
   } catch (error) {
     console.log('에러:', error);
