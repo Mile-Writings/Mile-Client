@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 
+import { usePostAdminTopic } from './hooks/queries';
+
 import Spacing from '../../components/commons/Spacing';
 
 const AddEditTopicModal = () => {
@@ -12,7 +14,7 @@ const AddEditTopicModal = () => {
   const [topicTagError, setTopicTagError] = useState(false);
   const [topicDescriptionError, setTopicDescriptionError] = useState(false);
   const limitLength = 90;
-
+  const { post1AdminTopic } = usePostAdminTopic();
   const handleTopicNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTopicName(e.target.value);
     setTopicNameError(false);
@@ -36,7 +38,7 @@ const AddEditTopicModal = () => {
       setTopicTagError(topicTag.trim() === '');
       setTopicDescriptionError(topicDescription.trim() === '');
     } else {
-      //api 통신
+      post1AdminTopic();
     }
   };
 

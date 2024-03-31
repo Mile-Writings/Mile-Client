@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { fetchAdminTopic } from '../apis/fetchAdminData';
+import { postAdminTopic, fetchAdminTopic } from '../apis/fetchAdminData';
 
 export const useAdminTopic = () => {
   const { data, isLoading, isError, error } = useQuery({
@@ -12,4 +12,15 @@ export const useAdminTopic = () => {
   const adminTopicData = data && data.data;
 
   return { topicCount, adminTopicData, isLoading, isError, error };
+};
+
+export const usePostAdminTopic = () => {
+  const { mutate, isError, error } = useMutation({
+    mutationKey: ['adminTopic'],
+    mutationFn: () => postAdminTopic(),
+  });
+
+  const post1AdminTopic = () => mutate();
+
+  return { post1AdminTopic, isError, error };
 };

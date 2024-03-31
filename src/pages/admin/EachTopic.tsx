@@ -1,4 +1,7 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
+
+import AddEditTopicModal from './AddEditTopicModal';
 
 import { EditIc, DeleteIc } from '../../assets/svgs';
 
@@ -11,7 +14,10 @@ interface AdminTopicPropTypes {
 }
 
 const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
-  const { topicName, topicTag, topicDescription, createdAt } = data;
+  const { topicName, topicTag, topicDescription, createdAt, topicId } = data;
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
   return (
     <TopicWrapper>
       <TopicData>
@@ -23,14 +29,31 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
         <TopicDescription>{topicDescription}</TopicDescription>
       </TopicData>
       <TopicAction>
-        <EditIc />
+        <EditIc onClick={() => openModal()} />
         <DeleteIc />
       </TopicAction>
+      {showModal && (
+        <>
+          <ModalOverlay onClick={closeModal} />
+          <AddEditTopicModal />
+        </>
+      )}
     </TopicWrapper>
   );
 };
 
 export default EachTopic;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4; /* 모달보다 더 위에 위치 */
+  width: 100%;
+  height: 100%;
+
+  background-color: rgb(0 0 0 / 50%); /* 반투명한 배경색 */
+`;
 
 const TopicWrapper = styled.div`
   display: flex;

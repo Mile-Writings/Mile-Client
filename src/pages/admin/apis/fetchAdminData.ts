@@ -20,3 +20,13 @@ interface AdminTopicPropTypes {
     createdAt: string;
   }[];
 }
+
+export const postAdminTopic = async () => {
+  try {
+    const response = await axios.post('/api/moim/moimId/topic');
+    const data = await response;
+    return data;
+  } catch (error) {
+    console.log('에러:', error);
+  }
+};
