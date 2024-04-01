@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
-import React, { useState, useReducer, SyntheticEvent, useEffect } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 
 import Spacing from '../../../components/commons/Spacing';
 
 interface userInfoStateType {
-  writerName: string;
-  writerIntroduce: string;
+  writerName?: string;
+  writerIntroduce?: string;
 }
 
 interface userInfoActionType {
@@ -49,7 +49,9 @@ const UserInfoInput = () => {
   };
 
   useEffect(() => {
-    userInfoVal.writerIntroduce.length > 100 ? setCharLimit(true) : setCharLimit(false);
+    if (userInfoVal.writerIntroduce) {
+      userInfoVal.writerIntroduce.length > 100 ? setCharLimit(true) : setCharLimit(false);
+    }
   }, [userInfoVal.writerIntroduce]);
 
   return (
@@ -61,7 +63,11 @@ const UserInfoInput = () => {
             placeholder="띄어쓰기 포함 8자 이내로 입력해주세요."
             onChange={onChangeWriterName}
           />
-          <WriterExistCheckBtn $isBtnDisabled={userInfoVal.writerName.trim().length === 0}>
+          <WriterExistCheckBtn
+            $isBtnDisabled={
+              userInfoVal.writerName ? userInfoVal.writerName.trim().length === 0 : true
+            }
+          >
             중복확인
           </WriterExistCheckBtn>
         </InputWrapper>
@@ -74,7 +80,9 @@ const UserInfoInput = () => {
           onChange={onChageWriterIntroduce}
           $charLimit={charLimit}
         />
-        <CharCount $charLimit={charLimit}>{userInfoVal.writerIntroduce.length}/100</CharCount>
+        <CharCount $charLimit={charLimit}>
+          {userInfoVal.writerIntroduce ? userInfoVal.writerIntroduce.length : 0}/100
+        </CharCount>
       </UserInfoInputWrapper>
     </>
   );

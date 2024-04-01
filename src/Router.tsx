@@ -4,6 +4,7 @@ import Admin from './pages/admin/Admin';
 import Error from './pages/error/Error';
 import GroupFeed from './pages/groupFeed/GroupFeed';
 import GroupInvite from './pages/groupInvite/GroupInvite';
+import GroupJoinCongrats from './pages/groupJoinCongrats/GroupJoinCongrats';
 import Login from './pages/login/Login';
 import RedirectLogin from './pages/login/RedirectLogin';
 import Main from './pages/main/Main';
@@ -24,6 +25,7 @@ const Router = () => {
         <Route path="*" element={<Error />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/groupInvite" element={<GroupInvite />} />
+        <Route path="/groupJoin" element={<GroupJoinCongrats />} />
       </Routes>
     </BrowserRouter>
   );

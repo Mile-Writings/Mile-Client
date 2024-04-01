@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import GroupInfo from './components/GroupInfo';
-import GroupJoinCongrats from './components/GroupJoinCongrats';
 import Title from './components/Title';
 import UserInfoInput from './components/UserInfoInput';
 
@@ -9,6 +9,11 @@ import { DefaultHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupInvite = () => {
+  const navigate = useNavigate();
+
+  const onClickSignUp = () => {
+    navigate('/groupJoin');
+  };
   return (
     <GroupInviteWrapper>
       <DefaultHeader />
@@ -19,9 +24,8 @@ const GroupInvite = () => {
       <Spacing marginBottom="2.8" />
       <UserInfoInput />
       <Spacing marginBottom="2.8" />
-      <SignUpBtn>가입하기</SignUpBtn>
+      <SignUpBtn onClick={onClickSignUp}>가입하기</SignUpBtn>
       <Spacing marginBottom="7.7" />
-      {/* <GroupJoinCongrats /> */}
     </GroupInviteWrapper>
   );
 };
