@@ -37,7 +37,6 @@ const reducerFn = (state: userInfoStateType, action: userInfoActionType): userIn
 };
 
 const UserInfoInput = () => {
-  const [charCount, setCharCount] = useState(0);
   const [charLimit, setCharLimit] = useState(false);
   const [userInfoVal, dispatch] = useReducer(reducerFn, userInfoState);
 
@@ -62,7 +61,9 @@ const UserInfoInput = () => {
             placeholder="띄어쓰기 포함 8자 이내로 입력해주세요."
             onChange={onChangeWriterName}
           />
-          <WriterExistCheckBtn>중복확인</WriterExistCheckBtn>
+          <WriterExistCheckBtn $isBtnDisabled={userInfoVal.writerName.trim().length === 0}>
+            중복확인
+          </WriterExistCheckBtn>
         </InputWrapper>
       </UserInfoInputWrapper>
       <Spacing marginBottom="2.8" />
@@ -73,7 +74,7 @@ const UserInfoInput = () => {
           onChange={onChageWriterIntroduce}
           $charLimit={charLimit}
         />
-        <CharCount>{userInfoVal.writerIntroduce.length}/100</CharCount>
+        <CharCount $charLimit={charLimit}>{userInfoVal.writerIntroduce.length}/100</CharCount>
       </UserInfoInputWrapper>
     </>
   );
@@ -125,14 +126,17 @@ const WriterNameInput = styled.input`
   }
 `;
 
-const WriterExistCheckBtn = styled.button`
+const WriterExistCheckBtn = styled.button<{ $isBtnDisabled: boolean }>`
   width: 8.1rem;
   height: 4rem;
   padding: 1rem 1.6rem;
 
-  color: ${({ theme }) => theme.colors.gray70};
+  color: ${({ $isBtnDisabled, theme }) =>
+    $isBtnDisabled ? theme.colors.gray70 : theme.colors.white};
 
-  background-color: ${({ theme }) => theme.colors.gray10};
+  background-color: ${({ $isBtnDisabled, theme }) =>
+    $isBtnDisabled ? theme.colors.gray10 : theme.colors.mainViolet};
+  cursor: ${({ $isBtnDisabled }) => ($isBtnDisabled ? 'default' : 'cursor')};
   border-radius: 8px;
   ${({ theme }) => theme.fonts.button3};
 `;
@@ -153,7 +157,8 @@ const WriterIntroduceInput = styled.textarea<{ $charLimit: boolean }>`
   resize: none;
 
   &:focus {
-    outline-color: ${({ $charLimit, theme }) => ($charLimit ? '#B81616' : theme.colors.gray50)};
+    outline-color: ${({ $charLimit, theme }) =>
+      $charLimit ? theme.colors.mileRed : theme.colors.gray50};
   }
 
   &::placeholder {
@@ -161,11 +166,11 @@ const WriterIntroduceInput = styled.textarea<{ $charLimit: boolean }>`
   }
 `;
 
-const CharCount = styled.span`
+const CharCount = styled.span<{ $charLimit: boolean }>`
   position: absolute;
   right: 4rem;
   bottom: 3.8rem;
 
-  color: ${({ theme }) => theme.colors.gray70};
+  color: ${({ $charLimit, theme }) => ($charLimit ? theme.colors.mileRed : theme.colors.gray70)};
   ${({ theme }) => theme.fonts.button3};
 `;
