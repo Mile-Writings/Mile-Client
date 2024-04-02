@@ -21,12 +21,12 @@ const MemberManage = () => {
       <Spacing marginBottom="0.4" />
       <MemberLayout>
         {data?.writerNameCount !== 0 ? (
-          data?.writerNameList.map(({ writerNameId, writerName, email }: Members) => {
+          data?.writerNameList.map(({ writerNameId, writerName, Information }: Members) => {
             return (
               <MemberItemContainer key={writerNameId}>
                 <AdminProfileIcon />
                 <Name>{writerName}</Name>
-                <Email>{email}</Email>
+                <MemberInfo>{Information}</MemberInfo>
                 <ExpelBtn onClick={deleteMember}>삭제하기</ExpelBtn>
               </MemberItemContainer>
             );
@@ -106,7 +106,7 @@ const Name = styled.pre`
   ${({ theme }) => theme.fonts.body1};
 `;
 
-const Email = styled.pre`
+const MemberInfo = styled.pre`
   display: flex;
   align-items: flex-end;
 
