@@ -8,12 +8,12 @@ export interface Members {
 }
 
 export interface FetchMemberPropTypes {
+  status: number;
+  message: string;
   data: {
     writerNameCount: number;
     writerNameList: Members[];
   };
-  // status: number;
-  // message: string;
 }
 
 const getMemberInfo = async (moimId: string) => {

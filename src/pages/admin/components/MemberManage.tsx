@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Members } from '../apis/getMemberInfo';
 import { useDeleteMember, useGetMemberInfo } from '../hooks/queries';
 
-import { adminEmptyMemberIc as AdminEmptyMemberIcon } from '../../../assets/svgs';
+import { adminEmptyMemberIc as AdminEmptyMemberIcon, adminProfileIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 const MemberManage = () => {
@@ -21,10 +21,10 @@ const MemberManage = () => {
       <Spacing marginBottom="0.4" />
       <MemberLayout>
         {data?.writerNameCount !== 0 ? (
-          data?.writerNameList.map(({ profileImage, writerNameId, writerName, email }: Members) => {
+          data?.writerNameList.map(({ writerNameId, writerName, email }: Members) => {
             return (
               <MemberItemContainer key={writerNameId}>
-                <Profile src={profileImage} />
+                <AdminProfileIcon />
                 <Name>{writerName}</Name>
                 <Email>{email}</Email>
                 <ExpelBtn onClick={deleteMember}>삭제하기</ExpelBtn>
@@ -92,7 +92,7 @@ const MemberItemContainer = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray10};
 `;
 
-const Profile = styled.img`
+const AdminProfileIcon = styled(adminProfileIc)`
   margin-right: 4rem;
 `;
 
