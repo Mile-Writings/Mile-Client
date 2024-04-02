@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useParams } from 'react-router-dom';
 
 import MemberManage from './components/MemberManage';
 import { useGetMemberInfo } from './hooks/queries';
@@ -6,7 +7,8 @@ import { useGetMemberInfo } from './hooks/queries';
 import Spacing from '../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
-  const { totalMember } = useGetMemberInfo();
+  const { moimId } = useParams();
+  const { totalMember } = useGetMemberInfo(moimId || '');
   switch (admin) {
     case 'topic':
       return (
