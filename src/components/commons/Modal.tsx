@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
+import { useRef, useState } from 'react';
 
 import Spacing from './Spacing';
+
+import useClickOutside from '../../hooks/useClickOutside';
 
 interface ModalContentPropTypes {
   modalContent: string;
@@ -12,10 +15,23 @@ interface ModalContentPropTypes {
 // '아니오'를 유도하는 모달
 export const NegativeModal = (props: ModalContentPropTypes) => {
   const { modalContent, modalHandler, closeModalHandler, isModalOpen } = props;
+  const [modalBgClickActive, setModalBgClickActive] = useState(isModalOpen);
+  const modalRef = useRef(null);
+
+  const handleOutSideClick = () => {
+    if (isModalOpen) {
+      setModalBgClickActive(true);
+    }
+    if (modalBgClickActive) {
+      closeModalHandler();
+      setModalBgClickActive(false);
+    }
+  };
+  useClickOutside(modalRef, handleOutSideClick);
 
   return (
     <ModalBackgroundWrapper $isModalOpen={isModalOpen}>
-      <ModalWrapper $isModalOpen={isModalOpen}>
+      <ModalWrapper ref={modalRef} $isModalOpen={isModalOpen}>
         <ModalContentLayout>{modalContent}</ModalContentLayout>
         <Spacing marginBottom="3.2" />
         <ModalBtnLayout>
@@ -30,10 +46,23 @@ export const NegativeModal = (props: ModalContentPropTypes) => {
 // '예'를 유도하는 모달
 export const PositiveModal = (props: ModalContentPropTypes) => {
   const { modalContent, modalHandler, closeModalHandler, isModalOpen } = props;
+  const [modalBgClickActive, setModalBgClickActive] = useState(isModalOpen);
+  const modalRef = useRef(null);
+
+  const handleOutSideClick = () => {
+    if (isModalOpen) {
+      setModalBgClickActive(true);
+    }
+    if (modalBgClickActive) {
+      closeModalHandler();
+      setModalBgClickActive(false);
+    }
+  };
+  useClickOutside(modalRef, handleOutSideClick);
 
   return (
     <ModalBackgroundWrapper $isModalOpen={isModalOpen}>
-      <ModalWrapper $isModalOpen={isModalOpen}>
+      <ModalWrapper ref={modalRef} $isModalOpen={isModalOpen}>
         <ModalContentLayout>{modalContent}</ModalContentLayout>
         <Spacing marginBottom="3.2" />
         <ModalBtnLayout>
