@@ -73,16 +73,23 @@ const CommentItem = ({ name, moimName, content, isMyComment, postId, commentId }
         </IconWrapper>
       </CommentItemWrapper>
       {isNestedComment && (
-        <div>
+        <NestedCommentWrapper>
           <ArrowTopLeftIc />
           <CommentInputBox postId={postId} isMainComment={false} />
-        </div>
+        </NestedCommentWrapper>
       )}
     </>
   );
 };
 
 export default CommentItem;
+
+const NestedCommentWrapper = styled.div`
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  padding: 1.2rem 0;
+`;
 
 const IconWrapper = styled.div`
   display: flex;

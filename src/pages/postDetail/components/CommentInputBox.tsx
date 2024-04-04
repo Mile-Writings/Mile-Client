@@ -133,6 +133,6 @@ const CommentPostBtn = styled.button<{ $isComment: string }>`
 
 const CommentPostWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  gap: 1.2rem;
   width: 100%;
 `;
