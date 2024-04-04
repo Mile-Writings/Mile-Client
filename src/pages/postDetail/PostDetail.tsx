@@ -104,7 +104,7 @@ const PostDetail = () => {
           </WriterInfoContainer>
           {localStorage.accessToken && <CuriousBtn />}
         </WriterInfoWrapper>
-        {localStorage.accessToken && <Comment postId={postId} />}
+        {localStorage.accessToken && <Comment postId={postId} isMainComment={true} />}
         <Spacing marginBottom="8" />
       </PostDetailWrapper>
     </>

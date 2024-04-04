@@ -11,16 +11,18 @@ import Spacing from '../../../components/commons/Spacing';
 
 interface CommentPropTypes {
   postId: string | undefined;
+  isMainComment: boolean;
 }
 
 const Comment = (props: CommentPropTypes) => {
-  const { postId } = props;
+  const { postId, isMainComment } = props;
   const [comment, setComment] = useState('');
   const { commentListData, error } = useGetCommentList(postId || '');
   const { postComment } = usePostComment(postId || '');
   const token = localStorage.getItem('accessToken');
   const navigate = useNavigate();
   const [isUnknownWriter, setIsUnknownWriter] = useState(false);
+  // const [isMainComment, setIsMainComment] = useState(true);
 
   const handleCommentSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -47,10 +49,11 @@ const Comment = (props: CommentPropTypes) => {
   ) : (
     <CommentWrapper>
       <CommentPostWrapper>
-        <CommentLayout>
+        <CommentLayout isMainComment={isMainComment}>
           <CommentForm
             value={comment}
             onChange={(e) => setComment(e.target.value)}
+            isMainComment={isMainComment}
             placeholder="댓글을 남겨주세요."
           />
           <CheckboxLayout>
@@ -119,11 +122,11 @@ const Checkbox = styled.button<{ isUnknownWriter: boolean }>`
   border-radius: 2px;
 `;
 
-const CommentLayout = styled.div`
+const CommentLayout = styled.div<{ isMainComment: boolean }>`
   display: flex;
   gap: 1rem;
   align-items: center;
-  width: 69.9rem;
+  width: ${({ isMainComment }) => (isMainComment ? '69.9rem' : '65.1rem')};
   height: 4rem;
   padding: 1rem 1.2rem;
 
@@ -132,8 +135,8 @@ const CommentLayout = styled.div`
   border-radius: 6px;
 `;
 
-const CommentForm = styled.input`
-  width: 62.1rem;
+const CommentForm = styled.input<{ isMainComment: boolean }>`
+  width: ${({ isMainComment }) => (isMainComment ? '62.1rem' : '57.3rem')};
 
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray30};

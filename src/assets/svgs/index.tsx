@@ -73,3 +73,4 @@ export { default as faviconMileIc } from './faviconMile.svg?react';
 
 export { default as CheckIc } from './check.svg?react';
 export { default as NestCommentIc } from './mode_comment.svg?react';
+export { default as ArrowTopLeftIc } from './arrow_top_left.svg?react';
