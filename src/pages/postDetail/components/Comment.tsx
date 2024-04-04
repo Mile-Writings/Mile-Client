@@ -46,11 +46,16 @@ const Comment = (props: CommentPropTypes) => {
   ) : (
     <CommentWrapper>
       <CommentPostWrapper>
-        <CommentForm
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder="댓글을 남겨주세요."
-        />
+        <CommentLayout>
+          <CommentForm
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder="댓글을 남겨주세요."
+          />
+          <CheckboxLayout>
+            <Checkbox /> 익명
+          </CheckboxLayout>
+        </CommentLayout>
 
         <CommentPostBtn $isComment={comment} onClick={handleCommentSubmit}>
           등록
@@ -82,6 +87,50 @@ const Comment = (props: CommentPropTypes) => {
 
 export default Comment;
 
+const CheckboxLayout = styled.div`
+  display: flex;
+  gap: 0.4rem;
+  width: 4.4rem;
+
+  ${({ theme }) => theme.fonts.body5};
+  color: ${({ theme }) => theme.colors.gray70};
+`;
+
+const Checkbox = styled.button`
+  width: 1.5rem;
+  height: 1.5rem;
+
+  border: 1px solid ${({ theme }) => theme.colors.gray30};
+  border-radius: 2px;
+`;
+
+const CommentLayout = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  width: 69.6rem;
+  height: 4rem;
+  padding: 1rem 1.2rem;
+
+  background-color: ${({ theme }) => theme.colors.gray5};
+  border: 1px solid ${({ theme }) => theme.colors.gray30};
+  border-radius: 6px;
+`;
+
+const CommentForm = styled.input`
+  width: 62.1rem;
+
+  ::placeholder {
+    color: ${({ theme }) => theme.colors.gray30};
+  }
+  color: ${({ theme }) => theme.colors.gray100};
+
+  background-color: ${({ theme }) => theme.colors.gray5};
+  border: none;
+
+  ${({ theme }) => theme.fonts.button2};
+`;
+
 const CommentPostBtn = styled.button<{ $isComment: string }>`
   padding: 1rem 1.6rem;
 
@@ -102,22 +151,7 @@ const CommentPostBtn = styled.button<{ $isComment: string }>`
       $isComment === '' ? theme.colors.gray10 : theme.colors.mileViolet};
   }
 `;
-const CommentForm = styled.input`
-  width: 69.6rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 2rem;
 
-  ::placeholder {
-    color: ${({ theme }) => theme.colors.gray30};
-  }
-  color: ${({ theme }) => theme.colors.gray100};
-
-  background-color: ${({ theme }) => theme.colors.gray5};
-  border: 1px solid ${({ theme }) => theme.colors.gray30};
-  border-radius: 6px;
-  ${({ theme }) => theme.fonts.button2};
-`;
 const CommentPostWrapper = styled.div`
   display: flex;
   justify-content: space-between;
