@@ -70,3 +70,6 @@ export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?reac
 
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
 export { default as faviconMileIc } from './faviconMile.svg?react';
+
+export { default as CheckIc } from './check.svg?react';
+export { default as NestCommentIc } from './mode_comment.svg?react';
