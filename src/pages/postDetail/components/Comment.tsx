@@ -6,7 +6,7 @@ import CommentItem from './CommentItem';
 
 import { useGetCommentList, usePostComment } from '../hooks/queries';
 
-import { EditorCatIc } from '../../../assets/svgs';
+import { EditorCatIc, CheckIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 interface CommentPropTypes {
@@ -20,6 +20,7 @@ const Comment = (props: CommentPropTypes) => {
   const { postComment } = usePostComment(postId || '');
   const token = localStorage.getItem('accessToken');
   const navigate = useNavigate();
+  const [isUnknownWriter, setIsUnknownWriter] = useState(false);
 
   const handleCommentSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -53,7 +54,13 @@ const Comment = (props: CommentPropTypes) => {
             placeholder="댓글을 남겨주세요."
           />
           <CheckboxLayout>
-            <Checkbox /> 익명
+            <Checkbox
+              isUnknownWriter={isUnknownWriter}
+              onClick={() => setIsUnknownWriter(!isUnknownWriter)}
+            >
+              {isUnknownWriter && <CheckIc />}
+            </Checkbox>
+            익명
           </CheckboxLayout>
         </CommentLayout>
 
@@ -90,17 +97,25 @@ export default Comment;
 const CheckboxLayout = styled.div`
   display: flex;
   gap: 0.4rem;
-  width: 4.4rem;
-
+  justify-content: center;
+  width: 5rem;
   ${({ theme }) => theme.fonts.body5};
+
   color: ${({ theme }) => theme.colors.gray70};
 `;
 
-const Checkbox = styled.button`
-  width: 1.5rem;
-  height: 1.5rem;
+const Checkbox = styled.button<{ isUnknownWriter: boolean }>`
+  display: flex;
+  align-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
 
-  border: 1px solid ${({ theme }) => theme.colors.gray30};
+  background-color: ${({ theme, isUnknownWriter }) =>
+    isUnknownWriter ? theme.colors.mainViolet : theme.colors.gray5};
+  border: 1px solid
+    ${({ theme, isUnknownWriter }) =>
+      isUnknownWriter ? theme.colors.mainViolet : theme.colors.gray30};
   border-radius: 2px;
 `;
 
@@ -108,7 +123,7 @@ const CommentLayout = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
-  width: 69.6rem;
+  width: 69.9rem;
   height: 4rem;
   padding: 1rem 1.2rem;
 
