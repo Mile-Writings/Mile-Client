@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import { useState, useRef, useEffect } from 'react';
 
+import CommentInputBox from './CommentInputBox';
+
 import { useDeleteComment } from '../hooks/queries';
 
 import {
@@ -72,8 +74,8 @@ const CommentItem = ({ name, moimName, content, isMyComment, postId, commentId }
       </CommentItemWrapper>
       {isNestedComment && (
         <div>
-          {' '}
           <ArrowTopLeftIc />
+          <CommentInputBox postId={postId} isMainComment={false} />
         </div>
       )}
     </>
