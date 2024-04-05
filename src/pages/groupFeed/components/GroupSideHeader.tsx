@@ -2,7 +2,12 @@ import styled from '@emotion/styled';
 
 import GroupInfoBox from './GroupInfoBox';
 
-import { GroupDateIc, GroupLeaderIc, GroupMemberIc } from '../../../assets/svgs';
+import {
+  GroupDateIc,
+  GroupLeaderIc,
+  GroupMemberIc,
+  GroupBestProfileIc,
+} from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 interface GroupInfoPropTypes {
@@ -17,39 +22,78 @@ const GroupSideHeader = (props: { groupInfoData: GroupInfoPropTypes }) => {
   const { groupInfoData } = props;
 
   return (
-    <GroupSideHeaderWrapper>
-      {groupInfoData && (
-        <>
-          <GroupSideHeaderTitle>{groupInfoData.moimName}</GroupSideHeaderTitle>
-          <Spacing marginBottom="2.8" />
-          <GroupSideHeaderLayout>
-            <GroupInfoBox
-              icon={<GroupLeaderIc />}
-              title="모임방장"
-              detail={groupInfoData.ownerName}
-            />
-            <GroupInfoBox
-              icon={<GroupDateIc />}
-              title="설립날짜"
-              detail={groupInfoData.startDate}
-            />
-            <GroupInfoBox
-              icon={<GroupMemberIc />}
-              title="모임인원"
-              detail={`${groupInfoData.writerCount}명의 작가들`}
-            />
-          </GroupSideHeaderLayout>
-          <Spacing marginBottom="2.4" />
-          <GroupSideHeaderDetailBox>{groupInfoData.description}</GroupSideHeaderDetailBox>
-          <Spacing marginBottom="2" />
-          <SideHeaderButton>관리자페이지</SideHeaderButton>
-        </>
-      )}
-    </GroupSideHeaderWrapper>
+    <HeaderWrapper>
+      <GroupSideHeaderWrapper>
+        {groupInfoData && (
+          <>
+            <GroupSideHeaderTitle>{groupInfoData.moimName}</GroupSideHeaderTitle>
+            <Spacing marginBottom="2.8" />
+            <GroupSideHeaderLayout>
+              <GroupInfoBox
+                icon={<GroupLeaderIc />}
+                title="모임방장"
+                detail={groupInfoData.ownerName}
+              />
+              <GroupInfoBox
+                icon={<GroupDateIc />}
+                title="설립날짜"
+                detail={groupInfoData.startDate}
+              />
+              <GroupInfoBox
+                icon={<GroupMemberIc />}
+                title="모임인원"
+                detail={`${groupInfoData.writerCount}명의 작가들`}
+              />
+            </GroupSideHeaderLayout>
+            <Spacing marginBottom="2" />
+            <GroupSideHeaderDetailBox>{groupInfoData.description}</GroupSideHeaderDetailBox>
+            <Spacing marginBottom="2" />
+            <SideHeaderButton>관리자페이지</SideHeaderButton>
+          </>
+        )}
+      </GroupSideHeaderWrapper>
+      <Spacing marginBottom="1.6" />
+      <MemberSideHeaderWrapper>
+        <ProfileWrapper>
+          <GroupBestProfileIc /> 일이삼사
+        </ProfileWrapper>
+        <Spacing marginBottom="1.6" />
+        <SideHeaderButton>소개글 수정</SideHeaderButton>
+      </MemberSideHeaderWrapper>
+    </HeaderWrapper>
   );
 };
 
 export default GroupSideHeader;
+
+const ProfileWrapper = styled.div`
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+
+  color: ${({ theme }) => theme.colors.black};
+
+  ${({ theme }) => theme.fonts.subtitle3};
+`;
+
+const HeaderWrapper = styled.div`
+  position: sticky;
+  top: 6rem;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+`;
+
+const MemberSideHeaderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 25.6rem;
+  height: fit-content;
+  padding: 2.4rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 8px;
+`;
 
 const SideHeaderButton = styled.button`
   width: 20.8rem;
@@ -69,8 +113,6 @@ const GroupSideHeaderTitle = styled.div`
 `;
 
 const GroupSideHeaderWrapper = styled.div`
-  position: sticky;
-  top: 2rem;
   display: flex;
   flex-direction: column;
   width: 25.6rem;
