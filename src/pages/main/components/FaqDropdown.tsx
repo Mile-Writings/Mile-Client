@@ -81,6 +81,7 @@ const AnswerTextBox = styled.div`
   padding: 1.6rem 2.8rem 0;
 
   color: ${({ theme }) => theme.colors.gray80};
+  white-space: pre-wrap;
   word-break: keep-all;
 
   ${({ theme }) => theme.fonts.body3};
