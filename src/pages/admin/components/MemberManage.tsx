@@ -1,43 +1,64 @@
 import styled from '@emotion/styled';
-import { useParams } from 'react-router-dom';
 
-import { Members } from '../apis/getMemberInfo';
-import { useDeleteMember, useGetMemberInfo } from '../hooks/queries';
+// import { Members } from '../apis/getMemberInfo';
+import { MEMBER } from '../constants/member';
 
 import { adminEmptyMemberIc as AdminEmptyMemberIcon, adminProfileIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
+export interface Members {
+  writerNameId: string;
+  writerName: string;
+  postNumber: number;
+  commentNumber: number;
+}
+
+export interface FetchMemberPropTypes {
+  data: {
+    writerNameCount: number;
+    writerNameList: Members[];
+  };
+  // status: number;
+  // message: string;
+}
+
 const MemberManage = () => {
-  const { writerNameId, moimId } = useParams();
-  const { data } = useGetMemberInfo(moimId || '');
-  const { deleteMember } = useDeleteMember(writerNameId || '');
+  // const { writerNameId, moimId } = useParams();
+  // const { data } = useGetMemberInfo(moimId || '');
+  // const { deleteMember } = useDeleteMember(writerNameId || '');
   return (
     <MemberTableWrapper>
       <TableHeaderLayout>
         <Header>프로필</Header>
         <Header>필명</Header>
-        <Header>이메일</Header>
+        <Header>게시물 수</Header>
+        <Header>댓글 수</Header>
       </TableHeaderLayout>
       <Spacing marginBottom="0.4" />
       <MemberLayout>
-        {data?.writerNameCount !== 0 ? (
-          data?.writerNameList.map(({ writerNameId, writerName, Information }: Members) => {
-            return (
-              <MemberItemContainer key={writerNameId}>
-                <AdminProfileIcon />
-                <Name>{writerName}</Name>
-                <MemberInfo>{Information}</MemberInfo>
-                <ExpelBtn onClick={deleteMember}>삭제하기</ExpelBtn>
-              </MemberItemContainer>
-            );
-          })
-        ) : (
-          <EmptyContainer key={writerNameId}>
-            <EmptyMemberText>아직 멤버가 없습니다.</EmptyMemberText>
-            <Spacing marginBottom="3" />
-            <AdminEmptyMemberIcon />
-          </EmptyContainer>
-        )}
+        {MEMBER.map(({ data }: FetchMemberPropTypes, index) => {
+          return data.writerNameCount !== 0 ? (
+            data.writerNameList.map(
+              ({ writerNameId, writerName, postNumber, commentNumber }: Members) => {
+                return (
+                  <MemberItemContainer key={writerNameId}>
+                    <AdminProfileIcon />
+                    <Name>{writerName}</Name>
+                    <PostNumber>{postNumber}</PostNumber>
+                    <CommentNumber>{commentNumber}</CommentNumber>
+                    <ExpelBtn>삭제하기</ExpelBtn>
+                  </MemberItemContainer>
+                );
+              },
+            )
+          ) : (
+            <EmptyContainer key={index}>
+              <EmptyMemberText>아직 멤버가 없습니다.</EmptyMemberText>
+              <Spacing marginBottom="3" />
+              <AdminEmptyMemberIcon />
+            </EmptyContainer>
+          );
+        })}
       </MemberLayout>
     </MemberTableWrapper>
   );
@@ -70,11 +91,15 @@ const Header = styled.p`
   align-items: flex-start;
 
   &:first-of-type {
-    margin-right: 7.75rem;
+    margin-right: 8.45rem;
   }
 
   &:nth-of-type(2) {
-    margin-right: 8.4rem;
+    margin-right: 11.1rem;
+  }
+
+  &:nth-of-type(3) {
+    margin-right: 6rem;
   }
 `;
 
@@ -97,8 +122,8 @@ const AdminProfileIcon = styled(adminProfileIc)`
 `;
 
 const Name = styled.pre`
-  width: 9.7rem;
-  margin-right: 4.8rem;
+  width: 11.1rem;
+  margin-right: 6.8rem;
 
   color: ${({ theme }) => theme.colors.black};
   text-align: center;
@@ -106,12 +131,27 @@ const Name = styled.pre`
   ${({ theme }) => theme.fonts.body1};
 `;
 
-const MemberInfo = styled.pre`
+const PostNumber = styled.pre`
   display: flex;
   align-items: flex-end;
+  justify-content: center;
+  width: 5.1rem;
+  margin-right: 6rem;
 
   color: ${({ theme }) => theme.colors.gray70};
-  ${({ theme }) => theme.fonts.body1};
+
+  ${({ theme }) => theme.fonts.body1}
+`;
+
+const CommentNumber = styled.pre`
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 5.1rem;
+
+  color: ${({ theme }) => theme.colors.gray70};
+
+  ${({ theme }) => theme.fonts.body1}
 `;
 
 const ExpelBtn = styled.button`
