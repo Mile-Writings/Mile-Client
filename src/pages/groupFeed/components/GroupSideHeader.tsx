@@ -40,10 +40,7 @@ const GroupSideHeader = (props: { groupInfoData: GroupInfoPropTypes }) => {
             />
           </GroupSideHeaderLayout>
           <Spacing marginBottom="2.4" />
-          <GroupSideHeaderDetailBox>
-            <DetailBoxRect />
-            {groupInfoData.description}
-          </GroupSideHeaderDetailBox>
+          <GroupSideHeaderDetailBox>{groupInfoData.description}</GroupSideHeaderDetailBox>
           <Spacing marginBottom="2" />
           <SideHeaderButton>관리자페이지</SideHeaderButton>
         </>
@@ -76,28 +73,18 @@ const GroupSideHeaderWrapper = styled.div`
   top: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 25.6rem;
   height: fit-content;
   padding: 2.4rem;
 
   background-color: ${({ theme }) => theme.colors.white};
-
-  /* height: 34.2rem; */
+  border-radius: 8px;
 `;
 
 const GroupSideHeaderLayout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-`;
-
-const DetailBoxRect = styled.div`
-  width: 1.6rem;
-  height: 7rem;
-
-  background-color: ${({ theme }) => theme.colors.mileGreen};
-  border-radius: 2px;
 `;
 
 const GroupSideHeaderDetailBox = styled.div`
