@@ -43,7 +43,9 @@ const GroupSideHeader = (props: { groupInfoData: GroupInfoPropTypes }) => {
           <GroupSideHeaderDetailBox>
             <DetailBoxRect />
             {groupInfoData.description}
-          </GroupSideHeaderDetailBox>{' '}
+          </GroupSideHeaderDetailBox>
+          <Spacing marginBottom="2" />
+          <SideHeaderButton>관리자페이지</SideHeaderButton>
         </>
       )}
     </GroupSideHeaderWrapper>
@@ -52,17 +54,36 @@ const GroupSideHeader = (props: { groupInfoData: GroupInfoPropTypes }) => {
 
 export default GroupSideHeader;
 
-const GroupSideHeaderTitle = styled.div`
-  color: ${({ theme }) => theme.colors.black};
+const SideHeaderButton = styled.button`
+  width: 20.8rem;
+  height: 4rem;
+  padding: 1rem 1.6rem;
 
-  ${({ theme }) => theme.fonts.title3};
+  color: ${({ theme }) => theme.colors.gray70};
+
+  background-color: ${({ theme }) => theme.colors.gray10};
+  border-radius: 8px;
+  ${({ theme }) => theme.fonts.button3};
+`;
+
+const GroupSideHeaderTitle = styled.div`
+  align-self: flex-start;
+  ${({ theme }) => theme.fonts.title13};
 `;
 
 const GroupSideHeaderWrapper = styled.div`
   position: sticky;
   top: 2rem;
-  width: 27.7rem;
-  height: 34.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25.6rem;
+  height: fit-content;
+  padding: 2.4rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+
+  /* height: 34.2rem; */
 `;
 
 const GroupSideHeaderLayout = styled.div`
