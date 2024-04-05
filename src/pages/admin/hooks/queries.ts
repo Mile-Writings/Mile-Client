@@ -1,22 +1,25 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
 
 import fetchDeleteMember from '../apis/fetchDeleteMember';
-import getMemberInfo from '../apis/getMemberInfo';
+import fetchMemberInfo from '../apis/getMemberInfo';
 
 export const QUERY_KEY_ADMIN = {
-  useMemberInfo: 'getMemberInfo',
+  useMemberInfo: 'fetchMemberInfo',
   useDeleteMember: 'deleteMember',
 };
 
 // 멤버 정보 조회 get api
-export const useGetMemberInfo = (moimId: string) => {
+export const useFetchMemberInfo = (moimId: string) => {
+  const [searchParams] = useSearchParams();
+  const params = parseInt(searchParams.get('page') || '');
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEY_ADMIN.useMemberInfo],
-    queryFn: () => getMemberInfo(moimId),
+    queryFn: () => fetchMemberInfo(moimId, params),
   });
   const totalMember = data?.writerNameCount;
 
-  return { data, totalMember, isLoading };
+  return { data, totalMember, isLoading, params };
 };
 
 // 멤버 삭제 api

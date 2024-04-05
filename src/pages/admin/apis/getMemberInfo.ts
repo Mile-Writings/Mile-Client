@@ -3,7 +3,8 @@ import { client } from '../../../utils/apis/axios';
 export interface Members {
   writerNameId: string;
   writerName: string;
-  Information: string;
+  postNumber: number;
+  commentNumber: number;
 }
 
 export interface FetchMemberPropTypes {
@@ -16,15 +17,12 @@ export interface FetchMemberPropTypes {
   };
 }
 
-const getMemberInfo = async (moimId: string) => {
+const fetchMemberInfo = async (moimId: string, params: number) => {
   const token = localStorage.getItem('accessToken');
   try {
     const { data } = await client.get<FetchMemberPropTypes>(
-      `/api/moim/:${moimId}/writerNameList?page=1`,
+      `/api/moim/:${moimId}/writerNameList?page=${params}`,
       {
-        params: {
-          page: Number,
-        },
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -36,4 +34,4 @@ const getMemberInfo = async (moimId: string) => {
   }
 };
 
-export default getMemberInfo;
+export default fetchMemberInfo;
