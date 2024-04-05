@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
 import fetchDeleteMember from '../apis/fetchDeleteMember';
-import fetchMemberInfo from '../apis/getMemberInfo';
+import fetchMemberInfo from '../apis/fetchMemberInfo';
 
 export const QUERY_KEY_ADMIN = {
   useMemberInfo: 'fetchMemberInfo',

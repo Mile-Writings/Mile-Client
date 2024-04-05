@@ -28,6 +28,7 @@ const fetchMemberInfo = async (moimId: string, params: number) => {
         },
       },
     );
+    console.log(data);
     return data.data;
   } catch (error) {
     console.error();

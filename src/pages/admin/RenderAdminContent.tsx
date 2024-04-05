@@ -2,13 +2,13 @@ import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
 
 import MemberManage from './components/MemberManage';
-import { useGetMemberInfo } from './hooks/queries';
+import { useFetchMemberInfo } from './hooks/queries';
 
 import Spacing from '../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
   const { moimId } = useParams();
-  const { totalMember } = useGetMemberInfo(moimId || '');
+  const { totalMember } = useFetchMemberInfo(moimId || '');
   switch (admin) {
     case 'topic':
       return (
