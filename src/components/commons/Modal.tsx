@@ -107,9 +107,9 @@ const ModalWrapper = styled.section<{ $isModalOpen: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 40rem;
-  height: 18.1rem;
-  padding: 3.2rem;
+  width: auto;
+  height: auto;
+  padding: 3.2rem 4rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 1rem;
