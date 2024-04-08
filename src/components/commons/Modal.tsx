@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Spacing from './Spacing';
 
@@ -27,6 +27,12 @@ export const NegativeModal = (props: ModalContentPropTypes) => {
       setModalBgClickActive(false);
     }
   };
+  /* 모달이 닫힐 때마다 배경 클릭 여부도 함께 초기화 */
+  useEffect(() => {
+    if (!isModalOpen) {
+      setModalBgClickActive(false);
+    }
+  }, [isModalOpen]);
   useClickOutside(modalRef, handleOutSideClick);
 
   return (
@@ -58,6 +64,13 @@ export const PositiveModal = (props: ModalContentPropTypes) => {
       setModalBgClickActive(false);
     }
   };
+  /* 모달이 닫힐 때마다 배경 클릭 여부도 함께 초기화 */
+  useEffect(() => {
+    if (!isModalOpen) {
+      setModalBgClickActive(false);
+    }
+  }, [isModalOpen]);
+
   useClickOutside(modalRef, handleOutSideClick);
 
   return (
