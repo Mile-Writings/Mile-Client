@@ -35,12 +35,6 @@ export const NegativeModal = (props: ModalContentPropTypes) => {
     }
   }, [isModalOpen]);
 
-  /* 모달이 닫힐 때마다 배경 클릭 여부도 함께 초기화 */
-  useEffect(() => {
-    if (!isModalOpen) {
-      setModalBgClickActive(false);
-    }
-  }, [isModalOpen]);
   useClickOutside(modalRef, handleOutSideClick);
 
   return (
