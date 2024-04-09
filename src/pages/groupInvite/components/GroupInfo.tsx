@@ -1,9 +1,18 @@
 import styled from '@emotion/styled';
 
+import { useGetGroupInfo } from '../hooks/queries';
+
 import { GroupLeaderIc, GroupMemberIc, GroupDateIc } from './../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 const GroupInfo = () => {
+  const { moimTitle, imageUrl, leader, memberCount, description } = useGetGroupInfo('==MQ');
+  console.log(moimTitle);
+  console.log(imageUrl);
+  console.log(leader);
+  console.log(memberCount);
+  console.log(description);
+
   return (
     <GroupInfoWrapper>
       <GroupImg />
