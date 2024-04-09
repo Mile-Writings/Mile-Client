@@ -1,9 +1,12 @@
-import axios from 'axios';
-
-export const fetchAdminTopic = async () => {
+import { devClient } from '../../../utils/apis/axios';
+//[GET] 관리자페이지 글감 LIST
+export const fetchAdminTopic = async (groupId: string, page: string) => {
   try {
-    const response = await axios.get<AdminTopicPropTypes>('/api/moim/moimId/topicList?page=1');
-    const data = await response;
+    const response = await axios.get<AdminTopicPropTypes>(
+      `/api/moim/${groupId}/topicList?page=${page}`,
+    );
+    const data = response.data;
+    console.log(data, 'data');
     return data;
   } catch (error) {
     console.log('에러:', error);

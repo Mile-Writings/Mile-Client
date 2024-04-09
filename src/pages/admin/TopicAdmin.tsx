@@ -17,6 +17,7 @@ interface AdminTopicPropTypes {
 }
 
 const TopicAdmin = ({ data }: { data?: AdminTopicPropTypes }) => {
+  console.log(data, 'data');
   return (
     <>
       <TopicListWrapper>
