@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useParams } from 'react-router-dom';
 
 import { useGetGroupInfo } from '../hooks/queries';
 
@@ -6,23 +7,19 @@ import { GroupLeaderIc, GroupMemberIc, GroupDateIc } from './../../../assets/svg
 import Spacing from '../../../components/commons/Spacing';
 
 const GroupInfo = () => {
-  const { moimTitle, imageUrl, leader, memberCount, description } = useGetGroupInfo('==MQ');
-  console.log(moimTitle);
-  console.log(imageUrl);
-  console.log(leader);
-  console.log(memberCount);
-  console.log(description);
+  const { groupId } = useParams() as { groupId: string };
+  const { moimTitle, imageUrl, leader, memberCount, description } = useGetGroupInfo(groupId);
 
   return (
     <GroupInfoWrapper>
-      <GroupImg />
+      <GroupImg src={imageUrl} alt={'모임 이미지'} />
       <GroupInfoContainer>
-        <GroupName>그룹명자리입니다</GroupName>
+        <GroupName>{moimTitle}</GroupName>
         <Spacing marginBottom="1.8" />
         <GroupInfoContentWrapper>
           <GroupLeaderIc />
           <GroupInfoContent>모임방장</GroupInfoContent>
-          <GroupInfoText>방장입니다</GroupInfoText>
+          <GroupInfoText>{leader}</GroupInfoText>
         </GroupInfoContentWrapper>
         <Spacing marginBottom="1.2" />
         <GroupInfoContentWrapper>
@@ -34,14 +31,12 @@ const GroupInfo = () => {
         <GroupInfoContentWrapper>
           <GroupMemberIc />
           <GroupInfoContent>모임인원</GroupInfoContent>
-          <GroupInfoText>11명의 작가들</GroupInfoText>
+          <GroupInfoText>{memberCount}명의 작가들</GroupInfoText>
         </GroupInfoContentWrapper>
         <Spacing marginBottom="2.4" />
         <GroupDetailWrapper>
           <BorderBar />
-          <GroupDetail>
-            일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십
-          </GroupDetail>
+          <GroupDetail>{description}</GroupDetail>
         </GroupDetailWrapper>
       </GroupInfoContainer>
     </GroupInfoWrapper>
@@ -112,6 +107,5 @@ const BorderBar = styled.div`
 const GroupDetail = styled.div`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.body2};
-  line-height: 32px;
   line-break: auto;
 `;

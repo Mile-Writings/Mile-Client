@@ -24,8 +24,8 @@ const Router = () => {
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<Error />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/groupInvite" element={<GroupInvite />} />
-        <Route path="/groupJoin" element={<GroupJoinCongrats />} />
+        <Route path="/group/:groupId/groupInvite" element={<GroupInvite />} />
+        <Route path="/group/:groupId/groupJoin" element={<GroupJoinCongrats />} />
       </Routes>
     </BrowserRouter>
   );
