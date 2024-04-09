@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import GroupInfoBox from './GroupInfoBox';
 
@@ -20,6 +21,8 @@ interface GroupInfoPropTypes {
 
 const GroupSideHeader = (props: { groupInfoData: GroupInfoPropTypes }) => {
   const { groupInfoData } = props;
+  const navigate = useNavigate();
+  const { groupId } = useParams();
 
   return (
     <HeaderWrapper>
@@ -48,7 +51,9 @@ const GroupSideHeader = (props: { groupInfoData: GroupInfoPropTypes }) => {
             <Spacing marginBottom="2" />
             <GroupSideHeaderDetailBox>{groupInfoData.description}</GroupSideHeaderDetailBox>
             <Spacing marginBottom="2" />
-            <SideHeaderButton>관리자페이지</SideHeaderButton>
+            <SideHeaderButton onClick={() => navigate(`/admin/${groupId}`)}>
+              관리자페이지
+            </SideHeaderButton>
           </>
         )}
       </GroupSideHeaderWrapper>
