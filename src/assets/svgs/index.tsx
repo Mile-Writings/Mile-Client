@@ -4,7 +4,6 @@ export { default as DetailCommentMeatBallIc } from './detailCommentMeatBallIc.sv
 export { default as HeaderLogoSvg } from './headerLogoSvg.svg?react';
 export { default as MainGroupRoutingBtn } from './mainGroupRoutingBtn.svg?react';
 export { default as MainGroupRoutingBtnHover } from './mainGroupRoutingBtnHover.svg?react';
-export { default as MainIcnArrowPurple } from './mainIcnArrowPurple.svg?react';
 
 export { default as DetailPurpleFavoriteIc } from './detailPurplefavorite.svg?react';
 export { default as DetailWhiteFavoriteIc } from './detailWhitefavorite.svg?react';
@@ -30,6 +29,8 @@ export { default as GroupNoDataImgIc } from './groupNoDataImg.svg?react';
 export { default as HeaderLogoIc } from './headerLogoSvg.svg?react';
 export { default as MainGraphicGradationIc } from './mainGraphicGradation.svg?react';
 export { default as MainGraphicLogo } from './mainGraphicLogo.svg?react';
+export { default as MainIcnArrowBlack } from './mainIcnArrowBlack.svg?react';
+export { default as MainIcnArrowPurple } from './mainIcnArrowPurple.svg?react';
 export { default as MainIcnArrowWhite } from './mainIcnArrowWhite.svg?react';
 export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?react';
 export { default as MakeGroupPlusBtn } from './mainMakeGroupPlusBtn.svg?react';

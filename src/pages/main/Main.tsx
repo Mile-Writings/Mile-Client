@@ -54,7 +54,7 @@ const Main = () => {
       <Manual />
       <FaqLayout>
         <FaqTitleWithDropDownContainer>
-          <FaqTitle>자주 묻는 질문이에요</FaqTitle>
+          <FaqTitle>자주 묻는 질문</FaqTitle>
           <Spacing marginBottom="3.6" />
           {FAQ_DATA.map(({ id, question, answer }) => (
             <FaqDropdown key={id} id={id} question={question} answer={answer} />
