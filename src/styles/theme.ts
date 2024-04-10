@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 
 export const theme = {
   colors: {
+    mileRed: '#B81616',
     mainViolet: '#6139D1',
     mileViolet: '#E9E3F8',
     middleViolet: '#D9CEF6',

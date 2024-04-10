@@ -108,6 +108,16 @@ export const EditorTempExistHeader = ({ onClickSubmit }: OnClickTempExistProps) 
   );
 };
 
+// 로고만 있는 헤더
+export const DefaultHeader = () => {
+  const { navigateToHome } = useNavigateHome();
+  return (
+    <HeaderWrapper>
+      <HeaderLogoIcon onClick={navigateToHome} />
+    </HeaderWrapper>
+  );
+};
+
 const HeaderWrapper = styled.div`
   position: fixed;
   top: 0%;
