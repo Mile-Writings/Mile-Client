@@ -16,9 +16,7 @@ interface AdminTopicPropTypes {
 
 const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
   const { topicName, topicTag, topicDescription, createdAt, topicId } = data;
-  const [showModal, setShowModal] = useState(false);
-  const openModal = () => setShowModal(true);
-  const closeModal = () => setShowModal(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -36,13 +34,13 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
         <EditIc
           onClick={() => {
             console.log(topicId, 'api요청에서 필요함');
-            openModal();
+            setShowEditModal(true);
           }}
         />
         <DeleteIc onClick={() => setShowDeleteModal(true)} />
       </TopicAction>
-      {showModal && (
-        <ModalOverlay onClick={closeModal}>
+      {showEditModal && (
+        <ModalOverlay onClick={() => setShowEditModal(false)}>
           <AddEditTopicModal
             topicStored={topicName}
             topicTagStored={topicTag}
@@ -52,9 +50,11 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
       )}
 
       <NegativeModal
-        modalContent="dk"
+        modalContent="삭제 시, 해당 글감으로 작성된 글도 함께 삭제되며,
+        삭제된 글감은 복구할 수 없습니다.
+        계속 하시겠습니까?"
         isModalOpen={showDeleteModal}
-        modalHandler={() => console.log('hi')}
+        modalHandler={() => console.log('삭제api실행')}
         closeModalHandler={() => setShowDeleteModal(false)}
       />
     </TopicWrapper>
@@ -74,7 +74,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   height: 100%;
 
-  background-color: rgb(0 0 0 / 50%); /* 반투명한 배경색 */
+  background-color: rgb(0 0 0 / 60%);
 `;
 
 const TopicWrapper = styled.div`
