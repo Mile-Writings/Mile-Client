@@ -64,6 +64,7 @@ const GroupInfoContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  width: 41.7rem;
 `;
 
 const GroupName = styled.div`
@@ -92,20 +93,26 @@ const GroupInfoText = styled.span`
 const GroupDetailWrapper = styled.section`
   display: flex;
   gap: 1.2rem;
-  width: 45.1rem;
+  justify-content: flex-start;
+  width: 100%;
   height: 12.8rem;
 `;
 
 const BorderBar = styled.div`
-  width: 13px;
+  flex-shrink: 0;
+  width: 4px;
   height: 100%;
 
   background-color: ${({ theme }) => theme.colors.middleViolet};
   border-radius: 2px;
 `;
 
-const GroupDetail = styled.div`
+const GroupDetail = styled.p`
+  width: 100%;
+  height: fit-content;
+
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.body2};
+  line-height: 3.2rem;
   line-break: auto;
 `;
