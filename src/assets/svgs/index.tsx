@@ -69,3 +69,11 @@ export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?reac
 
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
 export { default as faviconMileIc } from './faviconMile.svg?react';
+
+export { default as DeleteIc } from './deleteBtn.svg?react';
+export { default as EditIc } from './editBtn.svg?react';
+
+export { default as ArrowLeftIc } from './arrowLeft.svg?react';
+export { default as ArrowRightIc } from './arrowRight.svg?react';
+
+export { default as MakeGroupAdminIc } from './btn_makegroup.svg?react';
