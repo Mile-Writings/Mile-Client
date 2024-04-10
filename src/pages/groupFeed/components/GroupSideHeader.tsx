@@ -105,6 +105,12 @@ const SideHeaderButton = styled.button`
   background-color: ${({ theme }) => theme.colors.gray10};
   border-radius: 8px;
   ${({ theme }) => theme.fonts.button3};
+
+  :hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+
+    background-color: ${({ theme }) => theme.colors.mileViolet};
+  }
 `;
 
 const GroupSideHeaderTitle = styled.div`
