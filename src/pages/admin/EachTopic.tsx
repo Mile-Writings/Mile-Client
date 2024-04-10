@@ -21,6 +21,7 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
   const closeModal = () => setShowModal(false);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   return (
     <TopicWrapper>
       <TopicData>
@@ -49,13 +50,13 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
           />
         </ModalOverlay>
       )}
-      {showDeleteModal && (
-        <NegativeModal
-          modalContent="dk"
-          onClick={() => console.log('hi')}
-          setIsVisible={setShowDeleteModal}
-        />
-      )}
+
+      <NegativeModal
+        modalContent="dk"
+        isModalOpen={showDeleteModal}
+        modalHandler={() => console.log('hi')}
+        closeModalHandler={() => setShowDeleteModal(false)}
+      />
     </TopicWrapper>
   );
 };

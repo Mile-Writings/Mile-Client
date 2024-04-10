@@ -92,7 +92,8 @@ export const PositiveModal = (props: ModalContentPropTypes) => {
 const ModalBackgroundWrapper = styled.div<{ $isModalOpen: boolean }>`
   position: fixed;
   top: 0;
-  z-index: 1;
+  left: 0;
+  z-index: 4;
   display: ${({ $isModalOpen }) => ($isModalOpen ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
@@ -103,6 +104,7 @@ const ModalBackgroundWrapper = styled.div<{ $isModalOpen: boolean }>`
 `;
 
 const ModalWrapper = styled.section<{ $isModalOpen: boolean }>`
+  z-index: 9;
   display: ${({ $isModalOpen }) => ($isModalOpen ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
