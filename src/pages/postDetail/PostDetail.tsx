@@ -187,7 +187,30 @@ const PostContainer = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 10px;
+
   ${({ theme }) => theme.fonts.body2};
+
+  & > ul {
+    padding-left: 17px;
+
+    list-style-type: disc;
+  }
+
+  & > ol {
+    padding-left: 17px;
+
+    list-style: decimal;
+  }
+
+  & > blockquote {
+    padding-left: 1.8rem;
+
+    border-left: 4px solid #6139d1;
+  }
+
+  & > p {
+    min-height: 2.5rem;
+  }
 `;
 
 const WriterInfoWrapper = styled.div`
