@@ -71,6 +71,10 @@ export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?reac
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
 export { default as faviconMileIc } from './faviconMile.svg?react';
 
+export { default as CheckIc } from './check.svg?react';
+export { default as NestCommentIc } from './mode_comment.svg?react';
+export { default as ArrowTopLeftIc } from './arrow_top_left.svg?react';
+
 export { default as DeleteIc } from './deleteBtn.svg?react';
 export { default as EditIc } from './editBtn.svg?react';
 
