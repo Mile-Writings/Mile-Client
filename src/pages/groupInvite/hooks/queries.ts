@@ -25,10 +25,15 @@ export const useGetGroupInfo = (groupId: string) => {
 };
 
 // 필명 중복 여부 확인
-export const useGetWriterNameConflict = (groupId: string, writerName: string) => {
+export const useGetWriterNameConflict = (
+  groupId: string,
+  writerName: string,
+  isConflictBtnClicked: boolean,
+) => {
   const { data } = useQuery({
     queryKey: [QUERY_KEY_GROUP_INVITE.getWriterNameConflict, groupId, writerName],
     queryFn: () => fetchWriterNameConflict(groupId, writerName),
+    enabled: !!isConflictBtnClicked,
   });
 
   const isConflict = data && data.data.isConflict;

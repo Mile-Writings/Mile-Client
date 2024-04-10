@@ -1,5 +1,8 @@
 import styled from '@emotion/styled';
 import React, { useState, useReducer, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { useGetWriterNameConflict } from '../hooks/queries';
 
 import Spacing from '../../../components/commons/Spacing';
 
@@ -37,7 +40,9 @@ const reducerFn = (state: userInfoStateType, action: userInfoActionType): userIn
 };
 
 const UserInfoInput = () => {
+  const { groupId } = useParams() as { groupId: string };
   const [charLimit, setCharLimit] = useState(false);
+  const [isConflictBtnClicked, setIsConflictBtnClicked] = useState(false);
   const [userInfoVal, dispatch] = useReducer(reducerFn, userInfoState);
 
   const onChangeWriterName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,6 +52,17 @@ const UserInfoInput = () => {
   const onChageWriterIntroduce = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'setWriterIntroduce', writerIntroduce: e.currentTarget.value });
   };
+
+  // 중복확인 버튼 함수
+  const onClickConflictBtn = () => {
+    setIsConflictBtnClicked(true);
+  };
+  const { isConflict } = useGetWriterNameConflict(
+    groupId,
+    userInfoVal.writerName || '',
+    isConflictBtnClicked,
+  );
+  console.log(isConflict);
 
   useEffect(() => {
     if (userInfoVal.writerIntroduce) {
@@ -64,6 +80,8 @@ const UserInfoInput = () => {
             onChange={onChangeWriterName}
           />
           <WriterExistCheckBtn
+            disabled={userInfoVal.writerName ? userInfoVal.writerName.trim().length === 0 : true}
+            onClick={onClickConflictBtn}
             $isBtnDisabled={
               userInfoVal.writerName ? userInfoVal.writerName.trim().length === 0 : true
             }
