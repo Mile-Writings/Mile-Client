@@ -21,7 +21,7 @@ const TopicDropDown = (props: TopicPropTypes) => {
   const [topicIsOpen, setTopicIsOpen] = useState(false);
 
   // 드롭다운 리스트 부분 잡아오기
-  const dropDownRef = useRef(null);
+  const topicListDropDownRef = useRef(null);
 
   // 주제 드롭다운 버튼 누르면 열림/닫힘
   const handleOnClick = () => {
@@ -32,13 +32,18 @@ const TopicDropDown = (props: TopicPropTypes) => {
     setTopicIsOpen(false);
   };
   // 커스텀 훅 사용
-  useClickOutside(dropDownRef, handleOutSideClick);
+  useClickOutside(topicListDropDownRef, handleOutSideClick);
 
   return (
-    <TopicDropDownWrapper ref={dropDownRef}>
+    <TopicDropDownWrapper ref={topicListDropDownRef}>
       <DropDownToggle onClick={handleOnClick}>
         <DropDownContent $contentWidth={29}>{selectedTopic}</DropDownContent>
-        {topicIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
+        <EditorDropIcnActiveWrapper $isOpen={topicIsOpen}>
+          <EditorDropIcnActiveIcon />
+        </EditorDropIcnActiveWrapper>
+        <EditorDropIcnActiveOpenWrapper $isOpen={topicIsOpen}>
+          <EditorDropIcnActiveOpenIcon />
+        </EditorDropIcnActiveOpenWrapper>
       </DropDownToggle>
       <TopicListWrapper $isOpen={topicIsOpen}>
         {topicList.map((item, idx) => {
@@ -97,4 +102,22 @@ const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
     border: 20px solid ${({ theme }) => theme.colors.gray20};
     border-radius: 4px;
   }
+`;
+
+const EditorDropIcnActiveOpenWrapper = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'inline' : 'none')};
+`;
+
+const EditorDropIcnActiveOpenIcon = styled(EditorDropIcnActiveOpenIc)`
+  width: 2.8rem;
+  height: 2.8rem;
+`;
+
+const EditorDropIcnActiveWrapper = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'none' : 'inline')};
+`;
+
+const EditorDropIcnActiveIcon = styled(EditorDropIcnActiveIc)`
+  width: 2.8rem;
+  height: 2.8rem;
 `;

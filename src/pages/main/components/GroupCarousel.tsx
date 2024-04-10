@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 
@@ -9,7 +10,10 @@ import CarouselContent from './CarouselContent';
 
 import { groupPropTypes } from '../types/groupContent';
 
-import { MainIcnArrowPurple as MainIcnArrowPurpleIcon } from '../../../assets/svgs';
+import {
+  MainIcnArrowBlack as MainIcnArrowBlackIcon,
+  MainIcnArrowPurple as MainIcnArrowPurpleIcon,
+} from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 export interface carouselItemPropTypes {
@@ -32,6 +36,7 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
   const handleButtonOnClick = (groupId: string) => {
     navigate(`/group/${groupId}`);
   };
+  const [IsHovered, setIsHovered] = useState<boolean>(false);
 
   return (
     <>
@@ -39,9 +44,13 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
         <CarouselWrapper key={moim.moimId}>
           <Spacing marginBottom="3.6" />
           <CarouselWithButtonLayout key={moim.moimId}>
-            <GroupButtonContainer onClick={() => handleButtonOnClick(moim.moimId)}>
+            <GroupButtonContainer
+              onClick={() => handleButtonOnClick(moim.moimId)}
+              onMouseOver={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
               {moim.moimName}
-              <MainIcnArrowPurpleIcon />
+              {IsHovered ? <MainIcnArrowPurpleIcon /> : <MainIcnArrowBlackIcon />}
             </GroupButtonContainer>
             <Spacing marginBottom="1.6" />
             <CarouselContainer>
@@ -86,15 +95,18 @@ const GroupButtonContainer = styled.button`
   justify-content: flex-start;
   padding: 0.6rem 1rem;
 
-  color: ${({ theme }) => theme.colors.mainViolet};
+  color: ${({ theme }) => theme.colors.black};
 
-  border: 1px solid ${({ theme }) => theme.colors.mainViolet};
+  border: 1px solid ${({ theme }) => theme.colors.black};
   border-radius: 0.8rem;
 
   ${({ theme }) => theme.fonts.subtitle2};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.mileViolet};
+    color: ${({ theme }) => theme.colors.mainViolet};
+
+    background-color: ${({ theme }) => theme.colors.white};
+    border: 1px solid ${({ theme }) => theme.colors.white};
   }
 `;
 
