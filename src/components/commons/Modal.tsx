@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Spacing from './Spacing';
 
@@ -7,64 +7,109 @@ import useClickOutside from '../../hooks/useClickOutside';
 
 interface ModalContentPropTypes {
   modalContent: string;
-  onClick: () => void;
-  setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
+  isModalOpen: boolean;
+  modalHandler: () => void;
+  closeModalHandler: () => void;
 }
 
 // '아니오'를 유도하는 모달
 export const NegativeModal = (props: ModalContentPropTypes) => {
-  const { modalContent, onClick } = props;
-  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const { modalContent, modalHandler, closeModalHandler, isModalOpen } = props;
+  const [modalBgClickActive, setModalBgClickActive] = useState(isModalOpen);
   const modalRef = useRef(null);
-  const closeModalHandler = () => {
-    setIsVisible(false);
+
+  const handleOutSideClick = () => {
+    if (isModalOpen) {
+      setModalBgClickActive(true);
+    }
+    if (modalBgClickActive) {
+      closeModalHandler();
+      setModalBgClickActive(false);
+    }
   };
-  useClickOutside(modalRef, closeModalHandler);
+
+  /* 모달이 닫힐 때마다 배경 클릭 여부도 함께 초기화 */
+  useEffect(() => {
+    if (!isModalOpen) {
+      setModalBgClickActive(false);
+    }
+  }, [isModalOpen]);
+
+  useClickOutside(modalRef, handleOutSideClick);
 
   return (
-    <ModalWrapper ref={modalRef} $isVisible={isVisible}>
-      <ModalContentLayout>{modalContent}</ModalContentLayout>
-      <Spacing marginBottom="3.2" />
-      <ModalBtnLayout>
-        <NegativeButton onClick={onClick}>예</NegativeButton>
-        <PositiveButton onClick={closeModalHandler}>아니오</PositiveButton>
-      </ModalBtnLayout>
-    </ModalWrapper>
+    <ModalBackgroundWrapper $isModalOpen={isModalOpen}>
+      <ModalWrapper ref={modalRef} $isModalOpen={isModalOpen}>
+        <ModalContentLayout>{modalContent}</ModalContentLayout>
+        <Spacing marginBottom="3.2" />
+        <ModalBtnLayout>
+          <NegativeButton onClick={modalHandler}>예</NegativeButton>
+          <PositiveButton onClick={closeModalHandler}>아니오</PositiveButton>
+        </ModalBtnLayout>
+      </ModalWrapper>
+    </ModalBackgroundWrapper>
   );
 };
 
 // '예'를 유도하는 모달
 export const PositiveModal = (props: ModalContentPropTypes) => {
-  const { modalContent, onClick } = props;
-  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const { modalContent, modalHandler, closeModalHandler, isModalOpen } = props;
+  const [modalBgClickActive, setModalBgClickActive] = useState(isModalOpen);
   const modalRef = useRef(null);
 
-  const closeModalHandler = () => {
-    setIsVisible(false);
+  const handleOutSideClick = () => {
+    if (isModalOpen) {
+      setModalBgClickActive(true);
+    }
+    if (modalBgClickActive) {
+      closeModalHandler();
+      setModalBgClickActive(false);
+    }
   };
+  /* 모달이 닫힐 때마다 배경 클릭 여부도 함께 초기화 */
+  useEffect(() => {
+    if (!isModalOpen) {
+      setModalBgClickActive(false);
+    }
+  }, [isModalOpen]);
 
-  useClickOutside(modalRef, closeModalHandler);
+  useClickOutside(modalRef, handleOutSideClick);
 
   return (
-    <ModalWrapper ref={modalRef} $isVisible={isVisible}>
-      <ModalContentLayout>{modalContent}</ModalContentLayout>
-      <Spacing marginBottom="3.2" />
-      <ModalBtnLayout>
-        <NegativeButton onClick={closeModalHandler}>아니오</NegativeButton>
-        <PositiveButton onClick={onClick}>예</PositiveButton>
-      </ModalBtnLayout>
-    </ModalWrapper>
+    <ModalBackgroundWrapper $isModalOpen={isModalOpen}>
+      <ModalWrapper ref={modalRef} $isModalOpen={isModalOpen}>
+        <ModalContentLayout>{modalContent}</ModalContentLayout>
+        <Spacing marginBottom="3.2" />
+        <ModalBtnLayout>
+          <NegativeButton onClick={closeModalHandler}>아니오</NegativeButton>
+          <PositiveButton onClick={modalHandler}>예</PositiveButton>
+        </ModalBtnLayout>
+      </ModalWrapper>
+    </ModalBackgroundWrapper>
   );
 };
 
-const ModalWrapper = styled.section<{ $isVisible: boolean }>`
-  display: ${({ $isVisible }) => ($isVisible ? 'flex' : 'none')};
+const ModalBackgroundWrapper = styled.div<{ $isModalOpen: boolean }>`
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  display: ${({ $isModalOpen }) => ($isModalOpen ? 'flex' : 'none')};
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+  background-color: rgb(0 0 0 / 60%);
+`;
+
+const ModalWrapper = styled.section<{ $isModalOpen: boolean }>`
+  display: ${({ $isModalOpen }) => ($isModalOpen ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 40rem;
-  height: 18.1rem;
-  padding: 3.2rem;
+  width: auto;
+  height: auto;
+  padding: 3.2rem 4rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 1rem;
