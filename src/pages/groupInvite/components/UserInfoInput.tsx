@@ -47,6 +47,7 @@ const UserInfoInput = () => {
 
   const onChangeWriterName = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'setWriterName', writerName: e.target.value });
+    setIsConflictBtnClicked(false);
   };
 
   const onChageWriterIntroduce = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -62,7 +63,6 @@ const UserInfoInput = () => {
     userInfoVal.writerName || '',
     isConflictBtnClicked,
   );
-  console.log(isConflict);
 
   useEffect(() => {
     if (userInfoVal.writerIntroduce) {
@@ -78,6 +78,7 @@ const UserInfoInput = () => {
           <WriterNameInput
             placeholder="띄어쓰기 포함 8자 이내로 입력해주세요."
             onChange={onChangeWriterName}
+            $isConflict={isConflict || false}
           />
           <WriterExistCheckBtn
             disabled={userInfoVal.writerName ? userInfoVal.writerName.trim().length === 0 : true}
@@ -89,6 +90,13 @@ const UserInfoInput = () => {
             중복확인
           </WriterExistCheckBtn>
         </InputWrapper>
+        {isConflictBtnClicked ? (
+          <WriterNameEnable $isConflict={isConflict || false}>
+            {isConflict ? '사용 불가능한 필명입니다' : '사용 가능한 필명입니다'}
+          </WriterNameEnable>
+        ) : (
+          <></>
+        )}
       </UserInfoInputWrapper>
       <Spacing marginBottom="2.8" />
       <UserInfoInputWrapper>
@@ -132,14 +140,15 @@ const InputWrapper = styled.div`
   width: 100%;
 `;
 
-const WriterNameInput = styled.input`
+const WriterNameInput = styled.input<{ $isConflict: boolean }>`
   width: 67.7rem;
   padding: 1rem 1.2rem;
 
   color: ${({ theme }) => theme.colors.gray100};
 
   background-color: ${({ theme }) => theme.colors.gray5};
-  border: 1px solid ${({ theme }) => theme.colors.gray20};
+  border: ${({ $isConflict, theme }) =>
+    $isConflict ? `1px solid ${theme.colors.mileRed}` : `1px solid ${theme.colors.gray50}`};
   ${({ theme }) => theme.fonts.button2};
   border-radius: 6px;
 
@@ -165,6 +174,12 @@ const WriterExistCheckBtn = styled.button<{ $isBtnDisabled: boolean }>`
   cursor: ${({ $isBtnDisabled }) => ($isBtnDisabled ? 'default' : 'cursor')};
   border-radius: 8px;
   ${({ theme }) => theme.fonts.button3};
+`;
+
+const WriterNameEnable = styled.div<{ $isConflict: boolean }>`
+  color: ${({ $isConflict, theme }) => ($isConflict ? theme.colors.mileRed : theme.colors.gray70)};
+
+  ${({ theme }) => theme.fonts.body4}; /* 폰트 확인 필요 */
 `;
 
 const WriterIntroduceInput = styled.textarea<{ $charLimit: boolean }>`
