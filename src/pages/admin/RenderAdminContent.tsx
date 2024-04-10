@@ -9,7 +9,7 @@ import { MakeGroupAdminIc } from '../../assets/svgs';
 import Spacing from '../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
-  const { topicCount, adminTopicData } = useAdminTopic('MQ==', '1');
+  const { topicCount, adminTopicData } = useAdminTopic('MQ==', 1);
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
@@ -33,7 +33,7 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
               <AddEditTopicModal />
             </>
           )}
-          <TopicAdmin data={adminTopicData} />
+          {/* <TopicAdmin data={adminTopicData} /> */}
         </AdminContainer>
       );
 

@@ -26,9 +26,9 @@ const TopicAdmin = ({ data }: { data?: AdminTopicPropTypes }) => {
           <TopicTag>글감 태그</TopicTag>
           <TopicDescription>글감 설명</TopicDescription>
         </TopicAdminCategory>
-        <TopicList>
+        {/* <TopicList>
           {data && data.topics.map((topic) => <EachTopic key={topic.topicId} data={topic} />)}
-        </TopicList>
+        </TopicList> */}
       </TopicListWrapper>
       <Spacing marginBottom="3.2" />
       {data && data.topicCount && <Pagenation count={data.topicCount} allocatedCount={5} />}

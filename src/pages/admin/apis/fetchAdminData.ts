@@ -1,28 +1,33 @@
+import axios from 'axios';
+
 import { devClient } from '../../../utils/apis/axios';
 //[GET] 관리자페이지 글감 LIST
-export const fetchAdminTopic = async (groupId: string, page: string) => {
+export const fetchAdminTopic = async () => {
   try {
-    const response = await axios.get<AdminTopicPropTypes>(
-      `/api/moim/${groupId}/topicList?page=${page}`,
-    );
-    const data = response.data;
-    console.log(data, 'data');
-    return data;
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await devClient.get(`/api/moim/MQ==/admin/topicList?page=1`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    console.log(response.data, 'data');
+    return response.data;
   } catch (error) {
     console.log('에러:', error);
   }
 };
 
-interface AdminTopicPropTypes {
-  topicCount: number;
-  topics: {
-    topicId: string;
-    topicName: string;
-    topicTag: string;
-    topicDescription: string;
-    createdAt: string;
-  }[];
-}
+// interface AdminTopicPropTypes {
+//   topicCount: number;
+//   topics: {
+//     topicId: string;
+//     topicName: string;
+//     topicTag: string;
+//     topicDescription: string;
+//     createdAt: string;
+//   }[];
+// }
 
 export interface postAdminTopicPropTypes {
   topic: string;
@@ -37,7 +42,7 @@ export const postAdminTopic = async ({
   topicDescription,
 }: postAdminTopicPropTypes) => {
   try {
-    const response = await axios.post('/api/moim/moimId/topic', {
+    const response = await devClient.post('/api/moim/moimId/topic', {
       topic: topic,
       topicTag: topicTag,
       topicDescription: topicDescription,
@@ -57,7 +62,7 @@ export const editAdminTopic = async ({
   topicDescription,
 }: postAdminTopicPropTypes) => {
   try {
-    const response = await axios.put('/api/topic/topicId', {
+    const response = await devClient.put('/api/topic/topicId', {
       topic: topic,
       topicTag: topicTag,
       topicDescription: topicDescription,
