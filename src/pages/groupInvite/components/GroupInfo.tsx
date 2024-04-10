@@ -115,4 +115,6 @@ const GroupDetail = styled.p`
   ${({ theme }) => theme.fonts.body2};
   line-height: 3.2rem;
   line-break: auto;
+
+  word-break: keep-all;
 `;
