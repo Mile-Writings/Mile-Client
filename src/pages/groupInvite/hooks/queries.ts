@@ -1,11 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
+import { createGroupMemberJoin } from '../apis/createGroupMemberJoin';
 import { fetchGroupInfo } from '../apis/fetchGroupInfo';
 import { fetchWriterNameConflict } from '../apis/fetchWriterNameConflict';
 
 export const QUERY_KEY_GROUP_INVITE = {
   getGroupInfo: 'getGroupInfo',
   getWriterNameConflict: 'getWriterNameConflict',
+  postGroupMemberJoin: 'postGroupMemeberJoin',
 };
 
 // 글 모임 정보 가져오기
@@ -39,4 +41,29 @@ export const useGetWriterNameConflict = (
   const isConflict = data && data.data.isConflict;
 
   return { isConflict };
+};
+
+// 초대링크를 통한 글모임 사용자 가입
+interface postGroupMemberJoinType {
+  groupId: string;
+  writerName: string;
+  writerDescription: string;
+}
+export const usePostGroupMemberJoin = ({
+  groupId,
+  writerName,
+  writerDescription,
+}: postGroupMemberJoinType) => {
+  const data = useMutation({
+    mutationKey: [
+      QUERY_KEY_GROUP_INVITE.postGroupMemberJoin,
+      {
+        groupId,
+        writerName,
+        writerDescription,
+      },
+    ],
+    mutationFn: () => createGroupMemberJoin({ groupId, writerName, writerDescription }),
+  });
+  return data;
 };

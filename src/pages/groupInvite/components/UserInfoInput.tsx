@@ -41,7 +41,9 @@ const reducerFn = (state: userInfoStateType, action: userInfoActionType): userIn
 
 const UserInfoInput = () => {
   const { groupId } = useParams() as { groupId: string };
+  // 글자수 제한
   const [charLimit, setCharLimit] = useState(false);
+  // 필명 중복 확인
   const [isConflictBtnClicked, setIsConflictBtnClicked] = useState(false);
   const [userInfoVal, dispatch] = useReducer(reducerFn, userInfoState);
 
@@ -50,7 +52,7 @@ const UserInfoInput = () => {
     setIsConflictBtnClicked(false);
   };
 
-  const onChageWriterIntroduce = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeWriterIntroduce = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'setWriterIntroduce', writerIntroduce: e.currentTarget.value });
   };
 
@@ -92,7 +94,7 @@ const UserInfoInput = () => {
         </InputWrapper>
         {isConflictBtnClicked ? (
           <WriterNameEnable $isConflict={isConflict || false}>
-            {isConflict ? '사용 불가능한 필명입니다' : '사용 가능한 필명입니다'}
+            {isConflict ? '사용 불가능한 필명 입니다.' : '사용 가능한 필명 입니다.'}
           </WriterNameEnable>
         ) : (
           <></>
@@ -103,7 +105,7 @@ const UserInfoInput = () => {
         <UserInfoTitle>소개 글</UserInfoTitle>
         <WriterIntroduceInput
           placeholder="모임원들에게 ‘나’에 대해 자유롭게 소개해주세요."
-          onChange={onChageWriterIntroduce}
+          onChange={onChangeWriterIntroduce}
           $charLimit={charLimit}
         />
         <CharCount $charLimit={charLimit}>
@@ -179,7 +181,7 @@ const WriterExistCheckBtn = styled.button<{ $isBtnDisabled: boolean }>`
 const WriterNameEnable = styled.div<{ $isConflict: boolean }>`
   color: ${({ $isConflict, theme }) => ($isConflict ? theme.colors.mileRed : theme.colors.gray70)};
 
-  ${({ theme }) => theme.fonts.body4}; /* 폰트 확인 필요 */
+  ${({ theme }) => theme.fonts.body4};
 `;
 
 const WriterIntroduceInput = styled.textarea<{ $charLimit: boolean }>`
