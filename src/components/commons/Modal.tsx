@@ -104,7 +104,6 @@ const ModalBackgroundWrapper = styled.div<{ $isModalOpen: boolean }>`
 `;
 
 const ModalWrapper = styled.section<{ $isModalOpen: boolean }>`
-  z-index: 9;
   display: ${({ $isModalOpen }) => ($isModalOpen ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
