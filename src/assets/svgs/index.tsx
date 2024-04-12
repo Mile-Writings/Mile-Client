@@ -1,11 +1,9 @@
 export { default as DefaultProfileIc } from './defaultProfileIc.svg?react';
 export { default as DetailCommentMeatBallIc } from './detailCommentMeatBallIc.svg?react';
-export { default as EditorTextColorIcnBlackSvg } from './editorTextcolorIcnBlack.svg?react';
 
 export { default as HeaderLogoSvg } from './headerLogoSvg.svg?react';
 export { default as MainGroupRoutingBtn } from './mainGroupRoutingBtn.svg?react';
 export { default as MainGroupRoutingBtnHover } from './mainGroupRoutingBtnHover.svg?react';
-export { default as MainIcnArrowPurple } from './mainIcnArrowPurple.svg?react';
 
 export { default as DetailPurpleFavoriteIc } from './detailPurplefavorite.svg?react';
 export { default as DetailWhiteFavoriteIc } from './detailWhitefavorite.svg?react';
@@ -31,6 +29,8 @@ export { default as GroupNoDataImgIc } from './groupNoDataImg.svg?react';
 export { default as HeaderLogoIc } from './headerLogoSvg.svg?react';
 export { default as MainGraphicGradationIc } from './mainGraphicGradation.svg?react';
 export { default as MainGraphicLogo } from './mainGraphicLogo.svg?react';
+export { default as MainIcnArrowBlack } from './mainIcnArrowBlack.svg?react';
+export { default as MainIcnArrowPurple } from './mainIcnArrowPurple.svg?react';
 export { default as MainIcnArrowWhite } from './mainIcnArrowWhite.svg?react';
 export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?react';
 export { default as MakeGroupPlusBtn } from './mainMakeGroupPlusBtn.svg?react';
@@ -72,3 +72,15 @@ export { default as adminEmptyMemberIc } from './adminEmptyMember.svg?react';
 export { default as adminProfileIc } from './adminProfileIc.svg?react';
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
 export { default as faviconMileIc } from './faviconMile.svg?react';
+
+export { default as CheckIc } from './check.svg?react';
+export { default as NestCommentIc } from './mode_comment.svg?react';
+export { default as ArrowTopLeftIc } from './arrow_top_left.svg?react';
+
+export { default as DeleteIc } from './deleteBtn.svg?react';
+export { default as EditIc } from './editBtn.svg?react';
+
+export { default as ArrowLeftIc } from './arrowLeft.svg?react';
+export { default as ArrowRightIc } from './arrowRight.svg?react';
+
+export { default as MakeGroupAdminIc } from './btn_makegroup.svg?react';

@@ -1,8 +1,21 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
+import { fetchAdminTopic } from '../apis/fetchAdminData';
 import fetchDeleteMember from '../apis/fetchDeleteMember';
 import fetchMemberInfo from '../apis/fetchMemberInfo';
+
+export const useAdminTopic = () => {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['adminTopic'],
+    queryFn: () => fetchAdminTopic(),
+  });
+
+  const topicCount = data && data.data.topicCount;
+  const adminTopicData = data && data.data;
+
+  return { topicCount, adminTopicData, isLoading, isError, error };
+};
 
 export const QUERY_KEY_ADMIN = {
   useMemberInfo: 'fetchMemberInfo',

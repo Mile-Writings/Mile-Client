@@ -90,15 +90,16 @@ const MyGroupListLayout = styled.div<{ $isOpen: boolean }>`
 
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 16%);
+  cursor: pointer;
   border: ${({ theme }) => theme.colors.grayViolet};
   border-radius: 0.8rem;
 `;
 
 const GroupContentContainer = styled.div`
   display: flex;
-  flex-shrink: 0;
   align-items: center;
   justify-content: center;
+  max-width: 15.2em;
   padding: 1rem 1.6rem;
 
   color: ${({ theme }) => theme.colors.gray70};

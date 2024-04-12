@@ -2,21 +2,30 @@ import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
 
 import MemberManage from './components/MemberManage';
-import { useFetchMemberInfo } from './hooks/queries';
+import { useAdminTopic, useFetchMemberInfo } from './hooks/queries';
+import TopicAdmin from './TopicAdmin';
 
+import { MakeGroupAdminIc } from '../../assets/svgs';
 import Spacing from '../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
+  const { topicCount, adminTopicData } = useAdminTopic();
   const { moimId } = useParams();
   const { totalMember } = useFetchMemberInfo(moimId || '');
   switch (admin) {
     case 'topic':
       return (
         <AdminContainer>
-          <Title>글감 설정</Title>
-          <Spacing marginBottom="1.2" />
-          <SubTitle>{`개의 글감이 저장되어있어요`}</SubTitle>
+          <AdminLayout>
+            <div>
+              <Title>글감 설정</Title>
+              <Spacing marginBottom="1.2" />
+              <SubTitle>{`${topicCount}개의 글감이 저장되어있어요`}</SubTitle>
+            </div>
+            <MakeGroupAdminIc style={{ cursor: 'pointer' }} />
+          </AdminLayout>
           <Spacing marginBottom="3.6" />
+          <TopicAdmin data={adminTopicData} />
         </AdminContainer>
       );
 
@@ -52,11 +61,17 @@ const AdminContainer = styled.div`
 `;
 
 const Title = styled.h1`
-  ${({ theme }) => theme.fonts.title9};
-  color: ${({ theme }) => theme.colors.mainViolet};
+  ${({ theme }) => theme.fonts.title3};
+  color: ${({ theme }) => theme.colors.black};
 `;
 
 const SubTitle = styled.h2`
   ${({ theme }) => theme.fonts.body4};
   color: ${({ theme }) => theme.colors.gray70};
+`;
+
+const AdminLayout = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
 `;
