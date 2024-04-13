@@ -103,3 +103,20 @@ export const editAdminTopic = async ({
     console.log('에러:', error);
   }
 };
+
+//[DELETE] 관리자페이지 글감삭제
+export const deleteAdminTopic = async (topicId: string) => {
+  try {
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await devClient.get<AdminTopicPropTypes>(`/api/topic/${topicId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log(response.data, 'data');
+
+    return response.data;
+  } catch (error) {
+    console.log('에러:', error);
+  }
+};

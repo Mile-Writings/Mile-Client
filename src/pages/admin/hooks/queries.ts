@@ -1,10 +1,11 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
   postAdminTopic,
   fetchAdminTopic,
   postAdminTopicPropTypes,
   editAdminTopic,
+  deleteAdminTopic,
 } from '../apis/fetchAdminData';
 
 export const useAdminTopic = (groupId: string | undefined, pageNum: number) => {
@@ -52,4 +53,23 @@ export const useEditAdminTopic = (topicId: string | undefined) => {
     mutate({ topic, topicTag, topicDescription, topicId });
 
   return { editMutateAdminTopic, isError, error };
+};
+
+//[DELETE] 관리자페이지 글감삭제
+export const useDeleteAdminTopic = (topicId: string) => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: ['adminTopic', topicId],
+    mutationFn: () => deleteAdminTopic(topicId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['adminTopic', topicId],
+      });
+    },
+  });
+
+  const deleteMutateAdminTopic = () => {
+    data.mutate();
+  };
+  return { deleteMutateAdminTopic };
 };

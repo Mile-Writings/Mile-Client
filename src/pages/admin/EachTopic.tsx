@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import AddEditTopicModal from './AddEditTopicModal';
+import { useDeleteAdminTopic } from './hooks/queries';
 
 import { EditIc, DeleteIc } from '../../assets/svgs';
 import { NegativeModal } from '../../components/commons/Modal';
@@ -19,6 +20,7 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
   const [showEditModal, setShowEditModal] = useState(false);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const { deleteMutateAdminTopic } = useDeleteAdminTopic(topicId);
 
   return (
     <TopicWrapper>
