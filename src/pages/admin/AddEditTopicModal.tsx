@@ -106,6 +106,8 @@ export default AddEditTopicModal;
 
 const ModalWrapper = styled.div`
   position: fixed;
+  top: 50%;
+  left: 50%;
   z-index: 6;
   display: flex;
   flex-direction: column;
@@ -113,9 +115,9 @@ const ModalWrapper = styled.div`
   width: 61.6rem;
   padding: 3.2rem;
 
-  ${({ theme }) => theme.fonts.subtitle2}
-
   background-color: ${({ theme }) => theme.colors.white};
+  transform: translate(-50%, -50%);
+  ${({ theme }) => theme.fonts.subtitle2}
   border-radius: 8px;
 `;
 
