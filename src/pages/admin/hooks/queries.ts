@@ -1,9 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useSearchParams } from 'react-router-dom';
 
 import { fetchAdminTopic } from '../apis/fetchAdminData';
 import fetchDeleteMember from '../apis/fetchDeleteMember';
 import fetchMemberInfo from '../apis/fetchMemberInfo';
+
+export const QUERY_KEY_ADMIN = {
+  useMemberInfo: 'fetchMemberInfo',
+  useDeleteMember: 'deleteMember',
+};
 
 export const useAdminTopic = () => {
   const { data, isLoading, isError, error } = useQuery({
@@ -17,22 +21,16 @@ export const useAdminTopic = () => {
   return { topicCount, adminTopicData, isLoading, isError, error };
 };
 
-export const QUERY_KEY_ADMIN = {
-  useMemberInfo: 'fetchMemberInfo',
-  useDeleteMember: 'deleteMember',
-};
-
 // 멤버 정보 조회 get api
-export const useFetchMemberInfo = (moimId: string) => {
-  const [searchParams] = useSearchParams();
-  const params = parseInt(searchParams.get('page') || '');
+export const useFetchMemberInfo = (groupId: string, page: number) => {
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEY_ADMIN.useMemberInfo],
-    queryFn: () => fetchMemberInfo(moimId, params),
+    queryFn: () => fetchMemberInfo(groupId || '', page),
   });
-  const totalMember = data?.writerNameCount;
+  const totalMember = data && data.data.writerNameCount;
+  const memberData = data && data.data;
 
-  return { data, totalMember, isLoading, params };
+  return { memberData, totalMember, isLoading, page };
 };
 
 // 멤버 삭제 api
