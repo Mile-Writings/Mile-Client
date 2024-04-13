@@ -51,19 +51,25 @@ const GroupSideHeader = (props: {
             </GroupSideHeaderLayout>
             <Spacing marginBottom="2" />
             <GroupSideHeaderDetailBox>{groupInfoData.description}</GroupSideHeaderDetailBox>
-            <Spacing marginBottom="2" />
-            <SideHeaderButton>관리자페이지</SideHeaderButton>
+            {isOwner && (
+              <>
+                <Spacing marginBottom="2" />
+                <SideHeaderButton>관리자페이지</SideHeaderButton>
+              </>
+            )}
           </>
         )}
       </GroupSideHeaderWrapper>
       <Spacing marginBottom="1.6" />
-      <MemberSideHeaderWrapper>
-        <ProfileWrapper>
-          <GroupBestProfileIc /> 일이삼사
-        </ProfileWrapper>
-        <Spacing marginBottom="1.6" />
-        <SideHeaderButton>소개글 수정</SideHeaderButton>
-      </MemberSideHeaderWrapper>
+      {isMember && (
+        <MemberSideHeaderWrapper>
+          <ProfileWrapper>
+            <GroupBestProfileIc /> 일이삼사
+          </ProfileWrapper>
+          <Spacing marginBottom="1.6" />
+          <SideHeaderButton>소개글 수정</SideHeaderButton>
+        </MemberSideHeaderWrapper>
+      )}
     </HeaderWrapper>
   );
 };

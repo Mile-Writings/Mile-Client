@@ -52,7 +52,7 @@ export const handlers = [
     return HttpResponse.json({
       status: 200,
       data: {
-        isMember: true,
+        isMember: false,
         isOwner: false,
       },
     });
