@@ -1,4 +1,4 @@
-import { client } from '../../../utils/apis/axios';
+import { devClient } from '../../../utils/apis/axios';
 
 export interface Members {
   writerNameId: string;
@@ -17,17 +17,23 @@ export interface FetchMemberPropTypes {
   };
 }
 
-const fetchMemberInfo = async (moimId: string, params: number) => {
-  const token = localStorage.getItem('accessToken');
+export interface MemberPropTypes {
+  writerNameCount: number;
+  writerNameList: Members[];
+}
+
+const fetchMemberInfo = async (groupId: string, page: number) => {
   try {
-    const { data } = await client.get<FetchMemberPropTypes>(
-      `/api/moim/:${moimId}/writerNameList?page=${params}`,
+    const token = localStorage.getItem('accessToken');
+    const data = await devClient.get<FetchMemberPropTypes>(
+      `/api/moim/${groupId}/writerNameList?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       },
     );
+    console.log(data, 'data');
     return data.data;
   } catch (error) {
     console.error();
