@@ -1,4 +1,4 @@
-import { client } from '../../../utils/apis/axios';
+import { client, devClient } from '../../../utils/apis/axios';
 
 interface GroupFeedAuthPropTypes {
   data: {
@@ -11,11 +11,14 @@ interface GroupFeedAuthPropTypes {
 export const fetchGroupFeedAuth = async (groupId: string) => {
   try {
     const accessToken = localStorage.getItem('accessToken');
-    const response = await client.get<GroupFeedAuthPropTypes>(`/api/moim/${groupId}/authenticate`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+    const response = await devClient.get<GroupFeedAuthPropTypes>(
+      `/api/moim/${groupId}/authenticate`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    });
+    );
     console.log(response.data, 'fetchgRoup');
     return response.data; //"isMember" : boolean
   } catch (error) {
