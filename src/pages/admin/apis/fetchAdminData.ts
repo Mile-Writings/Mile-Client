@@ -39,6 +39,7 @@ export interface postAdminTopicPropTypes {
   topic: string;
   topicTag: string;
   topicDescription: string;
+  groupId: string | undefined;
 }
 
 //[POST] 관리자페이지 글감 생성
@@ -46,16 +47,25 @@ export const postAdminTopic = async ({
   topic,
   topicTag,
   topicDescription,
+  groupId,
 }: postAdminTopicPropTypes) => {
   try {
-    const response = await axios.post('/api/moim/moimId/topic', {
-      topic: topic,
-      topicTag: topicTag,
-      topicDescription: topicDescription,
-    });
-    const data = await response;
-    console.log(data, 'data');
-    return data;
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await devClient.post(
+      `/api/moim/${groupId}/topic`,
+      {
+        topicName: topic,
+        topicTag: topicTag,
+        topicDescription: topicDescription,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    console.log(response.data, 'data');
+    return response.data;
   } catch (error) {
     console.log('에러:', error);
   }

@@ -19,28 +19,29 @@ export const useAdminTopic = (groupId: string | undefined, pageNum: number) => {
   return { topicCount, adminTopicData, isLoading, isError, error };
 };
 
-export const usePostAdminTopic = () => {
+//[POST] 관리자페이지 글감 생성
+export const usePostAdminTopic = (groupId: string | undefined) => {
   const { mutate, isError, error } = useMutation({
     mutationKey: ['adminTopic'],
     mutationFn: ({ topic, topicTag, topicDescription }: postAdminTopicPropTypes) =>
-      postAdminTopic({ topic, topicTag, topicDescription }),
+      postAdminTopic({ topic, topicTag, topicDescription, groupId }),
   });
 
-  const post1AdminTopic = ({ topic, topicTag, topicDescription }: postAdminTopicPropTypes) =>
-    mutate({ topic, topicTag, topicDescription });
+  const postMutateAdminTopic = ({ topic, topicTag, topicDescription }: postAdminTopicPropTypes) =>
+    mutate({ topic, topicTag, topicDescription, groupId });
 
-  return { post1AdminTopic, isError, error };
+  return { postMutateAdminTopic, isError, error };
 };
 
-export const useEditAdminTopic = () => {
+export const useEditAdminTopic = (groupId: string | undefined) => {
   const { mutate, isError, error } = useMutation({
     mutationKey: ['adminTopic'],
     mutationFn: ({ topic, topicTag, topicDescription }: postAdminTopicPropTypes) =>
-      editAdminTopic({ topic, topicTag, topicDescription }),
+      editAdminTopic({ topic, topicTag, topicDescription, groupId }),
   });
 
   const editMutateAdminTopic = ({ topic, topicTag, topicDescription }: postAdminTopicPropTypes) =>
-    mutate({ topic, topicTag, topicDescription });
+    mutate({ topic, topicTag, topicDescription, groupId });
 
   return { editMutateAdminTopic, isError, error };
 };

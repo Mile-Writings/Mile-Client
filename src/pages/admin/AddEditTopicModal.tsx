@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { usePostAdminTopic } from './hooks/queries';
 
@@ -21,6 +22,7 @@ const AddEditTopicModal = ({
     setTopicTag(topicTagStored || '');
     setTopicDescription(topicDescriptionStored || '');
   }, []);
+
   const [topic, setTopic] = useState('');
   const [topicTag, setTopicTag] = useState('');
   const [topicDescription, setTopicDescription] = useState('');
@@ -29,7 +31,11 @@ const AddEditTopicModal = ({
   const [topicTagError, setTopicTagError] = useState(false);
   const [topicDescriptionError, setTopicDescriptionError] = useState(false);
   const limitLength = 90;
-  const { post1AdminTopic } = usePostAdminTopic();
+
+  const { groupId } = useParams();
+
+  const { postMutateAdminTopic } = usePostAdminTopic(groupId);
+
   const handleTopicNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTopic(e.target.value);
     setTopicNameError(false);
@@ -53,7 +59,7 @@ const AddEditTopicModal = ({
       setTopicTagError(topicTag.trim() === '');
       setTopicDescriptionError(topicDescription.trim() === '');
     } else {
-      post1AdminTopic({ topic, topicTag, topicDescription });
+      postMutateAdminTopic({ topic, topicTag, topicDescription, groupId });
     }
   };
 
