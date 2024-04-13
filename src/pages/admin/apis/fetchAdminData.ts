@@ -84,13 +84,21 @@ export const editAdminTopic = async ({
   topicId,
 }: editTopicPropType) => {
   try {
-    const response = await devClient.put(`/api/topic/${topicId}`, {
-      topic: topic,
-      topicTag: topicTag,
-      topicDescription: topicDescription,
-    });
-    const data = response;
-    return data;
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await devClient.put(
+      `/api/topic/${topicId}`,
+      {
+        topic: topic,
+        topicTag: topicTag,
+        topicDescription: topicDescription,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
   } catch (error) {
     console.log('에러:', error);
   }

@@ -10,12 +10,14 @@ interface topicPropTypes {
   topicStored?: string;
   topicTagStored?: string;
   topicDescriptionStored?: string;
+  topicId?: string;
 }
 
 const AddEditTopicModal = ({
   topicStored,
   topicTagStored,
   topicDescriptionStored,
+  topicId,
 }: topicPropTypes) => {
   useEffect(() => {
     setTopic(topicStored || '');
@@ -33,9 +35,10 @@ const AddEditTopicModal = ({
   const limitLength = 90;
 
   const { groupId } = useParams();
+  console.log(topicId, 'id');
 
   const { postMutateAdminTopic } = usePostAdminTopic(groupId);
-  const { editMutateAdminTopic } = useEditAdminTopic(groupId);
+  const { editMutateAdminTopic } = useEditAdminTopic(topicId);
 
   const handleTopicNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTopic(e.target.value);
