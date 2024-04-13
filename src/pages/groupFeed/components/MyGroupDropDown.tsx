@@ -2,12 +2,14 @@ import styled from '@emotion/styled';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { FetchGroupResponseTypes, Groups, MYGROUP } from '../constants/myGroupName';
+import { Moim } from '../apis/fetchHeaderGroup';
+import { useFetchHeaderGroup } from '../hooks/queries';
 
 import useClickOutside from '../../../hooks/useClickOutside';
 
 const MyGroupDropDown = () => {
   const navigate = useNavigate();
+  const { data } = useFetchHeaderGroup();
   const handleRoutingGroupFeed = (groupId: string) => {
     navigate(`/group/${groupId}`);
   };
@@ -27,13 +29,11 @@ const MyGroupDropDown = () => {
     <MyGroupDropDownWrapper ref={dropDownRef}>
       <MyGroupBtnLayout onClick={handleOnClick}>내 글 모임</MyGroupBtnLayout>
       <MyGroupListLayout $isOpen={isOpen}>
-        {MYGROUP.map(({ data }: FetchGroupResponseTypes) =>
-          data.groups.map(({ groupId, groupName }: Groups) => (
-            <GroupContentContainer key={groupId} onClick={() => handleRoutingGroupFeed(groupId)}>
-              {groupName}
-            </GroupContentContainer>
-          )),
-        )}
+        {data?.data.moims.map(({ moimName, moimId }: Moim) => (
+          <GroupContentContainer key={moimId} onClick={() => handleRoutingGroupFeed(moimId)}>
+            {moimName}
+          </GroupContentContainer>
+        ))}
       </MyGroupListLayout>
     </MyGroupDropDownWrapper>
   );
