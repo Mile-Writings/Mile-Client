@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import GroupInfoBox from './GroupInfoBox';
 
@@ -24,6 +25,8 @@ const GroupSideHeader = (props: {
   isOwner: boolean | undefined;
 }) => {
   const { groupInfoData, isMember, isOwner } = props;
+  const { groupId } = useParams();
+  const navigate = useNavigate();
 
   return (
     <HeaderWrapper>
@@ -54,7 +57,9 @@ const GroupSideHeader = (props: {
             {isOwner && (
               <>
                 <Spacing marginBottom="2" />
-                <SideHeaderButton>관리자페이지</SideHeaderButton>
+                <SideHeaderButton onClick={() => navigate(`/admin/${groupId}`)}>
+                  관리자페이지
+                </SideHeaderButton>
               </>
             )}
           </>
