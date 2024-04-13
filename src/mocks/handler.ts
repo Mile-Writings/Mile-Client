@@ -47,4 +47,14 @@ export const handlers = [
   http.put('/api/topic/topicId', () => {
     return HttpResponse.json({ status: 200, message: '글감 수정이 완료되었습니다.' });
   }),
+
+  http.get('/api/moim/:moimId/authenticate', () => {
+    return HttpResponse.json({
+      status: 200,
+      data: {
+        isMember: true,
+        isOwner: false,
+      },
+    });
+  }),
 ];

@@ -18,8 +18,12 @@ interface GroupInfoPropTypes {
   description?: string;
 }
 
-const GroupSideHeader = (props: { groupInfoData: GroupInfoPropTypes }) => {
-  const { groupInfoData } = props;
+const GroupSideHeader = (props: {
+  groupInfoData: GroupInfoPropTypes;
+  isMember: boolean | undefined;
+  isOwner: boolean | undefined;
+}) => {
+  const { groupInfoData, isMember, isOwner } = props;
 
   return (
     <HeaderWrapper>
