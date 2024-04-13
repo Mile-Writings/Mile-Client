@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import MemberManage from './components/MemberManage';
@@ -10,8 +11,10 @@ import Spacing from '../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
   const { topicCount, adminTopicData } = useAdminTopic();
-  const { moimId } = useParams();
-  const { totalMember } = useFetchMemberInfo(moimId || '');
+  const { groupId } = useParams();
+  console.log(`groupId: ${groupId}`);
+  const [page, setPage] = useState(1);
+  const { memberData, totalMember } = useFetchMemberInfo(groupId || '', page);
   switch (admin) {
     case 'topic':
       return (
@@ -25,7 +28,7 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
             <MakeGroupAdminIc style={{ cursor: 'pointer' }} />
           </AdminLayout>
           <Spacing marginBottom="3.6" />
-          <TopicAdmin data={adminTopicData} />
+          <TopicAdmin data={adminTopicData} setPageNum={setPage} pageNum={page} />
         </AdminContainer>
       );
 
@@ -36,7 +39,7 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
           <Spacing marginBottom="1.2" />
           <SubTitle>{`${totalMember}명의 멤버가 함께하고 있어요`}</SubTitle>
           <Spacing marginBottom="3.6" />
-          <MemberManage />
+          <MemberManage data={memberData} setPageCount={setPage} pageCount={page} />
         </AdminContainer>
       );
 

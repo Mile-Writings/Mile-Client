@@ -1,72 +1,73 @@
 import styled from '@emotion/styled';
+import { Dispatch, SetStateAction } from 'react';
+import { useParams } from 'react-router-dom';
 
-// import { Members } from '../apis/getMemberInfo';
-import { MEMBER } from '../constants/member';
+import { MemberPropTypes } from '../apis/fetchMemberInfo';
+import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 
 import { adminEmptyMemberIc as AdminEmptyMemberIcon, adminProfileIc } from '../../../assets/svgs';
+import Pagenation from '../../../components/commons/Pagenation';
 import Spacing from '../../../components/commons/Spacing';
 
-export interface Members {
-  writerNameId: string;
-  writerName: string;
-  postNumber: number;
-  commentNumber: number;
+interface MemberManagePropTypes {
+  data?: MemberPropTypes | undefined;
+  setPageCount: Dispatch<SetStateAction<number>>;
+  pageCount: number;
 }
 
-export interface FetchMemberPropTypes {
-  data: {
-    writerNameCount: number;
-    writerNameList: Members[];
-  };
-  // status: number;
-  // message: string;
-}
-
-const MemberManage = () => {
-  // const { writerNameId, moimId } = useParams();
-  // const { data } = useGetMemberInfo(moimId || '');
-  // const { deleteMember } = useDeleteMember(writerNameId || '');
+const MemberManage = ({ setPageCount, pageCount }: MemberManagePropTypes) => {
+  const { writerNameId, groupId } = useParams();
+  const { deleteMember } = useDeleteMember(writerNameId || '');
+  const { memberData } = useFetchMemberInfo(groupId || '', pageCount);
   return (
-    <MemberTableWrapper>
-      <TableHeaderLayout>
-        <Header>프로필</Header>
-        <Header>필명</Header>
-        <Header>게시물 수</Header>
-        <Header>댓글 수</Header>
-      </TableHeaderLayout>
-      <Spacing marginBottom="0.4" />
-      <MemberLayout>
-        {MEMBER.map(({ data }: FetchMemberPropTypes, index) => {
-          return data.writerNameCount !== 0 ? (
-            data.writerNameList.map(
-              ({ writerNameId, writerName, postNumber, commentNumber }: Members) => {
+    <>
+      <MemberListWrapper>
+        <TableHeaderLayout>
+          <Header>프로필</Header>
+          <Header>필명</Header>
+          <Header>게시물 수</Header>
+          <Header>댓글 수</Header>
+        </TableHeaderLayout>
+        <Spacing marginBottom="0.4" />
+        <MemberLayout>
+          {memberData?.writerNameCount !== 0 ? (
+            memberData?.writerNameList.map(
+              ({ writerNameId, writerName, postCount, commentCount }) => {
                 return (
                   <MemberItemContainer key={writerNameId}>
                     <AdminProfileIcon />
                     <Name>{writerName}</Name>
-                    <PostNumber>{postNumber}</PostNumber>
-                    <CommentNumber>{commentNumber}</CommentNumber>
-                    <ExpelBtn>삭제하기</ExpelBtn>
+                    <PostNumber>{postCount}</PostNumber>
+                    <CommentNumber>{commentCount}</CommentNumber>
+                    <ExpelBtn onClick={deleteMember}>삭제하기</ExpelBtn>
                   </MemberItemContainer>
                 );
               },
             )
           ) : (
-            <EmptyContainer key={index}>
+            <EmptyContainer>
               <EmptyMemberText>아직 멤버가 없습니다.</EmptyMemberText>
               <Spacing marginBottom="3" />
               <AdminEmptyMemberIcon />
             </EmptyContainer>
-          );
-        })}
-      </MemberLayout>
-    </MemberTableWrapper>
+          )}
+        </MemberLayout>
+      </MemberListWrapper>
+      {memberData && memberData.writerNameCount && (
+        <Pagenation
+          count={memberData.writerNameCount}
+          allocatedCount={5}
+          setPageNum={setPageCount}
+          pageNum={pageCount}
+        />
+      )}
+    </>
   );
 };
 
 export default MemberManage;
 
-const MemberTableWrapper = styled.section`
+const MemberListWrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 78.1rem;
