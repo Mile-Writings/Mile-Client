@@ -14,7 +14,6 @@ interface pagenationPropTypes {
 
 const Pagenation = ({ count, allocatedCount, setPageNum, pageNum }: pagenationPropTypes) => {
   const [activeChunk, setActiveChunk] = useState(1);
-  // const [activePages, setActivePages] = useState(1);
 
   const { resultArray, isExistNextPage, isExistPreviousPage } = slicePage(
     count,

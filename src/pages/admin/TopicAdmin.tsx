@@ -40,7 +40,12 @@ const TopicAdmin = ({
       </TopicListWrapper>
       <Spacing marginBottom="3.2" />
       {data && data.topicCount && (
-        <Pagenation count={10} allocatedCount={5} setPageNum={setPageNum} pageNum={pageNum} />
+        <Pagenation
+          count={data.topicCount}
+          allocatedCount={5}
+          setPageNum={setPageNum}
+          pageNum={pageNum}
+        />
       )}
     </>
   );

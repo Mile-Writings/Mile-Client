@@ -12,7 +12,6 @@ import Spacing from '../../components/commons/Spacing';
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
   const { groupId } = useParams();
   const [pageNum, setPageNum] = useState(1);
-  console.log(pageNum, 'd');
   const { topicCount, adminTopicData } = useAdminTopic(groupId, pageNum);
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);

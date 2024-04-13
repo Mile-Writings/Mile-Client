@@ -40,13 +40,14 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
         <DeleteIc onClick={() => setShowDeleteModal(true)} />
       </TopicAction>
       {showEditModal && (
-        <ModalOverlay onClick={() => setShowEditModal(false)}>
+        <>
+          <ModalOverlay onClick={() => setShowEditModal(false)} />
           <AddEditTopicModal
             topicStored={topicName}
             topicTagStored={topicTag}
             topicDescriptionStored={topicDescription}
           />
-        </ModalOverlay>
+        </>
       )}
 
       <NegativeModal
