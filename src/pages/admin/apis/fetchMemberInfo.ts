@@ -3,8 +3,8 @@ import { client } from '../../../utils/apis/axios';
 export interface Members {
   writerNameId: string;
   writerName: string;
-  postNumber: number;
-  commentNumber: number;
+  postCount: number;
+  commentCount: number;
 }
 
 export interface FetchMemberPropTypes {
@@ -28,7 +28,6 @@ const fetchMemberInfo = async (moimId: string, params: number) => {
         },
       },
     );
-    console.log(data);
     return data.data;
   } catch (error) {
     console.error();
