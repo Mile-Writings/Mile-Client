@@ -108,7 +108,7 @@ export const editAdminTopic = async ({
 export const deleteAdminTopic = async (topicId: string) => {
   try {
     const accessToken = localStorage.getItem('accessToken');
-    const response = await devClient.get<AdminTopicPropTypes>(`/api/topic/${topicId}`, {
+    const response = await devClient.delete<AdminTopicPropTypes>(`/api/topic/${topicId}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

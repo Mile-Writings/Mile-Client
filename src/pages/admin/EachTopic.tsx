@@ -58,7 +58,7 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
         삭제된 글감은 복구할 수 없습니다.
         계속 하시겠습니까?"
         isModalOpen={showDeleteModal}
-        modalHandler={() => console.log('삭제api실행')}
+        modalHandler={() => deleteMutateAdminTopic()}
         closeModalHandler={() => setShowDeleteModal(false)}
       />
     </TopicWrapper>
