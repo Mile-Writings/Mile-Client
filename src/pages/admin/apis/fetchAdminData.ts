@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import { devClient } from '../../../utils/apis/axios';
 
 //[GET] 관리자페이지 글감 LIST
@@ -71,14 +69,22 @@ export const postAdminTopic = async ({
   }
 };
 
+interface editTopicPropType {
+  topic: string;
+  topicTag: string;
+  topicDescription: string;
+  topicId: string | undefined;
+}
+
 //[PUT] 관리자 페이지 글감 수정
 export const editAdminTopic = async ({
   topic,
   topicTag,
   topicDescription,
-}: postAdminTopicPropTypes) => {
+  topicId,
+}: editTopicPropType) => {
   try {
-    const response = await axios.put('/api/topic/topicId', {
+    const response = await devClient.put(`/api/topic/${topicId}`, {
       topic: topic,
       topicTag: topicTag,
       topicDescription: topicDescription,

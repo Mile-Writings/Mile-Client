@@ -46,6 +46,7 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
             topicStored={topicName}
             topicTagStored={topicTag}
             topicDescriptionStored={topicDescription}
+            topicId={topicId}
           />
         </>
       )}

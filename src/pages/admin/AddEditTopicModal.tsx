@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { usePostAdminTopic } from './hooks/queries';
+import { usePostAdminTopic, useEditAdminTopic } from './hooks/queries';
 
 import Spacing from '../../components/commons/Spacing';
 
@@ -35,6 +35,7 @@ const AddEditTopicModal = ({
   const { groupId } = useParams();
 
   const { postMutateAdminTopic } = usePostAdminTopic(groupId);
+  const { editMutateAdminTopic } = useEditAdminTopic(groupId);
 
   const handleTopicNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTopic(e.target.value);
@@ -53,13 +54,15 @@ const AddEditTopicModal = ({
     setTopicDescriptionError(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (topicStored: string) => {
     if (topic.trim() === '' || topicTag.trim() === '' || topicDescription.trim() === '') {
       setTopicNameError(topic.trim() === '');
       setTopicTagError(topicTag.trim() === '');
       setTopicDescriptionError(topicDescription.trim() === '');
     } else {
-      postMutateAdminTopic({ topic, topicTag, topicDescription, groupId });
+      topicStored
+        ? editMutateAdminTopic({ topic, topicTag, topicDescription, topicId })
+        : postMutateAdminTopic({ topic, topicTag, topicDescription, groupId });
     }
   };
 
@@ -101,7 +104,7 @@ const AddEditTopicModal = ({
           </TextCount>
         </TextAreaWrapper>
       </div>
-      <SubmitForm onClick={handleSubmit}>
+      <SubmitForm onClick={() => handleSubmit(topicStored || '')}>
         {topicStored ? '글감 수정하기' : '글감 생성하기'}
       </SubmitForm>
     </ModalWrapper>
