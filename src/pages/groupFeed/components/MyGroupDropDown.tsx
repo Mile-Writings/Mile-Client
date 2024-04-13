@@ -29,11 +29,21 @@ const MyGroupDropDown = () => {
     <MyGroupDropDownWrapper ref={dropDownRef}>
       <MyGroupBtnLayout onClick={handleOnClick}>내 글 모임</MyGroupBtnLayout>
       <MyGroupListLayout $isOpen={isOpen}>
-        {data?.data.moims.map(({ moimName, moimId }: Moim) => (
-          <GroupContentContainer key={moimId} onClick={() => handleRoutingGroupFeed(moimId)}>
-            {moimName}
-          </GroupContentContainer>
-        ))}
+        {data ? (
+          data.data.moims.map(({ moimId, moimName }: Moim) => (
+            <GroupContentContainer
+              $isEmpty={false}
+              key={moimId}
+              onClick={() => handleRoutingGroupFeed(moimId)}
+            >
+              {moimName}
+            </GroupContentContainer>
+          ))
+        ) : (
+          <GroupContentContainer
+            $isEmpty={true}
+          >{`가입한 글 모임이\n 없습니다.`}</GroupContentContainer>
+        )}
       </MyGroupListLayout>
     </MyGroupDropDownWrapper>
   );
@@ -95,7 +105,7 @@ const MyGroupListLayout = styled.div<{ $isOpen: boolean }>`
   border-radius: 0.8rem;
 `;
 
-const GroupContentContainer = styled.div`
+const GroupContentContainer = styled.div<{ $isEmpty: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,6 +113,9 @@ const GroupContentContainer = styled.div`
   padding: 1rem 1.6rem;
 
   color: ${({ theme }) => theme.colors.gray70};
+  line-height: ${({ $isEmpty }) => ($isEmpty ? '150%' : '120%')};
+  white-space: pre-line;
+  text-align: ${({ $isEmpty }) => ($isEmpty ? 'center' : 'left')};
 
   border-radius: 0.8rem;
   ${({ theme }) => theme.fonts.body1};
@@ -111,6 +124,7 @@ const GroupContentContainer = styled.div`
     color: ${({ theme }) => theme.colors.black};
 
     background-color: ${({ theme }) => theme.colors.gray10};
+
     ${({ theme }) => theme.fonts.subtitle6};
   }
 `;
