@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { usePostAdminTopic, useEditAdminTopic } from './hooks/queries';
@@ -11,6 +11,8 @@ interface topicPropTypes {
   topicTagStored?: string;
   topicDescriptionStored?: string;
   topicId?: string;
+  pageNum: number;
+  setShowModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const AddEditTopicModal = ({
@@ -18,6 +20,8 @@ const AddEditTopicModal = ({
   topicTagStored,
   topicDescriptionStored,
   topicId,
+  pageNum,
+  setShowModal,
 }: topicPropTypes) => {
   useEffect(() => {
     setTopic(topicStored || '');
@@ -35,10 +39,9 @@ const AddEditTopicModal = ({
   const limitLength = 90;
 
   const { groupId } = useParams();
-  console.log(topicId, 'id');
 
-  const { postMutateAdminTopic } = usePostAdminTopic(groupId);
-  const { editMutateAdminTopic } = useEditAdminTopic(topicId);
+  const { postMutateAdminTopic } = usePostAdminTopic(groupId, pageNum);
+  const { editMutateAdminTopic } = useEditAdminTopic(topicId, groupId, pageNum);
 
   const handleTopicNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTopic(e.target.value);
@@ -66,6 +69,7 @@ const AddEditTopicModal = ({
       topicStored
         ? editMutateAdminTopic({ topic, topicTag, topicDescription, topicId })
         : postMutateAdminTopic({ topic, topicTag, topicDescription, groupId });
+      setShowModal(false);
     }
   };
 

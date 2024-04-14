@@ -21,11 +21,17 @@ export const useAdminTopic = (groupId: string | undefined, pageNum: number) => {
 };
 
 //[POST] 관리자페이지 글감 생성
-export const usePostAdminTopic = (groupId: string | undefined) => {
+export const usePostAdminTopic = (groupId: string | undefined, pageNum: number) => {
+  const queryClient = useQueryClient();
   const { mutate, isError, error } = useMutation({
     mutationKey: ['adminTopic'],
     mutationFn: ({ topic, topicTag, topicDescription }: postAdminTopicPropTypes) =>
       postAdminTopic({ topic, topicTag, topicDescription, groupId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['adminTopic', groupId, pageNum],
+      });
+    },
   });
 
   const postMutateAdminTopic = ({ topic, topicTag, topicDescription }: postAdminTopicPropTypes) =>
@@ -42,11 +48,21 @@ interface editTopicPropType {
 }
 
 //[PUT] 관리자 페이지 글감 수정
-export const useEditAdminTopic = (topicId: string | undefined) => {
+export const useEditAdminTopic = (
+  topicId: string | undefined,
+  groupId: string | undefined,
+  pageNum: number,
+) => {
+  const queryClient = useQueryClient();
   const { mutate, isError, error } = useMutation({
     mutationKey: ['adminTopic'],
     mutationFn: ({ topic, topicTag, topicDescription }: editTopicPropType) =>
       editAdminTopic({ topic, topicTag, topicDescription, topicId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['adminTopic', groupId, pageNum],
+      });
+    },
   });
 
   const editMutateAdminTopic = ({ topic, topicTag, topicDescription }: editTopicPropType) =>

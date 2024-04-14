@@ -33,7 +33,7 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
           {showModal && (
             <>
               <ModalOverlay onClick={closeModal} />
-              <AddEditTopicModal />
+              <AddEditTopicModal pageNum={pageNum} setShowModal={setShowModal} />
             </>
           )}
           <TopicAdmin data={adminTopicData} setPageNum={setPageNum} pageNum={pageNum} />

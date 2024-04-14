@@ -55,6 +55,8 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
             topicTagStored={topicTag}
             topicDescriptionStored={topicDescription}
             topicId={topicId}
+            pageNum={pageNum}
+            setShowModal={setShowEditModal}
           />
         </>
       )}
