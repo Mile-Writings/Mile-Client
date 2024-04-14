@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
-import { FormEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
+import CommentInputBox from './CommentInputBox';
 import CommentItem from './CommentItem';
 
-import { useGetCommentList, usePostComment } from '../hooks/queries';
+import { useGetCommentList } from '../hooks/queries';
 
 import { EditorCatIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
@@ -15,23 +14,8 @@ interface CommentPropTypes {
 
 const Comment = (props: CommentPropTypes) => {
   const { postId } = props;
-  const [comment, setComment] = useState('');
-  const { commentListData, error } = useGetCommentList(postId || '');
-  const { postComment } = usePostComment(postId || '');
-  const token = localStorage.getItem('accessToken');
-  const navigate = useNavigate();
 
-  const handleCommentSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (!token) {
-      navigate('/login');
-    } else {
-      if (comment.trim() !== '') {
-        postComment(comment); //댓글 등록
-        setComment(''); // 댓글 등록 후 댓글 초기화
-      }
-    }
-  };
+  const { commentListData, error } = useGetCommentList(postId || '');
 
   interface CommentListPropTypes {
     commentId: string;
@@ -45,17 +29,7 @@ const Comment = (props: CommentPropTypes) => {
     <div></div>
   ) : (
     <CommentWrapper>
-      <CommentPostWrapper>
-        <CommentForm
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder="댓글을 남겨주세요."
-        />
-
-        <CommentPostBtn $isComment={comment} onClick={handleCommentSubmit}>
-          등록
-        </CommentPostBtn>
-      </CommentPostWrapper>
+      <CommentInputBox postId={postId} isMainComment={true} />
       <Spacing marginBottom="2" />
       {commentListData?.length == 0 ? (
         <>
@@ -81,48 +55,6 @@ const Comment = (props: CommentPropTypes) => {
 };
 
 export default Comment;
-
-const CommentPostBtn = styled.button<{ $isComment: string }>`
-  padding: 1rem 1.6rem;
-
-  color: ${({ $isComment, theme }) =>
-    $isComment === '' ? theme.colors.gray70 : theme.colors.white};
-
-  background-color: ${({ $isComment, theme }) =>
-    $isComment === '' ? theme.colors.gray10 : theme.colors.mainViolet};
-  border-radius: 8px;
-
-  ${({ theme }) => theme.fonts.button3};
-
-  :hover {
-    color: ${({ $isComment, theme }) =>
-      $isComment === '' ? theme.colors.gray70 : theme.colors.mainViolet};
-
-    background-color: ${({ $isComment, theme }) =>
-      $isComment === '' ? theme.colors.gray10 : theme.colors.mileViolet};
-  }
-`;
-const CommentForm = styled.input`
-  width: 69.6rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 2rem;
-
-  ::placeholder {
-    color: ${({ theme }) => theme.colors.gray30};
-  }
-  color: ${({ theme }) => theme.colors.gray100};
-
-  background-color: ${({ theme }) => theme.colors.gray5};
-  border: 1px solid ${({ theme }) => theme.colors.gray30};
-  border-radius: 6px;
-  ${({ theme }) => theme.fonts.button2};
-`;
-const CommentPostWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-`;
 
 const CommentWrapper = styled.div`
   display: flex;
