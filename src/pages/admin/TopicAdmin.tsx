@@ -43,8 +43,8 @@ const TopicAdmin = ({
         <Pagenation
           count={data.topicCount}
           allocatedCount={5}
-          setPageNum={setPageNum}
-          pageNum={pageNum}
+          setActivePage={setPageNum}
+          activePage={pageNum}
         />
       )}
     </>

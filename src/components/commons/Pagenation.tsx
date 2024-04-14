@@ -8,11 +8,11 @@ import PageNumber from '../../utils/PageNumber';
 interface pagenationPropTypes {
   count: number;
   allocatedCount: number;
-  setPageNum: Dispatch<SetStateAction<number>>;
-  pageNum: number;
+  setActivePage: Dispatch<SetStateAction<number>>;
+  activePage: number;
 }
 
-const Pagenation = ({ count, allocatedCount, setPageNum, pageNum }: pagenationPropTypes) => {
+const Pagenation = ({ count, allocatedCount, setActivePage, activePage }: pagenationPropTypes) => {
   const [activeChunk, setActiveChunk] = useState(1);
 
   const { resultArray, isExistNextPage, isExistPreviousPage } = slicePage(
@@ -22,17 +22,17 @@ const Pagenation = ({ count, allocatedCount, setPageNum, pageNum }: pagenationPr
   );
 
   useEffect(() => {
-    setPageNum(5 * (activeChunk - 1) + 1);
+    setActivePage(5 * (activeChunk - 1) + 1);
   }, [activeChunk]);
 
   return (
     <PageWrapper>
-      {pageNum != 1 && (
+      {activePage != 1 && (
         <ArrowLeftIc
           onClick={() =>
             isExistPreviousPage
               ? setActiveChunk(activeChunk - 1)
-              : setPageNum((prev) => {
+              : setActivePage((prev) => {
                   return prev - 1;
                 })
           }
@@ -42,9 +42,9 @@ const Pagenation = ({ count, allocatedCount, setPageNum, pageNum }: pagenationPr
       {resultArray.map((index) => (
         <PageNumber
           key={index + 1}
-          isActive={pageNum === index}
+          isActive={activePage === index}
           onClick={() => {
-            setPageNum(index);
+            setActivePage(index);
           }}
         >
           {index}
