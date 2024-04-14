@@ -3,16 +3,16 @@ import { devClient } from '../../../utils/apis/axios';
 interface PostCommentResponseType {
   status: number;
   message: string;
-  data: null;
 }
 
-const fetchPostComment = async (postId: string, comment: string) => {
+const fetchPostNestedComment = async (commentId: string, comment: string, isAnonymous: boolean) => {
   try {
     const token = localStorage.getItem('accessToken');
     const response = await devClient.post<PostCommentResponseType>(
-      `/api/post/${postId}/comment`,
+      `/api/comment/${commentId}`,
       {
         content: comment,
+        isAnonymous: isAnonymous,
       },
       {
         headers: {
@@ -26,4 +26,4 @@ const fetchPostComment = async (postId: string, comment: string) => {
   }
 };
 
-export default fetchPostComment;
+export default fetchPostNestedComment;

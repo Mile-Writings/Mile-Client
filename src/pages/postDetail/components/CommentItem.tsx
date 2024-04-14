@@ -75,7 +75,7 @@ const CommentItem = ({ name, moimName, content, isMyComment, postId, commentId }
       {isNestedComment && (
         <NestedCommentWrapper>
           <ArrowTopLeftIc />
-          <CommentInputBox postId={postId} isMainComment={false} />
+          <CommentInputBox postId={commentId} isMainComment={false} />
         </NestedCommentWrapper>
       )}
     </>
