@@ -56,14 +56,18 @@ export const useEditAdminTopic = (topicId: string | undefined) => {
 };
 
 //[DELETE] 관리자페이지 글감삭제
-export const useDeleteAdminTopic = (topicId: string) => {
+export const useDeleteAdminTopic = (
+  topicId: string,
+  groupId: string | undefined,
+  pageNum: number,
+) => {
   const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: ['adminTopic', topicId],
     mutationFn: () => deleteAdminTopic(topicId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['adminTopic', topicId],
+        queryKey: ['adminTopic', groupId, pageNum],
       });
     },
   });

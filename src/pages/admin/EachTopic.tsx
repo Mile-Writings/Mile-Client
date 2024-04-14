@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import AddEditTopicModal from './AddEditTopicModal';
 import { useDeleteAdminTopic } from './hooks/queries';
@@ -15,12 +16,18 @@ interface AdminTopicPropTypes {
   createdAt: string;
 }
 
-const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
+interface eachTopicPropTypes {
+  data: AdminTopicPropTypes;
+  pageNum: number;
+}
+
+const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
   const { topicName, topicTag, topicDescription, createdAt, topicId } = data;
+  const { groupId } = useParams();
   const [showEditModal, setShowEditModal] = useState(false);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const { deleteMutateAdminTopic } = useDeleteAdminTopic(topicId);
+  const { deleteMutateAdminTopic } = useDeleteAdminTopic(topicId, groupId, pageNum);
 
   return (
     <TopicWrapper>
@@ -35,7 +42,6 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
       <TopicAction>
         <EditIc
           onClick={() => {
-            console.log(topicId, 'api요청에서 필요함');
             setShowEditModal(true);
           }}
         />

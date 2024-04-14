@@ -35,7 +35,10 @@ const TopicAdmin = ({
           <TopicDescription>글감 설명</TopicDescription>
         </TopicAdminCategory>
         <TopicList>
-          {data && data.topics.map((topic) => <EachTopic key={topic.topicId} data={topic} />)}
+          {data &&
+            data.topics.map((topic) => (
+              <EachTopic key={topic.topicId} data={topic} pageNum={pageNum} />
+            ))}
         </TopicList>
       </TopicListWrapper>
       <Spacing marginBottom="3.2" />
