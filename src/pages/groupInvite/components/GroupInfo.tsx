@@ -8,7 +8,8 @@ import Spacing from '../../../components/commons/Spacing';
 
 const GroupInfo = () => {
   const { groupId } = useParams() as { groupId: string };
-  const { moimTitle, imageUrl, leader, memberCount, description } = useGetGroupInfo(groupId);
+  const { moimTitle, imageUrl, leader, foundedDate, memberCount, description } =
+    useGetGroupInfo(groupId);
 
   return (
     <GroupInfoWrapper>
@@ -25,7 +26,7 @@ const GroupInfo = () => {
         <GroupInfoContentWrapper>
           <GroupDateIc />
           <GroupInfoContent>설립날짜</GroupInfoContent>
-          <GroupInfoText>24.01.08~</GroupInfoText>
+          <GroupInfoText>{foundedDate}</GroupInfoText>
         </GroupInfoContentWrapper>
         <Spacing marginBottom="1.2" />
         <GroupInfoContentWrapper>

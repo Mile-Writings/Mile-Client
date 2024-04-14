@@ -20,10 +20,11 @@ export const useGetGroupInfo = (groupId: string) => {
   const moimTitle = data && data.data.moimTitle;
   const imageUrl = data && data.data.imageUrl;
   const leader = data && data.data.leader;
+  const foundedDate = data && data.data.foundedDate;
   const memberCount = data && data.data.memberCount;
   const description = data && data.data.description;
 
-  return { moimTitle, imageUrl, leader, memberCount, description };
+  return { moimTitle, imageUrl, leader, foundedDate, memberCount, description };
 };
 
 // 필명 중복 여부 확인

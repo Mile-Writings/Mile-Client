@@ -6,6 +6,7 @@ interface FetchGroupInfoResponseTypes {
     moimTitle: string;
     imageUrl: string;
     leader: string;
+    foundedDate: string;
     memberCount: number;
     description: string;
   };

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React, { useState, useReducer, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useGetWriterNameConflict } from '../hooks/queries';
+import { useGetWriterNameConflict, usePostGroupMemberJoin } from '../hooks/queries';
 
 import Spacing from '../../../components/commons/Spacing';
 
@@ -45,6 +45,8 @@ const UserInfoInput = () => {
   const [charLimit, setCharLimit] = useState(false);
   // 필명 중복 확인
   const [isConflictBtnClicked, setIsConflictBtnClicked] = useState(false);
+  // 입력 폼 validation
+  const [isSubmitBtnClicked, setIsSubmitBtnClicked] = useState(false);
   const [userInfoVal, dispatch] = useReducer(reducerFn, userInfoState);
 
   const onChangeWriterName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,11 +68,21 @@ const UserInfoInput = () => {
     isConflictBtnClicked,
   );
 
+  // 글자수 체크
   useEffect(() => {
     if (userInfoVal.writerIntroduce) {
       userInfoVal.writerIntroduce.length > 100 ? setCharLimit(true) : setCharLimit(false);
     }
   }, [userInfoVal.writerIntroduce]);
+
+  // 가입하기 버튼 함수
+  // const onClickSubmitBtn = () => {
+  //   setIsConflictBtnClicked(true);
+  // };
+
+  // useEffect(() => {
+
+  // })
 
   return (
     <>
