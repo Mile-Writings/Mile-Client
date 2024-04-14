@@ -132,11 +132,11 @@ export const usePostComment = (postId: string) => {
 };
 
 //대댓글 생성 api
-export const useNestedPostComment = (commentId: string, postId: string) => {
+export const useNestedPostComment = (commentId: string, postId: string, isAnonymous: boolean) => {
   const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.postNestedComment, commentId],
-    mutationFn: (comment: string) => fetchPostNestedComment(postId, comment),
+    mutationFn: (comment: string) => fetchPostNestedComment(commentId, comment, isAnonymous),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
@@ -144,11 +144,11 @@ export const useNestedPostComment = (commentId: string, postId: string) => {
     },
   });
 
-  const postComment = (comment: string) => {
+  const postNestedComment = (comment: string) => {
     data.mutate(comment);
   };
 
-  return { postComment };
+  return { postNestedComment };
 };
 
 //댓글 삭제 api
