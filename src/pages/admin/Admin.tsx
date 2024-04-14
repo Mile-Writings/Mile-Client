@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
+import { useFetchInvitationLink } from './hooks/queries';
 import RenderAdminContent from './RenderAdminContent';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
@@ -9,6 +11,16 @@ import Spacing from '../../components/commons/Spacing';
 const Admin = () => {
   const accessToken = localStorage.getItem('accessToken');
   const [admin, setAdmin] = useState<'topic' | 'member' | 'groupInfo'>('topic');
+  const { groupId } = useParams();
+  const { invitationCode } = useFetchInvitationLink(groupId);
+
+  const handleCopyLink = async (invitationCode: string) => {
+    try {
+      await navigator.clipboard.writeText(invitationCode);
+    } catch {
+      console.error();
+    }
+  };
 
   return (
     <AdminWrapper>
@@ -37,7 +49,11 @@ const Admin = () => {
             </MenuList>
           </AdminMenu>
           <Spacing marginBottom="1.6" />
-          <AdminInviteBtn>초대링크 복사하기</AdminInviteBtn>
+          {invitationCode && (
+            <AdminInviteBtn onClick={() => handleCopyLink(invitationCode)}>
+              초대링크 복사하기
+            </AdminInviteBtn>
+          )}
         </SideNavbar>
         <RenderAdminContent admin={admin} />
       </AdminLayout>
