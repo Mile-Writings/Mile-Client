@@ -16,20 +16,29 @@ interface CommentItem {
   name: string;
   moimName: string;
   content: string;
-  isMyComment: boolean;
+  isMyComment?: boolean;
+  isMyReply?: boolean;
   postId: string | undefined;
   commentId: string;
-  replies: [];
+  type: 'nestedComment' | 'comment';
 }
+// interface ReplyResponseTypes {
+//   replyId: string;
+//   name: string;
+//   moimName: string;
+//   content: string;
+//   isMyReply: boolean;
+// }
 
 const CommentItem = ({
   name,
   moimName,
   content,
   isMyComment,
+  isMyReply,
   postId,
   commentId,
-  replies,
+  type,
 }: CommentItem) => {
   const { deleteComment } = useDeleteComment(commentId || '', postId || '');
   const [isClick, setIsClick] = useState(false);
@@ -55,7 +64,7 @@ const CommentItem = ({
 
   return (
     <>
-      <CommentItemWrapper>
+      <CommentItemWrapper isComment={type === 'comment'}>
         <TextCommentProfileIc />
         <CommentItemContainer>
           <CommentInfoWrapper>
@@ -65,10 +74,12 @@ const CommentItem = ({
           <CommentText>{content}</CommentText>
         </CommentItemContainer>
         <IconWrapper>
-          <NestCommentIcon onClick={() => setIsNestedComment(!isNestedComment)}>
-            <NestCommentIc />
-          </NestCommentIcon>
           {isMyComment && (
+            <NestCommentIcon onClick={() => setIsNestedComment(!isNestedComment)}>
+              <NestCommentIc />
+            </NestCommentIcon>
+          )}
+          {(isMyComment || isMyReply) && (
             <MeatBallWrapper onClick={handleBtnClick}>
               <DetailCommentMeatBallIcon />
               {isClick && (
@@ -113,12 +124,11 @@ const NestCommentIcon = styled.div`
   cursor: pointer;
 `;
 
-const CommentItemWrapper = styled.div`
+const CommentItemWrapper = styled.div<{ isComment: boolean }>`
   display: flex;
   gap: 1.2rem;
-  width: 100%;
+  width: ${({ isComment }) => (isComment ? '76.8rem' : '72rem')};
   height: auto;
-  margin-left: 1.2rem;
   padding: 1.8rem 0;
 
   background-color: ${({ theme }) => theme.colors.white};
