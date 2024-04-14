@@ -23,6 +23,7 @@ const Comment = (props: CommentPropTypes) => {
     moimName: string;
     content: string;
     isMyComment: boolean;
+    replies: [];
   }
 
   return error?.message == '403' ? (
@@ -45,6 +46,7 @@ const Comment = (props: CommentPropTypes) => {
             moimName={data.moimName}
             content={data.content}
             isMyComment={data.isMyComment}
+            replies={data.replies}
             postId={postId}
             commentId={data.commentId}
           ></CommentItem>

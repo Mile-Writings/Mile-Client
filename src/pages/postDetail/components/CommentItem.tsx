@@ -13,16 +13,24 @@ import {
 } from '../../../assets/svgs';
 
 interface CommentItem {
-  // id?: number;  추후 사용될지 모름
   name: string;
   moimName: string;
   content: string;
   isMyComment: boolean;
   postId: string | undefined;
   commentId: string;
+  replies: [];
 }
 
-const CommentItem = ({ name, moimName, content, isMyComment, postId, commentId }: CommentItem) => {
+const CommentItem = ({
+  name,
+  moimName,
+  content,
+  isMyComment,
+  postId,
+  commentId,
+  replies,
+}: CommentItem) => {
   const { deleteComment } = useDeleteComment(commentId || '', postId || '');
   const [isClick, setIsClick] = useState(false);
   const [isNestedComment, setIsNestedComment] = useState(false);
