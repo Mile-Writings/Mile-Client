@@ -6,6 +6,7 @@ import CommentInputBox from './CommentInputBox';
 import { useDeleteComment } from '../hooks/queries';
 
 import {
+  GroupListProfileCloseIc,
   DetailCommentMeatBallIc,
   TextCommentProfileIc,
   NestCommentIc,
@@ -66,6 +67,7 @@ const CommentItem = ({
     <>
       <CommentItemWrapper isComment={type === 'comment'}>
         <TextCommentProfileIc />
+        <GroupListProfileCloseIc />
         <CommentItemContainer>
           <CommentInfoWrapper>
             <CommenterNameText $name={name}>{name}</CommenterNameText>
@@ -107,6 +109,7 @@ const NestedCommentWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
   align-items: center;
+  margin-left: 1.2rem;
   padding: 1.2rem 0;
 `;
 
