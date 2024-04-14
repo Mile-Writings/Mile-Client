@@ -132,7 +132,7 @@ export const usePostComment = (postId: string) => {
 };
 
 //대댓글 생성 api
-export const useNestedPostComment = (commentId: string, postId: string, isAnonymous: boolean) => {
+export const usePostNestedComment = (commentId: string, postId: string, isAnonymous: boolean) => {
   const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.postNestedComment, commentId],

@@ -20,6 +20,7 @@ const fetchPostNestedComment = async (commentId: string, comment: string, isAnon
         },
       },
     );
+    console.log(response.data, 'data');
     return response.data;
   } catch (err) {
     console.error();
