@@ -112,11 +112,11 @@ export const useDeletePost = (postId: string, topicId: string) => {
 };
 
 //댓글 생성 api
-export const usePostComment = (postId: string) => {
+export const usePostComment = (postId: string, isAnonymous: boolean) => {
   const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
-    mutationFn: (comment: string) => fetchPostComment(postId, comment),
+    mutationFn: (comment: string) => fetchPostComment(postId, comment, isAnonymous),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],

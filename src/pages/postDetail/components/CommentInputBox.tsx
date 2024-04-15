@@ -17,7 +17,7 @@ const CommentInputBox = (props: CommentPropTypes) => {
   const { postId, commentId, isMainComment, setIsNestedComment } = props;
   const [isUnknownWriter, setIsUnknownWriter] = useState(false);
   const [comment, setComment] = useState('');
-  const { postComment } = usePostComment(postId || '');
+  const { postComment } = usePostComment(postId || '', isUnknownWriter);
   const { postNestedComment } = usePostNestedComment(
     commentId || '',
     postId || '',
