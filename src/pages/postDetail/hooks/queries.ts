@@ -169,3 +169,22 @@ export const useDeleteComment = (commentId: string, postId: string) => {
   };
   return { deleteComment };
 };
+
+//대댓글 삭제 api
+export const useDeleteNestedComment = (replyId: string, postId: string) => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: [QUERY_KEY_POST_DETAIL.getCommentList, replyId],
+    mutationFn: () => fetchDeleteComment(replyId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
+      });
+    },
+  });
+
+  const deleteNestedComment = () => {
+    data.mutate();
+  };
+  return { deleteNestedComment };
+};
