@@ -53,6 +53,7 @@ const MemberManage = ({ setPageCount, pageCount }: MemberManagePropTypes) => {
           )}
         </MemberLayout>
       </MemberListWrapper>
+      <Spacing marginBottom="3.6" />
       {memberData && memberData.writerNameCount && (
         <Pagenation
           count={memberData.writerNameCount}
