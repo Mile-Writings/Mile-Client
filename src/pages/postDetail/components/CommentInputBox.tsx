@@ -11,10 +11,11 @@ interface CommentPropTypes {
   commentId?: string | undefined;
   isMainComment: boolean;
   setIsNestedComment?: Dispatch<SetStateAction<boolean>>;
+  handleRecentCommentIndex: () => void;
 }
 
 const CommentInputBox = (props: CommentPropTypes) => {
-  const { postId, commentId, isMainComment, setIsNestedComment } = props;
+  const { postId, commentId, isMainComment, setIsNestedComment, handleRecentCommentIndex } = props;
   const [isUnknownWriter, setIsUnknownWriter] = useState(false);
   const [comment, setComment] = useState('');
   const { postComment } = usePostComment(postId || '', isUnknownWriter);
@@ -34,6 +35,7 @@ const CommentInputBox = (props: CommentPropTypes) => {
       if (comment.trim() !== '') {
         //commendId가 있으면 대댓글, 없으면 댓글
         commentId ? postNestedComment(comment) : postComment(comment); //댓글 등록
+        handleRecentCommentIndex();
         setComment(''); // 댓글 등록 후 댓글 초기화
         setIsNestedComment && setIsNestedComment(false);
       }
