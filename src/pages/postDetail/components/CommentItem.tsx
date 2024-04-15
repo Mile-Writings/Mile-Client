@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 
 import CommentInputBox from './CommentInputBox';
 
-import { useDeleteComment } from '../hooks/queries';
+import { useDeleteComment, useDeleteNestedComment } from '../hooks/queries';
 
 import {
   DetailCommentMeatBallIc,
@@ -41,6 +41,7 @@ const CommentItem = ({
   type,
 }: CommentItem) => {
   const { deleteComment } = useDeleteComment(commentId || '', postId || '');
+  const { deleteNestedComment } = useDeleteNestedComment(commentId || '', postId || '');
   const [isClick, setIsClick] = useState(false);
   const [isNestedComment, setIsNestedComment] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -76,17 +77,32 @@ const CommentItem = ({
         </CommentItemContainer>
         <IconWrapper>
           {isMyComment && (
-            <NestCommentIcon onClick={() => setIsNestedComment(!isNestedComment)}>
-              <NestCommentIc />
-            </NestCommentIcon>
+            <>
+              <NestCommentIcon onClick={() => setIsNestedComment(!isNestedComment)}>
+                <NestCommentIc />
+              </NestCommentIcon>
+              <MeatBallWrapper onClick={handleBtnClick}>
+                <DetailCommentMeatBallIcon />
+                {isClick && (
+                  <Modal
+                    onClick={() => {
+                      deleteComment();
+                    }}
+                    ref={modalRef}
+                  >
+                    <ModalContainer>삭제</ModalContainer>
+                  </Modal>
+                )}
+              </MeatBallWrapper>
+            </>
           )}
-          {(isMyComment || isMyReply) && (
+          {isMyReply && (
             <MeatBallWrapper onClick={handleBtnClick}>
               <DetailCommentMeatBallIcon />
               {isClick && (
                 <Modal
                   onClick={() => {
-                    deleteComment();
+                    deleteNestedComment();
                   }}
                   ref={modalRef}
                 >

@@ -9,6 +9,7 @@ import deletePost from '../apis/deletePost';
 import fetchCommentList from '../apis/fetchCommentList';
 import fetchCuriousInfo from '../apis/fetchCuriousInfo';
 import fetchDeleteComment from '../apis/fetchDeleteComment';
+import fetchDeleteNestedComment from '../apis/fetchDeleteNestedComment';
 import fetchPostComment from '../apis/fetchPostComment';
 import fetchPostDetail from '../apis/fetchPostDetail';
 import fetchPostNestedComment from '../apis/fetchPostNestedComment';
@@ -175,7 +176,7 @@ export const useDeleteNestedComment = (replyId: string, postId: string) => {
   const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.getCommentList, replyId],
-    mutationFn: () => fetchDeleteComment(replyId),
+    mutationFn: () => fetchDeleteNestedComment(replyId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
