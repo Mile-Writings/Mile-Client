@@ -47,6 +47,7 @@ const CommentItem = ({
   const [isClick, setIsClick] = useState(false);
   const [isNestedComment, setIsNestedComment] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const [highlight, setHighlight] = useState(isHighlighted);
 
   const handleBtnClick = () => {
     setIsClick((prev) => !prev);
@@ -65,9 +66,17 @@ const CommentItem = ({
     };
   }, []);
 
+  useEffect(() => {
+    // 3초 후에 보라색 하이라이트를 비활성화
+    setTimeout(() => {
+      setHighlight(false);
+    }, 3000),
+      [];
+  });
+
   return (
     <>
-      <CommentItemWrapper isComment={type === 'comment'} isHighlighted={isHighlighted}>
+      <CommentItemWrapper isComment={type === 'comment'} isHighlighted={highlight}>
         <TextCommentProfileIc />
         {/* <GroupListProfileCloseIc /> */}
         <CommentItemContainer>
