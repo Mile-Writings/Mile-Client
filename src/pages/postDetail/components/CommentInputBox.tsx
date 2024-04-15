@@ -10,7 +10,7 @@ interface CommentPropTypes {
   postId: string | undefined;
   commentId?: string | undefined;
   isMainComment: boolean;
-  setIsNestedComment: Dispatch<SetStateAction<boolean>>;
+  setIsNestedComment?: Dispatch<SetStateAction<boolean>>;
 }
 
 const CommentInputBox = (props: CommentPropTypes) => {
@@ -35,7 +35,7 @@ const CommentInputBox = (props: CommentPropTypes) => {
         //commendId가 있으면 대댓글, 없으면 댓글
         commentId ? postNestedComment(comment) : postComment(comment); //댓글 등록
         setComment(''); // 댓글 등록 후 댓글 초기화
-        setIsNestedComment(false);
+        setIsNestedComment && setIsNestedComment(false);
       }
     }
   };
