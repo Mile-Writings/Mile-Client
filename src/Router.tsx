@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import CreateGroup from './pages/createGroup/CreateGroup';
 import Error from './pages/error/Error';
 import GroupFeed from './pages/groupFeed/GroupFeed';
 import Login from './pages/login/Login';
@@ -17,6 +18,7 @@ const Router = () => {
         <Route path="/group/:groupId" element={<GroupFeed />} />
         <Route path="/detail/:groupId/:postId" element={<PostDetail />} />
         <Route path="/post/:groupId/:type" element={<PostPage />} />
+        <Route path="/createGroup" element={<CreateGroup />} />
         {/* <Route path="/edit/:groupId" element={<PostEditor />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/redirect-kakao" element={<RedirectLogin />} />

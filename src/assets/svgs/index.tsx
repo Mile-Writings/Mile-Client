@@ -49,8 +49,8 @@ export { default as CheckboxIc } from './postDetailCheckIc.svg?react';
 export { default as QuestionDefaultIc } from './questionDefaultIc.svg?react';
 export { default as QuestioHoverIc } from './questionHoverIc.svg?react';
 
-export { default as EditorDropIcnOpen } from './editorDropIcnOpen.svg?react';
 export { default as EditorDropIcnClose } from './editorDropIcnClose.svg?react';
+export { default as EditorDropIcnOpen } from './editorDropIcnOpen.svg?react';
 
 export { default as EditorDropIcnActiveIc } from './editorDropIcnActive.svg?react';
 export { default as EditorDropIcnActiveOpenIc } from './editorDropIcnActiveopen.svg?react';
@@ -68,5 +68,10 @@ export { default as KakaoLoginBtnIc } from './kakaoLoginBtn.svg?react';
 export { default as LoginIc } from './loginIc.svg?react';
 export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?react';
 
+export { default as CreateGroupImageUpload } from './createGroupImageUpload.svg?react';
+export { default as CreateGroupInfoIc } from './createGroupInfoIc.svg?react';
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
 export { default as faviconMileIc } from './faviconMile.svg?react';
+
+export { default as CreateGroupRadioCheckedIc } from './createGroupRadioChecked.svg?react';
+export { default as CreateGroupRadioUncheckedIc } from './createGroupRadioUnchecked.svg?react';
