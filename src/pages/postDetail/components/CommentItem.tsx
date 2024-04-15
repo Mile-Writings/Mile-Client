@@ -6,7 +6,6 @@ import CommentInputBox from './CommentInputBox';
 import { useDeleteComment } from '../hooks/queries';
 
 import {
-  GroupListProfileCloseIc,
   DetailCommentMeatBallIc,
   TextCommentProfileIc,
   NestCommentIc,
@@ -67,7 +66,7 @@ const CommentItem = ({
     <>
       <CommentItemWrapper isComment={type === 'comment'}>
         <TextCommentProfileIc />
-        <GroupListProfileCloseIc />
+        {/* <GroupListProfileCloseIc /> */}
         <CommentItemContainer>
           <CommentInfoWrapper>
             <CommenterNameText $name={name}>{name}</CommenterNameText>
@@ -85,7 +84,12 @@ const CommentItem = ({
             <MeatBallWrapper onClick={handleBtnClick}>
               <DetailCommentMeatBallIcon />
               {isClick && (
-                <Modal onClick={deleteComment} ref={modalRef}>
+                <Modal
+                  onClick={() => {
+                    deleteComment();
+                  }}
+                  ref={modalRef}
+                >
                   <ModalContainer>삭제</ModalContainer>
                 </Modal>
               )}
@@ -96,7 +100,12 @@ const CommentItem = ({
       {isNestedComment && (
         <NestedCommentWrapper>
           <ArrowTopLeftIc />
-          <CommentInputBox postId={postId} commentId={commentId} isMainComment={false} />
+          <CommentInputBox
+            postId={postId}
+            commentId={commentId}
+            isMainComment={false}
+            setIsNestedComment={setIsNestedComment}
+          />
         </NestedCommentWrapper>
       )}
     </>
