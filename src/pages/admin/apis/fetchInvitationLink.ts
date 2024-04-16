@@ -7,9 +7,7 @@ export interface InvitationPropTypes {
 }
 
 export interface invitationData {
-  data: {
-    invitationCode: string;
-  };
+  invitationCode: string;
 }
 
 export const fetchInvitationLink = async (groupId: string) => {
