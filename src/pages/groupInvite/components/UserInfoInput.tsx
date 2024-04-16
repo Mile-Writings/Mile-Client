@@ -4,7 +4,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { useGetWriterNameConflict, usePostGroupMemberJoin } from '../hooks/queries';
 
+import { PositiveModal } from '../../../components/commons/Modal';
 import Spacing from '../../../components/commons/Spacing';
+import useModal from '../../../hooks/useModal';
 
 interface userInfoStateType {
   writerName?: string;
@@ -41,6 +43,9 @@ const reducerFn = (state: userInfoStateType, action: userInfoActionType): userIn
 
 const UserInfoInput = () => {
   const navigate = useNavigate();
+  // 모달 관리
+  const { isModalOpen, handleCloseModal, handleShowModal } = useModal();
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
   const { groupId } = useParams() as { groupId: string };
   // 소개글 글자수 제한
   const [introduceLimit, setIntroduceLimit] = useState(false);
@@ -79,18 +84,43 @@ const UserInfoInput = () => {
     if (userInfoVal.writerName) {
       userInfoVal.writerName.length > 8 ? setWriterNameLimit(true) : setWriterNameLimit(false);
     }
+    setIsSubmitBtnClicked(false);
   }, [userInfoVal.writerIntroduce, userInfoVal.writerName]);
+
+  // 가입하기 api
+  const { mutate: postGroupJoin } = usePostGroupMemberJoin({
+    groupId: groupId,
+    writerName: userInfoVal.writerName || '',
+    writerDescription: userInfoVal.writerIntroduce || '',
+  });
 
   //가입하기 버튼 함수
   const onClickSignUp = () => {
     setIsSubmitBtnClicked(true);
+    if (
+      !writerNameLimit &&
+      !introduceLimit &&
+      isConflictBtnClicked &&
+      !isConflict &&
+      userInfoVal.writerName?.length != 0 &&
+      userInfoVal.writerIntroduce?.length != 0
+    ) {
+      setIsJoinModalOpen(true);
+    }
+  };
+
+  const onClickModalJoinBtn = () => {
+    postGroupJoin();
+    navigate(`/group/${groupId}/groupJoin`);
+  };
+
+  const onClickModalCloseBtn = () => {
+    setIsJoinModalOpen(false);
   };
 
   return (
     <>
-      <WriterNameInputWrapper
-        $valueNotTyped={isSubmitBtnClicked && userInfoVal.writerName?.length === 0}
-      >
+      <UserInfoWrapper $valueNotTyped={isSubmitBtnClicked && userInfoVal.writerName?.length === 0}>
         <UserInfoTitle>모임에서 사용할 필명*</UserInfoTitle>
         <InputWrapper>
           <WriterNameInput
@@ -129,9 +159,11 @@ const UserInfoInput = () => {
         ) : (
           <></>
         )}
-      </WriterNameInputWrapper>
+      </UserInfoWrapper>
       <Spacing marginBottom="2.8" />
-      <WriterIntroduceInputWrapper>
+      <UserInfoWrapper
+        $valueNotTyped={isSubmitBtnClicked && userInfoVal.writerIntroduce?.length === 0}
+      >
         <UserInfoTitle>소개 글</UserInfoTitle>
         <WriterIntroduceInput
           placeholder="모임원들에게 ‘나’에 대해 자유롭게 소개해주세요."
@@ -141,16 +173,23 @@ const UserInfoInput = () => {
         <CharCount $introduceLimit={introduceLimit}>
           {userInfoVal.writerIntroduce ? userInfoVal.writerIntroduce.length : 0}/100
         </CharCount>
-      </WriterIntroduceInputWrapper>
+      </UserInfoWrapper>
       <Spacing marginBottom="2.8" />
       <SignUpBtn onClick={onClickSignUp}>가입하기</SignUpBtn>
+      <PositiveModal
+        isModalOpen={isJoinModalOpen}
+        modalContent="가입 완료 시 필명 변경이 불가합니다.
+      계속 하시겠습니까?"
+        modalHandler={onClickModalJoinBtn}
+        closeModalHandler={onClickModalCloseBtn}
+      />
     </>
   );
 };
 
 export default UserInfoInput;
 
-const WriterNameInputWrapper = styled.section<{ $valueNotTyped: boolean }>`
+const UserInfoWrapper = styled.section<{ $valueNotTyped: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -161,18 +200,6 @@ const WriterNameInputWrapper = styled.section<{ $valueNotTyped: boolean }>`
   background-color: ${({ theme }) => theme.colors.white};
   border: ${({ $valueNotTyped, theme }) =>
     $valueNotTyped ? `1px solid ${theme.colors.mileRed}` : ``};
-  border-radius: 8px;
-`;
-
-const WriterIntroduceInputWrapper = styled.section`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  width: 100%;
-  padding: 2.8rem;
-
-  background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
 `;
 

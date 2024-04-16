@@ -55,7 +55,7 @@ export const usePostGroupMemberJoin = ({
   writerName,
   writerDescription,
 }: postGroupMemberJoinType) => {
-  const data = useMutation({
+  const { mutate, data } = useMutation({
     mutationKey: [
       QUERY_KEY_GROUP_INVITE.postGroupMemberJoin,
       {
@@ -66,5 +66,5 @@ export const usePostGroupMemberJoin = ({
     ],
     mutationFn: () => createGroupMemberJoin({ groupId, writerName, writerDescription }),
   });
-  return data;
+  return { mutate, data };
 };
