@@ -1,16 +1,18 @@
 import styled from '@emotion/styled';
+import { useLocation } from 'react-router-dom';
 
 import { DefaultHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupJoinCongrats = () => {
+  const location = useLocation();
   return (
     <GroupJoinCongratsWrapper>
       <DefaultHeader />
       <Spacing marginBottom="11.4" />
       <GroupJoinCongratsContainer>
         <GroupJoinTitleWrapper>
-          <GroupJoinTitle>글 모임 이름 가입을 축하해요!</GroupJoinTitle>
+          <GroupJoinTitle>{location.state.moimTitle} 가입을 축하해요!</GroupJoinTitle>
           <GroupJoinText>글 모임에서 당신의 소중한 이야기를 들려주세요.</GroupJoinText>
         </GroupJoinTitleWrapper>
         <Spacing marginBottom="4.8" />

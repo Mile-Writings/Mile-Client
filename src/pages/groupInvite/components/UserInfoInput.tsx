@@ -40,7 +40,12 @@ const reducerFn = (state: userInfoStateType, action: userInfoActionType): userIn
   }
 };
 
-const UserInfoInput = () => {
+interface UserInfoInputPropTypes {
+  moimTitle: string | undefined;
+}
+
+const UserInfoInput = (props: UserInfoInputPropTypes) => {
+  const { moimTitle } = props;
   const navigate = useNavigate();
   const { groupId } = useParams() as { groupId: string };
 
@@ -112,17 +117,21 @@ const UserInfoInput = () => {
   // 모달 yes
   const onClickModalJoinBtn = () => {
     postGroupJoin();
-    navigate(`/group/${groupId}/groupJoin`);
+    navigate(`/group/${groupId}/groupJoin`, {
+      state: {
+        moimTitle: moimTitle,
+      },
+    });
   };
   // 모달 no
   const onClickModalCloseBtn = () => {
     setIsJoinModalOpen(false);
   };
-
   return (
     <>
       <WriterNameInputWrapper
         $valueNotTyped={isSubmitBtnClicked && userInfoVal.writerName?.trim().length === 0}
+        $isConflictChecked={isSubmitBtnClicked && !isConflictBtnClicked}
       >
         <UserInfoTitle>모임에서 사용할 필명*</UserInfoTitle>
         <InputWrapper>
@@ -196,7 +205,10 @@ const UserInfoInput = () => {
 
 export default UserInfoInput;
 
-const WriterNameInputWrapper = styled.section<{ $valueNotTyped: boolean }>`
+const WriterNameInputWrapper = styled.section<{
+  $valueNotTyped: boolean;
+  $isConflictChecked: boolean;
+}>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -205,8 +217,8 @@ const WriterNameInputWrapper = styled.section<{ $valueNotTyped: boolean }>`
   padding: 2.8rem;
 
   background-color: ${({ theme }) => theme.colors.white};
-  border: ${({ $valueNotTyped, theme }) =>
-    $valueNotTyped ? `1px solid ${theme.colors.mileRed}` : ``};
+  border: ${({ $valueNotTyped, $isConflictChecked, theme }) =>
+    $valueNotTyped || $isConflictChecked ? `1px solid ${theme.colors.mileRed}` : ``};
   border-radius: 8px;
 `;
 

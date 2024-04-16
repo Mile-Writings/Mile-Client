@@ -1,15 +1,20 @@
 import styled from '@emotion/styled';
-import { useParams } from 'react-router-dom';
-
-import { useGetGroupInfo } from '../hooks/queries';
 
 import { GroupLeaderIc, GroupMemberIc, GroupDateIc } from './../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
-const GroupInfo = () => {
-  const { groupId } = useParams() as { groupId: string };
-  const { moimTitle, imageUrl, leader, foundedDate, memberCount, description } =
-    useGetGroupInfo(groupId);
+interface GroupInfoPropTypes {
+  moimTitle: string | undefined;
+  imageUrl: string | undefined;
+  leader: string | undefined;
+  foundedDate: string | undefined;
+  memberCount: number | undefined;
+  description: string | undefined;
+}
+
+const GroupInfo = (props: GroupInfoPropTypes) => {
+  const { moimTitle, imageUrl, leader, foundedDate, memberCount, description } = props;
+
   return (
     <GroupInfoWrapper>
       <GroupImg src={imageUrl} alt={'모임 이미지'} />
