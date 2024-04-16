@@ -17,8 +17,6 @@ const GroupInvite = () => {
       <GroupInfo />
       <Spacing marginBottom="2.8" />
       <UserInfoInput />
-      {/* <Spacing marginBottom="2.8" />
-      <SignUpBtn onClick={onClickSignUp}>가입하기</SignUpBtn> */}
       <Spacing marginBottom="7.7" />
     </GroupInviteWrapper>
   );

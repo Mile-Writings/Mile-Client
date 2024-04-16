@@ -45,7 +45,6 @@ const UserInfoInput = () => {
   const { groupId } = useParams() as { groupId: string };
 
   const [userInfoVal, dispatch] = useReducer(reducerFn, userInfoState);
-
   // 모달 관리
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
   // 소개글 글자수 제한
