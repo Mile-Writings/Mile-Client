@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import { createGroupMemberJoin } from '../apis/createGroupMemberJoin';
 import { fetchGroupInfo } from '../apis/fetchGroupInfo';
@@ -12,7 +13,9 @@ export const QUERY_KEY_GROUP_INVITE = {
 
 // 글 모임 정보 가져오기
 export const useGetGroupInfo = (groupId: string) => {
-  const { data } = useQuery({
+  const navigate = useNavigate();
+
+  const { data, error } = useQuery({
     queryKey: [QUERY_KEY_GROUP_INVITE.getGroupInfo, groupId],
     queryFn: () => fetchGroupInfo(groupId),
   });
@@ -24,7 +27,11 @@ export const useGetGroupInfo = (groupId: string) => {
   const memberCount = data && data.data.memberCount;
   const description = data && data.data.description;
 
-  return { moimTitle, imageUrl, leader, foundedDate, memberCount, description };
+  if (error) {
+    navigate(`/group/${groupId}`);
+  }
+
+  return { moimTitle, imageUrl, leader, foundedDate, memberCount, description, error };
 };
 
 // 필명 중복 여부 확인

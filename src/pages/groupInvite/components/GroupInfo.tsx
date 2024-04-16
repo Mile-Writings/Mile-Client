@@ -10,7 +10,6 @@ const GroupInfo = () => {
   const { groupId } = useParams() as { groupId: string };
   const { moimTitle, imageUrl, leader, foundedDate, memberCount, description } =
     useGetGroupInfo(groupId);
-
   return (
     <GroupInfoWrapper>
       <GroupImg src={imageUrl} alt={'모임 이미지'} />
