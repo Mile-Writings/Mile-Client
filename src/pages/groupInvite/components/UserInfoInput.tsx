@@ -103,8 +103,7 @@ const UserInfoInput = () => {
       !introduceLimit &&
       isConflictBtnClicked &&
       !isConflict &&
-      userInfoVal.writerName?.length != 0 &&
-      userInfoVal.writerIntroduce?.length != 0
+      userInfoVal.writerName?.length != 0
     ) {
       setIsJoinModalOpen(true);
     }
@@ -122,7 +121,7 @@ const UserInfoInput = () => {
 
   return (
     <>
-      <UserInfoWrapper
+      <WriterNameInputWrapper
         $valueNotTyped={isSubmitBtnClicked && userInfoVal.writerName?.trim().length === 0}
       >
         <UserInfoTitle>모임에서 사용할 필명*</UserInfoTitle>
@@ -149,6 +148,12 @@ const UserInfoInput = () => {
             중복확인
           </WriterExistCheckBtn>
         </InputWrapper>
+        {/* 중복확인 안 누르고 가입하기 눌렀을 경우 */}
+        {isSubmitBtnClicked && !isConflictBtnClicked ? (
+          <WriterNameLength>중복확인을 해주세요.</WriterNameLength>
+        ) : (
+          <></>
+        )}
         {/* 필명 8자 이상일 경우 */}
         {userInfoVal.writerName && writerNameLimit ? (
           <WriterNameLength>8자 이내로 작성해주세요.</WriterNameLength>
@@ -163,11 +168,9 @@ const UserInfoInput = () => {
         ) : (
           <></>
         )}
-      </UserInfoWrapper>
+      </WriterNameInputWrapper>
       <Spacing marginBottom="2.8" />
-      <UserInfoWrapper
-        $valueNotTyped={isSubmitBtnClicked && userInfoVal.writerIntroduce?.length === 0}
-      >
+      <WriterIntroduceInputWrapper>
         <UserInfoTitle>소개 글</UserInfoTitle>
         <WriterIntroduceInput
           placeholder="모임원들에게 ‘나’에 대해 자유롭게 소개해주세요."
@@ -177,7 +180,7 @@ const UserInfoInput = () => {
         <CharCount $introduceLimit={introduceLimit}>
           {userInfoVal.writerIntroduce ? userInfoVal.writerIntroduce.length : 0}/100
         </CharCount>
-      </UserInfoWrapper>
+      </WriterIntroduceInputWrapper>
       <Spacing marginBottom="2.8" />
       <SignUpBtn onClick={onClickSignUp}>가입하기</SignUpBtn>
       <PositiveModal
@@ -193,7 +196,7 @@ const UserInfoInput = () => {
 
 export default UserInfoInput;
 
-const UserInfoWrapper = styled.section<{ $valueNotTyped: boolean }>`
+const WriterNameInputWrapper = styled.section<{ $valueNotTyped: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -204,6 +207,18 @@ const UserInfoWrapper = styled.section<{ $valueNotTyped: boolean }>`
   background-color: ${({ theme }) => theme.colors.white};
   border: ${({ $valueNotTyped, theme }) =>
     $valueNotTyped ? `1px solid ${theme.colors.mileRed}` : ``};
+  border-radius: 8px;
+`;
+
+const WriterIntroduceInputWrapper = styled.section`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  padding: 2.8rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
 `;
 
