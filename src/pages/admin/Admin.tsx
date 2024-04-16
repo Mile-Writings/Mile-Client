@@ -16,7 +16,7 @@ const Admin = () => {
 
   const handleCopyLink = async (invitationCode: string) => {
     try {
-      await navigator.clipboard.writeText(invitationCode);
+      await navigator.clipboard.writeText(`/group/${invitationCode}/groupInvite`);
     } catch {
       console.error();
     }
