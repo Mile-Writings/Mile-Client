@@ -10,6 +10,7 @@ import {
   TextCommentProfileIc,
   NestCommentIc,
   ArrowTopLeftIc,
+  GroupListProfileCloseIc,
 } from '../../../assets/svgs';
 
 interface CommentItem {
@@ -18,17 +19,11 @@ interface CommentItem {
   content: string;
   isMyComment?: boolean;
   isMyReply?: boolean;
+  isAnonymous: boolean;
   postId: string | undefined;
   commentId: string;
   type: 'nestedComment' | 'comment';
 }
-// interface ReplyResponseTypes {
-//   replyId: string;
-//   name: string;
-//   moimName: string;
-//   content: string;
-//   isMyReply: boolean;
-// }
 
 const CommentItem = ({
   name,
@@ -39,6 +34,7 @@ const CommentItem = ({
   postId,
   commentId,
   type,
+  isAnonymous,
 }: CommentItem) => {
   const { deleteComment } = useDeleteComment(commentId || '', postId || '');
   const { deleteNestedComment } = useDeleteNestedComment(commentId || '', postId || '');
@@ -66,8 +62,7 @@ const CommentItem = ({
   return (
     <>
       <CommentItemWrapper isComment={type === 'comment'}>
-        <TextCommentProfileIc />
-        {/* <GroupListProfileCloseIc /> */}
+        {isAnonymous ? <GroupListProfileCloseIc /> : <TextCommentProfileIc />}
         <CommentItemContainer>
           <CommentInfoWrapper>
             <CommenterNameText $name={name}>{name}</CommenterNameText>
