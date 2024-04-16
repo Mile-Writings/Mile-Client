@@ -7,10 +7,12 @@ interface editorConinueTempModalPropsType {
   showTempContinueModal: boolean;
   setShowTempContinueModal: Dispatch<SetStateAction<boolean>>;
   setContinueTempPost: Dispatch<SetStateAction<boolean>>;
+  deleteTempPost: () => void;
 }
 
 const EditorContinueTempModal = (props: editorConinueTempModalPropsType) => {
-  const { showTempContinueModal, setShowTempContinueModal, setContinueTempPost } = props;
+  const { showTempContinueModal, setShowTempContinueModal, setContinueTempPost, deleteTempPost } =
+    props;
   const onClickNewPostBtn = () => {
     // 이어쓸지 여부
     setContinueTempPost(false);
@@ -19,6 +21,11 @@ const EditorContinueTempModal = (props: editorConinueTempModalPropsType) => {
   };
   const onClickContinueTempBtn = () => {
     setContinueTempPost(true);
+    setShowTempContinueModal(false);
+  };
+
+  const onClickDeleteTempPost = () => {
+    deleteTempPost();
     setShowTempContinueModal(false);
   };
   return (
@@ -35,7 +42,9 @@ const EditorContinueTempModal = (props: editorConinueTempModalPropsType) => {
           </ModalBtn>
         </BtnWrapper>
         <Spacing marginBottom="1.4" />
-        <DeleteTempContentBtn>임시 저장 삭제하기</DeleteTempContentBtn>
+        <DeleteTempContentBtn onClick={onClickDeleteTempPost}>
+          임시 저장 삭제하기
+        </DeleteTempContentBtn>
       </ModalWrapper>
     </ModalBackground>
   );

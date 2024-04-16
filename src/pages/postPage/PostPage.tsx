@@ -18,6 +18,7 @@ import {
   usePutEditContent,
   usePutTempSaveContent,
   useTempSaveFlag,
+  useDeleteTempPost,
 } from './hooks/queries';
 import { preventScroll, allowScroll } from './utils/modalPreventScroll';
 
@@ -108,7 +109,13 @@ const editorContentReducerFn = (
         imageUrl: action.imageUrl,
       };
     default:
-      return state;
+      return {
+        topic: '',
+        writer: '필명',
+        title: '',
+        content: '',
+        imageUrl: EDITOR_DEFAULT_IMG,
+      };
   }
 };
 
@@ -194,6 +201,9 @@ const PostPage = () => {
       preventScroll();
     }
   }, [isTemporaryPostExist, type, continueTempPost]);
+
+  // 임시저장 삭제하기
+  const { mutate: deleteTempPost } = useDeleteTempPost(tempPostId || '', groupId);
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
@@ -418,6 +428,7 @@ const PostPage = () => {
         showTempContinueModal={showTempContinueModal}
         setShowTempContinueModal={setShowTempContinueModal}
         setContinueTempPost={setContinueTempPost}
+        deleteTempPost={deleteTempPost}
       />
       <EditorFlowModal
         showModal={showModal}

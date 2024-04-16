@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import createPostContent from '../apis/createPostContent';
 import createTempSaveContent from '../apis/createTempSaveContent';
+import { deleteTempPost } from '../apis/deleteTempPost';
 import editPutContent from '../apis/editPutContent';
 import { fetchPresignedUrl } from '../apis/fetchPresignedUrl';
 import { fetchTempSaveContent } from '../apis/fetchTempSaveContent';
@@ -20,6 +21,7 @@ export const QUERY_KEY_POST = {
   postSaveTempContent: 'postSaveTempContent',
   getTempSaveContent: 'getTempSaveContent',
   putSaveTempContent: 'putSaveTempContent',
+  deleteTempPost: 'deleteTempPost',
 };
 
 // 글 최초 저장
@@ -229,6 +231,19 @@ export const usePutTempSaveContent = ({
     mutationFn: () => saveTempSavecontent({ topicId, title, content, imageUrl, anonymous, postId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
+    },
+  });
+  return data;
+};
+
+// 임시저장 삭제하기
+export const useDeleteTempPost = (postId: string, groupId: string) => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: [QUERY_KEY_POST.deleteTempPost, postId, groupId],
+    mutationFn: () => deleteTempPost(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId] });
     },
   });
   return data;
