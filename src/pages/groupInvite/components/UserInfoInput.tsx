@@ -42,18 +42,20 @@ const reducerFn = (state: userInfoStateType, action: userInfoActionType): userIn
 
 const UserInfoInput = () => {
   const navigate = useNavigate();
+  const { groupId } = useParams() as { groupId: string };
+
+  const [userInfoVal, dispatch] = useReducer(reducerFn, userInfoState);
+
   // 모달 관리
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
-  const { groupId } = useParams() as { groupId: string };
   // 소개글 글자수 제한
   const [introduceLimit, setIntroduceLimit] = useState(false);
   // 필명 글자수 제한
   const [writerNameLimit, setWriterNameLimit] = useState(false);
   // 필명 중복 확인
   const [isConflictBtnClicked, setIsConflictBtnClicked] = useState(false);
-  // 입력 폼 validation
+  // 가입하기 버튼 클릭여부
   const [isSubmitBtnClicked, setIsSubmitBtnClicked] = useState(false);
-  const [userInfoVal, dispatch] = useReducer(reducerFn, userInfoState);
 
   const onChangeWriterName = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'setWriterName', writerName: e.target.value });
@@ -64,15 +66,17 @@ const UserInfoInput = () => {
     dispatch({ type: 'setWriterIntroduce', writerIntroduce: e.currentTarget.value });
   };
 
-  // 중복확인 버튼 함수
-  const onClickConflictBtn = () => {
-    setIsConflictBtnClicked(true);
-  };
+  // 중복확인 API
   const { isConflict } = useGetWriterNameConflict(
     groupId,
     userInfoVal.writerName || '',
     isConflictBtnClicked,
   );
+
+  // 중복확인 버튼 함수
+  const onClickConflictBtn = () => {
+    setIsConflictBtnClicked(true);
+  };
 
   // 글자수 체크
   useEffect(() => {
@@ -107,18 +111,21 @@ const UserInfoInput = () => {
     }
   };
 
+  // 모달 yes
   const onClickModalJoinBtn = () => {
     postGroupJoin();
     navigate(`/group/${groupId}/groupJoin`);
   };
-
+  // 모달 no
   const onClickModalCloseBtn = () => {
     setIsJoinModalOpen(false);
   };
 
   return (
     <>
-      <UserInfoWrapper $valueNotTyped={isSubmitBtnClicked && userInfoVal.writerName?.length === 0}>
+      <UserInfoWrapper
+        $valueNotTyped={isSubmitBtnClicked && userInfoVal.writerName?.trim().length === 0}
+      >
         <UserInfoTitle>모임에서 사용할 필명*</UserInfoTitle>
         <InputWrapper>
           <WriterNameInput
