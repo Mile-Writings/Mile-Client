@@ -21,7 +21,6 @@ interface CommentItem {
   postId: string | undefined;
   commentId: string;
   type: 'nestedComment' | 'comment';
-  isHighlighted?: boolean;
 }
 // interface ReplyResponseTypes {
 //   replyId: string;
@@ -40,7 +39,6 @@ const CommentItem = ({
   postId,
   commentId,
   type,
-  isHighlighted,
 }: CommentItem) => {
   const { deleteComment } = useDeleteComment(commentId || '', postId || '');
   const { deleteNestedComment } = useDeleteNestedComment(commentId || '', postId || '');
@@ -67,7 +65,7 @@ const CommentItem = ({
 
   return (
     <>
-      <CommentItemWrapper isComment={type === 'comment'} isHighlighted={isHighlighted}>
+      <CommentItemWrapper isComment={type === 'comment'}>
         <TextCommentProfileIc />
         {/* <GroupListProfileCloseIc /> */}
         <CommentItemContainer>
@@ -123,7 +121,6 @@ const CommentItem = ({
             commentId={commentId}
             isMainComment={false}
             setIsNestedComment={setIsNestedComment}
-            handleRecentCommentIndex={() => console.log('hi')}
           />
         </NestedCommentWrapper>
       )}
@@ -155,15 +152,14 @@ const NestCommentIcon = styled.div`
   cursor: pointer;
 `;
 
-const CommentItemWrapper = styled.div<{ isComment: boolean; isHighlighted: boolean | undefined }>`
+const CommentItemWrapper = styled.div<{ isComment: boolean }>`
   display: flex;
   gap: 1.2rem;
   width: ${({ isComment }) => (isComment ? '76.8rem' : '72rem')};
   height: auto;
   padding: 1.8rem 0;
 
-  background-color: ${({ theme, isHighlighted }) =>
-    isHighlighted ? theme.colors.backGroundViolet : theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const CommentItemContainer = styled.div`

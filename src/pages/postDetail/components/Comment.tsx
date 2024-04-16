@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
 import CommentInputBox from './CommentInputBox';
 import CommentItem from './CommentItem';
@@ -17,7 +16,6 @@ const Comment = (props: CommentPropTypes) => {
   const { postId } = props;
 
   const { commentListData, error } = useGetCommentList(postId || '');
-  const [recentCommentIndex, setRecentCommentIndex] = useState<number | null>(null);
 
   interface CommentListPropTypes {
     commentId: string;
@@ -36,26 +34,11 @@ const Comment = (props: CommentPropTypes) => {
     isMyReply: boolean;
   }
 
-  const handleRecentCommentIndex = () => {
-    commentListData ? setRecentCommentIndex(commentListData.length) : setRecentCommentIndex(0);
-    console.log(commentListData, '데이터');
-    console.log(recentCommentIndex, 'index');
-
-    // 3초 후에 보라색 하이라이트를 비활성화
-    setTimeout(() => {
-      setRecentCommentIndex(null);
-    }, 3000);
-  };
-
   return error?.message == '403' ? (
     <div></div>
   ) : (
     <CommentWrapper>
-      <CommentInputBox
-        postId={postId}
-        isMainComment={true}
-        handleRecentCommentIndex={handleRecentCommentIndex}
-      />
+      <CommentInputBox postId={postId} isMainComment={true} />
       <Spacing marginBottom="2" />
       {commentListData?.length == 0 ? (
         <>
@@ -64,7 +47,7 @@ const Comment = (props: CommentPropTypes) => {
           <EditorCatIc />
         </>
       ) : (
-        commentListData?.map((data: CommentListPropTypes, index) => (
+        commentListData?.map((data: CommentListPropTypes) => (
           <>
             <CommentItem
               key={data.commentId}
@@ -75,7 +58,6 @@ const Comment = (props: CommentPropTypes) => {
               postId={postId}
               commentId={data.commentId}
               type="comment"
-              isHighlighted={recentCommentIndex === index}
             ></CommentItem>
             {data.replies &&
               data.replies.map((nestedData: ReplyResponseTypes) => (
