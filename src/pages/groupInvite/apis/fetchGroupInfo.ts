@@ -16,10 +16,10 @@ interface FetchGroupInfoResponseTypes {
 
 export const fetchGroupInfo = async (groupId: string) => {
   try {
-    const accessToken = localStorage.getItem('accesToken');
+    const token = localStorage.getItem('accessToken');
     const response = await client.get<FetchGroupInfoResponseTypes>(`/api/moim/${groupId}/invite`, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;

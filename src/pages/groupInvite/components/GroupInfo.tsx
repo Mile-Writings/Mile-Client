@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
 
 import { useGetGroupInfo } from '../hooks/queries';
-
 import { GroupLeaderIc, GroupMemberIc, GroupDateIc } from './../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
+
 
 const GroupInfo = () => {
   const { groupId } = useParams() as { groupId: string };
@@ -26,7 +26,7 @@ const GroupInfo = () => {
         <GroupInfoContentWrapper>
           <GroupDateIc />
           <GroupInfoContent>설립날짜</GroupInfoContent>
-          <GroupInfoText>{foundedDate}</GroupInfoText>
+          <GroupInfoText>{foundedDate}~</GroupInfoText>
         </GroupInfoContentWrapper>
         <Spacing marginBottom="1.2" />
         <GroupInfoContentWrapper>

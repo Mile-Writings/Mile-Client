@@ -41,8 +41,10 @@ const reducerFn = (state: userInfoStateType, action: userInfoActionType): userIn
 
 const UserInfoInput = () => {
   const { groupId } = useParams() as { groupId: string };
-  // 글자수 제한
-  const [charLimit, setCharLimit] = useState(false);
+  // 소개글 글자수 제한
+  const [introduceLimit, setIntroduceLimit] = useState(false);
+  // 필명 글자수 제한
+  const [writerNameLimit, setWriterNameLimit] = useState(false);
   // 필명 중복 확인
   const [isConflictBtnClicked, setIsConflictBtnClicked] = useState(false);
   // 입력 폼 validation
@@ -71,14 +73,17 @@ const UserInfoInput = () => {
   // 글자수 체크
   useEffect(() => {
     if (userInfoVal.writerIntroduce) {
-      userInfoVal.writerIntroduce.length > 100 ? setCharLimit(true) : setCharLimit(false);
+      userInfoVal.writerIntroduce.length > 100 ? setIntroduceLimit(true) : setIntroduceLimit(false);
     }
-  }, [userInfoVal.writerIntroduce]);
+    if (userInfoVal.writerName) {
+      userInfoVal.writerName.length > 8 ? setWriterNameLimit(true) : setWriterNameLimit(false);
+    }
+  }, [userInfoVal.writerIntroduce, userInfoVal.writerName]);
 
-  // 가입하기 버튼 함수
-  // const onClickSubmitBtn = () => {
-  //   setIsConflictBtnClicked(true);
-  // };
+  //가입하기 버튼 함수
+  const onClickSubmitBtn = () => {
+    setIsConflictBtnClicked(true);
+  };
 
   // useEffect(() => {
 
@@ -93,17 +98,29 @@ const UserInfoInput = () => {
             placeholder="띄어쓰기 포함 8자 이내로 입력해주세요."
             onChange={onChangeWriterName}
             $isConflict={isConflict || false}
+            $isValidLength={writerNameLimit}
           />
           <WriterExistCheckBtn
-            disabled={userInfoVal.writerName ? userInfoVal.writerName.trim().length === 0 : true}
+            disabled={
+              userInfoVal.writerName
+                ? userInfoVal.writerName.trim().length === 0 || writerNameLimit
+                : true
+            }
             onClick={onClickConflictBtn}
             $isBtnDisabled={
-              userInfoVal.writerName ? userInfoVal.writerName.trim().length === 0 : true
+              userInfoVal.writerName
+                ? userInfoVal.writerName.trim().length === 0 || writerNameLimit
+                : true
             }
           >
             중복확인
           </WriterExistCheckBtn>
         </InputWrapper>
+        {userInfoVal.writerName && writerNameLimit ? (
+          <WriterNameLength>8자 이내로 작성해주세요.</WriterNameLength>
+        ) : (
+          <></>
+        )}
         {isConflictBtnClicked ? (
           <WriterNameEnable $isConflict={isConflict || false}>
             {isConflict ? '사용 불가능한 필명 입니다.' : '사용 가능한 필명 입니다.'}
@@ -118,9 +135,9 @@ const UserInfoInput = () => {
         <WriterIntroduceInput
           placeholder="모임원들에게 ‘나’에 대해 자유롭게 소개해주세요."
           onChange={onChangeWriterIntroduce}
-          $charLimit={charLimit}
+          $charLimit={introduceLimit}
         />
-        <CharCount $charLimit={charLimit}>
+        <CharCount $charLimit={introduceLimit}>
           {userInfoVal.writerIntroduce ? userInfoVal.writerIntroduce.length : 0}/100
         </CharCount>
       </UserInfoInputWrapper>
@@ -154,15 +171,17 @@ const InputWrapper = styled.div`
   width: 100%;
 `;
 
-const WriterNameInput = styled.input<{ $isConflict: boolean }>`
+const WriterNameInput = styled.input<{ $isConflict: boolean; $isValidLength: boolean }>`
   width: 67.7rem;
   padding: 1rem 1.2rem;
 
   color: ${({ theme }) => theme.colors.gray100};
 
   background-color: ${({ theme }) => theme.colors.gray5};
-  border: ${({ $isConflict, theme }) =>
-    $isConflict ? `1px solid ${theme.colors.mileRed}` : `1px solid ${theme.colors.gray50}`};
+  border: ${({ $isConflict, $isValidLength, theme }) =>
+    $isConflict || $isValidLength
+      ? `1px solid ${theme.colors.mileRed}`
+      : `1px solid ${theme.colors.gray50}`};
   ${({ theme }) => theme.fonts.button2};
   border-radius: 6px;
 
@@ -171,7 +190,7 @@ const WriterNameInput = styled.input<{ $isConflict: boolean }>`
   }
 
   &:focus {
-    border-color: ${({ theme }) => theme.colors.gray50};
+    ${({ $isValidLength, theme }) => ($isValidLength ? theme.colors.mileRed : theme.colors.gray50)};
   }
 `;
 
@@ -192,6 +211,12 @@ const WriterExistCheckBtn = styled.button<{ $isBtnDisabled: boolean }>`
 
 const WriterNameEnable = styled.div<{ $isConflict: boolean }>`
   color: ${({ $isConflict, theme }) => ($isConflict ? theme.colors.mileRed : theme.colors.gray70)};
+
+  ${({ theme }) => theme.fonts.body4};
+`;
+
+const WriterNameLength = styled.div`
+  color: ${({ theme }) => theme.colors.mileRed};
 
   ${({ theme }) => theme.fonts.body4};
 `;
