@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
 
 import { useGetGroupInfo } from '../hooks/queries';
+
 import { GroupLeaderIc, GroupMemberIc, GroupDateIc } from './../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-
 
 const GroupInfo = () => {
   const { groupId } = useParams() as { groupId: string };
@@ -51,6 +51,7 @@ const GroupInfoWrapper = styled.section`
   gap: 4.5rem;
   align-items: center;
   width: 100%;
+  height: fit-content;
 `;
 
 const GroupImg = styled.img`
@@ -96,13 +97,10 @@ const GroupDetailWrapper = styled.section`
   gap: 1.2rem;
   justify-content: flex-start;
   width: 100%;
-  height: 12.8rem;
 `;
 
 const BorderBar = styled.div`
-  flex-shrink: 0;
   width: 4px;
-  height: 100%;
 
   background-color: ${({ theme }) => theme.colors.middleViolet};
   border-radius: 2px;

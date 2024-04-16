@@ -6,7 +6,6 @@ import { useGetWriterNameConflict, usePostGroupMemberJoin } from '../hooks/queri
 
 import { PositiveModal } from '../../../components/commons/Modal';
 import Spacing from '../../../components/commons/Spacing';
-import useModal from '../../../hooks/useModal';
 
 interface userInfoStateType {
   writerName?: string;
@@ -44,7 +43,6 @@ const reducerFn = (state: userInfoStateType, action: userInfoActionType): userIn
 const UserInfoInput = () => {
   const navigate = useNavigate();
   // 모달 관리
-  const { isModalOpen, handleCloseModal, handleShowModal } = useModal();
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
   const { groupId } = useParams() as { groupId: string };
   // 소개글 글자수 제한
