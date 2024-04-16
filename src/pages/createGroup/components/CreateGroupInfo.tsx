@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from 'react';
+
+import CreateGroupTopicModal from './CreateGroupTopicModal';
 
 import { CurrentPageType } from '../types/stateType';
 
@@ -16,31 +18,42 @@ interface CreateGroupInfoPropTypes {
   setCurrentPage: Dispatch<SetStateAction<CurrentPageType['currentPage']>>;
   groupName: string;
   setGroupName: (e: ChangeEvent<HTMLInputElement>) => void;
-  setGroupInfo: (e: ChangeEvent<HTMLInputElement>) => void;
+  groupInfo: string;
+  setGroupInfo: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   groupImageFile: string;
   setGroupImageFile: (image: string) => void;
   isPublic: boolean;
-  setIsPublic: (e: ChangeEvent<HTMLInputElement>) => void;
+  setIsPublic: (value: boolean) => void;
+  topic: string;
+  topicTag: string;
   setTopic: (e: ChangeEvent<HTMLInputElement>) => void;
+  setTopicTag: (e: ChangeEvent<HTMLInputElement>) => void;
+  setTopicDesc: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 const CreateGroupInfo = ({
   setCurrentPage,
   groupName,
   setGroupName,
+  groupInfo,
   setGroupInfo,
   groupImageFile,
   setGroupImageFile,
   isPublic,
   setIsPublic,
+  topic,
+  topicTag,
   setTopic,
+  setTopicTag,
+  setTopicDesc,
 }: CreateGroupInfoPropTypes) => {
-  // const [groupName, setGroupName] = useState('');
-  // const [groupInfo, setGroupInfo] = useState('');
-  // const [groupPicture, setGroupPicture] = useState('');
-
-  // const [groupImageFile, setGroupImageFile] = useState('');
-  // const [isPublic, setIsPublic] = useState(true);
+  const isGroupNameValid = groupName.length <= 10;
+  const isGroupInfoValid = groupInfo.length <= 100;
+  const [isGroupNameEmpty, setIsGroupNameEmpty] = useState(false);
+  const [isGroupImageEmpty, setIsGroupImageEmpty] = useState(false);
+  const [isGroupTopicEmpty, setIsGroupTopicEmpty] = useState(false);
+  const [topicModal, setTopicModal] = useState(false);
+  const groupNameRef = useRef<HTMLInputElement>(null);
 
   const handleGroupImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
@@ -53,8 +66,8 @@ const CreateGroupInfo = ({
       reader.readAsDataURL(file);
       reader.onload = () => {
         if (typeof reader.result === 'string') {
-          console.log(reader.result);
           setGroupImageFile(reader.result);
+          setIsGroupImageEmpty(false);
         } else {
           console.log('Image Error');
         }
@@ -66,19 +79,49 @@ const CreateGroupInfo = ({
     } else {
       alert('file 형식을 확인해주세요.');
     }
-
-    // reader의 loadend 이벤트가 완료될 때까지 기다린 후 이미지 URL을 설정합니다.
-    // await new Promise((resolve) => (reader.onloadend = resolve));
-
-    // setImageUrl(file);
   };
 
   const handleDuplicateGroupName = () => {
     alert('중복확인 로직');
   };
-  const handleIsPublic = (e) => {
+  const handleIsPublic = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value + '함수 작동');
-    setIsPublic(e.target.value);
+    setIsPublic(e.target.value === 'true');
+  };
+
+  const InputInfoMsg = {
+    groupNameLength: '10자 이내로 작성해주세요.',
+    groupNameNotAvailable: '사용 불가능한 모임명 입니다.',
+    groupNameNotCheck: '중복확인을 해주세요.',
+    groupNameAvailable: '사용 가능한 모임명입니다.',
+  };
+
+  const handleCurrentPage = () => {
+    if (groupName && isGroupNameValid && groupImageFile && topic && topicTag)
+      setCurrentPage('GroupLeaderInfoPage');
+    else if (!groupName || !isGroupNameValid) {
+      if (!groupName) setIsGroupNameEmpty(true);
+      else {
+        setIsGroupNameEmpty(false);
+      }
+
+      if (groupNameRef.current) {
+        groupNameRef.current && groupNameRef.current.focus();
+      }
+    } else if (!groupImageFile) {
+      setIsGroupImageEmpty(true);
+    } else if (!topic || !topicTag) {
+      setIsGroupTopicEmpty(true);
+    }
+  };
+
+  const handleGroupName = (e: ChangeEvent<HTMLInputElement>) => {
+    setGroupName(e);
+    setIsGroupNameEmpty(false);
+  };
+
+  const toggleModal = () => {
+    setTopicModal((prev) => !prev);
   };
 
   return (
@@ -92,13 +135,15 @@ const CreateGroupInfo = ({
           <Spacing marginBottom="4.8" />
           <GreyBox />
         </TitleWrapper>
-        <WhiteInputWrapper>
+        <WhiteInputWrapper isValid={!isGroupNameEmpty}>
           <GroupInputWrapper>
             <InputTitleText>글 모임 이름*</InputTitleText>
             <GroupNameInputLayout>
               <GroupNameInput
-                onChange={(e) => setGroupName(e)}
+                ref={groupNameRef}
+                onChange={handleGroupName}
                 placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
+                isValid={isGroupNameValid}
               />{' '}
               <DuplicateCheckBtn
                 type="button"
@@ -109,15 +154,22 @@ const CreateGroupInfo = ({
                 중복확인
               </DuplicateCheckBtn>
             </GroupNameInputLayout>
+            <ErrorMsgText>{isGroupNameValid ? '' : InputInfoMsg.groupNameLength}</ErrorMsgText>
           </GroupInputWrapper>
         </WhiteInputWrapper>
-        <WhiteInputWrapper>
+        <GroupInfoWrppaer>
           <GroupInputWrapper>
             <InputTitleText>글 모임 소개</InputTitleText>
-            <GroupInfoTextarea placeholder="글 모임에 대해 자유롭게 소개해주세요." />
+            <GroupInfoTextarea
+              placeholder="글 모임에 대해 자유롭게 소개해주세요."
+              isValid={isGroupInfoValid}
+              onChange={(e) => setGroupInfo(e)}
+              maxLength={110}
+            />
+            <TextAreaLenth isValid={isGroupInfoValid}> {groupInfo.length} / 100</TextAreaLenth>
           </GroupInputWrapper>
-        </WhiteInputWrapper>
-        <WhiteInputWrapper>
+        </GroupInfoWrppaer>
+        <WhiteInputWrapper isValid={!isGroupImageEmpty}>
           <GroupInputWrapper>
             <InputTitleText>글 모임 사진</InputTitleText>
             <GroupImageLabel htmlFor="file">
@@ -143,7 +195,7 @@ const CreateGroupInfo = ({
             </GroupInputDesc>
           </GroupInputWrapper>
         </WhiteInputWrapper>
-        <WhiteInputWrapper>
+        <WhiteInputWrapper isValid={true}>
           <GroupInputHorizonWrapper>
             <GroupPublicDescWrapper>
               <GroupPublicDesc>해당 글모임을 공개/비공개로 설정하시겠습니까?</GroupPublicDesc>
@@ -179,7 +231,7 @@ const CreateGroupInfo = ({
             </GroupPublicDescContainer>
           </GroupInputHorizonWrapper>
         </WhiteInputWrapper>
-        <WhiteInputWrapper>
+        <WhiteInputWrapper isValid={!isGroupTopicEmpty}>
           <GroupInputHorizonWrapper>
             <TopicSettingWrapper>
               <TopicSettingText>글모임 생성 전에 첫번째 글감을 설정해보세요*</TopicSettingText>
@@ -187,17 +239,65 @@ const CreateGroupInfo = ({
                 관리자 페이지에서 언제든지 수정 가능합니다.
               </TopicSettingAdditionalText>
             </TopicSettingWrapper>
-            <TopicCreateBtn>글감 작성하기</TopicCreateBtn>
+            <TopicCreateBtn onClick={toggleModal}>글감 작성하기</TopicCreateBtn>
           </GroupInputHorizonWrapper>
         </WhiteInputWrapper>
-        <NextBtn>다음</NextBtn>
+        <NextBtn onClick={handleCurrentPage}>다음</NextBtn>
       </CreateGroupLayout>
+      {topicModal && (
+        <Overlay onClick={toggleModal}>
+          {' '}
+          <CreateGroupTopicModal
+            topic={topic}
+            topicTag={topicTag}
+            setTopic={setTopic}
+            setTopicTag={setTopicTag}
+            setTopicDesc={setTopicDesc}
+            toggleModal={toggleModal}
+            setIsGroupTopicEmpty={setIsGroupTopicEmpty}
+          />
+        </Overlay>
+      )}
     </CreateGroupWrapper>
   );
 };
-
 export default CreateGroupInfo;
 
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+  background-color: rgb(0 0 0 / 60%);
+`;
+const GroupInfoWrppaer = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: fit-content;
+
+  border-radius: 8px;
+`;
+
+const TextAreaLenth = styled.p<{ isValid: boolean }>`
+  position: relative;
+  bottom: 4rem;
+  left: 70.6rem;
+
+  ${({ theme }) => theme.fonts.button3};
+  color: ${({ theme, isValid }) => (isValid ? theme.colors.gray70 : theme.colors.mileRed)};
+`;
+const ErrorMsgText = styled.p`
+  ${({ theme }) => theme.fonts.body4};
+  color: ${({ theme }) => theme.colors.mileRed};
+`;
 const CreateGroupRadioCheckedIcon = styled(CreateGroupRadioCheckedIc)`
   margin-right: 0.8rem;
 `;
@@ -372,13 +472,14 @@ const GreyBox = styled.div`
   background-color: ${({ theme }) => theme.colors.gray20};
 `;
 
-const WhiteInputWrapper = styled.section`
+const WhiteInputWrapper = styled.section<{ isValid: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: fit-content;
 
+  border: 1px solid ${({ theme, isValid }) => (isValid ? 'none' : theme.colors.mileRed)};
   border-radius: 8px;
 `;
 
@@ -405,7 +506,7 @@ const GroupNameInputLayout = styled.div`
   height: 4rem;
 `;
 
-const GroupNameInput = styled.input`
+const GroupNameInput = styled.input<{ isValid: boolean }>`
   width: 100%;
   height: 3.9rem;
   padding: 1rem 1.2rem;
@@ -413,7 +514,10 @@ const GroupNameInput = styled.input`
   color: ${({ theme }) => theme.colors.gray100};
 
   background: ${({ theme }) => theme.colors.gray5};
-  border: 1px solid ${({ theme }) => theme.colors.gray20};
+  border: 1px solid
+    ${({ theme, isValid }) => (isValid ? theme.colors.gray20 : theme.colors.mileRed)};
+
+  /* border: 1px solid ${({ theme }) => theme.colors.gray20}; */
   border-radius: 6px;
   ${({ theme }) => theme.fonts.button2};
 
@@ -441,7 +545,7 @@ const DuplicateCheckBtn = styled.button<{ positive: boolean }>`
   ${({ theme }) => theme.fonts.button3};
 `;
 
-const GroupInfoTextarea = styled.textarea`
+const GroupInfoTextarea = styled.textarea<{ isValid: boolean }>`
   width: 100%;
   height: 11rem;
   padding: 1rem 1.2rem;
@@ -449,7 +553,8 @@ const GroupInfoTextarea = styled.textarea`
   color: ${({ theme }) => theme.colors.gray100};
 
   background: ${({ theme }) => theme.colors.gray5};
-  border: 1px solid ${({ theme }) => theme.colors.gray20};
+  border: 1px solid
+    ${({ theme, isValid }) => (isValid ? theme.colors.gray20 : theme.colors.mileRed)};
   border-radius: 6px;
 
   ${({ theme }) => theme.fonts.button2};
