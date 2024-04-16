@@ -21,7 +21,6 @@ export const fetchInvitationLink = async (groupId: string) => {
         },
       },
     );
-    console.log({ data }.data.data);
     return { data: { data }.data.data };
   } catch {
     console.error();
