@@ -42,9 +42,9 @@ const Comment = (props: CommentPropTypes) => {
     console.log(recentCommentIndex, 'index');
 
     // 3초 후에 보라색 하이라이트를 비활성화
-    // setTimeout(() => {
-    //   setRecentCommentIndex(null);
-    // }, 3000);
+    setTimeout(() => {
+      setRecentCommentIndex(null);
+    }, 3000);
   };
 
   return error?.message == '403' ? (
@@ -64,7 +64,7 @@ const Comment = (props: CommentPropTypes) => {
           <EditorCatIc />
         </>
       ) : (
-        commentListData?.map((data: CommentListPropTypes, commentIndex) => (
+        commentListData?.map((data: CommentListPropTypes, index) => (
           <>
             <CommentItem
               key={data.commentId}
@@ -75,10 +75,10 @@ const Comment = (props: CommentPropTypes) => {
               postId={postId}
               commentId={data.commentId}
               type="comment"
-              isHighlighted={recentCommentIndex === commentIndex}
+              isHighlighted={recentCommentIndex === index}
             ></CommentItem>
             {data.replies &&
-              data.replies.map((nestedData: ReplyResponseTypes, replyIndex) => (
+              data.replies.map((nestedData: ReplyResponseTypes) => (
                 <NestedWrapper key={nestedData.replyId}>
                   <ArrowTopLeftIc />
                   <CommentItem
@@ -89,12 +89,6 @@ const Comment = (props: CommentPropTypes) => {
                     postId={postId}
                     commentId={nestedData.replyId}
                     type="nestedComment"
-                    isHighlighted={
-                      data &&
-                      data.replies &&
-                      data.replies.length > 0 &&
-                      replyIndex === data.replies.length - 1
-                    }
                   ></CommentItem>
                 </NestedWrapper>
               ))}
