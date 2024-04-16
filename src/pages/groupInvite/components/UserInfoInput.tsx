@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { useState, useReducer, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { useGetWriterNameConflict, usePostGroupMemberJoin } from '../hooks/queries';
 
@@ -40,6 +40,7 @@ const reducerFn = (state: userInfoStateType, action: userInfoActionType): userIn
 };
 
 const UserInfoInput = () => {
+  const navigate = useNavigate();
   const { groupId } = useParams() as { groupId: string };
   // 소개글 글자수 제한
   const [introduceLimit, setIntroduceLimit] = useState(false);
@@ -81,17 +82,15 @@ const UserInfoInput = () => {
   }, [userInfoVal.writerIntroduce, userInfoVal.writerName]);
 
   //가입하기 버튼 함수
-  const onClickSubmitBtn = () => {
-    setIsConflictBtnClicked(true);
+  const onClickSignUp = () => {
+    setIsSubmitBtnClicked(true);
   };
-
-  // useEffect(() => {
-
-  // })
 
   return (
     <>
-      <UserInfoInputWrapper>
+      <WriterNameInputWrapper
+        $valueNotTyped={isSubmitBtnClicked && userInfoVal.writerName?.length === 0}
+      >
         <UserInfoTitle>모임에서 사용할 필명*</UserInfoTitle>
         <InputWrapper>
           <WriterNameInput
@@ -116,11 +115,13 @@ const UserInfoInput = () => {
             중복확인
           </WriterExistCheckBtn>
         </InputWrapper>
+        {/* 필명 8자 이상일 경우 */}
         {userInfoVal.writerName && writerNameLimit ? (
           <WriterNameLength>8자 이내로 작성해주세요.</WriterNameLength>
         ) : (
           <></>
         )}
+        {/* 필명 중복 확인 결과 */}
         {isConflictBtnClicked ? (
           <WriterNameEnable $isConflict={isConflict || false}>
             {isConflict ? '사용 불가능한 필명 입니다.' : '사용 가능한 필명 입니다.'}
@@ -128,26 +129,42 @@ const UserInfoInput = () => {
         ) : (
           <></>
         )}
-      </UserInfoInputWrapper>
+      </WriterNameInputWrapper>
       <Spacing marginBottom="2.8" />
-      <UserInfoInputWrapper>
+      <WriterIntroduceInputWrapper>
         <UserInfoTitle>소개 글</UserInfoTitle>
         <WriterIntroduceInput
           placeholder="모임원들에게 ‘나’에 대해 자유롭게 소개해주세요."
           onChange={onChangeWriterIntroduce}
-          $charLimit={introduceLimit}
+          $introduceLimit={introduceLimit}
         />
-        <CharCount $charLimit={introduceLimit}>
+        <CharCount $introduceLimit={introduceLimit}>
           {userInfoVal.writerIntroduce ? userInfoVal.writerIntroduce.length : 0}/100
         </CharCount>
-      </UserInfoInputWrapper>
+      </WriterIntroduceInputWrapper>
+      <Spacing marginBottom="2.8" />
+      <SignUpBtn onClick={onClickSignUp}>가입하기</SignUpBtn>
     </>
   );
 };
 
 export default UserInfoInput;
 
-const UserInfoInputWrapper = styled.section`
+const WriterNameInputWrapper = styled.section<{ $valueNotTyped: boolean }>`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  padding: 2.8rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border: ${({ $valueNotTyped, theme }) =>
+    $valueNotTyped ? `1px solid ${theme.colors.mileRed}` : ``};
+  border-radius: 8px;
+`;
+
+const WriterIntroduceInputWrapper = styled.section`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -221,7 +238,7 @@ const WriterNameLength = styled.div`
   ${({ theme }) => theme.fonts.body4};
 `;
 
-const WriterIntroduceInput = styled.textarea<{ $charLimit: boolean }>`
+const WriterIntroduceInput = styled.textarea<{ $introduceLimit: boolean }>`
   position: relative;
   width: 100%;
   height: 11rem;
@@ -230,15 +247,16 @@ const WriterIntroduceInput = styled.textarea<{ $charLimit: boolean }>`
   color: ${({ theme }) => theme.colors.gray100};
 
   background-color: ${({ theme }) => theme.colors.gray5};
-  border: 1px solid ${({ theme }) => theme.colors.gray20};
+  border: ${({ $introduceLimit, theme }) =>
+    $introduceLimit ? `1px solid ${theme.colors.mileRed}` : `1px solid ${theme.colors.gray50}`};
   ${({ theme }) => theme.fonts.button2};
   border-radius: 6px;
 
   resize: none;
 
   &:focus {
-    outline-color: ${({ $charLimit, theme }) =>
-      $charLimit ? theme.colors.mileRed : theme.colors.gray50};
+    outline-color: ${({ $introduceLimit, theme }) =>
+      $introduceLimit ? theme.colors.mileRed : theme.colors.gray50};
   }
 
   &::placeholder {
@@ -246,11 +264,32 @@ const WriterIntroduceInput = styled.textarea<{ $charLimit: boolean }>`
   }
 `;
 
-const CharCount = styled.span<{ $charLimit: boolean }>`
+const CharCount = styled.span<{ $introduceLimit: boolean }>`
   position: absolute;
   right: 4rem;
   bottom: 3.8rem;
 
-  color: ${({ $charLimit, theme }) => ($charLimit ? theme.colors.mileRed : theme.colors.gray70)};
+  color: ${({ $introduceLimit, theme }) =>
+    $introduceLimit ? theme.colors.mileRed : theme.colors.gray70};
   ${({ theme }) => theme.fonts.button3};
+`;
+
+const SignUpBtn = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1.6rem 2rem;
+
+  color: ${({ theme }) => theme.colors.white};
+
+  background-color: ${({ theme }) => theme.colors.mainViolet};
+  border-radius: 10px;
+  ${({ theme }) => theme.fonts.button2};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+
+    background-color: ${({ theme }) => theme.colors.mileViolet};
+  }
 `;
