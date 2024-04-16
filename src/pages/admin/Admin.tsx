@@ -50,7 +50,7 @@ const Admin = () => {
           </AdminMenu>
           <Spacing marginBottom="1.6" />
           {invitationCode && (
-            <AdminInviteBtn onClick={() => handleCopyLink(invitationCode)}>
+            <AdminInviteBtn onClick={() => handleCopyLink(invitationCode?.invitationCode)}>
               초대링크 복사하기
             </AdminInviteBtn>
           )}
