@@ -16,9 +16,9 @@ interface MemberManagePropTypes {
 }
 
 const MemberManage = ({ setPageCount, pageCount }: MemberManagePropTypes) => {
-  const { writerNameId, groupId } = useParams();
+  const { groupId } = useParams();
+  const { memberData, writerNameId } = useFetchMemberInfo(groupId || '', pageCount);
   const { deleteMember } = useDeleteMember(writerNameId || '');
-  const { memberData } = useFetchMemberInfo(groupId || '', pageCount);
   return (
     <>
       <MemberListWrapper>

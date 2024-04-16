@@ -29,8 +29,9 @@ export const useFetchMemberInfo = (groupId: string, page: number) => {
   });
   const totalMember = data && data.data.writerNameCount;
   const memberData = data && data.data;
+  const writerNameId = data?.data.writerNameList[0].writerNameId;
 
-  return { memberData, totalMember, isLoading, page };
+  return { writerNameId, memberData, totalMember, isLoading, page };
 };
 
 // 멤버 삭제 api
