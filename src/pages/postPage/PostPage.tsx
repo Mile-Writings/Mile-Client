@@ -48,7 +48,7 @@ interface editorActionType {
 
 const editorState: editorStateType = {
   topic: '',
-  writer: '작자미상',
+  writer: '필명',
   title: '',
   content: '',
   imageUrl: EDITOR_DEFAULT_IMG,
