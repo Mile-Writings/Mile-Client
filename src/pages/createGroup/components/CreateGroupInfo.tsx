@@ -11,7 +11,6 @@ import {
   CreateGroupRadioCheckedIc,
   CreateGroupRadioUncheckedIc,
 } from '../../../assets/svgs';
-import { AuthorizationHeader, UnAuthorizationHeader } from '../../../components/commons/Header';
 import Spacing from '../../../components/commons/Spacing';
 
 interface CreateGroupInfoPropTypes {
@@ -125,8 +124,7 @@ const CreateGroupInfo = ({
   };
 
   return (
-    <CreateGroupWrapper>
-      {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
+    <>
       <CreateGroupLayout>
         <TitleWrapper>
           <SubTitle>안녕하세요. 마일에 오신 것을 환영합니다</SubTitle>
@@ -258,7 +256,7 @@ const CreateGroupInfo = ({
           />
         </Overlay>
       )}
-    </CreateGroupWrapper>
+    </>
   );
 };
 export default CreateGroupInfo;
@@ -430,13 +428,6 @@ const GroupImageWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.gray10};
   cursor: pointer;
   border-radius: 8px;
-`;
-
-const CreateGroupWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 11.4rem;
 `;
 
 const CreateGroupLayout = styled.div`

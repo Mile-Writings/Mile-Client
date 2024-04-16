@@ -1,8 +1,11 @@
+import styled from '@emotion/styled';
 import { ChangeEvent, useEffect, useReducer, useState } from 'react';
 
 import CreateGroupInfo from './components/CreateGroupInfo';
 import CreateGroupLeaderInfo from './components/CreateGroupLeaderInfo';
 import { ActionTypes, CreateGroupTypes, CurrentPageType } from './types/stateType';
+
+import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 
 const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
@@ -123,12 +126,13 @@ const CreateGroup = () => {
   const setLeaderPenName = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'setLeaderPenName', value: e.target.value });
   };
-  const setLeaderDesc = (e: ChangeEvent<HTMLInputElement>) => {
+  const setLeaderDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'setLeaderDesc', value: e.target.value });
   };
 
   return (
-    <>
+    <CreateGroupWrapper>
+      {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       {currentPage === 'GroupInfoPage' && (
         <CreateGroupInfo
           setCurrentPage={setCurrentPage}
@@ -155,8 +159,40 @@ const CreateGroup = () => {
           setLeaderDesc={setLeaderDesc}
         />
       )}
-    </>
+      {currentPage === 'GroupLeaderInfoPage' && (
+        <CreateGroupBtn type="button"> 생성하기</CreateGroupBtn>
+      )}
+    </CreateGroupWrapper>
   );
 };
 
 export default CreateGroup;
+
+const CreateGroupWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 11.4rem;
+`;
+const CreateGroupBtn = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 5.1rem;
+
+  color: ${({ theme }) => theme.colors.white};
+
+  ${({ theme }) => theme.fonts.button2};
+  background: ${({ theme }) => theme.colors.mainViolet};
+  border: 1px solid ${({ theme }) => theme.colors.mainViolet};
+  border-radius: 10px;
+
+  :hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+
+    background-color: ${({ theme }) => theme.colors.mileViolet};
+    border: 1px solid ${({ theme }) => theme.colors.mileViolet};
+  }
+`;

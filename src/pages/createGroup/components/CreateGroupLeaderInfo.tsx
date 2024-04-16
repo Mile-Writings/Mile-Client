@@ -3,7 +3,6 @@ import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
 
 import { CurrentPageType } from '../types/stateType';
 
-import { AuthorizationHeader, UnAuthorizationHeader } from '../../../components/commons/Header';
 import Spacing from '../../../components/commons/Spacing';
 
 interface GroupLeaderPropTypes {
@@ -32,8 +31,7 @@ const CreateGroupLeaderInfo = ({
   }, []); // 의존성 배열을 비워서 컴포넌트 마운트 시 1회만 설정되도록 함
 
   return (
-    <GroupLeaderInfoWrapper>
-      {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
+    <>
       <CreateGroupLayout>
         <TitleWrapper>
           <SubTitle>안녕하세요. 마일에 오신 것을 환영합니다</SubTitle>
@@ -64,38 +62,17 @@ const CreateGroupLeaderInfo = ({
             </TextAreaLenth>
           </GroupInputWrapper>
         </GroupLeaderInfoWrppaer>
-        <CreateGroupBtn type="button"> 생성하기</CreateGroupBtn>
       </CreateGroupLayout>
-    </GroupLeaderInfoWrapper>
+    </>
   );
 };
 
-const CreateGroupBtn = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 5.1rem;
-
-  color: ${({ theme }) => theme.colors.white};
-
-  ${({ theme }) => theme.fonts.button2};
-  background: ${({ theme }) => theme.colors.mainViolet};
-  border: 1px solid ${({ theme }) => theme.colors.mainViolet};
-  border-radius: 10px;
-
-  :hover {
-    color: ${({ theme }) => theme.colors.mainViolet};
-
-    background-color: ${({ theme }) => theme.colors.mileViolet};
-    border: 1px solid ${({ theme }) => theme.colors.mileViolet};
-  }
-`;
-
-const TextAreaLenth = styled.p<{ isValid: boolean }>`
+const TextAreaLenth = styled.span<{ isValid: boolean }>`
   position: relative;
   bottom: 4rem;
   left: 70.6rem;
+
+  width: 6rem;
 
   ${({ theme }) => theme.fonts.button3};
   color: ${({ theme, isValid }) => (isValid ? theme.colors.gray70 : theme.colors.mileRed)};
@@ -194,7 +171,7 @@ const CreateGroupLayout = styled.div`
   gap: 2.8rem;
   width: 82.6rem;
   height: fit-content;
-  margin-bottom: 8rem;
+  margin-bottom: 2.8rem;
 `;
 
 const GroupLeaderInfoWrapper = styled.div`
