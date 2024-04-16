@@ -92,22 +92,22 @@ const CreateGroup = () => {
     leaderDesc,
   } = state;
   useEffect(() => {
-    console.log(groupName);
+    console.log(groupName, groupInfo, groupImageFile, isPublic);
   }, [groupName]);
   const setGroupName = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'setGroupName', value: e.target.value });
   };
 
-  const setGroupInfo = (e: ChangeEvent<HTMLInputElement>) => {
+  const setGroupInfo = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'setGroupInfo', value: e.target.value });
   };
 
-  const setGroupImageFile = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'setGroupImageFile', value: e.target.value });
+  const setGroupImageFile = (inputValue: string) => {
+    dispatch({ type: 'setGroupImageFile', value: inputValue });
   };
 
-  const setIsPublic = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'setIsPublic', value: e.target.value });
+  const setIsPublic = (inputValue: boolean) => {
+    dispatch({ type: 'setIsPublic', value: inputValue });
   };
 
   const setTopic = (e: ChangeEvent<HTMLInputElement>) => {
@@ -117,7 +117,7 @@ const CreateGroup = () => {
   const setTopicTag = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'setTopicTag', value: e.target.value });
   };
-  const setTopicDesc = (e: ChangeEvent<HTMLInputElement>) => {
+  const setTopicDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'setTopicDesc', value: e.target.value });
   };
   const setLeaderPenName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -134,15 +134,27 @@ const CreateGroup = () => {
           setCurrentPage={setCurrentPage}
           groupName={groupName}
           setGroupName={setGroupName}
+          groupInfo={groupInfo}
           setGroupInfo={setGroupInfo}
           groupImageFile={groupImageFile}
           setGroupImageFile={setGroupImageFile}
           isPublic={isPublic}
           setIsPublic={setIsPublic}
+          topic={topic}
+          topicTag={topicTag}
           setTopic={setTopic}
+          setTopicTag={setTopicTag}
+          setTopicDesc={setTopicDesc}
         />
       )}
-      {currentPage === 'GroupLeaderInfoPage' && <CreateGroupLeaderInfo />}
+      {currentPage === 'GroupLeaderInfoPage' && (
+        <CreateGroupLeaderInfo
+          setCurrentPage={setCurrentPage}
+          setLeaderPenName={setLeaderPenName}
+          leaderDesc={leaderDesc}
+          setLeaderDesc={setLeaderDesc}
+        />
+      )}
     </>
   );
 };
