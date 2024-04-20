@@ -5,7 +5,7 @@ interface DeleteMemberPropTypes {
   message: string;
 }
 
-const fetchDeleteMember = async (writerNameId: string) => {
+const fetchDeleteMember = async (writerNameId: number) => {
   try {
     const token = localStorage.getItem('accessToken');
     const data = await devClient.delete<DeleteMemberPropTypes>(`/api/writerName/${writerNameId}`, {

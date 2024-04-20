@@ -29,16 +29,15 @@ export const useFetchMemberInfo = (groupId: string, page: number) => {
   });
   const totalMember = data && data.data.writerNameCount;
   const memberData = data && data.data;
-  const writerNameId = data?.data.writerNameList[0].writerNameId;
 
-  return { writerNameId, memberData, totalMember, isLoading, page };
+  return { memberData, totalMember, isLoading, page };
 };
 
 // 멤버 삭제 api
-export const useDeleteMember = (writerNameId: string) => {
+export const useDeleteMember = (writerNameId: number) => {
   const queryClient = useQueryClient();
   const data = useMutation({
-    mutationKey: [QUERY_KEY_ADMIN.useDeleteMember],
+    mutationKey: [QUERY_KEY_ADMIN.useDeleteMember, writerNameId],
     mutationFn: () => fetchDeleteMember(writerNameId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_ADMIN.useDeleteMember, writerNameId] });
@@ -47,5 +46,6 @@ export const useDeleteMember = (writerNameId: string) => {
   const deleteMember = () => {
     data.mutate();
   };
+
   return { deleteMember };
 };
