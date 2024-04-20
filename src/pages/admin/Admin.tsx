@@ -101,6 +101,12 @@ const AdminInviteBtn = styled.button`
 
   background-color: ${({ theme }) => theme.colors.mainViolet};
   border-radius: 8px;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+
+    background-color: ${({ theme }) => theme.colors.mileViolet};
+  }
 `;
 
 const Title = styled.h1`
