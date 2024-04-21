@@ -22,7 +22,7 @@ export interface MemberPropTypes {
 interface MemberManagePropTypes {
   data?: MemberPropTypes;
   setPageCount: Dispatch<SetStateAction<number>>;
-  pageCount: number | undefined;
+  pageCount: number;
 }
 
 const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) => {

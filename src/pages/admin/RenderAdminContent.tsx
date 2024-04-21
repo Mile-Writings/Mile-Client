@@ -12,7 +12,6 @@ import Spacing from '../../components/commons/Spacing';
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
   const { topicCount, adminTopicData } = useAdminTopic();
   const { groupId } = useParams();
-  console.log(`groupId: ${groupId}`);
   const [page, setPage] = useState(1);
   const { memberData, totalMember } = useFetchMemberInfo(groupId || '', page);
   switch (admin) {
