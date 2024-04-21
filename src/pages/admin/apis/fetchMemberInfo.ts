@@ -1,7 +1,7 @@
 import { devClient } from '../../../utils/apis/axios';
 
 export interface Members {
-  writerNameId: string;
+  writerNameId: number;
   writerName: string;
   postCount: number;
   commentCount: number;
