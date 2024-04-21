@@ -6,7 +6,6 @@ import fetchMemberInfo from '../apis/fetchMemberInfo';
 
 export const QUERY_KEY_ADMIN = {
   useMemberInfo: 'fetchMemberInfo',
-  useDeleteMember: 'deleteMember',
 };
 
 export const useAdminTopic = () => {
@@ -39,10 +38,10 @@ export const useFetchMemberInfo = (groupId: string, page: number | undefined) =>
 export const useDeleteMember = () => {
   const queryClient = useQueryClient();
   const data = useMutation({
-    mutationKey: [QUERY_KEY_ADMIN.useDeleteMember],
+    mutationKey: [QUERY_KEY_ADMIN.useMemberInfo],
     mutationFn: (writerNameId: number) => fetchDeleteMember(writerNameId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_ADMIN.useDeleteMember] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_ADMIN.useMemberInfo] });
     },
   });
   const deleteMember = (writerNameId: number) => {
