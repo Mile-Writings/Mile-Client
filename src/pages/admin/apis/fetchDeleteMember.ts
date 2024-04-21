@@ -1,14 +1,20 @@
 import { devClient } from '../../../utils/apis/axios';
 
-interface DeleteMemberPropTypes {
-  status: number;
-  message: string;
+interface MembersListTypes {
+  pageNumber: number;
+  writerNameCount: number;
+  writerNameList: {
+    writerNameId: number;
+    writerName: string;
+    postCount: number;
+    commentCount: number;
+  };
 }
 
-const fetchDeleteMember = async (writerNameId: number) => {
+const fetchDeleteMember = async (writerNameId: number | undefined) => {
   try {
     const token = localStorage.getItem('accessToken');
-    const data = await devClient.delete<DeleteMemberPropTypes>(`/api/writerName/${writerNameId}`, {
+    const data = await devClient.delete<MembersListTypes>(`/api/writerName/${writerNameId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
