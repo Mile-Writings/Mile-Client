@@ -22,29 +22,31 @@ export const useAdminTopic = () => {
 };
 
 // 멤버 정보 조회 get api
-export const useFetchMemberInfo = (groupId: string, page: number) => {
+export const useFetchMemberInfo = (groupId: string, page: number | undefined) => {
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEY_ADMIN.useMemberInfo],
     queryFn: () => fetchMemberInfo(groupId || '', page),
   });
-  const totalMember = data && data.data.writerNameCount;
-  const memberData = data && data.data;
+  const totalMember = data?.data.writerNameCount;
+  const memberData = data?.data;
+  const memberListData = data?.data.writerNameList;
+  const pageNumber = data?.data.pageNumber;
 
-  return { memberData, totalMember, isLoading, page };
+  return { memberData, memberListData, totalMember, pageNumber, isLoading, page };
 };
 
 // 멤버 삭제 api
-export const useDeleteMember = (writerNameId: number) => {
+export const useDeleteMember = () => {
   const queryClient = useQueryClient();
   const data = useMutation({
-    mutationKey: [QUERY_KEY_ADMIN.useDeleteMember, writerNameId],
-    mutationFn: () => fetchDeleteMember(writerNameId),
+    mutationKey: [QUERY_KEY_ADMIN.useDeleteMember],
+    mutationFn: (writerNameId: number) => fetchDeleteMember(writerNameId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_ADMIN.useDeleteMember, writerNameId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_ADMIN.useDeleteMember] });
     },
   });
-  const deleteMember = () => {
-    data.mutate();
+  const deleteMember = (writerNameId: number) => {
+    data.mutate(writerNameId);
   };
 
   return { deleteMember };

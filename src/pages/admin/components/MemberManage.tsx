@@ -2,23 +2,34 @@ import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { MemberPropTypes } from '../apis/fetchMemberInfo';
 import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 
 import { adminEmptyMemberIc as AdminEmptyMemberIcon, adminProfileIc } from '../../../assets/svgs';
 import Pagenation from '../../../components/commons/Pagenation';
 import Spacing from '../../../components/commons/Spacing';
 
-interface MemberManagePropTypes {
-  data?: MemberPropTypes | undefined;
-  setPageCount: Dispatch<SetStateAction<number>>;
-  pageCount: number;
+export interface MemberPropTypes {
+  pageNumber: number;
+  writerNameCount: number;
+  writerNameList: {
+    writerNameId: number;
+    writerName: string;
+    postCount: number;
+    commentCount: number;
+  }[];
 }
 
-const MemberManage = ({ setPageCount, pageCount }: MemberManagePropTypes) => {
+interface MemberManagePropTypes {
+  data?: MemberPropTypes;
+  setPageCount: Dispatch<SetStateAction<number>>;
+  pageCount: number | undefined;
+}
+
+const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) => {
   const { groupId } = useParams();
-  const { memberData, writerNameId } = useFetchMemberInfo(groupId || '', pageCount);
-  const { deleteMember } = useDeleteMember(writerNameId || '');
+  const { memberData } = useFetchMemberInfo(groupId || '', pageCount);
+  const { deleteMember } = useDeleteMember();
+
   return (
     <>
       <MemberListWrapper>
@@ -30,20 +41,16 @@ const MemberManage = ({ setPageCount, pageCount }: MemberManagePropTypes) => {
         </TableHeaderLayout>
         <Spacing marginBottom="0.4" />
         <MemberLayout>
-          {memberData?.writerNameCount !== 0 ? (
-            memberData?.writerNameList.map(
-              ({ writerNameId, writerName, postCount, commentCount }) => {
-                return (
-                  <MemberItemContainer key={writerNameId}>
-                    <AdminProfileIcon />
-                    <Name>{writerName}</Name>
-                    <PostNumber>{postCount}</PostNumber>
-                    <CommentNumber>{commentCount}</CommentNumber>
-                    <ExpelBtn onClick={deleteMember}>삭제하기</ExpelBtn>
-                  </MemberItemContainer>
-                );
-              },
-            )
+          {data?.writerNameCount !== 0 ? (
+            data?.writerNameList.map(({ writerNameId, writerName, postCount, commentCount }) => (
+              <MemberItemContainer key={writerNameId}>
+                <AdminProfileIcon />
+                <Name>{writerName}</Name>
+                <PostNumber>{postCount}</PostNumber>
+                <CommentNumber>{commentCount}</CommentNumber>
+                <ExpelBtn onClick={() => deleteMember(writerNameId)}>삭제하기</ExpelBtn>
+              </MemberItemContainer>
+            ))
           ) : (
             <EmptyContainer>
               <EmptyMemberText>아직 멤버가 없습니다.</EmptyMemberText>
