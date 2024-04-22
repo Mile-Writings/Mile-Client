@@ -162,11 +162,9 @@ const PostPage = () => {
   };
   const setTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     editorContentDispatch({ type: 'setTitle', title: e.target.value });
-    e.target.value.trim().length > 0 && setPostErrorMessage('');
   };
   const setContent = (content: string) => {
     editorContentDispatch({ type: 'setContent', content: content });
-    contentWithoutTag.trim().length > 0 && setPostErrorMessage('');
   };
   const setImageToServer = (imageUrl: string) => {
     editorContentDispatch({ type: 'setImageToServer', imageUrl: imageUrl });
@@ -350,6 +348,17 @@ const PostPage = () => {
     setEditorModalType('putTempSaveContent');
     preventScroll();
   };
+
+  // 글 제출 시 에러 메시지 타이머 설정
+  useEffect(() => {
+    if (postErrorMessage) {
+      const timer = setTimeout(() => {
+        setPostErrorMessage('');
+      }, 1500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [postErrorMessage]);
 
   // editor Flow Modal 관련
   const editorFlowModalReducerFn = (
