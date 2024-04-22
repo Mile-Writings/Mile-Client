@@ -23,7 +23,7 @@ export const useAdminTopic = () => {
 // 멤버 정보 조회 get api
 export const useFetchMemberInfo = (groupId: string, page: number | undefined) => {
   const { data, isLoading } = useQuery({
-    queryKey: [QUERY_KEY_ADMIN.useMemberInfo],
+    queryKey: [QUERY_KEY_ADMIN.useMemberInfo, page],
     queryFn: () => fetchMemberInfo(groupId || '', page),
   });
   const totalMember = data?.data.writerNameCount;
