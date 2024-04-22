@@ -22,6 +22,7 @@ import {
 } from './hooks/queries';
 import { preventScroll, allowScroll } from './utils/modalPreventScroll';
 
+import { EditorErrorIcn } from '../../assets/svgs/editorSVG';
 import {
   EditorEditHeader,
   EditorTempExistHeader,
@@ -183,6 +184,9 @@ const PostPage = () => {
   const [showTempContinueModal, setShowTempContinueModal] = useState(false);
   // 어떤 모달 열려야 하는지 handling
   const [editorModalType, setEditorModalType] = useState('');
+  // 모든 정보 입력됐는지 여부
+  const [postAvailable, setPostAvailable] = useState(true);
+  const [postErrorMessage, setPostErrorMessage] = useState('');
 
   // 임시저장 불러오기
   interface tempTopicListType {
@@ -226,6 +230,7 @@ const PostPage = () => {
     content: editorVal.content || '',
     imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
+    setPostErrorMessage: setPostErrorMessage,
   });
 
   // 최초저장 -> 제출하기 누르면 열리는 모달
@@ -447,6 +452,10 @@ const PostPage = () => {
         />
       )}
       <Spacing marginBottom="6.4" />
+      <PostDeclinedWrapper $postAvailable={postErrorMessage.trim().length === 0}>
+        <EditorErrorIcn />
+        <PoseDeclinedText>{postErrorMessage}</PoseDeclinedText>
+      </PostDeclinedWrapper>
       <ImageUpload
         setPreviewImgUrl={setPreviewImgUrl}
         previewImgUrl={previewImgUrl}
@@ -481,6 +490,7 @@ const PostPage = () => {
 export default PostPage;
 
 const PostPageWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -494,4 +504,26 @@ const DropDownEditorWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+`;
+
+const PostDeclinedWrapper = styled.div<{ $postAvailable: boolean }>`
+  position: fixed;
+  top: 7rem;
+  right: 6rem;
+  z-index: 5;
+  display: ${({ $postAvailable }) => ($postAvailable ? 'none' : 'flex')};
+  gap: 1.17rem;
+  align-items: center;
+  justify-content: center;
+  width: 20.9rem;
+  padding: 1.17rem 1.6rem 1.17rem 1.97rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.mainViolet};
+  border-radius: 8px;
+`;
+
+const PoseDeclinedText = styled.span`
+  color: ${({ theme }) => theme.colors.mainViolet};
+  ${({ theme }) => theme.fonts.button1};
 `;
