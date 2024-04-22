@@ -32,6 +32,7 @@ interface postContentType {
   content: string;
   imageUrl: string;
   anonymous: boolean;
+  contentWithoutTag: string;
   // eslint-disable-next-line no-unused-vars
   setPostErrorMessage: (errorMessage: string) => void;
 }
@@ -43,6 +44,7 @@ export const usePostContent = ({
   content,
   imageUrl,
   anonymous,
+  contentWithoutTag,
   setPostErrorMessage,
 }: postContentType) => {
   const { mutate, data: postContentId } = useMutation({
@@ -55,6 +57,7 @@ export const usePostContent = ({
         content,
         imageUrl,
         anonymous,
+        contentWithoutTag,
         setPostErrorMessage,
       },
     ],
@@ -66,6 +69,7 @@ export const usePostContent = ({
         content,
         imageUrl,
         anonymous,
+        contentWithoutTag,
         setPostErrorMessage,
       }),
   });
@@ -127,6 +131,8 @@ interface putEditContentType {
   imageUrl: string;
   anonymous: boolean;
   postId: string;
+  // eslint-disable-next-line no-unused-vars
+  setPostErrorMessage: (errorMessage: string) => void;
 }
 
 export const usePutEditContent = ({
@@ -136,6 +142,7 @@ export const usePutEditContent = ({
   imageUrl,
   anonymous,
   postId,
+  setPostErrorMessage,
 }: putEditContentType) => {
   const queryClient = useQueryClient();
   const data = useMutation({
@@ -148,9 +155,11 @@ export const usePutEditContent = ({
         imageUrl,
         anonymous,
         postId,
+        setPostErrorMessage,
       },
     ],
-    mutationFn: () => editPutContent({ topicId, title, content, imageUrl, anonymous, postId }),
+    mutationFn: () =>
+      editPutContent({ topicId, title, content, imageUrl, anonymous, postId, setPostErrorMessage }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
     },
@@ -212,7 +221,7 @@ export const useGetTempSaveContent = (postId: string, isTempClicked: boolean) =>
 };
 
 // 임시저장 저장하기
-interface putEditContentType {
+interface putTempSaveContentType {
   topicId: string;
   title: string;
   content: string;
@@ -228,7 +237,7 @@ export const usePutTempSaveContent = ({
   imageUrl,
   anonymous,
   postId,
-}: putEditContentType) => {
+}: putTempSaveContentType) => {
   const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [

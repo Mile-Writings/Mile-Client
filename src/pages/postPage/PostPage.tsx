@@ -162,11 +162,11 @@ const PostPage = () => {
   };
   const setTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     editorContentDispatch({ type: 'setTitle', title: e.target.value });
-    e.target.value.length > 0 && setPostErrorMessage('');
+    e.target.value.trim().length > 0 && setPostErrorMessage('');
   };
   const setContent = (content: string) => {
     editorContentDispatch({ type: 'setContent', content: content });
-    content.length > 0 && setPostErrorMessage('');
+    contentWithoutTag.trim().length > 0 && setPostErrorMessage('');
   };
   const setImageToServer = (imageUrl: string) => {
     editorContentDispatch({ type: 'setImageToServer', imageUrl: imageUrl });
@@ -188,6 +188,8 @@ const PostPage = () => {
   const [editorModalType, setEditorModalType] = useState('');
   // 모든 정보 입력됐는지 여부
   const [postErrorMessage, setPostErrorMessage] = useState('');
+  // 에디터 글 내용 태그 제외한 값 (valid 확인용)
+  const [contentWithoutTag, setContentWithoutTag] = useState('');
 
   // 임시저장 불러오기
   interface tempTopicListType {
@@ -231,6 +233,7 @@ const PostPage = () => {
     content: editorVal.content || '',
     imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
+    contentWithoutTag: contentWithoutTag,
     setPostErrorMessage: setPostErrorMessage,
   });
 
@@ -288,10 +291,12 @@ const PostPage = () => {
     imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
     postId: editPostId,
+    setPostErrorMessage: setPostErrorMessage,
   });
 
   const onClickEditSaveBtn = () => {
     putEditContent();
+    // 여기 에러 없을 때 만 열리게 처리필요
     setShowModal(true);
     setEditorModalType('editContent');
     editorFlowModalDispatch({ type: 'editContent' });
@@ -481,6 +486,7 @@ const PostPage = () => {
           tempContent={tempContent}
           editContent={type === 'edit' ? location.state.content : ''}
           setEditorContent={setContent}
+          setContentWithoutTag={setContentWithoutTag}
         />
       </DropDownEditorWrapper>
       <Spacing marginBottom="8" />
