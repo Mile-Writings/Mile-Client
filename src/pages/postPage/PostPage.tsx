@@ -162,9 +162,11 @@ const PostPage = () => {
   };
   const setTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     editorContentDispatch({ type: 'setTitle', title: e.target.value });
+    e.target.value.length > 0 && setPostErrorMessage('');
   };
   const setContent = (content: string) => {
     editorContentDispatch({ type: 'setContent', content: content });
+    content.length > 0 && setPostErrorMessage('');
   };
   const setImageToServer = (imageUrl: string) => {
     editorContentDispatch({ type: 'setImageToServer', imageUrl: imageUrl });
@@ -185,7 +187,6 @@ const PostPage = () => {
   // 어떤 모달 열려야 하는지 handling
   const [editorModalType, setEditorModalType] = useState('');
   // 모든 정보 입력됐는지 여부
-  const [postAvailable, setPostAvailable] = useState(true);
   const [postErrorMessage, setPostErrorMessage] = useState('');
 
   // 임시저장 불러오기

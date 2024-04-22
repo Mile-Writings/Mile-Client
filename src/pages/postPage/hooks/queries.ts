@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { isAxiosError } from 'axios';
 
 import createPostContent from '../apis/createPostContent';
 import createTempSaveContent from '../apis/createTempSaveContent';
@@ -34,7 +33,7 @@ interface postContentType {
   imageUrl: string;
   anonymous: boolean;
   // eslint-disable-next-line no-unused-vars
-  setPostErrorMessage: (content: string) => void;
+  setPostErrorMessage: (errorMessage: string) => void;
 }
 
 export const usePostContent = ({
@@ -56,10 +55,19 @@ export const usePostContent = ({
         content,
         imageUrl,
         anonymous,
+        setPostErrorMessage,
       },
     ],
-    mutationFn: () => createPostContent({ groupId, topicId, title, content, imageUrl, anonymous }),
-    onError: (error) => console.log(error.message),
+    mutationFn: () =>
+      createPostContent({
+        groupId,
+        topicId,
+        title,
+        content,
+        imageUrl,
+        anonymous,
+        setPostErrorMessage,
+      }),
   });
   return { mutate, postContentId };
 };
