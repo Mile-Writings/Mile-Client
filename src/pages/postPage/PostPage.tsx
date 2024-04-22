@@ -291,16 +291,18 @@ const PostPage = () => {
     imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
     postId: editPostId,
+    contentWithoutTag: contentWithoutTag,
     setPostErrorMessage: setPostErrorMessage,
   });
 
   const onClickEditSaveBtn = () => {
     putEditContent();
-    // 여기 에러 없을 때 만 열리게 처리필요
-    setShowModal(true);
-    setEditorModalType('editContent');
-    editorFlowModalDispatch({ type: 'editContent' });
-    preventScroll();
+    if (contentWithoutTag.trim().length !== 0 && editorVal.title?.trim().length !== 0) {
+      setShowModal(true);
+      setEditorModalType('editContent');
+      editorFlowModalDispatch({ type: 'editContent' });
+      preventScroll();
+    }
   };
 
   // 최초 글 임시 저장

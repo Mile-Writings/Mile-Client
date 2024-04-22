@@ -131,6 +131,7 @@ interface putEditContentType {
   imageUrl: string;
   anonymous: boolean;
   postId: string;
+  contentWithoutTag: string;
   // eslint-disable-next-line no-unused-vars
   setPostErrorMessage: (errorMessage: string) => void;
 }
@@ -142,6 +143,7 @@ export const usePutEditContent = ({
   imageUrl,
   anonymous,
   postId,
+  contentWithoutTag,
   setPostErrorMessage,
 }: putEditContentType) => {
   const queryClient = useQueryClient();
@@ -155,11 +157,21 @@ export const usePutEditContent = ({
         imageUrl,
         anonymous,
         postId,
+        contentWithoutTag,
         setPostErrorMessage,
       },
     ],
     mutationFn: () =>
-      editPutContent({ topicId, title, content, imageUrl, anonymous, postId, setPostErrorMessage }),
+      editPutContent({
+        topicId,
+        title,
+        content,
+        imageUrl,
+        anonymous,
+        postId,
+        contentWithoutTag,
+        setPostErrorMessage,
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
     },

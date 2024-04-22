@@ -7,6 +7,7 @@ interface putEditContentType {
   imageUrl: string;
   anonymous: boolean;
   postId: string;
+  contentWithoutTag: string;
   // eslint-disable-next-line no-unused-vars
   setPostErrorMessage: (errorMessage: string) => void;
 }
@@ -24,12 +25,12 @@ const editPutContent = async ({
   imageUrl,
   anonymous,
   postId,
+  contentWithoutTag,
   setPostErrorMessage,
 }: putEditContentType) => {
   if (title.trim().length === 0) {
-    console.log('실행됨');
     setPostErrorMessage('제목을 입력해주세요');
-  } else if (content.trim().length === 0) {
+  } else if (contentWithoutTag.trim().length === 0) {
     setPostErrorMessage('글을 입력해주세요');
   } else {
     try {

@@ -32,7 +32,6 @@ const createPostContent = async ({
   setPostErrorMessage,
 }: postContentType) => {
   if (title.trim().length === 0) {
-    console.log('실행됨');
     setPostErrorMessage('제목을 입력해주세요');
   } else if (contentWithoutTag.trim().length === 0) {
     setPostErrorMessage('글을 입력해주세요');
