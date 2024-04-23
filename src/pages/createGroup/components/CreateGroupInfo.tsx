@@ -56,9 +56,9 @@ const CreateGroupInfo = ({
   const groupNameRef = useRef<HTMLInputElement>(null);
   const [groupNameValidationTrg, setGroupNameValidationTrg] = useState(false);
 
-  const { data, error } = useGetGroupNameValidation(groupName, groupNameValidationTrg);
+  const { data, error, refetch } = useGetGroupNameValidation(groupName, groupNameValidationTrg);
   console.log(data?.data?.data?.isValidate);
-  console.log(error);
+
   const handleGroupImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
 
@@ -86,11 +86,11 @@ const CreateGroupInfo = ({
   };
 
   const handleDuplicateGroupName = () => {
-    setGroupNameValidationTrg(true);
+    // setGroupNameValidationTrg(true);
+    refetch();
     // if (!data) {
     //   setGroupNameValidationTrg(false);
     // }
-    alert('중복확인 로직');
   };
   const handleIsPublic = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value + '함수 작동');

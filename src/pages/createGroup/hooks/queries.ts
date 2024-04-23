@@ -12,7 +12,8 @@ export const useGetGroupNameValidation = (moimName: string, isEnabled: boolean) 
   const data = useQuery({
     queryKey: [QUERY_KEY_CREATE_GROUP.getGroupNameValidation, moimName],
     queryFn: () => getGroupNameValidation(moimName),
-    enabled: isEnabled,
+    refetchOnWindowFocus: false,
+    enabled: false,
     retry: 0,
   });
 
