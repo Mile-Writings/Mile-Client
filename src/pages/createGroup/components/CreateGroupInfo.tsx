@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from 'react';
+import { isAxiosError } from 'axios';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
 import CreateGroupTopicModal from './CreateGroupTopicModal';
 
@@ -13,6 +14,9 @@ import {
   CreateGroupRadioUncheckedIc,
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
+import postDirectlyS3 from '../../postPage/apis/postDirectlyS3';
+import { usePresignedUrl } from '../../postPage/hooks/queries';
+import { s3UrlParsing } from '../../postPage/utils/s3UrlParsing';
 
 interface CreateGroupInfoPropTypes {
   setCurrentPage: Dispatch<SetStateAction<CurrentPageType['currentPage']>>;
@@ -52,10 +56,27 @@ const CreateGroupInfo = ({
   const [isGroupNameEmpty, setIsGroupNameEmpty] = useState(false);
   const [isGroupImageEmpty, setIsGroupImageEmpty] = useState(false);
   const [isGroupTopicEmpty, setIsGroupTopicEmpty] = useState(false);
+  const [groupImageView, setGroupImageView] = useState('');
   const [topicModal, setTopicModal] = useState(false);
   const groupNameRef = useRef<HTMLInputElement>(null);
 
   const { data, error, refetch } = useGetGroupNameValidation(groupName);
+  // 이미지 보낼 url 받아오기
+  const { fileName, url = '' } = usePresignedUrl();
+
+  const postDirectlyS3Func = async (url: string, imageFile: File) => {
+    try {
+      const data = await postDirectlyS3(url, imageFile);
+      const s3url = s3UrlParsing(url) || '';
+
+      const urlToServer = `${s3url + fileName}`;
+
+      setGroupImageFile(urlToServer);
+      console.log(data);
+    } catch (err) {
+      if (err instanceof Error) throw err;
+    }
+  };
 
   const handleGroupImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
@@ -68,7 +89,8 @@ const CreateGroupInfo = ({
       reader.readAsDataURL(file);
       reader.onload = () => {
         if (typeof reader.result === 'string') {
-          setGroupImageFile(reader.result);
+          postDirectlyS3Func(url, file);
+          setGroupImageView(reader.result);
           setIsGroupImageEmpty(false);
         } else {
           console.log('Image Error');
@@ -101,7 +123,7 @@ const CreateGroupInfo = ({
     if (
       groupName &&
       isGroupNameValid &&
-      groupImageFile &&
+      groupImageView &&
       topic &&
       topicTag &&
       data?.data?.data?.isValidate
@@ -116,7 +138,7 @@ const CreateGroupInfo = ({
       if (groupNameRef.current) {
         groupNameRef.current && groupNameRef.current.focus();
       }
-    } else if (!groupImageFile) {
+    } else if (!groupImageView) {
       setIsGroupImageEmpty(true);
     } else if (!topic || !topicTag) {
       setIsGroupTopicEmpty(true);
@@ -190,8 +212,8 @@ const CreateGroupInfo = ({
           <GroupInputWrapper>
             <InputTitleText>글 모임 사진</InputTitleText>
             <GroupImageLabel htmlFor="file">
-              {groupImageFile ? (
-                <GroupImagePreview src={groupImageFile} />
+              {groupImageView ? (
+                <GroupImagePreview src={groupImageView} />
               ) : (
                 <GroupImageWrapper>
                   <CreateGroupImageUploadIcon />

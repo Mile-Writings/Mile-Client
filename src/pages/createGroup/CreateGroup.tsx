@@ -10,7 +10,8 @@ import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/com
 
 const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
-  const [isGroupLeaderValid, setIsGroupLeaderBalid] = useState(true);
+  const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
+
   const initialState = {
     groupName: '',
     groupInfo: '',
@@ -143,7 +144,7 @@ const CreateGroup = () => {
   });
   const createGroup = () => {
     if (!leaderPenName) {
-      setIsGroupLeaderBalid(false);
+      setIsGroupLeaderValid(false);
     }
     if (groupName && groupImageFile && topic && topicTag && leaderPenName) {
       mutate();
@@ -174,9 +175,11 @@ const CreateGroup = () => {
       )}
       {currentPage === 'GroupLeaderInfoPage' && (
         <CreateGroupLeaderInfo
+          leaderPenName={leaderPenName}
           setCurrentPage={setCurrentPage}
           setLeaderPenName={setLeaderPenName}
           leaderDesc={leaderDesc}
+          setIsGroupLeaderValid={setIsGroupLeaderValid}
           setLeaderDesc={setLeaderDesc}
           isGroupLeaderValid={isGroupLeaderValid}
         />

@@ -6,32 +6,40 @@ import { CurrentPageType } from '../types/stateType';
 import Spacing from '../../../components/commons/Spacing';
 
 interface GroupLeaderPropTypes {
+  leaderPenName: string;
   setCurrentPage: Dispatch<SetStateAction<CurrentPageType['currentPage']>>;
   setLeaderPenName: (e: ChangeEvent<HTMLInputElement>) => void;
   leaderDesc: string;
   setLeaderDesc: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   isGroupLeaderValid: boolean;
+  setIsGroupLeaderValid: Dispatch<SetStateAction<boolean>>;
 }
 
 const CreateGroupLeaderInfo = ({
+  leaderPenName,
   setCurrentPage,
   setLeaderDesc,
   leaderDesc,
   setLeaderPenName,
   isGroupLeaderValid,
+  setIsGroupLeaderValid,
 }: GroupLeaderPropTypes) => {
-  useEffect(() => {
-    const handleBackButton = (e: PopStateEvent) => {
-      e.preventDefault(); // 기본 동작 방지
-      setCurrentPage('GroupInfoPage'); // 상태 변경
-    };
+  // useEffect(() => {
+  //   const handleBackButton = (e: PopStateEvent) => {
+  //     e.preventDefault(); // 기본 동작 방지
+  //     setCurrentPage('GroupInfoPage'); // 상태 변경
+  //   };
 
-    window.addEventListener('popstate', handleBackButton);
-    return () => {
-      window.removeEventListener('popstate', handleBackButton);
-    };
-  }, []); // 의존성 배열을 비워서 컴포넌트 마운트 시 1회만 설정되도록 함
+  //   window.addEventListener('popstate', handleBackButton);
+  //   return () => {
+  //     window.removeEventListener('popstate', handleBackButton);
+  //   };
+  // }, []); // 의존성 배열을 비워서 컴포넌트 마운트 시 1회만 설정되도록 함
 
+  const handleLeaderNameInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsGroupLeaderValid(true);
+    setLeaderPenName(e);
+  };
   return (
     <>
       <CreateGroupLayout>
@@ -45,9 +53,10 @@ const CreateGroupLeaderInfo = ({
             <InputTitleText>글모임장 필명*</InputTitleText>
             <GroupLeaderNameInput
               placeholder="모임에서 사용할 필명 설정 후 가입할 수 있어요!"
-              isValid={true}
-              onChange={(e) => setLeaderPenName(e)}
+              isValid={leaderPenName.length <= 8}
+              onChange={(e) => handleLeaderNameInput(e)}
             />{' '}
+            {leaderPenName.length > 8 && <ErrorMsgText>8자 이내로 작성해주세요.</ErrorMsgText>}
           </GroupInputWrapper>
         </WhiteInputWrapper>
         <GroupLeaderInfoWrppaer>
@@ -68,6 +77,11 @@ const CreateGroupLeaderInfo = ({
     </>
   );
 };
+
+const ErrorMsgText = styled.p`
+  ${({ theme }) => theme.fonts.body4};
+  color: ${({ theme }) => theme.colors.mileRed};
+`;
 
 const TextAreaLenth = styled.span<{ isValid: boolean }>`
   position: relative;
