@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useEffect, useReducer, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import CreateGroupInfo from './components/CreateGroupInfo';
 import CreateGroupLeaderInfo from './components/CreateGroupLeaderInfo';
@@ -11,7 +12,7 @@ import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/com
 const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
-
+  const navigate = useNavigate();
   const initialState = {
     groupName: '',
     groupInfo: '',
@@ -131,7 +132,7 @@ const CreateGroup = () => {
   const setLeaderDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'setLeaderDesc', value: e.target.value });
   };
-  const { mutate, data } = usePostCreateGroup({
+  const { mutate } = usePostCreateGroup({
     groupName,
     groupInfo,
     groupImageFile,
@@ -148,6 +149,7 @@ const CreateGroup = () => {
     }
     if (groupName && groupImageFile && topic && topicTag && leaderPenName) {
       mutate();
+      navigate('/');
     } else {
       console.log('error');
     }
@@ -186,7 +188,6 @@ const CreateGroup = () => {
       )}
       {currentPage === 'GroupLeaderInfoPage' && (
         <CreateGroupBtn type="button" onClick={createGroup}>
-          {' '}
           생성하기
         </CreateGroupBtn>
       )}
