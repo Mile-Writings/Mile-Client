@@ -2,7 +2,7 @@ import { client } from '../../../utils/apis/axios';
 
 interface GroupNameValidationPropTypes {
   data: {
-    isValidation: true;
+    isValidate: true;
   };
   status: number;
   message: string;
@@ -22,6 +22,7 @@ export const getGroupNameValidation = (moimName: string) => {
           },
         },
       );
+      console.log(data);
       return data;
     } catch (err) {
       console.log(err);
