@@ -2,12 +2,11 @@ import styled from '@emotion/styled';
 import { Suspense, lazy } from 'react';
 import { useParams } from 'react-router-dom';
 
+import Ruler from './components/DailyKeyword';
 import FaqDropdown from './components/FaqDropdown';
-import FaqTitle from './components/FaqTitle';
 import Introduction from './components/Introduction';
 import Manual from './components/Manual';
 import OnBoarding from './components/OnBoarding';
-import Ruler from './components/Ruler';
 import { SkeletonComponent } from './components/skeletons/SkeletonComponent';
 import { FAQ_DATA } from './constants/faqData';
 import { useGetGroupContent, useGetRecommendTopic } from './hooks/queries';
@@ -55,7 +54,8 @@ const Main = () => {
       <Manual />
       <FaqLayout>
         <FaqTitleWithDropDownContainer>
-          <FaqTitle />
+          <FaqTitle>자주 묻는 질문</FaqTitle>
+          <Spacing marginBottom="3.6" />
           {FAQ_DATA.map(({ id, question, answer }) => (
             <FaqDropdown key={id} id={id} question={question} answer={answer} />
           ))}
@@ -109,6 +109,10 @@ const FaqLayout = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const FaqTitle = styled.p`
+  ${({ theme }) => theme.fonts.title3};
 `;
 
 const FaqTitleWithDropDownContainer = styled.section`

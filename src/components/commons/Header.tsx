@@ -7,7 +7,7 @@ import LogInOutBtn from './LogInOutBtn';
 import { HeaderLogoIc } from '../../assets/svgs';
 import useNavigateHome from '../../hooks/useNavigateHome';
 import CreateGroupBtn from '../../pages/groupFeed/components/CreateGroupBtn';
-import MyGroupBtn from '../../pages/groupFeed/components/MyGroupBtn';
+import MyGroupDropDown from '../../pages/groupFeed/components/MyGroupDropDown';
 import logout from '../../utils/logout';
 
 interface onClickEditProps {
@@ -35,7 +35,7 @@ export const AuthorizationHeader = () => {
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
       <HeaderLayout>
-        <MyGroupBtn />
+        <MyGroupDropDown />
         <HeaderBtnContainer>
           <CreateGroupBtn />
           <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
@@ -108,6 +108,16 @@ export const EditorTempExistHeader = ({ onClickSubmit }: OnClickTempExistProps) 
   );
 };
 
+// 로고만 있는 헤더
+export const DefaultHeader = () => {
+  const { navigateToHome } = useNavigateHome();
+  return (
+    <HeaderWrapper>
+      <HeaderLogoIcon onClick={navigateToHome} />
+    </HeaderWrapper>
+  );
+};
+
 const HeaderWrapper = styled.div`
   position: fixed;
   top: 0%;
@@ -126,13 +136,14 @@ const HeaderWrapper = styled.div`
 
 const HeaderLayout = styled.div`
   display: flex;
+  gap: 2rem;
   align-items: center;
   height: 6.4rem;
 `;
 
 const HeaderBtnContainer = styled.div`
   display: flex;
-  gap: 1.2rem;
+  gap: 2rem;
   align-items: center;
   height: 6.4rem;
 `;

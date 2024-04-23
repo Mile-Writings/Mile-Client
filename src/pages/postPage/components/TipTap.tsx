@@ -20,16 +20,19 @@ import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import { Editor, EditorContent, useEditor } from '@tiptap/react';
 import classNames from 'classnames';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 
 // custom
 import { FontSize } from '../utils/fontSize';
 import { FontWeight } from '../utils/fontWeight';
 import { LineHeight } from '../utils/lineHeight';
 
+// custom editor css
 import './tiptap.css';
 // editor svg
 import * as ToolbarIcon from '../../../assets/svgs/editorSVG';
+import Spacing from '../../../components/commons/Spacing';
+import useClickOutside from '../../../hooks/useClickOutside';
 
 interface EditorPropTypes {
   title: string | undefined;
@@ -50,18 +53,42 @@ const TipTap = (props: EditorPropTypes) => {
   // font background color drop down
   const [isFontBgColorOpen, setIsFontBgColorOpen] = useState(false);
 
+  const fontSizeDropDownRef = useRef(null);
+  const fontColorDropDownRef = useRef(null);
+  const fontBgColorDropDownRef = useRef(null);
+  // 커스텀 훅 전달 함수
+  const handleFontSizeOutSideClick = () => {
+    setIsFontSizeOpen(false);
+  };
+  const handleFontColorOutSideClick = () => {
+    setIsFontColorOpen(false);
+  };
+  const handleFontBgColorOutSideClick = () => {
+    setIsFontBgColorOpen(false);
+  };
+  // 커스텀 훅 사용
+  useClickOutside(fontSizeDropDownRef, handleFontSizeOutSideClick);
+  useClickOutside(fontColorDropDownRef, handleFontColorOutSideClick);
+  useClickOutside(fontBgColorDropDownRef, handleFontBgColorOutSideClick);
+
   const onClickFontSizeToggle = () => {
     setIsFontSizeOpen(!isFontSizeOpen);
+    setIsFontColorOpen(false);
+    setIsFontBgColorOpen(false);
     setIsToggleOpen(!isToggleOpen);
   };
 
   const onClickFontColorToggle = () => {
     setIsFontColorOpen(!isFontColorOpen);
+    setIsFontSizeOpen(false);
+    setIsFontBgColorOpen(false);
     setIsToggleOpen(!isToggleOpen);
   };
 
   const onClickFontBgColorToggle = () => {
     setIsFontBgColorOpen(!isFontBgColorOpen);
+    setIsFontSizeOpen(false);
+    setIsFontColorOpen(false);
     setIsToggleOpen(!isToggleOpen);
   };
 
@@ -118,7 +145,7 @@ const TipTap = (props: EditorPropTypes) => {
     },
     [editor],
   );
-  //git test
+
   // 글자 색상 함수
   const toggleTextColor = useCallback(
     (color: string) => {
@@ -179,7 +206,10 @@ const TipTap = (props: EditorPropTypes) => {
 
   // 인용구 함수
   const toggleBlockQuote = useCallback(() => {
-    editor.chain().focus().toggleBlockquote().run();
+    const current = editor.view.state.selection.$head.pos + 1;
+    const focusPos = current === 1 ? 'start' : current;
+
+    editor.chain().focus().toggleBlockquote().enter().unsetBlockquote().focus(focusPos).run();
   }, [editor]);
 
   // 구분선 함수
@@ -194,9 +224,10 @@ const TipTap = (props: EditorPropTypes) => {
   return (
     <div className="text-editor">
       <Title type="text" placeholder="제목을 적어주세요" onChange={setTitle} value={title} />
+      <Spacing marginBottom="2.4" />
       <ToolbarWrapper className="menu">
         {/* 글자 크기 */}
-        <ToolbarDropDownWrapper>
+        <ToolbarDropDownWrapper ref={fontSizeDropDownRef}>
           <FontSizeToggle onClick={onClickFontSizeToggle}>
             <FontSizeLabel>
               {editor.isActive('textStyle', { fontSize: '1.2rem' })
@@ -209,25 +240,19 @@ const TipTap = (props: EditorPropTypes) => {
                       ? '제목 1'
                       : '본문 1'}
             </FontSizeLabel>
-            {isFontSizeOpen ? (
+            <ToolbarFontSizeDropDonwOpen $isOpen={isFontSizeOpen}>
               <ToolbarIcon.EditorDropIcnOpen />
-            ) : (
+            </ToolbarFontSizeDropDonwOpen>
+            <ToolbarFontSizeDropDonwClose $isOpen={isFontSizeOpen}>
               <ToolbarIcon.EditorDropIcnClose />
-            )}
+            </ToolbarFontSizeDropDonwClose>
           </FontSizeToggle>
           <FontSizeOptionList $isFontSizeOpen={isFontSizeOpen}>
-            <FontSizeOption onClick={() => toggleFontSize('1.2rem', '400', '200%')}>
+            <FontSizeOption onClick={() => toggleFontSize('2.6rem', '700', '200%')}>
               <FontSizeText
-                className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
+                className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
               >
-                본문 2
-              </FontSizeText>
-            </FontSizeOption>
-            <FontSizeOption onClick={() => toggleFontSize('1.6rem', '400', '160%')}>
-              <FontSizeText
-                className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
-              >
-                본문 1
+                제목 1
               </FontSizeText>
             </FontSizeOption>
             <FontSizeOption onClick={() => toggleFontSize('1.8rem', '700', '200%')}>
@@ -237,18 +262,25 @@ const TipTap = (props: EditorPropTypes) => {
                 제목 2
               </FontSizeText>
             </FontSizeOption>
-            <FontSizeOption onClick={() => toggleFontSize('2.6rem', '700', '200%')}>
+            <FontSizeOption onClick={() => toggleFontSize('1.6rem', '400', '200%')}>
               <FontSizeText
-                className={editor.isActive('textStyle', { fontSize: '2.6rem' }) ? 'is-active' : ''}
+                className={editor.isActive('textStyle', { fontSize: '1.6rem' }) ? 'is-active' : ''}
               >
-                제목 1
+                본문 1
+              </FontSizeText>
+            </FontSizeOption>
+            <FontSizeOption onClick={() => toggleFontSize('1.2rem', '400', '200%')}>
+              <FontSizeText
+                className={editor.isActive('textStyle', { fontSize: '1.2rem' }) ? 'is-active' : ''}
+              >
+                본문 2
               </FontSizeText>
             </FontSizeOption>
           </FontSizeOptionList>
         </ToolbarDropDownWrapper>
 
         {/* 글자색 */}
-        <ToolbarDropDownWrapper>
+        <ToolbarDropDownWrapper ref={fontColorDropDownRef}>
           <TextColorToggle onClick={onClickFontColorToggle}>
             {editor.isActive('textStyle', { color: '#010101' }) ? (
               <ToolbarIcon.EditorTextColorBlackIcn />
@@ -271,11 +303,12 @@ const TipTap = (props: EditorPropTypes) => {
             ) : (
               <ToolbarIcon.EditorTextColorBlackIcn />
             )}
-            {isFontColorOpen ? (
+            <ToolbarFontColorDropDonwOpen $isOpen={isFontColorOpen}>
               <ToolbarIcon.EditorDropIcnOpen />
-            ) : (
+            </ToolbarFontColorDropDonwOpen>
+            <ToolbarFontColorDropDonwClose $isOpen={isFontColorOpen}>
               <ToolbarIcon.EditorDropIcnClose />
-            )}
+            </ToolbarFontColorDropDonwClose>
           </TextColorToggle>
           <TextColorList $isFontColorOpen={isFontColorOpen}>
             <TextColorOptionWrapper onClick={() => toggleTextColor('#010101')}>
@@ -372,7 +405,7 @@ const TipTap = (props: EditorPropTypes) => {
         </ToolbarDropDownWrapper>
 
         {/* 글자 배경색 */}
-        <ToolbarDropDownWrapper>
+        <ToolbarDropDownWrapper ref={fontBgColorDropDownRef}>
           <TextColorToggle onClick={onClickFontBgColorToggle}>
             {editor.isActive('highlight', { color: '#FFFFFF' }) ? (
               <ToolbarIcon.EditorTextBgColorWhiteIcn />
@@ -395,11 +428,12 @@ const TipTap = (props: EditorPropTypes) => {
             ) : (
               <ToolbarIcon.EditorTextBgColorWhiteIcn />
             )}
-            {isFontBgColorOpen ? (
+            <ToolbarFontBgColorDropDonwOpen $isOpen={isFontBgColorOpen}>
               <ToolbarIcon.EditorDropIcnOpen />
-            ) : (
+            </ToolbarFontBgColorDropDonwOpen>
+            <ToolbarFontBgColorDropDonwClose $isOpen={isFontBgColorOpen}>
               <ToolbarIcon.EditorDropIcnClose />
-            )}
+            </ToolbarFontBgColorDropDonwClose>
           </TextColorToggle>
           <TextColorBgList $isFontBgColorOpen={isFontBgColorOpen}>
             <TextColorOptionWrapper onClick={() => toggleTextBgColor('#FFFFFF')}>
@@ -626,6 +660,7 @@ const TipTap = (props: EditorPropTypes) => {
           </ToolbarSvg>
         </ToolbarSvgBtnLast>
       </ToolbarWrapper>
+      <Spacing marginBottom="2.4" />
       <div className="editorWrapper">
         <EditorContent editor={editor} />
       </div>
@@ -656,12 +691,12 @@ const Title = styled.input`
 const ToolbarWrapper = styled.div`
   display: flex;
   align-items: center;
-  height: 3.6rem;
+  width: 82.6rem;
+  height: 4.6rem;
   margin: 0;
   padding: 0;
 
   background-color: white;
-  border: 1px solid #d3d3d3;
   border-radius: 0.8rem;
 `;
 
@@ -673,6 +708,7 @@ const ToolbarDropDownWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  height: 4.6rem;
 
   cursor: pointer;
   border-right: 1px solid ${({ theme }) => theme.colors.gray30};
@@ -681,11 +717,10 @@ const ToolbarDropDownWrapper = styled.div`
 // 글자 크기 드롭다운 리스트
 const FontSizeToggle = styled.div`
   display: flex;
-  gap: 0.8rem;
   align-items: center;
   justify-content: space-between;
-  width: 10.1rem;
-  height: 3.4rem;
+  width: 12.9rem;
+  height: 4.6rem;
   padding: 0 1.3rem;
 
   background-color: white;
@@ -693,19 +728,22 @@ const FontSizeToggle = styled.div`
 `;
 
 const FontSizeLabel = styled.p`
+  width: 5.622rem;
+  margin-right: 1.02rem;
+
   color: ${({ theme }) => theme.colors.gray90};
-  ${({ theme }) => theme.fonts.body7}
+  ${({ theme }) => theme.fonts.body1}
 `;
 
 const FontSizeOptionList = styled.div<{ $isFontSizeOpen: boolean }>`
   position: absolute;
-  top: 3.5rem;
+  top: 4.65rem;
   display: ${({ $isFontSizeOpen }) => ($isFontSizeOpen ? 'flex' : 'none')};
   flex-direction: column;
   gap: 0.6rem;
   align-items: center;
   justify-content: flex-start;
-  width: 8.8rem;
+  width: 13.2rem;
   padding: 1rem;
 
   background-color: ${({ theme }) => theme.colors.white};
@@ -714,8 +752,11 @@ const FontSizeOptionList = styled.div<{ $isFontSizeOpen: boolean }>`
 `;
 
 const FontSizeOption = styled.div`
-  width: 6.8rem;
-  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  width: 11.2rem;
+  height: 3.5rem;
+  padding: 0.8rem 1.2rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 6px;
@@ -730,7 +771,7 @@ const FontSizeOption = styled.div`
 `;
 
 const FontSizeText = styled.p`
-  ${({ theme }) => theme.fonts.body7}
+  ${({ theme }) => theme.fonts.body1}
   color: ${({ theme }) => theme.colors.gray90};
 `;
 
@@ -740,16 +781,16 @@ const TextColorToggle = styled.div`
   gap: 0.5rem;
   align-items: center;
   justify-content: space-between;
-  width: 8.1rem;
-  height: 3.4rem;
-  padding: 0 1.3rem;
+  width: 10.4rem;
+  height: 4.6rem;
+  padding: 0 1.66rem;
 
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const TextColorList = styled.div<{ $isFontColorOpen: boolean }>`
   position: absolute;
-  top: 3.5rem;
+  top: 4.65rem;
 
   display: ${({ $isFontColorOpen }) => ($isFontColorOpen ? 'flex' : 'none')};
   flex-direction: column;
@@ -766,14 +807,14 @@ const TextColorList = styled.div<{ $isFontColorOpen: boolean }>`
 
 const TextColorBgList = styled.div<{ $isFontBgColorOpen: boolean }>`
   position: absolute;
-  top: 3.5rem;
+  top: 4.65rem;
 
   display: ${({ $isFontBgColorOpen }) => ($isFontBgColorOpen ? 'flex' : 'none')};
   flex-direction: column;
   gap: 0.6rem;
   align-items: center;
   justify-content: flex-start;
-  width: 11.6rem;
+  width: 12.6rem;
   padding: 1rem;
 
   background-color: ${({ theme }) => theme.colors.white};
@@ -786,7 +827,7 @@ const TextColorOptionWrapper = styled.div`
   gap: 1rem;
   align-items: center;
   justify-content: flex-start;
-  width: 9.6rem;
+  width: 11rem;
   padding: 0.6rem 1rem;
 
   border-radius: 6px;
@@ -811,9 +852,10 @@ const ToolbarSvgBtn = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 3.4rem;
+  width: 4.6rem;
+  height: 4.6rem;
 
-  border-right: 1px solid ${({ theme }) => theme.colors.gray30};
+  border-right: 0.96px solid ${({ theme }) => theme.colors.gray30};
 `;
 
 const ToolbarSvgBtnLast = styled.div`
@@ -821,14 +863,15 @@ const ToolbarSvgBtnLast = styled.div`
   align-items: center;
   justify-content: center;
   height: 3.4rem;
+  margin-right: 2.7rem;
 `;
 
 const ToolbarSvg = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 3.2rem;
+  height: 3.2rem;
   margin: 0.6rem;
 
   border-left: 1px transparent;
@@ -845,4 +888,24 @@ const ToolbarSvg = styled.button`
   :hover {
     background-color: ${({ theme }) => theme.colors.mileViolet};
   }
+`;
+
+// svg 조건부 렌더링용
+const ToolbarFontSizeDropDonwOpen = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'inline' : 'none')};
+`;
+const ToolbarFontSizeDropDonwClose = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'none' : 'inline')};
+`;
+const ToolbarFontColorDropDonwOpen = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'inline' : 'none')};
+`;
+const ToolbarFontColorDropDonwClose = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'none' : 'inline')};
+`;
+const ToolbarFontBgColorDropDonwOpen = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'inline' : 'none')};
+`;
+const ToolbarFontBgColorDropDonwClose = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'none' : 'inline')};
 `;
