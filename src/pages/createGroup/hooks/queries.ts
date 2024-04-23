@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import { getGroupNameValidation } from '../apis/getGroupNameValidation';
 import { CreateGroupRequestTypes, postCreateGroup } from '../apis/postGroup';
@@ -32,6 +33,7 @@ export const usePostCreateGroup = ({
   topicDesc,
 }: CreateGroupRequestTypes) => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { mutate, data } = useMutation({
     mutationKey: [
       QUERY_KEY_CREATE_GROUP.postCreateGroup,
@@ -59,8 +61,9 @@ export const usePostCreateGroup = ({
         topicTag,
         topicDesc,
       }),
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_CREATE_GROUP.postCreateGroup] });
+      navigate(`/group/success/${data.data.data.moimId}`);
     },
   });
 

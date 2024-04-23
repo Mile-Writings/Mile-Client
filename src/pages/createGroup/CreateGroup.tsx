@@ -132,7 +132,7 @@ const CreateGroup = () => {
   const setLeaderDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'setLeaderDesc', value: e.target.value });
   };
-  const { mutate } = usePostCreateGroup({
+  const { mutate, data } = usePostCreateGroup({
     groupName,
     groupInfo,
     groupImageFile,
@@ -149,7 +149,6 @@ const CreateGroup = () => {
     }
     if (groupName && groupImageFile && topic && topicTag && leaderPenName) {
       mutate();
-      navigate('/');
     } else {
       console.log('error');
     }

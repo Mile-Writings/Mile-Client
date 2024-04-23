@@ -1,9 +1,24 @@
 import styled from '@emotion/styled';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 
 const CreateGroupSuccess = () => {
   const token = localStorage.getItem('accessToken');
+  const { groupId } = useParams();
+
+  console.log(groupId);
+  const navigate = useNavigate();
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(`http://localhost:5173/group/${groupId}/groupInvite`);
+      alert('초대 링크가 복사되었습니다.');
+    } catch (err) {
+      console.error('클립보드 복사 실패:', err);
+      alert('클립보드 복사 실패');
+    }
+  };
   return (
     <CreateGroupSuccessWrapper>
       {token ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
@@ -14,8 +29,10 @@ const CreateGroupSuccess = () => {
         </TitleWrapper>
         <ImageWrppaer />
         <ButtonWrapper>
-          <CopyLinkBtn>초대 링크 복사하기</CopyLinkBtn>
-          <NavigateGroupPageBtn>글 모임 페이지로 이동하기</NavigateGroupPageBtn>
+          <CopyLinkBtn onClick={handleCopyLink}>초대 링크 복사하기</CopyLinkBtn>
+          <NavigateGroupPageBtn onClick={() => navigate(`/group/${groupId}`)}>
+            글 모임 페이지로 이동하기
+          </NavigateGroupPageBtn>
         </ButtonWrapper>
       </CreatGroupSection>
     </CreateGroupSuccessWrapper>
