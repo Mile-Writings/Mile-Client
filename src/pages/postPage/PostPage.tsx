@@ -127,6 +127,7 @@ interface editorFlowModalType {
   leftBtnFn: () => void;
   rightBtnText: string;
   rightBtnFn: () => void;
+  modalImgType: string;
 }
 
 interface editorFlowModalActionType {
@@ -139,6 +140,7 @@ const editorFlowModalState: editorFlowModalType = {
   leftBtnFn: () => {},
   rightBtnText: '',
   rightBtnFn: () => {},
+  modalImgType: '',
 };
 
 const PostPage = () => {
@@ -375,6 +377,7 @@ const PostPage = () => {
           leftBtnFn: () => setShowModal(false),
           rightBtnText: '예',
           rightBtnFn: tempSaveHandler,
+          modalImgType: 'tempSave',
         };
       // 최초 제출하기
       case 'postContent':
@@ -385,6 +388,7 @@ const PostPage = () => {
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${postContentId}`),
+          modalImgType: 'postContent',
         };
       // 임시저장 이어쓰기 -> 제출하기
       case 'putTempSaveContent':
@@ -405,6 +409,7 @@ const PostPage = () => {
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${editPostId}`),
+          modalImgType: 'postContent',
         };
       default:
         return state;

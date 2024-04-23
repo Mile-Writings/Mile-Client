@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRef, Dispatch, SetStateAction, useState } from 'react';
 
-import { EditorCatIc } from '../../../assets/svgs';
+import { AlertStorageIcn, AlertUploadIcn } from '../../../assets/svgs/editorSVG';
 import Spacing from '../../../components/commons/Spacing';
 import useClickOutside from '../../../hooks/useClickOutside';
 
@@ -11,6 +11,7 @@ interface editorFlowModalType {
   leftBtnFn: () => void;
   rightBtnText: string;
   rightBtnFn: () => void;
+  modalImgType: string;
 }
 
 interface EditorFlowModalPropsType {
@@ -46,7 +47,8 @@ const EditorFlowModal = (props: EditorFlowModalPropsType) => {
       <ModalWrapper ref={modalRef}>
         <ModalTitle>{editorFlowModalContent.title}</ModalTitle>
         <Spacing marginBottom="3.2" />
-        <EditorCatIc />
+        {editorFlowModalContent.modalImgType === 'tempSave' && <AlertStorageIcn />}
+        {editorFlowModalContent.modalImgType === 'postContent' && <AlertUploadIcn />}
         <Spacing marginBottom="3.2" />
         <BtnWrapper>
           <ModalBtn $isLeft={true} onClick={editorFlowModalContent.leftBtnFn}>
