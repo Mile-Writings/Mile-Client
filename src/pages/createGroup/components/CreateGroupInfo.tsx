@@ -3,6 +3,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from 'react';
 
 import CreateGroupTopicModal from './CreateGroupTopicModal';
 
+import { useGetGroupNameValidation } from '../hooks/queries';
 import { CurrentPageType } from '../types/stateType';
 
 import {
@@ -53,7 +54,11 @@ const CreateGroupInfo = ({
   const [isGroupTopicEmpty, setIsGroupTopicEmpty] = useState(false);
   const [topicModal, setTopicModal] = useState(false);
   const groupNameRef = useRef<HTMLInputElement>(null);
+  const [groupNameValidationTrg, setGroupNameValidationTrg] = useState(false);
 
+  const { data, error } = useGetGroupNameValidation(groupName, groupNameValidationTrg);
+  console.log(data?.data?.data?.isValidate);
+  console.log(error);
   const handleGroupImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
 
@@ -81,6 +86,10 @@ const CreateGroupInfo = ({
   };
 
   const handleDuplicateGroupName = () => {
+    setGroupNameValidationTrg(true);
+    // if (!data) {
+    //   setGroupNameValidationTrg(false);
+    // }
     alert('중복확인 로직');
   };
   const handleIsPublic = (e: ChangeEvent<HTMLInputElement>) => {
@@ -96,9 +105,16 @@ const CreateGroupInfo = ({
   };
 
   const handleCurrentPage = () => {
-    if (groupName && isGroupNameValid && groupImageFile && topic && topicTag)
+    if (
+      groupName &&
+      isGroupNameValid &&
+      groupImageFile &&
+      topic &&
+      topicTag &&
+      data?.data?.data?.isValidate
+    )
       setCurrentPage('GroupLeaderInfoPage');
-    else if (!groupName || !isGroupNameValid) {
+    else if (!groupName || !isGroupNameValid || !data?.data?.data?.isValidate) {
       if (!groupName) setIsGroupNameEmpty(true);
       else {
         setIsGroupNameEmpty(false);
@@ -117,6 +133,7 @@ const CreateGroupInfo = ({
   const handleGroupName = (e: ChangeEvent<HTMLInputElement>) => {
     setGroupName(e);
     setIsGroupNameEmpty(false);
+    setGroupNameValidationTrg(false);
   };
 
   const toggleModal = () => {
@@ -141,7 +158,7 @@ const CreateGroupInfo = ({
                 ref={groupNameRef}
                 onChange={handleGroupName}
                 placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
-                isValid={isGroupNameValid}
+                isValid={isGroupNameValid && !error}
               />{' '}
               <DuplicateCheckBtn
                 type="button"
@@ -152,7 +169,17 @@ const CreateGroupInfo = ({
                 중복확인
               </DuplicateCheckBtn>
             </GroupNameInputLayout>
-            <ErrorMsgText>{isGroupNameValid ? '' : InputInfoMsg.groupNameLength}</ErrorMsgText>
+            {data?.data?.data?.isValidate ? (
+              <SuccessMsgText>{InputInfoMsg.groupNameAvailable}</SuccessMsgText>
+            ) : (
+              <ErrorMsgText>
+                {!isGroupNameValid
+                  ? InputInfoMsg.groupNameLength
+                  : data?.data?.data?.isValidate === false
+                    ? InputInfoMsg.groupNameNotAvailable
+                    : ''}
+              </ErrorMsgText>
+            )}
           </GroupInputWrapper>
         </WhiteInputWrapper>
         <GroupInfoWrppaer>
@@ -261,6 +288,10 @@ const CreateGroupInfo = ({
 };
 export default CreateGroupInfo;
 
+const SuccessMsgText = styled.p`
+  ${({ theme }) => theme.fonts.body4};
+  color: ${({ theme }) => theme.colors.mainGreen};
+`;
 const Overlay = styled.div`
   position: fixed;
   top: 0;

@@ -3,13 +3,14 @@ import { ChangeEvent, useEffect, useReducer, useState } from 'react';
 
 import CreateGroupInfo from './components/CreateGroupInfo';
 import CreateGroupLeaderInfo from './components/CreateGroupLeaderInfo';
+import { usePostCreateGroup } from './hooks/queries';
 import { ActionTypes, CreateGroupTypes, CurrentPageType } from './types/stateType';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 
 const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
-
+  const [isGroupLeaderValid, setIsGroupLeaderBalid] = useState(true);
   const initialState = {
     groupName: '',
     groupInfo: '',
@@ -129,7 +130,27 @@ const CreateGroup = () => {
   const setLeaderDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'setLeaderDesc', value: e.target.value });
   };
-
+  const { mutate, data } = usePostCreateGroup({
+    groupName,
+    groupInfo,
+    groupImageFile,
+    isPublic,
+    topic,
+    topicTag,
+    topicDesc,
+    leaderPenName,
+    leaderDesc,
+  });
+  const createGroup = () => {
+    if (!leaderPenName) {
+      setIsGroupLeaderBalid(false);
+    }
+    if (groupName && groupImageFile && topic && topicTag && leaderPenName) {
+      mutate();
+    } else {
+      console.log('error');
+    }
+  };
   return (
     <CreateGroupWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
@@ -157,10 +178,14 @@ const CreateGroup = () => {
           setLeaderPenName={setLeaderPenName}
           leaderDesc={leaderDesc}
           setLeaderDesc={setLeaderDesc}
+          isGroupLeaderValid={isGroupLeaderValid}
         />
       )}
       {currentPage === 'GroupLeaderInfoPage' && (
-        <CreateGroupBtn type="button"> 생성하기</CreateGroupBtn>
+        <CreateGroupBtn type="button" onClick={createGroup}>
+          {' '}
+          생성하기
+        </CreateGroupBtn>
       )}
     </CreateGroupWrapper>
   );

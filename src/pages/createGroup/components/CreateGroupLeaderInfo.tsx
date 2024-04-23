@@ -10,6 +10,7 @@ interface GroupLeaderPropTypes {
   setLeaderPenName: (e: ChangeEvent<HTMLInputElement>) => void;
   leaderDesc: string;
   setLeaderDesc: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  isGroupLeaderValid: boolean;
 }
 
 const CreateGroupLeaderInfo = ({
@@ -17,6 +18,7 @@ const CreateGroupLeaderInfo = ({
   setLeaderDesc,
   leaderDesc,
   setLeaderPenName,
+  isGroupLeaderValid,
 }: GroupLeaderPropTypes) => {
   useEffect(() => {
     const handleBackButton = (e: PopStateEvent) => {
@@ -38,7 +40,7 @@ const CreateGroupLeaderInfo = ({
           <Spacing marginBottom="1.1" />
           <Title>글모임 장의 정보를 입력해주세요</Title>
         </TitleWrapper>
-        <WhiteInputWrapper isValid={true}>
+        <WhiteInputWrapper isValid={isGroupLeaderValid}>
           <GroupInputWrapper>
             <InputTitleText>글모임장 필명*</InputTitleText>
             <GroupLeaderNameInput
