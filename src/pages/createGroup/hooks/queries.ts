@@ -8,7 +8,7 @@ export const QUERY_KEY_CREATE_GROUP = {
   postCreateGroup: 'postCreateGroup',
 };
 
-export const useGetGroupNameValidation = (moimName: string, isEnabled: boolean) => {
+export const useGetGroupNameValidation = (moimName: string) => {
   const data = useQuery({
     queryKey: [QUERY_KEY_CREATE_GROUP.getGroupNameValidation, moimName],
     queryFn: () => getGroupNameValidation(moimName),

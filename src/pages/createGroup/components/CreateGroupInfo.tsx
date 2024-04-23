@@ -54,10 +54,8 @@ const CreateGroupInfo = ({
   const [isGroupTopicEmpty, setIsGroupTopicEmpty] = useState(false);
   const [topicModal, setTopicModal] = useState(false);
   const groupNameRef = useRef<HTMLInputElement>(null);
-  const [groupNameValidationTrg, setGroupNameValidationTrg] = useState(false);
 
-  const { data, error, refetch } = useGetGroupNameValidation(groupName, groupNameValidationTrg);
-  console.log(data?.data?.data?.isValidate);
+  const { data, error, refetch } = useGetGroupNameValidation(groupName);
 
   const handleGroupImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
@@ -86,14 +84,9 @@ const CreateGroupInfo = ({
   };
 
   const handleDuplicateGroupName = () => {
-    // setGroupNameValidationTrg(true);
     refetch();
-    // if (!data) {
-    //   setGroupNameValidationTrg(false);
-    // }
   };
   const handleIsPublic = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value + '함수 작동');
     setIsPublic(e.target.value === 'true');
   };
 
@@ -133,7 +126,6 @@ const CreateGroupInfo = ({
   const handleGroupName = (e: ChangeEvent<HTMLInputElement>) => {
     setGroupName(e);
     setIsGroupNameEmpty(false);
-    setGroupNameValidationTrg(false);
   };
 
   const toggleModal = () => {
