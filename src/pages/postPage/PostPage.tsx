@@ -399,6 +399,7 @@ const PostPage = () => {
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${tempPostId}`),
+          modalImgType: 'postContent',
         };
       // 수정하기
       case 'editContent':
