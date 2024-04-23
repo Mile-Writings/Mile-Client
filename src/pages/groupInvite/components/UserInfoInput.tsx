@@ -158,7 +158,9 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
           </WriterExistCheckBtn>
         </InputWrapper>
         {/* 중복확인 안 누르고 가입하기 눌렀을 경우 */}
-        {isSubmitBtnClicked && !isConflictBtnClicked ? (
+        {isSubmitBtnClicked &&
+        userInfoVal.writerName?.trim().length !== 0 &&
+        !isConflictBtnClicked ? (
           <WriterNameLength>중복확인을 해주세요.</WriterNameLength>
         ) : (
           <></>
