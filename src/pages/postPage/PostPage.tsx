@@ -356,7 +356,7 @@ const PostPage = () => {
     if (postErrorMessage) {
       const timer = setTimeout(() => {
         setPostErrorMessage('');
-      }, 1500);
+      }, 3000);
 
       return () => clearTimeout(timer);
     }
