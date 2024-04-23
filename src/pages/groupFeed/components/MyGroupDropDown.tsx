@@ -107,9 +107,7 @@ const MyGroupListLayout = styled.div<{ $isOpen: boolean }>`
 
 const GroupContentContainer = styled.div<{ $isEmpty: boolean }>`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 15.2em;
+  width: 15.2rem;
   padding: 1rem 1.6rem;
 
   color: ${({ theme }) => theme.colors.gray70};
