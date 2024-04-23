@@ -115,6 +115,7 @@ const GroupContentContainer = styled.div<{ $isEmpty: boolean }>`
   white-space: pre-line;
   text-align: ${({ $isEmpty }) => ($isEmpty ? 'center' : 'left')};
 
+  cursor: pointer;
   border-radius: 0.8rem;
   ${({ theme }) => theme.fonts.body1};
 
