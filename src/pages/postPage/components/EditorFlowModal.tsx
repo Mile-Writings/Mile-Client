@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRef, Dispatch, SetStateAction, useState } from 'react';
 
-import { AlertStorageIcn, AlertUploadIcn } from '../../../assets/svgs/editorSVG';
+import { AlertStorageIcn, AlertUploadIcn, AlertCautionIcn } from '../../../assets/svgs/editorSVG';
 import Spacing from '../../../components/commons/Spacing';
 import useClickOutside from '../../../hooks/useClickOutside';
 
@@ -49,6 +49,7 @@ const EditorFlowModal = (props: EditorFlowModalPropsType) => {
         <Spacing marginBottom="3.2" />
         {editorFlowModalContent.modalImgType === 'tempSave' && <AlertStorageIcn />}
         {editorFlowModalContent.modalImgType === 'postContent' && <AlertUploadIcn />}
+        {editorFlowModalContent.modalImgType === 'editorWarn' && <AlertCautionIcon />}
         <Spacing marginBottom="3.2" />
         <BtnWrapper>
           <ModalBtn $isLeft={true} onClick={editorFlowModalContent.leftBtnFn}>
@@ -84,7 +85,8 @@ const ModalWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 40rem;
-  height: 30.8rem;
+
+  /* height: 30.8rem; */
   padding: 3.2rem 4rem;
 
   background-color: ${({ theme }) => theme.colors.white};
@@ -93,6 +95,8 @@ const ModalWrapper = styled.div`
 
 const ModalTitle = styled.p`
   color: ${({ theme }) => theme.colors.gray100};
+  white-space: pre-wrap;
+  text-align: center;
   ${({ theme }) => theme.fonts.title8};
 `;
 
@@ -126,4 +130,9 @@ const ModalBtn = styled.button<{ $isLeft: boolean }>`
     background-color: ${({ theme }) => theme.colors.mileViolet};
     border: ${({ $isLeft }) => ($isLeft ? '1px solid theme.colors.mainViolet' : 'none')};
   }
+`;
+
+const AlertCautionIcon = styled(AlertCautionIcn)`
+  width: 17rem;
+  height: 15rem;
 `;

@@ -49,3 +49,4 @@ export { default as EditorErrorIcn } from './editorErrorSvg.svg?react';
 // 에디터 모달 이미지
 export { default as AlertStorageIcn } from './alertStoragePng.svg?react';
 export { default as AlertUploadIcn } from './alertUploadPng.svg?react';
+export { default as AlertCautionIcn } from './alertCautionPng.svg?react';

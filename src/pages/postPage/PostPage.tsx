@@ -319,10 +319,17 @@ const PostPage = () => {
 
   // 임시저장 버튼 누르면 열리는 모달
   const onClickTempSaveBtn = () => {
-    setShowModal(true);
-    setEditorModalType('tempSave');
-    editorFlowModalDispatch({ type: 'tempSave' });
-    preventScroll();
+    if (isTemporaryPostExist) {
+      setShowModal(true);
+      setEditorModalType('tempSave');
+      editorFlowModalDispatch({ type: 'putNewTempSaveContent' });
+      preventScroll();
+    } else {
+      setShowModal(true);
+      setEditorModalType('tempSave');
+      editorFlowModalDispatch({ type: 'tempSave' });
+      preventScroll();
+    }
   };
 
   // 임시저장 모달 -> '예' 누르면 쿼리 동작
@@ -400,6 +407,17 @@ const PostPage = () => {
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${tempPostId}`),
           modalImgType: 'postContent',
+        };
+      // 임시저장 존재하는데 다른 글 임시저장
+      case 'putNewTempSaveContent':
+        return {
+          ...state,
+          title: '이미 임시저장된 글이 있습니다. \n덮어쓰시겠습니까?',
+          leftBtnText: '예',
+          leftBtnFn: tempSaveHandler,
+          rightBtnText: '아니오',
+          rightBtnFn: () => setShowModal(false),
+          modalImgType: 'editorWarn',
         };
       // 수정하기
       case 'editContent':
