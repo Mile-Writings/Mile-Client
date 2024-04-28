@@ -1,38 +1,62 @@
 import styled from '@emotion/styled';
-import { useParams } from 'react-router-dom';
+import { AxiosError } from 'axios';
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import GroupInfo from './components/GroupInfo';
 import Title from './components/Title';
 import UserInfoInput from './components/UserInfoInput';
 import { useGetGroupInfo } from './hooks/queries';
 
+import Loading from '../loading/Loading';
+
 import { DefaultHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupInvite = () => {
+  const navigate = useNavigate();
   const { groupId } = useParams() as { groupId: string };
-  const { moimTitle, imageUrl, leader, foundedDate, memberCount, description } =
+  const [errorLoading, setErrorLoading] = useState(false);
+  const { moimTitle, imageUrl, leader, foundedDate, memberCount, description, error } =
     useGetGroupInfo(groupId);
 
-  return (
-    <GroupInviteWrapper>
-      <DefaultHeader />
-      <Spacing marginBottom="11.4" />
-      <Title />
-      <Spacing marginBottom="4.8" />
-      <GroupInfo
-        moimTitle={moimTitle}
-        imageUrl={imageUrl}
-        leader={leader}
-        foundedDate={foundedDate}
-        memberCount={memberCount}
-        description={description}
-      />
-      <Spacing marginBottom="2.8" />
-      <UserInfoInput moimTitle={moimTitle} />
-      <Spacing marginBottom="7.7" />
-    </GroupInviteWrapper>
-  );
+  useEffect(() => {
+    moimTitle === undefined ? setErrorLoading(true) : setErrorLoading(false);
+  }, [moimTitle]);
+
+  useEffect(() => {
+    if (error instanceof AxiosError) {
+      if (error.response && error.response.status) {
+        const { status } = error.response;
+        status === 400 && navigate(`/error`);
+        status === 409 && navigate(`/group/${groupId}`);
+      }
+    }
+  }, [error, groupId]);
+
+  if (errorLoading) {
+    return <Loading />;
+  } else {
+    return (
+      <GroupInviteWrapper>
+        <DefaultHeader />
+        <Spacing marginBottom="11.4" />
+        <Title />
+        <Spacing marginBottom="4.8" />
+        <GroupInfo
+          moimTitle={moimTitle}
+          imageUrl={imageUrl}
+          leader={leader}
+          foundedDate={foundedDate}
+          memberCount={memberCount}
+          description={description}
+        />
+        <Spacing marginBottom="2.8" />
+        <UserInfoInput moimTitle={moimTitle} />
+        <Spacing marginBottom="7.7" />
+      </GroupInviteWrapper>
+    );
+  }
 };
 
 export default GroupInvite;

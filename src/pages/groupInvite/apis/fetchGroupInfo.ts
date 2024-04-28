@@ -23,7 +23,8 @@ export const fetchGroupInfo = async (groupId: string) => {
       },
     });
     return response.data;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
