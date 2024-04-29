@@ -12,6 +12,7 @@ interface GetCommentListResponseTypes {
       moimName: string;
       content: string;
       isMyComment: boolean;
+      isAnonymous: boolean;
       replies: ReplyResponseTypes[];
     }[];
   };
@@ -23,6 +24,7 @@ interface ReplyResponseTypes {
   moimName: string;
   content: string;
   isMyReply: boolean;
+  isAnonymous: boolean;
 }
 
 const fetchCommentList = async (postId: string) => {

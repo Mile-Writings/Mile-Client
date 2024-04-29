@@ -3,14 +3,14 @@ import { useState, useRef, useEffect } from 'react';
 
 import CommentInputBox from './CommentInputBox';
 
-import { useDeleteComment } from '../hooks/queries';
+import { useDeleteComment, useDeleteNestedComment } from '../hooks/queries';
 
 import {
-  GroupListProfileCloseIc,
   DetailCommentMeatBallIc,
   TextCommentProfileIc,
   NestCommentIc,
   ArrowTopLeftIc,
+  GroupListProfileCloseIc,
 } from '../../../assets/svgs';
 
 interface CommentItem {
@@ -19,17 +19,11 @@ interface CommentItem {
   content: string;
   isMyComment?: boolean;
   isMyReply?: boolean;
+  isAnonymous: boolean;
   postId: string | undefined;
   commentId: string;
   type: 'nestedComment' | 'comment';
 }
-// interface ReplyResponseTypes {
-//   replyId: string;
-//   name: string;
-//   moimName: string;
-//   content: string;
-//   isMyReply: boolean;
-// }
 
 const CommentItem = ({
   name,
@@ -40,8 +34,10 @@ const CommentItem = ({
   postId,
   commentId,
   type,
+  isAnonymous,
 }: CommentItem) => {
   const { deleteComment } = useDeleteComment(commentId || '', postId || '');
+  const { deleteNestedComment } = useDeleteNestedComment(commentId || '', postId || '');
   const [isClick, setIsClick] = useState(false);
   const [isNestedComment, setIsNestedComment] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -66,8 +62,7 @@ const CommentItem = ({
   return (
     <>
       <CommentItemWrapper isComment={type === 'comment'}>
-        <TextCommentProfileIc />
-        <GroupListProfileCloseIc />
+        {isAnonymous ? <GroupListProfileCloseIc /> : <TextCommentProfileIc />}
         <CommentItemContainer>
           <CommentInfoWrapper>
             <CommenterNameText $name={name}>{name}</CommenterNameText>
@@ -77,15 +72,35 @@ const CommentItem = ({
         </CommentItemContainer>
         <IconWrapper>
           {isMyComment && (
-            <NestCommentIcon onClick={() => setIsNestedComment(!isNestedComment)}>
-              <NestCommentIc />
-            </NestCommentIcon>
+            <>
+              <NestCommentIcon onClick={() => setIsNestedComment(!isNestedComment)}>
+                <NestCommentIc />
+              </NestCommentIcon>
+              <MeatBallWrapper onClick={handleBtnClick}>
+                <DetailCommentMeatBallIcon />
+                {isClick && (
+                  <Modal
+                    onClick={() => {
+                      deleteComment();
+                    }}
+                    ref={modalRef}
+                  >
+                    <ModalContainer>삭제</ModalContainer>
+                  </Modal>
+                )}
+              </MeatBallWrapper>
+            </>
           )}
-          {(isMyComment || isMyReply) && (
+          {isMyReply && (
             <MeatBallWrapper onClick={handleBtnClick}>
               <DetailCommentMeatBallIcon />
               {isClick && (
-                <Modal onClick={deleteComment} ref={modalRef}>
+                <Modal
+                  onClick={() => {
+                    deleteNestedComment();
+                  }}
+                  ref={modalRef}
+                >
                   <ModalContainer>삭제</ModalContainer>
                 </Modal>
               )}
@@ -96,7 +111,12 @@ const CommentItem = ({
       {isNestedComment && (
         <NestedCommentWrapper>
           <ArrowTopLeftIc />
-          <CommentInputBox postId={postId} commentId={commentId} isMainComment={false} />
+          <CommentInputBox
+            postId={postId}
+            commentId={commentId}
+            isMainComment={false}
+            setIsNestedComment={setIsNestedComment}
+          />
         </NestedCommentWrapper>
       )}
     </>

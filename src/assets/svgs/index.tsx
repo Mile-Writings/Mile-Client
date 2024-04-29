@@ -82,4 +82,4 @@ export { default as ArrowLeftIc } from './arrowLeft.svg?react';
 export { default as ArrowRightIc } from './arrowRight.svg?react';
 
 export { default as MakeGroupAdminIc } from './btn_makegroup.svg?react';
-export { default as GroupListProfileCloseIc } from './groupListprofileIcnClose.svg';
+export { default as GroupListProfileCloseIc } from './groupListprofileIcnClose.svg?react';

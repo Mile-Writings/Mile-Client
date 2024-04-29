@@ -23,6 +23,7 @@ const Comment = (props: CommentPropTypes) => {
     moimName: string;
     content: string;
     isMyComment: boolean;
+    isAnonymous: boolean;
     replies?: ReplyResponseTypes[] | undefined;
   }
 
@@ -32,6 +33,7 @@ const Comment = (props: CommentPropTypes) => {
     moimName: string;
     content: string;
     isMyReply: boolean;
+    isAnonymous: boolean;
   }
 
   return error?.message == '403' ? (
@@ -57,6 +59,7 @@ const Comment = (props: CommentPropTypes) => {
               isMyComment={data.isMyComment}
               postId={postId}
               commentId={data.commentId}
+              isAnonymous={data.isAnonymous}
               type="comment"
             ></CommentItem>
             {data.replies &&
@@ -70,6 +73,7 @@ const Comment = (props: CommentPropTypes) => {
                     isMyReply={nestedData.isMyReply}
                     postId={postId}
                     commentId={nestedData.replyId}
+                    isAnonymous={nestedData.isAnonymous}
                     type="nestedComment"
                   ></CommentItem>
                 </NestedWrapper>

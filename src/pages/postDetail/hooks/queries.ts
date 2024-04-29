@@ -9,6 +9,7 @@ import deletePost from '../apis/deletePost';
 import fetchCommentList from '../apis/fetchCommentList';
 import fetchCuriousInfo from '../apis/fetchCuriousInfo';
 import fetchDeleteComment from '../apis/fetchDeleteComment';
+import fetchDeleteNestedComment from '../apis/fetchDeleteNestedComment';
 import fetchPostComment from '../apis/fetchPostComment';
 import fetchPostDetail from '../apis/fetchPostDetail';
 import fetchPostNestedComment from '../apis/fetchPostNestedComment';
@@ -112,11 +113,11 @@ export const useDeletePost = (postId: string, topicId: string) => {
 };
 
 //댓글 생성 api
-export const usePostComment = (postId: string) => {
+export const usePostComment = (postId: string, isAnonymous: boolean) => {
   const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
-    mutationFn: (comment: string) => fetchPostComment(postId, comment),
+    mutationFn: (comment: string) => fetchPostComment(postId, comment, isAnonymous),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
@@ -168,4 +169,23 @@ export const useDeleteComment = (commentId: string, postId: string) => {
     data.mutate();
   };
   return { deleteComment };
+};
+
+//대댓글 삭제 api
+export const useDeleteNestedComment = (replyId: string, postId: string) => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: [QUERY_KEY_POST_DETAIL.getCommentList, replyId],
+    mutationFn: () => fetchDeleteNestedComment(replyId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
+      });
+    },
+  });
+
+  const deleteNestedComment = () => {
+    data.mutate();
+  };
+  return { deleteNestedComment };
 };
