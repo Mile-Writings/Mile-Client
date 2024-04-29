@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Dispatch, SetStateAction } from 'react';
 
 import EachTopic from './EachTopic';
 
@@ -16,7 +17,15 @@ interface AdminTopicPropTypes {
   }[];
 }
 
-const TopicAdmin = ({ data }: { data?: AdminTopicPropTypes }) => {
+const TopicAdmin = ({
+  data,
+  setPageNum,
+  pageNum,
+}: {
+  data?: AdminTopicPropTypes;
+  setPageNum: Dispatch<SetStateAction<number>>;
+  pageNum: number;
+}) => {
   return (
     <>
       <TopicListWrapper>
@@ -30,7 +39,14 @@ const TopicAdmin = ({ data }: { data?: AdminTopicPropTypes }) => {
         </TopicList>
       </TopicListWrapper>
       <Spacing marginBottom="3.2" />
-      {data && data.topicCount && <Pagenation count={data.topicCount} allocatedCount={5} />}
+      {data && data.topicCount && (
+        <Pagenation
+          count={data.topicCount}
+          allocatedCount={5}
+          setActivePage={setPageNum}
+          activePage={pageNum}
+        />
+      )}
     </>
   );
 };

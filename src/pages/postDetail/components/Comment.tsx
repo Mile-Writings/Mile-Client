@@ -5,7 +5,7 @@ import CommentItem from './CommentItem';
 
 import { useGetCommentList } from '../hooks/queries';
 
-import { EditorCatIc } from '../../../assets/svgs';
+import { EditorCatIc, ArrowTopLeftIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 interface CommentPropTypes {
@@ -23,6 +23,15 @@ const Comment = (props: CommentPropTypes) => {
     moimName: string;
     content: string;
     isMyComment: boolean;
+    replies?: ReplyResponseTypes[] | undefined;
+  }
+
+  interface ReplyResponseTypes {
+    replyId: string;
+    name: string;
+    moimName: string;
+    content: string;
+    isMyReply: boolean;
   }
 
   return error?.message == '403' ? (
@@ -39,15 +48,33 @@ const Comment = (props: CommentPropTypes) => {
         </>
       ) : (
         commentListData?.map((data: CommentListPropTypes) => (
-          <CommentItem
-            key={data.commentId}
-            name={data.name}
-            moimName={data.moimName}
-            content={data.content}
-            isMyComment={data.isMyComment}
-            postId={postId}
-            commentId={data.commentId}
-          ></CommentItem>
+          <>
+            <CommentItem
+              key={data.commentId}
+              name={data.name}
+              moimName={data.moimName}
+              content={data.content}
+              isMyComment={data.isMyComment}
+              postId={postId}
+              commentId={data.commentId}
+              type="comment"
+            ></CommentItem>
+            {data.replies &&
+              data.replies.map((nestedData: ReplyResponseTypes) => (
+                <NestedWrapper key={nestedData.replyId}>
+                  <ArrowTopLeftIc />
+                  <CommentItem
+                    name={nestedData.name}
+                    moimName={nestedData.moimName}
+                    content={nestedData.content}
+                    isMyReply={nestedData.isMyReply}
+                    postId={postId}
+                    commentId={nestedData.replyId}
+                    type="nestedComment"
+                  ></CommentItem>
+                </NestedWrapper>
+              ))}
+          </>
         ))
       )}
     </CommentWrapper>
@@ -56,11 +83,20 @@ const Comment = (props: CommentPropTypes) => {
 
 export default Comment;
 
+const NestedWrapper = styled.div`
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  width: 76.8rem;
+  padding-left: 1.2rem;
+`;
+
 const CommentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  box-sizing: content-box;
+  width: 76.8rem;
   height: fit-content;
   padding: 2.8rem;
 

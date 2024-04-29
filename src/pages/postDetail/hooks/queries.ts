@@ -11,6 +11,7 @@ import fetchCuriousInfo from '../apis/fetchCuriousInfo';
 import fetchDeleteComment from '../apis/fetchDeleteComment';
 import fetchPostComment from '../apis/fetchPostComment';
 import fetchPostDetail from '../apis/fetchPostDetail';
+import fetchPostNestedComment from '../apis/fetchPostNestedComment';
 //쿼리키를 이렇게 두는 이유는 겹치지 않기위해 + 객체로 생성하여 자동완성 하기 위해
 export const QUERY_KEY_POST_DETAIL = {
   getPostDetail: 'getPostDetail',
@@ -22,6 +23,7 @@ export const QUERY_KEY_POST_DETAIL = {
   deleteComment: 'deleteComment',
   getAuthorization: 'getAuthorization',
   getCurious: 'getCurious',
+  postNestedComment: 'postNestedComment',
 };
 
 // 글정보 조회 get api
@@ -127,6 +129,26 @@ export const usePostComment = (postId: string) => {
   };
 
   return { postComment };
+};
+
+//대댓글 생성 api
+export const usePostNestedComment = (commentId: string, postId: string, isAnonymous: boolean) => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: [QUERY_KEY_POST_DETAIL.postNestedComment, commentId],
+    mutationFn: (comment: string) => fetchPostNestedComment(commentId, comment, isAnonymous),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
+      });
+    },
+  });
+
+  const postNestedComment = (comment: string) => {
+    data.mutate(comment);
+  };
+
+  return { postNestedComment };
 };
 
 //댓글 삭제 api

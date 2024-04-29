@@ -2,20 +2,26 @@ import styled from '@emotion/styled';
 import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { usePostComment } from '../hooks/queries';
+import { usePostComment, usePostNestedComment } from '../hooks/queries';
 
 import { CheckIc } from '../../../assets/svgs';
 
 interface CommentPropTypes {
   postId: string | undefined;
+  commentId?: string | undefined;
   isMainComment: boolean;
 }
 
 const CommentInputBox = (props: CommentPropTypes) => {
-  const { postId, isMainComment } = props;
+  const { postId, commentId, isMainComment } = props;
   const [isUnknownWriter, setIsUnknownWriter] = useState(false);
   const [comment, setComment] = useState('');
   const { postComment } = usePostComment(postId || '');
+  const { postNestedComment } = usePostNestedComment(
+    commentId || '',
+    postId || '',
+    isUnknownWriter,
+  );
   const token = localStorage.getItem('accessToken');
   const navigate = useNavigate();
 
@@ -25,7 +31,8 @@ const CommentInputBox = (props: CommentPropTypes) => {
       navigate('/login');
     } else {
       if (comment.trim() !== '') {
-        postComment(comment); //댓글 등록
+        //commendId가 있으면 대댓글, 없으면 댓글
+        commentId ? postNestedComment(comment) : postComment(comment); //댓글 등록
         setComment(''); // 댓글 등록 후 댓글 초기화
       }
     }
