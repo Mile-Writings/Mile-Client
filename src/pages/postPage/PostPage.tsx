@@ -501,6 +501,14 @@ const PostPage = () => {
     preventScroll();
   };
 
+  const preventReload = (e: Event) => {
+    e.preventDefault();
+    setShowModal(true);
+    editorFlowModalDispatch({ type: 'exitEditPage' });
+    setEditorModalType('exitEditPage');
+    preventScroll();
+  };
+
   useEffect(() => {
     (() => {
       // 현재 상태를 세션 히스토리 스택에 추가(push)
@@ -508,10 +516,12 @@ const PostPage = () => {
       history.push(history.location);
 
       window.addEventListener('popstate', preventGoBack);
+      window.addEventListener('beforeunload', preventReload);
     })();
 
     return () => {
       window.removeEventListener('popstate', preventGoBack);
+      window.removeEventListener('beforeunload', preventReload);
     };
   }, []);
 
