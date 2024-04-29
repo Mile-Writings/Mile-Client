@@ -2,14 +2,7 @@
 import styled from '@emotion/styled';
 import { createBrowserHistory } from 'history';
 import React, { useEffect, useState, useReducer } from 'react';
-import {
-  // Location,
-  // NavigationType,
-  useLocation,
-  useNavigate,
-  // useNavigationType,
-  useParams,
-} from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
 import EditorContinueTempModal from './components/EditorContinueTempModal';
@@ -265,6 +258,7 @@ const PostPage = () => {
     if (type === 'edit') {
       setEditPostId(location.state.postId);
       setPreviewImgUrl(location.state.imageUrl);
+      setContentWithoutTag(location.state.title);
       editorContentDispatch({
         type: 'setEditValue',
         topic: location.state.topic,
@@ -503,10 +497,10 @@ const PostPage = () => {
 
   const preventReload = (e: Event) => {
     e.preventDefault();
-    setShowModal(true);
-    editorFlowModalDispatch({ type: 'exitEditPage' });
-    setEditorModalType('exitEditPage');
-    preventScroll();
+    // setShowModal(true);
+    // editorFlowModalDispatch({ type: 'exitEditPage' });
+    // setEditorModalType('exitEditPage');
+    // preventScroll();
   };
 
   useEffect(() => {
