@@ -30,7 +30,7 @@ const EditorFlowModal = (props: EditorFlowModalPropsType) => {
 
   // 커스텀 훅 전달 함수
   const handleOutSideClick = () => {
-    if (showModal && editorModalType === 'tempSave') {
+    if (showModal && (editorModalType === 'tempSave' || editorModalType === 'exitEditPage')) {
       setModalBgClickActive(true);
     }
     if (modalBgClickActive) {

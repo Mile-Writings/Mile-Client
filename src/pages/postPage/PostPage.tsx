@@ -1,7 +1,15 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
+import { createBrowserHistory } from 'history';
 import React, { useEffect, useState, useReducer } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  // Location,
+  // NavigationType,
+  useLocation,
+  useNavigate,
+  // useNavigationType,
+  useParams,
+} from 'react-router-dom';
 
 import DropDown from './components/DropDown';
 import EditorContinueTempModal from './components/EditorContinueTempModal';
@@ -144,6 +152,7 @@ const editorFlowModalState: editorFlowModalType = {
 };
 
 const PostPage = () => {
+  const history = createBrowserHistory();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -430,6 +439,17 @@ const PostPage = () => {
           rightBtnFn: () => navigate(`/detail/${groupId}/${editPostId}`),
           modalImgType: 'postContent',
         };
+      // 페이지 이탈
+      case 'exitEditPage':
+        return {
+          ...state,
+          title: '작성 중이 글이 있습니다. \n 페이지를 나가시겠습니까?',
+          leftBtnText: '예',
+          leftBtnFn: () => navigate(`/group/${groupId}`),
+          rightBtnText: '아니오',
+          rightBtnFn: () => setShowModal(false),
+          modalImgType: 'editorWarn',
+        };
       default:
         return state;
     }
@@ -460,6 +480,9 @@ const PostPage = () => {
           // 렌더링 되자마자 쿼리함수 실행되므로 prevent만 넣어줌
           preventScroll();
           break;
+        case 'exitEditPage':
+          preventScroll();
+          break;
       }
     }
 
@@ -467,6 +490,30 @@ const PostPage = () => {
       allowScroll();
     };
   }, [showModal, showTempContinueModal, editorModalType]);
+
+  // 뒤로가기 방지
+  const preventGoBack = () => {
+    // 현재 상태를 세션 히스토리 스택에 추가(push)
+    // 뒤로가기 해도 현재 페이지에 일단 머물게 하기
+    setShowModal(true);
+    editorFlowModalDispatch({ type: 'exitEditPage' });
+    setEditorModalType('exitEditPage');
+    preventScroll();
+  };
+
+  useEffect(() => {
+    (() => {
+      // 현재 상태를 세션 히스토리 스택에 추가(push)
+      // 뒤로가기 해도 현재 페이지에 일단 머물게 하기
+      history.push(history.location);
+
+      window.addEventListener('popstate', preventGoBack);
+    })();
+
+    return () => {
+      window.removeEventListener('popstate', preventGoBack);
+    };
+  }, []);
 
   return (
     <PostPageWrapper>
