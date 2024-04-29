@@ -7,7 +7,6 @@ const CreateGroupSuccess = () => {
   const token = localStorage.getItem('accessToken');
   const { groupId } = useParams();
 
-  console.log(groupId);
   const navigate = useNavigate();
 
   const handleCopyLink = async () => {

@@ -16,10 +16,10 @@ export const MYGROUP = [
     data: {
       groups: [
         { groupId: 'MQ==', groupName: '마일' },
-        { groupId: 'MQ==', groupName: '나우솝트' },
-        { groupId: 'MQ==', groupName: '작미들라뷰' },
-        { groupId: 'MQ==', groupName: '나우솝트두근' },
-        { groupId: 'MQ==', groupName: '여덟글자까지가능' },
+        { groupId: 'M1==', groupName: '나우솝트' },
+        { groupId: 'M2==', groupName: '작미들라뷰' },
+        { groupId: 'M3==', groupName: '나우솝트두근' },
+        { groupId: 'M4==', groupName: '여덟글자까지가능' },
       ],
     },
   },

@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
-import { isAxiosError } from 'axios';
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from 'react';
 
 import CreateGroupTopicModal from './CreateGroupTopicModal';
 
@@ -24,7 +23,7 @@ interface CreateGroupInfoPropTypes {
   setGroupName: (e: ChangeEvent<HTMLInputElement>) => void;
   groupInfo: string;
   setGroupInfo: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  groupImageFile: string;
+
   setGroupImageFile: (image: string) => void;
   isPublic: boolean;
   setIsPublic: (value: boolean) => void;
@@ -41,7 +40,7 @@ const CreateGroupInfo = ({
   setGroupName,
   groupInfo,
   setGroupInfo,
-  groupImageFile,
+
   setGroupImageFile,
   isPublic,
   setIsPublic,

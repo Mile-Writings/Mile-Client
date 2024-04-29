@@ -14,7 +14,7 @@ export const theme = {
     midGrayViolet: '#D6D6EB',
     mainGreen: '#2F7417',
     mileGreen: '#C5DB8F',
-    mileRed: '#B81616',
+
     middleGreen: '#CCE09B',
     secondGreen: '#E4F4B5',
     lightGreen: '#F1F6E2',

@@ -1,13 +1,10 @@
 import styled from '@emotion/styled';
-import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
-
-import { CurrentPageType } from '../types/stateType';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 import Spacing from '../../../components/commons/Spacing';
 
 interface GroupLeaderPropTypes {
   leaderPenName: string;
-  setCurrentPage: Dispatch<SetStateAction<CurrentPageType['currentPage']>>;
   setLeaderPenName: (e: ChangeEvent<HTMLInputElement>) => void;
   leaderDesc: string;
   setLeaderDesc: (e: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -17,13 +14,13 @@ interface GroupLeaderPropTypes {
 
 const CreateGroupLeaderInfo = ({
   leaderPenName,
-  setCurrentPage,
   setLeaderDesc,
   leaderDesc,
   setLeaderPenName,
   isGroupLeaderValid,
   setIsGroupLeaderValid,
 }: GroupLeaderPropTypes) => {
+  //뒤로가기 처리 추후 해줘야해서 코드 남겨둡니다.
   // useEffect(() => {
   //   const handleBackButton = (e: PopStateEvent) => {
   //     e.preventDefault(); // 기본 동작 방지
@@ -188,13 +185,6 @@ const CreateGroupLayout = styled.div`
   width: 82.6rem;
   height: fit-content;
   margin-bottom: 2.8rem;
-`;
-
-const GroupLeaderInfoWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 11.4rem;
 `;
 
 export default CreateGroupLeaderInfo;

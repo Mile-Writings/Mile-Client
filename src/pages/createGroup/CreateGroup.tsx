@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useEffect, useReducer, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import CreateGroupInfo from './components/CreateGroupInfo';
 import CreateGroupLeaderInfo from './components/CreateGroupLeaderInfo';
@@ -9,10 +8,20 @@ import { ActionTypes, CreateGroupTypes, CurrentPageType } from './types/stateTyp
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 
+type CreateGroupAction =
+  | { type: 'setGroupName'; value: string }
+  | { type: 'setGroupInfo'; value: string }
+  | { type: 'setGroupImageFile'; value: string }
+  | { type: 'setIsPublic'; value: boolean }
+  | { type: 'setTopic'; value: string }
+  | { type: 'setTopicTag'; value: string }
+  | { type: 'setTopicDesc'; value: string }
+  | { type: 'setLeaderPenName'; value: string }
+  | { type: 'setLeaderDesc'; value: string };
 const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
-  const navigate = useNavigate();
+
   const initialState = {
     groupName: '',
     groupInfo: '',
@@ -25,66 +34,87 @@ const CreateGroup = () => {
     leaderDesc: '',
   };
 
-  const reducer = (state: CreateGroupTypes, action: ActionTypes) => {
-    switch (action.type) {
-      case 'setGroupName': {
-        return {
-          ...state,
-          groupName: action.value,
-        };
-      }
-      case 'setGroupInfo': {
-        return {
-          ...state,
-          groupInfo: action.value,
-        };
-      }
-      case 'setGroupImageFile': {
-        return {
-          ...state,
-          groupImageFile: action.value,
-        };
-      }
-      case 'setIsPublic': {
-        return {
-          ...state,
-          isPublic: action.value,
-        };
-      }
-      case 'setTopic': {
-        return {
-          ...state,
-          topic: action.value,
-        };
-      }
-      case 'setTopicTag': {
-        return {
-          ...state,
-          topicTag: action.value,
-        };
-      }
+  // const reducer = (state: CreateGroupTypes, action: ActionTypes) => {
+  //   switch (action.type) {
+  //     case 'setGroupName': {
+  //       return {
+  //         ...state,
+  //         groupName: action.value,
+  //       };
+  //     }
+  //     case 'setGroupInfo': {
+  //       return {
+  //         ...state,
+  //         groupInfo: action.value,
+  //       };
+  //     }
+  //     case 'setGroupImageFile': {
+  //       return {
+  //         ...state,
+  //         groupImageFile: action.value,
+  //       };
+  //     }
+  //     case 'setIsPublic': {
+  //       return {
+  //         ...state,
+  //         isPublic: action.value,
+  //       };
+  //     }
+  //     case 'setTopic': {
+  //       return {
+  //         ...state,
+  //         topic: action.value,
+  //       };
+  //     }
+  //     case 'setTopicTag': {
+  //       return {
+  //         ...state,
+  //         topicTag: action.value,
+  //       };
+  //     }
 
-      case 'setTopicDesc': {
-        return {
-          ...state,
-          topicDesc: action.value,
-        };
-      }
-      case 'setLeaderPenName': {
-        return {
-          ...state,
-          leaderPenName: action.value,
-        };
-      }
+  //     case 'setTopicDesc': {
+  //       return {
+  //         ...state,
+  //         topicDesc: action.value,
+  //       };
+  //     }
+  //     case 'setLeaderPenName': {
+  //       return {
+  //         ...state,
+  //         leaderPenName: action.value,
+  //       };
+  //     }
+  //     case 'setLeaderDesc': {
+  //       return {
+  //         ...state,
+  //         leaderDesc: action.value,
+  //       };
+  //     }
+  //   }
+  // };
+
+  const reducer = (state: CreateGroupTypes, action: CreateGroupAction) => {
+    switch (action.type) {
+      case 'setGroupName':
+      case 'setGroupInfo':
+      case 'setGroupImageFile':
+      case 'setTopic':
+      case 'setTopicTag':
+      case 'setLeaderPenName':
       case 'setLeaderDesc': {
-        return {
-          ...state,
-          leaderDesc: action.value,
-        };
+        const fieldName = action.type.slice(3); // "set"을 제외한 나머지 문자열
+        const formattedFieldName = fieldName.charAt(0).toLowerCase() + fieldName.slice(1); // 첫 글자만 소문자로 변경
+        return { ...state, [formattedFieldName]: action.value };
       }
+      case 'setIsPublic':
+        return { ...state, isPublic: action.value };
+      case 'setTopicDesc':
+        return { ...state, topicDesc: action.value };
+      default:
+        return state;
     }
   };
-
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     groupName,
@@ -100,6 +130,40 @@ const CreateGroup = () => {
   useEffect(() => {
     console.log(groupName, groupInfo, groupImageFile, isPublic);
   }, [groupName]);
+
+  // const setGroupName = (e: ChangeEvent<HTMLInputElement>) => {
+  //   dispatch({ type: 'setGroupName', value: e.target.value });
+  // };
+
+  // const setGroupInfo = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  //   dispatch({ type: 'setGroupInfo', value: e.target.value });
+  // };
+
+  // const setGroupImageFile = (inputValue: string) => {
+  //   dispatch({ type: 'setGroupImageFile', value: inputValue });
+  // };
+
+  // const setIsPublic = (inputValue: boolean) => {
+  //   dispatch({ type: 'setIsPublic', value: inputValue });
+  // };
+
+  // const setTopic = (e: ChangeEvent<HTMLInputElement>) => {
+  //   dispatch({ type: 'setTopic', value: e.target.value });
+  // };
+
+  // const setTopicTag = (e: ChangeEvent<HTMLInputElement>) => {
+  //   dispatch({ type: 'setTopicTag', value: e.target.value });
+  // };
+  // const setTopicDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  //   dispatch({ type: 'setTopicDesc', value: e.target.value });
+  // };
+  // const setLeaderPenName = (e: ChangeEvent<HTMLInputElement>) => {
+  //   dispatch({ type: 'setLeaderPenName', value: e.target.value });
+  // };
+  // const setLeaderDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  //   dispatch({ type: 'setLeaderDesc', value: e.target.value });
+  // };
+
   const setGroupName = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'setGroupName', value: e.target.value });
   };
@@ -132,7 +196,7 @@ const CreateGroup = () => {
   const setLeaderDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'setLeaderDesc', value: e.target.value });
   };
-  const { mutate, data } = usePostCreateGroup({
+  const { mutate } = usePostCreateGroup({
     groupName,
     groupInfo,
     groupImageFile,
@@ -163,7 +227,6 @@ const CreateGroup = () => {
           setGroupName={setGroupName}
           groupInfo={groupInfo}
           setGroupInfo={setGroupInfo}
-          groupImageFile={groupImageFile}
           setGroupImageFile={setGroupImageFile}
           isPublic={isPublic}
           setIsPublic={setIsPublic}
@@ -177,7 +240,6 @@ const CreateGroup = () => {
       {currentPage === 'GroupLeaderInfoPage' && (
         <CreateGroupLeaderInfo
           leaderPenName={leaderPenName}
-          setCurrentPage={setCurrentPage}
           setLeaderPenName={setLeaderPenName}
           leaderDesc={leaderDesc}
           setIsGroupLeaderValid={setIsGroupLeaderValid}
