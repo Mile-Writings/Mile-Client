@@ -41,4 +41,10 @@ export const handlers = [
       ],
     });
   }),
+  http.post('/api/moim/moimId/topic', () => {
+    return HttpResponse.json({ status: 201, message: '글감 생성이 완료되었습니다.' });
+  }),
+  http.put('/api/topic/topicId', () => {
+    return HttpResponse.json({ status: 200, message: '글감 수정이 완료되었습니다.' });
+  }),
 ];

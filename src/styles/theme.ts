@@ -124,6 +124,13 @@ export const theme = {
       line-height: 120%; /* 57.6px */
       letter-spacing: -1.44px;
     `,
+    title13: css`
+      font-weight: 700;
+      font-size: 24px;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-style: normal;
+      line-height: 120%;
+    `,
     subtitle1: css`
       font-weight: 700;
       font-size: 1.8rem;
