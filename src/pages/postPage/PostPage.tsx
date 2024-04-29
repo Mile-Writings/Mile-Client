@@ -491,8 +491,6 @@ const PostPage = () => {
 
   // 뒤로가기 방지
   const preventGoBack = () => {
-    // 현재 상태를 세션 히스토리 스택에 추가(push)
-    // 뒤로가기 해도 현재 페이지에 일단 머물게 하기
     setShowModal(true);
     editorFlowModalDispatch({ type: 'exitEditPage' });
     setEditorModalType('exitEditPage');
