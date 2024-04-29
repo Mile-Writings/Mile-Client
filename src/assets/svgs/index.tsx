@@ -85,3 +85,4 @@ export { default as MakeGroupAdminIc } from './btn_makegroup.svg?react';
 
 // 글 모임 가입 축하페이지
 export { default as JoinCongratulationIc } from './joinCongratulationPng.svg?react';
+export { default as GroupListProfileCloseIc } from './groupListprofileIcnClose.svg?react';

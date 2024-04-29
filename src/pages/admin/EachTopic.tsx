@@ -1,6 +1,10 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
+
+import AddEditTopicModal from './AddEditTopicModal';
 
 import { EditIc, DeleteIc } from '../../assets/svgs';
+import { NegativeModal } from '../../components/commons/Modal';
 
 interface AdminTopicPropTypes {
   topicId: string;
@@ -11,7 +15,11 @@ interface AdminTopicPropTypes {
 }
 
 const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
-  const { topicName, topicTag, topicDescription, createdAt } = data;
+  const { topicName, topicTag, topicDescription, createdAt, topicId } = data;
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   return (
     <TopicWrapper>
       <TopicData>
@@ -23,14 +31,50 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
         <TopicDescription>{topicDescription}</TopicDescription>
       </TopicData>
       <TopicAction>
-        <EditIc />
-        <DeleteIc />
+        <EditIc
+          onClick={() => {
+            console.log(topicId, 'api요청에서 필요함');
+            setShowEditModal(true);
+          }}
+        />
+        <DeleteIc onClick={() => setShowDeleteModal(true)} />
       </TopicAction>
+      {showEditModal && (
+        <>
+          <ModalOverlay onClick={() => setShowEditModal(false)} />
+          <AddEditTopicModal
+            topicStored={topicName}
+            topicTagStored={topicTag}
+            topicDescriptionStored={topicDescription}
+          />
+        </>
+      )}
+
+      <NegativeModal
+        modalContent="삭제 시, 해당 글감으로 작성된 글도 함께 삭제되며,
+        삭제된 글감은 복구할 수 없습니다.
+        계속 하시겠습니까?"
+        isModalOpen={showDeleteModal}
+        modalHandler={() => console.log('삭제api실행')}
+        closeModalHandler={() => setShowDeleteModal(false)}
+      />
     </TopicWrapper>
   );
 };
 
 export default EachTopic;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgb(0 0 0 / 60%);
+`;
 
 const TopicWrapper = styled.div`
   display: flex;
