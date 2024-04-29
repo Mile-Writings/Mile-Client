@@ -146,7 +146,6 @@ export const usePutEditContent = ({
   contentWithoutTag,
   setPostErrorMessage,
 }: putEditContentType) => {
-  const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [
       QUERY_KEY_POST.putEditContent,
@@ -172,9 +171,6 @@ export const usePutEditContent = ({
         contentWithoutTag,
         setPostErrorMessage,
       }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
-    },
   });
   return data;
 };
@@ -197,6 +193,7 @@ export const usePostTempSaveContent = ({
   imageUrl,
   anonymous,
 }: postTempSaveType) => {
+  const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [
       QUERY_KEY_POST.postSaveTempContent,
@@ -211,6 +208,9 @@ export const usePostTempSaveContent = ({
     ],
     mutationFn: () =>
       createTempSaveContent({ groupId, topicId, title, content, imageUrl, anonymous }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId] });
+    },
   });
   return data;
 };
@@ -240,6 +240,7 @@ interface putTempSaveContentType {
   imageUrl: string;
   anonymous: boolean;
   postId: string;
+  groupId: string;
 }
 
 export const usePutTempSaveContent = ({
@@ -249,6 +250,7 @@ export const usePutTempSaveContent = ({
   imageUrl,
   anonymous,
   postId,
+  groupId,
 }: putTempSaveContentType) => {
   const queryClient = useQueryClient();
   const data = useMutation({
@@ -265,6 +267,7 @@ export const usePutTempSaveContent = ({
     mutationFn: () => saveTempSavecontent({ topicId, title, content, imageUrl, anonymous, postId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId] });
     },
   });
   return data;

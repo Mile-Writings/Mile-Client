@@ -213,6 +213,9 @@ const PostPage = () => {
 
   // 임시저장 삭제하기
   const { mutate: deleteTempPost } = useDeleteTempPost(tempPostId || '', groupId);
+  const deleteTempPostHandler = () => {
+    deleteTempPost();
+  };
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
@@ -343,6 +346,7 @@ const PostPage = () => {
 
   // 임시 저장 글 -> 저장하기
   const { mutate: putTempSaveContent } = usePutTempSaveContent({
+    groupId: groupId,
     topicId: topics
       ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId ?? ''
       : '',
@@ -525,7 +529,7 @@ const PostPage = () => {
         showTempContinueModal={showTempContinueModal}
         setShowTempContinueModal={setShowTempContinueModal}
         setContinueTempPost={setContinueTempPost}
-        deleteTempPost={deleteTempPost}
+        deleteTempPost={deleteTempPostHandler}
       />
       <EditorFlowModal
         showModal={showModal}
