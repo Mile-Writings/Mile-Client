@@ -40,13 +40,14 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
         <DeleteIc onClick={() => setShowDeleteModal(true)} />
       </TopicAction>
       {showEditModal && (
-        <ModalOverlay onClick={() => setShowEditModal(false)}>
+        <>
+          <ModalOverlay onClick={() => setShowEditModal(false)} />
           <AddEditTopicModal
             topicStored={topicName}
             topicTagStored={topicTag}
             topicDescriptionStored={topicDescription}
           />
-        </ModalOverlay>
+        </>
       )}
 
       <NegativeModal
@@ -68,9 +69,7 @@ const ModalOverlay = styled.div`
   top: 0;
   left: 0;
   z-index: 4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
   width: 100%;
   height: 100%;
 

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import AddEditTopicModal from './AddEditTopicModal';
 import { useAdminTopic } from './hooks/queries';
@@ -9,7 +10,9 @@ import { MakeGroupAdminIc } from '../../assets/svgs';
 import Spacing from '../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
-  const { topicCount, adminTopicData } = useAdminTopic();
+  const { groupId } = useParams();
+  const [pageNum, setPageNum] = useState(1);
+  const { topicCount, adminTopicData } = useAdminTopic(groupId, pageNum);
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
@@ -33,7 +36,7 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
               <AddEditTopicModal />
             </>
           )}
-          <TopicAdmin data={adminTopicData} />
+          <TopicAdmin data={adminTopicData} setPageNum={setPageNum} pageNum={pageNum} />
         </AdminContainer>
       );
 

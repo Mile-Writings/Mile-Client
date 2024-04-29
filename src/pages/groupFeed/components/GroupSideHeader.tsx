@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import GroupInfoBox from './GroupInfoBox';
 
@@ -18,8 +19,14 @@ interface GroupInfoPropTypes {
   description?: string;
 }
 
-const GroupSideHeader = (props: { groupInfoData: GroupInfoPropTypes }) => {
-  const { groupInfoData } = props;
+const GroupSideHeader = (props: {
+  groupInfoData: GroupInfoPropTypes;
+  isMember: boolean | undefined;
+  isOwner: boolean | undefined;
+}) => {
+  const { groupInfoData, isMember, isOwner } = props;
+  const { groupId } = useParams();
+  const navigate = useNavigate();
 
   return (
     <HeaderWrapper>
@@ -47,19 +54,27 @@ const GroupSideHeader = (props: { groupInfoData: GroupInfoPropTypes }) => {
             </GroupSideHeaderLayout>
             <Spacing marginBottom="2" />
             <GroupSideHeaderDetailBox>{groupInfoData.description}</GroupSideHeaderDetailBox>
-            <Spacing marginBottom="2" />
-            <SideHeaderButton>관리자페이지</SideHeaderButton>
+            {isOwner && (
+              <>
+                <Spacing marginBottom="2" />
+                <SideHeaderButton onClick={() => navigate(`/admin/${groupId}`)}>
+                  관리자페이지
+                </SideHeaderButton>
+              </>
+            )}
           </>
         )}
       </GroupSideHeaderWrapper>
       <Spacing marginBottom="1.6" />
-      <MemberSideHeaderWrapper>
-        <ProfileWrapper>
-          <GroupBestProfileIc /> 일이삼사
-        </ProfileWrapper>
-        <Spacing marginBottom="1.6" />
-        <SideHeaderButton>소개글 수정</SideHeaderButton>
-      </MemberSideHeaderWrapper>
+      {isMember && (
+        <MemberSideHeaderWrapper>
+          <ProfileWrapper>
+            <GroupBestProfileIc /> 일이삼사
+          </ProfileWrapper>
+          <Spacing marginBottom="1.6" />
+          <SideHeaderButton>소개글 수정</SideHeaderButton>
+        </MemberSideHeaderWrapper>
+      )}
     </HeaderWrapper>
   );
 };

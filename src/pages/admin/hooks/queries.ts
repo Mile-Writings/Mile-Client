@@ -7,10 +7,10 @@ import {
   editAdminTopic,
 } from '../apis/fetchAdminData';
 
-export const useAdminTopic = () => {
+export const useAdminTopic = (groupId: string | undefined, pageNum: number) => {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['adminTopic'],
-    queryFn: () => fetchAdminTopic(),
+    queryKey: ['adminTopic', groupId, pageNum],
+    queryFn: () => fetchAdminTopic(groupId, pageNum),
   });
 
   const topicCount = data && data.data.topicCount;
