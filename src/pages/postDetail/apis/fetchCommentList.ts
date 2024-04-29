@@ -2,6 +2,8 @@ import { isAxiosError } from 'axios';
 
 import { devClient } from '../../../utils/apis/axios';
 
+//for pr
+
 interface GetCommentListResponseTypes {
   status: string;
   message: string;
