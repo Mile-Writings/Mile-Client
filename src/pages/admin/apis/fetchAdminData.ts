@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import { devClient } from '../../../utils/apis/axios';
 
 //[GET] 관리자페이지 글감 LIST
@@ -39,6 +37,7 @@ export interface postAdminTopicPropTypes {
   topic: string;
   topicTag: string;
   topicDescription: string;
+  groupId: string | undefined;
 }
 
 //[POST] 관리자페이지 글감 생성
@@ -46,35 +45,77 @@ export const postAdminTopic = async ({
   topic,
   topicTag,
   topicDescription,
+  groupId,
 }: postAdminTopicPropTypes) => {
   try {
-    const response = await axios.post('/api/moim/moimId/topic', {
-      topic: topic,
-      topicTag: topicTag,
-      topicDescription: topicDescription,
-    });
-    const data = await response;
-    console.log(data, 'data');
-    return data;
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await devClient.post(
+      `/api/moim/${groupId}/topic`,
+      {
+        topicName: topic,
+        topicTag: topicTag,
+        topicDescription: topicDescription,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    console.log(response.data, 'data');
+    return response.data;
   } catch (error) {
     console.log('에러:', error);
   }
 };
+
+interface editTopicPropType {
+  topic: string;
+  topicTag: string;
+  topicDescription: string;
+  topicId: string | undefined;
+}
 
 //[PUT] 관리자 페이지 글감 수정
 export const editAdminTopic = async ({
   topic,
   topicTag,
   topicDescription,
-}: postAdminTopicPropTypes) => {
+  topicId,
+}: editTopicPropType) => {
   try {
-    const response = await axios.put('/api/topic/topicId', {
-      topic: topic,
-      topicTag: topicTag,
-      topicDescription: topicDescription,
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await devClient.put(
+      `/api/topic/${topicId}`,
+      {
+        topic: topic,
+        topicTag: topicTag,
+        topicDescription: topicDescription,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.log('에러:', error);
+  }
+};
+
+//[DELETE] 관리자페이지 글감삭제
+export const deleteAdminTopic = async (topicId: string) => {
+  try {
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await devClient.delete<AdminTopicPropTypes>(`/api/topic/${topicId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
-    const data = response;
-    return data;
+    console.log(response.data, 'data');
+
+    return response.data;
   } catch (error) {
     console.log('에러:', error);
   }
