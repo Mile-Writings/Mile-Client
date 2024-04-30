@@ -40,7 +40,6 @@ const CreateGroupInfo = ({
   setGroupName,
   groupInfo,
   setGroupInfo,
-
   setGroupImageFile,
   isPublic,
   setIsPublic,
@@ -53,25 +52,24 @@ const CreateGroupInfo = ({
   const isGroupNameValid = groupName.length <= 10;
   const isGroupInfoValid = groupInfo.length <= 100;
   const [isGroupNameEmpty, setIsGroupNameEmpty] = useState(false);
-  const [isGroupImageEmpty, setIsGroupImageEmpty] = useState(false);
   const [isGroupTopicEmpty, setIsGroupTopicEmpty] = useState(false);
   const [groupImageView, setGroupImageView] = useState('');
   const [topicModal, setTopicModal] = useState(false);
   const groupNameRef = useRef<HTMLInputElement>(null);
 
   const { data, error, refetch } = useGetGroupNameValidation(groupName);
+  console.log(data, error);
   // 이미지 보낼 url 받아오기
   const { fileName, url = '' } = usePresignedUrl();
 
   const postDirectlyS3Func = async (url: string, imageFile: File) => {
     try {
-      const data = await postDirectlyS3(url, imageFile);
+      await postDirectlyS3(url, imageFile);
       const s3url = s3UrlParsing(url) || '';
 
       const urlToServer = `${s3url + fileName}`;
 
       setGroupImageFile(urlToServer);
-      console.log(data);
     } catch (err) {
       if (err instanceof Error) throw err;
     }
@@ -90,7 +88,6 @@ const CreateGroupInfo = ({
         if (typeof reader.result === 'string') {
           postDirectlyS3Func(url, file);
           setGroupImageView(reader.result);
-          setIsGroupImageEmpty(false);
         } else {
           console.log('Image Error');
         }
@@ -113,7 +110,7 @@ const CreateGroupInfo = ({
 
   const InputInfoMsg = {
     groupNameLength: '10자 이내로 작성해주세요.',
-    groupNameNotAvailable: '사용 불가능한 모임명 입니다.',
+    groupNameNotAvailable: '이미 사용중인 모임명입니다.',
     groupNameNotCheck: '중복확인을 해주세요.',
     groupNameAvailable: '사용 가능한 모임명입니다.',
   };
@@ -137,8 +134,6 @@ const CreateGroupInfo = ({
       if (groupNameRef.current) {
         groupNameRef.current && groupNameRef.current.focus();
       }
-    } else if (!groupImageView) {
-      setIsGroupImageEmpty(true);
     } else if (!topic || !topicTag) {
       setIsGroupTopicEmpty(true);
     }
@@ -171,7 +166,7 @@ const CreateGroupInfo = ({
                 ref={groupNameRef}
                 onChange={handleGroupName}
                 placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
-                isValid={isGroupNameValid && !error}
+                isValid={isGroupNameValid && !error && data?.data?.data?.isValid}
               />{' '}
               <DuplicateCheckBtn
                 type="button"
@@ -188,9 +183,9 @@ const CreateGroupInfo = ({
               <ErrorMsgText>
                 {!isGroupNameValid
                   ? InputInfoMsg.groupNameLength
-                  : data?.data?.data?.isValidate === false
-                    ? InputInfoMsg.groupNameNotAvailable
-                    : ''}
+                  : data?.data?.data?.isValidate === undefined
+                    ? ''
+                    : InputInfoMsg.groupNameNotAvailable}
               </ErrorMsgText>
             )}
           </GroupInputWrapper>
@@ -207,7 +202,7 @@ const CreateGroupInfo = ({
             <TextAreaLenth isValid={isGroupInfoValid}> {groupInfo.length} / 100</TextAreaLenth>
           </GroupInputWrapper>
         </GroupInfoWrppaer>
-        <WhiteInputWrapper isValid={!isGroupImageEmpty}>
+        <WhiteInputWrapper isValid={true}>
           <GroupInputWrapper>
             <InputTitleText>글 모임 사진</InputTitleText>
             <GroupImageLabel htmlFor="file">

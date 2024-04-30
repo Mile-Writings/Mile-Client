@@ -10,6 +10,7 @@ export const QUERY_KEY_CREATE_GROUP = {
 };
 
 export const useGetGroupNameValidation = (moimName: string) => {
+  const queryClient = useQueryClient();
   const data = useQuery({
     queryKey: [QUERY_KEY_CREATE_GROUP.getGroupNameValidation, moimName],
     queryFn: () => getGroupNameValidation(moimName),
@@ -17,7 +18,7 @@ export const useGetGroupNameValidation = (moimName: string) => {
     enabled: false,
     retry: 0,
   });
-
+  queryClient.removeQueries({ queryKey: [QUERY_KEY_CREATE_GROUP.getGroupNameValidation] });
   return data;
 };
 
