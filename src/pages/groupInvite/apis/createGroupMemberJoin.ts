@@ -31,8 +31,10 @@ export const createGroupMemberJoin = async ({
         },
       },
     );
+    console.log(data);
     return data;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
