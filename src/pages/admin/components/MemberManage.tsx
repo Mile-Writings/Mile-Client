@@ -65,8 +65,8 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
         <Pagenation
           count={memberData.writerNameCount}
           allocatedCount={5}
-          setPageNum={setPageCount}
-          pageNum={pageCount}
+          setActivePage={setPageCount}
+          activePage={pageCount}
         />
       )}
     </>
