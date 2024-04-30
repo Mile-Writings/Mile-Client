@@ -37,7 +37,7 @@ const TopicDropDown = (props: TopicPropTypes) => {
   return (
     <TopicDropDownWrapper ref={topicListDropDownRef}>
       <DropDownToggle onClick={handleOnClick}>
-        <DropDownContent $contentWidth={29}>{selectedTopic}</DropDownContent>
+        <DropDownContent $contentWidth={28}>{selectedTopic}</DropDownContent>
         <EditorDropIcnActiveWrapper $isOpen={topicIsOpen}>
           <EditorDropIcnActiveIcon />
         </EditorDropIcnActiveWrapper>

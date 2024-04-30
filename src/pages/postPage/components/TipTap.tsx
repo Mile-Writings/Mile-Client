@@ -40,10 +40,12 @@ interface EditorPropTypes {
   tempContent: string;
   editContent: string;
   setEditorContent: (content: string) => void;
+  setContentWithoutTag: (content: string) => void;
 }
 
 const TipTap = (props: EditorPropTypes) => {
-  const { title, setTitle, tempContent, editContent, setEditorContent } = props;
+  const { title, setTitle, tempContent, editContent, setEditorContent, setContentWithoutTag } =
+    props;
   // toolbar 드롭다운 전체 핸들
   const [isToggleOpen, setIsToggleOpen] = useState(false);
   // font size drop down
@@ -122,6 +124,7 @@ const TipTap = (props: EditorPropTypes) => {
     content: '',
     onUpdate: ({ editor }) => {
       setEditorContent(editor.getHTML());
+      setContentWithoutTag(editor.getText());
     },
   }) as Editor;
 

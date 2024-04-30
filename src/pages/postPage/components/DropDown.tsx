@@ -57,7 +57,7 @@ export const DropDownToggle = styled.div`
 
 export const DropDownContent = styled.span<{ $contentWidth: number }>`
   width: ${({ $contentWidth }) => `${$contentWidth}rem`};
-  margin-right: 1rem;
+  margin-right: 2rem;
 
   color: ${({ theme }) => theme.colors.mainViolet};
   ${({ theme }) => theme.fonts.button2};

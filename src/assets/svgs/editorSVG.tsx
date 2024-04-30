@@ -43,3 +43,10 @@ export { default as EditorNumberListIcn } from './stickyeditorNumberSvg.svg?reac
 export { default as EditorQuoteIcn } from './stickyeditorQuoteSvg.svg?react';
 // Divider
 export { default as EditorDividerIcn } from './stickyeditorHorizonSvg.svg?react';
+// 에디터 필수정보 미입력 에러 아이콘
+export { default as EditorErrorIcn } from './editorErrorSvg.svg?react';
+
+// 에디터 모달 이미지
+export { default as AlertStorageIcn } from './alertStoragePng.svg?react';
+export { default as AlertUploadIcn } from './alertUploadPng.svg?react';
+export { default as AlertCautionIcn } from './alertCautionPng.svg?react';
