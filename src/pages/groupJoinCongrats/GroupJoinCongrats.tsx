@@ -1,22 +1,31 @@
 import styled from '@emotion/styled';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import { JoinCongratulationIc } from '../../assets/svgs';
 import { DefaultHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupJoinCongrats = () => {
+  const { groupId } = useParams() as { groupId: string };
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const onClickGoToGroupFeedBtn = () => {
+    navigate(`/group/${groupId}`);
+  };
   return (
     <GroupJoinCongratsWrapper>
       <DefaultHeader />
       <Spacing marginBottom="11.4" />
       <GroupJoinCongratsContainer>
         <GroupJoinTitleWrapper>
-          <GroupJoinTitle>글 모임 이름 가입을 축하해요!</GroupJoinTitle>
+          <GroupJoinTitle>{location.state.moimTitle} 가입을 축하해요!</GroupJoinTitle>
           <GroupJoinText>글 모임에서 당신의 소중한 이야기를 들려주세요.</GroupJoinText>
         </GroupJoinTitleWrapper>
         <Spacing marginBottom="4.8" />
-        <CongratsImg />
+        <JoinCongratulationIc />
         <Spacing marginBottom="4.8" />
-        <GoToGroupFeedBtn>모임 페이지 보러가기</GoToGroupFeedBtn>
+        <GoToGroupFeedBtn onClick={onClickGoToGroupFeedBtn}>모임 페이지 보러가기</GoToGroupFeedBtn>
       </GroupJoinCongratsContainer>
     </GroupJoinCongratsWrapper>
   );
@@ -61,13 +70,6 @@ const GroupJoinTitle = styled.h1`
 const GroupJoinText = styled.p`
   color: ${({ theme }) => theme.colors.gray90};
   ${({ theme }) => theme.fonts.subtitle4}
-`;
-
-const CongratsImg = styled.div`
-  width: 100%;
-  height: 19.4rem;
-
-  background-color: ${({ theme }) => theme.colors.gray10};
 `;
 
 const GoToGroupFeedBtn = styled.button`

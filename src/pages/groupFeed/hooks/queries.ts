@@ -9,6 +9,7 @@ import {
   fetchTodayTopic,
   fetchTopicList,
 } from '../apis/fetchGroupFeed';
+import { fetchHeaderGroup } from '../apis/fetchHeaderGroup';
 
 export const QUERY_KEY_GROUPFEED = {
   getGroupFeedAuth: 'getGroupFeedAuth',
@@ -17,10 +18,12 @@ export const QUERY_KEY_GROUPFEED = {
   getGroupFeedCategory: 'getGroupFeedCategory',
   getCuriousWriters: 'getCuriousWriters',
   getArticleList: 'getArticleList',
+  fetchHeaderGroup: 'fetchHeaderGroup',
 };
 
 interface GroupFeedAuthQueryResult {
   isMember: boolean | undefined;
+  isOwner: boolean | undefined;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
@@ -36,9 +39,10 @@ export const useGroupFeedAuth = (
     enabled: !!accessToken,
   });
 
-  const isMember = data && data.data.isMember;
+  const isMember = data && data?.data?.isMember;
+  const isOwner = data && data?.data?.isOwner;
 
-  return { isMember, isLoading, isError, error };
+  return { isMember, isOwner, isLoading, isError, error };
 };
 
 interface GroupInfoQueryResult {
@@ -123,4 +127,13 @@ export const useArticleList = (topicId: string) => {
   const postListData = data && data.data.postList;
 
   return { topicInfo, postListData, isLoading, isError, error };
+};
+
+export const useFetchHeaderGroup = () => {
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
+    queryFn: () => fetchHeaderGroup(),
+  });
+  console.log(data);
+  return { data };
 };
