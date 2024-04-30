@@ -17,12 +17,12 @@ export const useGetGroupInfo = (groupId: string) => {
     queryFn: () => fetchGroupInfo(groupId),
   });
 
-  const moimTitle = data && data.data.moimTitle;
-  const imageUrl = data && data.data.imageUrl;
-  const leader = data && data.data.leader;
-  const foundedDate = data && data.data.foundedDate;
-  const memberCount = data && data.data.memberCount;
-  const description = data && data.data.description;
+  const moimTitle = data && data?.data?.moimTitle;
+  const imageUrl = data && data?.data?.imageUrl;
+  const leader = data && data?.data?.leader;
+  const foundedDate = data && data?.data?.foundedDate;
+  const memberCount = data && data?.data?.memberCount;
+  const description = data && data?.data?.description;
 
   return { moimTitle, imageUrl, leader, foundedDate, memberCount, description, error };
 };
@@ -39,7 +39,7 @@ export const useGetWriterNameConflict = (
     enabled: !!isConflictBtnClicked,
   });
 
-  const isConflict = data && data.data.isConflict;
+  const isConflict = data && data?.data?.isConflict;
 
   return { isConflict };
 };
