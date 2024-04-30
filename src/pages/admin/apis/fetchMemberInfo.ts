@@ -33,14 +33,13 @@ const fetchMemberInfo = async (groupId: string, page: number | undefined) => {
   try {
     const token = localStorage.getItem('accessToken');
     const data = await devClient.get<FetchMemberPropTypes>(
-      `/api/moim/${groupId}/writerNameList?page=${page}`,
+      `/api/moim/${groupId}/writernames?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       },
     );
-    console.log(data, 'data');
     return data.data;
   } catch (error) {
     console.error();
