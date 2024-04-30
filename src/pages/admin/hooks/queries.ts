@@ -5,6 +5,7 @@ import {
   fetchAdminTopic,
   postAdminTopic,
   postAdminTopicPropTypes,
+  deleteAdminTopic,
 } from '../apis/fetchAdminData';
 import fetchDeleteMember from '../apis/fetchDeleteMember';
 import { fetchInvitationLink } from '../apis/fetchInvitationLink';
@@ -25,6 +26,26 @@ export const useAdminTopic = (groupId: string | undefined, pageNum: number) => {
   const adminTopicData = data && data.data;
 
   return { topicCount, adminTopicData, isLoading, isError, error };
+};
+
+//[POST] 관리자페이지 글감 생성
+export const usePostAdminTopic = (groupId: string | undefined, pageNum: number) => {
+  const queryClient = useQueryClient();
+  const { mutate, isError, error } = useMutation({
+    mutationKey: ['adminTopic'],
+    mutationFn: ({ topic, topicTag, topicDescription }: postAdminTopicPropTypes) =>
+      postAdminTopic({ topic, topicTag, topicDescription, groupId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['adminTopic', groupId, pageNum],
+      });
+    },
+  });
+
+  const postMutateAdminTopic = ({ topic, topicTag, topicDescription }: postAdminTopicPropTypes) =>
+    mutate({ topic, topicTag, topicDescription, groupId });
+
+  return { postMutateAdminTopic, isError, error };
 };
 
 // 멤버 정보 조회 get api
@@ -68,28 +89,56 @@ export const useFetchInvitationLink = (groupId: string | undefined) => {
   return { invitationCode };
 };
 
-export const usePostAdminTopic = () => {
+interface editTopicPropType {
+  topic: string;
+  topicTag: string;
+  topicDescription: string;
+  topicId: string | undefined;
+}
+
+//[PUT] 관리자 페이지 글감 수정
+export const useEditAdminTopic = (
+  topicId: string | undefined,
+  groupId: string | undefined,
+  pageNum: number,
+) => {
+  const queryClient = useQueryClient();
   const { mutate, isError, error } = useMutation({
     mutationKey: ['adminTopic'],
-    mutationFn: ({ topic, topicTag, topicDescription }: postAdminTopicPropTypes) =>
-      postAdminTopic({ topic, topicTag, topicDescription }),
+    mutationFn: ({ topic, topicTag, topicDescription }: editTopicPropType) =>
+      editAdminTopic({ topic, topicTag, topicDescription, topicId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['adminTopic', groupId, pageNum],
+      });
+    },
   });
 
-  const post1AdminTopic = ({ topic, topicTag, topicDescription }: postAdminTopicPropTypes) =>
-    mutate({ topic, topicTag, topicDescription });
-
-  return { post1AdminTopic, isError, error };
-};
-
-export const useEditAdminTopic = () => {
-  const { mutate, isError, error } = useMutation({
-    mutationKey: ['adminTopic'],
-    mutationFn: ({ topic, topicTag, topicDescription }: postAdminTopicPropTypes) =>
-      editAdminTopic({ topic, topicTag, topicDescription }),
-  });
-
-  const editMutateAdminTopic = ({ topic, topicTag, topicDescription }: postAdminTopicPropTypes) =>
-    mutate({ topic, topicTag, topicDescription });
+  const editMutateAdminTopic = ({ topic, topicTag, topicDescription }: editTopicPropType) =>
+    mutate({ topic, topicTag, topicDescription, topicId });
 
   return { editMutateAdminTopic, isError, error };
+};
+
+//[DELETE] 관리자페이지 글감삭제
+export const useDeleteAdminTopic = (
+  topicId: string,
+  groupId: string | undefined,
+  pageNum: number,
+) => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: ['adminTopic', topicId],
+    mutationFn: () => deleteAdminTopic(topicId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['adminTopic', groupId, pageNum],
+      });
+    },
+  });
+
+  const deleteMutateAdminTopic = () => {
+    data.mutate();
+  };
+  return { deleteMutateAdminTopic };
 };

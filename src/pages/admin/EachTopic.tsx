@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import AddEditTopicModal from './AddEditTopicModal';
+import { useDeleteAdminTopic } from './hooks/queries';
 
 import { EditIc, DeleteIc } from '../../assets/svgs';
 import { NegativeModal } from '../../components/commons/Modal';
@@ -14,11 +16,18 @@ interface AdminTopicPropTypes {
   createdAt: string;
 }
 
-const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
+interface eachTopicPropTypes {
+  data: AdminTopicPropTypes;
+  pageNum: number;
+}
+
+const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
   const { topicName, topicTag, topicDescription, createdAt, topicId } = data;
+  const { groupId } = useParams();
   const [showEditModal, setShowEditModal] = useState(false);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const { deleteMutateAdminTopic } = useDeleteAdminTopic(topicId, groupId, pageNum);
 
   return (
     <TopicWrapper>
@@ -33,7 +42,6 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
       <TopicAction>
         <EditIc
           onClick={() => {
-            console.log(topicId, 'api요청에서 필요함');
             setShowEditModal(true);
           }}
         />
@@ -46,6 +54,9 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
             topicStored={topicName}
             topicTagStored={topicTag}
             topicDescriptionStored={topicDescription}
+            topicId={topicId}
+            pageNum={pageNum}
+            setShowModal={setShowEditModal}
           />
         </>
       )}
@@ -55,7 +66,10 @@ const EachTopic = ({ data }: { data: AdminTopicPropTypes }) => {
         삭제된 글감은 복구할 수 없습니다.
         계속 하시겠습니까?"
         isModalOpen={showDeleteModal}
-        modalHandler={() => console.log('삭제api실행')}
+        modalHandler={() => {
+          deleteMutateAdminTopic();
+          setShowDeleteModal(false);
+        }}
         closeModalHandler={() => setShowDeleteModal(false)}
       />
     </TopicWrapper>

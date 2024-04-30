@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { usePostAdminTopic } from './hooks/queries';
+import { usePostAdminTopic, useEditAdminTopic } from './hooks/queries';
 
 import Spacing from '../../components/commons/Spacing';
 
@@ -9,18 +10,25 @@ interface topicPropTypes {
   topicStored?: string;
   topicTagStored?: string;
   topicDescriptionStored?: string;
+  topicId?: string;
+  pageNum: number;
+  setShowModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const AddEditTopicModal = ({
   topicStored,
   topicTagStored,
   topicDescriptionStored,
+  topicId,
+  pageNum,
+  setShowModal,
 }: topicPropTypes) => {
   useEffect(() => {
     setTopic(topicStored || '');
     setTopicTag(topicTagStored || '');
     setTopicDescription(topicDescriptionStored || '');
   }, []);
+
   const [topic, setTopic] = useState('');
   const [topicTag, setTopicTag] = useState('');
   const [topicDescription, setTopicDescription] = useState('');
@@ -29,7 +37,12 @@ const AddEditTopicModal = ({
   const [topicTagError, setTopicTagError] = useState(false);
   const [topicDescriptionError, setTopicDescriptionError] = useState(false);
   const limitLength = 90;
-  const { post1AdminTopic } = usePostAdminTopic();
+
+  const { groupId } = useParams();
+
+  const { postMutateAdminTopic } = usePostAdminTopic(groupId, pageNum);
+  const { editMutateAdminTopic } = useEditAdminTopic(topicId, groupId, pageNum);
+
   const handleTopicNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTopic(e.target.value);
     setTopicNameError(false);
@@ -47,13 +60,16 @@ const AddEditTopicModal = ({
     setTopicDescriptionError(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (topicStored: string) => {
     if (topic.trim() === '' || topicTag.trim() === '' || topicDescription.trim() === '') {
       setTopicNameError(topic.trim() === '');
       setTopicTagError(topicTag.trim() === '');
       setTopicDescriptionError(topicDescription.trim() === '');
     } else {
-      post1AdminTopic({ topic, topicTag, topicDescription });
+      topicStored
+        ? editMutateAdminTopic({ topic, topicTag, topicDescription, topicId })
+        : postMutateAdminTopic({ topic, topicTag, topicDescription, groupId });
+      setShowModal(false);
     }
   };
 
@@ -95,7 +111,7 @@ const AddEditTopicModal = ({
           </TextCount>
         </TextAreaWrapper>
       </div>
-      <SubmitForm onClick={handleSubmit}>
+      <SubmitForm onClick={() => handleSubmit(topicStored || '')}>
         {topicStored ? '글감 수정하기' : '글감 생성하기'}
       </SubmitForm>
     </ModalWrapper>
