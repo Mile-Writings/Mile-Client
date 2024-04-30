@@ -37,8 +37,8 @@ export const useGroupFeedAuth = (
     enabled: !!accessToken,
   });
 
-  const isMember = data && data.data.isMember;
-  const isOwner = data && data.data.isOwner;
+  const isMember = data && data?.data?.isMember;
+  const isOwner = data && data?.data?.isOwner;
 
   return { isMember, isOwner, isLoading, isError, error };
 };

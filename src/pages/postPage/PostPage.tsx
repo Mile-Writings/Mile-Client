@@ -497,6 +497,7 @@ const PostPage = () => {
     preventScroll();
   };
 
+  // 새로고침 방지
   const preventReload = (e: Event) => {
     e.preventDefault();
     // setShowModal(true);
