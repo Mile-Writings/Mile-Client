@@ -27,7 +27,6 @@ export { default as GroupFloatingBtnIc } from './groupFloatingBtn.svg?react';
 export { default as GroupFloatingBtnHoverIc } from './groupFloatingBtnHover.svg?react';
 export { default as GroupNoDataImgIc } from './groupNoDataImg.svg?react';
 export { default as HeaderLogoIc } from './headerLogoSvg.svg?react';
-export { default as MainGraphicGradationIc } from './mainGraphicGradation.svg?react';
 export { default as MainGraphicLogo } from './mainGraphicLogo.svg?react';
 export { default as MainIcnArrowBlack } from './mainIcnArrowBlack.svg?react';
 export { default as MainIcnArrowPurple } from './mainIcnArrowPurple.svg?react';
@@ -73,9 +72,9 @@ export { default as adminProfileIc } from './adminProfileIc.svg?react';
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
 export { default as faviconMileIc } from './faviconMile.svg?react';
 
+export { default as ArrowTopLeftIc } from './arrow_top_left.svg?react';
 export { default as CheckIc } from './check.svg?react';
 export { default as NestCommentIc } from './mode_comment.svg?react';
-export { default as ArrowTopLeftIc } from './arrow_top_left.svg?react';
 
 export { default as DeleteIc } from './deleteBtn.svg?react';
 export { default as EditIc } from './editBtn.svg?react';

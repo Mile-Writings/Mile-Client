@@ -100,6 +100,8 @@ const GroupRoutingButtonBox = styled.button`
     ${({ theme }) => theme.fonts.button1};
 
     background-color: ${({ theme }) => theme.colors.white};
+
+    transition: all 0.5s;
   }
 `;
 
