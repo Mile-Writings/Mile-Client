@@ -16,7 +16,7 @@ const fetchCuriousInfo = async (postId: string) => {
     const token = localStorage.getItem('accessToken');
 
     const { data } = await client.get<GetCuriousInfoResponseTypes>(
-      `/api/post/${postId}/curiousInfo`,
+      `/api/post/${postId}/info/curious`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

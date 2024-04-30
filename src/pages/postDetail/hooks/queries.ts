@@ -9,8 +9,10 @@ import deletePost from '../apis/deletePost';
 import fetchCommentList from '../apis/fetchCommentList';
 import fetchCuriousInfo from '../apis/fetchCuriousInfo';
 import fetchDeleteComment from '../apis/fetchDeleteComment';
+import fetchDeleteNestedComment from '../apis/fetchDeleteNestedComment';
 import fetchPostComment from '../apis/fetchPostComment';
 import fetchPostDetail from '../apis/fetchPostDetail';
+import fetchPostNestedComment from '../apis/fetchPostNestedComment';
 //쿼리키를 이렇게 두는 이유는 겹치지 않기위해 + 객체로 생성하여 자동완성 하기 위해
 export const QUERY_KEY_POST_DETAIL = {
   getPostDetail: 'getPostDetail',
@@ -22,6 +24,7 @@ export const QUERY_KEY_POST_DETAIL = {
   deleteComment: 'deleteComment',
   getAuthorization: 'getAuthorization',
   getCurious: 'getCurious',
+  postNestedComment: 'postNestedComment',
 };
 
 // 글정보 조회 get api
@@ -110,11 +113,11 @@ export const useDeletePost = (postId: string, topicId: string) => {
 };
 
 //댓글 생성 api
-export const usePostComment = (postId: string) => {
+export const usePostComment = (postId: string, isAnonymous: boolean) => {
   const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
-    mutationFn: (comment: string) => fetchPostComment(postId, comment),
+    mutationFn: (comment: string) => fetchPostComment(postId, comment, isAnonymous),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
@@ -127,6 +130,26 @@ export const usePostComment = (postId: string) => {
   };
 
   return { postComment };
+};
+
+//대댓글 생성 api
+export const usePostNestedComment = (commentId: string, postId: string, isAnonymous: boolean) => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: [QUERY_KEY_POST_DETAIL.postNestedComment, commentId],
+    mutationFn: (comment: string) => fetchPostNestedComment(commentId, comment, isAnonymous),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
+      });
+    },
+  });
+
+  const postNestedComment = (comment: string) => {
+    data.mutate(comment);
+  };
+
+  return { postNestedComment };
 };
 
 //댓글 삭제 api
@@ -146,4 +169,23 @@ export const useDeleteComment = (commentId: string, postId: string) => {
     data.mutate();
   };
   return { deleteComment };
+};
+
+//대댓글 삭제 api
+export const useDeleteNestedComment = (replyId: string, postId: string) => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: [QUERY_KEY_POST_DETAIL.getCommentList, replyId],
+    mutationFn: () => fetchDeleteNestedComment(replyId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
+      });
+    },
+  });
+
+  const deleteNestedComment = () => {
+    data.mutate();
+  };
+  return { deleteNestedComment };
 };

@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import AddEditTopicModal from './AddEditTopicModal';
 import MemberManage from './components/MemberManage';
 import { useAdminTopic, useFetchMemberInfo } from './hooks/queries';
 import TopicAdmin from './TopicAdmin';
@@ -10,10 +11,15 @@ import { MakeGroupAdminIc } from '../../assets/svgs';
 import Spacing from '../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
-  const { topicCount, adminTopicData } = useAdminTopic();
   const { groupId } = useParams();
   const [page, setPage] = useState(1);
   const { memberData, totalMember } = useFetchMemberInfo(groupId || '', page);
+  const [pageNum, setPageNum] = useState(1);
+  const { topicCount, adminTopicData } = useAdminTopic(groupId, pageNum);
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
+
   switch (admin) {
     case 'topic':
       return (
@@ -24,10 +30,16 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
               <Spacing marginBottom="1.2" />
               <SubTitle>{`${topicCount}개의 글감이 저장되어있어요`}</SubTitle>
             </div>
-            <MakeGroupAdminIc style={{ cursor: 'pointer' }} />
+            <MakeGroupAdminIc style={{ cursor: 'pointer' }} onClick={openModal} />
           </AdminLayout>
           <Spacing marginBottom="3.6" />
-          <TopicAdmin data={adminTopicData} setPageNum={setPage} pageNum={page} />
+          {showModal && (
+            <>
+              <ModalOverlay onClick={closeModal} />
+              <AddEditTopicModal />
+            </>
+          )}
+          <TopicAdmin data={adminTopicData} setPageNum={setPageNum} pageNum={pageNum} />
         </AdminContainer>
       );
 
@@ -55,6 +67,17 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
 };
 
 export default RenderAdminContent;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4; /* 모달보다 더 위에 위치 */
+  width: 100%;
+  height: 100%;
+
+  background-color: rgb(0 0 0 / 50%); /* 반투명한 배경색 */
+`;
 
 const AdminContainer = styled.div`
   display: flex;

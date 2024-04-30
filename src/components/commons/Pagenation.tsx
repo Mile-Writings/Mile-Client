@@ -5,14 +5,14 @@ import { ArrowLeftIc, ArrowRightIc } from '../../assets/svgs';
 import { slicePage } from '../../utils/countPage';
 import PageNumber from '../../utils/PageNumber';
 
-interface PagenationPropTypes {
+interface pagenationPropTypes {
   count: number;
   allocatedCount: number;
-  setPageNum: Dispatch<SetStateAction<number>>;
-  pageNum: number;
+  setActivePage: Dispatch<SetStateAction<number>>;
+  activePage: number;
 }
 
-const Pagenation = ({ count, allocatedCount, setPageNum, pageNum }: PagenationPropTypes) => {
+const Pagenation = ({ count, allocatedCount, setActivePage, activePage }: pagenationPropTypes) => {
   const [activeChunk, setActiveChunk] = useState(1);
   const { resultArray, isExistNextPage, isExistPreviousPage } = slicePage(
     count,
@@ -21,17 +21,17 @@ const Pagenation = ({ count, allocatedCount, setPageNum, pageNum }: PagenationPr
   );
 
   useEffect(() => {
-    setPageNum(5 * (activeChunk - 1) + 1);
+    setActivePage(5 * (activeChunk - 1) + 1);
   }, [activeChunk]);
 
   return (
     <PageWrapper>
-      {pageNum != 1 && (
+      {activePage != 1 && (
         <ArrowLeftIc
           onClick={() =>
             isExistPreviousPage
               ? setActiveChunk(activeChunk - 1)
-              : setPageNum((prev) => {
+              : setActivePage((prev) => {
                   return prev - 1;
                 })
           }
@@ -39,7 +39,13 @@ const Pagenation = ({ count, allocatedCount, setPageNum, pageNum }: PagenationPr
         />
       )}
       {resultArray.map((index) => (
-        <PageNumber key={index + 1} isActive={pageNum === index} onClick={() => setPageNum(index)}>
+        <PageNumber
+          key={index + 1}
+          isActive={activePage === index}
+          onClick={() => {
+            setActivePage(index);
+          }}
+        >
           {index}
         </PageNumber>
       ))}
