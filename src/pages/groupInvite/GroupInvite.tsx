@@ -1,33 +1,62 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import GroupInfo from './components/GroupInfo';
 import Title from './components/Title';
 import UserInfoInput from './components/UserInfoInput';
+import { useGetGroupInfo } from './hooks/queries';
+
+import Loading from '../loading/Loading';
 
 import { DefaultHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 const GroupInvite = () => {
   const navigate = useNavigate();
+  const { groupId } = useParams() as { groupId: string };
+  const [errorLoading, setErrorLoading] = useState(false);
+  const { moimTitle, imageUrl, leader, foundedDate, memberCount, description, error } =
+    useGetGroupInfo(groupId);
 
-  const onClickSignUp = () => {
-    navigate('/groupJoin');
-  };
-  return (
-    <GroupInviteWrapper>
-      <DefaultHeader />
-      <Spacing marginBottom="11.4" />
-      <Title />
-      <Spacing marginBottom="4.8" />
-      <GroupInfo />
-      <Spacing marginBottom="2.8" />
-      <UserInfoInput />
-      <Spacing marginBottom="2.8" />
-      <SignUpBtn onClick={onClickSignUp}>가입하기</SignUpBtn>
-      <Spacing marginBottom="7.7" />
-    </GroupInviteWrapper>
-  );
+  useEffect(() => {
+    moimTitle === undefined ? setErrorLoading(true) : setErrorLoading(false);
+  }, [moimTitle]);
+
+  useEffect(() => {
+    if (error instanceof AxiosError) {
+      if (error.response && error.response.status) {
+        const { status } = error.response;
+        status === 400 && navigate(`/error`);
+        status === 409 && navigate(`/group/${groupId}`);
+      }
+    }
+  }, [error, groupId]);
+
+  if (errorLoading) {
+    return <Loading />;
+  } else {
+    return (
+      <GroupInviteWrapper>
+        <DefaultHeader />
+        <Spacing marginBottom="11.4" />
+        <Title />
+        <Spacing marginBottom="4.8" />
+        <GroupInfo
+          moimTitle={moimTitle}
+          imageUrl={imageUrl}
+          leader={leader}
+          foundedDate={foundedDate}
+          memberCount={memberCount}
+          description={description}
+        />
+        <Spacing marginBottom="2.8" />
+        <UserInfoInput moimTitle={moimTitle} />
+        <Spacing marginBottom="7.7" />
+      </GroupInviteWrapper>
+    );
+  }
 };
 
 export default GroupInvite;
@@ -38,24 +67,4 @@ const GroupInviteWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 82.6rem;
-`;
-
-const SignUpBtn = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 1.6rem 2rem;
-
-  color: ${({ theme }) => theme.colors.white};
-
-  background-color: ${({ theme }) => theme.colors.mainViolet};
-  border-radius: 10px;
-  ${({ theme }) => theme.fonts.button2};
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.mainViolet};
-
-    background-color: ${({ theme }) => theme.colors.mileViolet};
-  }
 `;
