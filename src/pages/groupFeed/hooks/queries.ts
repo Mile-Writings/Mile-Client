@@ -134,6 +134,6 @@ export const useFetchHeaderGroup = () => {
     queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
     queryFn: () => fetchHeaderGroup(),
   });
-  console.log(data);
+
   return { data };
 };

@@ -49,16 +49,18 @@ const CreateGroupInfo = ({
   setTopicTag,
   setTopicDesc,
 }: CreateGroupInfoPropTypes) => {
-  const isGroupNameValid = groupName.length <= 10;
+  // const isGroupNameValid = groupName.length <= 10;
+  const isGroupNameLength = groupName.length <= 10;
   const isGroupInfoValid = groupInfo.length <= 100;
   const [isGroupNameEmpty, setIsGroupNameEmpty] = useState(false);
+  const [isGroupNameValid, setIsGroupNameValid] = useState(true);
   const [isGroupTopicEmpty, setIsGroupTopicEmpty] = useState(false);
   const [groupImageView, setGroupImageView] = useState('');
   const [topicModal, setTopicModal] = useState(false);
   const groupNameRef = useRef<HTMLInputElement>(null);
 
-  const { data, error, refetch } = useGetGroupNameValidation(groupName);
-  console.log(data, error);
+  const { data, refetch, isSuccess } = useGetGroupNameValidation(groupName);
+
   // 이미지 보낼 url 받아오기
   const { fileName, url = '' } = usePresignedUrl();
 
@@ -140,6 +142,11 @@ const CreateGroupInfo = ({
   };
 
   const handleGroupName = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length > 10) {
+      setIsGroupNameValid(false);
+    } else {
+      setIsGroupNameValid(true);
+    }
     setGroupName(e);
     setIsGroupNameEmpty(false);
   };
@@ -166,7 +173,7 @@ const CreateGroupInfo = ({
                 ref={groupNameRef}
                 onChange={handleGroupName}
                 placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
-                isValid={isGroupNameValid && !error && data?.data?.data?.isValid}
+                isValid={isGroupNameValid}
               />{' '}
               <DuplicateCheckBtn
                 type="button"
@@ -177,16 +184,27 @@ const CreateGroupInfo = ({
                 중복확인
               </DuplicateCheckBtn>
             </GroupNameInputLayout>
-            {data?.data?.data?.isValidate ? (
+            {/* {data?.data?.data?.isValidate ? (
               <SuccessMsgText>{InputInfoMsg.groupNameAvailable}</SuccessMsgText>
             ) : (
               <ErrorMsgText>
-                {!isGroupNameValid
+                {!isGroupNameLength
                   ? InputInfoMsg.groupNameLength
-                  : data?.data?.data?.isValidate === undefined
-                    ? ''
-                    : InputInfoMsg.groupNameNotAvailable}
+                  : isSuccess && !data?.data?.data?.isValidate
+                    ? InputInfoMsg.groupNameNotAvailable
+                    : ''}
               </ErrorMsgText>
+            )} */}
+            {isSuccess ? (
+              data?.data?.data?.isValidate ? (
+                <SuccessMsgText>{InputInfoMsg.groupNameAvailable}</SuccessMsgText>
+              ) : (
+                <ErrorMsgText>{InputInfoMsg.groupNameNotAvailable}</ErrorMsgText>
+              )
+            ) : !isGroupNameLength ? (
+              <ErrorMsgText>{InputInfoMsg.groupNameLength}</ErrorMsgText>
+            ) : (
+              ''
             )}
           </GroupInputWrapper>
         </WhiteInputWrapper>

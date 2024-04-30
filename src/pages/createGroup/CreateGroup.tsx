@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import { ChangeEvent, useEffect, useReducer, useState } from 'react';
+import { ChangeEvent, useReducer, useState } from 'react';
 
 import CreateGroupInfo from './components/CreateGroupInfo';
 import CreateGroupLeaderInfo from './components/CreateGroupLeaderInfo';
 import { usePostCreateGroup } from './hooks/queries';
-import { ActionTypes, CreateGroupTypes, CurrentPageType } from './types/stateType';
+import { CreateGroupTypes, CurrentPageType } from './types/stateType';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 
@@ -127,9 +127,6 @@ const CreateGroup = () => {
     leaderPenName,
     leaderDesc,
   } = state;
-  useEffect(() => {
-    console.log(groupName, groupInfo, groupImageFile, isPublic);
-  }, [groupName]);
 
   // const setGroupName = (e: ChangeEvent<HTMLInputElement>) => {
   //   dispatch({ type: 'setGroupName', value: e.target.value });
