@@ -12,9 +12,6 @@ import fetchMemberInfo from '../apis/fetchMemberInfo';
 
 export const QUERY_KEY_ADMIN = {
   useMemberInfo: 'fetchMemberInfo',
-};
-
-export const QUERY_KEY_ADMIN = {
   fetchInvitationLink: 'fetchInvitationLink',
 };
 
