@@ -67,6 +67,8 @@ export { default as KakaoLoginBtnIc } from './kakaoLoginBtn.svg?react';
 export { default as LoginIc } from './loginIc.svg?react';
 export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?react';
 
+export { default as adminEmptyMemberIc } from './adminEmptyMember.svg?react';
+export { default as adminProfileIc } from './adminProfileIc.svg?react';
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
 export { default as faviconMileIc } from './faviconMile.svg?react';
 
@@ -81,3 +83,7 @@ export { default as ArrowLeftIc } from './arrowLeft.svg?react';
 export { default as ArrowRightIc } from './arrowRight.svg?react';
 
 export { default as MakeGroupAdminIc } from './btn_makegroup.svg?react';
+
+// 글 모임 가입 축하페이지
+export { default as JoinCongratulationIc } from './joinCongratulationPng.svg?react';
+export { default as GroupListProfileCloseIc } from './groupListprofileIcnClose.svg?react';

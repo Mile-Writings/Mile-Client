@@ -21,6 +21,7 @@ export const QUERY_KEY_GROUPFEED = {
 
 interface GroupFeedAuthQueryResult {
   isMember: boolean | undefined;
+  isOwner: boolean | undefined;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
@@ -36,9 +37,10 @@ export const useGroupFeedAuth = (
     enabled: !!accessToken,
   });
 
-  const isMember = data && data.data.isMember;
+  const isMember = data && data?.data?.isMember;
+  const isOwner = data && data?.data?.isOwner;
 
-  return { isMember, isLoading, isError, error };
+  return { isMember, isOwner, isLoading, isError, error };
 };
 
 interface GroupInfoQueryResult {

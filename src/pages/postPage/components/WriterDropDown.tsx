@@ -38,7 +38,7 @@ const WriterDropDown = (props: WriterPropType) => {
   return (
     <WriterDropDownWrapper ref={dropDownRef}>
       <DropDownToggle onClick={handleOnClick}>
-        <DropDownContent $contentWidth={14.6}>{selectedWriter}</DropDownContent>
+        <DropDownContent $contentWidth={6.8}>{selectedWriter}</DropDownContent>
         <EditorDropIcnActiveWrapper $isOpen={writerIsOpen}>
           <EditorDropIcnActiveIcon />
         </EditorDropIcnActiveWrapper>
@@ -70,8 +70,8 @@ const WriterDropDownWrapper = styled.div`
 
 const WriterListWrapper = styled.div<{ $isOpen: boolean }>`
   position: absolute;
-  top: 4.3rem;
-  right: 7rem;
+  top: 4.4rem;
+  right: 0;
   z-index: 3;
   display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
   flex-direction: column;

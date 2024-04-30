@@ -22,7 +22,7 @@ import Loading from '../loading/Loading';
 const GroupFeed = () => {
   const { groupId } = useParams();
   const accessToken = localStorage.getItem('accessToken');
-  const { isMember, isLoading, isError, error } = useGroupFeedAuth(
+  const { isMember, isOwner, isLoading, isError, error } = useGroupFeedAuth(
     groupId || '',
     accessToken || '',
   );
@@ -61,7 +61,9 @@ const GroupFeed = () => {
       <GroupFeedThumnail imageUrl={groupInfoData?.imageUrl} />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
-        {groupInfoData && <GroupSideHeader groupInfoData={groupInfoData} />}
+        {groupInfoData && (
+          <GroupSideHeader groupInfoData={groupInfoData} isMember={isMember} isOwner={isOwner} />
+        )}
         <GroupInfo>
           <GroupTodayWriteStyle isMember={isMember} groupId={groupId} />
           <Spacing marginBottom="6.4" />

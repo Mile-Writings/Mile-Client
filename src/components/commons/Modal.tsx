@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Spacing from './Spacing';
 
 import useClickOutside from '../../hooks/useClickOutside';
+import { preventScroll } from '../../pages/postPage/utils/modalPreventScroll';
 
 interface ModalContentPropTypes {
   modalContent: string;
@@ -21,6 +22,7 @@ export const NegativeModal = (props: ModalContentPropTypes) => {
   const handleOutSideClick = () => {
     if (isModalOpen) {
       setModalBgClickActive(true);
+      preventScroll();
     }
     if (modalBgClickActive) {
       closeModalHandler();
@@ -60,6 +62,7 @@ export const PositiveModal = (props: ModalContentPropTypes) => {
   const handleOutSideClick = () => {
     if (isModalOpen) {
       setModalBgClickActive(true);
+      preventScroll();
     }
     if (modalBgClickActive) {
       closeModalHandler();
@@ -92,7 +95,8 @@ export const PositiveModal = (props: ModalContentPropTypes) => {
 const ModalBackgroundWrapper = styled.div<{ $isModalOpen: boolean }>`
   position: fixed;
   top: 0;
-  z-index: 1;
+  left: 0;
+  z-index: 4;
   display: ${({ $isModalOpen }) => ($isModalOpen ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;

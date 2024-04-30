@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
+import { createBrowserHistory } from 'history';
 import React, { useEffect, useState, useReducer } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -18,9 +19,11 @@ import {
   usePutEditContent,
   usePutTempSaveContent,
   useTempSaveFlag,
+  useDeleteTempPost,
 } from './hooks/queries';
 import { preventScroll, allowScroll } from './utils/modalPreventScroll';
 
+import { EditorErrorIcn } from '../../assets/svgs/editorSVG';
 import {
   EditorEditHeader,
   EditorTempExistHeader,
@@ -48,7 +51,7 @@ interface editorActionType {
 
 const editorState: editorStateType = {
   topic: '',
-  writer: '작자미상',
+  writer: '필명',
   title: '',
   content: '',
   imageUrl: EDITOR_DEFAULT_IMG,
@@ -108,7 +111,13 @@ const editorContentReducerFn = (
         imageUrl: action.imageUrl,
       };
     default:
-      return state;
+      return {
+        topic: '',
+        writer: '필명',
+        title: '',
+        content: '',
+        imageUrl: EDITOR_DEFAULT_IMG,
+      };
   }
 };
 
@@ -119,6 +128,7 @@ interface editorFlowModalType {
   leftBtnFn: () => void;
   rightBtnText: string;
   rightBtnFn: () => void;
+  modalImgType: string;
 }
 
 interface editorFlowModalActionType {
@@ -131,9 +141,11 @@ const editorFlowModalState: editorFlowModalType = {
   leftBtnFn: () => {},
   rightBtnText: '',
   rightBtnFn: () => {},
+  modalImgType: '',
 };
 
 const PostPage = () => {
+  const history = createBrowserHistory();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -176,6 +188,10 @@ const PostPage = () => {
   const [showTempContinueModal, setShowTempContinueModal] = useState(false);
   // 어떤 모달 열려야 하는지 handling
   const [editorModalType, setEditorModalType] = useState('');
+  // 모든 정보 입력됐는지 여부
+  const [postErrorMessage, setPostErrorMessage] = useState('');
+  // 에디터 글 내용 태그 제외한 값 (valid 확인용)
+  const [contentWithoutTag, setContentWithoutTag] = useState('');
 
   // 임시저장 불러오기
   interface tempTopicListType {
@@ -194,6 +210,12 @@ const PostPage = () => {
       preventScroll();
     }
   }, [isTemporaryPostExist, type, continueTempPost]);
+
+  // 임시저장 삭제하기
+  const { mutate: deleteTempPost } = useDeleteTempPost(tempPostId || '', groupId);
+  const deleteTempPostHandler = () => {
+    deleteTempPost();
+  };
 
   // 글감 받아오기
   const { topics } = useGetTopic(groupId || '');
@@ -216,6 +238,8 @@ const PostPage = () => {
     content: editorVal.content || '',
     imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
+    contentWithoutTag: contentWithoutTag,
+    setPostErrorMessage: setPostErrorMessage,
   });
 
   // 최초저장 -> 제출하기 누르면 열리는 모달
@@ -237,6 +261,7 @@ const PostPage = () => {
     if (type === 'edit') {
       setEditPostId(location.state.postId);
       setPreviewImgUrl(location.state.imageUrl);
+      setContentWithoutTag(location.state.title);
       editorContentDispatch({
         type: 'setEditValue',
         topic: location.state.topic,
@@ -272,14 +297,18 @@ const PostPage = () => {
     imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
     postId: editPostId,
+    contentWithoutTag: contentWithoutTag,
+    setPostErrorMessage: setPostErrorMessage,
   });
 
   const onClickEditSaveBtn = () => {
     putEditContent();
-    setShowModal(true);
-    setEditorModalType('editContent');
-    editorFlowModalDispatch({ type: 'editContent' });
-    preventScroll();
+    if (contentWithoutTag.trim().length !== 0 && editorVal.title?.trim().length !== 0) {
+      setShowModal(true);
+      setEditorModalType('editContent');
+      editorFlowModalDispatch({ type: 'editContent' });
+      preventScroll();
+    }
   };
 
   // 최초 글 임시 저장
@@ -296,10 +325,17 @@ const PostPage = () => {
 
   // 임시저장 버튼 누르면 열리는 모달
   const onClickTempSaveBtn = () => {
-    setShowModal(true);
-    setEditorModalType('tempSave');
-    editorFlowModalDispatch({ type: 'tempSave' });
-    preventScroll();
+    if (isTemporaryPostExist) {
+      setShowModal(true);
+      setEditorModalType('tempSave');
+      editorFlowModalDispatch({ type: 'putNewTempSaveContent' });
+      preventScroll();
+    } else {
+      setShowModal(true);
+      setEditorModalType('tempSave');
+      editorFlowModalDispatch({ type: 'tempSave' });
+      preventScroll();
+    }
   };
 
   // 임시저장 모달 -> '예' 누르면 쿼리 동작
@@ -310,6 +346,7 @@ const PostPage = () => {
 
   // 임시 저장 글 -> 저장하기
   const { mutate: putTempSaveContent } = usePutTempSaveContent({
+    groupId: groupId,
     topicId: topics
       ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId ?? ''
       : '',
@@ -328,6 +365,17 @@ const PostPage = () => {
     preventScroll();
   };
 
+  // 글 제출 시 에러 메시지 타이머 설정
+  useEffect(() => {
+    if (postErrorMessage) {
+      const timer = setTimeout(() => {
+        setPostErrorMessage('');
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [postErrorMessage]);
+
   // editor Flow Modal 관련
   const editorFlowModalReducerFn = (
     state: editorFlowModalType,
@@ -343,6 +391,7 @@ const PostPage = () => {
           leftBtnFn: () => setShowModal(false),
           rightBtnText: '예',
           rightBtnFn: tempSaveHandler,
+          modalImgType: 'tempSave',
         };
       // 최초 제출하기
       case 'postContent':
@@ -353,6 +402,7 @@ const PostPage = () => {
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${postContentId}`),
+          modalImgType: 'postContent',
         };
       // 임시저장 이어쓰기 -> 제출하기
       case 'putTempSaveContent':
@@ -363,6 +413,18 @@ const PostPage = () => {
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${tempPostId}`),
+          modalImgType: 'postContent',
+        };
+      // 임시저장 존재하는데 다른 글 임시저장
+      case 'putNewTempSaveContent':
+        return {
+          ...state,
+          title: '이미 임시저장된 글이 있습니다. \n덮어쓰시겠습니까?',
+          leftBtnText: '예',
+          leftBtnFn: tempSaveHandler,
+          rightBtnText: '아니오',
+          rightBtnFn: () => setShowModal(false),
+          modalImgType: 'editorWarn',
         };
       // 수정하기
       case 'editContent':
@@ -373,6 +435,18 @@ const PostPage = () => {
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${editPostId}`),
+          modalImgType: 'postContent',
+        };
+      // 페이지 이탈
+      case 'exitEditPage':
+        return {
+          ...state,
+          title: '작성 중이 글이 있습니다. \n 페이지를 나가시겠습니까?',
+          leftBtnText: '예',
+          leftBtnFn: () => navigate(`/group/${groupId}`),
+          rightBtnText: '아니오',
+          rightBtnFn: () => setShowModal(false),
+          modalImgType: 'editorWarn',
         };
       default:
         return state;
@@ -404,6 +478,9 @@ const PostPage = () => {
           // 렌더링 되자마자 쿼리함수 실행되므로 prevent만 넣어줌
           preventScroll();
           break;
+        case 'exitEditPage':
+          preventScroll();
+          break;
       }
     }
 
@@ -412,12 +489,46 @@ const PostPage = () => {
     };
   }, [showModal, showTempContinueModal, editorModalType]);
 
+  // 뒤로가기 방지
+  const preventGoBack = () => {
+    setShowModal(true);
+    editorFlowModalDispatch({ type: 'exitEditPage' });
+    setEditorModalType('exitEditPage');
+    preventScroll();
+  };
+
+  // 새로고침 방지
+  const preventReload = (e: Event) => {
+    e.preventDefault();
+    // setShowModal(true);
+    // editorFlowModalDispatch({ type: 'exitEditPage' });
+    // setEditorModalType('exitEditPage');
+    // preventScroll();
+  };
+
+  useEffect(() => {
+    (() => {
+      // 현재 상태를 세션 히스토리 스택에 추가(push)
+      // 뒤로가기 해도 현재 페이지에 일단 머물게 하기
+      history.push(history.location);
+
+      window.addEventListener('popstate', preventGoBack);
+      window.addEventListener('beforeunload', preventReload);
+    })();
+
+    return () => {
+      window.removeEventListener('popstate', preventGoBack);
+      window.removeEventListener('beforeunload', preventReload);
+    };
+  }, []);
+
   return (
     <PostPageWrapper>
       <EditorContinueTempModal
         showTempContinueModal={showTempContinueModal}
         setShowTempContinueModal={setShowTempContinueModal}
         setContinueTempPost={setContinueTempPost}
+        deleteTempPost={deleteTempPostHandler}
       />
       <EditorFlowModal
         showModal={showModal}
@@ -436,6 +547,10 @@ const PostPage = () => {
         />
       )}
       <Spacing marginBottom="6.4" />
+      <PostDeclinedWrapper $postAvailable={postErrorMessage.trim().length === 0}>
+        <EditorErrorIcn />
+        <PoseDeclinedText>{postErrorMessage}</PoseDeclinedText>
+      </PostDeclinedWrapper>
       <ImageUpload
         setPreviewImgUrl={setPreviewImgUrl}
         previewImgUrl={previewImgUrl}
@@ -460,6 +575,7 @@ const PostPage = () => {
           tempContent={tempContent}
           editContent={type === 'edit' ? location.state.content : ''}
           setEditorContent={setContent}
+          setContentWithoutTag={setContentWithoutTag}
         />
       </DropDownEditorWrapper>
       <Spacing marginBottom="8" />
@@ -470,6 +586,7 @@ const PostPage = () => {
 export default PostPage;
 
 const PostPageWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -483,4 +600,26 @@ const DropDownEditorWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+`;
+
+const PostDeclinedWrapper = styled.div<{ $postAvailable: boolean }>`
+  position: fixed;
+  top: 7rem;
+  right: 6rem;
+  z-index: 5;
+  display: ${({ $postAvailable }) => ($postAvailable ? 'none' : 'flex')};
+  gap: 1.17rem;
+  align-items: center;
+  justify-content: center;
+  width: 20.9rem;
+  padding: 1.17rem 1.6rem 1.17rem 1.97rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.mainViolet};
+  border-radius: 8px;
+`;
+
+const PoseDeclinedText = styled.span`
+  color: ${({ theme }) => theme.colors.mainViolet};
+  ${({ theme }) => theme.fonts.button1};
 `;
