@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import createPostContent from '../apis/createPostContent';
 import createTempSaveContent from '../apis/createTempSaveContent';
+import { deleteTempPost } from '../apis/deleteTempPost';
 import editPutContent from '../apis/editPutContent';
 import { fetchPresignedUrl } from '../apis/fetchPresignedUrl';
 import { fetchTempSaveContent } from '../apis/fetchTempSaveContent';
@@ -20,6 +21,7 @@ export const QUERY_KEY_POST = {
   postSaveTempContent: 'postSaveTempContent',
   getTempSaveContent: 'getTempSaveContent',
   putSaveTempContent: 'putSaveTempContent',
+  deleteTempPost: 'deleteTempPost',
 };
 
 // 글 최초 저장
@@ -30,6 +32,9 @@ interface postContentType {
   content: string;
   imageUrl: string;
   anonymous: boolean;
+  contentWithoutTag: string;
+  // eslint-disable-next-line no-unused-vars
+  setPostErrorMessage: (errorMessage: string) => void;
 }
 
 export const usePostContent = ({
@@ -39,6 +44,8 @@ export const usePostContent = ({
   content,
   imageUrl,
   anonymous,
+  contentWithoutTag,
+  setPostErrorMessage,
 }: postContentType) => {
   const { mutate, data: postContentId } = useMutation({
     mutationKey: [
@@ -50,9 +57,21 @@ export const usePostContent = ({
         content,
         imageUrl,
         anonymous,
+        contentWithoutTag,
+        setPostErrorMessage,
       },
     ],
-    mutationFn: () => createPostContent({ groupId, topicId, title, content, imageUrl, anonymous }),
+    mutationFn: () =>
+      createPostContent({
+        groupId,
+        topicId,
+        title,
+        content,
+        imageUrl,
+        anonymous,
+        contentWithoutTag,
+        setPostErrorMessage,
+      }),
   });
   return { mutate, postContentId };
 };
@@ -62,7 +81,7 @@ export const useGetTopic = (groupId: string) => {
     queryKey: [QUERY_KEY_POST.getTopic, groupId],
     queryFn: () => fetchTopic(groupId),
   });
-  const topics = data && data.data.topics;
+  const topics = data && data?.data?.topics;
   return { topics };
 };
 
@@ -81,8 +100,8 @@ export const useTempSaveFlag = (groupId: string): TempSaveFlagQueryResult => {
     queryFn: () => fetchTempSaveFlag(groupId),
   });
 
-  const isTemporaryPostExist = data && data.data.isTemporaryPostExist;
-  const tempPostId = data && data.data.postId;
+  const isTemporaryPostExist = data && data?.data?.isTemporaryPostExist;
+  const tempPostId = data && data?.data?.postId;
 
   return { isTemporaryPostExist, tempPostId, isLoading, isError, error };
 };
@@ -99,8 +118,8 @@ export const usePresignedUrl = (): PresignedUrlQueryResult => {
     queryFn: () => fetchPresignedUrl(),
   });
 
-  const fileName = data && data.data.fileName;
-  const url = data && data.data.url;
+  const fileName = data && data?.data?.fileName;
+  const url = data && data?.data?.url;
   return { fileName, url };
 };
 
@@ -112,6 +131,9 @@ interface putEditContentType {
   imageUrl: string;
   anonymous: boolean;
   postId: string;
+  contentWithoutTag: string;
+  // eslint-disable-next-line no-unused-vars
+  setPostErrorMessage: (errorMessage: string) => void;
 }
 
 export const usePutEditContent = ({
@@ -121,8 +143,9 @@ export const usePutEditContent = ({
   imageUrl,
   anonymous,
   postId,
+  contentWithoutTag,
+  setPostErrorMessage,
 }: putEditContentType) => {
-  const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [
       QUERY_KEY_POST.putEditContent,
@@ -133,12 +156,21 @@ export const usePutEditContent = ({
         imageUrl,
         anonymous,
         postId,
+        contentWithoutTag,
+        setPostErrorMessage,
       },
     ],
-    mutationFn: () => editPutContent({ topicId, title, content, imageUrl, anonymous, postId }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
-    },
+    mutationFn: () =>
+      editPutContent({
+        topicId,
+        title,
+        content,
+        imageUrl,
+        anonymous,
+        postId,
+        contentWithoutTag,
+        setPostErrorMessage,
+      }),
   });
   return data;
 };
@@ -161,6 +193,7 @@ export const usePostTempSaveContent = ({
   imageUrl,
   anonymous,
 }: postTempSaveType) => {
+  const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [
       QUERY_KEY_POST.postSaveTempContent,
@@ -175,6 +208,9 @@ export const usePostTempSaveContent = ({
     ],
     mutationFn: () =>
       createTempSaveContent({ groupId, topicId, title, content, imageUrl, anonymous }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId] });
+    },
   });
   return data;
 };
@@ -187,23 +223,24 @@ export const useGetTempSaveContent = (postId: string, isTempClicked: boolean) =>
     enabled: !!isTempClicked,
   });
 
-  const tempTopicList = data && data.data.topicList;
-  const tempTitle = data && data.data.title;
-  const tempContent = data && data.data.content;
-  const tempImageUrl = data && data.data.imageUrl;
-  const tempAnonymous = data && data.data.anonymous;
+  const tempTopicList = data && data?.data?.topicList;
+  const tempTitle = data && data?.data?.title;
+  const tempContent = data && data?.data?.content;
+  const tempImageUrl = data && data?.data?.imageUrl;
+  const tempAnonymous = data && data?.data?.anonymous;
 
   return { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous };
 };
 
 // 임시저장 저장하기
-interface putEditContentType {
+interface putTempSaveContentType {
   topicId: string;
   title: string;
   content: string;
   imageUrl: string;
   anonymous: boolean;
   postId: string;
+  groupId: string;
 }
 
 export const usePutTempSaveContent = ({
@@ -213,7 +250,8 @@ export const usePutTempSaveContent = ({
   imageUrl,
   anonymous,
   postId,
-}: putEditContentType) => {
+  groupId,
+}: putTempSaveContentType) => {
   const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [
@@ -229,6 +267,20 @@ export const usePutTempSaveContent = ({
     mutationFn: () => saveTempSavecontent({ topicId, title, content, imageUrl, anonymous, postId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId] });
+    },
+  });
+  return data;
+};
+
+// 임시저장 삭제하기
+export const useDeleteTempPost = (postId: string, groupId: string) => {
+  const queryClient = useQueryClient();
+  const data = useMutation({
+    mutationKey: [QUERY_KEY_POST.deleteTempPost, postId, groupId],
+    mutationFn: () => deleteTempPost(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId] });
     },
   });
   return data;

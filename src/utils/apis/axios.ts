@@ -8,12 +8,12 @@ export const client = axios.create({
   headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
 });
 
-// export const authClient = axios.create({
-//   baseURL: `${baseUrl}`,
-//   headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-// });
-
 export const devClient = axios.create({
   baseURL: `${devBaseUrl}`,
   headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
 });
+
+// export const authClient = axios.create({
+//   baseURL: `${baseUrl}`,
+//   headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+// });

@@ -3,27 +3,41 @@ import { useState, useRef, useEffect } from 'react';
 
 import CommentInputBox from './CommentInputBox';
 
-import { useDeleteComment } from '../hooks/queries';
+import { useDeleteComment, useDeleteNestedComment } from '../hooks/queries';
 
 import {
   DetailCommentMeatBallIc,
   TextCommentProfileIc,
   NestCommentIc,
   ArrowTopLeftIc,
+  GroupListProfileCloseIc,
 } from '../../../assets/svgs';
 
 interface CommentItem {
-  // id?: number;  추후 사용될지 모름
   name: string;
   moimName: string;
   content: string;
-  isMyComment: boolean;
+  isMyComment?: boolean;
+  isMyReply?: boolean;
+  isAnonymous: boolean;
   postId: string | undefined;
   commentId: string;
+  type: 'nestedComment' | 'comment';
 }
 
-const CommentItem = ({ name, moimName, content, isMyComment, postId, commentId }: CommentItem) => {
+const CommentItem = ({
+  name,
+  moimName,
+  content,
+  isMyComment,
+  isMyReply,
+  postId,
+  commentId,
+  type,
+  isAnonymous,
+}: CommentItem) => {
   const { deleteComment } = useDeleteComment(commentId || '', postId || '');
+  const { deleteNestedComment } = useDeleteNestedComment(commentId || '', postId || '');
   const [isClick, setIsClick] = useState(false);
   const [isNestedComment, setIsNestedComment] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -47,8 +61,8 @@ const CommentItem = ({ name, moimName, content, isMyComment, postId, commentId }
 
   return (
     <>
-      <CommentItemWrapper>
-        <TextCommentProfileIc />
+      <CommentItemWrapper isComment={type === 'comment'}>
+        {isAnonymous ? <GroupListProfileCloseIc /> : <TextCommentProfileIc />}
         <CommentItemContainer>
           <CommentInfoWrapper>
             <CommenterNameText $name={name}>{name}</CommenterNameText>
@@ -57,14 +71,36 @@ const CommentItem = ({ name, moimName, content, isMyComment, postId, commentId }
           <CommentText>{content}</CommentText>
         </CommentItemContainer>
         <IconWrapper>
-          <NestCommentIcon onClick={() => setIsNestedComment(!isNestedComment)}>
-            <NestCommentIc />
-          </NestCommentIcon>
           {isMyComment && (
+            <>
+              <NestCommentIcon onClick={() => setIsNestedComment(!isNestedComment)}>
+                <NestCommentIc />
+              </NestCommentIcon>
+              <MeatBallWrapper onClick={handleBtnClick}>
+                <DetailCommentMeatBallIcon />
+                {isClick && (
+                  <Modal
+                    onClick={() => {
+                      deleteComment();
+                    }}
+                    ref={modalRef}
+                  >
+                    <ModalContainer>삭제</ModalContainer>
+                  </Modal>
+                )}
+              </MeatBallWrapper>
+            </>
+          )}
+          {isMyReply && (
             <MeatBallWrapper onClick={handleBtnClick}>
               <DetailCommentMeatBallIcon />
               {isClick && (
-                <Modal onClick={deleteComment} ref={modalRef}>
+                <Modal
+                  onClick={() => {
+                    deleteNestedComment();
+                  }}
+                  ref={modalRef}
+                >
                   <ModalContainer>삭제</ModalContainer>
                 </Modal>
               )}
@@ -75,7 +111,12 @@ const CommentItem = ({ name, moimName, content, isMyComment, postId, commentId }
       {isNestedComment && (
         <NestedCommentWrapper>
           <ArrowTopLeftIc />
-          <CommentInputBox postId={postId} isMainComment={false} />
+          <CommentInputBox
+            postId={postId}
+            commentId={commentId}
+            isMainComment={false}
+            setIsNestedComment={setIsNestedComment}
+          />
         </NestedCommentWrapper>
       )}
     </>
@@ -88,6 +129,7 @@ const NestedCommentWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
   align-items: center;
+  margin-left: 1.2rem;
   padding: 1.2rem 0;
 `;
 
@@ -105,12 +147,11 @@ const NestCommentIcon = styled.div`
   cursor: pointer;
 `;
 
-const CommentItemWrapper = styled.div`
+const CommentItemWrapper = styled.div<{ isComment: boolean }>`
   display: flex;
   gap: 1.2rem;
-  width: 100%;
+  width: ${({ isComment }) => (isComment ? '76.8rem' : '72rem')};
   height: auto;
-  margin-left: 1.2rem;
   padding: 1.8rem 0;
 
   background-color: ${({ theme }) => theme.colors.white};

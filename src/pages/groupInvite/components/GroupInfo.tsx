@@ -3,36 +3,45 @@ import styled from '@emotion/styled';
 import { GroupLeaderIc, GroupMemberIc, GroupDateIc } from './../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
-const GroupInfo = () => {
+interface GroupInfoPropTypes {
+  moimTitle: string | undefined;
+  imageUrl: string | undefined;
+  leader: string | undefined;
+  foundedDate: string | undefined;
+  memberCount: number | undefined;
+  description: string | undefined;
+}
+
+const GroupInfo = (props: GroupInfoPropTypes) => {
+  const { moimTitle, imageUrl, leader, foundedDate, memberCount, description } = props;
+
   return (
     <GroupInfoWrapper>
-      <GroupImg />
+      <GroupImg src={imageUrl} alt={'모임 이미지'} />
       <GroupInfoContainer>
-        <GroupName>그룹명자리입니다</GroupName>
+        <GroupName>{moimTitle}</GroupName>
         <Spacing marginBottom="1.8" />
         <GroupInfoContentWrapper>
           <GroupLeaderIc />
           <GroupInfoContent>모임방장</GroupInfoContent>
-          <GroupInfoText>방장입니다</GroupInfoText>
+          <GroupInfoText>{leader}</GroupInfoText>
         </GroupInfoContentWrapper>
         <Spacing marginBottom="1.2" />
         <GroupInfoContentWrapper>
           <GroupDateIc />
           <GroupInfoContent>설립날짜</GroupInfoContent>
-          <GroupInfoText>24.01.08~</GroupInfoText>
+          <GroupInfoText>{foundedDate}~</GroupInfoText>
         </GroupInfoContentWrapper>
         <Spacing marginBottom="1.2" />
         <GroupInfoContentWrapper>
           <GroupMemberIc />
           <GroupInfoContent>모임인원</GroupInfoContent>
-          <GroupInfoText>11명의 작가들</GroupInfoText>
+          <GroupInfoText>{memberCount}명의 작가들</GroupInfoText>
         </GroupInfoContentWrapper>
         <Spacing marginBottom="2.4" />
         <GroupDetailWrapper>
           <BorderBar />
-          <GroupDetail>
-            일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십
-          </GroupDetail>
+          <GroupDetail>{description}</GroupDetail>
         </GroupDetailWrapper>
       </GroupInfoContainer>
     </GroupInfoWrapper>
@@ -46,6 +55,7 @@ const GroupInfoWrapper = styled.section`
   gap: 4.5rem;
   align-items: center;
   width: 100%;
+  height: fit-content;
 `;
 
 const GroupImg = styled.img`
@@ -60,6 +70,7 @@ const GroupInfoContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  width: 41.7rem;
 `;
 
 const GroupName = styled.div`
@@ -88,21 +99,25 @@ const GroupInfoText = styled.span`
 const GroupDetailWrapper = styled.section`
   display: flex;
   gap: 1.2rem;
-  width: 45.1rem;
-  height: 12.8rem;
+  justify-content: flex-start;
+  width: 100%;
 `;
 
 const BorderBar = styled.div`
-  width: 13px;
-  height: 100%;
+  width: 4px;
 
   background-color: ${({ theme }) => theme.colors.middleViolet};
   border-radius: 2px;
 `;
 
-const GroupDetail = styled.div`
+const GroupDetail = styled.p`
+  width: 100%;
+  height: fit-content;
+
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.body2};
-  line-height: 32px;
+  line-height: 2.9rem;
   line-break: auto;
+
+  word-break: keep-all;
 `;

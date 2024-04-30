@@ -1,6 +1,10 @@
 import styled from '@emotion/styled';
 import React, { useState, useReducer, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
+import { useGetWriterNameConflict, usePostGroupMemberJoin } from '../hooks/queries';
+
+import { PositiveModal } from '../../../components/commons/Modal';
 import Spacing from '../../../components/commons/Spacing';
 
 interface userInfoStateType {
@@ -36,61 +40,191 @@ const reducerFn = (state: userInfoStateType, action: userInfoActionType): userIn
   }
 };
 
-const UserInfoInput = () => {
-  const [charLimit, setCharLimit] = useState(false);
+interface UserInfoInputPropTypes {
+  moimTitle: string | undefined;
+}
+
+const UserInfoInput = (props: UserInfoInputPropTypes) => {
+  const { moimTitle } = props;
+  const navigate = useNavigate();
+  const { groupId } = useParams() as { groupId: string };
+
   const [userInfoVal, dispatch] = useReducer(reducerFn, userInfoState);
+  // 모달 관리
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+  // 소개글 글자수 제한
+  const [introduceLimit, setIntroduceLimit] = useState(false);
+  // 필명 글자수 제한
+  const [writerNameLimit, setWriterNameLimit] = useState(false);
+  // 필명 중복 확인
+  const [isConflictBtnClicked, setIsConflictBtnClicked] = useState(false);
+  // 가입하기 버튼 클릭여부
+  const [isSubmitBtnClicked, setIsSubmitBtnClicked] = useState(false);
 
   const onChangeWriterName = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'setWriterName', writerName: e.target.value });
+    setIsConflictBtnClicked(false);
   };
 
-  const onChageWriterIntroduce = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeWriterIntroduce = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'setWriterIntroduce', writerIntroduce: e.currentTarget.value });
   };
 
+  // 중복확인 API
+  const { isConflict } = useGetWriterNameConflict(
+    groupId,
+    userInfoVal.writerName || '',
+    isConflictBtnClicked,
+  );
+
+  // 중복확인 버튼 함수
+  const onClickConflictBtn = () => {
+    setIsConflictBtnClicked(true);
+  };
+
+  // 글자수 체크
   useEffect(() => {
     if (userInfoVal.writerIntroduce) {
-      userInfoVal.writerIntroduce.length > 100 ? setCharLimit(true) : setCharLimit(false);
+      userInfoVal.writerIntroduce.length > 100 ? setIntroduceLimit(true) : setIntroduceLimit(false);
     }
-  }, [userInfoVal.writerIntroduce]);
+    if (userInfoVal.writerName) {
+      userInfoVal.writerName.length > 8 ? setWriterNameLimit(true) : setWriterNameLimit(false);
+    }
+    setIsSubmitBtnClicked(false);
+  }, [userInfoVal.writerIntroduce, userInfoVal.writerName]);
 
+  // 가입하기 api
+  const { mutate: postGroupJoin } = usePostGroupMemberJoin({
+    groupId: groupId,
+    writerName: userInfoVal.writerName || '',
+    writerDescription: userInfoVal.writerIntroduce || '',
+  });
+
+  //가입하기 버튼 함수
+  const onClickSignUp = () => {
+    setIsSubmitBtnClicked(true);
+    if (
+      !writerNameLimit &&
+      !introduceLimit &&
+      isConflictBtnClicked &&
+      !isConflict &&
+      userInfoVal.writerName?.length != 0
+    ) {
+      setIsJoinModalOpen(true);
+    }
+  };
+
+  // 모달 yes
+  const onClickModalJoinBtn = () => {
+    postGroupJoin();
+    navigate(`/group/${groupId}/groupJoin`, {
+      state: {
+        moimTitle: moimTitle,
+      },
+    });
+  };
+  // 모달 no
+  const onClickModalCloseBtn = () => {
+    setIsJoinModalOpen(false);
+  };
   return (
     <>
-      <UserInfoInputWrapper>
+      <WriterNameInputWrapper
+        $valueNotTyped={isSubmitBtnClicked && userInfoVal.writerName?.trim().length === 0}
+        $isConflictChecked={isSubmitBtnClicked && !isConflictBtnClicked}
+      >
         <UserInfoTitle>모임에서 사용할 필명*</UserInfoTitle>
         <InputWrapper>
           <WriterNameInput
             placeholder="띄어쓰기 포함 8자 이내로 입력해주세요."
             onChange={onChangeWriterName}
+            $isConflict={isConflict || false}
+            $isValidLength={writerNameLimit}
           />
           <WriterExistCheckBtn
+            disabled={
+              userInfoVal.writerName
+                ? userInfoVal.writerName.trim().length === 0 || writerNameLimit
+                : true
+            }
+            onClick={onClickConflictBtn}
             $isBtnDisabled={
-              userInfoVal.writerName ? userInfoVal.writerName.trim().length === 0 : true
+              userInfoVal.writerName
+                ? userInfoVal.writerName.trim().length === 0 || writerNameLimit
+                : true
             }
           >
             중복확인
           </WriterExistCheckBtn>
         </InputWrapper>
-      </UserInfoInputWrapper>
+        {/* 중복확인 안 누르고 가입하기 눌렀을 경우 */}
+        {isSubmitBtnClicked &&
+        userInfoVal.writerName?.trim().length !== 0 &&
+        !isConflictBtnClicked ? (
+          <WriterNameLength>중복확인을 해주세요.</WriterNameLength>
+        ) : (
+          <></>
+        )}
+        {/* 필명 8자 이상일 경우 */}
+        {userInfoVal.writerName && writerNameLimit ? (
+          <WriterNameLength>8자 이내로 작성해주세요.</WriterNameLength>
+        ) : (
+          <></>
+        )}
+        {/* 필명 중복 확인 결과 */}
+        {isConflictBtnClicked ? (
+          <WriterNameEnable $isConflict={isConflict || false}>
+            {isConflict ? '사용 불가능한 필명 입니다.' : '사용 가능한 필명 입니다.'}
+          </WriterNameEnable>
+        ) : (
+          <></>
+        )}
+      </WriterNameInputWrapper>
       <Spacing marginBottom="2.8" />
-      <UserInfoInputWrapper>
+      <WriterIntroduceInputWrapper>
         <UserInfoTitle>소개 글</UserInfoTitle>
         <WriterIntroduceInput
           placeholder="모임원들에게 ‘나’에 대해 자유롭게 소개해주세요."
-          onChange={onChageWriterIntroduce}
-          $charLimit={charLimit}
+          onChange={onChangeWriterIntroduce}
+          $introduceLimit={introduceLimit}
         />
-        <CharCount $charLimit={charLimit}>
+        <CharCount $introduceLimit={introduceLimit}>
           {userInfoVal.writerIntroduce ? userInfoVal.writerIntroduce.length : 0}/100
         </CharCount>
-      </UserInfoInputWrapper>
+      </WriterIntroduceInputWrapper>
+      <Spacing marginBottom="2.8" />
+      <SignUpBtn onClick={onClickSignUp}>가입하기</SignUpBtn>
+      <PositiveModal
+        isModalOpen={isJoinModalOpen}
+        modalContent="가입 완료 시 필명 변경이 불가합니다.
+      계속 하시겠습니까?"
+        modalHandler={onClickModalJoinBtn}
+        closeModalHandler={onClickModalCloseBtn}
+      />
     </>
   );
 };
 
 export default UserInfoInput;
 
-const UserInfoInputWrapper = styled.section`
+const WriterNameInputWrapper = styled.section<{
+  $valueNotTyped: boolean;
+  $isConflictChecked: boolean;
+}>`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  padding: 2.8rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border: ${({ $valueNotTyped, $isConflictChecked, theme }) =>
+    $valueNotTyped || $isConflictChecked ? `1px solid ${theme.colors.mileRed}` : ``};
+  border-radius: 8px;
+`;
+
+const WriterIntroduceInputWrapper = styled.section`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -114,14 +248,17 @@ const InputWrapper = styled.div`
   width: 100%;
 `;
 
-const WriterNameInput = styled.input`
+const WriterNameInput = styled.input<{ $isConflict: boolean; $isValidLength: boolean }>`
   width: 67.7rem;
   padding: 1rem 1.2rem;
 
   color: ${({ theme }) => theme.colors.gray100};
 
   background-color: ${({ theme }) => theme.colors.gray5};
-  border: 1px solid ${({ theme }) => theme.colors.gray20};
+  border: ${({ $isConflict, $isValidLength, theme }) =>
+    $isConflict || $isValidLength
+      ? `1px solid ${theme.colors.mileRed}`
+      : `1px solid ${theme.colors.gray50}`};
   ${({ theme }) => theme.fonts.button2};
   border-radius: 6px;
 
@@ -130,7 +267,7 @@ const WriterNameInput = styled.input`
   }
 
   &:focus {
-    border-color: ${({ theme }) => theme.colors.gray50};
+    ${({ $isValidLength, theme }) => ($isValidLength ? theme.colors.mileRed : theme.colors.gray50)};
   }
 `;
 
@@ -149,7 +286,19 @@ const WriterExistCheckBtn = styled.button<{ $isBtnDisabled: boolean }>`
   ${({ theme }) => theme.fonts.button3};
 `;
 
-const WriterIntroduceInput = styled.textarea<{ $charLimit: boolean }>`
+const WriterNameEnable = styled.div<{ $isConflict: boolean }>`
+  color: ${({ $isConflict, theme }) => ($isConflict ? theme.colors.mileRed : theme.colors.gray70)};
+
+  ${({ theme }) => theme.fonts.body4};
+`;
+
+const WriterNameLength = styled.div`
+  color: ${({ theme }) => theme.colors.mileRed};
+
+  ${({ theme }) => theme.fonts.body4};
+`;
+
+const WriterIntroduceInput = styled.textarea<{ $introduceLimit: boolean }>`
   position: relative;
   width: 100%;
   height: 11rem;
@@ -158,15 +307,16 @@ const WriterIntroduceInput = styled.textarea<{ $charLimit: boolean }>`
   color: ${({ theme }) => theme.colors.gray100};
 
   background-color: ${({ theme }) => theme.colors.gray5};
-  border: 1px solid ${({ theme }) => theme.colors.gray20};
+  border: ${({ $introduceLimit, theme }) =>
+    $introduceLimit ? `1px solid ${theme.colors.mileRed}` : `1px solid ${theme.colors.gray50}`};
   ${({ theme }) => theme.fonts.button2};
   border-radius: 6px;
 
   resize: none;
 
   &:focus {
-    outline-color: ${({ $charLimit, theme }) =>
-      $charLimit ? theme.colors.mileRed : theme.colors.gray50};
+    outline-color: ${({ $introduceLimit, theme }) =>
+      $introduceLimit ? theme.colors.mileRed : theme.colors.gray50};
   }
 
   &::placeholder {
@@ -174,11 +324,32 @@ const WriterIntroduceInput = styled.textarea<{ $charLimit: boolean }>`
   }
 `;
 
-const CharCount = styled.span<{ $charLimit: boolean }>`
+const CharCount = styled.span<{ $introduceLimit: boolean }>`
   position: absolute;
   right: 4rem;
   bottom: 3.8rem;
 
-  color: ${({ $charLimit, theme }) => ($charLimit ? theme.colors.mileRed : theme.colors.gray70)};
+  color: ${({ $introduceLimit, theme }) =>
+    $introduceLimit ? theme.colors.mileRed : theme.colors.gray70};
   ${({ theme }) => theme.fonts.button3};
+`;
+
+const SignUpBtn = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1.6rem 2rem;
+
+  color: ${({ theme }) => theme.colors.white};
+
+  background-color: ${({ theme }) => theme.colors.mainViolet};
+  border-radius: 10px;
+  ${({ theme }) => theme.fonts.button2};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+
+    background-color: ${({ theme }) => theme.colors.mileViolet};
+  }
 `;
