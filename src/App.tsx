@@ -21,4 +21,5 @@ const DesktopWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  scroll-behavior: smooth;
 `;

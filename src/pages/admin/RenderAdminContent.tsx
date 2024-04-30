@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import AddEditTopicModal from './AddEditTopicModal';
-import { useAdminTopic } from './hooks/queries';
+import MemberManage from './components/MemberManage';
+import { useAdminTopic, useFetchMemberInfo } from './hooks/queries';
 import TopicAdmin from './TopicAdmin';
 
 import { MakeGroupAdminIc } from '../../assets/svgs';
@@ -11,6 +12,8 @@ import Spacing from '../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
   const { groupId } = useParams();
+  const [page, setPage] = useState(1);
+  const { memberData, totalMember } = useFetchMemberInfo(groupId || '', page);
   const [pageNum, setPageNum] = useState(1);
   const { topicCount, adminTopicData } = useAdminTopic(groupId, pageNum);
   const [showModal, setShowModal] = useState(false);
@@ -45,8 +48,9 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
         <AdminContainer>
           <Title>멤버 관리</Title>
           <Spacing marginBottom="1.2" />
-          <SubTitle>{`명의 멤버가 함께하고 있어요`}</SubTitle>
+          <SubTitle>{`${totalMember}명의 멤버가 함께하고 있어요`}</SubTitle>
           <Spacing marginBottom="3.6" />
+          <MemberManage data={memberData} setPageCount={setPage} pageCount={page} />
         </AdminContainer>
       );
 
