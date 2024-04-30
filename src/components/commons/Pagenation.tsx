@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { ArrowLeftIc, ArrowRightIc } from '../../assets/svgs';
 import { slicePage } from '../../utils/countPage';
@@ -14,7 +14,6 @@ interface pagenationPropTypes {
 
 const Pagenation = ({ count, allocatedCount, setActivePage, activePage }: pagenationPropTypes) => {
   const [activeChunk, setActiveChunk] = useState(1);
-
   const { resultArray, isExistNextPage, isExistPreviousPage } = slicePage(
     count,
     activeChunk,
