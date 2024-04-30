@@ -67,6 +67,7 @@ const ThumbNailGradient = styled.div`
   width: 100%;
 
   background: ${({ theme }) => theme.colors.thumbnailGradient};
+  border-radius: 10px;
 `;
 
 const ThumbNailImg = styled.img<{ $imgExist: string }>`
@@ -76,6 +77,7 @@ const ThumbNailImg = styled.img<{ $imgExist: string }>`
   height: 30.7rem;
   object-fit: cover;
 
+  border-radius: 10px;
   ${({ $imgExist }) => $imgExist && $imgExist.length === 0 && 'content: "";'}
 `;
 
@@ -87,6 +89,7 @@ const ImageUploadLabel = styled.label`
   width: 100%;
 
   cursor: pointer;
+  border-radius: 10px;
 `;
 
 const EditorThuminputIcnActiveIcon = styled(EditorThuminputIcnActiveIc)`

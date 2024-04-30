@@ -20,7 +20,7 @@ export const fetchGroupFeedAuth = async (groupId: string) => {
         },
       },
     );
-    console.log(response.data, 'fetchgRoup');
+    // console.log(response.data, 'fetchgRoup');
     return response.data; //"isMember" : boolean, "isOwner" : boolean
   } catch (error) {
     console.error('에러:', error);
@@ -81,7 +81,7 @@ interface CuriousWriterPropTypes {
 export const fetchCuriousWriters = async (groupId: string) => {
   try {
     const response = await client.get<CuriousWriterPropTypes>(
-      `/api/moim/${groupId}/mostCuriousWriters`,
+      `/api/moim/${groupId}/writers/top-rank`,
     );
     return response.data;
   } catch (error) {
@@ -102,7 +102,7 @@ interface TopicListPropTypes {
 
 export const fetchTopicList = async (groupId: string) => {
   try {
-    const response = await client.get<TopicListPropTypes>(`/api/moim/${groupId}/topicList`);
+    const response = await client.get<TopicListPropTypes>(`/api/moim/${groupId}/topics`);
     return response.data;
   } catch (error) {
     console.error('에러:', error);
@@ -126,7 +126,7 @@ interface CuriousPostPropTypes {
 
 export const fetchCuriousPost = async (groupId: string) => {
   try {
-    const response = await client.get<CuriousPostPropTypes>(`/api/moim/${groupId}/mostCuriousPost`);
+    const response = await client.get<CuriousPostPropTypes>(`/api/moim/${groupId}/posts/top-rank`);
     return response.data;
   } catch (error) {
     console.error('에러:', error);

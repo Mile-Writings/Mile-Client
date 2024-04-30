@@ -7,7 +7,7 @@ export const fetchAdminTopic = async (groupId: string | undefined, pageNum: numb
   try {
     const accessToken = localStorage.getItem('accessToken');
     const response = await devClient.get<AdminTopicPropTypes>(
-      `/api/moim/${groupId}/admin/topicList?page=${pageNum}`,
+      `/api/moim/${groupId}/admin/topics?page=${pageNum}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
