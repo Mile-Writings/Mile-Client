@@ -15,6 +15,7 @@ export const useGetGroupInfo = (groupId: string) => {
   const { data, error } = useQuery({
     queryKey: [QUERY_KEY_GROUP_INVITE.getGroupInfo, groupId],
     queryFn: () => fetchGroupInfo(groupId),
+    retry: 1,
   });
 
   const moimTitle = data && data?.data?.moimTitle;
