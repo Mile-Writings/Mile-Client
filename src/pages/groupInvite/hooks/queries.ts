@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import { createGroupMemberJoin } from '../apis/createGroupMemberJoin';
 import { fetchGroupInfo } from '../apis/fetchGroupInfo';
@@ -15,6 +16,7 @@ export const useGetGroupInfo = (groupId: string) => {
   const { data, error } = useQuery({
     queryKey: [QUERY_KEY_GROUP_INVITE.getGroupInfo, groupId],
     queryFn: () => fetchGroupInfo(groupId),
+    retry: 1,
   });
 
   const moimTitle = data && data?.data?.moimTitle;
@@ -49,13 +51,16 @@ interface postGroupMemberJoinType {
   groupId: string;
   writerName: string;
   writerDescription: string;
+  moimTitle: string;
 }
 export const usePostGroupMemberJoin = ({
   groupId,
   writerName,
   writerDescription,
+  moimTitle,
 }: postGroupMemberJoinType) => {
-  const { mutate, data } = useMutation({
+  const navigate = useNavigate();
+  const { mutate, data, error } = useMutation({
     mutationKey: [
       QUERY_KEY_GROUP_INVITE.postGroupMemberJoin,
       {
@@ -65,6 +70,14 @@ export const usePostGroupMemberJoin = ({
       },
     ],
     mutationFn: () => createGroupMemberJoin({ groupId, writerName, writerDescription }),
+    retry: 1,
+    onSuccess: () => {
+      navigate(`/group/${groupId}/groupJoin`, {
+        state: {
+          moimTitle: moimTitle,
+        },
+      });
+    },
   });
-  return { mutate, data };
+  return { mutate, data, error };
 };
