@@ -1,11 +1,16 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import {
-  postAdminTopic,
-  fetchAdminTopic,
-  postAdminTopicPropTypes,
   editAdminTopic,
+  fetchAdminTopic,
+  postAdminTopic,
+  postAdminTopicPropTypes,
 } from '../apis/fetchAdminData';
+import { fetchInvitationLink } from '../apis/fetchInvitationLink';
+
+export const QUERY_KEY_ADMIN = {
+  fetchInvitationLink: 'fetchInvitationLink',
+};
 
 export const useAdminTopic = (groupId: string | undefined, pageNum: number) => {
   const { data, isLoading, isError, error } = useQuery({
@@ -17,6 +22,16 @@ export const useAdminTopic = (groupId: string | undefined, pageNum: number) => {
   const adminTopicData = data && data.data;
 
   return { topicCount, adminTopicData, isLoading, isError, error };
+};
+
+export const useFetchInvitationLink = (groupId: string | undefined) => {
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY_ADMIN.fetchInvitationLink],
+    queryFn: () => fetchInvitationLink(groupId || ''),
+  });
+  const invitationCode = data?.data;
+
+  return { invitationCode };
 };
 
 export const usePostAdminTopic = () => {
