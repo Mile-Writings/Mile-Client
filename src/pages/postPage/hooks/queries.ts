@@ -81,7 +81,7 @@ export const useGetTopic = (groupId: string) => {
     queryKey: [QUERY_KEY_POST.getTopic, groupId],
     queryFn: () => fetchTopic(groupId),
   });
-  const topics = data && data.data.topics;
+  const topics = data && data?.data?.topics;
   return { topics };
 };
 
@@ -100,8 +100,8 @@ export const useTempSaveFlag = (groupId: string): TempSaveFlagQueryResult => {
     queryFn: () => fetchTempSaveFlag(groupId),
   });
 
-  const isTemporaryPostExist = data && data.data.isTemporaryPostExist;
-  const tempPostId = data && data.data.postId;
+  const isTemporaryPostExist = data && data?.data?.isTemporaryPostExist;
+  const tempPostId = data && data?.data?.postId;
 
   return { isTemporaryPostExist, tempPostId, isLoading, isError, error };
 };
@@ -118,8 +118,8 @@ export const usePresignedUrl = (): PresignedUrlQueryResult => {
     queryFn: () => fetchPresignedUrl(),
   });
 
-  const fileName = data && data.data.fileName;
-  const url = data && data.data.url;
+  const fileName = data && data?.data?.fileName;
+  const url = data && data?.data?.url;
   return { fileName, url };
 };
 
@@ -223,11 +223,11 @@ export const useGetTempSaveContent = (postId: string, isTempClicked: boolean) =>
     enabled: !!isTempClicked,
   });
 
-  const tempTopicList = data && data.data.topicList;
-  const tempTitle = data && data.data.title;
-  const tempContent = data && data.data.content;
-  const tempImageUrl = data && data.data.imageUrl;
-  const tempAnonymous = data && data.data.anonymous;
+  const tempTopicList = data && data?.data?.topicList;
+  const tempTitle = data && data?.data?.title;
+  const tempContent = data && data?.data?.content;
+  const tempImageUrl = data && data?.data?.imageUrl;
+  const tempAnonymous = data && data?.data?.anonymous;
 
   return { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous };
 };
