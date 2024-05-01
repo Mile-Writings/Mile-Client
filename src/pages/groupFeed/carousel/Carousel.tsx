@@ -38,7 +38,7 @@ const Carousel = () => {
 
   useEffect(() => {
     if (groupFeedCategoryData && groupFeedCategoryData.length > 0) {
-      setSelectedTopicId(groupFeedCategoryData[categoryId].topicId);
+      setSelectedTopicId(groupFeedCategoryData[categoryId]?.topicId);
     }
   }, [groupFeedCategoryData]);
 
