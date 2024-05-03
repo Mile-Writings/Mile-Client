@@ -10,14 +10,13 @@ import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
 import { useGroupFeedAuth, useGroupInfo } from './hooks/queries';
 
-import GroupThumbnailImg from '/src/assets/svgs/groupThumnailImg.svg';
+import Error from '../error/Error';
+import Loading from '../loading/Loading';
 
+import { GroupThumbnailImgIc } from '../../assets/svgs';
 import Footer from '../../components/commons/Footer';
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
-
-import Error from '../error/Error';
-import Loading from '../loading/Loading';
 
 const GroupFeed = () => {
   const { groupId } = useParams();
@@ -105,7 +104,7 @@ const GroupFeedWrapper = styled.div`
 const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
   height: 37rem;
 
-  background-image: ${({ imageUrl }) => `url(${imageUrl || GroupThumbnailImg})`};
+  background-image: ${({ imageUrl }) => `url(${imageUrl || GroupThumbnailImgIc})`};
   background-size: cover;
 `;
 const GroupInfoWrapper = styled.div`
