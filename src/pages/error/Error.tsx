@@ -24,7 +24,7 @@ const Error = () => {
         남겨주시면 빠르게 해결할게요.
       </SubTitle>
       <Spacing marginBottom="4.8" />
-      <BackToPrevPageButton onClick={handlePrevPage}>홈으로 가기</BackToPrevPageButton>
+      <BackToPrevPageBtn onClick={handlePrevPage}>이전 페이지로 가기</BackToPrevPageBtn>
     </ErrorWrapper>
   );
 };
@@ -40,12 +40,13 @@ const ErrorWrapper = styled.div`
 `;
 
 const Title = styled.div`
-  color: ${({ theme }) => theme.colors.darkViolet};
+  color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.title5};
 `;
 
 const SubTitle = styled.div`
   color: ${({ theme }) => theme.colors.gray80};
+  text-align: center;
   ${({ theme }) => theme.fonts.subtitle4};
 `;
 
@@ -54,7 +55,7 @@ const HyperLinkText = styled.a`
   ${({ theme }) => theme.fonts.subtitle2};
 `;
 
-const BackToPrevPageButton = styled.button`
+const BackToPrevPageBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,7 +65,7 @@ const BackToPrevPageButton = styled.button`
 
   color: ${({ theme }) => theme.colors.mileViolet};
 
-  background-color: ${({ theme }) => theme.colors.mainViolet};
+  background-color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.button3};
   border-radius: 8px;
 `;
