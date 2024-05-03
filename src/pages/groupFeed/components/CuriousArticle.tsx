@@ -73,8 +73,6 @@ export default CuriousArticle;
 const CuriousArticleWrapper = styled.div`
   display: flex;
   gap: 1.6rem;
-
-  cursor: pointer;
 `;
 
 const ArticleThumbnail = styled.img`
