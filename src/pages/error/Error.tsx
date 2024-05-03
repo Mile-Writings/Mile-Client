@@ -13,7 +13,7 @@ const Error = () => {
   return (
     <ErrorWrapper>
       <ErrorIc />
-      <Spacing marginBottom="2.8" />
+      <Spacing marginBottom="0.8" />
       <Title>페이지를 찾지 못했어요</Title>
       <Spacing marginBottom="1.2" />
       <SubTitle>
