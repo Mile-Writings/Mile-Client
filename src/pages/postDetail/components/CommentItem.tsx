@@ -22,6 +22,7 @@ interface CommentItem {
   isAnonymous: boolean;
   postId: string | undefined;
   commentId: string;
+  isNested: boolean;
   type: 'nestedComment' | 'comment';
 }
 
@@ -35,6 +36,7 @@ const CommentItem = ({
   commentId,
   type,
   isAnonymous,
+  isNested,
 }: CommentItem) => {
   const { deleteComment } = useDeleteComment(commentId || '', postId || '');
   const { deleteNestedComment } = useDeleteNestedComment(commentId || '', postId || '');
@@ -71,25 +73,25 @@ const CommentItem = ({
           <CommentText>{content}</CommentText>
         </CommentItemContainer>
         <IconWrapper>
+          {!isNested && (
+            <NestCommentIcon onClick={() => setIsNestedComment(!isNestedComment)}>
+              <NestCommentIc />
+            </NestCommentIcon>
+          )}
           {isMyComment && (
-            <>
-              <NestCommentIcon onClick={() => setIsNestedComment(!isNestedComment)}>
-                <NestCommentIc />
-              </NestCommentIcon>
-              <MeatBallWrapper onClick={handleBtnClick}>
-                <DetailCommentMeatBallIcon />
-                {isClick && (
-                  <Modal
-                    onClick={() => {
-                      deleteComment();
-                    }}
-                    ref={modalRef}
-                  >
-                    <ModalContainer>삭제</ModalContainer>
-                  </Modal>
-                )}
-              </MeatBallWrapper>
-            </>
+            <MeatBallWrapper onClick={handleBtnClick}>
+              <DetailCommentMeatBallIcon />
+              {isClick && (
+                <Modal
+                  onClick={() => {
+                    deleteComment();
+                  }}
+                  ref={modalRef}
+                >
+                  <ModalContainer>삭제</ModalContainer>
+                </Modal>
+              )}
+            </MeatBallWrapper>
           )}
           {isMyReply && (
             <MeatBallWrapper onClick={handleBtnClick}>
