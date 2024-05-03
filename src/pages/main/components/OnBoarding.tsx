@@ -9,14 +9,15 @@ const OnBoarding = () => {
       <OnBoardingIcWithTextLayout>
         <TextLayout>
           <MainText>글 모임을 위한 글쓰기 공간, 마일</MainText>
+          <Spacing marginBottom="1.4" />
           <SubText>
             마일은 글쓰기를 쉽고 편안하게 만들어 주는 공간이에요.
             <br />
             모임원들과 함께 글을 쓰면서 여러분만의 공간을 만들어 보세요.
           </SubText>
         </TextLayout>
-        <Spacing marginBottom="8.86" />
-        <MainOnBoardingIc />
+        <Spacing marginBottom="3.2" />
+        <MainOnBoardingIcon />
       </OnBoardingIcWithTextLayout>
     </OnBoardingWrapper>
   );
@@ -30,7 +31,8 @@ const OnBoardingWrapper = styled.section`
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 4.2rem 21.7rem 4.25rem 21.8rem;
+  height: 100%;
+  padding: 6.8rem 21.8rem 4.8rem;
 
   background-color: ${({ theme }) => theme.colors.white};
 `;
@@ -43,7 +45,6 @@ const OnBoardingIcWithTextLayout = styled.div`
 const TextLayout = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
   justify-content: flex-start;
   width: fit-content;
 `;
@@ -57,4 +58,8 @@ const MainText = styled.p`
 const SubText = styled.p`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.subtitle7};
+`;
+
+const MainOnBoardingIcon = styled(MainOnBoardingIc)`
+  padding: 0 2.2rem;
 `;
