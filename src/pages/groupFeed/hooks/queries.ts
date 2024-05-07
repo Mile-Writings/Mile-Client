@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 
 import {
   fetchArticleList,
   fetchCuriousPost,
   fetchCuriousWriters,
+  fetchEditIntro,
   fetchGroupFeedAuth,
   fetchGroupInfo,
   fetchTodayTopic,
@@ -164,4 +165,24 @@ export const useFetchWriterInfo = (writerNameId: number | undefined) => {
   const description = data?.data.description;
 
   return { name, description };
+};
+
+//[PATCH] 필명 소개글 수정
+export const useEditWriterIntro = (writerNameId: number) => {
+  const queryClient = useQueryClient();
+  const { mutate, isError, error } = useMutation({
+    mutationKey: ['editWriterIntro'],
+    mutationFn: ({ description }: { description: string }) =>
+      fetchEditIntro({ writerNameId, description }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_GROUPFEED.getWriterInfo, writerNameId],
+      });
+    },
+  });
+
+  const editMutateWriterIntro = ({ description }: { description: string }) =>
+    mutate({ description });
+
+  return { editMutateWriterIntro, isError, error };
 };

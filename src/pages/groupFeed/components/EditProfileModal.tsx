@@ -17,6 +17,7 @@ const EditProfileModal = ({ setShowEditProfileModal, writerNameId }: editProfilM
   const onInputHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCountLength(e.target.value.length);
   };
+  // const submitHandler = () => {};
   return (
     <>
       <BackgroundWrapper onClick={() => setShowEditProfileModal(false)} />

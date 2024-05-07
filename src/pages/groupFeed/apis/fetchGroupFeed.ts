@@ -219,7 +219,11 @@ interface WriterIntroPropTypes {
   message: string;
   data: null;
 }
-export const fetchEditIntro = async (writerNameId: string, description: string) => {
+interface editWriterInfoPropType {
+  writerNameId: number;
+  description: string;
+}
+export const fetchEditIntro = async ({ writerNameId, description }: editWriterInfoPropType) => {
   try {
     const accessToken = localStorage.getItem('accessToken');
     const response = await client.patch<WriterIntroPropTypes>(
