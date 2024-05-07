@@ -162,3 +162,19 @@ export const fetchArticleList = async (topicId: string) => {
     console.error('에러:', error);
   }
 };
+
+//[GET] 필명만 GET
+export const fetchWriterNameOnly = async (groupId: string) => {
+  try {
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await client.get<ArticleListPropTypes>(`/api/moim/${groupId}/writername`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log(response.data, '필명데이터');
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
