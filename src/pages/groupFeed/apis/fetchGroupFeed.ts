@@ -180,7 +180,58 @@ export const fetchWriterNameOnly = async (groupId: string) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(response.data, '필명데이터');
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
+
+//[GET] 필명 + 프로필 설명 GET
+interface WriterInfoPropTypes {
+  status: number;
+  message: string;
+  data: {
+    name: string;
+    description: number;
+  };
+}
+export const fetchWriterInfo = async (writerNameId: string) => {
+  try {
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await client.get<WriterInfoPropTypes>(
+      `/api/writername/${writerNameId}/profile`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
+
+//[PATCH] 필명 소개글 수정
+interface WriterIntroPropTypes {
+  status: number;
+  message: string;
+  data: null;
+}
+export const fetchEditIntro = async (writerNameId: string, description: string) => {
+  try {
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await client.patch<WriterIntroPropTypes>(
+      `/api/writername/${writerNameId}/description`,
+      {
+        description: description,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
     return response.data;
   } catch (error) {
     console.error('에러:', error);
