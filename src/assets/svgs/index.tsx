@@ -69,6 +69,8 @@ export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?reac
 
 export { default as adminEmptyMemberIc } from './adminEmptyMember.svg?react';
 export { default as adminProfileIc } from './adminProfileIc.svg?react';
+export { default as CreateGroupImageUpload } from './createGroupImageUpload.svg?react';
+export { default as CreateGroupInfoIc } from './createGroupInfoIc.svg?react';
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
 export { default as faviconMileIc } from './faviconMile.svg?react';
 
@@ -84,6 +86,11 @@ export { default as ArrowRightIc } from './arrowRight.svg?react';
 
 export { default as MakeGroupAdminIc } from './btn_makegroup.svg?react';
 
+export { default as CreateGroupRadioCheckedIc } from './createGroupRadioChecked.svg?react';
+export { default as CreateGroupRadioUncheckedIc } from './createGroupRadioUnchecked.svg?react';
 // 글 모임 가입 축하페이지
-export { default as JoinCongratulationIc } from './joinCongratulationPng.svg?react';
 export { default as GroupListProfileCloseIc } from './groupListprofileIcnClose.svg?react';
+export { default as JoinCongratulationIc } from './joinCongratulationPng.svg?react';
+
+export { default as CreateGroupCongrats } from './createGroupCongrats.svg?react';
+export { default as CreateGroupIlust } from './createGroupIlust.svg?react';
