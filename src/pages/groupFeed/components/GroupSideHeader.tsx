@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Dispatch, SetStateAction } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import GroupInfoBox from './GroupInfoBox';
@@ -23,8 +24,9 @@ const GroupSideHeader = (props: {
   groupInfoData: GroupInfoPropTypes;
   isMember: boolean | undefined;
   isOwner: boolean | undefined;
+  setShowEditProfileModal: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { groupInfoData, isMember, isOwner } = props;
+  const { groupInfoData, isMember, isOwner, setShowEditProfileModal } = props;
   const { groupId } = useParams();
   const navigate = useNavigate();
 
@@ -72,7 +74,14 @@ const GroupSideHeader = (props: {
             <GroupBestProfileIc /> 일이삼사
           </ProfileWrapper>
           <Spacing marginBottom="1.6" />
-          <SideHeaderButton>소개글 수정</SideHeaderButton>
+          <SideHeaderButton
+            onClick={() => {
+              setShowEditProfileModal(true);
+              console.log('clicked');
+            }}
+          >
+            소개글 수정
+          </SideHeaderButton>
         </MemberSideHeaderWrapper>
       )}
     </HeaderWrapper>
