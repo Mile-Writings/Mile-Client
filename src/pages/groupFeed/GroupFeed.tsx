@@ -39,7 +39,7 @@ const GroupFeed = () => {
   }, [activeCategoryId]);
 
   const { groupInfoData } = useGroupInfo(groupId || '');
-  const { writerName } = useFetchWriterNameOnly(groupId || '');
+  const { writerName, writerNameId } = useFetchWriterNameOnly(groupId || '');
 
   const navigate = useNavigate();
 
@@ -99,7 +99,10 @@ const GroupFeed = () => {
         <FloatingBtn onClick={() => navigate(`/post/${groupId}/post`)} />
       )}
       {showEditProfileModal && (
-        <EditProfileModal setShowEditProfileModal={setShowEditProfileModal} />
+        <EditProfileModal
+          setShowEditProfileModal={setShowEditProfileModal}
+          writerNameId={writerNameId}
+        />
       )}
     </GroupFeedWrapper>
   );

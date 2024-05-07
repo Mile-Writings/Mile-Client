@@ -1,13 +1,17 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction, useRef, useState, ChangeEvent } from 'react';
 
+import { useFetchWriterInfo } from '../hooks/queries';
+
 import { AniImgProfileIc } from '../../../assets/svgs';
 
 interface editProfilModalPropTypes {
   setShowEditProfileModal: Dispatch<SetStateAction<boolean>>;
+  writerNameId: number | undefined;
 }
 
-const EditProfileModal = ({ setShowEditProfileModal }: editProfilModalPropTypes) => {
+const EditProfileModal = ({ setShowEditProfileModal, writerNameId }: editProfilModalPropTypes) => {
+  const { name, description } = useFetchWriterInfo(writerNameId);
   const modalRef = useRef(null);
   const [countLength, setCountLength] = useState(0);
   const onInputHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -19,10 +23,12 @@ const EditProfileModal = ({ setShowEditProfileModal }: editProfilModalPropTypes)
       <ModalWrapper ref={modalRef}>
         <ProfileWrapper>
           <AniImgProfileIc />
-          <p>쾌활한 딸기</p>
+          <p>{name}</p>
         </ProfileWrapper>
         <ContentWrapper isError={countLength > 100}>
-          <InputWrapper placeholder="소개글을 입력해주세요" onChange={onInputHandler} />
+          <InputWrapper placeholder="소개글을 입력해주세요" onChange={onInputHandler}>
+            {description}
+          </InputWrapper>
           <div>{countLength}/100</div>
         </ContentWrapper>
         <EditButton>프로필 수정</EditButton>

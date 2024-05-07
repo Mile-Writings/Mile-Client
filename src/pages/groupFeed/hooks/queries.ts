@@ -8,6 +8,7 @@ import {
   fetchGroupInfo,
   fetchTodayTopic,
   fetchTopicList,
+  fetchWriterInfo,
   fetchWriterNameOnly,
 } from '../apis/fetchGroupFeed';
 import { fetchHeaderGroup } from '../apis/fetchHeaderGroup';
@@ -21,6 +22,7 @@ export const QUERY_KEY_GROUPFEED = {
   getArticleList: 'getArticleList',
   fetchHeaderGroup: 'fetchHeaderGroup',
   getWriterNameOnly: 'getWriterNameOnly',
+  getWriterInfo: 'getWriterInfo',
 };
 
 interface GroupFeedAuthQueryResult {
@@ -136,7 +138,6 @@ export const useFetchHeaderGroup = () => {
     queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
     queryFn: () => fetchHeaderGroup(),
   });
-  console.log(data);
   return { data };
 };
 
@@ -149,4 +150,18 @@ export const useFetchWriterNameOnly = (groupId: string) => {
   const writerName = data?.data.writerName;
   const writerNameId = data?.data.writerNameId;
   return { writerName, writerNameId };
+};
+
+//[GET] 필명 + 프로필 설명 GET
+export const useFetchWriterInfo = (writerNameId: number | undefined) => {
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY_GROUPFEED.getWriterInfo, writerNameId],
+    queryFn: () => fetchWriterInfo(writerNameId),
+    enabled: writerNameId !== undefined,
+  });
+
+  const name = data?.data.name;
+  const description = data?.data.description;
+
+  return { name, description };
 };

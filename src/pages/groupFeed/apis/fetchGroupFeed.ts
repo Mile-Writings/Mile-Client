@@ -192,10 +192,10 @@ interface WriterInfoPropTypes {
   message: string;
   data: {
     name: string;
-    description: number;
+    description: string;
   };
 }
-export const fetchWriterInfo = async (writerNameId: string) => {
+export const fetchWriterInfo = async (writerNameId: number | undefined) => {
   try {
     const accessToken = localStorage.getItem('accessToken');
     const response = await client.get<WriterInfoPropTypes>(
@@ -206,6 +206,7 @@ export const fetchWriterInfo = async (writerNameId: string) => {
         },
       },
     );
+    console.log(response.data, 'writerInfo');
     return response.data;
   } catch (error) {
     console.error('에러:', error);
