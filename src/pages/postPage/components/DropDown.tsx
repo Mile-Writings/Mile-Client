@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import TopicDropDown from './TopicDropDown';
 import WriterDropDown from './WriterDropDown';
@@ -16,8 +17,52 @@ interface DropDownDataPropsType {
 }
 
 const DropDown = (props: DropDownDataPropsType) => {
-  const { topicList, setTopic, setWriter, selectedTopic, selectedWriter } = props;
+  const { topicList, selectedTopicId, updateAnonymous, isTemp, tempTopicList, tempAnonymous } =
+    props;
+  // 드롭다운에서 선택된 값 저장 state
 
+  const [selectedValues, setSelectedValues] = useState({
+    topic: '',
+    writer: '작자미상',
+  });
+
+  // 어느 뷰인지 확인
+  const { type } = useParams() as { type: string };
+
+  // 익명 여부 저장
+  useEffect(() => {
+    if (selectedValues.writer == '작자미상') {
+      updateAnonymous(true);
+    } else {
+      updateAnonymous(false);
+    }
+  }, [selectedValues.writer]);
+
+  // 드롭다운 리스트 중 선택된 값 저장 이벤트 핸들러
+  const handleListItem = (key: string, value: string) => {
+    setSelectedValues((prev) => ({ ...prev, [key]: value }));
+  };
+
+  // 불러온 글감 중 가장 초기값 보여주기 위함
+  useEffect(() => {
+    if (isTemp) {
+      if (tempTopicList && tempTopicList.length > 0) {
+        setSelectedValues({
+          topic: tempTopicList?.find((topic) => topic.isSelected)?.topicName || '',
+          writer: tempAnonymous ? '작자미상' : '필명',
+        });
+      }
+    } else {
+      if (type != 'edit') {
+        if (topicList && topicList.length > 0) {
+          setSelectedValues({
+            topic: topicList[0]?.topicName,
+            writer: selectedValues.writer,
+          });
+        }
+      }
+    }
+  }, [tempTopicList, topicList, isTemp]);
   return (
     <DropDownWrapper>
       <TopicDropDown setTopic={setTopic} selectedTopic={selectedTopic} topicList={topicList} />
