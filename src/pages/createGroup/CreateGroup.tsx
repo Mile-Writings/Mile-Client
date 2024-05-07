@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ChangeEvent, useReducer, useState } from 'react';
+import { ChangeEvent, useReducer, useRef, useState } from 'react';
 
 import CreateGroupInfo from './components/CreateGroupInfo';
 import CreateGroupLeaderInfo from './components/CreateGroupLeaderInfo';
@@ -21,7 +21,7 @@ type CreateGroupAction =
 const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
-
+  const groupLeaderNameRef = useRef<HTMLInputElement>(null);
   const initialState = {
     groupName: '',
     groupInfo: '',
@@ -33,66 +33,6 @@ const CreateGroup = () => {
     leaderPenName: '',
     leaderDesc: '',
   };
-
-  // const reducer = (state: CreateGroupTypes, action: ActionTypes) => {
-  //   switch (action.type) {
-  //     case 'setGroupName': {
-  //       return {
-  //         ...state,
-  //         groupName: action.value,
-  //       };
-  //     }
-  //     case 'setGroupInfo': {
-  //       return {
-  //         ...state,
-  //         groupInfo: action.value,
-  //       };
-  //     }
-  //     case 'setGroupImageFile': {
-  //       return {
-  //         ...state,
-  //         groupImageFile: action.value,
-  //       };
-  //     }
-  //     case 'setIsPublic': {
-  //       return {
-  //         ...state,
-  //         isPublic: action.value,
-  //       };
-  //     }
-  //     case 'setTopic': {
-  //       return {
-  //         ...state,
-  //         topic: action.value,
-  //       };
-  //     }
-  //     case 'setTopicTag': {
-  //       return {
-  //         ...state,
-  //         topicTag: action.value,
-  //       };
-  //     }
-
-  //     case 'setTopicDesc': {
-  //       return {
-  //         ...state,
-  //         topicDesc: action.value,
-  //       };
-  //     }
-  //     case 'setLeaderPenName': {
-  //       return {
-  //         ...state,
-  //         leaderPenName: action.value,
-  //       };
-  //     }
-  //     case 'setLeaderDesc': {
-  //       return {
-  //         ...state,
-  //         leaderDesc: action.value,
-  //       };
-  //     }
-  //   }
-  // };
 
   const reducer = (state: CreateGroupTypes, action: CreateGroupAction) => {
     switch (action.type) {
@@ -127,39 +67,6 @@ const CreateGroup = () => {
     leaderPenName,
     leaderDesc,
   } = state;
-
-  // const setGroupName = (e: ChangeEvent<HTMLInputElement>) => {
-  //   dispatch({ type: 'setGroupName', value: e.target.value });
-  // };
-
-  // const setGroupInfo = (e: ChangeEvent<HTMLTextAreaElement>) => {
-  //   dispatch({ type: 'setGroupInfo', value: e.target.value });
-  // };
-
-  // const setGroupImageFile = (inputValue: string) => {
-  //   dispatch({ type: 'setGroupImageFile', value: inputValue });
-  // };
-
-  // const setIsPublic = (inputValue: boolean) => {
-  //   dispatch({ type: 'setIsPublic', value: inputValue });
-  // };
-
-  // const setTopic = (e: ChangeEvent<HTMLInputElement>) => {
-  //   dispatch({ type: 'setTopic', value: e.target.value });
-  // };
-
-  // const setTopicTag = (e: ChangeEvent<HTMLInputElement>) => {
-  //   dispatch({ type: 'setTopicTag', value: e.target.value });
-  // };
-  // const setTopicDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
-  //   dispatch({ type: 'setTopicDesc', value: e.target.value });
-  // };
-  // const setLeaderPenName = (e: ChangeEvent<HTMLInputElement>) => {
-  //   dispatch({ type: 'setLeaderPenName', value: e.target.value });
-  // };
-  // const setLeaderDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
-  //   dispatch({ type: 'setLeaderDesc', value: e.target.value });
-  // };
 
   const setGroupName = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'setGroupName', value: e.target.value });
@@ -207,8 +114,18 @@ const CreateGroup = () => {
   const createGroup = () => {
     if (!leaderPenName) {
       setIsGroupLeaderValid(false);
+      return;
     }
-    if (groupName && groupImageFile && topic && topicTag && leaderPenName) {
+    if (leaderPenName.length > 8) {
+      alert('글모임장 필명 글자수를 확인해주세요');
+      return;
+    }
+    if (leaderDesc.length > 100) {
+      alert('글모임 소개 글자수를 확인해주세요');
+      return;
+    }
+
+    if (groupName && topic && topicTag && leaderPenName && leaderDesc.length <= 100) {
       mutate();
     } else {
       console.log('error');

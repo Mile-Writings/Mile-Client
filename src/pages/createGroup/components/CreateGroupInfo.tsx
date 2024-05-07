@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from 'react';
+import { AxiosError } from 'axios';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
 import CreateGroupTopicModal from './CreateGroupTopicModal';
 
@@ -49,8 +50,15 @@ const CreateGroupInfo = ({
   setTopicTag,
   setTopicDesc,
 }: CreateGroupInfoPropTypes) => {
+  const InputInfoMsg = {
+    groupNameLength: '10자 이내로 작성해주세요.',
+    groupNameNotAvailable: '이미 사용중인 모임명입니다.',
+    groupNameNotCheck: '중복확인을 해주세요.',
+    groupNameAvailable: '사용 가능한 모임명입니다.',
+    emptyText: '',
+  };
   // const isGroupNameValid = groupName.length <= 10;
-  const isGroupNameLength = groupName.length <= 10;
+  // const isGroupNameLength = groupName.length <= 10;
   const isGroupInfoValid = groupInfo.length <= 100;
   const [isGroupNameEmpty, setIsGroupNameEmpty] = useState(false);
   const [isGroupNameValid, setIsGroupNameValid] = useState(true);
@@ -58,8 +66,12 @@ const CreateGroupInfo = ({
   const [groupImageView, setGroupImageView] = useState('');
   const [topicModal, setTopicModal] = useState(false);
   const groupNameRef = useRef<HTMLInputElement>(null);
+  const groupInfoRef = useRef<HTMLTextAreaElement>(null);
+  const [passDuplicate, setPassDuplicate] = useState(false);
 
-  const { data, refetch, isSuccess } = useGetGroupNameValidation(groupName);
+  const [isGroupNameValidGreen, setIsGroupNameValidGreen] = useState(false);
+  const [groupNameInputMsg, setGroupNameInputMsg] = useState<string>(InputInfoMsg.emptyText);
+  const { data, refetch, isSuccess, error } = useGetGroupNameValidation(groupName);
 
   // 이미지 보낼 url 받아오기
   const { fileName, url = '' } = usePresignedUrl();
@@ -110,34 +122,44 @@ const CreateGroupInfo = ({
     setIsPublic(e.target.value === 'true');
   };
 
-  const InputInfoMsg = {
-    groupNameLength: '10자 이내로 작성해주세요.',
-    groupNameNotAvailable: '이미 사용중인 모임명입니다.',
-    groupNameNotCheck: '중복확인을 해주세요.',
-    groupNameAvailable: '사용 가능한 모임명입니다.',
-  };
-
+  //다음페이지로 넘어가는 함수
   const handleCurrentPage = () => {
-    if (
-      groupName &&
-      isGroupNameValid &&
-      groupImageView &&
-      topic &&
-      topicTag &&
-      data?.data?.data?.isValidate
-    )
+    if (groupInfo.length > 100) {
+      if (groupInfoRef.current) {
+        groupInfoRef.current.focus();
+        groupInfoRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
+      }
+
+      return;
+    }
+
+    //그룹이름 여부, 그룹이름 유효성(길이), 토픽, 토픽태그, 중복검사 통과여부 확인
+    if (groupName && isGroupNameValid && topic && topicTag && passDuplicate) {
       setCurrentPage('GroupLeaderInfoPage');
-    else if (!groupName || !isGroupNameValid || !data?.data?.data?.isValidate) {
-      if (!groupName) setIsGroupNameEmpty(true);
-      else {
-        setIsGroupNameEmpty(false);
+    }
+    //그룹이름 없거나 그룹이름 유효하지 않은 경우
+    else if (!groupName || !isGroupNameValid) {
+      if (!groupName) {
+        setIsGroupNameEmpty(true);
       }
 
       if (groupNameRef.current) {
         groupNameRef.current && groupNameRef.current.focus();
       }
-    } else if (!topic || !topicTag) {
+    }
+    //중복검사를 하지 않았거나 통과하지 못했을 때
+    else if ((isSuccess && data === undefined) || !passDuplicate) {
+      setGroupNameInputMsg(InputInfoMsg.groupNameNotCheck);
+      setIsGroupNameEmpty(true);
+      if (groupNameRef.current) {
+        groupNameRef.current && groupNameRef.current.focus();
+      }
+    }
+    //topic이나 topicTag가 없을 때
+    else if (!topic || !topicTag) {
       setIsGroupTopicEmpty(true);
+    } else {
+      console.log('예기치 않는 에러');
     }
   };
 
@@ -146,14 +168,48 @@ const CreateGroupInfo = ({
       setIsGroupNameValid(false);
     } else {
       setIsGroupNameValid(true);
+      setGroupNameInputMsg(InputInfoMsg.emptyText);
     }
     setGroupName(e);
+
+    //input이 변경되면 중복검사, 유효성 검사 모두 다시하는 로직
+    setPassDuplicate(false);
     setIsGroupNameEmpty(false);
+    setIsGroupNameValidGreen(false);
   };
 
   const toggleModal = () => {
     setTopicModal((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (error instanceof AxiosError && error?.response?.data.status === 400) {
+      console.log(error?.response);
+      alert(InputInfoMsg.groupNameLength);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      // API 호출 성공 시 응답 데이터에 따라 메시지 설정
+      if (data?.data?.data?.isValidate) {
+        setGroupNameInputMsg(InputInfoMsg.groupNameAvailable);
+        setIsGroupNameValid(true);
+        setIsGroupNameValidGreen(true);
+        setIsGroupNameEmpty(false);
+        setPassDuplicate(true);
+        console.log('중복검사 성공');
+      } else {
+        setGroupNameInputMsg(InputInfoMsg.groupNameNotAvailable);
+        setIsGroupNameValid(false);
+        setIsGroupNameEmpty(false);
+      }
+    }
+
+    if (groupName.length > 10) {
+      setGroupNameInputMsg(InputInfoMsg.groupNameLength);
+    }
+  }, [isSuccess, data, error, groupName]);
 
   return (
     <>
@@ -174,6 +230,7 @@ const CreateGroupInfo = ({
                 onChange={handleGroupName}
                 placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
                 isValid={isGroupNameValid}
+                isGreen={isGroupNameValidGreen}
               />{' '}
               <DuplicateCheckBtn
                 type="button"
@@ -195,7 +252,9 @@ const CreateGroupInfo = ({
                     : ''}
               </ErrorMsgText>
             )} */}
-            {isSuccess ? (
+
+            {/* 중복확인 없는 로직 */}
+            {/* {isSuccess ? (
               data?.data?.data?.isValidate ? (
                 <SuccessMsgText>{InputInfoMsg.groupNameAvailable}</SuccessMsgText>
               ) : (
@@ -205,6 +264,11 @@ const CreateGroupInfo = ({
               <ErrorMsgText>{InputInfoMsg.groupNameLength}</ErrorMsgText>
             ) : (
               ''
+            )} */}
+            {isGroupNameValid && groupNameInputMsg === InputInfoMsg.groupNameAvailable ? (
+              <SuccessMsgText>{groupNameInputMsg}</SuccessMsgText>
+            ) : (
+              <ErrorMsgText>{groupNameInputMsg}</ErrorMsgText>
             )}
           </GroupInputWrapper>
         </WhiteInputWrapper>
@@ -216,6 +280,7 @@ const CreateGroupInfo = ({
               isValid={isGroupInfoValid}
               onChange={(e) => setGroupInfo(e)}
               maxLength={110}
+              ref={groupInfoRef}
             />
             <TextAreaLenth isValid={isGroupInfoValid}> {groupInfo.length} / 100</TextAreaLenth>
           </GroupInputWrapper>
@@ -554,7 +619,7 @@ const GroupNameInputLayout = styled.div`
   height: 4rem;
 `;
 
-const GroupNameInput = styled.input<{ isValid: boolean }>`
+const GroupNameInput = styled.input<{ isValid: boolean; isGreen: boolean }>`
   width: 100%;
   height: 3.9rem;
   padding: 1rem 1.2rem;
@@ -563,7 +628,8 @@ const GroupNameInput = styled.input<{ isValid: boolean }>`
 
   background: ${({ theme }) => theme.colors.gray5};
   border: 1px solid
-    ${({ theme, isValid }) => (isValid ? theme.colors.gray20 : theme.colors.mileRed)};
+    ${({ theme, isValid, isGreen }) =>
+      isGreen ? theme.colors.mainGreen : isValid ? theme.colors.gray20 : theme.colors.mileRed};
 
   /* border: 1px solid ${({ theme }) => theme.colors.gray20}; */
   border-radius: 6px;

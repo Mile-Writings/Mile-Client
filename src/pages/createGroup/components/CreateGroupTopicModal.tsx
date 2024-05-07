@@ -32,10 +32,18 @@ const CreateGroupTopicModal = ({
     } else if (!topicTag) {
       setIsTopicTagEmpty(true);
     } else {
-      console.log('error');
+      throw new Error('topic modal Error');
     }
   };
+  const handleTopic = (e: ChangeEvent<HTMLInputElement>) => {
+    setTopic(e);
+    setIsTopicEmpty(false);
+  };
 
+  const handleTopicTag = (e: ChangeEvent<HTMLInputElement>) => {
+    setTopicTag(e);
+    setIsTopicTagEmpty(false);
+  };
   return (
     <ModalWrapper onClick={(e) => e.stopPropagation()}>
       <InputWrpper>
@@ -43,7 +51,7 @@ const CreateGroupTopicModal = ({
         <TopicInput
           isValid={!isTopicEmpty}
           value={topic}
-          onChange={setTopic}
+          onChange={handleTopic}
           placeholder="가벼운 주제부터 시작해보는 건 어때요? ex) 내가 가장 좋아하는 음식"
         />
       </InputWrpper>
@@ -52,7 +60,7 @@ const CreateGroupTopicModal = ({
         <TopicInput
           isValid={!isTopicTagEmpty}
           value={topicTag}
-          onChange={setTopicTag}
+          onChange={handleTopicTag}
           placeholder="위에 적은 글감을 한 단어로 요약해주세요. ex)음식"
         />
       </InputWrpper>

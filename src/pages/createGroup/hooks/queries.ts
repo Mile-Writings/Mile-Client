@@ -11,7 +11,7 @@ export const QUERY_KEY_CREATE_GROUP = {
 
 export const useGetGroupNameValidation = (moimName: string) => {
   const queryClient = useQueryClient();
-  const { data, refetch, isSuccess } = useQuery({
+  const { data, refetch, isSuccess, error } = useQuery({
     queryKey: [QUERY_KEY_CREATE_GROUP.getGroupNameValidation, moimName],
     queryFn: () => getGroupNameValidation(moimName),
     refetchOnWindowFocus: false,
@@ -19,7 +19,7 @@ export const useGetGroupNameValidation = (moimName: string) => {
     retry: 0,
   });
   queryClient.removeQueries({ queryKey: [QUERY_KEY_CREATE_GROUP.getGroupNameValidation] });
-  return { data, refetch, isSuccess };
+  return { data, refetch, isSuccess, error };
 };
 
 export const usePostCreateGroup = ({
