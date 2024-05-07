@@ -8,6 +8,7 @@ import {
   fetchGroupInfo,
   fetchTodayTopic,
   fetchTopicList,
+  fetchWriterNameOnly,
 } from '../apis/fetchGroupFeed';
 import { fetchHeaderGroup } from '../apis/fetchHeaderGroup';
 
@@ -19,6 +20,7 @@ export const QUERY_KEY_GROUPFEED = {
   getCuriousWriters: 'getCuriousWriters',
   getArticleList: 'getArticleList',
   fetchHeaderGroup: 'fetchHeaderGroup',
+  getWriterNameOnly: 'getWriterNameOnly',
 };
 
 interface GroupFeedAuthQueryResult {
@@ -133,6 +135,15 @@ export const useFetchHeaderGroup = () => {
   const { data } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
     queryFn: () => fetchHeaderGroup(),
+  });
+  console.log(data);
+  return { data };
+};
+
+export const useFetchWriterNameOnly = (groupId: string) => {
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY_GROUPFEED.getWriterNameOnly],
+    queryFn: () => fetchWriterNameOnly(groupId),
   });
   console.log(data);
   return { data };

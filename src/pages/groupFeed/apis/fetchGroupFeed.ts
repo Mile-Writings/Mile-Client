@@ -164,10 +164,18 @@ export const fetchArticleList = async (topicId: string) => {
 };
 
 //[GET] 필명만 GET
+interface WriterNamePropTypes {
+  status: number;
+  message: string;
+  data: {
+    writerName: string;
+    writerNameId: number;
+  };
+}
 export const fetchWriterNameOnly = async (groupId: string) => {
   try {
     const accessToken = localStorage.getItem('accessToken');
-    const response = await client.get<ArticleListPropTypes>(`/api/moim/${groupId}/writername`, {
+    const response = await client.get<WriterNamePropTypes>(`/api/moim/${groupId}/writername`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
