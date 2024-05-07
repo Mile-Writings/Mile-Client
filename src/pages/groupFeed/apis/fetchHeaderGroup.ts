@@ -16,7 +16,7 @@ export interface Moim {
 export const fetchHeaderGroup = async () => {
   try {
     const accessToken = localStorage.getItem('accessToken');
-    console.log(accessToken);
+
     const data = await client.get<HeaderGroupPropTypes>(`/api/user/moims`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
