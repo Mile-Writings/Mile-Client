@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
-import React, { FormEvent } from 'react';
 
+import CommentInputBox from './CommentInputBox';
 import CommentItem from './CommentItem';
 
-import { useGetCommentList, usePostComment } from '../hooks/queries';
+import { useGetCommentList } from '../hooks/queries';
 
-import { ArrowTopLeftIc, EditorCatIc } from '../../../assets/svgs';
+import { EditorCatIc, ArrowTopLeftIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 interface CommentPropTypes {
@@ -16,21 +16,6 @@ const Comment = (props: CommentPropTypes) => {
   const { postId } = props;
 
   const { commentListData, error } = useGetCommentList(postId || '');
-  const { postComment } = usePostComment(postId || '');
-
-  const handleCommentSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (comment.trim() !== '') {
-      postComment(comment); //댓글 등록
-      setComment(''); // 댓글 등록 후 댓글 초기화
-    }
-  };
-
-  const handleOnKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleCommentSubmit(e);
-    }
-  };
 
   interface CommentListPropTypes {
     commentId: string;
@@ -52,21 +37,10 @@ const Comment = (props: CommentPropTypes) => {
   }
 
   return error?.message == '403' ? (
-    <div />
+    <div></div>
   ) : (
     <CommentWrapper>
-      <CommentPostWrapper>
-        <CommentForm
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          onKeyUp={(e) => handleOnKeyUp(e)}
-          placeholder="댓글을 남겨주세요."
-        />
-
-        <CommentPostBtn $isComment={comment} onClick={handleCommentSubmit}>
-          등록
-        </CommentPostBtn>
-      </CommentPostWrapper>
+      <CommentInputBox postId={postId} isMainComment={true} />
       <Spacing marginBottom="2" />
       {commentListData?.length == 0 ? (
         <>
@@ -87,7 +61,7 @@ const Comment = (props: CommentPropTypes) => {
               commentId={data.commentId}
               isAnonymous={data.isAnonymous}
               type="comment"
-            />
+            ></CommentItem>
             {data.replies &&
               data.replies.map((nestedData: ReplyResponseTypes) => (
                 <NestedWrapper key={nestedData.replyId}>
@@ -101,7 +75,7 @@ const Comment = (props: CommentPropTypes) => {
                     commentId={nestedData.replyId}
                     isAnonymous={nestedData.isAnonymous}
                     type="nestedComment"
-                  />
+                  ></CommentItem>
                 </NestedWrapper>
               ))}
           </>

@@ -12,6 +12,7 @@ export const useLoginService = ({ code, socialType }: LoginProps) => {
     mutationFn: () => loginService(code, socialType),
     mutationKey: ['login'],
     onSuccess: (data) => {
+      console.log('success');
       // queryClient.invalidateQueries({ queryKey: ['products'] });
       localStorage.setItem('accessToken', data.accessToken);
       if (localStorage.getItem('history')) {

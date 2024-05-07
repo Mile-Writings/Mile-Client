@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import { createBrowserHistory } from 'history';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
@@ -11,7 +11,6 @@ import ImageUpload from './components/ImageUpload';
 import TipTap from './components/TipTap';
 import { EDITOR_DEFAULT_IMG } from './constants/editorDefaultImg';
 import {
-  useDeleteTempPost,
   useGetTempSaveContent,
   useGetTopic,
   usePostContent,
@@ -20,8 +19,9 @@ import {
   usePutEditContent,
   usePutTempSaveContent,
   useTempSaveFlag,
+  useDeleteTempPost,
 } from './hooks/queries';
-import { allowScroll, preventScroll } from './utils/modalPreventScroll';
+import { preventScroll, allowScroll } from './utils/modalPreventScroll';
 
 import { EditorErrorIcn } from '../../assets/svgs/editorSVG';
 import {

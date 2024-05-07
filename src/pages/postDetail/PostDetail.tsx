@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
@@ -86,7 +86,9 @@ const PostDetail = () => {
             <CheckboxIc />
             <TopicText>{postData?.topic}</TopicText>
           </TopicWrapper>
-          <PostContainer dangerouslySetInnerHTML={{ __html: postData?.content || '' }} />
+          <PostContainer
+            dangerouslySetInnerHTML={{ __html: postData?.content || '' }}
+          ></PostContainer>
         </PostWrapper>
         <WriterInfoWrapper>
           <WriterInfoContainer>
@@ -101,8 +103,7 @@ const PostDetail = () => {
           </WriterInfoContainer>
           {localStorage.accessToken && <CuriousBtn />}
         </WriterInfoWrapper>
-        {accessToken ? <Comment postId={postId} /> : <></>}
-
+        {localStorage.accessToken && <Comment postId={postId} />}
         <Spacing marginBottom="8" />
       </PostDetailWrapper>
     </>
@@ -124,8 +125,6 @@ const PostDetailWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 82.6rem;
-
-  word-break: keep-all;
 `;
 
 const PostDetailContainer = styled.div`
