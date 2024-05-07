@@ -57,20 +57,19 @@ const CreateGroupInfo = ({
     groupNameAvailable: '사용 가능한 모임명입니다.',
     emptyText: '',
   };
-  // const isGroupNameValid = groupName.length <= 10;
-  // const isGroupNameLength = groupName.length <= 10;
+
   const isGroupInfoValid = groupInfo.length <= 100;
   const [isGroupNameEmpty, setIsGroupNameEmpty] = useState(false);
   const [isGroupNameValid, setIsGroupNameValid] = useState(true);
   const [isGroupTopicEmpty, setIsGroupTopicEmpty] = useState(false);
   const [groupImageView, setGroupImageView] = useState('');
   const [topicModal, setTopicModal] = useState(false);
+  const [passDuplicate, setPassDuplicate] = useState(false);
+  const [groupNameInputMsg, setGroupNameInputMsg] = useState<string>(InputInfoMsg.emptyText);
+
   const groupNameRef = useRef<HTMLInputElement>(null);
   const groupInfoRef = useRef<HTMLTextAreaElement>(null);
-  const [passDuplicate, setPassDuplicate] = useState(false);
 
-  const [isGroupNameValidGreen, setIsGroupNameValidGreen] = useState(false);
-  const [groupNameInputMsg, setGroupNameInputMsg] = useState<string>(InputInfoMsg.emptyText);
   const { data, refetch, isSuccess, error } = useGetGroupNameValidation(groupName);
 
   // 이미지 보낼 url 받아오기
@@ -106,7 +105,6 @@ const CreateGroupInfo = ({
           console.log('Image Error');
         }
       };
-
       reader.onerror = (err) => {
         alert(err);
       };
@@ -118,6 +116,7 @@ const CreateGroupInfo = ({
   const handleDuplicateGroupName = () => {
     refetch();
   };
+
   const handleIsPublic = (e: ChangeEvent<HTMLInputElement>) => {
     setIsPublic(e.target.value === 'true');
   };
@@ -129,7 +128,6 @@ const CreateGroupInfo = ({
         groupInfoRef.current.focus();
         groupInfoRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
       }
-
       return;
     }
 
@@ -175,7 +173,6 @@ const CreateGroupInfo = ({
     //input이 변경되면 중복검사, 유효성 검사 모두 다시하는 로직
     setPassDuplicate(false);
     setIsGroupNameEmpty(false);
-    setIsGroupNameValidGreen(false);
   };
 
   const toggleModal = () => {
@@ -184,7 +181,6 @@ const CreateGroupInfo = ({
 
   useEffect(() => {
     if (error instanceof AxiosError && error?.response?.data.status === 400) {
-      console.log(error?.response);
       alert(InputInfoMsg.groupNameLength);
     }
   }, [error]);
@@ -195,10 +191,8 @@ const CreateGroupInfo = ({
       if (data?.data?.data?.isValidate) {
         setGroupNameInputMsg(InputInfoMsg.groupNameAvailable);
         setIsGroupNameValid(true);
-        setIsGroupNameValidGreen(true);
         setIsGroupNameEmpty(false);
         setPassDuplicate(true);
-        console.log('중복검사 성공');
       } else {
         setGroupNameInputMsg(InputInfoMsg.groupNameNotAvailable);
         setIsGroupNameValid(false);
@@ -230,7 +224,7 @@ const CreateGroupInfo = ({
                 onChange={handleGroupName}
                 placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
                 isValid={isGroupNameValid}
-                isGreen={isGroupNameValidGreen}
+                isGreen={passDuplicate}
               />{' '}
               <DuplicateCheckBtn
                 type="button"
