@@ -88,9 +88,12 @@ export { default as MakeGroupAdminIc } from './btn_makegroup.svg?react';
 
 export { default as CreateGroupRadioCheckedIc } from './createGroupRadioChecked.svg?react';
 export { default as CreateGroupRadioUncheckedIc } from './createGroupRadioUnchecked.svg?react';
+
+export { default as AniImgProfileIc } from './ani_img_profile.svg?react';
+
 // 글 모임 가입 축하페이지
 export { default as GroupListProfileCloseIc } from './groupListprofileIcnClose.svg?react';
 export { default as JoinCongratulationIc } from './joinCongratulationPng.svg?react';
-
 export { default as CreateGroupCongrats } from './createGroupCongrats.svg?react';
 export { default as CreateGroupIlust } from './createGroupIlust.svg?react';
+
