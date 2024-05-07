@@ -8,6 +8,7 @@ import { useGetGroupNameValidation } from '../hooks/queries';
 import { CurrentPageType } from '../types/stateType';
 
 import {
+  CreateGroupIlust,
   CreateGroupImageUpload,
   CreateGroupInfoIc,
   CreateGroupRadioCheckedIc,
@@ -213,7 +214,7 @@ const CreateGroupInfo = ({
           <Spacing marginBottom="1.1" />
           <Title>나만의 글 모임을 만들어보세요</Title>
           <Spacing marginBottom="4.8" />
-          <GreyBox />
+          <IllustImg />
         </TitleWrapper>
         <WhiteInputWrapper isValid={!isGroupNameEmpty}>
           <GroupInputWrapper>
@@ -235,30 +236,7 @@ const CreateGroupInfo = ({
                 중복확인
               </DuplicateCheckBtn>
             </GroupNameInputLayout>
-            {/* {data?.data?.data?.isValidate ? (
-              <SuccessMsgText>{InputInfoMsg.groupNameAvailable}</SuccessMsgText>
-            ) : (
-              <ErrorMsgText>
-                {!isGroupNameLength
-                  ? InputInfoMsg.groupNameLength
-                  : isSuccess && !data?.data?.data?.isValidate
-                    ? InputInfoMsg.groupNameNotAvailable
-                    : ''}
-              </ErrorMsgText>
-            )} */}
 
-            {/* 중복확인 없는 로직 */}
-            {/* {isSuccess ? (
-              data?.data?.data?.isValidate ? (
-                <SuccessMsgText>{InputInfoMsg.groupNameAvailable}</SuccessMsgText>
-              ) : (
-                <ErrorMsgText>{InputInfoMsg.groupNameNotAvailable}</ErrorMsgText>
-              )
-            ) : !isGroupNameLength ? (
-              <ErrorMsgText>{InputInfoMsg.groupNameLength}</ErrorMsgText>
-            ) : (
-              ''
-            )} */}
             {isGroupNameValid && groupNameInputMsg === InputInfoMsg.groupNameAvailable ? (
               <SuccessMsgText>{groupNameInputMsg}</SuccessMsgText>
             ) : (
@@ -529,7 +507,10 @@ const GroupImagePreview = styled.img`
 const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
   cursor: pointer;
 `;
-const GroupImageLabel = styled.label``;
+
+const GroupImageLabel = styled.label`
+  display: block;
+`;
 const GroupImageInput = styled.input`
   display: none;
 `;
@@ -572,11 +553,9 @@ const SubTitle = styled.h2`
   ${({ theme }) => theme.fonts.title5};
 `;
 
-const GreyBox = styled.div`
+const IllustImg = styled(CreateGroupIlust)`
   width: 100%;
-  height: 19.4rem;
-
-  background-color: ${({ theme }) => theme.colors.gray20};
+  height: 36.6rem;
 `;
 
 const WhiteInputWrapper = styled.section<{ isValid: boolean }>`

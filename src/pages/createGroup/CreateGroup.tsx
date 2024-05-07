@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ChangeEvent, useReducer, useRef, useState } from 'react';
+import { ChangeEvent, useReducer, useState } from 'react';
 
 import CreateGroupInfo from './components/CreateGroupInfo';
 import CreateGroupLeaderInfo from './components/CreateGroupLeaderInfo';
@@ -21,7 +21,7 @@ type CreateGroupAction =
 const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
-  const groupLeaderNameRef = useRef<HTMLInputElement>(null);
+
   const initialState = {
     groupName: '',
     groupInfo: '',
