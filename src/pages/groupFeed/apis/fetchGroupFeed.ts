@@ -220,8 +220,8 @@ interface WriterIntroPropTypes {
   data: null;
 }
 interface editWriterInfoPropType {
-  writerNameId: number;
-  description: string;
+  writerNameId: number | undefined;
+  description: string | undefined;
 }
 export const fetchEditIntro = async ({ writerNameId, description }: editWriterInfoPropType) => {
   try {

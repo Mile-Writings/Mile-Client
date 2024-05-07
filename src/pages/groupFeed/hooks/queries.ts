@@ -168,11 +168,11 @@ export const useFetchWriterInfo = (writerNameId: number | undefined) => {
 };
 
 //[PATCH] 필명 소개글 수정
-export const useEditWriterIntro = (writerNameId: number) => {
+export const useEditWriterIntro = (writerNameId: number | undefined) => {
   const queryClient = useQueryClient();
   const { mutate, isError, error } = useMutation({
     mutationKey: ['editWriterIntro'],
-    mutationFn: ({ description }: { description: string }) =>
+    mutationFn: ({ description }: { description: string | undefined }) =>
       fetchEditIntro({ writerNameId, description }),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -181,7 +181,7 @@ export const useEditWriterIntro = (writerNameId: number) => {
     },
   });
 
-  const editMutateWriterIntro = ({ description }: { description: string }) =>
+  const editMutateWriterIntro = ({ description }: { description: string | undefined }) =>
     mutate({ description });
 
   return { editMutateWriterIntro, isError, error };

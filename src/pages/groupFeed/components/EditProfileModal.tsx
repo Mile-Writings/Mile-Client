@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction, useRef, useState, ChangeEvent } from 'react';
 
-import { useFetchWriterInfo } from '../hooks/queries';
+import { useEditWriterIntro, useFetchWriterInfo } from '../hooks/queries';
 
 import { AniImgProfileIc } from '../../../assets/svgs';
 
@@ -12,12 +12,20 @@ interface editProfilModalPropTypes {
 
 const EditProfileModal = ({ setShowEditProfileModal, writerNameId }: editProfilModalPropTypes) => {
   const { name, description } = useFetchWriterInfo(writerNameId);
+  const [content, setContent] = useState(description);
   const modalRef = useRef(null);
-  const [countLength, setCountLength] = useState(0);
+  const [countLength, setCountLength] = useState(content?.length || 0);
   const onInputHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCountLength(e.target.value.length);
+    setContent(e.target.value);
   };
-  // const submitHandler = () => {};
+  const { editMutateWriterIntro } = useEditWriterIntro(writerNameId);
+  const submitHandler = () => {
+    if (countLength <= 100) {
+      editMutateWriterIntro({ description: content });
+      setShowEditProfileModal(false);
+    }
+  };
   return (
     <>
       <BackgroundWrapper onClick={() => setShowEditProfileModal(false)} />
@@ -27,12 +35,22 @@ const EditProfileModal = ({ setShowEditProfileModal, writerNameId }: editProfilM
           <p>{name}</p>
         </ProfileWrapper>
         <ContentWrapper isError={countLength > 100}>
-          <InputWrapper placeholder="소개글을 입력해주세요" onChange={onInputHandler}>
-            {description}
+          <InputWrapper
+            placeholder="소개글을 입력해주세요"
+            onChange={onInputHandler}
+            value={content}
+          >
+            {content}
           </InputWrapper>
           <div>{countLength}/100</div>
         </ContentWrapper>
-        <EditButton>프로필 수정</EditButton>
+        <EditButton
+          onClick={() => {
+            submitHandler();
+          }}
+        >
+          프로필 수정
+        </EditButton>
       </ModalWrapper>
     </>
   );
