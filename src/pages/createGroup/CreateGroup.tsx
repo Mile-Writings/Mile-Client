@@ -161,8 +161,8 @@ const CreateGroup = () => {
           isGroupLeaderValid={isGroupLeaderValid}
         />
       )}
+      {/* 모달 추후 추가 */}
       {/* <EditorFlowModal
-
         title={'생성 완료 시 필명 변경이 불가합니다. 계속 하시겠습니까?'}
         leftBtnText={'아니오'}
         rightBtnText={'예'}
