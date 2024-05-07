@@ -21,12 +21,8 @@ const EditProfileModal = ({ setShowEditProfileModal }: editProfilModalPropTypes)
           <AniImgProfileIc />
           <p>쾌활한 딸기</p>
         </ProfileWrapper>
-        <ContentWrapper>
-          <InputWrapper
-            placeholder="소개글을 입력해주세요"
-            onChange={onInputHandler}
-            maxLength={100}
-          />
+        <ContentWrapper isError={countLength > 100}>
+          <InputWrapper placeholder="소개글을 입력해주세요" onChange={onInputHandler} />
           <div>{countLength}/100</div>
         </ContentWrapper>
         <EditButton>프로필 수정</EditButton>
@@ -80,7 +76,7 @@ const ProfileWrapper = styled.div`
   ${({ theme }) => theme.fonts.title6};
 `;
 
-const ContentWrapper = styled.div`
+const ContentWrapper = styled.div<{ isError: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: end;
@@ -88,10 +84,11 @@ const ContentWrapper = styled.div`
   height: 11.8rem;
   padding: 1rem 1.2rem;
 
-  color: ${({ theme }) => theme.colors.gray70};
+  color: ${({ theme, isError }) => (isError ? theme.colors.mileRed : theme.colors.gray70)};
 
   background-color: ${({ theme }) => theme.colors.gray5};
-  border: 1px solid ${({ theme }) => theme.colors.gray20};
+  border: 1px solid
+    ${({ theme, isError }) => (isError ? theme.colors.mileRed : theme.colors.gray20)};
   border-radius: 6px;
 
   ${({ theme }) => theme.fonts.button3};
@@ -122,4 +119,11 @@ const InputWrapper = styled.textarea`
 const EditButton = styled.button`
   width: 100%;
   height: 5.1rem;
+
+  color: ${({ theme }) => theme.colors.white};
+
+  background-color: ${({ theme }) => theme.colors.mainViolet};
+  border-radius: 10px;
+
+  ${({ theme }) => theme.fonts.button2};
 `;
