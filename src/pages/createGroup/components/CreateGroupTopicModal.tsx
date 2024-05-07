@@ -9,6 +9,7 @@ interface GroupTopicModalPropTypes {
   setTopicTag: (e: ChangeEvent<HTMLInputElement>) => void;
   setTopicDesc: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   setIsGroupTopicEmpty: Dispatch<SetStateAction<boolean>>;
+  setIsBtnEnabled: Dispatch<SetStateAction<boolean>>;
 }
 
 const CreateGroupTopicModal = ({
@@ -19,6 +20,7 @@ const CreateGroupTopicModal = ({
   setTopicDesc,
   toggleModal,
   setIsGroupTopicEmpty,
+  setIsBtnEnabled,
 }: GroupTopicModalPropTypes) => {
   const [isTopicEmpty, setIsTopicEmpty] = useState(false);
   const [isTopicTagEmpty, setIsTopicTagEmpty] = useState(false);
@@ -27,6 +29,7 @@ const CreateGroupTopicModal = ({
     if (topic && topicTag) {
       setIsGroupTopicEmpty(false);
       toggleModal(false);
+      setIsBtnEnabled(false);
     } else if (!topic) {
       setIsTopicEmpty(true);
     } else if (!topicTag) {

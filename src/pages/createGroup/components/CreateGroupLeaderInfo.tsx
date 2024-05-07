@@ -20,7 +20,7 @@ const CreateGroupLeaderInfo = ({
   isGroupLeaderValid,
   setIsGroupLeaderValid,
 }: GroupLeaderPropTypes) => {
-  //뒤로가기 처리 추후 해줘야해서 코드 남겨둡니다.
+  //뒤로가기 처리 추후 해줘야해서 코드 남겨둡니다. or Outlet으로 리팩토링 필요합니다.
   // useEffect(() => {
   //   const handleBackButton = (e: PopStateEvent) => {
   //     e.preventDefault(); // 기본 동작 방지

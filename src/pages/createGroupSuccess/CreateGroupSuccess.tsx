@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import { CreateGroupCongrats } from '../../assets/svgs';
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 
 const CreateGroupSuccess = () => {
@@ -18,6 +19,7 @@ const CreateGroupSuccess = () => {
       alert('클립보드 복사 실패');
     }
   };
+
   return (
     <CreateGroupSuccessWrapper>
       {token ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
@@ -26,7 +28,7 @@ const CreateGroupSuccess = () => {
           <MainTitle>글 모임 생성을 축하해요!</MainTitle>
           <SubTitle>초대 링크 복사 후, 생성된 글 모임 페이지를 확인해볼까요?</SubTitle>
         </TitleWrapper>
-        <ImageWrppaer />
+        <CreateGroupCongratsImg />
         <ButtonWrapper>
           <CopyLinkBtn onClick={handleCopyLink}>초대 링크 복사하기</CopyLinkBtn>
           <NavigateGroupPageBtn onClick={() => navigate(`/group/${groupId}`)}>
@@ -40,6 +42,10 @@ const CreateGroupSuccess = () => {
 
 export default CreateGroupSuccess;
 
+const CreateGroupCongratsImg = styled(CreateGroupCongrats)`
+  width: 40.8rem;
+  height: 29.2rem;
+`;
 const CreateGroupSuccessWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -78,13 +84,6 @@ const MainTitle = styled.h1`
 const SubTitle = styled.h2`
   color: ${({ theme }) => theme.colors.gray90};
   ${({ theme }) => theme.fonts.subtitle4};
-`;
-
-const ImageWrppaer = styled.div`
-  width: 56.4rem;
-  height: 19.4rem;
-
-  background-color: ${({ theme }) => theme.colors.gray10};
 `;
 
 const ButtonWrapper = styled.div`

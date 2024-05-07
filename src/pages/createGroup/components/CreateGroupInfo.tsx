@@ -67,10 +67,11 @@ const CreateGroupInfo = ({
   const [topicModal, setTopicModal] = useState(false);
   const [passDuplicate, setPassDuplicate] = useState(false);
   const [groupNameInputMsg, setGroupNameInputMsg] = useState<string>(InputInfoMsg.emptyText);
+  const [isHovered, setIsHovered] = useState(false);
 
   const groupNameRef = useRef<HTMLInputElement>(null);
   const groupInfoRef = useRef<HTMLTextAreaElement>(null);
-
+  const [isBtnEnabled, setIsBtnEnabled] = useState(true);
   const { data, refetch, isSuccess, error } = useGetGroupNameValidation(groupName);
 
   // 이미지 보낼 url 받아오기
@@ -287,7 +288,20 @@ const CreateGroupInfo = ({
           <GroupInputHorizonWrapper>
             <GroupPublicDescWrapper>
               <GroupPublicDesc>해당 글모임을 공개/비공개로 설정하시겠습니까?</GroupPublicDesc>
-              <CreateGroupInfoIc />
+              <CreateGroupInfoIc
+                onMouseLeave={() => setIsHovered(false)}
+                onMouseEnter={() => setIsHovered(true)}
+              />
+              <PublicInfoWrapper isVisible={isHovered}>
+                <PublicInfoText>
+                  {' '}
+                  글 모임원이 아니더라도 마일에 접속한 모든 사용자가 해당 글 모임에 방문할 수
+                  있습니다.
+                  <br />
+                  활발한 글 모임 활동이 이루어지면, 메인페이지 ‘마일과 함께하는 글모임’에 노출될
+                  가능성이 있습니다.
+                </PublicInfoText>
+              </PublicInfoWrapper>
             </GroupPublicDescWrapper>
             <GroupPublicDescContainer>
               <GroupIsPublicWrapper>
@@ -323,11 +337,20 @@ const CreateGroupInfo = ({
           <GroupInputHorizonWrapper>
             <TopicSettingWrapper>
               <TopicSettingText>글모임 생성 전에 첫번째 글감을 설정해보세요*</TopicSettingText>
+
               <TopicSettingAdditionalText>
-                관리자 페이지에서 언제든지 수정 가능합니다.
+                {isBtnEnabled
+                  ? '관리자 페이지에서 언제든지 수정 가능합니다.'
+                  : '첫번째 글감 작성이 완료되었습니다. 관리자 페이지에서 언제든지 수정 가능합니다.'}
               </TopicSettingAdditionalText>
             </TopicSettingWrapper>
-            <TopicCreateBtn onClick={toggleModal}>글감 작성하기</TopicCreateBtn>
+            <TopicCreateBtn
+              onClick={toggleModal}
+              disabled={!isBtnEnabled}
+              isBtnEnabled={isBtnEnabled}
+            >
+              글감 작성하기
+            </TopicCreateBtn>
           </GroupInputHorizonWrapper>
         </WhiteInputWrapper>
         <NextBtn onClick={handleCurrentPage}>다음</NextBtn>
@@ -343,6 +366,7 @@ const CreateGroupInfo = ({
             setTopicDesc={setTopicDesc}
             toggleModal={toggleModal}
             setIsGroupTopicEmpty={setIsGroupTopicEmpty}
+            setIsBtnEnabled={setIsBtnEnabled}
           />
         </Overlay>
       )}
@@ -351,6 +375,26 @@ const CreateGroupInfo = ({
 };
 export default CreateGroupInfo;
 
+const PublicInfoText = styled.p`
+  color: ${({ theme }) => theme.colors.black};
+  ${({ theme }) => theme.fonts.body3};
+`;
+const PublicInfoWrapper = styled.div<{ isVisible: boolean }>`
+  position: absolute;
+  top: 5.7rem;
+  display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
+
+  /* display: flex; */
+  flex-direction: column;
+  justify-content: center;
+  width: 66.3rem;
+  height: 7.6rem;
+  padding: 16px;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 2px solid ${({ theme }) => theme.colors.mainViolet};
+  border-radius: 8px;
+`;
 const SuccessMsgText = styled.p`
   ${({ theme }) => theme.fonts.body4};
   color: ${({ theme }) => theme.colors.mainGreen};
@@ -420,25 +464,29 @@ const NextBtn = styled.button`
   }
 `;
 
-const TopicCreateBtn = styled.button`
+const TopicCreateBtn = styled.button<{ isBtnEnabled: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 12.7rem;
   height: 5.1rem;
 
-  color: ${({ theme }) => theme.colors.mainViolet};
-  ${({ theme }) => theme.fonts.button2};
+  color: ${({ theme, isBtnEnabled }) =>
+    isBtnEnabled ? theme.colors.mainViolet : theme.colors.gray50};
 
-  background: ${({ theme }) => theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.mainViolet};
+  background-color: ${({ theme, isBtnEnabled }) =>
+    isBtnEnabled ? theme.colors.white : theme.colors.gray20};
+  cursor: ${({ isBtnEnabled }) => (isBtnEnabled ? 'pointer' : 'default')};
+  border: ${({ theme, isBtnEnabled }) =>
+    isBtnEnabled ? `1px solid ${theme.colors.mainViolet}` : `1px solid ${theme.colors.gray50}`};
   border-radius: 10px;
 
   :hover {
-    color: ${({ theme }) => theme.colors.mainViolet};
+    color: ${({ theme, isBtnEnabled }) => (isBtnEnabled ? theme.colors.mainViolet : ``)};
 
-    background-color: ${({ theme }) => theme.colors.mileViolet};
+    background-color: ${({ theme, isBtnEnabled }) => (isBtnEnabled ? theme.colors.mileViolet : ``)};
   }
+  ${({ theme }) => theme.fonts.button2};
 `;
 const TopicSettingWrapper = styled.div`
   display: flex;
@@ -485,6 +533,7 @@ const GroupPublicDesc = styled.p`
   ${({ theme }) => theme.fonts.body4};
 `;
 const GroupPublicDescWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1rem;

@@ -92,4 +92,5 @@ export { default as CreateGroupRadioUncheckedIc } from './createGroupRadioUnchec
 export { default as GroupListProfileCloseIc } from './groupListprofileIcnClose.svg?react';
 export { default as JoinCongratulationIc } from './joinCongratulationPng.svg?react';
 
+export { default as CreateGroupCongrats } from './createGroupCongrats.svg?react';
 export { default as CreateGroupIlust } from './createGroupIlust.svg?react';
