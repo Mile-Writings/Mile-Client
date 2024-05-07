@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction, useRef } from 'react';
+import { Dispatch, SetStateAction, useRef, useState, ChangeEvent } from 'react';
 
 import { AniImgProfileIc } from '../../../assets/svgs';
 
@@ -9,18 +9,28 @@ interface editProfilModalPropTypes {
 
 const EditProfileModal = ({ setShowEditProfileModal }: editProfilModalPropTypes) => {
   const modalRef = useRef(null);
+  const [countLength, setCountLength] = useState(0);
+  const onInputHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setCountLength(e.target.value.length);
+  };
   return (
     <>
-      <BackgroundWrapper onClick={() => setShowEditProfileModal(false)}>
-        <ModalWrapper ref={modalRef}>
-          <ProfileWrapper>
-            <AniImgProfileIc />
-            <p>쾌활한 딸기</p>
-          </ProfileWrapper>
-          <InputWrapper></InputWrapper>
-          <EditButton>프로필 수정</EditButton>
-        </ModalWrapper>
-      </BackgroundWrapper>
+      <BackgroundWrapper onClick={() => setShowEditProfileModal(false)} />
+      <ModalWrapper ref={modalRef}>
+        <ProfileWrapper>
+          <AniImgProfileIc />
+          <p>쾌활한 딸기</p>
+        </ProfileWrapper>
+        <ContentWrapper>
+          <InputWrapper
+            placeholder="소개글을 입력해주세요"
+            onChange={onInputHandler}
+            maxLength={100}
+          />
+          <div>{countLength}/100</div>
+        </ContentWrapper>
+        <EditButton>프로필 수정</EditButton>
+      </ModalWrapper>
     </>
   );
 };
@@ -42,7 +52,10 @@ const BackgroundWrapper = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  z-index: 3;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 5;
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
@@ -52,8 +65,10 @@ const ModalWrapper = styled.div`
   padding: 3.2rem;
 
   background-color: ${({ theme }) => theme.colors.white};
+  transform: translate(-50%, -50%);
   border-radius: 8px;
 `;
+
 const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -64,10 +79,46 @@ const ProfileWrapper = styled.div`
 
   ${({ theme }) => theme.fonts.title6};
 `;
-const InputWrapper = styled.input`
+
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: end;
   width: 100%;
   height: 11.8rem;
+  padding: 1rem 1.2rem;
+
+  color: ${({ theme }) => theme.colors.gray70};
+
+  background-color: ${({ theme }) => theme.colors.gray5};
+  border: 1px solid ${({ theme }) => theme.colors.gray20};
+  border-radius: 6px;
+
+  ${({ theme }) => theme.fonts.button3};
 `;
+
+const InputWrapper = styled.textarea`
+  width: 52.8rem;
+  height: 7.8rem;
+
+  color: ${({ theme }) => theme.colors.gray100};
+
+  background-color: ${({ theme }) => theme.colors.gray5};
+  border: none;
+
+  resize: none;
+
+  :focus {
+    outline: none;
+  }
+
+  ::placeholder {
+    color: ${({ theme }) => theme.colors.gray50};
+  }
+
+  ${({ theme }) => theme.fonts.button2}
+`;
+
 const EditButton = styled.button`
   width: 100%;
   height: 5.1rem;
