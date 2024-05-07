@@ -4,8 +4,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import GroupInfoBox from './GroupInfoBox';
 
-import { useFetchWriterNameOnly } from '../hooks/queries';
-
 import {
   GroupDateIc,
   GroupLeaderIc,
@@ -26,13 +24,12 @@ const GroupSideHeader = (props: {
   groupInfoData: GroupInfoPropTypes;
   isMember: boolean | undefined;
   isOwner: boolean | undefined;
+  writerName: string | undefined;
   setShowEditProfileModal: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { groupInfoData, isMember, isOwner, setShowEditProfileModal } = props;
+  const { groupInfoData, isMember, isOwner, setShowEditProfileModal, writerName } = props;
   const { groupId } = useParams();
   const navigate = useNavigate();
-
-  const { data } = useFetchWriterNameOnly(groupId || '');
 
   return (
     <HeaderWrapper>
@@ -75,13 +72,12 @@ const GroupSideHeader = (props: {
       {isMember && (
         <MemberSideHeaderWrapper>
           <ProfileWrapper>
-            <GroupBestProfileIc /> {data?.data.writerName}
+            <GroupBestProfileIc /> {writerName}
           </ProfileWrapper>
           <Spacing marginBottom="1.6" />
           <SideHeaderButton
             onClick={() => {
               setShowEditProfileModal(true);
-              console.log('clicked');
             }}
           >
             소개글 수정

@@ -9,7 +9,7 @@ import EditProfileModal from './components/EditProfileModal';
 import GroupCuriousTitle from './components/GroupCuriousTitle';
 import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
-import { useGroupFeedAuth, useGroupInfo } from './hooks/queries';
+import { useGroupFeedAuth, useGroupInfo, useFetchWriterNameOnly } from './hooks/queries';
 
 import GroupThumbnailImg from '/src/assets/svgs/groupThumnailImg.svg';
 
@@ -39,6 +39,7 @@ const GroupFeed = () => {
   }, [activeCategoryId]);
 
   const { groupInfoData } = useGroupInfo(groupId || '');
+  const { writerName } = useFetchWriterNameOnly(groupId || '');
 
   const navigate = useNavigate();
 
@@ -69,6 +70,7 @@ const GroupFeed = () => {
             isMember={isMember}
             isOwner={isOwner}
             setShowEditProfileModal={setShowEditProfileModal}
+            writerName={writerName}
           />
         )}
         <GroupInfo>

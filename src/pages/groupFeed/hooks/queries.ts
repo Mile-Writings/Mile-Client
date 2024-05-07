@@ -145,6 +145,8 @@ export const useFetchWriterNameOnly = (groupId: string) => {
     queryKey: [QUERY_KEY_GROUPFEED.getWriterNameOnly],
     queryFn: () => fetchWriterNameOnly(groupId),
   });
-  console.log(data);
-  return { data };
+
+  const writerName = data?.data.writerName;
+  const writerNameId = data?.data.writerNameId;
+  return { writerName, writerNameId };
 };
