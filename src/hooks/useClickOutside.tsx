@@ -4,7 +4,7 @@ const useClickOutside = (ref: React.RefObject<HTMLElement>, callback: () => void
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       // 드롭다운이 열려있고, 드롭다운 외부가 클릭됐을 경우
-      if (ref.current && !ref.current.contains(event.target as Node)) {
+      if (ref.current && !ref.current.contains(event.target as HTMLElement)) {
         // 실행할 함수를 인자로 받아와서 실행시켜 줌
         callback();
       }

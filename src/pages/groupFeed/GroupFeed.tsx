@@ -5,15 +5,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Carousel from './carousel/Carousel';
 import CuriousArticle from './components/CuriousArticle';
 import CuriousProfile from './components/CuriousProfile';
+import EditProfileModal from './components/EditProfileModal';
 import GroupCuriousTitle from './components/GroupCuriousTitle';
-import { GroupFeedHeader, LogOutHeader } from './components/GroupFeedHeader';
 import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
-import { useGroupFeedAuth, useGroupInfo } from './hooks/queries';
+import { useGroupFeedAuth, useGroupInfo, useFetchWriterNameOnly } from './hooks/queries';
 
 import GroupThumbnailImg from '/src/assets/svgs/groupThumnailImg.svg';
 
 import Footer from '../../components/commons/Footer';
+import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
 import Error from '../error/Error';
@@ -22,27 +23,25 @@ import Loading from '../loading/Loading';
 const GroupFeed = () => {
   const { groupId } = useParams();
   const accessToken = localStorage.getItem('accessToken');
-  const { isMember, isLoading, isError, error } = useGroupFeedAuth(
+  const { isMember, isOwner, isLoading, isError, error } = useGroupFeedAuth(
     groupId || '',
     accessToken || '',
   );
 
   //sessionStorage에 저장된 카테고리 id 값을 가져옴
-  const sessionCategoryId = window.sessionStorage.getItem('activeCategoryId');
+  const sessionCategoryId = sessionStorage.getItem('activeCategoryId');
 
-  const { groupInfoData } = useGroupInfo(groupId || '');
-
-  const [activeCategoryId, setActiveCategoryId] = useState<number>(Number(sessionCategoryId) || 1);
+  const [activeCategoryId] = useState<number>(Number(sessionCategoryId) || 1);
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
 
   useEffect(() => {
-    window.sessionStorage.setItem('activeCategoryId', String(activeCategoryId));
+    sessionStorage.setItem('activeCategoryId', String(activeCategoryId));
   }, [activeCategoryId]);
 
-  const navigate = useNavigate();
+  const { groupInfoData } = useGroupInfo(groupId || '');
+  const { writerName, writerNameId } = useFetchWriterNameOnly(groupId || '');
 
-  const handleLogin = () => {
-    navigate(`/login`);
-  };
+  const navigate = useNavigate();
 
   //라우팅 했을 때 스크롤 맨 위로
   useEffect(() => {
@@ -60,11 +59,20 @@ const GroupFeed = () => {
 
   return (
     <GroupFeedWrapper>
-      {accessToken ? <GroupFeedHeader /> : <LogOutHeader onClick={handleLogin} />}
+      {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
+      <Spacing marginBottom="6.4" />
       <GroupFeedThumnail imageUrl={groupInfoData?.imageUrl} />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
-        {groupInfoData && <GroupSideHeader groupInfoData={groupInfoData} />}
+        {groupInfoData && (
+          <GroupSideHeader
+            groupInfoData={groupInfoData}
+            isMember={isMember}
+            isOwner={isOwner}
+            setShowEditProfileModal={setShowEditProfileModal}
+            writerName={writerName}
+          />
+        )}
         <GroupInfo>
           <GroupTodayWriteStyle isMember={isMember} groupId={groupId} />
           <Spacing marginBottom="6.4" />
@@ -82,17 +90,19 @@ const GroupFeed = () => {
           <Spacing marginBottom="2" />
           <CuriousArticle groupId={groupId} />
           <Spacing marginBottom="6.4" />
-          <Carousel
-            activeCategoryId={activeCategoryId}
-            setActiveCategoryId={setActiveCategoryId}
-            groupId={groupId}
-          />
+          <Carousel />
         </GroupInfo>
       </GroupInfoWrapper>
       <Spacing marginBottom="14" />
       <Footer />
       {isMember !== undefined && isMember && (
         <FloatingBtn onClick={() => navigate(`/post/${groupId}/post`)} />
+      )}
+      {showEditProfileModal && (
+        <EditProfileModal
+          setShowEditProfileModal={setShowEditProfileModal}
+          writerNameId={writerNameId}
+        />
       )}
     </GroupFeedWrapper>
   );

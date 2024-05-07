@@ -58,6 +58,12 @@ const globalStyle = css`
   select {
     cursor: pointer;
   }
+
+  textarea {
+    outline: none;
+
+    resize: none;
+  }
 `;
 
 export default globalStyle;

@@ -1,8 +1,9 @@
-import { client } from '../../../utils/apis/axios';
+import { client, devClient } from '../../../utils/apis/axios';
 
 interface GroupFeedAuthPropTypes {
   data: {
     isMember: boolean;
+    isOwner: boolean;
   };
   status: number;
   message: string;
@@ -11,13 +12,16 @@ interface GroupFeedAuthPropTypes {
 export const fetchGroupFeedAuth = async (groupId: string) => {
   try {
     const accessToken = localStorage.getItem('accessToken');
-    const response = await client.get<GroupFeedAuthPropTypes>(`/api/moim/${groupId}/authenticate`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+    const response = await devClient.get<GroupFeedAuthPropTypes>(
+      `/api/moim/${groupId}/authenticate`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    });
-    console.log(response.data, 'fetchgRoup');
-    return response.data; //"isMember" : boolean
+    );
+    // console.log(response.data, 'fetchgRoup');
+    return response.data; //"isMember" : boolean, "isOwner" : boolean
   } catch (error) {
     console.error('에러:', error);
   }
@@ -77,7 +81,7 @@ interface CuriousWriterPropTypes {
 export const fetchCuriousWriters = async (groupId: string) => {
   try {
     const response = await client.get<CuriousWriterPropTypes>(
-      `/api/moim/${groupId}/mostCuriousWriters`,
+      `/api/moim/${groupId}/writers/top-rank`,
     );
     return response.data;
   } catch (error) {
@@ -98,7 +102,7 @@ interface TopicListPropTypes {
 
 export const fetchTopicList = async (groupId: string) => {
   try {
-    const response = await client.get<TopicListPropTypes>(`/api/moim/${groupId}/topicList`);
+    const response = await client.get<TopicListPropTypes>(`/api/moim/${groupId}/topics`);
     return response.data;
   } catch (error) {
     console.error('에러:', error);
@@ -122,7 +126,7 @@ interface CuriousPostPropTypes {
 
 export const fetchCuriousPost = async (groupId: string) => {
   try {
-    const response = await client.get<CuriousPostPropTypes>(`/api/moim/${groupId}/mostCuriousPost`);
+    const response = await client.get<CuriousPostPropTypes>(`/api/moim/${groupId}/posts/top-rank`);
     return response.data;
   } catch (error) {
     console.error('에러:', error);
@@ -153,6 +157,86 @@ interface ArticleListPropTypes {
 export const fetchArticleList = async (topicId: string) => {
   try {
     const response = await client.get<ArticleListPropTypes>(`/api/topic/${topicId}`);
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
+
+//[GET] 필명만 GET
+interface WriterNamePropTypes {
+  status: number;
+  message: string;
+  data: {
+    writerName: string;
+    writerNameId: number;
+  };
+}
+export const fetchWriterNameOnly = async (groupId: string) => {
+  try {
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await client.get<WriterNamePropTypes>(`/api/moim/${groupId}/writername`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
+
+//[GET] 필명 + 프로필 설명 GET
+interface WriterInfoPropTypes {
+  status: number;
+  message: string;
+  data: {
+    name: string;
+    description: string;
+  };
+}
+export const fetchWriterInfo = async (writerNameId: number | undefined) => {
+  try {
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await client.get<WriterInfoPropTypes>(
+      `/api/writername/${writerNameId}/profile`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    console.log(response.data, 'writerInfo');
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
+
+//[PATCH] 필명 소개글 수정
+interface WriterIntroPropTypes {
+  status: number;
+  message: string;
+  data: null;
+}
+interface editWriterInfoPropType {
+  writerNameId: number | undefined;
+  description: string | undefined;
+}
+export const fetchEditIntro = async ({ writerNameId, description }: editWriterInfoPropType) => {
+  try {
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await client.patch<WriterIntroPropTypes>(
+      `/api/writername/${writerNameId}/description`,
+      {
+        description: description,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
     return response.data;
   } catch (error) {
     console.error('에러:', error);

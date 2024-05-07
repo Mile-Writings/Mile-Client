@@ -2,15 +2,19 @@ import { css } from '@emotion/react';
 
 export const theme = {
   colors: {
+    mileRed: '#B81616',
     mainViolet: '#6139D1',
     mileViolet: '#E9E3F8',
     middleViolet: '#D9CEF6',
+    secondViolet: '#F6F2FF',
     lightViolet: '#F7F5FC',
+    backGroundViolet: '#F6F2FF',
     darkViolet: '#A29CAF',
     grayViolet: '#EDEDF5',
     midGrayViolet: '#D6D6EB',
     mainGreen: '#2F7417',
     mileGreen: '#C5DB8F',
+
     middleGreen: '#CCE09B',
     secondGreen: '#E4F4B5',
     lightGreen: '#F1F6E2',
@@ -120,6 +124,13 @@ export const theme = {
       font-style: normal;
       line-height: 120%; /* 57.6px */
       letter-spacing: -1.44px;
+    `,
+    title13: css`
+      font-weight: 700;
+      font-size: 24px;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-style: normal;
+      line-height: 120%;
     `,
     subtitle1: css`
       font-weight: 700;

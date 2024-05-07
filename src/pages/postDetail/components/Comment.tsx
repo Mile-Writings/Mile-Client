@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
-import React, { FormEvent, useState } from 'react';
 
+import CommentInputBox from './CommentInputBox';
 import CommentItem from './CommentItem';
 
-import { useGetCommentList, usePostComment } from '../hooks/queries';
+import { useGetCommentList } from '../hooks/queries';
 
-import { EditorCatIc } from '../../../assets/svgs';
+import { ArrowTopLeftIc, EditorCatIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 interface CommentPropTypes {
@@ -14,23 +14,8 @@ interface CommentPropTypes {
 
 const Comment = (props: CommentPropTypes) => {
   const { postId } = props;
-  const [comment, setComment] = useState('');
+
   const { commentListData, error } = useGetCommentList(postId || '');
-  const { postComment } = usePostComment(postId || '');
-
-  const handleCommentSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (comment.trim() !== '') {
-      postComment(comment); //댓글 등록
-      setComment(''); // 댓글 등록 후 댓글 초기화
-    }
-  };
-
-  const handleOnKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleCommentSubmit(e);
-    }
-  };
 
   interface CommentListPropTypes {
     commentId: string;
@@ -38,24 +23,24 @@ const Comment = (props: CommentPropTypes) => {
     moimName: string;
     content: string;
     isMyComment: boolean;
+    isAnonymous: boolean;
+    replies?: ReplyResponseTypes[] | undefined;
+  }
+
+  interface ReplyResponseTypes {
+    replyId: string;
+    name: string;
+    moimName: string;
+    content: string;
+    isMyReply: boolean;
+    isAnonymous: boolean;
   }
 
   return error?.message == '403' ? (
-    <div></div>
+    <div />
   ) : (
     <CommentWrapper>
-      <CommentPostWrapper>
-        <CommentForm
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          onKeyUp={(e) => handleOnKeyUp(e)}
-          placeholder="댓글을 남겨주세요."
-        />
-
-        <CommentPostBtn $isComment={comment} onClick={handleCommentSubmit}>
-          등록
-        </CommentPostBtn>
-      </CommentPostWrapper>
+      <CommentInputBox postId={postId} isMainComment={true} />
       <Spacing marginBottom="2" />
       {commentListData?.length == 0 ? (
         <>
@@ -65,15 +50,35 @@ const Comment = (props: CommentPropTypes) => {
         </>
       ) : (
         commentListData?.map((data: CommentListPropTypes) => (
-          <CommentItem
-            key={data.commentId}
-            name={data.name}
-            moimName={data.moimName}
-            content={data.content}
-            isMyComment={data.isMyComment}
-            postId={postId}
-            commentId={data.commentId}
-          ></CommentItem>
+          <>
+            <CommentItem
+              key={data.commentId}
+              name={data.name}
+              moimName={data.moimName}
+              content={data.content}
+              isMyComment={data.isMyComment}
+              postId={postId}
+              commentId={data.commentId}
+              isAnonymous={data.isAnonymous}
+              type="comment"
+            />
+            {data.replies &&
+              data.replies.map((nestedData: ReplyResponseTypes) => (
+                <NestedWrapper key={nestedData.replyId}>
+                  <ArrowTopLeftIc />
+                  <CommentItem
+                    name={nestedData.name}
+                    moimName={nestedData.moimName}
+                    content={nestedData.content}
+                    isMyReply={nestedData.isMyReply}
+                    postId={postId}
+                    commentId={nestedData.replyId}
+                    isAnonymous={nestedData.isAnonymous}
+                    type="nestedComment"
+                  />
+                </NestedWrapper>
+              ))}
+          </>
         ))
       )}
     </CommentWrapper>
@@ -82,53 +87,20 @@ const Comment = (props: CommentPropTypes) => {
 
 export default Comment;
 
-const CommentPostBtn = styled.button<{ $isComment: string }>`
-  padding: 1rem 1.6rem;
-
-  color: ${({ $isComment, theme }) =>
-    $isComment === '' ? theme.colors.gray70 : theme.colors.white};
-
-  background-color: ${({ $isComment, theme }) =>
-    $isComment === '' ? theme.colors.gray10 : theme.colors.mainViolet};
-  border-radius: 8px;
-
-  ${({ theme }) => theme.fonts.button3};
-
-  :hover {
-    color: ${({ $isComment, theme }) =>
-      $isComment === '' ? theme.colors.gray70 : theme.colors.mainViolet};
-
-    background-color: ${({ $isComment, theme }) =>
-      $isComment === '' ? theme.colors.gray10 : theme.colors.mileViolet};
-  }
-`;
-const CommentForm = styled.input`
-  width: 69.6rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 2rem;
-
-  ::placeholder {
-    color: ${({ theme }) => theme.colors.gray30};
-  }
-  color: ${({ theme }) => theme.colors.gray100};
-
-  background-color: ${({ theme }) => theme.colors.gray5};
-  border: 1px solid ${({ theme }) => theme.colors.gray30};
-  border-radius: 6px;
-  ${({ theme }) => theme.fonts.button2};
-`;
-const CommentPostWrapper = styled.div`
+const NestedWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 100%;
+  gap: 1.2rem;
+  align-items: center;
+  width: 76.8rem;
+  padding-left: 1.2rem;
 `;
 
 const CommentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  box-sizing: content-box;
+  width: 76.8rem;
   height: fit-content;
   padding: 2.8rem;
 

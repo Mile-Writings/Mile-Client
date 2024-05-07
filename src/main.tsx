@@ -5,6 +5,17 @@ import App from './App.tsx';
 import globalStyle from './styles/GlobalStyle.tsx';
 import { theme } from './styles/theme.ts';
 
+// async function enableMocking() {
+//   // eslint-disable-next-line no-undef
+//   if (process.env.NODE_ENV !== 'development') {
+//     return;
+//   }
+
+//   const { worker } = await import('./mocks/browser.ts');
+//   return worker.start();
+// }
+
+// enableMocking().then(() => {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <>
     <Global styles={globalStyle} />
@@ -13,3 +24,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </ThemeProvider>
   </>,
 );
+// });

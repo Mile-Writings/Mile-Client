@@ -7,6 +7,9 @@ interface postContentType {
   content: string;
   imageUrl: string;
   anonymous: boolean;
+  contentWithoutTag: string;
+  // eslint-disable-next-line no-unused-vars
+  setPostErrorMessage: (errorMessage: string) => void;
 }
 
 interface PostContentResponseType {
@@ -25,29 +28,38 @@ const createPostContent = async ({
   content,
   imageUrl,
   anonymous,
+  contentWithoutTag,
+  setPostErrorMessage,
 }: postContentType) => {
-  try {
-    const token = localStorage.getItem('accessToken');
-    const { data } = await client.post<PostContentResponseType>(
-      `/api/post`,
-      {
-        moimId: groupId,
-        topicId: topicId,
-        title: title,
-        content: content,
-        imageUrl: imageUrl,
-        anonymous: anonymous,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+  if (title.trim().length === 0) {
+    setPostErrorMessage('제목을 입력해주세요');
+  } else if (contentWithoutTag.trim().length === 0) {
+    setPostErrorMessage('글을 입력해주세요');
+  } else {
+    try {
+      const token = localStorage.getItem('accessToken');
+      const { data } = await client.post<PostContentResponseType>(
+        `/api/post`,
+        {
+          moimId: groupId,
+          topicId: topicId,
+          title: title,
+          content: content,
+          imageUrl: imageUrl,
+          anonymous: anonymous,
         },
-      },
-    );
-    console.log(`data: ${data.data.postId}`);
-    return data.data.postId;
-  } catch (err) {
-    console.log(err);
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      // console.log(`data: ${data.data.postId}`);
+      return data.data.postId;
+      setPostErrorMessage('');
+    } catch (err) {
+      console.log(err);
+    }
   }
 };
 

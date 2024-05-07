@@ -1,14 +1,18 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 
 import {
   fetchArticleList,
   fetchCuriousPost,
   fetchCuriousWriters,
+  fetchEditIntro,
   fetchGroupFeedAuth,
   fetchGroupInfo,
   fetchTodayTopic,
   fetchTopicList,
+  fetchWriterInfo,
+  fetchWriterNameOnly,
 } from '../apis/fetchGroupFeed';
+import { fetchHeaderGroup } from '../apis/fetchHeaderGroup';
 
 export const QUERY_KEY_GROUPFEED = {
   getGroupFeedAuth: 'getGroupFeedAuth',
@@ -17,10 +21,14 @@ export const QUERY_KEY_GROUPFEED = {
   getGroupFeedCategory: 'getGroupFeedCategory',
   getCuriousWriters: 'getCuriousWriters',
   getArticleList: 'getArticleList',
+  fetchHeaderGroup: 'fetchHeaderGroup',
+  getWriterNameOnly: 'getWriterNameOnly',
+  getWriterInfo: 'getWriterInfo',
 };
 
 interface GroupFeedAuthQueryResult {
   isMember: boolean | undefined;
+  isOwner: boolean | undefined;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
@@ -36,9 +44,10 @@ export const useGroupFeedAuth = (
     enabled: !!accessToken,
   });
 
-  const isMember = data && data.data.isMember;
+  const isMember = data && data?.data?.isMember;
+  const isOwner = data && data?.data?.isOwner;
 
-  return { isMember, isLoading, isError, error };
+  return { isMember, isOwner, isLoading, isError, error };
 };
 
 interface GroupInfoQueryResult {
@@ -123,4 +132,57 @@ export const useArticleList = (topicId: string) => {
   const postListData = data && data.data.postList;
 
   return { topicInfo, postListData, isLoading, isError, error };
+};
+
+export const useFetchHeaderGroup = () => {
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
+    queryFn: () => fetchHeaderGroup(),
+  });
+  return { data };
+};
+
+export const useFetchWriterNameOnly = (groupId: string) => {
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY_GROUPFEED.getWriterNameOnly],
+    queryFn: () => fetchWriterNameOnly(groupId),
+  });
+
+  const writerName = data?.data.writerName;
+  const writerNameId = data?.data.writerNameId;
+  return { writerName, writerNameId };
+};
+
+//[GET] 필명 + 프로필 설명 GET
+export const useFetchWriterInfo = (writerNameId: number | undefined) => {
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY_GROUPFEED.getWriterInfo, writerNameId],
+    queryFn: () => fetchWriterInfo(writerNameId),
+    enabled: writerNameId !== undefined,
+  });
+
+  const name = data?.data.name;
+  const description = data?.data.description;
+
+  return { name, description };
+};
+
+//[PATCH] 필명 소개글 수정
+export const useEditWriterIntro = (writerNameId: number | undefined) => {
+  const queryClient = useQueryClient();
+  const { mutate, isError, error } = useMutation({
+    mutationKey: ['editWriterIntro', writerNameId],
+    mutationFn: ({ description }: { description: string | undefined }) =>
+      fetchEditIntro({ writerNameId, description }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_GROUPFEED.getWriterInfo, writerNameId],
+      });
+    },
+  });
+
+  const editMutateWriterIntro = ({ description }: { description: string | undefined }) =>
+    mutate({ description });
+
+  return { editMutateWriterIntro, isError, error };
 };

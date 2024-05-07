@@ -1,50 +1,23 @@
+/* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
-import React, { useRef, useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
 
-import { DropDownToggle, DropDownContent, DropDownPropsType } from './DropDown';
+import { DropDownToggle, DropDownContent } from './DropDown';
 
 import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../assets/svgs';
 import useClickOutside from '../../../hooks/useClickOutside';
 
-const WriterDropDown = (props: DropDownPropsType) => {
-  const { onClickListItem, selectedValue } = props;
-  const [urlType, setUrlType] = useState('');
+interface WriterPropType {
+  setWriter: (e: React.MouseEvent<HTMLDivElement>) => void;
+  selectedWriter: string | undefined;
+}
+
+const WriterDropDown = (props: WriterPropType) => {
+  const { setWriter, selectedWriter } = props;
   const [writerIsOpen, setWriterIsOpen] = useState(false);
-  const [editWriterName, setEditWriterName] = useState('');
-
-  // 수정뷰 전달값 받아오기
-  const location = useLocation();
-  const { type } = useParams() as { type: string };
-
-  // url 타입 업데이트
-  useEffect(() => {
-    setUrlType(type);
-  }, []);
 
   // 드롭다운 리스트 부분 잡아오기
   const dropDownRef = useRef(null);
-  // 선택된 값 저장
-  const handleListClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    onClickListItem('writer', e.currentTarget.innerText);
-    setWriterIsOpen(false);
-  };
-
-  // 수정 뷰일 때 필명여부 업데이트
-  useEffect(() => {
-    if (type == 'edit') {
-      setEditWriterName(location.state.writer);
-      // const writerName = location.state.writer;
-      if (location.state.writer != '작자미상') {
-        console.log('수정하기');
-        onClickListItem('writer', '필명');
-      } else {
-        console.log('수정하기 익명');
-        onClickListItem('writer', '작자미상');
-      }
-    }
-  }, [urlType, editWriterName]);
-  console.log(editWriterName);
 
   // 필명 드롭다운 버튼 누르면 열림/닫힘
   const handleOnClick = () => {
@@ -57,17 +30,27 @@ const WriterDropDown = (props: DropDownPropsType) => {
   // 커스텀 훅 사용
   useClickOutside(dropDownRef, handleOutSideClick);
 
+  const onClickWriter = (e: React.MouseEvent<HTMLDivElement>) => {
+    setWriter(e);
+    setWriterIsOpen(false);
+  };
+
   return (
     <WriterDropDownWrapper ref={dropDownRef}>
       <DropDownToggle onClick={handleOnClick}>
-        <DropDownContent $contentWidth={14.6}>{selectedValue}</DropDownContent>
-        {writerIsOpen ? <EditorDropIcnActiveOpenIc /> : <EditorDropIcnActiveIc />}
+        <DropDownContent $contentWidth={6.8}>{selectedWriter}</DropDownContent>
+        <EditorDropIcnActiveWrapper $isOpen={writerIsOpen}>
+          <EditorDropIcnActiveIcon />
+        </EditorDropIcnActiveWrapper>
+        <EditorDropIcnActiveOpenWrapper $isOpen={writerIsOpen}>
+          <EditorDropIcnActiveOpenIcon />
+        </EditorDropIcnActiveOpenWrapper>
       </DropDownToggle>
       <WriterListWrapper $isOpen={writerIsOpen}>
-        <WriterList onClick={handleListClick} $selected={selectedValue == '작자미상'}>
+        <WriterList onClick={onClickWriter} $selected={selectedWriter === '작자미상'}>
           작자미상
         </WriterList>
-        <WriterList onClick={handleListClick} $selected={selectedValue == '필명'}>
+        <WriterList onClick={onClickWriter} $selected={selectedWriter === '필명'}>
           필명
         </WriterList>
       </WriterListWrapper>
@@ -87,8 +70,8 @@ const WriterDropDownWrapper = styled.div`
 
 const WriterListWrapper = styled.div<{ $isOpen: boolean }>`
   position: absolute;
-  top: 4.3rem;
-  right: 7rem;
+  top: 4.4rem;
+  right: 0;
   z-index: 3;
   display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
   flex-direction: column;
@@ -117,4 +100,22 @@ const WriterList = styled.div<{ $selected: boolean }>`
   &:hover {
     background-color: ${({ theme }) => theme.colors.gray20};
   }
+`;
+
+const EditorDropIcnActiveOpenWrapper = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'inline' : 'none')};
+`;
+
+const EditorDropIcnActiveOpenIcon = styled(EditorDropIcnActiveOpenIc)`
+  width: 2.8rem;
+  height: 2.8rem;
+`;
+
+const EditorDropIcnActiveWrapper = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? 'none' : 'inline')};
+`;
+
+const EditorDropIcnActiveIcon = styled(EditorDropIcnActiveIc)`
+  width: 2.8rem;
+  height: 2.8rem;
 `;

@@ -3,6 +3,7 @@ import type { SerializedStyles } from '@emotion/react';
 declare module '@emotion/react' {
   export interface Theme {
     colors: {
+      mileRed: string;
       mainViolet: string;
       mileViolet: string;
       middleViolet: string;
@@ -10,8 +11,10 @@ declare module '@emotion/react' {
       darkViolet: string;
       grayViolet: string;
       midGrayViolet: string;
+      backGroundViolet: string;
       mainGreen: string;
       mileGreen: string;
+      mileRed: string;
       middleGreen: string;
       secondGreen: string;
       lightGreen: string;
@@ -46,6 +49,7 @@ declare module '@emotion/react' {
       title10: SerializedStyles;
       title11: SerializedStyles;
       title12: SerializedStyles;
+      title13: SerializedStyles;
       subtitle1: SerializedStyles;
       subtitle2: SerializedStyles;
       subtitle3: SerializedStyles;
