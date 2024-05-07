@@ -24,13 +24,22 @@
   "ignorePatterns": ["build", "dist", "public"], // lint 무시 파일 정하기
 
   "rules": {
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": true
+      }
+    ],
+
     "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }], // "warn": 규칙을 경고로 사용
     "react/react-in-jsx-scope": "off", // react 17부턴 import react가 필요없는데 off해두지 않으면 에러뜸
     "react/jsx-uses-react": "off",
 
     "no-duplicate-imports": "error", // 중복 Import 금지
     "no-console": ["warn", { "allow": ["warn", "error", "info"] }], // 콘솔은 확인 뒤 지우기
-    "no-unused-vars": "error", // 사용하지 않는 변수 error처리
+    // "no-unused-vars": "error", // 사용하지 않는 변수 error처리
+    "@typescript-eslint/no-unused-vars": "error",
     "no-multiple-empty-lines": "error", //공백 금지
     "no-undef": "error", // 정의 안 한 변수 사용 x
     "indent": "off", // 프리티어 충돌로 인한 OFF

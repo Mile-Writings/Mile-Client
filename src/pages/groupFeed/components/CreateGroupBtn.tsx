@@ -1,15 +1,17 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { MakeGroupPlusBtn, MakeGroupPlusHoverBtn } from '../../../assets/svgs';
 
 const CreateGroupBtn = () => {
   const [showHoverIcon, setShowHoverIcon] = useState(false);
+  const navigate = useNavigate();
   return (
     <CreateGroupBtnWrapper
       onMouseOver={() => setShowHoverIcon(true)}
       onMouseLeave={() => setShowHoverIcon(false)}
-      onClick={() => alert('아직 준비중인 기능이에요')}
+      onClick={() => navigate('/createGroup')}
     >
       {showHoverIcon ? <MakeGroupPlusHoverBtn /> : <MakeGroupPlusBtn />} 글모임 만들기
     </CreateGroupBtnWrapper>
