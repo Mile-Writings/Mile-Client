@@ -75,7 +75,7 @@ const GroupSideHeader = (props: {
       {isMember && (
         <MemberSideHeaderWrapper>
           <ProfileWrapper>
-            <GroupBestProfileIc /> 일이삼사
+            <GroupBestProfileIc /> {data?.data.writerName}
           </ProfileWrapper>
           <Spacing marginBottom="1.6" />
           <SideHeaderButton
