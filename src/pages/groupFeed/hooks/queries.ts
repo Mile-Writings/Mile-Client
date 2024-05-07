@@ -171,7 +171,7 @@ export const useFetchWriterInfo = (writerNameId: number | undefined) => {
 export const useEditWriterIntro = (writerNameId: number | undefined) => {
   const queryClient = useQueryClient();
   const { mutate, isError, error } = useMutation({
-    mutationKey: ['editWriterIntro'],
+    mutationKey: ['editWriterIntro', writerNameId],
     mutationFn: ({ description }: { description: string | undefined }) =>
       fetchEditIntro({ writerNameId, description }),
     onSuccess: () => {

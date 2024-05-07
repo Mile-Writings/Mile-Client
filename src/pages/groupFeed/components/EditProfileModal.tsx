@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction, useRef, useState, ChangeEvent } from 'react';
+import { Dispatch, SetStateAction, useRef, useState, ChangeEvent, useEffect } from 'react';
 
 import { useEditWriterIntro, useFetchWriterInfo } from '../hooks/queries';
 
@@ -20,12 +20,17 @@ const EditProfileModal = ({ setShowEditProfileModal, writerNameId }: editProfilM
     setContent(e.target.value);
   };
   const { editMutateWriterIntro } = useEditWriterIntro(writerNameId);
+
   const submitHandler = () => {
     if (countLength <= 100) {
       editMutateWriterIntro({ description: content });
       setShowEditProfileModal(false);
     }
   };
+
+  useEffect(() => {
+    setContent(description);
+  }, [description]);
   return (
     <>
       <BackgroundWrapper onClick={() => setShowEditProfileModal(false)} />
@@ -39,9 +44,7 @@ const EditProfileModal = ({ setShowEditProfileModal, writerNameId }: editProfilM
             placeholder="소개글을 입력해주세요"
             onChange={onInputHandler}
             value={content}
-          >
-            {content}
-          </InputWrapper>
+          />
           <div>{countLength}/100</div>
         </ContentWrapper>
         <EditButton
