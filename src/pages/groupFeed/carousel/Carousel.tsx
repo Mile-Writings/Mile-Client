@@ -11,12 +11,6 @@ import './slick.css';
 import { useArticleList, useTopicList } from '../hooks/queries';
 
 import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
-
-import BeforeBtn from '/src/assets/svgs/groupTabBeforeBtnEnable.svg';
-import BeforeBtnHover from '/src/assets/svgs/groupTabBeforeBtnHover.svg';
-import NextBtn from '/src/assets/svgs/groupTabNextBtnEnable.svg';
-import NextBtnHover from '/src/assets/svgs/groupTabNextBtnHover.svg';
-
 import Spacing from '../../../components/commons/Spacing';
 import Error from '../../error/Error';
 import Loading from '../../loading/Loading';
@@ -49,8 +43,7 @@ const Carousel = () => {
     slidesToShow: 6,
     slidesToScroll: 6,
     initialSlide: 0,
-    nextArrow: <Next />,
-    prevArrow: <Prev />,
+
     beforeChange: (_: number, newIndex: number) => {
       setActiveCategoryId(newIndex + 1);
     },
@@ -114,34 +107,9 @@ const CarouselWrapper = styled.div`
   border-bottom: 0.1rem solid ${({ theme }) => theme.colors.gray30};
 `;
 
-const Next = styled.div`
-  z-index: 2;
-  width: 3.6rem;
-  height: 3.6rem;
-
-  background-image: url(${NextBtn});
-
-  :hover {
-    background-image: url(${NextBtnHover});
-  }
-`;
-
-const Prev = styled.div`
-  z-index: 2;
-  width: 3.6rem;
-  height: 3.6rem;
-
-  background-image: url(${BeforeBtn});
-
-  :hover {
-    background-image: url(${BeforeBtnHover});
-  }
-`;
-
 const GroupTabBtnBaseBeforeIcon = styled(GroupTabBtnBaseBeforeIc)`
   position: absolute;
   top: 0;
-  z-index: 1;
 
   pointer-events: none;
 `;
@@ -150,7 +118,6 @@ const GroupTabBtnBaseNextIcon = styled(GroupTabBtnBaseNextIc)`
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 1;
 
   pointer-events: none;
 `;

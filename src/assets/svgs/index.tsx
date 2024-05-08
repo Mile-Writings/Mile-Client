@@ -96,4 +96,3 @@ export { default as GroupListProfileCloseIc } from './groupListprofileIcnClose.s
 export { default as JoinCongratulationIc } from './joinCongratulationPng.svg?react';
 export { default as CreateGroupCongrats } from './createGroupCongrats.svg?react';
 export { default as CreateGroupIlust } from './createGroupIlust.svg?react';
-
