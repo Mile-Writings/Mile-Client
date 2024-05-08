@@ -5,7 +5,7 @@ import CommentItem from './CommentItem';
 
 import { useGetCommentList } from '../hooks/queries';
 
-import { EditorCatIc, ArrowTopLeftIc } from '../../../assets/svgs';
+import { ArrowTopLeftIc, EditorCatIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 interface CommentPropTypes {
@@ -37,7 +37,7 @@ const Comment = (props: CommentPropTypes) => {
   }
 
   return error?.message == '403' ? (
-    <div></div>
+    <div />
   ) : (
     <CommentWrapper>
       <CommentInputBox postId={postId} isMainComment={true} />
@@ -62,7 +62,7 @@ const Comment = (props: CommentPropTypes) => {
               isAnonymous={data.isAnonymous}
               isNested={false}
               type="comment"
-            ></CommentItem>
+            />
             {data.replies &&
               data.replies.map((nestedData: ReplyResponseTypes) => (
                 <NestedWrapper key={nestedData.replyId}>
@@ -77,7 +77,7 @@ const Comment = (props: CommentPropTypes) => {
                     isAnonymous={nestedData.isAnonymous}
                     isNested={true}
                     type="nestedComment"
-                  ></CommentItem>
+                  />
                 </NestedWrapper>
               ))}
           </>

@@ -43,7 +43,6 @@ const PostDetail = () => {
       deletePost();
       navigate(`/group/${groupId}`);
     }
-    console.log('삭제취소');
   };
 
   const handleEditBtn = () => {

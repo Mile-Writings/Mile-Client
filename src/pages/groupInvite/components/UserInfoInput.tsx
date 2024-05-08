@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { AxiosError } from 'axios';
 import React, { useState, useReducer, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -94,11 +95,27 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
   }, [userInfoVal.writerIntroduce, userInfoVal.writerName]);
 
   // 가입하기 api
-  const { mutate: postGroupJoin } = usePostGroupMemberJoin({
+  const { mutate: postGroupJoin, error } = usePostGroupMemberJoin({
     groupId: groupId,
     writerName: userInfoVal.writerName || '',
     writerDescription: userInfoVal.writerIntroduce || '',
+    moimTitle: moimTitle || '',
   });
+
+  useEffect(() => {
+    if (error instanceof AxiosError) {
+      if (error.response && error.response.status) {
+        const { status } = error.response;
+        if (status === 400) {
+          alert('최대 가입 가능 모임 개수(5개)를 초과하였습니다.');
+          navigate(`/`);
+        } else if (status === 409) {
+          alert('이미 가입한 모임입니다!');
+          navigate(`/`);
+        }
+      }
+    }
+  }, [error, groupId]);
 
   //가입하기 버튼 함수
   const onClickSignUp = () => {
@@ -117,11 +134,6 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
   // 모달 yes
   const onClickModalJoinBtn = () => {
     postGroupJoin();
-    navigate(`/group/${groupId}/groupJoin`, {
-      state: {
-        moimTitle: moimTitle,
-      },
-    });
   };
   // 모달 no
   const onClickModalCloseBtn = () => {

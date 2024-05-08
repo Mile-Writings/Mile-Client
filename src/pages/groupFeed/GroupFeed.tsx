@@ -5,10 +5,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Carousel from './carousel/Carousel';
 import CuriousArticle from './components/CuriousArticle';
 import CuriousProfile from './components/CuriousProfile';
+import EditProfileModal from './components/EditProfileModal';
 import GroupCuriousTitle from './components/GroupCuriousTitle';
 import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
-import { useGroupFeedAuth, useGroupInfo } from './hooks/queries';
+import { useGroupFeedAuth, useGroupInfo, useFetchWriterNameOnly } from './hooks/queries';
 
 import Error from '../error/Error';
 import Loading from '../loading/Loading';
@@ -30,12 +31,14 @@ const GroupFeed = () => {
   const sessionCategoryId = sessionStorage.getItem('activeCategoryId');
 
   const [activeCategoryId] = useState<number>(Number(sessionCategoryId) || 1);
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
 
   useEffect(() => {
     sessionStorage.setItem('activeCategoryId', String(activeCategoryId));
   }, [activeCategoryId]);
 
   const { groupInfoData } = useGroupInfo(groupId || '');
+  const { writerName, writerNameId } = useFetchWriterNameOnly(groupId || '');
 
   const navigate = useNavigate();
 
@@ -61,7 +64,13 @@ const GroupFeed = () => {
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
         {groupInfoData && (
-          <GroupSideHeader groupInfoData={groupInfoData} isMember={isMember} isOwner={isOwner} />
+          <GroupSideHeader
+            groupInfoData={groupInfoData}
+            isMember={isMember}
+            isOwner={isOwner}
+            setShowEditProfileModal={setShowEditProfileModal}
+            writerName={writerName}
+          />
         )}
         <GroupInfo>
           <GroupTodayWriteStyle isMember={isMember} groupId={groupId} />
@@ -87,6 +96,12 @@ const GroupFeed = () => {
       <Footer />
       {isMember !== undefined && isMember && (
         <FloatingBtn onClick={() => navigate(`/post/${groupId}/post`)} />
+      )}
+      {showEditProfileModal && (
+        <EditProfileModal
+          setShowEditProfileModal={setShowEditProfileModal}
+          writerNameId={writerNameId}
+        />
       )}
     </GroupFeedWrapper>
   );

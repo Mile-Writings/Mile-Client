@@ -30,7 +30,7 @@ const CuriousBtn = () => {
   }, [data?.data?.isCurious]);
 
   return error?.message == '403' || !token ? (
-    <div></div>
+    <div />
   ) : (
     <CuriousBtnWrapper onClick={handleBtnClick} $isClick={isClick}>
       <CuriousTextWrapper>

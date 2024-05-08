@@ -28,8 +28,13 @@ const GroupInvite = () => {
     if (error instanceof AxiosError) {
       if (error.response && error.response.status) {
         const { status } = error.response;
-        status === 400 && navigate(`/error`);
-        status === 409 && navigate(`/group/${groupId}`);
+        if (status === 400) {
+          alert('이미 가입한 모임입니다!');
+          navigate(`/group/${groupId}`);
+        } else if (status === 404) {
+          alert('해당 모임은 존재하지 않습니다!');
+          navigate(`/`);
+        }
       }
     }
   }, [error, groupId]);
