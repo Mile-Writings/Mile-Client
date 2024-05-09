@@ -91,6 +91,7 @@ const CuriousArticleLayout = styled.div`
   padding: 3.2rem;
 
   background-color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
   border-radius: 8px;
 `;
 
