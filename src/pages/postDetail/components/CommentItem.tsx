@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 import CommentInputBox from './CommentInputBox';
 
@@ -12,6 +12,7 @@ import {
   ArrowTopLeftIc,
   GroupListProfileCloseIc,
 } from '../../../assets/svgs';
+import useClickOutside from '../../../hooks/useClickOutside';
 
 interface CommentItem {
   name: string;
@@ -44,40 +45,30 @@ const CommentItem = ({
   const [isNestedComment, setIsNestedComment] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const commentRef = useRef<HTMLDivElement>(null);
+  const [isBgClick, setIsBgClick] = useState(false);
 
   const handleBtnClick = () => {
-    setIsClick((prev) => !prev);
+    setIsClick(true);
   };
 
-  const handleBtnClick2 = () => {
-    setIsNestedComment((prev) => !prev);
+  const handleDeleteBtn = () => {
+    if (isClick) setIsBgClick(true);
+    if (isBgClick) {
+      setIsClick((prev) => !prev);
+      setIsBgClick(false);
+    }
   };
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-        setIsClick(false);
-      }
-    };
+  const handleCommentBtn = () => {
+    if (isNestedComment) setIsBgClick(true);
+    if (isBgClick) {
+      setIsNestedComment((prev) => !prev);
+      setIsBgClick(false);
+    }
+  };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside2 = (e: MouseEvent) => {
-      if (commentRef.current && !commentRef.current.contains(e.target as Node)) {
-        setIsNestedComment(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside2);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside2);
-    };
-  }, []);
+  useClickOutside(modalRef, handleDeleteBtn);
+  useClickOutside(commentRef, handleCommentBtn);
 
   return (
     <>
@@ -94,7 +85,7 @@ const CommentItem = ({
           {!isNested && (
             <NestCommentIcon
               onClick={() => {
-                setIsNestedComment(!isNestedComment);
+                setIsNestedComment(true);
               }}
             >
               <NestCommentIc />
@@ -133,7 +124,7 @@ const CommentItem = ({
         </IconWrapper>
       </CommentItemWrapper>
       {isNestedComment && (
-        <NestedCommentWrapper onClick={handleBtnClick2}>
+        <NestedCommentWrapper>
           <div ref={commentRef}>
             <ArrowTopLeftIc />
             <CommentInputBox
