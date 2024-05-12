@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
@@ -29,6 +29,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
   const { groupId } = useParams();
   const { memberData } = useFetchMemberInfo(groupId || '', pageCount);
   const { deleteMember } = useDeleteMember();
+  const [activeChunk, setActiveChunk] = useState(1);
 
   return (
     <>
@@ -67,6 +68,8 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
           allocatedCount={5}
           setActivePage={setPageCount}
           activePage={pageCount}
+          activeChunk={activeChunk}
+          setActiveChunk={setActiveChunk}
         />
       )}
     </>

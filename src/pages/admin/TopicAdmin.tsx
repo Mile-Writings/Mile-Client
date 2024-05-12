@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 import EachTopic from './EachTopic';
 
@@ -26,6 +26,7 @@ const TopicAdmin = ({
   setPageNum: Dispatch<SetStateAction<number>>;
   pageNum: number;
 }) => {
+  const [activeChunk, setActiveChunk] = useState(1);
   return (
     <>
       <TopicListWrapper>
@@ -48,6 +49,8 @@ const TopicAdmin = ({
           allocatedCount={5}
           setActivePage={setPageNum}
           activePage={pageNum}
+          setActiveChunk={setActiveChunk}
+          activeChunk={activeChunk}
         />
       )}
     </>
