@@ -43,9 +43,14 @@ const CommentItem = ({
   const [isClick, setIsClick] = useState(false);
   const [isNestedComment, setIsNestedComment] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const commentRef = useRef<HTMLDivElement>(null);
 
   const handleBtnClick = () => {
     setIsClick((prev) => !prev);
+  };
+
+  const handleBtnClick2 = () => {
+    setIsNestedComment((prev) => !prev);
   };
 
   useEffect(() => {
@@ -58,6 +63,19 @@ const CommentItem = ({
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside2 = (e: MouseEvent) => {
+      if (commentRef.current && !commentRef.current.contains(e.target as Node)) {
+        setIsNestedComment(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside2);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside2);
     };
   }, []);
 
@@ -74,7 +92,11 @@ const CommentItem = ({
         </CommentItemContainer>
         <IconWrapper>
           {!isNested && (
-            <NestCommentIcon onClick={() => setIsNestedComment(!isNestedComment)}>
+            <NestCommentIcon
+              onClick={() => {
+                setIsNestedComment(!isNestedComment);
+              }}
+            >
               <NestCommentIc />
             </NestCommentIcon>
           )}
@@ -111,14 +133,16 @@ const CommentItem = ({
         </IconWrapper>
       </CommentItemWrapper>
       {isNestedComment && (
-        <NestedCommentWrapper>
-          <ArrowTopLeftIc />
-          <CommentInputBox
-            postId={postId}
-            commentId={commentId}
-            isMainComment={false}
-            setIsNestedComment={setIsNestedComment}
-          />
+        <NestedCommentWrapper onClick={handleBtnClick2}>
+          <div ref={commentRef}>
+            <ArrowTopLeftIc />
+            <CommentInputBox
+              postId={postId}
+              commentId={commentId}
+              isMainComment={false}
+              setIsNestedComment={setIsNestedComment}
+            />
+          </div>
         </NestedCommentWrapper>
       )}
     </>
