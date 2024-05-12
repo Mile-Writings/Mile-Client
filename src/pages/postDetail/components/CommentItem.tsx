@@ -47,10 +47,6 @@ const CommentItem = ({
   const commentRef = useRef<HTMLDivElement>(null);
   const [isBgClick, setIsBgClick] = useState(false);
 
-  const handleBtnClick = () => {
-    setIsClick(true);
-  };
-
   const handleDeleteBtn = () => {
     if (isClick) setIsBgClick(true);
     if (isBgClick) {
@@ -92,7 +88,7 @@ const CommentItem = ({
             </NestCommentIcon>
           )}
           {isMyComment && (
-            <MeatBallWrapper onClick={handleBtnClick}>
+            <MeatBallWrapper onClick={() => setIsClick(true)}>
               <DetailCommentMeatBallIcon />
               {isClick && (
                 <Modal
@@ -107,7 +103,7 @@ const CommentItem = ({
             </MeatBallWrapper>
           )}
           {isMyReply && (
-            <MeatBallWrapper onClick={handleBtnClick}>
+            <MeatBallWrapper onClick={() => setIsClick(true)}>
               <DetailCommentMeatBallIcon />
               {isClick && (
                 <Modal
@@ -124,16 +120,14 @@ const CommentItem = ({
         </IconWrapper>
       </CommentItemWrapper>
       {isNestedComment && (
-        <NestedCommentWrapper>
-          <div ref={commentRef}>
-            <ArrowTopLeftIc />
-            <CommentInputBox
-              postId={postId}
-              commentId={commentId}
-              isMainComment={false}
-              setIsNestedComment={setIsNestedComment}
-            />
-          </div>
+        <NestedCommentWrapper ref={commentRef}>
+          <ArrowTopLeftIc />
+          <CommentInputBox
+            postId={postId}
+            commentId={commentId}
+            isMainComment={false}
+            setIsNestedComment={setIsNestedComment}
+          />
         </NestedCommentWrapper>
       )}
     </>
