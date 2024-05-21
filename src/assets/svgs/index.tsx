@@ -97,3 +97,6 @@ export { default as JoinCongratulationIc } from './joinCongratulationPng.svg?rea
 export { default as CreateGroupCongrats } from './createGroupCongrats.svg?react';
 export { default as CreateGroupIlust } from './createGroupIlust.svg?react';
 
+export { default as groupViewIc } from './groupViewIcn.svg?react';
+export { default as groupCuriousIc } from './groupCuriousIcn.svg?react';
+export { default as groupChatIc } from './groupChatIcn.svg?react';
