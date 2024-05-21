@@ -72,6 +72,7 @@ const CreateGroupInfo = ({
   const groupNameRef = useRef<HTMLInputElement>(null);
   const groupInfoRef = useRef<HTMLTextAreaElement>(null);
   const [isBtnEnabled, setIsBtnEnabled] = useState(true);
+
   const { data, refetch, isSuccess, error } = useGetGroupNameValidation(groupName);
 
   // 이미지 보낼 url 받아오기
