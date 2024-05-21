@@ -31,6 +31,8 @@ const EachArticle = (props: EachProfilePropTypes) => {
     writerName: string;
     createdAt: string;
     curiousCount: number;
+    hitsCount: number;
+    commentCount: number;
     imageUrl: string;
     isImageContained: boolean;
   }
@@ -68,9 +70,9 @@ const EachArticle = (props: EachProfilePropTypes) => {
                   </ArticleDetail>
                   <ArticleDetailBold>{list.hitsCount}</ArticleDetailBold>
                   <ArticleDetail>
-                    <GroupCuriousIc />
+                    <GroupChatIc />
                   </ArticleDetail>
-                  <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
+                  <ArticleDetailBold>{list.commentCount}</ArticleDetailBold>
                 </ArticleInfo>
               </ArticleContainer>
               {list.isImageContained && <ArticleThumbnail imageUrl={list.imageUrl} />}
