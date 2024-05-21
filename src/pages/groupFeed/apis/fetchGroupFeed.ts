@@ -146,6 +146,8 @@ interface ArticleListPropTypes {
       writerName: string;
       createdAt: string;
       curiousCount: number;
+      hitsCount: number;
+      commentCount: number;
       imageUrl: string;
       isImageContained: boolean;
     }[];
@@ -157,6 +159,7 @@ interface ArticleListPropTypes {
 export const fetchArticleList = async (topicId: string) => {
   try {
     const response = await client.get<ArticleListPropTypes>(`/api/topic/${topicId}`);
+    console.log(topicId, 'id');
     return response.data;
   } catch (error) {
     console.error('에러:', error);

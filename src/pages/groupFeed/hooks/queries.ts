@@ -131,6 +131,8 @@ export const useArticleList = (topicId: string) => {
   const topicInfo = data && data.data.topicInfo;
   const postListData = data && data.data.postList;
 
+  console.log(postListData);
+
   return { topicInfo, postListData, isLoading, isError, error };
 };
 
