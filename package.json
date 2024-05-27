@@ -18,6 +18,7 @@
     "@tiptap/extension-blockquote": "^2.2.3",
     "@tiptap/extension-color": "^2.2.3",
     "@tiptap/extension-highlight": "^2.2.3",
+    "@tiptap/extension-history": "^2.4.0",
     "@tiptap/extension-horizontal-rule": "^2.2.3",
     "@tiptap/extension-list-item": "^2.2.3",
     "@tiptap/extension-placeholder": "^2.2.3",

@@ -7,6 +7,7 @@ import BulletList from '@tiptap/extension-bullet-list';
 import Color from '@tiptap/extension-color';
 import Document from '@tiptap/extension-document';
 import Highlight from '@tiptap/extension-highlight';
+import History from '@tiptap/extension-history';
 import HorizontalRule from '@tiptap/extension-horizontal-rule';
 import Italic from '@tiptap/extension-italic';
 import ListItem from '@tiptap/extension-list-item';
@@ -131,6 +132,7 @@ const TipTap = (props: EditorPropTypes) => {
       OrderedList,
       Blockquote,
       HorizontalRule,
+      History.configure({ depth: 100 }),
     ],
     content: '',
     onUpdate: ({ editor }) => {
