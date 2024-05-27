@@ -251,8 +251,8 @@ const PostPage = () => {
   useEffect(() => {
     if (postContentId !== undefined) {
       setShowModal(true);
-      editorFlowModalDispatch({ type: 'postContent' });
       setEditorModalType('postContent');
+      editorFlowModalDispatch({ type: 'postContent' });
     }
   }, [postContentId]);
 
@@ -466,7 +466,7 @@ const PostPage = () => {
           onClickTempSaveBtn();
           break;
         case 'postContent':
-          onClickPostContentBtn();
+          preventScroll();
           break;
         case 'putTempSaveContent':
           onClickTempExistSaveBtn();
