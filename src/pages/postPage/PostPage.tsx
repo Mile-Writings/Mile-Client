@@ -156,7 +156,6 @@ const PostPage = () => {
 
   // editor content API 관련
   const [editorVal, editorContentDispatch] = useReducer(editorContentReducerFn, editorState);
-
   // editorContentDispatch prop 함수들
   const setTopic = (e: React.MouseEvent<HTMLDivElement>) => {
     editorContentDispatch({ type: 'setTopic', topic: e.currentTarget.innerText });
@@ -164,8 +163,9 @@ const PostPage = () => {
   const setWriter = (e: React.MouseEvent<HTMLDivElement>) => {
     editorContentDispatch({ type: 'setWriter', writer: e.currentTarget.innerText });
   };
-  const setTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    editorContentDispatch({ type: 'setTitle', title: e.target.value });
+  const setTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const title = e.target.value.length <= 32 ? e.target.value : e.target.value.slice(0, 32);
+    editorContentDispatch({ type: 'setTitle', title: title });
   };
   const setContent = (content: string) => {
     editorContentDispatch({ type: 'setContent', content: content });

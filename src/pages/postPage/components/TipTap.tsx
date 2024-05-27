@@ -36,7 +36,7 @@ import useClickOutside from '../../../hooks/useClickOutside';
 
 interface EditorPropTypes {
   title: string | undefined;
-  setTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setTitle: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   tempContent: string;
   editContent: string;
   setEditorContent: (content: string) => void;
@@ -54,6 +54,17 @@ const TipTap = (props: EditorPropTypes) => {
   const [isFontColorOpen, setIsFontColorOpen] = useState(false);
   // font background color drop down
   const [isFontBgColorOpen, setIsFontBgColorOpen] = useState(false);
+
+  // 제목 textarea 높이 조절용
+  const titleRef = useRef<HTMLTextAreaElement | null>(null);
+  // 제목 onChange 높이 조절 포함
+  const onChangeTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (titleRef.current) {
+      titleRef.current.style.height = '9.4rem';
+      titleRef.current.style.height = titleRef.current.scrollHeight * 0.1 + 'rem';
+    }
+    setTitle(e);
+  };
 
   const fontSizeDropDownRef = useRef(null);
   const fontColorDropDownRef = useRef(null);
@@ -226,7 +237,13 @@ const TipTap = (props: EditorPropTypes) => {
 
   return (
     <div className="text-editor">
-      <Title type="text" placeholder="제목을 적어주세요" onChange={setTitle} value={title} />
+      <Title
+        placeholder="제목을 적어주세요"
+        onChange={onChangeTitle}
+        value={title}
+        rows={1}
+        ref={titleRef}
+      />
       <Spacing marginBottom="2.4" />
       <ToolbarWrapper className="menu">
         {/* 글자 크기 */}
@@ -673,10 +690,11 @@ const TipTap = (props: EditorPropTypes) => {
 
 export default TipTap;
 
-const Title = styled.input`
+const Title = styled.textarea`
   width: 82.6rem;
-  height: 9.4rem;
+  max-height: 13.2rem;
   padding: 2.8rem;
+  overflow: hidden;
 
   color: ${({ theme }) => theme.colors.grayBlack};
 
