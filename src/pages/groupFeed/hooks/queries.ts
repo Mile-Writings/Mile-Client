@@ -130,8 +130,7 @@ export const useArticleList = (topicId: string) => {
       initialPageParam: '',
       getNextPageParam: (lastPage) => {
         if (lastPage?.data?.hasNext) {
-          console.log(lastPage?.data?.postList[0]?.postId, 'df');
-          return lastPage?.data?.postList[0]?.postId;
+          return lastPage?.data?.postList[lastPage?.data?.postList.length - 1]?.postId;
         }
         return undefined;
       }, //hasNext가 true일 경우, 다음 postId를 가져온다. false일경우 undefined.
