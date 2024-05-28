@@ -32,11 +32,7 @@ const CuriousProfile = (props: CuriousProfilePropTypes) => {
           <CuriousProfileLayout key={index}>
             <GroupBestProfileIc />
             <ProfileWrapper>
-              {writer.information == '' ? (
-                <ProfileTitle>{writer.writerName}</ProfileTitle>
-              ) : (
-                <ProfileTitle>{writer.writerName}</ProfileTitle>
-              )}
+              <ProfileTitle>{writer.writerName}</ProfileTitle>
             </ProfileWrapper>
           </CuriousProfileLayout>
         ))
