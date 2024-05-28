@@ -13,7 +13,7 @@ interface EachProfilePropTypes {
 
 const EachArticle = (props: EachProfilePropTypes) => {
   const { groupId, selectedTopicId } = props;
-  const { postListData } = useArticleList(selectedTopicId || '');
+  const { postListData, fetchNextPage, hasNextPage } = useArticleList(selectedTopicId || '');
   const navigate = useNavigate();
   const handleGoPostDetail = (postId: string) => {
     navigate(`/detail/${groupId}/${postId}`, { state: { topicId: selectedTopicId } });
@@ -41,27 +41,34 @@ const EachArticle = (props: EachProfilePropTypes) => {
           <Spacing marginBottom="4" />
         </NoPostWrapper>
       ) : (
-        postListData?.map((list: ProfilePropTypes, index: number) => (
-          <div key={index}>
-            <ArticleWrapper onClick={() => handleGoPostDetail(list.postId)}>
-              <ArticleContainer isImageContained={list.isImageContained}>
-                <ArticleTitle>{list.postTitle}</ArticleTitle>
-                <Spacing marginBottom="1.6" />
-                <ArticleContent>{list.postContent}</ArticleContent>
-                <Spacing marginBottom="1.2" />
-                <ArticleInfo>
-                  <GroupListProfileIc />
-                  <ProfileName>{list.writerName}</ProfileName>
-                  <ArticleDetail>{list.createdAt}</ArticleDetail>
-                  <ArticleDetail>·</ArticleDetail>
-                  <ArticleDetail>궁금해요</ArticleDetail>
-                  <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
-                </ArticleInfo>
-              </ArticleContainer>
-              {list.isImageContained && <ArticleThumbnail imageUrl={list.imageUrl} />}
-            </ArticleWrapper>
-          </div>
-        ))
+        <>
+          {postListData &&
+            postListData.map(
+              (postData, dataIndex) =>
+                postData?.data.postList.map((list: ProfilePropTypes, index: number) => (
+                  <div key={`${dataIndex}-${index}`}>
+                    <ArticleWrapper onClick={() => handleGoPostDetail(list.postId)}>
+                      <ArticleContainer isImageContained={list.isImageContained}>
+                        <ArticleTitle>{list.postTitle}</ArticleTitle>
+                        <Spacing marginBottom="1.6" />
+                        <ArticleContent>{list.postContent}</ArticleContent>
+                        <Spacing marginBottom="1.2" />
+                        <ArticleInfo>
+                          <GroupListProfileIc />
+                          <ProfileName>{list.writerName}</ProfileName>
+                          <ArticleDetail>{list.createdAt}</ArticleDetail>
+                          <ArticleDetail>·</ArticleDetail>
+                          <ArticleDetail>궁금해요</ArticleDetail>
+                          <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
+                        </ArticleInfo>
+                      </ArticleContainer>
+                      {list.isImageContained && <ArticleThumbnail imageUrl={list.imageUrl} />}
+                    </ArticleWrapper>
+                  </div>
+                )),
+            )}
+          {hasNextPage && <button onClick={() => fetchNextPage()}> Load More</button>}
+        </>
       )}
     </ArticlePostWrapper>
   );
