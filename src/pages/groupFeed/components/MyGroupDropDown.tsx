@@ -106,7 +106,6 @@ const MyGroupListLayout = styled.div<{ $isOpen: boolean }>`
 `;
 
 const GroupContentContainer = styled.div<{ $isEmpty: boolean }>`
-  display: flex;
   width: 15.2rem;
   padding: 1rem 1.6rem;
 
