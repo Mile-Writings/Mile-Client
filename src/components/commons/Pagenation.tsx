@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import { ArrowLeftIc, ArrowRightIc } from '../../assets/svgs';
 import { slicePage } from '../../utils/countPage';
@@ -10,34 +10,43 @@ interface pagenationPropTypes {
   allocatedCount: number;
   setActivePage: Dispatch<SetStateAction<number>>;
   activePage: number;
+  setActiveChunk: Dispatch<SetStateAction<number>>;
+  activeChunk: number;
 }
 
-const Pagenation = ({ count, allocatedCount, setActivePage, activePage }: pagenationPropTypes) => {
-  const [activeChunk, setActiveChunk] = useState(1);
+const Pagenation = ({
+  count,
+  allocatedCount,
+  setActivePage,
+  activePage,
+  setActiveChunk,
+  activeChunk,
+}: pagenationPropTypes) => {
   const { resultArray, isExistNextPage, isExistPreviousPage } = slicePage(
     count,
     activeChunk,
     allocatedCount,
   );
 
-  useEffect(() => {
-    setActivePage(5 * (activeChunk - 1) + 1);
-  }, [activeChunk]);
+  const clickPrevious = () => {
+    if (isExistPreviousPage) {
+      const newChunk = activeChunk - 1;
+      setActiveChunk(newChunk);
+      setActivePage(5 * (newChunk - 1) + 1);
+    } else {
+      setActivePage((prev) => prev - 1);
+    }
+  };
+
+  const clickNext = () => {
+    const newChunk = activeChunk + 1;
+    setActiveChunk(newChunk);
+    setActivePage(5 * (newChunk - 1) + 1);
+  };
 
   return (
     <PageWrapper>
-      {activePage != 1 && (
-        <ArrowLeftIc
-          onClick={() =>
-            isExistPreviousPage
-              ? setActiveChunk(activeChunk - 1)
-              : setActivePage((prev) => {
-                  return prev - 1;
-                })
-          }
-          style={{ cursor: 'pointer' }}
-        />
-      )}
+      {activePage != 1 && <ArrowLeftIc onClick={clickPrevious} style={{ cursor: 'pointer' }} />}
       {resultArray.map((index) => (
         <PageNumber
           key={index + 1}
@@ -49,14 +58,7 @@ const Pagenation = ({ count, allocatedCount, setActivePage, activePage }: pagena
           {index}
         </PageNumber>
       ))}
-      {isExistNextPage && (
-        <ArrowRightIc
-          onClick={() => {
-            setActiveChunk(activeChunk + 1);
-          }}
-          style={{ cursor: 'pointer' }}
-        />
-      )}
+      {isExistNextPage && <ArrowRightIc onClick={clickNext} style={{ cursor: 'pointer' }} />}
     </PageWrapper>
   );
 };

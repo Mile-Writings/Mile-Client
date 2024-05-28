@@ -32,14 +32,7 @@ const CuriousProfile = (props: CuriousProfilePropTypes) => {
           <CuriousProfileLayout key={index}>
             <GroupBestProfileIc />
             <ProfileWrapper>
-              {writer.information == '' ? (
-                <ProfileTitle>{writer.writerName}</ProfileTitle>
-              ) : (
-                <>
-                  <ProfileTitle>{writer.writerName}</ProfileTitle>
-                  <ProfileDetail>{writer.information}</ProfileDetail>
-                </>
-              )}
+              <ProfileTitle>{writer.writerName}</ProfileTitle>
             </ProfileWrapper>
           </CuriousProfileLayout>
         ))
@@ -59,18 +52,13 @@ const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  width: 100%;
 `;
 
 const ProfileTitle = styled.div`
   color: ${({ theme }) => theme.colors.gray90};
 
   ${({ theme }) => theme.fonts.subtitle3};
-`;
-
-const ProfileDetail = styled.div`
-  color: ${({ theme }) => theme.colors.gray70};
-
-  ${({ theme }) => theme.fonts.body6};
 `;
 
 const CuriousProfileLayout = styled.div`

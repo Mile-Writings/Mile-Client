@@ -31,6 +31,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
   const { groupId } = useParams();
   const { memberData } = useFetchMemberInfo(groupId || '', pageCount);
   const { deleteMember } = useDeleteMember();
+  const [activeChunk, setActiveChunk] = useState(1);
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
   const [deleteMemberId, setDeleteMemberId] = useState(-1);
 
@@ -78,6 +79,8 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
           allocatedCount={5}
           setActivePage={setPageCount}
           activePage={pageCount}
+          activeChunk={activeChunk}
+          setActiveChunk={setActiveChunk}
         />
       )}
       <NegativeModal

@@ -60,6 +60,7 @@ const Comment = (props: CommentPropTypes) => {
               postId={postId}
               commentId={data.commentId}
               isAnonymous={data.isAnonymous}
+              isNested={false}
               type="comment"
             />
             {data.replies &&
@@ -74,6 +75,7 @@ const Comment = (props: CommentPropTypes) => {
                     postId={postId}
                     commentId={nestedData.replyId}
                     isAnonymous={nestedData.isAnonymous}
+                    isNested={true}
                     type="nestedComment"
                   />
                 </NestedWrapper>

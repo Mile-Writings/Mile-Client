@@ -40,12 +40,12 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
         <TopicDescription>{topicDescription}</TopicDescription>
       </TopicData>
       <TopicAction>
-        <EditIc
+        <EditIcon
           onClick={() => {
             setShowEditModal(true);
           }}
         />
-        <DeleteIc onClick={() => setShowDeleteModal(true)} />
+        <DeleteIcon onClick={() => setShowDeleteModal(true)} />
       </TopicAction>
       {showEditModal && (
         <>
@@ -77,6 +77,14 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
 };
 
 export default EachTopic;
+
+const EditIcon = styled(EditIc)`
+  cursor: pointer;
+`;
+
+const DeleteIcon = styled(DeleteIc)`
+  cursor: pointer;
+`;
 
 const ModalOverlay = styled.div`
   position: fixed;
