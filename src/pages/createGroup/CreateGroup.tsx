@@ -18,6 +18,7 @@ type CreateGroupAction =
   | { type: 'setTopicDesc'; value: string }
   | { type: 'setLeaderPenName'; value: string }
   | { type: 'setLeaderDesc'; value: string };
+
 const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
@@ -111,6 +112,7 @@ const CreateGroup = () => {
     leaderPenName,
     leaderDesc,
   });
+
   const createGroup = () => {
     if (!leaderPenName) {
       setIsGroupLeaderValid(false);
@@ -130,6 +132,10 @@ const CreateGroup = () => {
     } else {
       console.log('error');
     }
+  };
+
+  const handleBackBtn = () => {
+    setCurrentPage('GroupInfoPage');
   };
   return (
     <CreateGroupWrapper>
@@ -171,15 +177,48 @@ const CreateGroup = () => {
         rightBtnFn={() => {}}
       /> */}
       {currentPage === 'GroupLeaderInfoPage' && (
-        <CreateGroupBtn type="button" onClick={createGroup}>
-          생성하기
-        </CreateGroupBtn>
+        <BtnWrapper>
+          <CreateGroupBtn type="button" onClick={createGroup}>
+            생성하기
+          </CreateGroupBtn>
+          <BackPageBtn type="button" onClick={handleBackBtn}>
+            뒤로가기
+          </BackPageBtn>
+        </BtnWrapper>
       )}
     </CreateGroupWrapper>
   );
 };
 
 export default CreateGroup;
+
+const BackPageBtn = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 5.1rem;
+
+  color: ${({ theme }) => theme.colors.mainViolet};
+
+  ${({ theme }) => theme.fonts.button2};
+  background: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.mainViolet};
+  border-radius: 10px;
+
+  :hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+
+    background-color: ${({ theme }) => theme.colors.mileViolet};
+    border: 1px solid ${({ theme }) => theme.colors.mileViolet};
+  }
+`;
+const BtnWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+`;
 
 const CreateGroupWrapper = styled.div`
   display: flex;

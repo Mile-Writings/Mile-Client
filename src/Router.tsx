@@ -22,7 +22,6 @@ const Router = () => {
         <Route path="/detail/:groupId/:postId" element={<PostDetail />} />
         <Route path="/post/:groupId/:type" element={<PostPage />} />
         <Route path="/createGroup" element={<CreateGroup />} />
-        {/* <Route path="/edit/:groupId" element={<PostEditor />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/redirect-kakao" element={<RedirectLogin />} />
         <Route path="/error" element={<Error />} />

@@ -71,7 +71,6 @@ const CreateGroupInfo = ({
 
   const groupNameRef = useRef<HTMLInputElement>(null);
   const groupInfoRef = useRef<HTMLTextAreaElement>(null);
-  const [isBtnEnabled, setIsBtnEnabled] = useState(true);
 
   const { data, refetch, isSuccess, error } = useGetGroupNameValidation(groupName);
 
@@ -228,6 +227,7 @@ const CreateGroupInfo = ({
                 placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
                 isValid={isGroupNameValid}
                 isGreen={passDuplicate}
+                value={groupName}
               />{' '}
               <DuplicateCheckBtn
                 type="button"
@@ -255,6 +255,7 @@ const CreateGroupInfo = ({
               onChange={(e) => setGroupInfo(e)}
               maxLength={110}
               ref={groupInfoRef}
+              value={groupInfo}
             />
             <TextAreaLenth isValid={isGroupInfoValid}> {groupInfo.length} / 100</TextAreaLenth>
           </GroupInputWrapper>
@@ -276,6 +277,7 @@ const CreateGroupInfo = ({
               type="file"
               name="file"
               id="file"
+              accept="image/*"
               onChange={(e) => {
                 handleGroupImage(e);
               }}
@@ -340,15 +342,15 @@ const CreateGroupInfo = ({
               <TopicSettingText>글모임 생성 전에 첫번째 글감을 설정해보세요*</TopicSettingText>
 
               <TopicSettingAdditionalText>
-                {isBtnEnabled
+                {!(topicTag && topic)
                   ? '관리자 페이지에서 언제든지 수정 가능합니다.'
                   : '첫번째 글감 작성이 완료되었습니다. 관리자 페이지에서 언제든지 수정 가능합니다.'}
               </TopicSettingAdditionalText>
             </TopicSettingWrapper>
             <TopicCreateBtn
               onClick={toggleModal}
-              disabled={!isBtnEnabled}
-              isBtnEnabled={isBtnEnabled}
+              disabled={!!(topicTag && topic)}
+              isBtnEnabled={!(topicTag && topic)}
             >
               글감 작성하기
             </TopicCreateBtn>
@@ -367,7 +369,6 @@ const CreateGroupInfo = ({
             setTopicDesc={setTopicDesc}
             toggleModal={toggleModal}
             setIsGroupTopicEmpty={setIsGroupTopicEmpty}
-            setIsBtnEnabled={setIsBtnEnabled}
           />
         </Overlay>
       )}
