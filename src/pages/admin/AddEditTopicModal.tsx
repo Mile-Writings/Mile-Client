@@ -32,7 +32,6 @@ const AddEditTopicModal = ({
   const [topic, setTopic] = useState('');
   const [topicTag, setTopicTag] = useState('');
   const [topicDescription, setTopicDescription] = useState('');
-  const [topicDescriptionLength, setTopicDescriptionLength] = useState(0);
   const [topicNameError, setTopicNameError] = useState(false);
   const [topicTagError, setTopicTagError] = useState(false);
   const [topicDescriptionError, setTopicDescriptionError] = useState(false);
@@ -55,7 +54,6 @@ const AddEditTopicModal = ({
   const handleTopicDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newDescription = e.target.value;
     setTopicDescription(newDescription);
-    setTopicDescriptionLength(newDescription.length);
     setTopicDescriptionError(false);
   };
 
@@ -116,7 +114,7 @@ const AddEditTopicModal = ({
             isError={topicDescriptionError}
           />
           <TextCount isError={topicDescription.length > 90 || topicDescriptionError}>
-            {topicDescriptionLength}/90
+            {topicDescription.length}/90
           </TextCount>
         </TextAreaWrapper>
       </div>
