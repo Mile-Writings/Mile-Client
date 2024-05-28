@@ -146,6 +146,8 @@ interface ArticleListPropTypes {
       writerName: string;
       createdAt: string;
       curiousCount: number;
+      hitsCount: number;
+      commentCount: number;
       imageUrl: string;
       isImageContained: boolean;
     }[];
