@@ -1,12 +1,14 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 
 import { adminEmptyMemberIc as AdminEmptyMemberIcon, adminProfileIc } from '../../../assets/svgs';
+import { NegativeModal } from '../../../components/commons/Modal';
 import Pagenation from '../../../components/commons/Pagenation';
 import Spacing from '../../../components/commons/Spacing';
+import useModal from '../../../hooks/useModal';
 
 export interface MemberPropTypes {
   pageNumber: number;
@@ -29,10 +31,12 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
   const { groupId } = useParams();
   const { memberData } = useFetchMemberInfo(groupId || '', pageCount);
   const { deleteMember } = useDeleteMember();
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
+  const [deleteMemberId, setDeleteMemberId] = useState(-1);
 
   return (
     <>
-      <MemberListWrapper>
+      <MemberTableWrapper>
         <TableHeaderLayout>
           <Header>프로필</Header>
           <Header>필명</Header>
@@ -48,7 +52,14 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
                 <Name>{writerName}</Name>
                 <PostNumber>{postCount}</PostNumber>
                 <CommentNumber>{commentCount}</CommentNumber>
-                <ExpelBtn onClick={() => deleteMember(writerNameId)}>삭제하기</ExpelBtn>
+                <ExpelBtn
+                  onClick={() => {
+                    setDeleteMemberId(writerNameId);
+                    handleShowModal();
+                  }}
+                >
+                  삭제하기
+                </ExpelBtn>
               </MemberItemContainer>
             ))
           ) : (
@@ -59,7 +70,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
             </EmptyContainer>
           )}
         </MemberLayout>
-      </MemberListWrapper>
+      </MemberTableWrapper>
       <Spacing marginBottom="3.6" />
       {memberData && memberData.writerNameCount && (
         <Pagenation
@@ -69,13 +80,27 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
           activePage={pageCount}
         />
       )}
+      <NegativeModal
+        modalContent={
+          '삭제 시, 해당 멤버와 해당 멤버가 작성한\n글과 댓글도 모두 삭제됩니다. 계속 하시겠습니까?'
+        }
+        isModalOpen={isModalOpen}
+        modalHandler={() => {
+          deleteMember(deleteMemberId);
+          handleCloseModal();
+        }}
+        closeModalHandler={() => {
+          setDeleteMemberId(-1);
+          handleCloseModal();
+        }}
+      />
     </>
   );
 };
 
 export default MemberManage;
 
-const MemberListWrapper = styled.section`
+const MemberTableWrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 78.1rem;
