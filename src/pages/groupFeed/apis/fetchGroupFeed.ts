@@ -135,6 +135,7 @@ export const fetchCuriousPost = async (groupId: string) => {
 
 interface ArticleListPropTypes {
   data: {
+    hasNext: boolean;
     topicInfo: {
       topic: string;
       topicDescription: string;
@@ -154,9 +155,12 @@ interface ArticleListPropTypes {
   message: string;
 }
 
-export const fetchArticleList = async (topicId: string) => {
+export const fetchArticleList = async (topicId: string, pageParam: string | null) => {
   try {
-    const response = await client.get<ArticleListPropTypes>(`/api/topic/${topicId}`);
+    const response = await client.get<ArticleListPropTypes>(`/api/topic/${topicId}`, {
+      params: { lastPostId: pageParam == '' ? null : pageParam },
+    });
+    console.log(response.data, 'ea');
     return response.data;
   } catch (error) {
     console.error('에러:', error);
