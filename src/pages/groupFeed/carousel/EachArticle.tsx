@@ -10,6 +10,7 @@ interface EachProfilePropTypes {
   groupId: string;
   selectedTopicId: string;
 }
+
 const EachArticle = (props: EachProfilePropTypes) => {
   const { groupId, selectedTopicId } = props;
   const { postListData } = useArticleList(selectedTopicId || '');
