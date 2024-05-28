@@ -3,7 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import { useArticleList } from '../hooks/queries';
 
-import { GroupListProfileIc, GroupNoDataImgIc } from '../../../assets/svgs';
+import {
+  GroupListProfileIc,
+  GroupNoDataImgIc,
+  GroupViewIc,
+  GroupCuriousIc,
+  GroupChatIc,
+} from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 interface EachProfilePropTypes {
@@ -25,6 +31,8 @@ const EachArticle = (props: EachProfilePropTypes) => {
     writerName: string;
     createdAt: string;
     curiousCount: number;
+    hitsCount: number;
+    commentCount: number;
     imageUrl: string;
     isImageContained: boolean;
   }
@@ -53,8 +61,18 @@ const EachArticle = (props: EachProfilePropTypes) => {
                   <ProfileName>{list.writerName}</ProfileName>
                   <ArticleDetail>{list.createdAt}</ArticleDetail>
                   <ArticleDetail>·</ArticleDetail>
-                  <ArticleDetail>궁금해요</ArticleDetail>
+                  <ArticleDetail>
+                    <GroupCuriousIc />
+                  </ArticleDetail>
                   <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
+                  <ArticleDetail>
+                    <GroupViewIc />
+                  </ArticleDetail>
+                  <ArticleDetailBold>{list.hitsCount}</ArticleDetailBold>
+                  <ArticleDetail>
+                    <GroupChatIc />
+                  </ArticleDetail>
+                  <ArticleDetailBold>{list.commentCount}</ArticleDetailBold>
                 </ArticleInfo>
               </ArticleContainer>
               {list.isImageContained && <ArticleThumbnail imageUrl={list.imageUrl} />}
@@ -142,6 +160,8 @@ const ArticleInfo = styled.div`
 `;
 
 const ArticleDetail = styled.div`
+  display: flex;
+  align-items: center;
   margin-right: 0.4rem;
 
   color: ${({ theme }) => theme.colors.gray60};
@@ -150,6 +170,8 @@ const ArticleDetail = styled.div`
 `;
 
 const ArticleDetailBold = styled.div`
+  margin-right: 0.8rem;
+
   color: ${({ theme }) => theme.colors.gray70};
 
   ${({ theme }) => theme.fonts.body5};

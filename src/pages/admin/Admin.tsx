@@ -19,6 +19,7 @@ const Admin = () => {
       await navigator.clipboard.writeText(
         `https://www.milewriting.com/group/${invitationCode}/groupInvite`,
       );
+      alert('초대링크가 복사되었습니다.');
     } catch {
       console.error();
     }

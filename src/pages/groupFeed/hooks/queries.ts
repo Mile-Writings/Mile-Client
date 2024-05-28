@@ -93,7 +93,6 @@ export const useCuriousPost = (groupId: string) => {
   });
 
   const curiousPostData = data && data.data.postList;
-  console.log(curiousPostData, 'data');
 
   return { curiousPostData, isLoading, isError, error };
 };
@@ -144,7 +143,7 @@ export const useFetchHeaderGroup = () => {
 
 export const useFetchWriterNameOnly = (groupId: string) => {
   const { data } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getWriterNameOnly],
+    queryKey: [QUERY_KEY_GROUPFEED.getWriterNameOnly, groupId],
     queryFn: () => fetchWriterNameOnly(groupId),
   });
 

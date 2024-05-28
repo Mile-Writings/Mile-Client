@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 import CommentInputBox from './CommentInputBox';
 
@@ -12,6 +12,7 @@ import {
   ArrowTopLeftIc,
   GroupListProfileCloseIc,
 } from '../../../assets/svgs';
+import useClickOutside from '../../../hooks/useClickOutside';
 
 interface CommentItem {
   name: string;
@@ -22,6 +23,7 @@ interface CommentItem {
   isAnonymous: boolean;
   postId: string | undefined;
   commentId: string;
+  isNested: boolean;
   type: 'nestedComment' | 'comment';
 }
 
@@ -35,29 +37,34 @@ const CommentItem = ({
   commentId,
   type,
   isAnonymous,
+  isNested,
 }: CommentItem) => {
   const { deleteComment } = useDeleteComment(commentId || '', postId || '');
   const { deleteNestedComment } = useDeleteNestedComment(commentId || '', postId || '');
   const [isClick, setIsClick] = useState(false);
   const [isNestedComment, setIsNestedComment] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const commentRef = useRef<HTMLDivElement>(null);
+  const [isBgClick, setIsBgClick] = useState(false);
 
-  const handleBtnClick = () => {
-    setIsClick((prev) => !prev);
+  const handleDeleteBtn = () => {
+    if (isClick) setIsBgClick(true);
+    if (isBgClick) {
+      setIsClick((prev) => !prev);
+      setIsBgClick(false);
+    }
   };
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-        setIsClick(false);
-      }
-    };
+  const handleCommentBtn = () => {
+    if (isNestedComment) setIsBgClick(true);
+    if (isBgClick) {
+      setIsNestedComment((prev) => !prev);
+      setIsBgClick(false);
+    }
+  };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  useClickOutside(modalRef, handleDeleteBtn);
+  useClickOutside(commentRef, handleCommentBtn);
 
   return (
     <>
@@ -71,28 +78,32 @@ const CommentItem = ({
           <CommentText>{content}</CommentText>
         </CommentItemContainer>
         <IconWrapper>
+          {!isNested && (
+            <NestCommentIcon
+              onClick={() => {
+                setIsNestedComment(true);
+              }}
+            >
+              <NestCommentIc />
+            </NestCommentIcon>
+          )}
           {isMyComment && (
-            <>
-              <NestCommentIcon onClick={() => setIsNestedComment(!isNestedComment)}>
-                <NestCommentIc />
-              </NestCommentIcon>
-              <MeatBallWrapper onClick={handleBtnClick}>
-                <DetailCommentMeatBallIcon />
-                {isClick && (
-                  <Modal
-                    onClick={() => {
-                      deleteComment();
-                    }}
-                    ref={modalRef}
-                  >
-                    <ModalContainer>삭제</ModalContainer>
-                  </Modal>
-                )}
-              </MeatBallWrapper>
-            </>
+            <MeatBallWrapper onClick={() => setIsClick(true)}>
+              <DetailCommentMeatBallIcon />
+              {isClick && (
+                <Modal
+                  onClick={() => {
+                    deleteComment();
+                  }}
+                  ref={modalRef}
+                >
+                  <ModalContainer>삭제</ModalContainer>
+                </Modal>
+              )}
+            </MeatBallWrapper>
           )}
           {isMyReply && (
-            <MeatBallWrapper onClick={handleBtnClick}>
+            <MeatBallWrapper onClick={() => setIsClick(true)}>
               <DetailCommentMeatBallIcon />
               {isClick && (
                 <Modal
@@ -109,7 +120,7 @@ const CommentItem = ({
         </IconWrapper>
       </CommentItemWrapper>
       {isNestedComment && (
-        <NestedCommentWrapper>
+        <NestedCommentWrapper ref={commentRef}>
           <ArrowTopLeftIc />
           <CommentInputBox
             postId={postId}
