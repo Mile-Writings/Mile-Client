@@ -28,22 +28,25 @@ const Pagenation = ({
     allocatedCount,
   );
 
+  const clickPrevious = () => {
+    if (isExistPreviousPage) {
+      const newChunk = activeChunk - 1;
+      setActiveChunk(newChunk);
+      setActivePage(5 * (newChunk - 1) + 1);
+    } else {
+      setActivePage((prev) => prev - 1);
+    }
+  };
+
+  const clickNext = () => {
+    const newChunk = activeChunk + 1;
+    setActiveChunk(newChunk);
+    setActivePage(5 * (newChunk - 1) + 1);
+  };
+
   return (
     <PageWrapper>
-      {activePage != 1 && (
-        <ArrowLeftIc
-          onClick={() => {
-            if (isExistPreviousPage) {
-              const newChunk = activeChunk - 1;
-              setActiveChunk(newChunk);
-              setActivePage(5 * (newChunk - 1) + 1);
-            } else {
-              setActivePage((prev) => prev - 1);
-            }
-          }}
-          style={{ cursor: 'pointer' }}
-        />
-      )}
+      {activePage != 1 && <ArrowLeftIc onClick={clickPrevious} style={{ cursor: 'pointer' }} />}
       {resultArray.map((index) => (
         <PageNumber
           key={index + 1}
@@ -55,16 +58,7 @@ const Pagenation = ({
           {index}
         </PageNumber>
       ))}
-      {isExistNextPage && (
-        <ArrowRightIc
-          onClick={() => {
-            const newChunk = activeChunk + 1;
-            setActiveChunk(newChunk);
-            setActivePage(5 * (newChunk - 1) + 1);
-          }}
-          style={{ cursor: 'pointer' }}
-        />
-      )}
+      {isExistNextPage && <ArrowRightIc onClick={clickNext} style={{ cursor: 'pointer' }} />}
     </PageWrapper>
   );
 };
