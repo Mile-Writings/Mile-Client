@@ -558,26 +558,26 @@ const PostPage = () => {
         url={url || ''}
         fileName={fileName || ''}
       />
-      <DropDownEditorWrapper>
-        {topics && (
-          <DropDown
-            topicList={topics}
-            setTopic={setTopic}
-            setWriter={setWriter}
-            selectedTopic={editorVal.topic}
-            selectedWriter={editorVal.writer}
-          />
-        )}
-        <Spacing marginBottom="2.4" />
-        <TipTap
-          title={editorVal.title}
-          setTitle={setTitle}
-          tempContent={tempContent}
-          editContent={type === 'edit' ? location.state.content : ''}
-          setEditorContent={setContent}
-          setContentWithoutTag={setContentWithoutTag}
+      {/* <DropDownEditorWrapper> */}
+      {topics && (
+        <DropDown
+          topicList={topics}
+          setTopic={setTopic}
+          setWriter={setWriter}
+          selectedTopic={editorVal.topic}
+          selectedWriter={editorVal.writer}
         />
-      </DropDownEditorWrapper>
+      )}
+      <Spacing marginBottom="2.4" />
+      <TipTap
+        title={editorVal.title}
+        setTitle={setTitle}
+        tempContent={tempContent}
+        editContent={type === 'edit' ? location.state.content : ''}
+        setEditorContent={setContent}
+        setContentWithoutTag={setContentWithoutTag}
+      />
+      {/* </DropDownEditorWrapper> */}
       <Spacing marginBottom="8" />
     </PostPageWrapper>
   );
@@ -595,11 +595,11 @@ const PostPageWrapper = styled.div`
 `;
 
 const DropDownEditorWrapper = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 100%; */
 `;
 
 const PostDeclinedWrapper = styled.div<{ $postAvailable: boolean }>`
