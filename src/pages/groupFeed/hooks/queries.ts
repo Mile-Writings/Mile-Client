@@ -121,26 +121,38 @@ export const useCuriousWriters = (groupId: string) => {
 };
 
 export const useArticleList = (topicId: string) => {
-  const { data, isLoading, isError, error } = useInfiniteQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getArticleList, topicId],
-    queryFn: ({ pageParam }) => fetchArticleList(topicId, pageParam),
-    staleTime: 10000, //20초 캐시
-    enabled: !!topicId,
-    initialPageParam: '',
-    getNextPageParam: (lastPage) => {
-      if (lastPage?.data?.hasNext) {
-        console.log(lastPage?.data?.postList[0]?.postId, 'df');
-        return lastPage?.data?.postList[0]?.postId;
-      }
-      return undefined;
-    }, //hasNext가 true일 경우, 다음 postId를 가져온다. false일경우 undefined.
-  });
+  const { data, isLoading, isError, error, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: [QUERY_KEY_GROUPFEED.getArticleList, topicId],
+      queryFn: ({ pageParam }) => fetchArticleList(topicId, pageParam),
+      staleTime: 10000, //20초 캐시
+      enabled: !!topicId,
+      initialPageParam: '',
+      getNextPageParam: (lastPage) => {
+        if (lastPage?.data?.hasNext) {
+          console.log(lastPage?.data?.postList[0]?.postId, 'df');
+          return lastPage?.data?.postList[0]?.postId;
+        }
+        return undefined;
+      }, //hasNext가 true일 경우, 다음 postId를 가져온다. false일경우 undefined.
+    });
 
   const topicInfo = data?.pages[0]?.data.topicInfo;
-  const postListData = data?.pages[0]?.data.postList;
+  const postListData = data?.pages;
+
   console.log(data, 'inif');
 
-  return { data, topicInfo, postListData, isLoading, isError, error };
+  return {
+    data,
+    topicInfo,
+    postListData,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isError,
+    error,
+  };
 };
 
 export const useFetchHeaderGroup = () => {
