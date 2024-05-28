@@ -14,7 +14,9 @@ interface EachProfilePropTypes {
 
 const EachArticle = (props: EachProfilePropTypes) => {
   const { groupId, selectedTopicId } = props;
-  const { postListData, fetchNextPage, hasNextPage } = useArticleList(selectedTopicId || '');
+  const { postListData, fetchNextPage, hasNextPage, isFetchingNextPage } = useArticleList(
+    selectedTopicId || '',
+  );
   const navigate = useNavigate();
   const handleGoPostDetail = (postId: string) => {
     navigate(`/detail/${groupId}/${postId}`, { state: { topicId: selectedTopicId } });
@@ -84,6 +86,9 @@ const EachArticle = (props: EachProfilePropTypes) => {
                   </div>
                 )),
             )}
+          {isFetchingNextPage && (
+            <LoadingWrapper src="/src/assets/gifs/loadingSpinner.gif" alt="로딩" />
+          )}
         </>
       )}
     </ArticlePostWrapper>
@@ -91,6 +96,12 @@ const EachArticle = (props: EachProfilePropTypes) => {
 };
 
 export default EachArticle;
+
+const LoadingWrapper = styled.img`
+  width: 20rem;
+  height: 20rem;
+  margin: 0 auto;
+`;
 
 const ArticlePostWrapper = styled.div`
   display: flex;
