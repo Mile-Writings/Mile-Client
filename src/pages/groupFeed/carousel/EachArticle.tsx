@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useArticleList } from '../hooks/queries';
@@ -30,6 +31,22 @@ const EachArticle = (props: EachProfilePropTypes) => {
     isImageContained: boolean;
   }
 
+  const bottomOfListRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (bottomOfListRef.current) {
+      const isBottom = bottomOfListRef.current.getBoundingClientRect().bottom <= window.innerHeight;
+      isBottom && hasNextPage && fetchNextPage();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+
   return (
     <ArticlePostWrapper>
       {postListData?.length === 0 ? (
@@ -46,7 +63,7 @@ const EachArticle = (props: EachProfilePropTypes) => {
             postListData.map(
               (postData, dataIndex) =>
                 postData?.data.postList.map((list: ProfilePropTypes, index: number) => (
-                  <div key={`${dataIndex}-${index}`}>
+                  <div key={`${dataIndex}-${index}`} ref={bottomOfListRef}>
                     <ArticleWrapper onClick={() => handleGoPostDetail(list.postId)}>
                       <ArticleContainer isImageContained={list.isImageContained}>
                         <ArticleTitle>{list.postTitle}</ArticleTitle>
@@ -67,7 +84,6 @@ const EachArticle = (props: EachProfilePropTypes) => {
                   </div>
                 )),
             )}
-          {hasNextPage && <button onClick={() => fetchNextPage()}> Load More</button>}
         </>
       )}
     </ArticlePostWrapper>
