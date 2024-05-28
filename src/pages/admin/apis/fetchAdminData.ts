@@ -1,3 +1,5 @@
+import { isAxiosError } from 'axios';
+
 import { devClient } from '../../../utils/apis/axios';
 
 //[GET] 관리자페이지 글감 LIST
@@ -117,6 +119,8 @@ export const deleteAdminTopic = async (topicId: string) => {
 
     return response.data;
   } catch (error) {
-    console.log('에러:', error);
+    if (isAxiosError(error) && error?.response?.status == 400)
+      alert('모임에는 최소 1개 이상의 글감이 필요합니다');
+    else console.log('에러:', error);
   }
 };
