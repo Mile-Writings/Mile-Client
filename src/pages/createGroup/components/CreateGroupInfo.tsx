@@ -34,6 +34,8 @@ interface CreateGroupInfoPropTypes {
   setTopic: (e: ChangeEvent<HTMLInputElement>) => void;
   setTopicTag: (e: ChangeEvent<HTMLInputElement>) => void;
   setTopicDesc: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  groupImageView: string;
+  setGroupImageView: Dispatch<SetStateAction<string>>;
 }
 
 const CreateGroupInfo = ({
@@ -50,6 +52,8 @@ const CreateGroupInfo = ({
   setTopic,
   setTopicTag,
   setTopicDesc,
+  groupImageView,
+  setGroupImageView,
 }: CreateGroupInfoPropTypes) => {
   const InputInfoMsg = {
     groupNameLength: '10자 이내로 작성해주세요.',
@@ -63,7 +67,6 @@ const CreateGroupInfo = ({
   const [isGroupNameEmpty, setIsGroupNameEmpty] = useState(false);
   const [isGroupNameValid, setIsGroupNameValid] = useState(true);
   const [isGroupTopicEmpty, setIsGroupTopicEmpty] = useState(false);
-  const [groupImageView, setGroupImageView] = useState('');
   const [topicModal, setTopicModal] = useState(false);
   const [passDuplicate, setPassDuplicate] = useState(false);
   const [groupNameInputMsg, setGroupNameInputMsg] = useState<string>(InputInfoMsg.emptyText);
@@ -90,9 +93,9 @@ const CreateGroupInfo = ({
     }
   };
 
-  const handleGroupImage = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleGroupImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
-
+    console.log('filename: ' + file);
     if (
       file &&
       (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg')
@@ -102,6 +105,8 @@ const CreateGroupInfo = ({
       reader.onload = () => {
         if (typeof reader.result === 'string') {
           postDirectlyS3Func(url, file);
+          console.log('핸들 그룹 이미지 로직' + reader.result);
+          console.log(typeof reader.result);
           setGroupImageView(reader.result);
         } else {
           console.log('Image Error');
@@ -207,6 +212,16 @@ const CreateGroupInfo = ({
     }
   }, [isSuccess, data, error, groupName]);
 
+  console.log(groupImageView);
+
+  useEffect(() => {
+    console.log(groupImageView, groupName);
+  }, [groupImageView, groupName]);
+
+  useEffect(() => {
+    console.log('그룹이미지뷰' + groupImageView);
+  }, []);
+
   return (
     <>
       <CreateGroupLayout>
@@ -271,17 +286,17 @@ const CreateGroupInfo = ({
                   <CreateGroupImageUploadIcon />
                 </GroupImageWrapper>
               )}
+              <GroupImageInput
+                type="file"
+                name="file"
+                id="file"
+                accept="image/*"
+                onChange={(e) => {
+                  handleGroupImage(e);
+                }}
+              />
             </GroupImageLabel>
 
-            <GroupImageInput
-              type="file"
-              name="file"
-              id="file"
-              accept="image/*"
-              onChange={(e) => {
-                handleGroupImage(e);
-              }}
-            />
             <GroupInputDesc>
               *글모임 페이지 상단에 노출될 대표 이미지입니다. 1366*306사이즈를 권장합니다.
             </GroupInputDesc>

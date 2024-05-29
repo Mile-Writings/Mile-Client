@@ -22,7 +22,7 @@ type CreateGroupAction =
 const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
-
+  const [groupImageView, setGroupImageView] = useState('');
   const initialState = {
     groupName: '',
     groupInfo: '',
@@ -155,6 +155,8 @@ const CreateGroup = () => {
           setTopic={setTopic}
           setTopicTag={setTopicTag}
           setTopicDesc={setTopicDesc}
+          groupImageView={groupImageView}
+          setGroupImageView={setGroupImageView}
         />
       )}
       {currentPage === 'GroupLeaderInfoPage' && (
