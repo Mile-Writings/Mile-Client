@@ -123,7 +123,6 @@ export const useArticleList = (topicId: string) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getArticleList, topicId],
     queryFn: () => fetchArticleList(topicId),
-    staleTime: 10000, //20초 캐시
     enabled: !!topicId,
   });
 

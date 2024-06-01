@@ -8,7 +8,7 @@ import EachArticle from './EachArticle';
 import './slick-theme.css';
 import './slick.css';
 
-import { useArticleList, useTopicList } from '../hooks/queries';
+import { useTopicList } from '../hooks/queries';
 
 import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
@@ -54,9 +54,7 @@ const Carousel = () => {
     setSelectedTopicId(topicId);
   };
 
-  const { topicInfo, isLoading: articleListLoading } = useArticleList(selectedTopicId || '');
-
-  if (isLoading || articleListLoading) {
+  if (isLoading) {
     return <Loading />;
   }
 
@@ -87,10 +85,6 @@ const Carousel = () => {
         )}
       </CarouselWrapper>
       <Spacing marginBottom="3.2" />
-      <Topic>{topicInfo?.topic}</Topic>
-      <Spacing marginBottom="0.8" />
-      <TopicDescription>{topicInfo?.topicDescription}</TopicDescription>
-      <Spacing marginBottom="2" />
       <EachArticle selectedTopicId={selectedTopicId} groupId={groupId || ''} />
     </>
   );
@@ -120,19 +114,4 @@ const GroupTabBtnBaseNextIcon = styled(GroupTabBtnBaseNextIc)`
   right: 0;
 
   pointer-events: none;
-`;
-
-const Topic = styled.div`
-  width: 63.1rem;
-
-  color: ${({ theme }) => theme.colors.black};
-  ${({ theme }) => theme.fonts.title5};
-`;
-
-const TopicDescription = styled.div`
-  width: 63.1rem;
-
-  color: ${({ theme }) => theme.colors.gray70};
-
-  ${({ theme }) => theme.fonts.body3};
 `;

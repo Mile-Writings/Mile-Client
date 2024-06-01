@@ -18,7 +18,7 @@ interface EachProfilePropTypes {
 }
 const EachArticle = (props: EachProfilePropTypes) => {
   const { groupId, selectedTopicId } = props;
-  const { postListData } = useArticleList(selectedTopicId || '');
+  const { topicInfo, postListData } = useArticleList(selectedTopicId || '');
   const navigate = useNavigate();
   const handleGoPostDetail = (postId: string) => {
     navigate(`/detail/${groupId}/${postId}`, { state: { topicId: selectedTopicId } });
@@ -38,53 +38,74 @@ const EachArticle = (props: EachProfilePropTypes) => {
   }
 
   return (
-    <ArticlePostWrapper>
-      {postListData?.length === 0 ? (
-        <NoPostWrapper>
-          <Spacing marginBottom="4" />
-          <GroupNoDataImgIc />
-          <Spacing marginBottom="1.6" />
-          아직 글이 없어요
-          <Spacing marginBottom="4" />
-        </NoPostWrapper>
-      ) : (
-        postListData?.map((list: ProfilePropTypes, index: number) => (
-          <div key={index}>
-            <ArticleWrapper onClick={() => handleGoPostDetail(list.postId)}>
-              <ArticleContainer isImageContained={list.isImageContained}>
-                <ArticleTitle>{list.postTitle}</ArticleTitle>
-                <Spacing marginBottom="1.6" />
-                <ArticleContent>{list.postContent}</ArticleContent>
-                <Spacing marginBottom="1.2" />
-                <ArticleInfo>
-                  <GroupListProfileIc />
-                  <ProfileName>{list.writerName}</ProfileName>
-                  <ArticleDetail>{list.createdAt}</ArticleDetail>
-                  <ArticleDetail>·</ArticleDetail>
-                  <ArticleDetail>
-                    <GroupCuriousIc />
-                  </ArticleDetail>
-                  <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
-                  <ArticleDetail>
-                    <GroupViewIc />
-                  </ArticleDetail>
-                  <ArticleDetailBold>{list.hitsCount}</ArticleDetailBold>
-                  <ArticleDetail>
-                    <GroupChatIc />
-                  </ArticleDetail>
-                  <ArticleDetailBold>{list.commentCount}</ArticleDetailBold>
-                </ArticleInfo>
-              </ArticleContainer>
-              {list.isImageContained && <ArticleThumbnail imageUrl={list.imageUrl} />}
-            </ArticleWrapper>
-          </div>
-        ))
-      )}
-    </ArticlePostWrapper>
+    <>
+      <Topic>{topicInfo?.topic}</Topic>
+      <Spacing marginBottom="0.8" />
+      <TopicDescription>{topicInfo?.topicDescription}</TopicDescription>
+      <Spacing marginBottom="2" />
+      <ArticlePostWrapper>
+        {postListData?.length === 0 ? (
+          <NoPostWrapper>
+            <Spacing marginBottom="4" />
+            <GroupNoDataImgIc />
+            <Spacing marginBottom="1.6" />
+            아직 글이 없어요
+            <Spacing marginBottom="4" />
+          </NoPostWrapper>
+        ) : (
+          postListData?.map((list: ProfilePropTypes, index: number) => (
+            <div key={index}>
+              <ArticleWrapper onClick={() => handleGoPostDetail(list.postId)}>
+                <ArticleContainer isImageContained={list.isImageContained}>
+                  <ArticleTitle>{list.postTitle}</ArticleTitle>
+                  <Spacing marginBottom="1.6" />
+                  <ArticleContent>{list.postContent}</ArticleContent>
+                  <Spacing marginBottom="1.2" />
+                  <ArticleInfo>
+                    <GroupListProfileIc />
+                    <ProfileName>{list.writerName}</ProfileName>
+                    <ArticleDetail>{list.createdAt}</ArticleDetail>
+                    <ArticleDetail>·</ArticleDetail>
+                    <ArticleDetail>
+                      <GroupCuriousIc />
+                    </ArticleDetail>
+                    <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
+                    <ArticleDetail>
+                      <GroupViewIc />
+                    </ArticleDetail>
+                    <ArticleDetailBold>{list.hitsCount}</ArticleDetailBold>
+                    <ArticleDetail>
+                      <GroupChatIc />
+                    </ArticleDetail>
+                    <ArticleDetailBold>{list.commentCount}</ArticleDetailBold>
+                  </ArticleInfo>
+                </ArticleContainer>
+                {list.isImageContained && <ArticleThumbnail imageUrl={list.imageUrl} />}
+              </ArticleWrapper>
+            </div>
+          ))
+        )}
+      </ArticlePostWrapper>
+    </>
   );
 };
 
 export default EachArticle;
+
+const Topic = styled.div`
+  width: 63.1rem;
+
+  color: ${({ theme }) => theme.colors.black};
+  ${({ theme }) => theme.fonts.title5};
+`;
+
+const TopicDescription = styled.div`
+  width: 63.1rem;
+
+  color: ${({ theme }) => theme.colors.gray70};
+
+  ${({ theme }) => theme.fonts.body3};
+`;
 
 const ArticlePostWrapper = styled.div`
   display: flex;
