@@ -12,7 +12,7 @@ const CreateGroupSuccess = () => {
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(`http://localhost:5173/group/${groupId}/groupInvite`);
+      await navigator.clipboard.writeText(`https://www.milewriting.com/${groupId}/groupInvite`);
       alert('초대 링크가 복사되었습니다.');
     } catch (err) {
       console.error('클립보드 복사 실패:', err);
