@@ -86,9 +86,7 @@ const PostDetail = () => {
             <CheckboxIc />
             <TopicText>{postData?.topic}</TopicText>
           </TopicWrapper>
-          <PostContainer
-            dangerouslySetInnerHTML={{ __html: postData?.content || '' }}
-          ></PostContainer>
+          <PostContainer dangerouslySetInnerHTML={{ __html: postData?.content || '' }} />
         </PostWrapper>
         <WriterInfoWrapper>
           <WriterInfoContainer>

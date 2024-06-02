@@ -143,7 +143,7 @@ export const useFetchHeaderGroup = () => {
 
 export const useFetchWriterNameOnly = (groupId: string) => {
   const { data } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getWriterNameOnly],
+    queryKey: [QUERY_KEY_GROUPFEED.getWriterNameOnly, groupId],
     queryFn: () => fetchWriterNameOnly(groupId),
   });
 

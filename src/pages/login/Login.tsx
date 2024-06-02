@@ -26,14 +26,17 @@ const Login = () => {
         <HeaderLogoIcon onClick={handleNavigateMain} />
         <HeaderBtnLayout />
       </HeaderWrapper>
-      <Spacing marginBottom="6.4" />
+      <Spacing marginBottom="13.2" />
       <LoginLayout>
         <LoginContainer>
           <LoginTextBox>
             <HeadText>마일 시작하기</HeadText>
+            <Spacing marginBottom="1.6" />
             <SubText>Make it look easy 글쓰기를 쉽고 편안하게</SubText>
           </LoginTextBox>
+          <Spacing marginBottom="2.4" />
           <LoginIc />
+          <Spacing marginBottom="2.4" />
           <KakaoLoginBtnIcon onClick={handleKakaoLogin} />
         </LoginContainer>
       </LoginLayout>
@@ -54,17 +57,13 @@ const LoginWrapper = styled.div`
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2.4rem;
   align-items: center;
   justify-content: center;
-  padding: 4rem 0;
-  padding-top: 13.2rem;
 `;
 
 const LoginTextBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
   align-items: center;
   width: 30.9rem;
   height: 7.4rem;
@@ -106,6 +105,11 @@ const HeaderLogoIcon = styled(HeaderLogoIc)`
 const LoginLayout = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 100%;
+  gap: 24px;
+  align-items: center;
+  width: 61.5rem;
+  padding: 4rem 0;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 0.8rem;
 `;

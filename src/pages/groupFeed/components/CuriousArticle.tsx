@@ -73,8 +73,6 @@ export default CuriousArticle;
 const CuriousArticleWrapper = styled.div`
   display: flex;
   gap: 1.6rem;
-
-  cursor: pointer;
 `;
 
 const ArticleThumbnail = styled.img`
@@ -93,6 +91,7 @@ const CuriousArticleLayout = styled.div`
   padding: 3.2rem;
 
   background-color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
   border-radius: 8px;
 `;
 

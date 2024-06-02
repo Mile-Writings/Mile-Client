@@ -162,9 +162,10 @@ const GroupSideHeaderLayout = styled.div`
 const GroupSideHeaderDetailBox = styled.div`
   display: flex;
   gap: 1.2rem;
+  width: 20.8rem;
 
   color: ${({ theme }) => theme.colors.gray70};
-  word-break: keep-all;
+  word-break: break-all;
 
   ${({ theme }) => theme.fonts.body2};
 `;

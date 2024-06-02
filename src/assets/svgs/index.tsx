@@ -53,7 +53,7 @@ export { default as EditorDropIcnOpen } from './editorDropIcnOpen.svg?react';
 
 export { default as EditorDropIcnActiveIc } from './editorDropIcnActive.svg?react';
 export { default as EditorDropIcnActiveOpenIc } from './editorDropIcnActiveopen.svg?react';
-export { default as GroupThumnailImgIc } from './groupThumnailImg.svg?react';
+export { default as GroupThumbnailImgIc } from './groupThumbnailImg.svg?react';
 
 export {
   default as EditorThuminputIcnActiveIc,
@@ -97,3 +97,6 @@ export { default as JoinCongratulationIc } from './joinCongratulationPng.svg?rea
 export { default as CreateGroupCongrats } from './createGroupCongrats.svg?react';
 export { default as CreateGroupIlust } from './createGroupIlust.svg?react';
 
+export { default as GroupViewIc } from './groupViewIcn.svg?react';
+export { default as GroupCuriousIc } from './groupCuriousIcn.svg?react';
+export { default as GroupChatIc } from './groupChatIcn.svg?react';
