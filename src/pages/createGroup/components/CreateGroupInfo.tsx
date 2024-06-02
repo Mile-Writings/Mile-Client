@@ -95,7 +95,6 @@ const CreateGroupInfo = ({
 
   const handleGroupImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
-    console.log('filename: ' + file);
     if (
       file &&
       (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg')
@@ -105,8 +104,6 @@ const CreateGroupInfo = ({
       reader.onload = () => {
         if (typeof reader.result === 'string') {
           postDirectlyS3Func(url, file);
-          console.log('핸들 그룹 이미지 로직' + reader.result);
-          console.log(typeof reader.result);
           setGroupImageView(reader.result);
         } else {
           console.log('Image Error');
@@ -211,16 +208,6 @@ const CreateGroupInfo = ({
       setGroupNameInputMsg(InputInfoMsg.groupNameLength);
     }
   }, [isSuccess, data, error, groupName]);
-
-  console.log(groupImageView);
-
-  useEffect(() => {
-    console.log(groupImageView, groupName);
-  }, [groupImageView, groupName]);
-
-  useEffect(() => {
-    console.log('그룹이미지뷰' + groupImageView);
-  }, []);
 
   return (
     <>
