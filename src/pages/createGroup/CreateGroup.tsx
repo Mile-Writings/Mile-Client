@@ -152,6 +152,7 @@ const CreateGroup = () => {
           setIsPublic={setIsPublic}
           topic={topic}
           topicTag={topicTag}
+          topicDesc={topicDesc}
           setTopic={setTopic}
           setTopicTag={setTopicTag}
           setTopicDesc={setTopicDesc}

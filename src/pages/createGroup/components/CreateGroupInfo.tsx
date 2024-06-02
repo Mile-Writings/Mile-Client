@@ -31,6 +31,7 @@ interface CreateGroupInfoPropTypes {
   setIsPublic: (value: boolean) => void;
   topic: string;
   topicTag: string;
+  topicDesc: string;
   setTopic: (e: ChangeEvent<HTMLInputElement>) => void;
   setTopicTag: (e: ChangeEvent<HTMLInputElement>) => void;
   setTopicDesc: (e: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -49,6 +50,7 @@ const CreateGroupInfo = ({
   setIsPublic,
   topic,
   topicTag,
+  topicDesc,
   setTopic,
   setTopicTag,
   setTopicDesc,
@@ -258,7 +260,7 @@ const CreateGroupInfo = ({
               ref={groupInfoRef}
               value={groupInfo}
             />
-            <TextAreaLenth isValid={isGroupInfoValid}> {groupInfo.length} / 100</TextAreaLenth>
+            <TextAreaLength isValid={isGroupInfoValid}> {groupInfo.length} / 100</TextAreaLength>
           </GroupInputWrapper>
         </GroupInfoWrppaer>
         <WhiteInputWrapper isValid={true}>
@@ -365,6 +367,7 @@ const CreateGroupInfo = ({
           <CreateGroupTopicModal
             topic={topic}
             topicTag={topicTag}
+            topicDesc={topicDesc}
             setTopic={setTopic}
             setTopicTag={setTopicTag}
             setTopicDesc={setTopicDesc}
@@ -425,7 +428,7 @@ const GroupInfoWrppaer = styled.section`
   border-radius: 8px;
 `;
 
-const TextAreaLenth = styled.p<{ isValid: boolean }>`
+const TextAreaLength = styled.p<{ isValid: boolean }>`
   position: relative;
   bottom: 4rem;
   left: 70.6rem;
