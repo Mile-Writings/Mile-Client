@@ -1,6 +1,12 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
+import {
+  MAX_TOPIC_DESC_LENGTH,
+  MAX_TOPIC_KEYWORD_LENGTH,
+  MAX_TOPIC_LENGTH,
+} from '../constants/topicLenth';
+
 interface GroupTopicModalPropTypes {
   topic: string;
   topicTag: string;
@@ -24,10 +30,6 @@ const CreateGroupTopicModal = ({
 }: GroupTopicModalPropTypes) => {
   const [isTopicEmpty, setIsTopicEmpty] = useState(false);
   const [isTopicTagEmpty, setIsTopicTagEmpty] = useState(false);
-
-  const MAX_TOPIC_DESC_LENGTH = 90;
-  const MAX_TOPIC_LENGTH = 15;
-  const MAX_TOPIC_KEYWORD_LENGTH = 5;
 
   const isTopicDescValid = topicDesc.length <= MAX_TOPIC_DESC_LENGTH;
   const isTopicValid = topic.length <= MAX_TOPIC_LENGTH;

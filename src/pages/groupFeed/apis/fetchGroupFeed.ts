@@ -60,7 +60,7 @@ interface TodayTopicPropTypes {
 
 export const fetchTodayTopic = async (groupId: string) => {
   try {
-    const response = await client.get<TodayTopicPropTypes>(`/api/moim/${groupId}/topic`);
+    const response = await client.get<TodayTopicPropTypes>(`/api/moim/${groupId}/topics`);
     return response.data;
   } catch (error) {
     console.error('에러:', error);

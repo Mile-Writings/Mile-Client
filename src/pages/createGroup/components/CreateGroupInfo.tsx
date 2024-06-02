@@ -4,6 +4,11 @@ import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } fr
 
 import CreateGroupTopicModal from './CreateGroupTopicModal';
 
+import {
+  MAX_TOPIC_DESC_LENGTH,
+  MAX_TOPIC_KEYWORD_LENGTH,
+  MAX_TOPIC_LENGTH,
+} from '../constants/topicLenth';
 import { useGetGroupNameValidation } from '../hooks/queries';
 import { CurrentPageType } from '../types/stateType';
 
@@ -65,7 +70,6 @@ const CreateGroupInfo = ({
     emptyText: '',
   };
 
-  const isGroupInfoValid = groupInfo.length <= 100;
   const [isGroupNameEmpty, setIsGroupNameEmpty] = useState(false);
   const [isGroupNameValid, setIsGroupNameValid] = useState(true);
   const [isGroupTopicEmpty, setIsGroupTopicEmpty] = useState(false);
@@ -76,7 +80,13 @@ const CreateGroupInfo = ({
 
   const groupNameRef = useRef<HTMLInputElement>(null);
   const groupInfoRef = useRef<HTMLTextAreaElement>(null);
-
+  const isGroupInfoValid = groupInfo.length <= 100;
+  const topicValidationAll =
+    topicTag &&
+    topic &&
+    topic.length <= MAX_TOPIC_LENGTH &&
+    topicTag.length <= MAX_TOPIC_KEYWORD_LENGTH &&
+    topicDesc.length <= MAX_TOPIC_DESC_LENGTH;
   const { data, refetch, isSuccess, error } = useGetGroupNameValidation(groupName);
 
   // 이미지 보낼 url 받아오기
@@ -138,7 +148,7 @@ const CreateGroupInfo = ({
     }
 
     //그룹이름 여부, 그룹이름 유효성(길이), 토픽, 토픽태그, 중복검사 통과여부 확인
-    if (groupName && isGroupNameValid && topic && topicTag && passDuplicate) {
+    if (groupName && isGroupNameValid && topic && topicTag && passDuplicate && topicValidationAll) {
       setCurrentPage('GroupLeaderInfoPage');
     }
     //그룹이름 없거나 그룹이름 유효하지 않은 경우
@@ -160,7 +170,7 @@ const CreateGroupInfo = ({
       }
     }
     //topic이나 topicTag가 없을 때
-    else if (!topic || !topicTag) {
+    else if (!topic || !topicTag || !topicValidationAll) {
       setIsGroupTopicEmpty(true);
     } else {
       console.log('예기치 않는 에러');
@@ -352,8 +362,8 @@ const CreateGroupInfo = ({
             </TopicSettingWrapper>
             <TopicCreateBtn
               onClick={toggleModal}
-              disabled={!!(topicTag && topic)}
-              isBtnEnabled={!(topicTag && topic)}
+              disabled={!!topicValidationAll}
+              isBtnEnabled={!topicValidationAll}
             >
               글감 작성하기
             </TopicCreateBtn>
