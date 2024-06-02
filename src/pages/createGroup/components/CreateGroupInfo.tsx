@@ -241,7 +241,6 @@ const CreateGroupInfo = ({
                 onChange={handleGroupName}
                 placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
                 isValid={isGroupNameValid}
-                isGreen={passDuplicate}
                 value={groupName}
               />{' '}
               <DuplicateCheckBtn
@@ -658,7 +657,7 @@ const GroupNameInputLayout = styled.div`
   height: 4rem;
 `;
 
-const GroupNameInput = styled.input<{ isValid: boolean; isGreen: boolean }>`
+const GroupNameInput = styled.input<{ isValid: boolean }>`
   width: 100%;
   height: 3.9rem;
   padding: 1rem 1.2rem;
@@ -667,8 +666,7 @@ const GroupNameInput = styled.input<{ isValid: boolean; isGreen: boolean }>`
 
   background: ${({ theme }) => theme.colors.gray5};
   border: 1px solid
-    ${({ theme, isValid, isGreen }) =>
-      isGreen ? theme.colors.mainGreen : isValid ? theme.colors.gray20 : theme.colors.mileRed};
+    ${({ theme, isValid }) => (isValid ? theme.colors.gray20 : theme.colors.mileRed)};
 
   /* border: 1px solid ${({ theme }) => theme.colors.gray20}; */
   border-radius: 6px;
