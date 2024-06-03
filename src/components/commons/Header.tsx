@@ -8,6 +8,7 @@ import { HeaderLogoIc } from '../../assets/svgs';
 import useNavigateHome from '../../hooks/useNavigateHome';
 import CreateGroupBtn from '../../pages/groupFeed/components/CreateGroupBtn';
 import MyGroupDropDown from '../../pages/groupFeed/components/MyGroupDropDown';
+import { useFetchHeaderGroup } from '../../pages/groupFeed/hooks/queries';
 import logout from '../../utils/logout';
 
 interface onClickEditProps {
@@ -26,6 +27,7 @@ interface OnClickTempExistProps {
 // 로그인된 경우 헤더
 export const AuthorizationHeader = () => {
   const { navigateToHome } = useNavigateHome();
+  const { data } = useFetchHeaderGroup();
   const handleLogOut = () => {
     logout();
     location.reload();
@@ -37,7 +39,7 @@ export const AuthorizationHeader = () => {
       <HeaderLayout>
         <MyGroupDropDown />
         <HeaderBtnContainer>
-          <CreateGroupBtn />
+          <CreateGroupBtn groupCount={data?.data.moims.length} />
           <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
         </HeaderBtnContainer>
       </HeaderLayout>

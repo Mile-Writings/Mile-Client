@@ -4,14 +4,22 @@ import { useNavigate } from 'react-router-dom';
 
 import { MakeGroupPlusBtn, MakeGroupPlusHoverBtn } from '../../../assets/svgs';
 
-const CreateGroupBtn = () => {
+const CreateGroupBtn = (groupCount: number) => {
   const [showHoverIcon, setShowHoverIcon] = useState(false);
   const navigate = useNavigate();
+
+  const handleCreateGroupBtn = () => {
+    if (groupCount < 5) {
+      navigate('/createGroup');
+    } else {
+      alert('글모임은 최대 5개까지 가입할 수 있습니다.');
+    }
+  };
   return (
     <CreateGroupBtnWrapper
       onMouseOver={() => setShowHoverIcon(true)}
       onMouseLeave={() => setShowHoverIcon(false)}
-      onClick={() => navigate('/createGroup')}
+      onClick={handleCreateGroupBtn}
     >
       {showHoverIcon ? <MakeGroupPlusHoverBtn /> : <MakeGroupPlusBtn />} 글모임 만들기
     </CreateGroupBtnWrapper>
