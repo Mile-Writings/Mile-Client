@@ -7,6 +7,7 @@ import RenderAdminContent from './RenderAdminContent';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
+import { copyLink } from '../../utils/copyLink';
 
 const Admin = () => {
   const accessToken = localStorage.getItem('accessToken');
@@ -14,15 +15,8 @@ const Admin = () => {
   const { groupId } = useParams();
   const { invitationCode } = useFetchInvitationLink(groupId);
 
-  const handleCopyLink = async (invitationCode: string) => {
-    try {
-      await navigator.clipboard.writeText(
-        `https://www.milewriting.com/group/${invitationCode}/groupInvite`,
-      );
-      alert('초대링크가 복사되었습니다.');
-    } catch {
-      console.error();
-    }
+  const handleCopyLink = (invitationCode: string) => {
+    copyLink(`https://www.milewriting.com/group/${invitationCode}/groupInvite`);
   };
 
   return (
