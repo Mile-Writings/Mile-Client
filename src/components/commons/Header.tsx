@@ -31,13 +31,12 @@ export const AuthorizationHeader = () => {
   const [moims, setMoims] = useState<Moim[]>([]);
   const { navigateToHome } = useNavigateHome();
   const { data } = useFetchHeaderGroup();
-  console.log(data);
   const handleLogOut = () => {
     logout();
     location.reload();
   };
   useEffect(() => {
-    if (data?.data?.moims) setMoims(data?.data.moims ?? []);
+    if (data?.data?.moims) setMoims(data?.data.moims);
   }, [data?.data?.moims]);
   return (
     <HeaderWrapper>
