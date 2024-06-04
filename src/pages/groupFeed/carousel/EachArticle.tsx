@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useArticleList } from '../hooks/queries';
 
+import spinnerGif from '../../../assets/gifs/loadingSpinner.gif';
 import {
   GroupListProfileIc,
   GroupNoDataImgIc,
@@ -109,9 +110,7 @@ const EachArticle = (props: EachProfilePropTypes) => {
                 </div>
               )),
           )}
-          {isFetchingNextPage && (
-            <LoadingWrapper src="/src/assets/gifs/loadingSpinner.gif" alt="로딩" />
-          )}
+          {isFetchingNextPage && <LoadingWrapper src={spinnerGif} alt="로딩" />}
         </>
       )}
     </ArticlePostWrapper>
