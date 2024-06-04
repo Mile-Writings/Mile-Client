@@ -20,7 +20,6 @@ export const fetchGroupFeedAuth = async (groupId: string) => {
         },
       },
     );
-    // console.log(response.data, 'fetchgRoup');
     return response.data; //"isMember" : boolean, "isOwner" : boolean
   } catch (error) {
     console.error('에러:', error);
