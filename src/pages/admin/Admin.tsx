@@ -15,7 +15,7 @@ const Admin = () => {
   const { groupId } = useParams();
   const { invitationCode } = useFetchInvitationLink(groupId);
 
-  const handleCopyLink = async (invitationCode: string) => {
+  const handleCopyLink = (invitationCode: string) => {
     copyLink(`https://www.milewriting.com/group/${invitationCode}/groupInvite`);
   };
 
