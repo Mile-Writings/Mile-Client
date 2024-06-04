@@ -594,14 +594,6 @@ const PostPageWrapper = styled.div`
   width: 100%;
 `;
 
-const DropDownEditorWrapper = styled.div`
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%; */
-`;
-
 const PostDeclinedWrapper = styled.div<{ $postAvailable: boolean }>`
   position: fixed;
   top: 7rem;
