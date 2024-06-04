@@ -238,6 +238,13 @@ export const theme = {
       font-style: normal;
       line-height: 200%; /* 24px */
     `,
+    body9: css`
+      font-weight: 500;
+      font-size: 1.6rem;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-style: normal;
+      line-height: 150%; /* 24px */
+    `,
     button1: css`
       font-weight: 600;
       font-size: 1.6rem;

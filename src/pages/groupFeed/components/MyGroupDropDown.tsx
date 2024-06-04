@@ -106,7 +106,6 @@ const MyGroupListLayout = styled.div<{ $isOpen: boolean }>`
 `;
 
 const GroupContentContainer = styled.div<{ $isEmpty: boolean }>`
-  display: flex;
   width: 15.2rem;
   padding: 1rem 1.6rem;
 
@@ -115,15 +114,15 @@ const GroupContentContainer = styled.div<{ $isEmpty: boolean }>`
   white-space: pre-line;
   text-align: ${({ $isEmpty }) => ($isEmpty ? 'center' : 'left')};
 
-  cursor: pointer;
+  cursor: ${({ $isEmpty }) => ($isEmpty ? 'default' : 'cursor')};
   border-radius: 0.8rem;
-  ${({ theme }) => theme.fonts.body1};
+  ${({ $isEmpty, theme }) => ($isEmpty ? theme.fonts.body9 : theme.fonts.body1)};
 
   &:hover {
-    color: ${({ theme }) => theme.colors.black};
+    color: ${({ $isEmpty, theme }) => !$isEmpty && theme.colors.black};
 
-    background-color: ${({ theme }) => theme.colors.gray10};
+    background-color: ${({ $isEmpty, theme }) => !$isEmpty && theme.colors.gray10};
 
-    ${({ theme }) => theme.fonts.subtitle6};
+    ${({ $isEmpty, theme }) => !$isEmpty && theme.fonts.subtitle6};
   }
 `;
