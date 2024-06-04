@@ -4,6 +4,11 @@ import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } fr
 
 import CreateGroupTopicModal from './CreateGroupTopicModal';
 
+import {
+  MAX_TOPIC_DESC_LENGTH,
+  MAX_TOPIC_KEYWORD_LENGTH,
+  MAX_TOPIC_LENGTH,
+} from '../constants/topicLenth';
 import { useGetGroupNameValidation } from '../hooks/queries';
 import { CurrentPageType } from '../types/stateType';
 
@@ -31,9 +36,12 @@ interface CreateGroupInfoPropTypes {
   setIsPublic: (value: boolean) => void;
   topic: string;
   topicTag: string;
+  topicDesc: string;
   setTopic: (e: ChangeEvent<HTMLInputElement>) => void;
   setTopicTag: (e: ChangeEvent<HTMLInputElement>) => void;
   setTopicDesc: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  groupImageView: string;
+  setGroupImageView: Dispatch<SetStateAction<string>>;
 }
 
 const CreateGroupInfo = ({
@@ -47,9 +55,12 @@ const CreateGroupInfo = ({
   setIsPublic,
   topic,
   topicTag,
+  topicDesc,
   setTopic,
   setTopicTag,
   setTopicDesc,
+  groupImageView,
+  setGroupImageView,
 }: CreateGroupInfoPropTypes) => {
   const InputInfoMsg = {
     groupNameLength: '10자 이내로 작성해주세요.',
@@ -59,11 +70,9 @@ const CreateGroupInfo = ({
     emptyText: '',
   };
 
-  const isGroupInfoValid = groupInfo.length <= 100;
   const [isGroupNameEmpty, setIsGroupNameEmpty] = useState(false);
   const [isGroupNameValid, setIsGroupNameValid] = useState(true);
   const [isGroupTopicEmpty, setIsGroupTopicEmpty] = useState(false);
-  const [groupImageView, setGroupImageView] = useState('');
   const [topicModal, setTopicModal] = useState(false);
   const [passDuplicate, setPassDuplicate] = useState(false);
   const [groupNameInputMsg, setGroupNameInputMsg] = useState<string>(InputInfoMsg.emptyText);
@@ -71,7 +80,13 @@ const CreateGroupInfo = ({
 
   const groupNameRef = useRef<HTMLInputElement>(null);
   const groupInfoRef = useRef<HTMLTextAreaElement>(null);
-  const [isBtnEnabled, setIsBtnEnabled] = useState(true);
+  const isGroupInfoValid = groupInfo.length <= 100;
+  const topicValidationAll =
+    topicTag &&
+    topic &&
+    topic.length <= MAX_TOPIC_LENGTH &&
+    topicTag.length <= MAX_TOPIC_KEYWORD_LENGTH &&
+    topicDesc.length <= MAX_TOPIC_DESC_LENGTH;
   const { data, refetch, isSuccess, error } = useGetGroupNameValidation(groupName);
 
   // 이미지 보낼 url 받아오기
@@ -90,9 +105,8 @@ const CreateGroupInfo = ({
     }
   };
 
-  const handleGroupImage = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleGroupImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
-
     if (
       file &&
       (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg')
@@ -134,7 +148,7 @@ const CreateGroupInfo = ({
     }
 
     //그룹이름 여부, 그룹이름 유효성(길이), 토픽, 토픽태그, 중복검사 통과여부 확인
-    if (groupName && isGroupNameValid && topic && topicTag && passDuplicate) {
+    if (groupName && isGroupNameValid && topic && topicTag && passDuplicate && topicValidationAll) {
       setCurrentPage('GroupLeaderInfoPage');
     }
     //그룹이름 없거나 그룹이름 유효하지 않은 경우
@@ -156,7 +170,7 @@ const CreateGroupInfo = ({
       }
     }
     //topic이나 topicTag가 없을 때
-    else if (!topic || !topicTag) {
+    else if (!topic || !topicTag || !topicValidationAll) {
       setIsGroupTopicEmpty(true);
     } else {
       console.log('예기치 않는 에러');
@@ -226,7 +240,7 @@ const CreateGroupInfo = ({
                 onChange={handleGroupName}
                 placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
                 isValid={isGroupNameValid}
-                isGreen={passDuplicate}
+                value={groupName}
               />{' '}
               <DuplicateCheckBtn
                 type="button"
@@ -254,8 +268,9 @@ const CreateGroupInfo = ({
               onChange={(e) => setGroupInfo(e)}
               maxLength={110}
               ref={groupInfoRef}
+              value={groupInfo}
             />
-            <TextAreaLenth isValid={isGroupInfoValid}> {groupInfo.length} / 100</TextAreaLenth>
+            <TextAreaLength isValid={isGroupInfoValid}> {groupInfo.length} / 100</TextAreaLength>
           </GroupInputWrapper>
         </GroupInfoWrppaer>
         <WhiteInputWrapper isValid={true}>
@@ -269,16 +284,17 @@ const CreateGroupInfo = ({
                   <CreateGroupImageUploadIcon />
                 </GroupImageWrapper>
               )}
+              <GroupImageInput
+                type="file"
+                name="file"
+                id="file"
+                accept="image/*"
+                onChange={(e) => {
+                  handleGroupImage(e);
+                }}
+              />
             </GroupImageLabel>
 
-            <GroupImageInput
-              type="file"
-              name="file"
-              id="file"
-              onChange={(e) => {
-                handleGroupImage(e);
-              }}
-            />
             <GroupInputDesc>
               *글모임 페이지 상단에 노출될 대표 이미지입니다. 1366*306사이즈를 권장합니다.
             </GroupInputDesc>
@@ -339,15 +355,15 @@ const CreateGroupInfo = ({
               <TopicSettingText>글모임 생성 전에 첫번째 글감을 설정해보세요*</TopicSettingText>
 
               <TopicSettingAdditionalText>
-                {isBtnEnabled
+                {!(topicTag && topic)
                   ? '관리자 페이지에서 언제든지 수정 가능합니다.'
                   : '첫번째 글감 작성이 완료되었습니다. 관리자 페이지에서 언제든지 수정 가능합니다.'}
               </TopicSettingAdditionalText>
             </TopicSettingWrapper>
             <TopicCreateBtn
               onClick={toggleModal}
-              disabled={!isBtnEnabled}
-              isBtnEnabled={isBtnEnabled}
+              disabled={!!topicValidationAll}
+              isBtnEnabled={!topicValidationAll}
             >
               글감 작성하기
             </TopicCreateBtn>
@@ -361,12 +377,12 @@ const CreateGroupInfo = ({
           <CreateGroupTopicModal
             topic={topic}
             topicTag={topicTag}
+            topicDesc={topicDesc}
             setTopic={setTopic}
             setTopicTag={setTopicTag}
             setTopicDesc={setTopicDesc}
             toggleModal={toggleModal}
             setIsGroupTopicEmpty={setIsGroupTopicEmpty}
-            setIsBtnEnabled={setIsBtnEnabled}
           />
         </Overlay>
       )}
@@ -422,7 +438,7 @@ const GroupInfoWrppaer = styled.section`
   border-radius: 8px;
 `;
 
-const TextAreaLenth = styled.p<{ isValid: boolean }>`
+const TextAreaLength = styled.p<{ isValid: boolean }>`
   position: relative;
   bottom: 4rem;
   left: 70.6rem;
@@ -641,7 +657,7 @@ const GroupNameInputLayout = styled.div`
   height: 4rem;
 `;
 
-const GroupNameInput = styled.input<{ isValid: boolean; isGreen: boolean }>`
+const GroupNameInput = styled.input<{ isValid: boolean }>`
   width: 100%;
   height: 3.9rem;
   padding: 1rem 1.2rem;
@@ -650,8 +666,7 @@ const GroupNameInput = styled.input<{ isValid: boolean; isGreen: boolean }>`
 
   background: ${({ theme }) => theme.colors.gray5};
   border: 1px solid
-    ${({ theme, isValid, isGreen }) =>
-      isGreen ? theme.colors.mainGreen : isValid ? theme.colors.gray20 : theme.colors.mileRed};
+    ${({ theme, isValid }) => (isValid ? theme.colors.gray20 : theme.colors.mileRed)};
 
   /* border: 1px solid ${({ theme }) => theme.colors.gray20}; */
   border-radius: 6px;

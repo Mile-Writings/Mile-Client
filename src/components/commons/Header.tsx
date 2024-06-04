@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import Button from './Button';
@@ -6,8 +7,10 @@ import LogInOutBtn from './LogInOutBtn';
 
 import { HeaderLogoIc } from '../../assets/svgs';
 import useNavigateHome from '../../hooks/useNavigateHome';
+import { Moim } from '../../pages/groupFeed/apis/fetchHeaderGroup';
 import CreateGroupBtn from '../../pages/groupFeed/components/CreateGroupBtn';
 import MyGroupDropDown from '../../pages/groupFeed/components/MyGroupDropDown';
+import { useFetchHeaderGroup } from '../../pages/groupFeed/hooks/queries';
 import logout from '../../utils/logout';
 
 interface onClickEditProps {
@@ -25,19 +28,24 @@ interface OnClickTempExistProps {
 
 // 로그인된 경우 헤더
 export const AuthorizationHeader = () => {
+  const [moims, setMoims] = useState<Moim[]>([]);
   const { navigateToHome } = useNavigateHome();
+  const { data } = useFetchHeaderGroup();
+  console.log(data);
   const handleLogOut = () => {
     logout();
     location.reload();
   };
-
+  useEffect(() => {
+    if (data?.data?.moims) setMoims(data?.data.moims ?? []);
+  }, [data?.data?.moims]);
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
       <HeaderLayout>
-        <MyGroupDropDown />
+        <MyGroupDropDown groupData={moims ?? []} />
         <HeaderBtnContainer>
-          <CreateGroupBtn />
+          <CreateGroupBtn groupCount={data?.data.moims.length ?? 0} />
           <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
         </HeaderBtnContainer>
       </HeaderLayout>

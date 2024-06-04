@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import Router from './Router';
 
@@ -10,6 +11,7 @@ const App = () => {
       <DesktopWrapper>
         <Router />
       </DesktopWrapper>
+      <ReactQueryDevtools initialIsOpen />
     </QueryClientProvider>
   );
 };
