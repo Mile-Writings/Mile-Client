@@ -56,6 +56,13 @@ const EachArticle = (props: EachProfilePropTypes) => {
     isImageContained: boolean;
   }
 
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+
   return (
     <ArticlePostWrapper>
       {postListData?.length === 0 ? (
