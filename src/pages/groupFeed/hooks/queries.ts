@@ -93,7 +93,6 @@ export const useCuriousPost = (groupId: string) => {
   });
 
   const curiousPostData = data && data.data.postList;
-  console.log(curiousPostData, 'data');
 
   return { curiousPostData, isLoading, isError, error };
 };

@@ -299,7 +299,8 @@ const WriterExistCheckBtn = styled.button<{ $isBtnDisabled: boolean }>`
 `;
 
 const WriterNameEnable = styled.div<{ $isConflict: boolean }>`
-  color: ${({ $isConflict, theme }) => ($isConflict ? theme.colors.mileRed : theme.colors.gray70)};
+  color: ${({ $isConflict, theme }) =>
+    $isConflict ? theme.colors.mileRed : theme.colors.mainGreen};
 
   ${({ theme }) => theme.fonts.body4};
 `;
