@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useMutation, useInfiniteQuery } from '@tanstack/react-query';
 
 import {
   fetchArticleList,
@@ -120,17 +120,35 @@ export const useCuriousWriters = (groupId: string) => {
 };
 
 export const useArticleList = (topicId: string) => {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getArticleList, topicId],
-    queryFn: () => fetchArticleList(topicId),
-    staleTime: 10000, //20초 캐시
-    enabled: !!topicId,
-  });
+  const { data, isLoading, isError, error, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: [QUERY_KEY_GROUPFEED.getArticleList, topicId],
+      queryFn: ({ pageParam }) => fetchArticleList(topicId, pageParam),
+      staleTime: 10000, //20초 캐시
+      enabled: !!topicId,
+      initialPageParam: '',
+      getNextPageParam: (lastPage) => {
+        if (lastPage?.data?.hasNext) {
+          return lastPage?.data?.postList[lastPage?.data?.postList.length - 1]?.postId;
+        }
+        return undefined;
+      }, //hasNext가 true일 경우, 다음 postId를 가져온다. false일경우 undefined.
+    });
 
-  const topicInfo = data && data.data.topicInfo;
-  const postListData = data && data.data.postList;
+  const topicInfo = data?.pages[0]?.data.topicInfo;
+  const postListData = data?.pages;
 
-  return { topicInfo, postListData, isLoading, isError, error };
+  return {
+    data,
+    topicInfo,
+    postListData,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isError,
+    error,
+  };
 };
 
 export const useFetchHeaderGroup = () => {
