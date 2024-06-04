@@ -158,9 +158,8 @@ interface ArticleListPropTypes {
 export const fetchArticleList = async (topicId: string, pageParam: string | null) => {
   try {
     const response = await client.get<ArticleListPropTypes>(`/api/topic/${topicId}`, {
-      params: { lastPostId: pageParam == '' ? null : pageParam },
+      params: { lastPostId: pageParam === '' ? null : pageParam },
     });
-    console.log(response.data, pageParam, 'ea');
     return response.data;
   } catch (error) {
     console.error('에러:', error);

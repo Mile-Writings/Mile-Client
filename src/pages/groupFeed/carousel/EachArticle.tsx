@@ -61,31 +61,30 @@ const EachArticle = (props: EachProfilePropTypes) => {
         </NoPostWrapper>
       ) : (
         <>
-          {postListData &&
-            postListData.map(
-              (postData, dataIndex) =>
-                postData?.data.postList.map((list: ProfilePropTypes, index: number) => (
-                  <div key={`${dataIndex}-${index}`} ref={bottomOfListRef}>
-                    <ArticleWrapper onClick={() => handleGoPostDetail(list.postId)}>
-                      <ArticleContainer isImageContained={list.isImageContained}>
-                        <ArticleTitle>{list.postTitle}</ArticleTitle>
-                        <Spacing marginBottom="1.6" />
-                        <ArticleContent>{list.postContent}</ArticleContent>
-                        <Spacing marginBottom="1.2" />
-                        <ArticleInfo>
-                          <GroupListProfileIc />
-                          <ProfileName>{list.writerName}</ProfileName>
-                          <ArticleDetail>{list.createdAt}</ArticleDetail>
-                          <ArticleDetail>·</ArticleDetail>
-                          <ArticleDetail>궁금해요</ArticleDetail>
-                          <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
-                        </ArticleInfo>
-                      </ArticleContainer>
-                      {list.isImageContained && <ArticleThumbnail imageUrl={list.imageUrl} />}
-                    </ArticleWrapper>
-                  </div>
-                )),
-            )}
+          {postListData?.map(
+            (postData, dataIndex) =>
+              postData?.data?.postList?.map((list: ProfilePropTypes, index: number) => (
+                <div key={`${dataIndex}-${index}`} ref={bottomOfListRef}>
+                  <ArticleWrapper onClick={() => handleGoPostDetail(list.postId)}>
+                    <ArticleContainer isImageContained={list.isImageContained}>
+                      <ArticleTitle>{list.postTitle}</ArticleTitle>
+                      <Spacing marginBottom="1.6" />
+                      <ArticleContent>{list.postContent}</ArticleContent>
+                      <Spacing marginBottom="1.2" />
+                      <ArticleInfo>
+                        <GroupListProfileIc />
+                        <ProfileName>{list.writerName}</ProfileName>
+                        <ArticleDetail>{list.createdAt}</ArticleDetail>
+                        <ArticleDetail>·</ArticleDetail>
+                        <ArticleDetail>궁금해요</ArticleDetail>
+                        <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
+                      </ArticleInfo>
+                    </ArticleContainer>
+                    {list.isImageContained && <ArticleThumbnail imageUrl={list.imageUrl} />}
+                  </ArticleWrapper>
+                </div>
+              )),
+          )}
           {isFetchingNextPage && (
             <LoadingWrapper src="/src/assets/gifs/loadingSpinner.gif" alt="로딩" />
           )}
@@ -131,7 +130,7 @@ const ArticleThumbnail = styled.div<{ imageUrl: string }>`
   border-radius: 8px;
 `;
 
-const ArticleContainer = styled.div<{ isImageContained: boolean }>`
+const ArticleContainer = styled.article<{ isImageContained: boolean }>`
   display: flex;
   flex-direction: column;
   width: ${({ isImageContained }) => (isImageContained ? '42.4rem' : 'auto')};

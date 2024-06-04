@@ -139,8 +139,6 @@ export const useArticleList = (topicId: string) => {
   const topicInfo = data?.pages[0]?.data.topicInfo;
   const postListData = data?.pages;
 
-  console.log(data, 'inif');
-
   return {
     data,
     topicInfo,
