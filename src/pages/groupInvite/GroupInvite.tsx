@@ -34,6 +34,8 @@ const GroupInvite = () => {
         } else if (status === 404) {
           alert('해당 모임은 존재하지 않습니다!');
           navigate(`/`);
+        } else if (status === 401) {
+          navigate(`/login`);
         }
       }
     }
