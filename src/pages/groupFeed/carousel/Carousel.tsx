@@ -56,10 +56,6 @@ const Carousel = () => {
 
   const { topicInfo, isLoading: articleListLoading } = useArticleList(selectedTopicId || '');
 
-  if (isLoading || articleListLoading) {
-    return <Loading />;
-  }
-
   if (isError) {
     console.log(error?.message, 'error');
     return <Error />;
@@ -67,6 +63,7 @@ const Carousel = () => {
 
   return (
     <>
+      {(articleListLoading || isLoading) && <Loading />}
       <CarouselWrapper>
         {groupFeedCategoryData != undefined && groupFeedCategoryData?.length > 6 && (
           <GroupTabBtnBaseBeforeIcon />
