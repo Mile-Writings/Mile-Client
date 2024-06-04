@@ -156,7 +156,6 @@ const PostPage = () => {
 
   // editor content API 관련
   const [editorVal, editorContentDispatch] = useReducer(editorContentReducerFn, editorState);
-
   // editorContentDispatch prop 함수들
   const setTopic = (e: React.MouseEvent<HTMLDivElement>) => {
     editorContentDispatch({ type: 'setTopic', topic: e.currentTarget.innerText });
@@ -164,8 +163,9 @@ const PostPage = () => {
   const setWriter = (e: React.MouseEvent<HTMLDivElement>) => {
     editorContentDispatch({ type: 'setWriter', writer: e.currentTarget.innerText });
   };
-  const setTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    editorContentDispatch({ type: 'setTitle', title: e.target.value });
+  const setTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const title = e.target.value.length <= 32 ? e.target.value : e.target.value.slice(0, 32);
+    editorContentDispatch({ type: 'setTitle', title: title });
   };
   const setContent = (content: string) => {
     editorContentDispatch({ type: 'setContent', content: content });
@@ -251,8 +251,8 @@ const PostPage = () => {
   useEffect(() => {
     if (postContentId !== undefined) {
       setShowModal(true);
-      editorFlowModalDispatch({ type: 'postContent' });
       setEditorModalType('postContent');
+      editorFlowModalDispatch({ type: 'postContent' });
     }
   }, [postContentId]);
 
@@ -466,7 +466,7 @@ const PostPage = () => {
           onClickTempSaveBtn();
           break;
         case 'postContent':
-          onClickPostContentBtn();
+          preventScroll();
           break;
         case 'putTempSaveContent':
           onClickTempExistSaveBtn();
@@ -558,26 +558,26 @@ const PostPage = () => {
         url={url || ''}
         fileName={fileName || ''}
       />
-      <DropDownEditorWrapper>
-        {topics && (
-          <DropDown
-            topicList={topics}
-            setTopic={setTopic}
-            setWriter={setWriter}
-            selectedTopic={editorVal.topic}
-            selectedWriter={editorVal.writer}
-          />
-        )}
-        <Spacing marginBottom="2.4" />
-        <TipTap
-          title={editorVal.title}
-          setTitle={setTitle}
-          tempContent={tempContent}
-          editContent={type === 'edit' ? location.state.content : ''}
-          setEditorContent={setContent}
-          setContentWithoutTag={setContentWithoutTag}
+      {/* <DropDownEditorWrapper> */}
+      {topics && (
+        <DropDown
+          topicList={topics}
+          setTopic={setTopic}
+          setWriter={setWriter}
+          selectedTopic={editorVal.topic}
+          selectedWriter={editorVal.writer}
         />
-      </DropDownEditorWrapper>
+      )}
+      <Spacing marginBottom="2.4" />
+      <TipTap
+        title={editorVal.title}
+        setTitle={setTitle}
+        tempContent={tempContent}
+        editContent={type === 'edit' ? location.state.content : ''}
+        setEditorContent={setContent}
+        setContentWithoutTag={setContentWithoutTag}
+      />
+      {/* </DropDownEditorWrapper> */}
       <Spacing marginBottom="8" />
     </PostPageWrapper>
   );
@@ -587,14 +587,6 @@ export default PostPage;
 
 const PostPageWrapper = styled.div`
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-`;
-
-const DropDownEditorWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
