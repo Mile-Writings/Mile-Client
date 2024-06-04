@@ -65,6 +65,7 @@ declare module '@emotion/react' {
       body6: SerializedStyles;
       body7: SerializedStyles;
       body8: SerializedStyles;
+      body9: SerializedStyles;
       button1: SerializedStyles;
       button2: SerializedStyles;
       button3: SerializedStyles;

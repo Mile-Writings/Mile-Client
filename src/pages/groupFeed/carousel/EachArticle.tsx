@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useArticleList } from '../hooks/queries';
@@ -16,13 +17,31 @@ interface EachProfilePropTypes {
   groupId: string;
   selectedTopicId: string;
 }
+
 const EachArticle = (props: EachProfilePropTypes) => {
   const { groupId, selectedTopicId } = props;
-  const { postListData } = useArticleList(selectedTopicId || '');
+  const { postListData, fetchNextPage, hasNextPage, isFetchingNextPage } = useArticleList(
+    selectedTopicId || '',
+  );
   const navigate = useNavigate();
   const handleGoPostDetail = (postId: string) => {
     navigate(`/detail/${groupId}/${postId}`, { state: { topicId: selectedTopicId } });
   };
+  const bottomOfListRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (bottomOfListRef.current) {
+      const isBottom = bottomOfListRef.current.getBoundingClientRect().bottom <= window.innerHeight;
+      isBottom && hasNextPage && fetchNextPage();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
 
   interface ProfilePropTypes {
     postId: string;
@@ -37,6 +56,13 @@ const EachArticle = (props: EachProfilePropTypes) => {
     isImageContained: boolean;
   }
 
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+
   return (
     <ArticlePostWrapper>
       {postListData?.length === 0 ? (
@@ -48,43 +74,57 @@ const EachArticle = (props: EachProfilePropTypes) => {
           <Spacing marginBottom="4" />
         </NoPostWrapper>
       ) : (
-        postListData?.map((list: ProfilePropTypes, index: number) => (
-          <div key={index}>
-            <ArticleWrapper onClick={() => handleGoPostDetail(list.postId)}>
-              <ArticleContainer isImageContained={list.isImageContained}>
-                <ArticleTitle>{list.postTitle}</ArticleTitle>
-                <Spacing marginBottom="1.6" />
-                <ArticleContent>{list.postContent}</ArticleContent>
-                <Spacing marginBottom="1.2" />
-                <ArticleInfo>
-                  <GroupListProfileIc />
-                  <ProfileName>{list.writerName}</ProfileName>
-                  <ArticleDetail>{list.createdAt}</ArticleDetail>
-                  <ArticleDetail>·</ArticleDetail>
-                  <ArticleDetail>
-                    <GroupCuriousIc />
-                  </ArticleDetail>
-                  <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
-                  <ArticleDetail>
-                    <GroupViewIc />
-                  </ArticleDetail>
-                  <ArticleDetailBold>{list.hitsCount}</ArticleDetailBold>
-                  <ArticleDetail>
-                    <GroupChatIc />
-                  </ArticleDetail>
-                  <ArticleDetailBold>{list.commentCount}</ArticleDetailBold>
-                </ArticleInfo>
-              </ArticleContainer>
-              {list.isImageContained && <ArticleThumbnail imageUrl={list.imageUrl} />}
-            </ArticleWrapper>
-          </div>
-        ))
+        <>
+          {postListData?.map(
+            (postData, dataIndex) =>
+              postData?.data?.postList?.map((list: ProfilePropTypes, index: number) => (
+                <div key={`${dataIndex}-${index}`} ref={bottomOfListRef}>
+                  <ArticleWrapper onClick={() => handleGoPostDetail(list.postId)}>
+                    <ArticleContainer isImageContained={list.isImageContained}>
+                      <ArticleTitle>{list.postTitle}</ArticleTitle>
+                      <Spacing marginBottom="1.6" />
+                      <ArticleContent>{list.postContent}</ArticleContent>
+                      <Spacing marginBottom="1.2" />
+                      <ArticleInfo>
+                        <GroupListProfileIc />
+                        <ProfileName>{list.writerName}</ProfileName>
+                        <ArticleDetail>{list.createdAt}</ArticleDetail>
+                        <ArticleDetail>·</ArticleDetail>
+                        <ArticleDetail>
+                          <GroupCuriousIc />
+                        </ArticleDetail>
+                        <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
+                        <ArticleDetail>
+                          <GroupViewIc />
+                        </ArticleDetail>
+                        <ArticleDetailBold>{list.hitsCount}</ArticleDetailBold>
+                        <ArticleDetail>
+                          <GroupChatIc />
+                        </ArticleDetail>
+                        <ArticleDetailBold>{list.commentCount}</ArticleDetailBold>
+                      </ArticleInfo>
+                    </ArticleContainer>
+                    {list.isImageContained && <ArticleThumbnail imageUrl={list.imageUrl} />}
+                  </ArticleWrapper>
+                </div>
+              )),
+          )}
+          {isFetchingNextPage && (
+            <LoadingWrapper src="/src/assets/gifs/loadingSpinner.gif" alt="로딩" />
+          )}
+        </>
       )}
     </ArticlePostWrapper>
   );
 };
 
 export default EachArticle;
+
+const LoadingWrapper = styled.img`
+  width: 20rem;
+  height: 20rem;
+  margin: 0 auto;
+`;
 
 const ArticlePostWrapper = styled.div`
   display: flex;
