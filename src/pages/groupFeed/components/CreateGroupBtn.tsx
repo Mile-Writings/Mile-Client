@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { MakeGroupPlusBtn, MakeGroupPlusHoverBtn } from '../../../assets/svgs';
 
-const CreateGroupBtn = (groupCount: number) => {
+interface groupCountProps {
+  groupCount: number;
+}
+const CreateGroupBtn = ({ groupCount }: groupCountProps) => {
   const [showHoverIcon, setShowHoverIcon] = useState(false);
   const navigate = useNavigate();
 

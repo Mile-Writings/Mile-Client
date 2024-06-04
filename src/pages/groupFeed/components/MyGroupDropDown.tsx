@@ -3,13 +3,16 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Moim } from '../apis/fetchHeaderGroup';
-import { useFetchHeaderGroup } from '../hooks/queries';
 
 import useClickOutside from '../../../hooks/useClickOutside';
 
-const MyGroupDropDown = () => {
+interface CreateGroupBtnProps {
+  groupData: Moim[] | [];
+}
+
+const MyGroupDropDown = ({ groupData }: CreateGroupBtnProps) => {
   const navigate = useNavigate();
-  const { data } = useFetchHeaderGroup();
+  console.log(groupData);
   const handleRoutingGroupFeed = (groupId: string) => {
     navigate(`/group/${groupId}`);
   };
@@ -29,8 +32,8 @@ const MyGroupDropDown = () => {
     <MyGroupDropDownWrapper ref={dropDownRef}>
       <MyGroupBtnLayout onClick={handleOnClick}>내 글 모임</MyGroupBtnLayout>
       <MyGroupListLayout $isOpen={isOpen}>
-        {data ? (
-          data.data.moims.map(({ moimId, moimName }: Moim) => (
+        {groupData?.length > 0 ? (
+          groupData.map(({ moimId, moimName }: Moim) => (
             <GroupContentContainer
               $isEmpty={false}
               key={moimId}
