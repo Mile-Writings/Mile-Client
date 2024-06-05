@@ -198,6 +198,7 @@ const CommnertGroupNameText = styled.p`
 const CommentText = styled.p`
   color: ${({ theme }) => theme.colors.gray90};
   ${({ theme }) => theme.fonts.body6};
+  white-space: pre-wrap;
 `;
 
 const Modal = styled.div`
