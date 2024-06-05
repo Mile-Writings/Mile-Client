@@ -138,6 +138,7 @@ const CommentForm = styled.textarea<{ isMainComment: boolean }>`
 `;
 
 const CommentPostBtn = styled.button<{ $isComment: string }>`
+  height: 4rem;
   padding: 1rem 1.6rem;
 
   color: ${({ $isComment, theme }) =>
@@ -161,5 +162,6 @@ const CommentPostBtn = styled.button<{ $isComment: string }>`
 const CommentPostWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
+  align-items: flex-end;
   width: 100%;
 `;
