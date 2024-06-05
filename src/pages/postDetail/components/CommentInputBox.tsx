@@ -142,10 +142,10 @@ const CommentPostBtn = styled.button<{ $isComment: string }>`
   padding: 1rem 1.6rem;
 
   color: ${({ $isComment, theme }) =>
-    $isComment === '' ? theme.colors.gray70 : theme.colors.white};
+    $isComment.trim() === '' ? theme.colors.gray70 : theme.colors.white};
 
   background-color: ${({ $isComment, theme }) =>
-    $isComment === '' ? theme.colors.gray10 : theme.colors.mainViolet};
+    $isComment.trim() === '' ? theme.colors.gray10 : theme.colors.mainViolet};
   border-radius: 8px;
 
   ${({ theme }) => theme.fonts.button3};
