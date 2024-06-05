@@ -57,6 +57,7 @@ const CommentInputBox = (props: CommentPropTypes) => {
           onChange={(e) => setComment(e.target.value)}
           isMainComment={isMainComment}
           placeholder="댓글을 남겨주세요."
+          maxLength={1500}
         />
         <CheckboxLayout>
           <Checkbox
