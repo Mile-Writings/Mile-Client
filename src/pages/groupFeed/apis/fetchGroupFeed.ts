@@ -49,6 +49,26 @@ export const fetchGroupInfo = async (groupId: string) => {
   }
 };
 
+interface GroupPublicStatusPropTypes {
+  data: {
+    isPublic: boolean;
+  };
+  status: number;
+  message: string;
+}
+
+export const fetchGroupPublicStatus = async (groupId: string) => {
+  try {
+    const response = await client.get<GroupPublicStatusPropTypes>(
+      `/api/moim/${groupId}/public-status`,
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
+
 interface TodayTopicPropTypes {
   data: {
     content: string;
