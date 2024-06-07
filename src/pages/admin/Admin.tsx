@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useFetchInvitationLink } from './hooks/queries';
 import RenderAdminContent from './RenderAdminContent';
@@ -15,9 +15,14 @@ const Admin = () => {
   const [admin, setAdmin] = useState<'topic' | 'member' | 'groupInfo'>('topic');
   const { groupId } = useParams();
   const { invitationCode } = useFetchInvitationLink(groupId);
+  const navigate = useNavigate();
 
   const handleCopyLink = (invitationCode: string) => {
     copyLink(`https://www.milewriting.com/group/${invitationCode}/groupInvite`);
+  };
+
+  const handleRoutingGroup = () => {
+    navigate(`/group/${groupId}`);
   };
 
   return (
@@ -27,7 +32,7 @@ const Admin = () => {
       <AdminLayout>
         <SideNavbar>
           <AdminGroupInfo>
-            <HomeBtn type="button">
+            <HomeBtn type="button" onClick={handleRoutingGroup}>
               <AdminHomeIc />
               Home
             </HomeBtn>
