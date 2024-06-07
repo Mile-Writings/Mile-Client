@@ -69,6 +69,7 @@ export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?reac
 
 export { default as adminEmptyMemberIc } from './adminEmptyMember.svg?react';
 export { default as adminProfileIc } from './adminProfileIc.svg?react';
+export { default as AdminHomeIc } from './adminHomeIcn.svg?react';
 export { default as CreateGroupImageUpload } from './createGroupImageUpload.svg?react';
 export { default as CreateGroupInfoIc } from './createGroupInfoIc.svg?react';
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
