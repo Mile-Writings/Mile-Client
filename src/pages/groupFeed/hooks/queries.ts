@@ -7,6 +7,7 @@ import {
   fetchEditIntro,
   fetchGroupFeedAuth,
   fetchGroupInfo,
+  fetchGroupPublicStatus,
   fetchTodayTopic,
   fetchTopicList,
   fetchWriterInfo,
@@ -69,12 +70,12 @@ interface GroupInfoQueryResult {
 export const useGroupFeedPublicStatus = (groupId: string) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['groupFeed_Info_moimId', groupId],
-    queryFn: () => fetchGroupInfo(groupId),
+    queryFn: () => fetchGroupPublicStatus(groupId),
   });
 
-  const groupInfoData = data?.data;
+  const isPublic = data?.data?.isPublic;
 
-  return { groupInfoData, isLoading, isError, error };
+  return { isPublic, isLoading, isError, error };
 };
 
 export const useGroupInfo = (groupId: string): GroupInfoQueryResult => {
