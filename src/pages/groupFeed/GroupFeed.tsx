@@ -31,12 +31,7 @@ const GroupFeed = () => {
     groupId || '',
     accessToken || '',
   );
-  const {
-    isPublic,
-    isLoading: isPublicLoading,
-    isError: isPublicError,
-    error: publicError,
-  } = useGroupFeedPublicStatus(groupId || '');
+  const { isPublic } = useGroupFeedPublicStatus(groupId || '');
 
   //sessionStorage에 저장된 카테고리 id 값을 가져옴
   const sessionCategoryId = sessionStorage.getItem('activeCategoryId');
@@ -67,11 +62,8 @@ const GroupFeed = () => {
     return <Error />;
   }
 
-  console.log(isPublic, isMember, '');
-
   //해당 모임의 멤버도 아니고, 모임이 비공개일때 (비정상적인 접근)
   if (!isPublic && !isMember) {
-    console.log(isPublic, isMember, 'dk');
     alert('해당 모임은 비공개 모임입니다');
     navigate('/');
   }

@@ -42,7 +42,6 @@ interface GroupInfoPropTypes {
 export const fetchGroupInfo = async (groupId: string) => {
   try {
     const response = await client.get<GroupInfoPropTypes>(`/api/moim/${groupId}/info`);
-
     return response.data;
   } catch (error) {
     console.error('에러:', error);
