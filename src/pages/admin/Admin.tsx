@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useFetchInvitationLink } from './hooks/queries';
 import RenderAdminContent from './RenderAdminContent';
 
+import { AdminHomeIc } from '../../assets/svgs';
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import { copyLink } from '../../utils/copyLink';
@@ -25,6 +26,14 @@ const Admin = () => {
       <Spacing marginBottom="13.6" />
       <AdminLayout>
         <SideNavbar>
+          <AdminGroupInfo>
+            <HomeBtn type="button">
+              <AdminHomeIc />
+              Home
+            </HomeBtn>
+            <GroupName>현재글모임명자리임요</GroupName>
+          </AdminGroupInfo>
+          <Spacing marginBottom="2.4" />
           <AdminMenu>
             <Title>관리자 페이지</Title>
             <Spacing marginBottom="1.6" />
@@ -47,7 +56,10 @@ const Admin = () => {
           </AdminMenu>
           <Spacing marginBottom="1.6" />
           {invitationCode && (
-            <AdminInviteBtn onClick={() => handleCopyLink(invitationCode?.invitationCode)}>
+            <AdminInviteBtn
+              type="button"
+              onClick={() => handleCopyLink(invitationCode?.invitationCode)}
+            >
               초대링크 복사하기
             </AdminInviteBtn>
           )}
@@ -74,7 +86,26 @@ const SideNavbar = styled.nav`
   display: flex;
   flex-direction: column;
   width: 19.5rem;
-  height: 29.4rem;
+`;
+
+const AdminGroupInfo = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const HomeBtn = styled.button`
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-end;
+  padding: 0;
+
+  color: ${({ theme }) => theme.colors.gray60};
+  ${({ theme }) => theme.fonts.body1};
+`;
+
+const GroupName = styled.h3`
+  ${({ theme }) => theme.fonts.title9};
 `;
 
 const AdminMenu = styled.div`
