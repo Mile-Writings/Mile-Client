@@ -16,6 +16,7 @@ import { fetchHeaderGroup } from '../apis/fetchHeaderGroup';
 
 export const QUERY_KEY_GROUPFEED = {
   getGroupFeedAuth: 'getGroupFeedAuth',
+  getGroupFeedPublicStatus: 'getGroupFeedPublicStatus',
   getTodayWritingStyle: 'getTodayWritingStyle',
   getCuriousPost: 'getCuriousPost',
   getGroupFeedCategory: 'getGroupFeedCategory',
@@ -64,6 +65,17 @@ interface GroupInfoQueryResult {
   isError: boolean;
   error: Error | null;
 }
+
+export const useGroupFeedPublicStatus = (groupId: string) => {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['groupFeed_Info_moimId', groupId],
+    queryFn: () => fetchGroupInfo(groupId),
+  });
+
+  const groupInfoData = data?.data;
+
+  return { groupInfoData, isLoading, isError, error };
+};
 
 export const useGroupInfo = (groupId: string): GroupInfoQueryResult => {
   const { data, isLoading, isError, error } = useQuery({
