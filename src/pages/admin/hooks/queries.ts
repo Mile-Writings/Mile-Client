@@ -7,6 +7,7 @@ import {
   postAdminTopicPropTypes,
   deleteAdminTopic,
 } from '../apis/fetchAdminData';
+import fetchAdminGroupInfo from '../apis/fetchAdminGroupInfo';
 import fetchDeleteMember from '../apis/fetchDeleteMember';
 import { fetchInvitationLink } from '../apis/fetchInvitationLink';
 import fetchMemberInfo from '../apis/fetchMemberInfo';
@@ -14,6 +15,7 @@ import fetchMemberInfo from '../apis/fetchMemberInfo';
 export const QUERY_KEY_ADMIN = {
   useMemberInfo: 'fetchMemberInfo',
   fetchInvitationLink: 'fetchInvitationLink',
+  fetchAdminGroupInfo: 'fetchAdminGroupInfo',
 };
 
 export const useAdminTopic = (groupId: string | undefined, pageNum: number) => {
@@ -141,4 +143,15 @@ export const useDeleteAdminTopic = (
     data.mutate();
   };
   return { deleteMutateAdminTopic };
+};
+
+//모임 정보 수정 get
+
+export const useFetchGroupInfo = (groupId: string) => {
+  const data = useQuery({
+    queryKey: [QUERY_KEY_ADMIN.fetchAdminGroupInfo, groupId],
+    queryFn: () => fetchAdminGroupInfo(groupId),
+  });
+  console.log(data);
+  return data;
 };

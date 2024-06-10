@@ -1,6 +1,6 @@
 import { client } from '../../../utils/apis/axios';
 
-const fetchGroupInfo = async (groupId: string) => {
+const fetchAdminGroupInfo = async (groupId: string) => {
   try {
     const token = localStorage.getItem('accessToken');
     const data = await client.get(`/api/moim/${groupId}/info/owner`, {
@@ -14,4 +14,4 @@ const fetchGroupInfo = async (groupId: string) => {
   }
 };
 
-export default fetchGroupInfo;
+export default fetchAdminGroupInfo;

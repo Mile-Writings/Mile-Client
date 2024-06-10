@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
+
+import { useFetchGroupInfo } from './hooks/queries';
 
 import {
   CreateGroupImageUpload,
@@ -11,13 +13,31 @@ import {
 const EditGroupInfo = () => {
   const [groupName, setGroupName] = useState('');
   const [groupDesc, setGroupDesc] = useState('');
-  const [groupImageView, setGroupImageView] = useState('');
+  const [groupImageView, setGroupImageView] = useState(
+    'https://mile-s3.s3.ap-northeast-2.amazonaws.com/test/groupMile.png',
+  );
   const [isPublic, setIsPublic] = useState(true);
-
+  const [groupImage, setGroupImage] = useState('');
   const [isHover, setIsHover] = useState(false);
+
+  const { data } = useFetchGroupInfo('NDY=');
+  useEffect(() => {
+    setGroupName(data?.data.moimTitle);
+    setGroupDesc(data?.data.description);
+    setIsPublic(data?.data.isPublic);
+    if (data?.data.imageUrl) setGroupImage(data?.data.imageUrl);
+  }, [data]);
 
   const handleHover = () => {
     setIsHover((prev) => !prev);
+  };
+
+  const handleGroupName = () => {
+    console.log('hd');
+  };
+
+  const handleIsPublic = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsPublic(e.target.value === 'true');
   };
   return (
     <CreateGroupLayout>
@@ -27,7 +47,7 @@ const EditGroupInfo = () => {
           <GroupNameInputLayout>
             <GroupNameInput
               // ref={groupNameRef}
-              // onChange={handleGroupName}
+              onChange={handleGroupName}
               placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
               isValid={true}
               value={groupName}
@@ -55,10 +75,10 @@ const EditGroupInfo = () => {
           <GroupInfoTextarea
             placeholder="글 모임에 대해 자유롭게 소개해주세요."
             isValid={true}
-            // onChange={(e) => setGroupInfo(e)}
+            onChange={handleGroupName}
             maxLength={110}
             // ref={groupInfoRef}
-            // value={groupInfo}
+            value={groupDesc}
           />
           <TextAreaLength isValid={true}> {0} / 100</TextAreaLength>
         </GroupInputWrapper>
@@ -118,7 +138,7 @@ const EditGroupInfo = () => {
               id="isPublicTrue"
               name="isPublic"
               value={'true'}
-              // onChange={handleIsPublic}
+              onChange={handleIsPublic}
             />
           </GroupPublicDescContainer>
           <GroupPublicDescContainer>
@@ -131,7 +151,7 @@ const EditGroupInfo = () => {
               id="isPublicFalse"
               name="isPublic"
               value={'false'}
-              // onChange={handleIsPublic}
+              onChange={handleIsPublic}
             />
           </GroupPublicDescContainer>
         </GroupInputHorizonWrapper>
