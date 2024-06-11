@@ -10,7 +10,7 @@ import Pagenation from '../../../components/commons/Pagenation';
 import Spacing from '../../../components/commons/Spacing';
 import useModal from '../../../hooks/useModal';
 
-export interface MemberPropTypes {
+interface MemberPropTypes {
   pageNumber: number;
   writerNameCount: number;
   writerNameList: {
@@ -18,6 +18,7 @@ export interface MemberPropTypes {
     writerName: string;
     postCount: number;
     commentCount: number;
+    isOwner: boolean;
   }[];
 }
 
@@ -48,22 +49,28 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
         <Spacing marginBottom="0.4" />
         <MemberLayout>
           {data?.writerNameCount !== 0 ? (
-            data?.writerNameList.map(({ writerNameId, writerName, postCount, commentCount }) => (
-              <MemberItemContainer key={writerNameId}>
-                <AdminProfileIcon />
-                <Name>{writerName}</Name>
-                <PostNumber>{postCount}</PostNumber>
-                <CommentNumber>{commentCount}</CommentNumber>
-                <ExpelBtn
-                  onClick={() => {
-                    setDeleteMemberId(writerNameId);
-                    handleShowModal();
-                  }}
-                >
-                  삭제하기
-                </ExpelBtn>
-              </MemberItemContainer>
-            ))
+            data?.writerNameList.map(
+              ({ writerNameId, writerName, postCount, commentCount, isOwner }) => (
+                <MemberItemContainer key={writerNameId}>
+                  <AdminProfileIcon />
+                  <Name>{writerName}</Name>
+                  <PostNumber>{postCount}</PostNumber>
+                  <CommentNumber>{commentCount}</CommentNumber>
+                  {!isOwner ? (
+                    <ExpelBtn
+                      onClick={() => {
+                        setDeleteMemberId(writerNameId);
+                        handleShowModal();
+                      }}
+                    >
+                      삭제하기
+                    </ExpelBtn>
+                  ) : (
+                    <Owner>글 모임 장</Owner>
+                  )}
+                </MemberItemContainer>
+              ),
+            )
           ) : (
             <EmptyContainer>
               <EmptyMemberText>아직 멤버가 없습니다.</EmptyMemberText>
@@ -201,6 +208,15 @@ const ExpelBtn = styled.button`
   &:hover {
     color: ${({ theme }) => theme.colors.mainViolet};
   }
+`;
+
+const Owner = styled.span`
+  margin-left: auto;
+
+  color: ${({ theme }) => theme.colors.black};
+
+  ${({ theme }) => theme.fonts.body5};
+  cursor: default;
 `;
 
 const EmptyContainer = styled.div`
