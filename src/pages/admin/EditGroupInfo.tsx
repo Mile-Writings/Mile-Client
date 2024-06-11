@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useState, ChangeEvent } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { useFetchGroupInfo } from './hooks/queries';
 
@@ -9,36 +10,45 @@ import {
   CreateGroupRadioUncheckedIc,
   CreateGroupInfoIc,
 } from '../../assets/svgs';
+import useHandleGroupImage from '../../hooks/useGroupImage';
 
 const EditGroupInfo = () => {
   const [groupName, setGroupName] = useState('');
   const [groupDesc, setGroupDesc] = useState('');
-  const [groupImageView, setGroupImageView] = useState(
-    'https://mile-s3.s3.ap-northeast-2.amazonaws.com/test/groupMile.png',
-  );
+  // const [groupImageView, setGroupImageView] = useState('');
   const [isPublic, setIsPublic] = useState(true);
-  const [groupImage, setGroupImage] = useState('');
+
   const [isHover, setIsHover] = useState(false);
 
-  const { data } = useFetchGroupInfo('NDY=');
-  useEffect(() => {
-    setGroupName(data?.data.moimTitle);
-    setGroupDesc(data?.data.description);
-    setIsPublic(data?.data.isPublic);
-    if (data?.data.imageUrl) setGroupImage(data?.data.imageUrl);
-  }, [data]);
-
+  const { groupId } = useParams();
+  const { data } = useFetchGroupInfo(groupId || '');
+  const { groupImageView, handleGroupImage, setGroupImageView } = useHandleGroupImage();
+  const DEFAULT_IMG_URL = 'https://mile-s3.s3.ap-northeast-2.amazonaws.com/test/groupMile.png';
   const handleHover = () => {
     setIsHover((prev) => !prev);
   };
 
-  const handleGroupName = () => {
-    console.log('hd');
+  const handleGroupName = (e: ChangeEvent<HTMLInputElement>) => {
+    setGroupName(e.target.value);
   };
 
+  const handleGroupDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setGroupDesc(e.target.value);
+  };
   const handleIsPublic = (e: ChangeEvent<HTMLInputElement>) => {
     setIsPublic(e.target.value === 'true');
   };
+
+  useEffect(() => {
+    if (data?.data) {
+      setGroupName(data?.data.moimTitle);
+      setGroupDesc(data?.data.description);
+      setIsPublic(data?.data.isPublic);
+    }
+
+    if (data?.data?.imageUrl !== '') setGroupImageView(data?.data.imageUrl);
+  }, [data]);
+
   return (
     <CreateGroupLayout>
       <WhiteInputWrapper isValid={true}>
@@ -47,7 +57,7 @@ const EditGroupInfo = () => {
           <GroupNameInputLayout>
             <GroupNameInput
               // ref={groupNameRef}
-              onChange={handleGroupName}
+              onChange={(e) => handleGroupName(e)}
               placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
               isValid={true}
               value={groupName}
@@ -75,12 +85,12 @@ const EditGroupInfo = () => {
           <GroupInfoTextarea
             placeholder="글 모임에 대해 자유롭게 소개해주세요."
             isValid={true}
-            onChange={handleGroupName}
+            onChange={(e) => handleGroupDesc(e)}
             maxLength={110}
             // ref={groupInfoRef}
             value={groupDesc}
           />
-          <TextAreaLength isValid={true}> {0} / 100</TextAreaLength>
+          <TextAreaLength isValid={true}> {groupDesc.length}/ 100</TextAreaLength>
         </GroupInputWrapper>
       </GroupInfoWrppaer>
       <WhiteInputWrapper isValid={true}>
@@ -99,9 +109,9 @@ const EditGroupInfo = () => {
               name="file"
               id="file"
               accept="image/*"
-              // onChange={(e) => {
-              //   handleGroupImage(e);
-              // }}
+              onChange={(e) => {
+                handleGroupImage(e);
+              }}
             />
           </GroupImageLabel>
 
@@ -129,7 +139,7 @@ const EditGroupInfo = () => {
           <GroupPublicDescContainer>
             <GroupIsPublicWrapper>
               <GroupisPublicLabel htmlFor="isPublicTrue">
-                {isPublic ? <CreateGroupRadioCheckedIcon /> : <CreateGroupRadioUncheckedIcon />}
+                {isPublic ? <CreateGroupRadioCheckedIc /> : <CreateGroupRadioUncheckedIc />}
                 공개
               </GroupisPublicLabel>
             </GroupIsPublicWrapper>
@@ -143,7 +153,7 @@ const EditGroupInfo = () => {
           </GroupPublicDescContainer>
           <GroupPublicDescContainer>
             <GroupisPublicLabel htmlFor="isPublicFalse">
-              {!isPublic ? <CreateGroupRadioCheckedIcon /> : <CreateGroupRadioUncheckedIcon />}
+              {!isPublic ? <CreateGroupRadioCheckedIc /> : <CreateGroupRadioUncheckedIc />}
               비공개
             </GroupisPublicLabel>
             <GroupIsPublicRadio
@@ -183,8 +193,8 @@ const CreateGroupBtn = styled.button`
     border: 1px solid ${({ theme }) => theme.colors.mileViolet};
   }
 `;
-const CreateGroupRadioUncheckedIcon = styled(CreateGroupRadioUncheckedIc)``;
-const CreateGroupRadioCheckedIcon = styled(CreateGroupRadioCheckedIc)``;
+// const CreateGroupRadioUncheckedIcon = styled(CreateGroupRadioUncheckedIc)``;
+// const CreateGroupRadioCheckedIcon = styled(CreateGroupRadioCheckedIc)``;
 const PublicInfoText = styled.p`
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.body3};

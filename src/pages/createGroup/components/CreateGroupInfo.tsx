@@ -20,9 +20,9 @@ import {
   CreateGroupRadioUncheckedIc,
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
+import { s3UrlParsing } from '../../../utils/s3UrlParsing';
 import postDirectlyS3 from '../../postPage/apis/postDirectlyS3';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
-import { s3UrlParsing } from '../../postPage/utils/s3UrlParsing';
 
 interface CreateGroupInfoPropTypes {
   setCurrentPage: Dispatch<SetStateAction<CurrentPageType['currentPage']>>;
