@@ -2,7 +2,7 @@ import { client } from '../../../utils/apis/axios';
 
 interface GroupNameValidationPropTypes {
   data: {
-    isValidate: true;
+    isValidate: boolean;
   };
   status: number;
   message: string;

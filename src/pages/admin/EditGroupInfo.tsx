@@ -4,6 +4,9 @@ import { useParams } from 'react-router-dom';
 
 import { useFetchGroupInfo } from './hooks/queries';
 
+import { InputInfoMsg } from '../createGroup/components/CreateGroupInfo';
+import { useGetGroupNameValidation } from '../createGroup/hooks/queries';
+
 import {
   CreateGroupImageUpload,
   CreateGroupRadioCheckedIc,
@@ -12,18 +15,36 @@ import {
 } from '../../assets/svgs';
 import useHandleGroupImage from '../../hooks/useGroupImage';
 
+// export const InputInfoMsg = {
+//   groupNameLength: '10자 이내로 작성해주세요.',
+//   groupNameNotAvailable: '이미 사용중인 모임명입니다.',
+//   groupNameNotCheck: '중복확인을 해주세요.',
+//   groupNameAvailable: '사용 가능한 모임명입니다.',
+//   emptyText: '',
+// };
 const EditGroupInfo = () => {
   const [groupName, setGroupName] = useState('');
   const [groupDesc, setGroupDesc] = useState('');
   // const [groupImageView, setGroupImageView] = useState('');
   const [isPublic, setIsPublic] = useState(true);
-
   const [isHover, setIsHover] = useState(false);
+
+  const [groupNameInfoMsg, setGroupNameInfoMsg] = useState(InputInfoMsg.emptyText);
+  // const [groupNameValidation,setGroupNameValidation]= useState(true)
 
   const { groupId } = useParams();
   const { data } = useFetchGroupInfo(groupId || '');
   const { groupImageView, handleGroupImage, setGroupImageView } = useHandleGroupImage();
   const DEFAULT_IMG_URL = 'https://mile-s3.s3.ap-northeast-2.amazonaws.com/test/groupMile.png';
+
+  const {
+    data: groupNameValidationData,
+    refetch,
+    isLoading,
+    error,
+    isSuccess,
+  } = useGetGroupNameValidation(groupName);
+
   const handleHover = () => {
     setIsHover((prev) => !prev);
   };
@@ -31,14 +52,15 @@ const EditGroupInfo = () => {
   const handleGroupName = (e: ChangeEvent<HTMLInputElement>) => {
     setGroupName(e.target.value);
   };
-
   const handleGroupDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setGroupDesc(e.target.value);
   };
   const handleIsPublic = (e: ChangeEvent<HTMLInputElement>) => {
     setIsPublic(e.target.value === 'true');
   };
-
+  const getGroupNameValidation = async () => {
+    await refetch();
+  };
   useEffect(() => {
     if (data?.data) {
       setGroupName(data?.data.moimTitle);
@@ -48,6 +70,20 @@ const EditGroupInfo = () => {
 
     if (data?.data?.imageUrl !== '') setGroupImageView(data?.data.imageUrl);
   }, [data]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log('성공');
+      if (groupNameValidationData?.data?.data?.isValidate === true) {
+        setGroupNameInfoMsg(InputInfoMsg.groupNameAvailable);
+        console.log('흠 통과');
+      } else if (groupNameValidationData?.data?.data?.isValidate === false) {
+        setGroupNameInfoMsg(InputInfoMsg.groupNameNotAvailable);
+        console.log('흠 불통');
+      }
+      console.log(groupNameInfoMsg);
+    }
+  }, [groupNameValidationData, isSuccess]);
 
   return (
     <CreateGroupLayout>
@@ -65,7 +101,7 @@ const EditGroupInfo = () => {
             <DuplicateCheckBtn
               type="button"
               positive={groupName !== ''}
-              // onClick={handleDuplicateGroupName}
+              onClick={getGroupNameValidation}
               disabled={!groupName}
             >
               중복확인
@@ -77,6 +113,15 @@ const EditGroupInfo = () => {
           ) : (
             <ErrorMsgText>{groupNameInputMsg}</ErrorMsgText>
           )} */}
+          {/* {groupNameValidationData?.data?.data?.isValidate === undefined ? (
+            <p>test</p>
+          ) : ( */}
+
+          <GroupNameValidationText
+            validation={InputInfoMsg.groupNameAvailable === groupNameInfoMsg}
+          >
+            {groupNameInfoMsg}
+          </GroupNameValidationText>
         </GroupInputWrapper>
       </WhiteInputWrapper>{' '}
       <GroupInfoWrppaer>
@@ -172,6 +217,27 @@ const EditGroupInfo = () => {
 };
 
 export default EditGroupInfo;
+
+// const ErrorMsgText = styled.p`
+//   ${({ theme }) => theme.fonts.body4};
+//   color: ${({ theme }) => theme.colors.mileRed};
+// `;
+
+const TestBtn = styled.button`
+  width: 8rem;
+  height: 5rem;
+
+  color: black;
+
+  ${({ theme }) => theme.fonts.body6};
+  background-color: rgb(237 255 0);
+  border: 1px solid black;
+  border-radius: 8px;
+`;
+const GroupNameValidationText = styled.p<{ validation: boolean }>`
+  ${({ theme }) => theme.fonts.body4};
+  color: ${({ theme, validation }) => (validation ? theme.colors.mainGreen : theme.colors.mileRed)};
+`;
 const CreateGroupBtn = styled.button`
   display: flex;
   align-items: center;
