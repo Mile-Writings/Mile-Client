@@ -19,6 +19,7 @@ export interface FetchMemberPropTypes {
       writerName: string;
       postCount: number;
       commentCount: number;
+      isOwner: boolean;
     }[];
   };
 }
