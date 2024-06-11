@@ -30,8 +30,7 @@ const EditGroupInfo = () => {
   const [isHover, setIsHover] = useState(false);
 
   const [groupNameInfoMsg, setGroupNameInfoMsg] = useState(InputInfoMsg.emptyText);
-  // const [groupNameValidation,setGroupNameValidation]= useState(true)
-
+  const [groupNameValid, setGroupNameValid] = useState(true);
   const { groupId } = useParams();
   const { data } = useFetchGroupInfo(groupId || '');
   const { groupImageView, handleGroupImage, setGroupImageView } = useHandleGroupImage();
@@ -51,6 +50,13 @@ const EditGroupInfo = () => {
 
   const handleGroupName = (e: ChangeEvent<HTMLInputElement>) => {
     setGroupName(e.target.value);
+    if (e.target.value.length > 10) {
+      setGroupNameInfoMsg(InputInfoMsg.groupNameLength);
+      setGroupNameValid(false);
+    } else {
+      setGroupNameInfoMsg(InputInfoMsg.emptyText);
+      setGroupNameValid(true);
+    }
   };
   const handleGroupDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setGroupDesc(e.target.value);
@@ -73,15 +79,12 @@ const EditGroupInfo = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log('성공');
       if (groupNameValidationData?.data?.data?.isValidate === true) {
         setGroupNameInfoMsg(InputInfoMsg.groupNameAvailable);
-        console.log('흠 통과');
       } else if (groupNameValidationData?.data?.data?.isValidate === false) {
         setGroupNameInfoMsg(InputInfoMsg.groupNameNotAvailable);
-        console.log('흠 불통');
+        setGroupNameValid(false);
       }
-      console.log(groupNameInfoMsg);
     }
   }, [groupNameValidationData, isSuccess]);
 
@@ -91,13 +94,18 @@ const EditGroupInfo = () => {
         <GroupInputWrapper>
           <InputTitleText>글 모임 이름*</InputTitleText>
           <GroupNameInputLayout>
-            <GroupNameInput
-              // ref={groupNameRef}
-              onChange={(e) => handleGroupName(e)}
-              placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
-              isValid={true}
-              value={groupName}
-            />{' '}
+            <GroupNameInputWrapper>
+              <GroupNameInput
+                // ref={groupNameRef}
+                onChange={(e) => handleGroupName(e)}
+                placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
+                isValid={groupNameValid}
+                value={groupName}
+              />{' '}
+              <TextAreaLength isValid={groupName.length <= 10}>
+                {groupName.length}/10
+              </TextAreaLength>
+            </GroupNameInputWrapper>
             <DuplicateCheckBtn
               type="button"
               positive={groupName !== ''}
@@ -127,15 +135,20 @@ const EditGroupInfo = () => {
       <GroupInfoWrppaer>
         <GroupInputWrapper>
           <InputTitleText>글 모임 소개</InputTitleText>
-          <GroupInfoTextarea
-            placeholder="글 모임에 대해 자유롭게 소개해주세요."
-            isValid={true}
-            onChange={(e) => handleGroupDesc(e)}
-            maxLength={110}
-            // ref={groupInfoRef}
-            value={groupDesc}
-          />
-          <TextAreaLength isValid={true}> {groupDesc.length}/ 100</TextAreaLength>
+          <GroupInfoTextareaWrapper>
+            <GroupInfoTextarea
+              placeholder="글 모임에 대해 자유롭게 소개해주세요."
+              isValid={groupDesc.length <= 100}
+              onChange={(e) => handleGroupDesc(e)}
+              maxLength={110}
+              // ref={groupInfoRef}
+              value={groupDesc}
+            />
+            <TextAreaLength isValid={groupDesc.length <= 100}>
+              {' '}
+              {groupDesc.length}/100
+            </TextAreaLength>
+          </GroupInfoTextareaWrapper>
         </GroupInputWrapper>
       </GroupInfoWrppaer>
       <WhiteInputWrapper isValid={true}>
@@ -222,17 +235,12 @@ export default EditGroupInfo;
 //   ${({ theme }) => theme.fonts.body4};
 //   color: ${({ theme }) => theme.colors.mileRed};
 // `;
-
-const TestBtn = styled.button`
-  width: 8rem;
-  height: 5rem;
-
-  color: black;
-
-  ${({ theme }) => theme.fonts.body6};
-  background-color: rgb(237 255 0);
-  border: 1px solid black;
-  border-radius: 8px;
+const GroupNameInputWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+const GroupInfoTextareaWrapper = styled.div`
+  position: relative;
 `;
 const GroupNameValidationText = styled.p<{ validation: boolean }>`
   ${({ theme }) => theme.fonts.body4};
@@ -259,8 +267,7 @@ const CreateGroupBtn = styled.button`
     border: 1px solid ${({ theme }) => theme.colors.mileViolet};
   }
 `;
-// const CreateGroupRadioUncheckedIcon = styled(CreateGroupRadioUncheckedIc)``;
-// const CreateGroupRadioCheckedIcon = styled(CreateGroupRadioCheckedIc)``;
+
 const PublicInfoText = styled.p`
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.body3};
@@ -269,8 +276,6 @@ const PublicInfoWrapper = styled.div<{ isVisible: boolean }>`
   position: absolute;
   top: 5.7rem;
   display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
-
-  /* display: flex; */
   flex-direction: column;
   justify-content: center;
   width: 66.3rem;
@@ -334,10 +339,6 @@ const GroupImagePreview = styled.img`
   border-radius: 8px;
 `;
 
-// const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
-//   cursor: pointer;
-// `;
-
 const GroupImageLabel = styled.label`
   display: block;
 `;
@@ -356,11 +357,28 @@ const GroupImageWrapper = styled.div`
   cursor: pointer;
   border-radius: 8px;
 `;
-
-const TextAreaLength = styled.p<{ isValid: boolean }>`
+const GroupInfoTextarea = styled.textarea<{ isValid: boolean }>`
   position: relative;
-  bottom: 4rem;
-  left: 70.6rem;
+  width: 100%;
+  height: 11rem;
+  padding: 1rem 1.2rem;
+
+  color: ${({ theme }) => theme.colors.gray100};
+
+  background: ${({ theme }) => theme.colors.gray5};
+  border: 1px solid
+    ${({ theme, isValid }) => (isValid ? theme.colors.gray20 : theme.colors.mileRed)};
+  border-radius: 6px;
+
+  ${({ theme }) => theme.fonts.button2};
+  ::placeholder {
+    color: ${({ theme }) => theme.colors.gray50};
+  }
+`;
+const TextAreaLength = styled.p<{ isValid: boolean }>`
+  position: absolute;
+  right: 1.2rem;
+  bottom: 1rem;
 
   ${({ theme }) => theme.fonts.button3};
   color: ${({ theme, isValid }) => (isValid ? theme.colors.gray70 : theme.colors.mileRed)};
@@ -453,24 +471,6 @@ const DuplicateCheckBtn = styled.button<{ positive: boolean }>`
   cursor: ${({ positive }) => (positive ? 'pointer' : 'default')};
   border-radius: 8px;
   ${({ theme }) => theme.fonts.button3};
-`;
-
-const GroupInfoTextarea = styled.textarea<{ isValid: boolean }>`
-  width: 100%;
-  height: 11rem;
-  padding: 1rem 1.2rem;
-
-  color: ${({ theme }) => theme.colors.gray100};
-
-  background: ${({ theme }) => theme.colors.gray5};
-  border: 1px solid
-    ${({ theme, isValid }) => (isValid ? theme.colors.gray20 : theme.colors.mileRed)};
-  border-radius: 6px;
-
-  ${({ theme }) => theme.fonts.button2};
-  ::placeholder {
-    color: ${({ theme }) => theme.colors.gray50};
-  }
 `;
 
 const CreateGroupLayout = styled.div`
