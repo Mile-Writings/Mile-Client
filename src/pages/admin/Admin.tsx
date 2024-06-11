@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useFetchInvitationLink } from './hooks/queries';
 import RenderAdminContent from './RenderAdminContent';
 
+import { useGroupInfo } from '../groupFeed/hooks/queries';
+
 import { AdminHomeIc } from '../../assets/svgs';
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
@@ -16,6 +18,7 @@ const Admin = () => {
   const { groupId } = useParams();
   const { invitationCode } = useFetchInvitationLink(groupId);
   const navigate = useNavigate();
+  const { groupInfoData } = useGroupInfo(groupId || '');
 
   const handleCopyLink = (invitationCode: string) => {
     copyLink(`https://www.milewriting.com/group/${invitationCode}/groupInvite`);
@@ -36,7 +39,7 @@ const Admin = () => {
               <AdminHomeIc />
               Home
             </HomeBtn>
-            <GroupName>현재글모임명자리임요</GroupName>
+            <GroupName>{groupInfoData?.moimName}</GroupName>
           </AdminGroupInfo>
           <Spacing marginBottom="2.4" />
           <AdminMenu>
