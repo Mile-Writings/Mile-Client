@@ -114,6 +114,7 @@ const HomeBtn = styled.button`
 
 const GroupName = styled.h3`
   ${({ theme }) => theme.fonts.title9};
+  cursor: default;
 `;
 
 const AdminMenu = styled.div`
