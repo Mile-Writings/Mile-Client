@@ -586,7 +586,6 @@ const PostPage = () => {
 export default PostPage;
 
 const PostPageWrapper = styled.div`
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;

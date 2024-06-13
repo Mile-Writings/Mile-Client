@@ -55,6 +55,8 @@ const TipTap = (props: EditorPropTypes) => {
   const [isFontColorOpen, setIsFontColorOpen] = useState(false);
   // font background color drop down
   const [isFontBgColorOpen, setIsFontBgColorOpen] = useState(false);
+  // 가운데 정렬 placeholder 조정용
+  const [isCenterClicked, setIsCenterClicked] = useState(false);
 
   // 제목 textarea 높이 조절용
   const titleRef = useRef<HTMLTextAreaElement | null>(null);
@@ -208,7 +210,8 @@ const TipTap = (props: EditorPropTypes) => {
   // 가운데 정렬 함수
   const toggleAlignCenter = useCallback(() => {
     editor.chain().focus().setTextAlign('center').run();
-  }, [editor]);
+    setIsCenterClicked(!isCenterClicked);
+  }, [editor, isCenterClicked]);
 
   // Bullet 리스트 함수
   const toggleBulletList = useCallback(() => {
@@ -246,8 +249,8 @@ const TipTap = (props: EditorPropTypes) => {
         rows={1}
         ref={titleRef}
       />
-      <StickyWrapper>
-        <Spacing marginBottom="2.4" />
+      <Toolbar>
+        <ToolbarBottom />
         <ToolbarWrapper className="menu">
           {/* 글자 크기 */}
           <ToolbarDropDownWrapper ref={fontSizeDropDownRef}>
@@ -691,14 +694,22 @@ const TipTap = (props: EditorPropTypes) => {
             </ToolbarSvg>
           </ToolbarSvgBtnLast>
         </ToolbarWrapper>
-        <Spacing marginBottom="2.4" />
-        <EditorContent editor={editor} />
-      </StickyWrapper>
+        <ToolbarBottom />
+      </Toolbar>
+
+      {/* <TextWrapper className={isCenterClicked ? 'center' : ''}> */}
+      <EditorContent editor={editor} />
+      {/* </TextWrapper> */}
     </TipTapWrapper>
   );
 };
 
 export default TipTap;
+
+const TextWrapper = styled.div`
+  position: sticky;
+  top: 14.4rem;
+`;
 
 const Title = styled.textarea`
   width: 82.6rem;
@@ -724,28 +735,43 @@ const TipTapWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 82.6rem;
+  height: 100%;
 `;
 
-const StickyWrapper = styled.div`
+// 마진 포함 툴바
+const Toolbar = styled.div`
   position: sticky;
-  top: 9.4rem;
+  top: 6.4rem;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
 `;
 
 // 툴바 전체 감싸기
 const ToolbarWrapper = styled.div`
-  /* position: sticky;
-  top: 6.4rem; */
+  position: sticky;
+  top: 6.4rem;
+  z-index: 99;
   display: flex;
   align-items: center;
   width: 82.6rem;
   height: 4.6rem;
-  margin: 0;
+
+  /* margin-bottom: 2.4rem; */
   padding: 0;
 
   background-color: white;
   border-radius: 0.8rem;
+`;
+
+// toolbar 전용 bottom
+const ToolbarBottom = styled.div`
+  z-index: 99;
+  height: 2.4rem;
+
+  background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
 
 // 드롭다운 리스트
