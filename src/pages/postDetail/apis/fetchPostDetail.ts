@@ -10,6 +10,9 @@ interface PostDetailRespnseTypes {
     topic: string;
     writerName: string;
     writerInfo: string;
+    hitsCount: number;
+    curiousCount: number;
+    commentCount: number;
   };
   status: number;
   message: string;
@@ -18,6 +21,7 @@ interface PostDetailRespnseTypes {
 const fetchPostDetail = async (postId: string) => {
   try {
     const { data } = await client.get<PostDetailRespnseTypes>(`/api/post/${postId}`);
+    console.log(data);
     return data;
   } catch (e) {
     console.log(e);
