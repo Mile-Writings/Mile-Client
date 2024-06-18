@@ -2,10 +2,11 @@ import styled from '@emotion/styled';
 import { useEffect, useState, ChangeEvent } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useFetchGroupInfo } from './hooks/queries';
+import { useFetchGroupInfo, usePutAdminGroupInfo } from './hooks/queries';
 
 import { InputInfoMsg } from '../createGroup/components/CreateGroupInfo';
 import { useGetGroupNameValidation } from '../createGroup/hooks/queries';
+import { usePresignedUrl } from '../postPage/hooks/queries';
 
 import {
   CreateGroupImageUpload,
@@ -33,14 +34,16 @@ const EditGroupInfo = () => {
   const [groupNameValid, setGroupNameValid] = useState(true);
   const { groupId } = useParams();
   const { data } = useFetchGroupInfo(groupId || '');
-  const { groupImageView, handleGroupImage, setGroupImageView } = useHandleGroupImage();
-  const DEFAULT_IMG_URL = 'https://mile-s3.s3.ap-northeast-2.amazonaws.com/test/groupMile.png';
+  const { fileName = '', url = '' } = usePresignedUrl();
+  const { groupImageView, handleGroupImage, setGroupImageView, groupImageServerUrl } =
+    useHandleGroupImage(fileName, url);
+
+  const [passDuplicate, setPassDuplicate] = useState(false);
 
   const {
     data: groupNameValidationData,
     refetch,
-    isLoading,
-    error,
+
     isSuccess,
   } = useGetGroupNameValidation(groupName);
 
@@ -50,6 +53,7 @@ const EditGroupInfo = () => {
 
   const handleGroupName = (e: ChangeEvent<HTMLInputElement>) => {
     setGroupName(e.target.value);
+    setPassDuplicate(false);
     if (e.target.value.length > 10) {
       setGroupNameInfoMsg(InputInfoMsg.groupNameLength);
       setGroupNameValid(false);
@@ -81,6 +85,7 @@ const EditGroupInfo = () => {
     if (isSuccess) {
       if (groupNameValidationData?.data?.data?.isValidate === true) {
         setGroupNameInfoMsg(InputInfoMsg.groupNameAvailable);
+        setPassDuplicate(true);
       } else if (groupNameValidationData?.data?.data?.isValidate === false) {
         setGroupNameInfoMsg(InputInfoMsg.groupNameNotAvailable);
         setGroupNameValid(false);
@@ -88,6 +93,28 @@ const EditGroupInfo = () => {
     }
   }, [groupNameValidationData, isSuccess]);
 
+  const {
+    mutate,
+    isSuccess: editGroupInfoSuccess,
+    isError,
+  } = usePutAdminGroupInfo({
+    groupName,
+    groupDesc,
+    groupImageServerUrl,
+    isPublic,
+    groupId,
+  });
+
+  const editGroupInfo = async () => {
+    await mutate();
+  };
+
+  useEffect(() => {
+    if (editGroupInfoSuccess) {
+      alert('글모임 정보 수정이 완료되었습니다.');
+      console.log(isError, editGroupInfoSuccess);
+    }
+  }, [editGroupInfoSuccess, isError]);
   return (
     <CreateGroupLayout>
       <WhiteInputWrapper isValid={true}>
@@ -115,15 +142,6 @@ const EditGroupInfo = () => {
               중복확인
             </DuplicateCheckBtn>
           </GroupNameInputLayout>
-
-          {/* {isGroupNameValid && groupNameInputMsg === InputInfoMsg.groupNameAvailable ? (
-            <SuccessMsgText>{groupNameInputMsg}</SuccessMsgText>
-          ) : (
-            <ErrorMsgText>{groupNameInputMsg}</ErrorMsgText>
-          )} */}
-          {/* {groupNameValidationData?.data?.data?.isValidate === undefined ? (
-            <p>test</p>
-          ) : ( */}
 
           <GroupNameValidationText
             validation={InputInfoMsg.groupNameAvailable === groupNameInfoMsg}
@@ -224,7 +242,9 @@ const EditGroupInfo = () => {
           </GroupPublicDescContainer>
         </GroupInputHorizonWrapper>
       </WhiteInputWrapper>
-      <CreateGroupBtn>수정하기</CreateGroupBtn>
+      <CreateGroupBtn onClick={editGroupInfo} active={false} disabled={false}>
+        수정하기
+      </CreateGroupBtn>
     </CreateGroupLayout>
   );
 };
@@ -246,26 +266,30 @@ const GroupNameValidationText = styled.p<{ validation: boolean }>`
   ${({ theme }) => theme.fonts.body4};
   color: ${({ theme, validation }) => (validation ? theme.colors.mainGreen : theme.colors.mileRed)};
 `;
-const CreateGroupBtn = styled.button`
+const CreateGroupBtn = styled.button<{ active: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 5.1rem;
 
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme, active }) => (active ? theme.colors.white : theme.colors.gray70)};
 
   ${({ theme }) => theme.fonts.button2};
-  background: ${({ theme }) => theme.colors.mainViolet};
-  border: 1px solid ${({ theme }) => theme.colors.mainViolet};
+  background: ${({ theme, active }) => (active ? theme.colors.mainViolet : theme.colors.gray30)};
+  border: 1px solid
+    ${({ theme, active }) => (active ? theme.colors.mainViolet : theme.colors.gray30)};
   border-radius: 10px;
 
-  :hover {
-    color: ${({ theme }) => theme.colors.mainViolet};
-
-    background-color: ${({ theme }) => theme.colors.mileViolet};
-    border: 1px solid ${({ theme }) => theme.colors.mileViolet};
-  }
+  ${({ active, theme }) =>
+    active &&
+    `
+    &:hover {
+      color: ${theme.colors.mainViolet};
+      background-color: ${theme.colors.mileViolet};
+      border: 1px solid ${theme.colors.mileViolet};
+    }
+  `}
 `;
 
 const PublicInfoText = styled.p`
