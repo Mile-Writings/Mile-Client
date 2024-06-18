@@ -173,7 +173,11 @@ export const usePutAdminGroupInfo = ({
       putAdminEditGroupInfo({ groupName, groupDesc, groupImageServerUrl, isPublic, groupId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY_ADMIN.fetchAdminGroupInfo, groupId],
+        queryKey: [
+          QUERY_KEY_ADMIN.fetchAdminGroupInfo,
+          QUERY_KEY_ADMIN.putAdminEditGroupInfo,
+          groupId,
+        ],
       });
     },
     onError: (err) => {

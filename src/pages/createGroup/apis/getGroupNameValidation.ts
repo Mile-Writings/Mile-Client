@@ -1,3 +1,5 @@
+import { isAxiosError } from 'axios';
+
 import { client } from '../../../utils/apis/axios';
 
 interface GroupNameValidationPropTypes {
@@ -22,10 +24,13 @@ export const getGroupNameValidation = (moimName: string) => {
           },
         },
       );
-
+      console.log(data);
       return data;
     } catch (err) {
       console.log(err);
+      if (isAxiosError(err) && err) {
+        console.log(err);
+      }
     }
   }
 };

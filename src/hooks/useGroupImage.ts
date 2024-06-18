@@ -23,7 +23,7 @@ const useHandleGroupImage = (fileName: string, url: string) =>
   {
     const [groupImageView, setGroupImageView] = useState('');
     const [groupImageServerUrl, setGroupImageServerUrl] = useState('');
-    const handleGroupImage = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleGroupImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files && e.target.files[0];
       if (
         file &&
@@ -51,8 +51,9 @@ const useHandleGroupImage = (fileName: string, url: string) =>
     return {
       groupImageView,
       setGroupImageView,
-      handleGroupImage,
+      handleGroupImageUpload,
       groupImageServerUrl,
+      setGroupImageServerUrl,
     };
   };
 

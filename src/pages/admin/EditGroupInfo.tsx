@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useState, ChangeEvent } from 'react';
+import { useEffect, useState, ChangeEvent, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useFetchGroupInfo, usePutAdminGroupInfo } from './hooks/queries';
@@ -25,26 +25,35 @@ import useHandleGroupImage from '../../hooks/useGroupImage';
 // };
 const EditGroupInfo = () => {
   const [groupName, setGroupName] = useState('');
+  const [beforeGroupName, setBeforeGroupName] = useState('');
   const [groupDesc, setGroupDesc] = useState('');
-  // const [groupImageView, setGroupImageView] = useState('');
   const [isPublic, setIsPublic] = useState(true);
   const [isHover, setIsHover] = useState(false);
 
   const [groupNameInfoMsg, setGroupNameInfoMsg] = useState(InputInfoMsg.emptyText);
   const [groupNameValid, setGroupNameValid] = useState(true);
+
+  const groupNameRef = useRef<HTMLInputElement>(null);
+
   const { groupId } = useParams();
   const { data } = useFetchGroupInfo(groupId || '');
   const { fileName = '', url = '' } = usePresignedUrl();
-  const { groupImageView, handleGroupImage, setGroupImageView, groupImageServerUrl } =
-    useHandleGroupImage(fileName, url);
+  const {
+    groupImageView,
+    handleGroupImageUpload,
+    setGroupImageView,
+    groupImageServerUrl,
+    setGroupImageServerUrl,
+  } = useHandleGroupImage(fileName, url);
 
   const [passDuplicate, setPassDuplicate] = useState(false);
-
+  const [editBtnAcitve, setEditBtnActive] = useState(false);
   const {
     data: groupNameValidationData,
     refetch,
-
+    isError,
     isSuccess,
+    error,
   } = useGetGroupNameValidation(groupName);
 
   const handleHover = () => {
@@ -54,6 +63,7 @@ const EditGroupInfo = () => {
   const handleGroupName = (e: ChangeEvent<HTMLInputElement>) => {
     setGroupName(e.target.value);
     setPassDuplicate(false);
+    setEditBtnActive(true);
     if (e.target.value.length > 10) {
       setGroupNameInfoMsg(InputInfoMsg.groupNameLength);
       setGroupNameValid(false);
@@ -64,21 +74,36 @@ const EditGroupInfo = () => {
   };
   const handleGroupDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setGroupDesc(e.target.value);
+    setEditBtnActive(true);
   };
+
+  const handleGroupImage = (e: ChangeEvent<HTMLInputElement>) => {
+    handleGroupImageUpload(e);
+    setEditBtnActive(true);
+  };
+
   const handleIsPublic = (e: ChangeEvent<HTMLInputElement>) => {
     setIsPublic(e.target.value === 'true');
+    setEditBtnActive(true);
   };
+
   const getGroupNameValidation = async () => {
-    await refetch();
+    if (groupName.length <= 10 && beforeGroupName !== groupName) {
+      await refetch();
+    }
   };
   useEffect(() => {
     if (data?.data) {
       setGroupName(data?.data.moimTitle);
+      setBeforeGroupName(data?.data.moimTitle);
       setGroupDesc(data?.data.description);
       setIsPublic(data?.data.isPublic);
     }
 
-    if (data?.data?.imageUrl !== '') setGroupImageView(data?.data.imageUrl);
+    if (data?.data?.imageUrl !== '') {
+      setGroupImageView(data?.data.imageUrl);
+      setGroupImageServerUrl(data?.data.imageUrl);
+    }
   }, [data]);
 
   useEffect(() => {
@@ -93,11 +118,7 @@ const EditGroupInfo = () => {
     }
   }, [groupNameValidationData, isSuccess]);
 
-  const {
-    mutate,
-    isSuccess: editGroupInfoSuccess,
-    isError,
-  } = usePutAdminGroupInfo({
+  const { mutate, isSuccess: editGroupInfoSuccess } = usePutAdminGroupInfo({
     groupName,
     groupDesc,
     groupImageServerUrl,
@@ -106,15 +127,22 @@ const EditGroupInfo = () => {
   });
 
   const editGroupInfo = async () => {
-    await mutate();
+    if (groupName && groupImageServerUrl) {
+      if (passDuplicate || groupName === beforeGroupName) {
+        await mutate();
+        alert('글모임 정보가 수정되었습니다.');
+      } else if (!passDuplicate && groupName !== beforeGroupName) {
+        if (groupNameRef.current) {
+          groupNameRef.current && groupNameRef.current.focus();
+          groupNameRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
+          setGroupNameInfoMsg(InputInfoMsg.groupNameNotCheck);
+        }
+      }
+    }
+
+    console.log(groupName, beforeGroupName, groupImageServerUrl, passDuplicate);
   };
 
-  useEffect(() => {
-    if (editGroupInfoSuccess) {
-      alert('글모임 정보 수정이 완료되었습니다.');
-      console.log(isError, editGroupInfoSuccess);
-    }
-  }, [editGroupInfoSuccess, isError]);
   return (
     <CreateGroupLayout>
       <WhiteInputWrapper isValid={true}>
@@ -123,7 +151,7 @@ const EditGroupInfo = () => {
           <GroupNameInputLayout>
             <GroupNameInputWrapper>
               <GroupNameInput
-                // ref={groupNameRef}
+                ref={groupNameRef}
                 onChange={(e) => handleGroupName(e)}
                 placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
                 isValid={groupNameValid}
@@ -135,9 +163,9 @@ const EditGroupInfo = () => {
             </GroupNameInputWrapper>
             <DuplicateCheckBtn
               type="button"
-              positive={groupName !== ''}
+              positive={groupName !== '' && groupName.length <= 10 && beforeGroupName !== groupName}
               onClick={getGroupNameValidation}
-              disabled={!groupName}
+              disabled={!groupName || groupName.length > 10 || beforeGroupName === groupName}
             >
               중복확인
             </DuplicateCheckBtn>
@@ -242,9 +270,9 @@ const EditGroupInfo = () => {
           </GroupPublicDescContainer>
         </GroupInputHorizonWrapper>
       </WhiteInputWrapper>
-      <CreateGroupBtn onClick={editGroupInfo} active={false} disabled={false}>
+      <EditGroupBtn onClick={editGroupInfo} active={editBtnAcitve} disabled={!editBtnAcitve}>
         수정하기
-      </CreateGroupBtn>
+      </EditGroupBtn>
     </CreateGroupLayout>
   );
 };
@@ -266,7 +294,7 @@ const GroupNameValidationText = styled.p<{ validation: boolean }>`
   ${({ theme }) => theme.fonts.body4};
   color: ${({ theme, validation }) => (validation ? theme.colors.mainGreen : theme.colors.mileRed)};
 `;
-const CreateGroupBtn = styled.button<{ active: boolean }>`
+const EditGroupBtn = styled.button<{ active: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -275,12 +303,13 @@ const CreateGroupBtn = styled.button<{ active: boolean }>`
 
   color: ${({ theme, active }) => (active ? theme.colors.white : theme.colors.gray70)};
 
-  ${({ theme }) => theme.fonts.button2};
   background: ${({ theme, active }) => (active ? theme.colors.mainViolet : theme.colors.gray30)};
+  cursor: default;
   border: 1px solid
     ${({ theme, active }) => (active ? theme.colors.mainViolet : theme.colors.gray30)};
   border-radius: 10px;
 
+  ${({ theme }) => theme.fonts.button2};
   ${({ active, theme }) =>
     active &&
     `
@@ -289,6 +318,7 @@ const CreateGroupBtn = styled.button<{ active: boolean }>`
       background-color: ${theme.colors.mileViolet};
       border: 1px solid ${theme.colors.mileViolet};
     }
+    cursor:pointer;
   `}
 `;
 
