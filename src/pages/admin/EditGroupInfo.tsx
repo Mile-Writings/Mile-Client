@@ -126,7 +126,7 @@ const EditGroupInfo = () => {
 
   const editGroupInfo = async () => {
     if (groupName && groupImageServerUrl) {
-      if (passDuplicate || groupName === beforeGroupName) {
+      if ((passDuplicate || groupName === beforeGroupName) && groupDesc.length <= 100) {
         await mutate();
         alert('글모임 정보가 수정되었습니다.');
       } else if (!passDuplicate && groupName !== beforeGroupName) {
@@ -275,10 +275,6 @@ const EditGroupInfo = () => {
 
 export default EditGroupInfo;
 
-// const ErrorMsgText = styled.p`
-//   ${({ theme }) => theme.fonts.body4};
-//   color: ${({ theme }) => theme.colors.mileRed};
-// `;
 const GroupNameInputWrapper = styled.div`
   position: relative;
   width: 100%;
@@ -508,8 +504,6 @@ const DuplicateCheckBtn = styled.button<{ positive: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* padding: 1 1.6rem; */
   width: 8.1rem;
   height: 4rem;
 

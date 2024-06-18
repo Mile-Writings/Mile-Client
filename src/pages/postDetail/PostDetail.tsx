@@ -114,6 +114,9 @@ const ThumnailImg = styled.img`
   width: 100%;
   height: 37rem;
   object-fit: cover;
+
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 `;
 
 const PostDetailWrapper = styled.div`
