@@ -51,9 +51,7 @@ const EditGroupInfo = () => {
   const {
     data: groupNameValidationData,
     refetch,
-    isError,
     isSuccess,
-    error,
   } = useGetGroupNameValidation(groupName);
 
   const handleHover = () => {
@@ -118,7 +116,7 @@ const EditGroupInfo = () => {
     }
   }, [groupNameValidationData, isSuccess]);
 
-  const { mutate, isSuccess: editGroupInfoSuccess } = usePutAdminGroupInfo({
+  const { mutate } = usePutAdminGroupInfo({
     groupName,
     groupDesc,
     groupImageServerUrl,
@@ -139,8 +137,6 @@ const EditGroupInfo = () => {
         }
       }
     }
-
-    console.log(groupName, beforeGroupName, groupImageServerUrl, passDuplicate);
   };
 
   return (
