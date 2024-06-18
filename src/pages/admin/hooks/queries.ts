@@ -14,6 +14,8 @@ import { fetchInvitationLink } from '../apis/fetchInvitationLink';
 import fetchMemberInfo from '../apis/fetchMemberInfo';
 import putAdminEditGroupInfo, { AdminEditGroupInfoPropTypes } from '../apis/putAdminEditGroupInfo';
 
+import { QUERY_KEY_GROUPFEED } from '../../groupFeed/hooks/queries';
+
 export const QUERY_KEY_ADMIN = {
   useMemberInfo: 'fetchMemberInfo',
   fetchInvitationLink: 'fetchInvitationLink',
@@ -173,11 +175,7 @@ export const usePutAdminGroupInfo = ({
       putAdminEditGroupInfo({ groupName, groupDesc, groupImageServerUrl, isPublic, groupId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [
-          QUERY_KEY_ADMIN.fetchAdminGroupInfo,
-          QUERY_KEY_ADMIN.putAdminEditGroupInfo,
-          groupId,
-        ],
+        queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
       });
     },
     onError: (err) => {
