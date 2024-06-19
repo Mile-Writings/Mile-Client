@@ -7,6 +7,7 @@ import { usePostCreateGroup } from './hooks/queries';
 import { CreateGroupTypes, CurrentPageType } from './types/stateType';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
+import { DEFAULT_IMG_URL } from '../../constants/defaultImgUrl';
 
 type CreateGroupAction =
   | { type: 'setGroupName'; value: string }
@@ -104,7 +105,7 @@ const CreateGroup = () => {
   const { mutate } = usePostCreateGroup({
     groupName,
     groupInfo,
-    groupImageFile,
+    groupImageFile: DEFAULT_IMG_URL,
     isPublic,
     topic,
     topicTag,
