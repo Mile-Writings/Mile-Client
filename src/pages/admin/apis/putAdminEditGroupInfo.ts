@@ -1,3 +1,4 @@
+import { DEFAULT_IMG_URL } from '../../../constants/defaultImgUrl';
 import { client } from '../../../utils/apis/axios';
 
 export interface AdminEditGroupInfoPropTypes {
@@ -16,8 +17,6 @@ const putAdminEditGroupInfo = async ({
   groupId,
 }: AdminEditGroupInfoPropTypes) => {
   const token = localStorage.getItem('accessToken');
-
-  const DEFAULT_IMG_URL = 'https://mile-s3.s3.ap-northeast-2.amazonaws.com/test/groupMile.png';
 
   try {
     await client.put(
