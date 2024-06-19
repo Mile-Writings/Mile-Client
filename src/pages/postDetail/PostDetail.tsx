@@ -4,6 +4,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
 import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
+import useCustomBack from './hooks/useCustomBack';
 
 import Error from '../error/Error';
 import Loading from '../loading/Loading';
@@ -26,8 +27,9 @@ const PostDetail = () => {
   const { data: postAuth } = useCheckPostAuth(postId || '');
   const { mutate: deletePost } = useDeletePost(postId || '', topicId);
   const postData = data?.data;
-
   const accessToken = localStorage.getItem('accessToken');
+
+  useCustomBack(() => navigate(`/group/${groupId}`));
 
   if (isLoading) {
     return <Loading />;
