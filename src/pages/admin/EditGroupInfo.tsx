@@ -16,13 +16,6 @@ import {
 } from '../../assets/svgs';
 import useHandleGroupImage from '../../hooks/useGroupImage';
 
-// export const InputInfoMsg = {
-//   groupNameLength: '10자 이내로 작성해주세요.',
-//   groupNameNotAvailable: '이미 사용중인 모임명입니다.',
-//   groupNameNotCheck: '중복확인을 해주세요.',
-//   groupNameAvailable: '사용 가능한 모임명입니다.',
-//   emptyText: '',
-// };
 const EditGroupInfo = () => {
   const [groupName, setGroupName] = useState('');
   const [beforeGroupName, setBeforeGroupName] = useState('');
@@ -201,7 +194,7 @@ const EditGroupInfo = () => {
               <GroupImagePreview src={groupImageView} />
             ) : (
               <GroupImageWrapper>
-                <CreateGroupImageUploadIcon />
+                <CreateGroupImageUpload />
               </GroupImageWrapper>
             )}
             <GroupImageInput
@@ -371,7 +364,6 @@ const GroupPublicDescWrapper = styled.div`
   width: 61.4rem;
 `;
 
-const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)``;
 const GroupInputDesc = styled.p`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.body4};
