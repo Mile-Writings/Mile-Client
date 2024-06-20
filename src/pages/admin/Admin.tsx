@@ -21,7 +21,7 @@ const Admin = () => {
   const { groupInfoData } = useGroupInfo(groupId || '');
 
   const handleCopyLink = (invitationCode: string) => {
-    copyLink(`https://www.milewriting.com/group/${invitationCode}/groupInvite`);
+    copyLink(import.meta.env.VITE_INVITE_URL + `group/${invitationCode}/groupInvite`);
   };
 
   const handleRoutingGroup = () => {
