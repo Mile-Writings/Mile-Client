@@ -174,7 +174,7 @@ const DateText = styled.p`
   ${({ theme }) => theme.fonts.subtitle4};
 `;
 
-const CuriousCount = styled.p`
+const CuriousCount = styled.div`
   display: flex;
   gap: 0.2rem;
   align-items: center;
@@ -183,7 +183,7 @@ const CuriousCount = styled.p`
   ${({ theme }) => theme.fonts.subtitle4};
 `;
 
-const ViewCount = styled.p`
+const ViewCount = styled.div`
   display: flex;
   gap: 0.2rem;
   align-items: center;
@@ -192,7 +192,7 @@ const ViewCount = styled.p`
   ${({ theme }) => theme.fonts.subtitle4};
 `;
 
-const CommentCount = styled.p`
+const CommentCount = styled.div`
   display: flex;
   gap: 0.2rem;
   align-items: center;
