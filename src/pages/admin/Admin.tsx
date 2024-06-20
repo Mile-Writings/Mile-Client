@@ -28,6 +28,10 @@ const Admin = () => {
     navigate(`/group/${groupId}`);
   };
 
+  const handleInviteBtnClick = () => {
+    handleCopyLink(invitationCode?.invitationCode || '');
+  };
+
   return (
     <AdminWrapper>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
@@ -64,10 +68,7 @@ const Admin = () => {
           </AdminMenu>
           <Spacing marginBottom="1.6" />
           {invitationCode && (
-            <AdminInviteBtn
-              type="button"
-              onClick={() => handleCopyLink(invitationCode?.invitationCode)}
-            >
+            <AdminInviteBtn type="button" onClick={handleInviteBtnClick}>
               초대링크 복사하기
             </AdminInviteBtn>
           )}
