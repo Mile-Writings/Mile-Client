@@ -32,7 +32,6 @@ import { LineHeight } from '../utils/lineHeight';
 import './tiptap.css';
 // editor svg
 import * as ToolbarIcon from '../../../assets/svgs/editorSVG';
-import Spacing from '../../../components/commons/Spacing';
 import useClickOutside from '../../../hooks/useClickOutside';
 
 interface EditorPropTypes {
@@ -55,8 +54,6 @@ const TipTap = (props: EditorPropTypes) => {
   const [isFontColorOpen, setIsFontColorOpen] = useState(false);
   // font background color drop down
   const [isFontBgColorOpen, setIsFontBgColorOpen] = useState(false);
-  // 가운데 정렬 placeholder 조정용
-  const [isCenterClicked, setIsCenterClicked] = useState(false);
 
   // 제목 textarea 높이 조절용
   const titleRef = useRef<HTMLTextAreaElement | null>(null);
@@ -210,8 +207,7 @@ const TipTap = (props: EditorPropTypes) => {
   // 가운데 정렬 함수
   const toggleAlignCenter = useCallback(() => {
     editor.chain().focus().setTextAlign('center').run();
-    setIsCenterClicked(!isCenterClicked);
-  }, [editor, isCenterClicked]);
+  }, [editor]);
 
   // Bullet 리스트 함수
   const toggleBulletList = useCallback(() => {
@@ -697,9 +693,9 @@ const TipTap = (props: EditorPropTypes) => {
         <ToolbarBottom />
       </Toolbar>
 
-      {/* <TextWrapper className={isCenterClicked ? 'center' : ''}> */}
-      <EditorContent editor={editor} />
-      {/* </TextWrapper> */}
+      <TextWrapper>
+        <EditorContent editor={editor} />
+      </TextWrapper>
     </TipTapWrapper>
   );
 };
