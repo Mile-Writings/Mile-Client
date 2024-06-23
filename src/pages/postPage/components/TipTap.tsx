@@ -223,6 +223,7 @@ const TipTap = (props: EditorPropTypes) => {
   const toggleBlockQuote = useCallback(() => {
     const current = editor.view.state.selection.$head.pos + 1;
     const focusPos = current === 1 ? 'start' : current;
+    console.log(current);
 
     editor.chain().focus().toggleBlockquote().enter().unsetBlockquote().focus(focusPos).run();
   }, [editor]);
@@ -246,7 +247,7 @@ const TipTap = (props: EditorPropTypes) => {
         ref={titleRef}
       />
       <Toolbar>
-        <ToolbarBottom />
+        <ToolbarTop />
         <ToolbarWrapper className="menu">
           {/* 글자 크기 */}
           <ToolbarDropDownWrapper ref={fontSizeDropDownRef}>
@@ -691,11 +692,11 @@ const TipTap = (props: EditorPropTypes) => {
           </ToolbarSvgBtnLast>
         </ToolbarWrapper>
         <ToolbarBottom />
-      </Toolbar>
 
-      <TextWrapper>
-        <EditorContent editor={editor} />
-      </TextWrapper>
+        <TextWrapper>
+          <EditorContent editor={editor} />
+        </TextWrapper>
+      </Toolbar>
     </TipTapWrapper>
   );
 };
@@ -704,7 +705,7 @@ export default TipTap;
 
 const TextWrapper = styled.div`
   position: sticky;
-  top: 14.4rem;
+  top: 13.4rem;
 `;
 
 const Title = styled.textarea`
@@ -740,16 +741,17 @@ const TipTapWrapper = styled.div`
 const Toolbar = styled.div`
   position: sticky;
   top: 6.4rem;
-  z-index: 99;
+  z-index: 9;
   display: flex;
   flex-direction: column;
+  height: 100%;
 `;
 
 // 툴바 전체 감싸기
 const ToolbarWrapper = styled.div`
   position: sticky;
-  top: 6.4rem;
-  z-index: 99;
+  top: 8.8rem;
+  z-index: 9;
   display: flex;
   align-items: center;
   width: 82.6rem;
@@ -763,8 +765,18 @@ const ToolbarWrapper = styled.div`
 `;
 
 // toolbar 전용 bottom
+const ToolbarTop = styled.div`
+  position: sticky;
+  top: 6.4rem;
+  z-index: 7;
+  height: 2.4rem;
+
+  background-color: ${({ theme }) => theme.colors.backGroundGray};
+`;
 const ToolbarBottom = styled.div`
-  z-index: 99;
+  position: sticky;
+  top: 13.2rem;
+  z-index: 7;
   height: 2.4rem;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};

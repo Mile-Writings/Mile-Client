@@ -69,7 +69,7 @@ export default EditorFlowModal;
 const ModalBackground = styled.div<{ $showModal: boolean }>`
   position: fixed;
   top: 0;
-  z-index: 5;
+  z-index: 11;
   display: ${({ $showModal }) => ($showModal ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
