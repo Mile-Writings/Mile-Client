@@ -221,11 +221,13 @@ const TipTap = (props: EditorPropTypes) => {
 
   // 인용구 함수
   const toggleBlockQuote = useCallback(() => {
-    const current = editor.view.state.selection.$head.pos + 1;
-    const focusPos = current === 1 ? 'start' : current;
-    console.log(current);
+    editor.chain().focus().toggleBlockquote().run();
 
-    editor.chain().focus().toggleBlockquote().enter().unsetBlockquote().focus(focusPos).run();
+    // 아래 한 줄 더 생기는 버전
+    // const current = editor.view.state.selection.$head.pos + 1;
+    // const focusPos = current === 1 ? 'start' : current;
+
+    // editor.chain().focus().toggleBlockquote().enter().unsetBlockquote().focus(focusPos).run();
   }, [editor]);
 
   // 구분선 함수

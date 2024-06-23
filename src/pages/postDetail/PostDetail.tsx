@@ -26,7 +26,6 @@ const PostDetail = () => {
   const { data: postAuth } = useCheckPostAuth(postId || '');
   const { mutate: deletePost } = useDeletePost(postId || '', topicId);
   const postData = data?.data;
-  console.log(postData);
 
   const accessToken = localStorage.getItem('accessToken');
 
