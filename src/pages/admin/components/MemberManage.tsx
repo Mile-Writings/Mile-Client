@@ -201,6 +201,7 @@ const CommentNumber = styled.pre`
 
 const ExpelBtn = styled.button`
   margin-left: auto;
+  padding: 0;
 
   color: ${({ theme }) => theme.colors.gray50};
   ${({ theme }) => theme.fonts.body5};
