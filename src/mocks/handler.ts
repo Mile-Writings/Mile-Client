@@ -57,4 +57,14 @@ export const handlers = [
       },
     });
   }),
+
+  http.get('/api/moim/:moimId/public-status', () => {
+    return HttpResponse.json({
+      status: 200,
+      data: {
+        isPublic: false,
+      },
+      message: '공개/비공개 확인',
+    });
+  }),
 ];
