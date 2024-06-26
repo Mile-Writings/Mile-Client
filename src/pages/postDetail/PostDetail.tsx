@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
@@ -8,7 +8,13 @@ import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queri
 import Error from '../error/Error';
 import Loading from '../loading/Loading';
 
-import { CheckboxIc, DefaultProfileIc } from './../../assets/svgs';
+import {
+  CheckboxIc,
+  DefaultProfileIc,
+  GroupChatIc,
+  GroupCuriousIc,
+  GroupViewIc,
+} from './../../assets/svgs';
 import Button from './../../components/commons/Button';
 import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/commons/Header';
 import Spacing from './../../components/commons/Spacing';
@@ -68,7 +74,21 @@ const PostDetail = () => {
         <PostDetailContainer>
           <InfoTextBox>
             <TitleText>{postData?.title}</TitleText>
-            <DateText>{postData?.createdAt}</DateText>
+            <DetailBox>
+              <DateText>{postData?.createdAt} ·</DateText>
+              <CuriousCount>
+                <GroupCuriousIc />
+                {postData?.curiousCount}
+              </CuriousCount>
+              <ViewCount>
+                <GroupViewIc />
+                {postData?.hitsCount}
+              </ViewCount>
+              <CommentCount>
+                <GroupChatIc />
+                {postData?.commentCount}
+              </CommentCount>
+            </DetailBox>
           </InfoTextBox>
           {postAuth?.data?.data?.canEdit && (
             <ButtonWrapper>
@@ -96,7 +116,9 @@ const PostDetail = () => {
                 <WriterInfoText>{postData?.writerName}</WriterInfoText>
                 <GroupInfoText>{postData?.moimName}</GroupInfoText>
               </WriterInfoBox>
-              <WriterDesc>{postData?.writerInfo && '아직 작가소개를 작성하지 않았어요'}</WriterDesc>
+              <WriterDesc>
+                {!postData?.writerInfo ? '아직 작가소개를 작성하지 않았어요' : postData?.writerInfo}
+              </WriterDesc>
             </InfoWrapper>
           </WriterInfoContainer>
           {localStorage.accessToken && <CuriousBtn />}
@@ -137,12 +159,44 @@ const InfoTextBox = styled.div`
   width: 60rem;
 `;
 
+const DetailBox = styled.div`
+  display: flex;
+  gap: 0.8rem;
+`;
+
 const TitleText = styled.h1`
   color: ${({ theme }) => theme.colors.grayBlack};
   ${({ theme }) => theme.fonts.title1};
 `;
 
 const DateText = styled.p`
+  color: ${({ theme }) => theme.colors.gray70};
+  ${({ theme }) => theme.fonts.subtitle4};
+`;
+
+const CuriousCount = styled.div`
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+
+  color: ${({ theme }) => theme.colors.gray70};
+  ${({ theme }) => theme.fonts.subtitle4};
+`;
+
+const ViewCount = styled.div`
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+
+  color: ${({ theme }) => theme.colors.gray70};
+  ${({ theme }) => theme.fonts.subtitle4};
+`;
+
+const CommentCount = styled.div`
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.subtitle4};
 `;
