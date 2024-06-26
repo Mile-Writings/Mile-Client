@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { isAxiosError } from 'axios';
 
 import {
   editAdminTopic,
@@ -7,13 +8,19 @@ import {
   postAdminTopicPropTypes,
   deleteAdminTopic,
 } from '../apis/fetchAdminData';
+import fetchAdminGroupInfo from '../apis/fetchAdminGroupInfo';
 import fetchDeleteMember from '../apis/fetchDeleteMember';
 import { fetchInvitationLink } from '../apis/fetchInvitationLink';
 import fetchMemberInfo from '../apis/fetchMemberInfo';
+import putAdminEditGroupInfo, { AdminEditGroupInfoPropTypes } from '../apis/putAdminEditGroupInfo';
+
+import { QUERY_KEY_GROUPFEED } from '../../groupFeed/hooks/queries';
 
 export const QUERY_KEY_ADMIN = {
   useMemberInfo: 'fetchMemberInfo',
   fetchInvitationLink: 'fetchInvitationLink',
+  fetchAdminGroupInfo: 'fetchAdminGroupInfo',
+  putAdminEditGroupInfo: 'putAdminEditGroupInfo',
 };
 
 export const useAdminTopic = (groupId: string | undefined, pageNum: number) => {
@@ -141,4 +148,50 @@ export const useDeleteAdminTopic = (
     data.mutate();
   };
   return { deleteMutateAdminTopic };
+};
+
+//모임 정보 수정 정보 get
+export const useFetchGroupInfo = (groupId: string) => {
+  const data = useQuery({
+    queryKey: [QUERY_KEY_ADMIN.fetchAdminGroupInfo, groupId],
+    queryFn: () => fetchAdminGroupInfo(groupId),
+  });
+
+  return data;
+};
+
+//모임 정보 수정
+export const usePutAdminGroupInfo = ({
+  groupName,
+  groupDesc,
+  groupImageServerUrl,
+  isPublic,
+  groupId,
+}: AdminEditGroupInfoPropTypes) => {
+  const queryClient = useQueryClient();
+  const { mutate, isSuccess, isError } = useMutation({
+    mutationKey: [QUERY_KEY_ADMIN.putAdminEditGroupInfo, groupId],
+    mutationFn: () =>
+      putAdminEditGroupInfo({ groupName, groupDesc, groupImageServerUrl, isPublic, groupId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
+      });
+    },
+    onError: (err) => {
+      if (isAxiosError(err)) {
+        if (err?.response?.status === 500) {
+          alert('서버내부 오류입니다. ');
+        } else if (err?.response?.status === 401) {
+          alert('파일 형식을 확인해주세요');
+        } else if (err?.response?.status === 413) {
+          alert(`파일 형식을 확인해주세요 Error Code ${err.response.status}`);
+        } else {
+          alert(`${err?.response}`);
+        }
+      }
+    },
+  });
+
+  return { mutate, isSuccess, isError };
 };

@@ -20,19 +20,6 @@ const CreateGroupLeaderInfo = ({
   isGroupLeaderValid,
   setIsGroupLeaderValid,
 }: GroupLeaderPropTypes) => {
-  //뒤로가기 처리 추후 해줘야해서 코드 남겨둡니다. or Outlet으로 리팩토링 필요합니다.
-  // useEffect(() => {
-  //   const handleBackButton = (e: PopStateEvent) => {
-  //     e.preventDefault(); // 기본 동작 방지
-  //     setCurrentPage('GroupInfoPage'); // 상태 변경
-  //   };
-
-  //   window.addEventListener('popstate', handleBackButton);
-  //   return () => {
-  //     window.removeEventListener('popstate', handleBackButton);
-  //   };
-  // }, []); // 의존성 배열을 비워서 컴포넌트 마운트 시 1회만 설정되도록 함
-
   const handleLeaderNameInput = (e: ChangeEvent<HTMLInputElement>) => {
     setIsGroupLeaderValid(true);
     setLeaderPenName(e);
@@ -58,7 +45,7 @@ const CreateGroupLeaderInfo = ({
         </WhiteInputWrapper>
         <GroupLeaderInfoWrppaer>
           <GroupInputWrapper>
-            <InputTitleText>글 모임 소개</InputTitleText>
+            <InputTitleText>글모임장 소개</InputTitleText>
             <GroupLeaderInfoTextarea
               placeholder="글 모임에 대해 자유롭게 소개해주세요."
               isValid={leaderDesc.length <= 100}

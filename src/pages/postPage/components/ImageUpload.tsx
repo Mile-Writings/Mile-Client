@@ -3,14 +3,13 @@ import React, { Dispatch, SetStateAction } from 'react';
 
 import postDirectlyS3 from '../apis/postDirectlyS3';
 import { EDITOR_DEFAULT_IMG } from '../constants/editorDefaultImg';
-import { s3UrlParsing } from '../utils/s3UrlParsing';
 
 import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
+import { s3UrlParsing } from '../../../utils/s3UrlParsing';
 
 interface ImageUploadPropTypes {
   setPreviewImgUrl: Dispatch<SetStateAction<string>>;
   url: string;
-  // eslint-disable-next-line no-unused-vars
   setImageToServer: (imageUrl: string) => void;
   fileName: string;
   previewImgUrl: string;

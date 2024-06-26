@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import AddEditTopicModal from './AddEditTopicModal';
 import MemberManage from './components/MemberManage';
+import EditGroupInfo from './EditGroupInfo';
 import { useAdminTopic, useFetchMemberInfo } from './hooks/queries';
 import TopicAdmin from './TopicAdmin';
 
@@ -61,6 +62,7 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
           <Spacing marginBottom="1.2" />
           <SubTitle>{`글 모임 정보를 수정할 수 있습니다`}</SubTitle>
           <Spacing marginBottom="3.6" />
+          <EditGroupInfo />
         </AdminContainer>
       );
   }

@@ -61,7 +61,6 @@ const GroupFeed = () => {
     console.log(error?.message, 'error');
     return <Error />;
   }
-
   //해당 모임의 멤버도 아니고, 모임이 비공개일때 (비정상적인 접근)
   if (!isPublic && !isMember) {
     alert('해당 모임은 비공개 모임입니다');

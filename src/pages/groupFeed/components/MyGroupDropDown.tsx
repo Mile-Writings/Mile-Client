@@ -12,7 +12,6 @@ interface CreateGroupBtnProps {
 
 const MyGroupDropDown = ({ groupData }: CreateGroupBtnProps) => {
   const navigate = useNavigate();
-  console.log(groupData);
   const handleRoutingGroupFeed = (groupId: string) => {
     navigate(`/group/${groupId}`);
   };
