@@ -1,10 +1,13 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useFetchInvitationLink } from './hooks/queries';
 import RenderAdminContent from './RenderAdminContent';
 
+import { useGroupInfo } from '../groupFeed/hooks/queries';
+
+import { AdminHomeIc } from '../../assets/svgs';
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import { copyLink } from '../../utils/copyLink';
@@ -14,9 +17,19 @@ const Admin = () => {
   const [admin, setAdmin] = useState<'topic' | 'member' | 'groupInfo'>('topic');
   const { groupId } = useParams();
   const { invitationCode } = useFetchInvitationLink(groupId);
+  const navigate = useNavigate();
+  const { groupInfoData } = useGroupInfo(groupId || '');
 
   const handleCopyLink = (invitationCode: string) => {
-    copyLink(`https://www.milewriting.com/group/${invitationCode}/groupInvite`);
+    copyLink(import.meta.env.VITE_INVITE_URL + `group/${invitationCode}/groupInvite`);
+  };
+
+  const handleRoutingGroup = () => {
+    navigate(`/group/${groupId}`);
+  };
+
+  const handleInviteBtnClick = () => {
+    handleCopyLink(invitationCode?.invitationCode || '');
   };
 
   return (
@@ -25,6 +38,14 @@ const Admin = () => {
       <Spacing marginBottom="13.6" />
       <AdminLayout>
         <SideNavbar>
+          <AdminGroupInfo>
+            <HomeBtn type="button" onClick={handleRoutingGroup}>
+              <AdminHomeIc />
+              Home
+            </HomeBtn>
+            <GroupName>{groupInfoData?.moimName}</GroupName>
+          </AdminGroupInfo>
+          <Spacing marginBottom="2.4" />
           <AdminMenu>
             <Title>관리자 페이지</Title>
             <Spacing marginBottom="1.6" />
@@ -47,7 +68,7 @@ const Admin = () => {
           </AdminMenu>
           <Spacing marginBottom="1.6" />
           {invitationCode && (
-            <AdminInviteBtn onClick={() => handleCopyLink(invitationCode?.invitationCode)}>
+            <AdminInviteBtn type="button" onClick={handleInviteBtnClick}>
               초대링크 복사하기
             </AdminInviteBtn>
           )}
@@ -74,7 +95,27 @@ const SideNavbar = styled.nav`
   display: flex;
   flex-direction: column;
   width: 19.5rem;
-  height: 29.4rem;
+`;
+
+const AdminGroupInfo = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const HomeBtn = styled.button`
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-end;
+  padding: 0;
+
+  color: ${({ theme }) => theme.colors.gray60};
+  ${({ theme }) => theme.fonts.body1};
+`;
+
+const GroupName = styled.h3`
+  ${({ theme }) => theme.fonts.title9};
+  cursor: default;
 `;
 
 const AdminMenu = styled.div`
