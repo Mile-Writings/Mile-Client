@@ -9,7 +9,12 @@ import EditProfileModal from './components/EditProfileModal';
 import GroupCuriousTitle from './components/GroupCuriousTitle';
 import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
-import { useGroupFeedAuth, useGroupInfo, useFetchWriterNameOnly } from './hooks/queries';
+import {
+  useGroupFeedAuth,
+  useGroupInfo,
+  useFetchWriterNameOnly,
+  useGroupFeedPublicStatus,
+} from './hooks/queries';
 
 import Error from '../error/Error';
 import Loading from '../loading/Loading';
@@ -26,6 +31,7 @@ const GroupFeed = () => {
     groupId || '',
     accessToken || '',
   );
+  const { isPublic } = useGroupFeedPublicStatus(groupId || '');
 
   //sessionStorage에 저장된 카테고리 id 값을 가져옴
   const sessionCategoryId = sessionStorage.getItem('activeCategoryId');
@@ -55,7 +61,11 @@ const GroupFeed = () => {
     console.log(error?.message, 'error');
     return <Error />;
   }
-  console.log(groupInfoData?.imageUrl);
+  //해당 모임의 멤버도 아니고, 모임이 비공개일때 (비정상적인 접근)
+  if (!isPublic && !isMember) {
+    alert('해당 모임은 비공개 모임입니다');
+    navigate('/');
+  }
   return (
     <GroupFeedWrapper>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
