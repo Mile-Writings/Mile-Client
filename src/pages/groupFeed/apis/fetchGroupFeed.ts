@@ -42,6 +42,25 @@ interface GroupInfoPropTypes {
 export const fetchGroupInfo = async (groupId: string) => {
   try {
     const response = await client.get<GroupInfoPropTypes>(`/api/moim/${groupId}/info`);
+    return response.data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+};
+
+interface GroupPublicStatusPropTypes {
+  data: {
+    isPublic: boolean;
+  };
+  status: number;
+  message: string;
+}
+
+export const fetchGroupPublicStatus = async (groupId: string) => {
+  try {
+    const response = await client.get<GroupPublicStatusPropTypes>(
+      `/api/moim/${groupId}/public-status`,
+    );
 
     return response.data;
   } catch (error) {
