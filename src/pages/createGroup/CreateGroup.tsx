@@ -58,17 +58,8 @@ const CreateGroup = () => {
     }
   };
   const [state, dispatch] = useReducer(reducer, initialState);
-  const {
-    groupName,
-    groupInfo,
-    groupImageFile,
-    isPublic,
-    topic,
-    topicTag,
-    topicDesc,
-    leaderPenName,
-    leaderDesc,
-  } = state;
+  const { groupName, groupInfo, isPublic, topic, topicTag, topicDesc, leaderPenName, leaderDesc } =
+    state;
 
   const setGroupName = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'setGroupName', value: e.target.value });
