@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
@@ -8,7 +8,13 @@ import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queri
 import Error from '../error/Error';
 import Loading from '../loading/Loading';
 
-import { CheckboxIc, DefaultProfileIc } from './../../assets/svgs';
+import {
+  CheckboxIc,
+  DefaultProfileIc,
+  GroupChatIc,
+  GroupCuriousIc,
+  GroupViewIc,
+} from './../../assets/svgs';
 import Button from './../../components/commons/Button';
 import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/commons/Header';
 import Spacing from './../../components/commons/Spacing';
@@ -26,8 +32,15 @@ const PostDetail = () => {
   const { data: postAuth } = useCheckPostAuth(postId || '');
   const { mutate: deletePost } = useDeletePost(postId || '', topicId);
   const postData = data?.data;
-
   const accessToken = localStorage.getItem('accessToken');
+
+  //글 작성 후 뒤로가기 하면 모임페이지로 이동하는 로직
+  //메인페이지 -> 글 상세페이지 -> 뒤로가기 -> 글 모임페이지가 되어 UX에 좋은 영향을 끼치지 않는 부분도 있어서 추후 적용
+
+  // const testFunc = () => {
+  //   navigate(`/group/${groupId}`, { replace: true });
+  // };
+  // useCustomBack(testFunc);
 
   if (isLoading) {
     return <Loading />;
@@ -68,7 +81,21 @@ const PostDetail = () => {
         <PostDetailContainer>
           <InfoTextBox>
             <TitleText>{postData?.title}</TitleText>
-            <DateText>{postData?.createdAt}</DateText>
+            <DetailBox>
+              <DateText>{postData?.createdAt} ·</DateText>
+              <CuriousCount>
+                <GroupCuriousIc />
+                {postData?.curiousCount}
+              </CuriousCount>
+              <ViewCount>
+                <GroupViewIc />
+                {postData?.hitsCount}
+              </ViewCount>
+              <CommentCount>
+                <GroupChatIc />
+                {postData?.commentCount}
+              </CommentCount>
+            </DetailBox>
           </InfoTextBox>
           {postAuth?.data?.data?.canEdit && (
             <ButtonWrapper>
@@ -96,7 +123,9 @@ const PostDetail = () => {
                 <WriterInfoText>{postData?.writerName}</WriterInfoText>
                 <GroupInfoText>{postData?.moimName}</GroupInfoText>
               </WriterInfoBox>
-              <WriterDesc>{postData?.writerInfo && '아직 작가소개를 작성하지 않았어요'}</WriterDesc>
+              <WriterDesc>
+                {!postData?.writerInfo ? '아직 작가소개를 작성하지 않았어요' : postData?.writerInfo}
+              </WriterDesc>
             </InfoWrapper>
           </WriterInfoContainer>
           {localStorage.accessToken && <CuriousBtn />}
@@ -114,6 +143,9 @@ const ThumnailImg = styled.img`
   width: 100%;
   height: 37rem;
   object-fit: cover;
+
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 `;
 
 const PostDetailWrapper = styled.div`
@@ -137,12 +169,44 @@ const InfoTextBox = styled.div`
   width: 60rem;
 `;
 
+const DetailBox = styled.div`
+  display: flex;
+  gap: 0.8rem;
+`;
+
 const TitleText = styled.h1`
   color: ${({ theme }) => theme.colors.grayBlack};
   ${({ theme }) => theme.fonts.title1};
 `;
 
 const DateText = styled.p`
+  color: ${({ theme }) => theme.colors.gray70};
+  ${({ theme }) => theme.fonts.subtitle4};
+`;
+
+const CuriousCount = styled.div`
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+
+  color: ${({ theme }) => theme.colors.gray70};
+  ${({ theme }) => theme.fonts.subtitle4};
+`;
+
+const ViewCount = styled.div`
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+
+  color: ${({ theme }) => theme.colors.gray70};
+  ${({ theme }) => theme.fonts.subtitle4};
+`;
+
+const CommentCount = styled.div`
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.subtitle4};
 `;

@@ -60,7 +60,7 @@ const AddEditTopicModal = ({
   const handleSubmit = (topicStored: string) => {
     const isTopicNameError = topic.trim() === '' || topic.length > 15;
     const isTopicTagError = topicTag.trim() === '' || topicTag.length > 5;
-    const isTopicDescriptionError = topicDescription.trim() === '' || topicDescription.length > 90;
+    const isTopicDescriptionError = topicDescription.length > 90;
 
     setTopicNameError(isTopicNameError);
     setTopicTagError(isTopicTagError);

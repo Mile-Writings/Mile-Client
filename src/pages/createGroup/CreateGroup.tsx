@@ -7,6 +7,7 @@ import { usePostCreateGroup } from './hooks/queries';
 import { CreateGroupTypes, CurrentPageType } from './types/stateType';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
+import { DEFAULT_IMG_URL } from '../../constants/defaultImgUrl';
 
 type CreateGroupAction =
   | { type: 'setGroupName'; value: string }
@@ -60,13 +61,13 @@ const CreateGroup = () => {
   const {
     groupName,
     groupInfo,
-    groupImageFile,
     isPublic,
     topic,
     topicTag,
     topicDesc,
     leaderPenName,
     leaderDesc,
+    groupImageFile,
   } = state;
 
   const setGroupName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -101,10 +102,14 @@ const CreateGroup = () => {
   const setLeaderDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'setLeaderDesc', value: e.target.value });
   };
+
+  // 빈 문자열인 경우 DEFAULT_IMG_URL로 대체
+  const finalGroupImageFile = groupImageFile === '' ? DEFAULT_IMG_URL : groupImageFile;
+
   const { mutate } = usePostCreateGroup({
     groupName,
     groupInfo,
-    groupImageFile,
+    groupImageFile: finalGroupImageFile,
     isPublic,
     topic,
     topicTag,

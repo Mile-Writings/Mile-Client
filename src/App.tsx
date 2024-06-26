@@ -7,12 +7,14 @@ import Router from './Router';
 const App = () => {
   const queryClient = new QueryClient();
   return (
-    <QueryClientProvider client={queryClient}>
-      <DesktopWrapper>
-        <Router />
-      </DesktopWrapper>
-      <ReactQueryDevtools initialIsOpen />
-    </QueryClientProvider>
+    <div style={{ fontSize: '16px' }}>
+      <QueryClientProvider client={queryClient}>
+        <DesktopWrapper>
+          <Router />
+        </DesktopWrapper>
+        <ReactQueryDevtools initialIsOpen />
+      </QueryClientProvider>
+    </div>
   );
 };
 

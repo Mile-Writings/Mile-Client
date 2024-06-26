@@ -26,7 +26,7 @@ const Router = () => {
         <Route path="/redirect-kakao" element={<RedirectLogin />} />
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<Error />} />
-        <Route path="/group/success/:groupId/" element={<CreateGroupSuccess />} />
+        <Route path="/group/success/:groupId" element={<CreateGroupSuccess />} />
         <Route path="/group/:groupId/groupInvite" element={<GroupInvite />} />
         <Route path="/group/:groupId/groupJoin" element={<GroupJoinCongrats />} />
         <Route path="/admin/:groupId" element={<Admin />} />

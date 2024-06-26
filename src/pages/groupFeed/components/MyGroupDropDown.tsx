@@ -12,7 +12,6 @@ interface CreateGroupBtnProps {
 
 const MyGroupDropDown = ({ groupData }: CreateGroupBtnProps) => {
   const navigate = useNavigate();
-  console.log(groupData);
   const handleRoutingGroupFeed = (groupId: string) => {
     navigate(`/group/${groupId}`);
   };
@@ -69,6 +68,7 @@ const MyGroupBtnLayout = styled.button`
   padding: 1rem 1.6rem;
 
   color: ${({ theme }) => theme.colors.gray70};
+  white-space: nowrap;
   text-align: center;
 
   cursor: pointer;
