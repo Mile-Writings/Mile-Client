@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
+import deleteGroup from '../apis/deleteGroup';
 import {
   editAdminTopic,
   fetchAdminTopic,
@@ -21,6 +23,7 @@ export const QUERY_KEY_ADMIN = {
   fetchInvitationLink: 'fetchInvitationLink',
   fetchAdminGroupInfo: 'fetchAdminGroupInfo',
   putAdminEditGroupInfo: 'putAdminEditGroupInfo',
+  deleteGroup: 'deleteGroup',
 };
 
 export const useAdminTopic = (groupId: string | undefined, pageNum: number) => {
@@ -194,4 +197,23 @@ export const usePutAdminGroupInfo = ({
   });
 
   return { mutate, isSuccess, isError };
+};
+
+//모임 정보 삭제
+export const useDeleteGroup = (groupId: string) => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { mutate, isError, isPending } = useMutation({
+    mutationKey: [QUERY_KEY_ADMIN.deleteGroup, groupId],
+    mutationFn: () => deleteGroup(groupId),
+    onSuccess: () => {
+      //key에 대한 정책을 변경해야함, 현재는 key의 unique함은 보장되어있지만 관련성이 적어 key의 역할을 제대로 못하고있음
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
+      });
+      navigate('/');
+    },
+  });
+
+  return { mutate, isError, isPending };
 };

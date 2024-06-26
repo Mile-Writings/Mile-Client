@@ -58,8 +58,17 @@ const CreateGroup = () => {
     }
   };
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { groupName, groupInfo, isPublic, topic, topicTag, topicDesc, leaderPenName, leaderDesc } =
-    state;
+  const {
+    groupName,
+    groupInfo,
+    isPublic,
+    topic,
+    topicTag,
+    topicDesc,
+    leaderPenName,
+    leaderDesc,
+    groupImageFile,
+  } = state;
 
   const setGroupName = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'setGroupName', value: e.target.value });
@@ -93,10 +102,14 @@ const CreateGroup = () => {
   const setLeaderDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'setLeaderDesc', value: e.target.value });
   };
+
+  // 빈 문자열인 경우 DEFAULT_IMG_URL로 대체
+  const finalGroupImageFile = groupImageFile === '' ? DEFAULT_IMG_URL : groupImageFile;
+
   const { mutate } = usePostCreateGroup({
     groupName,
     groupInfo,
-    groupImageFile: DEFAULT_IMG_URL,
+    groupImageFile: finalGroupImageFile,
     isPublic,
     topic,
     topicTag,

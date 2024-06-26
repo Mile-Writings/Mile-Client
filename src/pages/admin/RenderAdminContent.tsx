@@ -5,8 +5,11 @@ import { useParams } from 'react-router-dom';
 import AddEditTopicModal from './AddEditTopicModal';
 import MemberManage from './components/MemberManage';
 import EditGroupInfo from './EditGroupInfo';
-import { useAdminTopic, useFetchMemberInfo } from './hooks/queries';
+import { useAdminTopic, useFetchMemberInfo, useDeleteGroup } from './hooks/queries';
 import TopicAdmin from './TopicAdmin';
+
+import Error from '../error/Error';
+import Loading from '../loading/Loading';
 
 import { MakeGroupAdminIc } from '../../assets/svgs';
 import Spacing from '../../components/commons/Spacing';
@@ -20,6 +23,25 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
+
+  const { mutate, isPending, isError } = useDeleteGroup(groupId || '');
+
+  const handleDeleteGroup = () => {
+    if (
+      confirm(
+        '글모임 삭제 시 모임 내 모든 데이터가 삭제되며 다시 복구할 수 없습니다. 그래도 계속하시겠습니까?',
+      )
+    ) {
+      mutate();
+    }
+  };
+
+  if (isError) {
+    return <Error />;
+  }
+  if (isPending) {
+    return <Loading />;
+  }
 
   switch (admin) {
     case 'topic':
@@ -60,7 +82,11 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
         <AdminContainer>
           <Title>모임 정보 수정</Title>
           <Spacing marginBottom="1.2" />
-          <SubTitle>{`글 모임 정보를 수정할 수 있습니다`}</SubTitle>
+          <SubTitleWrapper>
+            <SubTitle>{`글 모임 정보를 수정할 수 있습니다`}</SubTitle>
+            <DeleteGroupBtn onClick={handleDeleteGroup}>삭제하기</DeleteGroupBtn>
+          </SubTitleWrapper>
+
           <Spacing marginBottom="3.6" />
           <EditGroupInfo />
         </AdminContainer>
@@ -70,6 +96,16 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
 
 export default RenderAdminContent;
 
+const DeleteGroupBtn = styled.button`
+  padding: 0.5rem;
+
+  color: ${({ theme }) => theme.colors.gray70};
+  ${({ theme }) => theme.fonts.button3};
+`;
+const SubTitleWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -84,7 +120,8 @@ const ModalOverlay = styled.div`
 const AdminContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 78.1rem;
+
+  /* width: 78.1rem; */
 `;
 
 const Title = styled.h1`
