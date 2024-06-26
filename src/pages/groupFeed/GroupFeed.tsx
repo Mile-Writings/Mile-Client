@@ -55,7 +55,6 @@ const GroupFeed = () => {
     console.log(error?.message, 'error');
     return <Error />;
   }
-  console.log(groupInfoData?.imageUrl);
   return (
     <GroupFeedWrapper>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
