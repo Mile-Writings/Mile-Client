@@ -4,16 +4,18 @@ import { useEffect } from 'react';
 // ex ) 뒤로가기 막고 특정 페이지로 라우팅
 const useCustomBack = (customBack: () => void) => {
   const browserPreventEvent = (event: () => void) => {
-    history.pushState(null, '', location.href);
     event();
   };
 
   useEffect(() => {
     const handlePopstate = () => {
+      // history.pushState(null, '', location.href);
       browserPreventEvent(customBack);
     };
     history.pushState(null, '', location.href);
+
     window.addEventListener('popstate', handlePopstate);
+    console.log(window.history);
     return () => {
       window.removeEventListener('popstate', handlePopstate);
     };

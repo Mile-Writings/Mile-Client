@@ -4,7 +4,6 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
 import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
-import useCustomBack from './hooks/useCustomBack';
 
 import Error from '../error/Error';
 import Loading from '../loading/Loading';
@@ -29,7 +28,13 @@ const PostDetail = () => {
   const postData = data?.data;
   const accessToken = localStorage.getItem('accessToken');
 
-  useCustomBack(() => navigate(`/group/${groupId}`));
+  //글 작성 후 뒤로가기 하면 모임페이지로 이동하는 로직
+  //메인페이지 -> 글 상세페이지 -> 뒤로가기 -> 글 모임페이지가 되어 UX에 좋은 영향을 끼치지 않는 부분도 있어서 추후 적용
+
+  // const testFunc = () => {
+  //   navigate(`/group/${groupId}`, { replace: true });
+  // };
+  // useCustomBack(testFunc);
 
   if (isLoading) {
     return <Loading />;
