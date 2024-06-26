@@ -41,6 +41,7 @@ const CreateGroupBtnWrapper = styled.button`
   padding: 1rem 1.6rem;
 
   color: ${({ theme }) => theme.colors.white};
+  white-space: nowrap;
 
   background-color: ${({ theme }) => theme.colors.black};
   cursor: pointer;

@@ -16,9 +16,11 @@ const LogInOutWrapper = styled.button`
   padding: 1rem 1.6rem;
 
   color: ${({ theme }) => theme.colors.gray70};
+  white-space: nowrap;
 
   cursor: pointer;
   border-radius: 8px;
+
   ${({ theme }) => theme.fonts.button3};
 
   :hover {

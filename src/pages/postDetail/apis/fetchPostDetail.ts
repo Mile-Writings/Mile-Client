@@ -10,6 +10,9 @@ interface PostDetailRespnseTypes {
     topic: string;
     writerName: string;
     writerInfo: string;
+    hitsCount: number;
+    curiousCount: number;
+    commentCount: number;
   };
   status: number;
   message: string;

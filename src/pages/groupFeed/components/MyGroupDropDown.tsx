@@ -68,6 +68,7 @@ const MyGroupBtnLayout = styled.button`
   padding: 1rem 1.6rem;
 
   color: ${({ theme }) => theme.colors.gray70};
+  white-space: nowrap;
   text-align: center;
 
   cursor: pointer;
