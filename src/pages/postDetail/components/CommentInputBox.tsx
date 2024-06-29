@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState, FormEvent, Dispatch, SetStateAction } from 'react';
+import { useState, FormEvent, Dispatch, SetStateAction, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { usePostComment, usePostNestedComment } from '../hooks/queries';
@@ -25,6 +25,7 @@ const CommentInputBox = (props: CommentPropTypes) => {
   );
   const token = localStorage.getItem('accessToken');
   const navigate = useNavigate();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleCommentSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -39,14 +40,24 @@ const CommentInputBox = (props: CommentPropTypes) => {
       }
     }
   };
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = '2.3rem';
+      const scrollHeight = textareaRef.current.scrollHeight;
+      textareaRef.current.style.height = `${scrollHeight}px`;
+    }
+  }, [comment]);
   return (
     <CommentPostWrapper>
       <CommentLayout isMainComment={isMainComment}>
         <CommentForm
+          ref={textareaRef}
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           isMainComment={isMainComment}
           placeholder="댓글을 남겨주세요."
+          maxLength={1500}
         />
         <CheckboxLayout>
           <Checkbox
@@ -70,8 +81,10 @@ export default CommentInputBox;
 const CheckboxLayout = styled.div`
   display: flex;
   gap: 0.4rem;
+  align-items: center;
   justify-content: center;
   width: 5rem;
+  height: 2.3rem;
   ${({ theme }) => theme.fonts.body5};
 
   color: ${({ theme }) => theme.colors.gray70};
@@ -95,9 +108,9 @@ const Checkbox = styled.button<{ isUnknownWriter: boolean }>`
 const CommentLayout = styled.div<{ isMainComment: boolean }>`
   display: flex;
   gap: 1rem;
-  align-items: center;
+  align-items: flex-end;
   width: ${({ isMainComment }) => (isMainComment ? '69.9rem' : '65.1rem')};
-  height: 4rem;
+  height: auto;
   padding: 1rem 1.2rem;
 
   background-color: ${({ theme }) => theme.colors.gray5};
@@ -105,28 +118,35 @@ const CommentLayout = styled.div<{ isMainComment: boolean }>`
   border-radius: 6px;
 `;
 
-const CommentForm = styled.input<{ isMainComment: boolean }>`
+const CommentForm = styled.textarea<{ isMainComment: boolean }>`
   width: ${({ isMainComment }) => (isMainComment ? '62.1rem' : '57.3rem')};
+  overflow: hidden;
 
-  ::placeholder {
-    color: ${({ theme }) => theme.colors.gray30};
-  }
   color: ${({ theme }) => theme.colors.gray100};
 
   background-color: ${({ theme }) => theme.colors.gray5};
   border: none;
 
+  resize: none;
+
+  ::placeholder {
+    color: ${({ theme }) => theme.colors.gray30};
+
+    background-color: ${({ theme }) => theme.colors.gray5};
+  }
+
   ${({ theme }) => theme.fonts.button2};
 `;
 
 const CommentPostBtn = styled.button<{ $isComment: string }>`
+  height: 4rem;
   padding: 1rem 1.6rem;
 
   color: ${({ $isComment, theme }) =>
-    $isComment === '' ? theme.colors.gray70 : theme.colors.white};
+    $isComment.trim() === '' ? theme.colors.gray70 : theme.colors.white};
 
   background-color: ${({ $isComment, theme }) =>
-    $isComment === '' ? theme.colors.gray10 : theme.colors.mainViolet};
+    $isComment.trim() === '' ? theme.colors.gray10 : theme.colors.mainViolet};
   border-radius: 8px;
 
   ${({ theme }) => theme.fonts.button3};
@@ -143,5 +163,6 @@ const CommentPostBtn = styled.button<{ $isComment: string }>`
 const CommentPostWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
+  align-items: flex-end;
   width: 100%;
 `;

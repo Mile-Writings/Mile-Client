@@ -60,6 +60,14 @@
   content: '→';
 }
 
+.groupFeedCarousel .slick-next.slick-disabled {
+  display: none !important;
+}
+
+.groupFeedCarousel .slick-prev.slick-disabled {
+  display: none !important;
+}
+
 .groupFeedCarousel .slick-next {
   right: -2.5rem;
   width: 3.6rem;
