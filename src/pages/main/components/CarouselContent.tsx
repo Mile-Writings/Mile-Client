@@ -36,15 +36,15 @@ const CarouselContent = ({
 
   return (
     <CarouselWrapper>
-      <CarouselContentWrapper>
-        <ContentLayout onClick={handleRoutingDetail}>
+      <CarouselContentLayout>
+        <ContentContainer onClick={handleRoutingDetail}>
           <Topic>{topicName}</Topic>
-          <MainText>{postTitle}</MainText>
+          <Title>{postTitle}</Title>
           <Spacing marginBottom="2" />
           <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
             {postContent}
           </SubText>
-        </ContentLayout>
+        </ContentContainer>
         {isContainPhoto && (
           <Image
             src={imageUrl || ''}
@@ -53,7 +53,7 @@ const CarouselContent = ({
             onClick={handleRoutingDetail}
           />
         )}
-      </CarouselContentWrapper>
+      </CarouselContentLayout>
       {isLast && (
         <GroupRoutingBtnLayout>
           <GroupRoutingText>
@@ -76,7 +76,7 @@ const CarouselWrapper = styled.section`
   display: flex;
 `;
 
-const CarouselContentWrapper = styled.div`
+const CarouselContentLayout = styled.div`
   display: flex;
   gap: 3.6rem;
   padding: 3.6rem;
@@ -85,23 +85,23 @@ const CarouselContentWrapper = styled.div`
   border-radius: 8px;
 `;
 
-const Topic = styled.div`
+const Topic = styled.h1`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.body6};
 `;
 
-const MainText = styled.p`
+const Title = styled.h2`
   ${({ theme }) => theme.fonts.title10};
 `;
 
-const ContentLayout = styled.div`
+const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
 
   cursor: pointer;
 `;
 
-const SubText = styled.p<{ isContainPhoto: boolean; isLast: boolean }>`
+const SubText = styled.span<{ isContainPhoto: boolean; isLast: boolean }>`
   width: ${({ isContainPhoto, isLast }) =>
     isContainPhoto && isLast
       ? '47.8rem'
