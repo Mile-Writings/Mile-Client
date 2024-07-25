@@ -215,7 +215,8 @@ const ButtonWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
   align-items: flex-start;
-  width: 22rem;
+  justify-content: center;
+  width: 21rem;
 `;
 
 const TopicWrapper = styled.div`
