@@ -19,7 +19,7 @@ import Spacing from '../../../components/commons/Spacing';
 export interface carouselItemPropTypes {
   moimId?: string;
   data: groupPropTypes[] | undefined;
-  groupLength: number | undefined;
+  groupLength: number;
 }
 
 const GroupCarousel = ({ data }: carouselItemPropTypes) => {
@@ -36,7 +36,7 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
   const handleButtonOnClick = (groupId: string) => {
     navigate(`/group/${groupId}`);
   };
-  const [IsHovered, setIsHovered] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   return (
     <>
@@ -50,7 +50,7 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
               onMouseLeave={() => setIsHovered(false)}
             >
               {moim.moimName}
-              {IsHovered ? <MainIcnArrowPurpleIcon /> : <MainIcnArrowBlackIcon />}
+              {isHovered ? <MainIcnArrowPurpleIcon /> : <MainIcnArrowBlackIcon />}
             </GroupButtonContainer>
             <Spacing marginBottom="1.6" />
             <CarouselContainer>

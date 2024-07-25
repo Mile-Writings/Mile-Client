@@ -35,44 +35,46 @@ const CarouselContent = ({
   };
 
   return (
-    <CarouselContentWrapper>
-      {imageUrl && (
-        <>
-          <ContentLayout onClick={handleRoutingDetail}>
-            <Topic>{topicName}</Topic>
-            <MainText>{postTitle}</MainText>
-            <Spacing marginBottom="2" />
-            <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
-              {postContent}
-            </SubText>
-          </ContentLayout>
-          {isContainPhoto && (
-            <Image
-              src={imageUrl}
-              isLast={isLast}
-              alt="group-content-image"
-              onClick={handleRoutingDetail}
-            />
-          )}
-        </>
-      )}
+    <CarouselWrapper>
+      <CarouselContentWrapper>
+        <ContentLayout onClick={handleRoutingDetail}>
+          <Topic>{topicName}</Topic>
+          <MainText>{postTitle}</MainText>
+          <Spacing marginBottom="2" />
+          <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
+            {postContent}
+          </SubText>
+        </ContentLayout>
+        {isContainPhoto && (
+          <Image
+            src={imageUrl || ''}
+            isLast={isLast}
+            alt={`${groupId}-content-image`}
+            onClick={handleRoutingDetail}
+          />
+        )}
+      </CarouselContentWrapper>
       {isLast && (
         <GroupRoutingBtnLayout>
-          <GroupRoutingBox>
+          <GroupRoutingText>
             이 모임에 대해서
             <br /> 더 궁금하신가요?
-          </GroupRoutingBox>
+          </GroupRoutingText>
           <Spacing marginBottom="1.6" />
           <GroupRoutingBtnBox>
             <MainGroupRoutingBtnIcon onClick={() => handleRoutingGroup()} />
           </GroupRoutingBtnBox>
         </GroupRoutingBtnLayout>
       )}
-    </CarouselContentWrapper>
+    </CarouselWrapper>
   );
 };
 
 export default CarouselContent;
+
+const CarouselWrapper = styled.section`
+  display: flex;
+`;
 
 const CarouselContentWrapper = styled.div`
   display: flex;
@@ -100,7 +102,6 @@ const ContentLayout = styled.div`
 `;
 
 const SubText = styled.p<{ isContainPhoto: boolean; isLast: boolean }>`
-  display: -webkit-box;
   width: ${({ isContainPhoto, isLast }) =>
     isContainPhoto && isLast
       ? '47.8rem'
@@ -134,12 +135,12 @@ const GroupRoutingBtnLayout = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 4.2rem;
+  margin-left: 5rem;
 
   text-align: center;
 `;
 
-const GroupRoutingBox = styled.p`
+const GroupRoutingText = styled.p`
   width: 12.3rem;
 
   color: ${({ theme }) => theme.colors.black};
