@@ -75,6 +75,7 @@ export default CarouselContent;
 
 const CarouselWrapper = styled.section`
   display: flex;
+  gap: 5rem;
 `;
 
 const CarouselContentLayout = styled.div`
@@ -133,7 +134,6 @@ const LastSlideBtnLayout = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 5rem;
 
   text-align: center;
 
