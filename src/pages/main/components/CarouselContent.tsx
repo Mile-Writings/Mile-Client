@@ -37,7 +37,7 @@ const CarouselContent = ({
   return (
     <CarouselWrapper>
       <CarouselContentLayout>
-        <ContentContainer onClick={handleRoutingDetail}>
+        <ContentContainer onClick={() => handleRoutingDetail}>
           <Topic>{topicName}</Topic>
           <Title>{postTitle}</Title>
           <Spacing marginBottom="2" />
@@ -50,7 +50,7 @@ const CarouselContent = ({
             src={imageUrl || ''}
             isLast={isLast}
             alt={`${groupId}-content-image`}
-            onClick={handleRoutingDetail}
+            onClick={() => handleRoutingDetail}
           />
         )}
       </CarouselContentLayout>
@@ -62,7 +62,7 @@ const CarouselContent = ({
           </GroupRoutingText>
           <Spacing marginBottom="1.6" />
           <GroupRoutingBtnBox>
-            <MainGroupRoutingBtnIcon onClick={() => handleRoutingGroup()} />
+            <MainGroupRoutingBtnIcon onClick={() => handleRoutingGroup} />
           </GroupRoutingBtnBox>
         </GroupRoutingBtnLayout>
       )}
@@ -97,8 +97,6 @@ const Title = styled.h2`
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-
-  cursor: pointer;
 `;
 
 const SubText = styled.span<{ isContainPhoto: boolean; isLast: boolean }>`
@@ -127,7 +125,6 @@ const Image = styled.img<{ isLast: boolean }>`
   height: 16.8rem;
   object-fit: cover;
 
-  cursor: pointer;
   border-radius: 8px;
 `;
 

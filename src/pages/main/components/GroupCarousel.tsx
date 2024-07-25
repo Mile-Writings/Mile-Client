@@ -112,6 +112,8 @@ const GroupButtonContainer = styled.button`
 
 const CarouselContainer = styled.div`
   display: flex;
+
+  cursor: pointer;
 `;
 
 const CarouselBox = styled(Slider)`

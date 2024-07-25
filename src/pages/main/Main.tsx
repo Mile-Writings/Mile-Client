@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Suspense, lazy } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Ruler from './components/DailyKeyword';
+import DailyKeyword from './components/DailyKeyword';
 import FaqDropdown from './components/FaqDropdown';
 import Introduction from './components/Introduction';
 import Manual from './components/Manual';
@@ -49,7 +49,7 @@ const Main = () => {
         )}
       </GroupCarouselLayout>
 
-      <Ruler data={topic?.data} />
+      <DailyKeyword data={topic?.data} />
       <Introduction />
       <Manual />
       <FaqLayout>
