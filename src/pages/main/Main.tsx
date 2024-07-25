@@ -52,6 +52,7 @@ const Main = () => {
       <DailyKeyword data={topic?.data} />
       <Spacing marginBottom="10" />
       <Introduction />
+      <Spacing marginBottom="10" />
       <Manual />
 
       <FaqLayout>
