@@ -54,8 +54,9 @@ const CarouselContent = ({
           />
         )}
       </CarouselContentLayout>
+
       {isLast && (
-        <GroupRoutingBtnLayout>
+        <LastSlideBtnLayout>
           <GroupRoutingText>
             이 모임에 대해서
             <br /> 더 궁금하신가요?
@@ -64,7 +65,7 @@ const CarouselContent = ({
           <GroupRoutingBtnBox>
             <MainGroupRoutingBtnIcon onClick={handleRoutingGroup} />
           </GroupRoutingBtnBox>
-        </GroupRoutingBtnLayout>
+        </LastSlideBtnLayout>
       )}
     </CarouselWrapper>
   );
@@ -128,13 +129,15 @@ const Image = styled.img<{ isLast: boolean }>`
   border-radius: 8px;
 `;
 
-const GroupRoutingBtnLayout = styled.section`
+const LastSlideBtnLayout = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-left: 5rem;
 
   text-align: center;
+
+  cursor: default;
 `;
 
 const GroupRoutingText = styled.p`
@@ -145,9 +148,7 @@ const GroupRoutingText = styled.p`
 `;
 
 const GroupRoutingBtnBox = styled.div`
-  & > svg {
-    cursor: pointer;
-  }
+  cursor: pointer;
 
   & > svg:hover {
     path {

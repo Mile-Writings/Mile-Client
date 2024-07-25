@@ -18,7 +18,7 @@ import Spacing from '../../../components/commons/Spacing';
 
 export interface carouselItemPropTypes {
   moimId?: string;
-  data: groupPropTypes[] | undefined;
+  data?: groupPropTypes[];
   groupLength: number;
 }
 
