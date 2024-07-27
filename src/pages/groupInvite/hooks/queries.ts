@@ -42,7 +42,6 @@ export const useGetWriterNameConflict = (
   });
 
   const isConflict = data && data?.data?.isConflict;
-
   return { isConflict };
 };
 

@@ -64,7 +64,7 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
 
   const onChangeWriterName = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'setWriterName', writerName: e.target.value });
-    setIsConflictBtnClicked(false);
+    isConflict ? setIsConflictBtnClicked(true) : setIsConflictBtnClicked(false);
   };
 
   const onChangeWriterIntroduce = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -144,6 +144,8 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
       <WriterNameInputWrapper
         $valueNotTyped={isSubmitBtnClicked && userInfoVal.writerName?.trim().length === 0}
         $isConflictChecked={isSubmitBtnClicked && !isConflictBtnClicked}
+        $writerNameLimit={writerNameLimit}
+        $isConflictBtnClicked={isConflictBtnClicked}
       >
         <UserInfoTitle>모임에서 사용할 필명*</UserInfoTitle>
         <InputWrapper>
@@ -172,7 +174,9 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
         {/* 중복확인 안 누르고 가입하기 눌렀을 경우 */}
         {isSubmitBtnClicked &&
         userInfoVal.writerName?.trim().length !== 0 &&
-        !isConflictBtnClicked ? (
+        !writerNameLimit &&
+        !isConflictBtnClicked &&
+        !isConflict ? (
           <WriterNameLength>중복확인을 해주세요.</WriterNameLength>
         ) : (
           <></>
@@ -184,8 +188,8 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
           <></>
         )}
         {/* 필명 중복 확인 결과 */}
-        {isConflictBtnClicked ? (
-          <WriterNameEnable $isConflict={isConflict || false}>
+        {isConflict || isConflictBtnClicked ? (
+          <WriterNameEnable $isConflict={isConflict}>
             {isConflict ? '사용 불가능한 필명 입니다.' : '사용 가능한 필명 입니다.'}
           </WriterNameEnable>
         ) : (
@@ -222,6 +226,8 @@ export default UserInfoInput;
 const WriterNameInputWrapper = styled.section<{
   $valueNotTyped: boolean;
   $isConflictChecked: boolean;
+  $writerNameLimit: boolean;
+  $isConflictBtnClicked: boolean;
 }>`
   position: relative;
   display: flex;
@@ -231,8 +237,16 @@ const WriterNameInputWrapper = styled.section<{
   padding: 2.8rem;
 
   background-color: ${({ theme }) => theme.colors.white};
-  border: ${({ $valueNotTyped, $isConflictChecked, theme }) =>
-    $valueNotTyped || $isConflictChecked ? `1px solid ${theme.colors.mileRed}` : ``};
+  border: ${({
+    $valueNotTyped,
+    $isConflictChecked,
+    $writerNameLimit,
+    $isConflictBtnClicked,
+    theme,
+  }) =>
+    $valueNotTyped || $isConflictChecked || ($writerNameLimit && $isConflictBtnClicked)
+      ? `1px solid ${theme.colors.mileRed}`
+      : ``};
   border-radius: 8px;
 `;
 
@@ -298,7 +312,8 @@ const WriterExistCheckBtn = styled.button<{ $isBtnDisabled: boolean }>`
   ${({ theme }) => theme.fonts.button3};
 `;
 
-const WriterNameEnable = styled.div<{ $isConflict: boolean }>`
+const WriterNameEnable = styled.div<{ $isConflict: boolean | undefined }>`
+  display: ${({ $isConflict }) => ($isConflict === undefined ? 'none' : 'flex')};
   color: ${({ $isConflict, theme }) =>
     $isConflict ? theme.colors.mileRed : theme.colors.mainGreen};
 
