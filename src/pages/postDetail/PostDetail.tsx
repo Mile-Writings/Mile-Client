@@ -138,9 +138,9 @@ const PostDetail = () => {
               </WriterDesc>
             </InfoWrapper>
           </WriterInfoContainer>
-          {localStorage.accessToken && <CuriousBtn />}
+          {postAuth?.data?.data?.role === 'anonymous' && <CuriousBtn />}
         </WriterInfoWrapper>
-        {localStorage.accessToken && <Comment postId={postId} />}
+        {postAuth?.data?.data?.role === 'anonymous' && <Comment postId={postId} />}
         <Spacing marginBottom="8" />
       </PostDetailWrapper>
     </>
