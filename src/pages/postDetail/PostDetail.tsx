@@ -30,6 +30,7 @@ const PostDetail = () => {
 
   const { data, isError, isLoading } = useGetPostDetail(postId || '');
   const { data: postAuth } = useCheckPostAuth(postId || '');
+  console.log(postAuth);
   const { mutate: deletePost } = useDeletePost(postId || '', topicId);
   const postData = data?.data;
   const accessToken = localStorage.getItem('accessToken');
@@ -82,7 +83,7 @@ const PostDetail = () => {
           <InfoTextBox>
             <TitleText>{postData?.title}</TitleText>
             <DetailBox>
-              <DateText>{postData?.createdAt} ·</DateText>
+              <DateText>{postData?.createdAt} </DateText>
               <CuriousCount>
                 <GroupCuriousIc />
                 {postData?.curiousCount}
@@ -97,16 +98,25 @@ const PostDetail = () => {
               </CommentCount>
             </DetailBox>
           </InfoTextBox>
-          {postAuth?.data?.data?.canEdit && (
-            <ButtonWrapper>
+
+          <ButtonWrapper role={postAuth?.data?.data?.role || ''}>
+            {postAuth?.data?.data?.role === 'writer' ? (
+              <>
+                <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
+                  글 삭제하기
+                </Button>
+                <Button typeName={'submitEditType'} onClick={handleEditBtn}>
+                  글 수정하기
+                </Button>
+              </>
+            ) : postAuth?.data?.data?.role === 'owner' ? (
               <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
                 글 삭제하기
               </Button>
-              <Button typeName={'submitEditType'} onClick={handleEditBtn}>
-                글 수정하기
-              </Button>
-            </ButtonWrapper>
-          )}
+            ) : (
+              <></>
+            )}
+          </ButtonWrapper>
         </PostDetailContainer>
         <PostWrapper>
           <TopicWrapper>
@@ -166,7 +176,7 @@ const InfoTextBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.1rem;
-  width: 60rem;
+  width: 100%;
 `;
 
 const DetailBox = styled.div`
@@ -211,12 +221,14 @@ const CommentCount = styled.div`
   ${({ theme }) => theme.fonts.subtitle4};
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.div<{ role: string }>`
   display: flex;
   gap: 1.2rem;
   align-items: flex-start;
   justify-content: center;
-  width: 21rem;
+
+  /* width: 28rem; */
+  width: ${({ role }) => (role === 'writer' ? `28rem` : role === 'owner' ? '12rem' : '0rem')};
 `;
 
 const TopicWrapper = styled.div`
