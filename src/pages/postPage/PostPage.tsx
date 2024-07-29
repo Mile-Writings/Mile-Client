@@ -301,27 +301,15 @@ const PostPage = () => {
     setPostErrorMessage: setPostErrorMessage,
   });
 
-  const onClickEditSaveBtn = async () => {
-    await putEditContent(
-      {},
-      {
-        onSuccess: () => {
-          setShowModal(true);
-          setEditorModalType('editContent');
-          editorFlowModalDispatch({ type: 'editContent' });
-          preventScroll();
-        },
-      },
-    );
-
-    // if (contentWithoutTag.trim().length !== 0 && editorVal.title?.trim().length !== 0) {
-    //   setShowModal(true);
-    //   setEditorModalType('editContent');
-    //   editorFlowModalDispatch({ type: 'editContent' });
-    //   preventScroll();
-    // }
+  const onClickEditSaveBtn = () => {
+    putEditContent();
+    if (contentWithoutTag.trim().length !== 0 && editorVal.title?.trim().length !== 0) {
+      setShowModal(true);
+      setEditorModalType('editContent');
+      editorFlowModalDispatch({ type: 'editContent' });
+      preventScroll();
+    }
   };
-
   // 최초 글 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
     groupId: groupId,
