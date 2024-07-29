@@ -30,7 +30,6 @@ const PostDetail = () => {
 
   const { data, isError, isLoading } = useGetPostDetail(postId || '');
   const { data: postAuth } = useCheckPostAuth(postId || '');
-  console.log(postAuth);
   const { mutate: deletePost } = useDeletePost(postId || '', topicId);
   const postData = data?.data;
   const accessToken = localStorage.getItem('accessToken');
@@ -138,9 +137,13 @@ const PostDetail = () => {
               </WriterDesc>
             </InfoWrapper>
           </WriterInfoContainer>
-          {postAuth?.data?.data?.role === 'anonymous' && <CuriousBtn />}
+          {(postAuth?.data?.data?.role === 'anonymous' || localStorage.accessToken) && (
+            <CuriousBtn />
+          )}
         </WriterInfoWrapper>
-        {postAuth?.data?.data?.role === 'anonymous' && <Comment postId={postId} />}
+        {(postAuth?.data?.data?.role || localStorage.accessToken) === 'anonymous' && (
+          <Comment postId={postId} />
+        )}
         <Spacing marginBottom="8" />
       </PostDetailWrapper>
     </>
