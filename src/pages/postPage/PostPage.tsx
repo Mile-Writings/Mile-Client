@@ -302,13 +302,13 @@ const PostPage = () => {
   });
 
   const onClickEditSaveBtn = () => {
-    putEditContent();
     if (contentWithoutTag.trim().length !== 0 && editorVal.title?.trim().length !== 0) {
-      setShowModal(true);
-      setEditorModalType('editContent');
-      editorFlowModalDispatch({ type: 'editContent' });
-      preventScroll();
+      putEditContent();
     }
+    setShowModal(true);
+    setEditorModalType('editContent');
+    editorFlowModalDispatch({ type: 'editContent' });
+    preventScroll();
   };
   // 최초 글 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
