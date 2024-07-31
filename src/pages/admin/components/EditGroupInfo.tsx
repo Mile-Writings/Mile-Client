@@ -1,20 +1,19 @@
 import styled from '@emotion/styled';
-import { useEffect, useState, ChangeEvent, useRef } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useFetchGroupInfo, usePutAdminGroupInfo } from './hooks/queries';
-
-import { InputInfoMsg } from '../createGroup/components/CreateGroupInfo';
-import { useGetGroupNameValidation } from '../createGroup/hooks/queries';
-import { usePresignedUrl } from '../postPage/hooks/queries';
+import { useFetchGroupInfo, usePutAdminGroupInfo } from '../hooks/queries';
 
 import {
   CreateGroupImageUpload,
+  CreateGroupInfoIc,
   CreateGroupRadioCheckedIc,
   CreateGroupRadioUncheckedIc,
-  CreateGroupInfoIc,
-} from '../../assets/svgs';
-import useHandleGroupImage from '../../hooks/useGroupImage';
+} from '../../../assets/svgs';
+import useHandleGroupImage from '../../../hooks/useGroupImage';
+import { InputInfoMsg } from '../../createGroup/components/CreateGroupInfo';
+import { useGetGroupNameValidation } from '../../createGroup/hooks/queries';
+import { usePresignedUrl } from '../../postPage/hooks/queries';
 
 const EditGroupInfo = () => {
   const [groupName, setGroupName] = useState('');
