@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { MODAL_CONTENT } from '../constants/modal';
 import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 
 import { adminProfileIc, MemberMaster } from '../../../assets/svgs';
@@ -88,9 +89,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
       )}
 
       <NegativeModal
-        modalContent={
-          '삭제 시, 해당 멤버와 해당 멤버가 작성한\n글과 댓글도 모두 삭제됩니다. 계속 하시겠습니까?'
-        }
+        modalContent={MODAL_CONTENT.DELETE_MEMBER}
         isModalOpen={isModalOpen}
         modalHandler={() => {
           deleteMember(deleteMemberId);

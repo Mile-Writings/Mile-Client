@@ -2,17 +2,18 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useAdminTopic, useDeleteGroup, useFetchMemberInfo } from '../hooks/queries';
 import AddEditTopicModal from './AddEditTopicModal';
 import EditGroupInfo from './EditGroupInfo';
 import MemberManage from './MemberManage';
 import TopicAdmin from './TopicAdmin';
 
-import Error from '../../error/Error';
-import Loading from '../../loading/Loading';
+import { MODAL_CONTENT } from '../constants/modal';
+import { useAdminTopic, useDeleteGroup, useFetchMemberInfo } from '../hooks/queries';
 
 import { MakeGroupAdminIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
+import Error from '../../error/Error';
+import Loading from '../../loading/Loading';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
   const { groupId } = useParams();
@@ -27,11 +28,7 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
   const { mutate, isPending, isError } = useDeleteGroup(groupId || '');
 
   const handleDeleteGroup = () => {
-    if (
-      confirm(
-        '글모임 삭제 시 모임 내 모든 데이터가 삭제되며 다시 복구할 수 없습니다. 그래도 계속하시겠습니까?',
-      )
-    ) {
+    if (confirm(MODAL_CONTENT.DELETE_GROUP)) {
       mutate();
     }
   };
