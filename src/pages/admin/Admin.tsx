@@ -163,7 +163,8 @@ const Menu = styled.div<{ isActive: boolean }>`
   padding: 1rem 1.6rem;
 
   ${({ theme }) => theme.fonts.subtitle3};
-  color: ${({ theme }) => theme.colors.gray70};
+
+  color: ${({ isActive, theme }) => (isActive ? theme.colors.black : theme.colors.gray70)};
 
   background-color: ${({ isActive, theme }) =>
     isActive ? theme.colors.backGroundGray : theme.colors.white};
