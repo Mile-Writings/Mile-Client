@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import RenderAdminContent from './components/RenderAdminContent';
 import { useFetchInvitationLink } from './hooks/queries';
-import RenderAdminContent from './RenderAdminContent';
 
 import { useGroupInfo } from '../groupFeed/hooks/queries';
 

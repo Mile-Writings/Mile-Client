@@ -2,17 +2,17 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { useAdminTopic, useDeleteGroup, useFetchMemberInfo } from '../hooks/queries';
 import AddEditTopicModal from './AddEditTopicModal';
-import MemberManage from './components/MemberManage';
 import EditGroupInfo from './EditGroupInfo';
-import { useAdminTopic, useFetchMemberInfo, useDeleteGroup } from './hooks/queries';
+import MemberManage from './MemberManage';
 import TopicAdmin from './TopicAdmin';
 
-import Error from '../error/Error';
-import Loading from '../loading/Loading';
+import Error from '../../error/Error';
+import Loading from '../../loading/Loading';
 
-import { MakeGroupAdminIc } from '../../assets/svgs';
-import Spacing from '../../components/commons/Spacing';
+import { MakeGroupAdminIc } from '../../../assets/svgs';
+import Spacing from '../../../components/commons/Spacing';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
   const { groupId } = useParams();

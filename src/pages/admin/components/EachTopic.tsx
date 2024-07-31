@@ -3,10 +3,11 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import AddEditTopicModal from './AddEditTopicModal';
-import { useDeleteAdminTopic } from './hooks/queries';
 
-import { EditIc, DeleteIc } from '../../assets/svgs';
-import { NegativeModal } from '../../components/commons/Modal';
+import { useDeleteAdminTopic } from '../hooks/queries';
+
+import { DeleteIc, EditIc } from '../../../assets/svgs';
+import { NegativeModal } from '../../../components/commons/Modal';
 
 interface AdminTopicPropTypes {
   topicId: string;
