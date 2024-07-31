@@ -145,6 +145,8 @@ const AdminInviteBtn = styled.button`
     color: ${({ theme }) => theme.colors.mainViolet};
 
     background-color: ${({ theme }) => theme.colors.mileViolet};
+
+    transition: all 0.2s ease-in-out;
   }
 `;
 

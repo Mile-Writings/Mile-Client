@@ -4,11 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 
-import {
-  adminEmptyMemberIc as AdminEmptyMemberIcon,
-  adminProfileIc,
-  MemberMaster,
-} from '../../../assets/svgs';
+import { adminProfileIc, MemberMaster } from '../../../assets/svgs';
 import { NegativeModal } from '../../../components/commons/Modal';
 import Pagenation from '../../../components/commons/Pagenation';
 import Spacing from '../../../components/commons/Spacing';
@@ -51,42 +47,36 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
           <Header>댓글 수</Header>
         </TableHeaderLayout>
         <Spacing marginBottom="0.4" />
+
         <MemberLayout>
-          {data?.writerNameCount !== 0 ? (
-            data?.writerNameList.map(
-              ({ writerNameId, writerName, postCount, commentCount, isOwner }) => (
-                <MemberItemContainer key={writerNameId}>
-                  <AdminProfileIcon />
-                  <Name>
-                    {isOwner && <MemberMaster style={{ flexShrink: 0 }} />}
-                    {writerName}
-                  </Name>
-                  <PostNumber>{postCount}</PostNumber>
-                  <CommentNumber>{commentCount}</CommentNumber>
-                  {!isOwner && (
-                    <ExpelBtn
-                      type="button"
-                      onClick={() => {
-                        setDeleteMemberId(writerNameId);
-                        handleShowModal();
-                      }}
-                    >
-                      삭제하기
-                    </ExpelBtn>
-                  )}
-                </MemberItemContainer>
-              ),
-            )
-          ) : (
-            <EmptyContainer>
-              <EmptyMemberText>아직 멤버가 없습니다.</EmptyMemberText>
-              <Spacing marginBottom="3" />
-              <AdminEmptyMemberIcon />
-            </EmptyContainer>
+          {data?.writerNameList.map(
+            ({ writerNameId, writerName, postCount, commentCount, isOwner }) => (
+              <MemberItemContainer key={writerNameId}>
+                <AdminProfileIcon />
+                <Name>
+                  {isOwner && <MemberMaster style={{ flexShrink: 0 }} />}
+                  {writerName}
+                </Name>
+                <PostNumber>{postCount}</PostNumber>
+                <CommentNumber>{commentCount}</CommentNumber>
+                {!isOwner && (
+                  <ExpelBtn
+                    type="button"
+                    onClick={() => {
+                      setDeleteMemberId(writerNameId);
+                      handleShowModal();
+                    }}
+                  >
+                    삭제하기
+                  </ExpelBtn>
+                )}
+              </MemberItemContainer>
+            ),
           )}
         </MemberLayout>
       </MemberTableWrapper>
       <Spacing marginBottom="3.6" />
+
       {memberData && memberData.writerNameCount && (
         <Pagenation
           count={memberData.writerNameCount}
@@ -97,6 +87,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
           setActiveChunk={setActiveChunk}
         />
       )}
+
       <NegativeModal
         modalContent={
           '삭제 시, 해당 멤버와 해당 멤버가 작성한\n글과 댓글도 모두 삭제됩니다. 계속 하시겠습니까?'
@@ -217,20 +208,7 @@ const ExpelBtn = styled.button`
 
   &:hover {
     color: ${({ theme }) => theme.colors.mainViolet};
+
+    transition: all 0.3s ease-in-out;
   }
-`;
-
-const EmptyContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 78.1rem;
-  height: 36.8rem;
-  padding: 0.4rem 1.8rem;
-`;
-
-const EmptyMemberText = styled.div`
-  color: ${({ theme }) => theme.colors.gray50};
-  ${({ theme }) => theme.fonts.title8};
 `;
