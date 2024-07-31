@@ -65,6 +65,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
                   <CommentNumber>{commentCount}</CommentNumber>
                   {!isOwner && (
                     <ExpelBtn
+                      type="button"
                       onClick={() => {
                         setDeleteMemberId(writerNameId);
                         handleShowModal();
