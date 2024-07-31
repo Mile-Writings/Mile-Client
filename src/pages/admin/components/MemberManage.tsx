@@ -4,7 +4,11 @@ import { useParams } from 'react-router-dom';
 
 import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 
-import { adminEmptyMemberIc as AdminEmptyMemberIcon, adminProfileIc } from '../../../assets/svgs';
+import {
+  adminEmptyMemberIc as AdminEmptyMemberIcon,
+  adminProfileIc,
+  MemberMaster,
+} from '../../../assets/svgs';
 import { NegativeModal } from '../../../components/commons/Modal';
 import Pagenation from '../../../components/commons/Pagenation';
 import Spacing from '../../../components/commons/Spacing';
@@ -53,10 +57,13 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
               ({ writerNameId, writerName, postCount, commentCount, isOwner }) => (
                 <MemberItemContainer key={writerNameId}>
                   <AdminProfileIcon />
-                  <Name>{writerName}</Name>
+                  <Name>
+                    {isOwner && <MemberMaster style={{ flexShrink: 0 }} />}
+                    {writerName}
+                  </Name>
                   <PostNumber>{postCount}</PostNumber>
                   <CommentNumber>{commentCount}</CommentNumber>
-                  {!isOwner ? (
+                  {!isOwner && (
                     <ExpelBtn
                       onClick={() => {
                         setDeleteMemberId(writerNameId);
@@ -65,8 +72,6 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
                     >
                       삭제하기
                     </ExpelBtn>
-                  ) : (
-                    <Owner>글 모임 장</Owner>
                   )}
                 </MemberItemContainer>
               ),
@@ -167,6 +172,9 @@ const AdminProfileIcon = styled(adminProfileIc)`
 `;
 
 const Name = styled.pre`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 11.1rem;
   margin-right: 6.8rem;
 
@@ -209,15 +217,6 @@ const ExpelBtn = styled.button`
   &:hover {
     color: ${({ theme }) => theme.colors.mainViolet};
   }
-`;
-
-const Owner = styled.span`
-  margin-left: auto;
-
-  color: ${({ theme }) => theme.colors.black};
-
-  ${({ theme }) => theme.fonts.body5};
-  cursor: default;
 `;
 
 const EmptyContainer = styled.div`
