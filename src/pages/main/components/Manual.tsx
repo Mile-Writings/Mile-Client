@@ -13,21 +13,19 @@ import Spacing from '../../../components/commons/Spacing';
 const Manual = () => {
   return (
     <ManualWrapper>
+      <ManualTitle>마일 메뉴얼</ManualTitle>
+      <Spacing marginBottom="3.6" />
       <ManualLayout>
-        <ManualTitle>마일 메뉴얼</ManualTitle>
-        <Spacing marginBottom="3.6" />
-        <ManualContainer>
-          <ManualRow>
-            <MainManualMakeIc />
-            <MainManualJoinIc />
-            <MainManualWriteIc />
-          </ManualRow>
-          <ManualRow>
-            <MainManualShareIc />
-            <MainManualCuriousIc />
-            <MainManualLookIc />
-          </ManualRow>
-        </ManualContainer>
+        <ManualRow>
+          <MainManualMakeIc />
+          <MainManualJoinIc />
+          <MainManualWriteIc />
+        </ManualRow>
+        <ManualRow>
+          <MainManualShareIc />
+          <MainManualCuriousIc />
+          <MainManualLookIc />
+        </ManualRow>
       </ManualLayout>
     </ManualWrapper>
   );
@@ -38,22 +36,19 @@ export default Manual;
 const ManualWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  margin: 0 auto;
   padding-bottom: 10rem;
-`;
-
-const ManualLayout = styled.div`
-  cursor: default;
 `;
 
 const ManualTitle = styled.h1`
   display: flex;
   margin-top: 10rem;
   ${({ theme }) => theme.fonts.title3};
+
+  cursor: default;
 `;
 
-const ManualContainer = styled.section`
+const ManualLayout = styled.section`
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
