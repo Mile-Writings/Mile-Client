@@ -37,18 +37,23 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
   const [deleteMemberId, setDeleteMemberId] = useState(-1);
 
+  const handleDeleteMember = (writerNameId: number) => {
+    setDeleteMemberId(writerNameId);
+    handleShowModal();
+  };
+
   return (
     <>
-      <MemberTableWrapper>
+      <MemberListTableWrapper>
         <TableHeaderLayout>
-          <Header>프로필</Header>
-          <Header>필명</Header>
-          <Header>게시물 수</Header>
-          <Header>댓글 수</Header>
+          <InfoField>프로필</InfoField>
+          <InfoField>필명</InfoField>
+          <InfoField>게시물 수</InfoField>
+          <InfoField>댓글 수</InfoField>
         </TableHeaderLayout>
         <Spacing marginBottom="0.4" />
 
-        <MemberLayout>
+        <MemberListLayout>
           {data?.writerNameList.map(
             ({ writerNameId, writerName, postCount, commentCount, isOwner }) => (
               <MemberItemContainer key={writerNameId}>
@@ -60,21 +65,15 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
                 <PostNumber>{postCount}</PostNumber>
                 <CommentNumber>{commentCount}</CommentNumber>
                 {!isOwner && (
-                  <ExpelBtn
-                    type="button"
-                    onClick={() => {
-                      setDeleteMemberId(writerNameId);
-                      handleShowModal();
-                    }}
-                  >
+                  <ExpelBtn type="button" onClick={() => handleDeleteMember(writerNameId)}>
                     삭제하기
                   </ExpelBtn>
                 )}
               </MemberItemContainer>
             ),
           )}
-        </MemberLayout>
-      </MemberTableWrapper>
+        </MemberListLayout>
+      </MemberListTableWrapper>
       <Spacing marginBottom="3.6" />
 
       {memberData && memberData.writerNameCount && (
@@ -108,7 +107,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
 
 export default MemberManage;
 
-const MemberTableWrapper = styled.section`
+const MemberListTableWrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 78.1rem;
@@ -128,7 +127,7 @@ const TableHeaderLayout = styled.div`
   ${({ theme }) => theme.fonts.button3};
 `;
 
-const Header = styled.p`
+const InfoField = styled.div`
   display: flex;
   align-items: flex-start;
 
@@ -145,7 +144,7 @@ const Header = styled.p`
   }
 `;
 
-const MemberLayout = styled.section`
+const MemberListLayout = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 1.8rem;
@@ -163,7 +162,7 @@ const AdminProfileIcon = styled(adminProfileIc)`
   margin-right: 4rem;
 `;
 
-const Name = styled.pre`
+const Name = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,12 +170,12 @@ const Name = styled.pre`
   margin-right: 6.8rem;
 
   color: ${({ theme }) => theme.colors.black};
-  text-align: center;
+  white-space: nowrap;
 
   ${({ theme }) => theme.fonts.body1};
 `;
 
-const PostNumber = styled.pre`
+const PostNumber = styled.span`
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -188,7 +187,7 @@ const PostNumber = styled.pre`
   ${({ theme }) => theme.fonts.body1}
 `;
 
-const CommentNumber = styled.pre`
+const CommentNumber = styled.span`
   display: flex;
   align-items: flex-end;
   justify-content: center;
