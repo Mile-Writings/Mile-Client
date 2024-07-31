@@ -88,6 +88,7 @@ const AdminWrapper = styled.div`
 const AdminLayout = styled.div`
   display: flex;
   gap: 6rem;
+  justify-content: center;
   padding: 0 16.5rem;
 `;
 
