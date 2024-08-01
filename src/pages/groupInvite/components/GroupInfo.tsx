@@ -112,7 +112,6 @@ const BorderBar = styled.div`
 
 const GroupDetail = styled.p`
   width: 100%;
-  max-width: 41.4rem;
   height: fit-content;
 
   color: ${({ theme }) => theme.colors.gray70};
