@@ -24,7 +24,6 @@ export const getGroupNameValidation = (moimName: string) => {
           },
         },
       );
-      console.log(data);
       return data;
     } catch (err) {
       console.log(err);

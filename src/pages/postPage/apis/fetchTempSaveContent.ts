@@ -8,7 +8,6 @@ export const fetchTempSaveContent = async (postId: string) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(response.data);
     return response.data;
   } catch (err) {
     console.log(err);

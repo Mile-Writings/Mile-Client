@@ -54,7 +54,6 @@ const createPostContent = async ({
           },
         },
       );
-      // console.log(`data: ${data.data.postId}`);
       return data.data.postId;
       setPostErrorMessage('');
     } catch (err) {
