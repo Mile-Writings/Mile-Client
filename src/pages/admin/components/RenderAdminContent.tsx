@@ -7,11 +7,13 @@ import EditGroupInfo from './EditGroupInfo';
 import MemberManage from './MemberManage';
 import TopicAdmin from './TopicAdmin';
 
-import { MODAL_CONTENT } from '../constants/modal';
+import { MODAL } from '../constants/modal';
 import { useAdminTopic, useDeleteGroup, useFetchMemberInfo } from '../hooks/queries';
 
 import { MakeGroupAdminIc } from '../../../assets/svgs';
+import { NegativeModal } from '../../../components/commons/Modal';
 import Spacing from '../../../components/commons/Spacing';
+import useModal from '../../../hooks/useModal';
 import Error from '../../error/Error';
 import Loading from '../../loading/Loading';
 
@@ -27,10 +29,10 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
 
   const { mutate, isPending, isError } = useDeleteGroup(groupId || '');
 
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
+
   const handleDeleteGroup = () => {
-    if (confirm(MODAL_CONTENT.DELETE_GROUP)) {
-      mutate();
-    }
+    mutate();
   };
 
   if (isError) {
@@ -76,17 +78,28 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
 
     case 'groupInfo':
       return (
-        <AdminContainer>
-          <Title>모임 정보 수정</Title>
-          <Spacing marginBottom="1.2" />
-          <SubTitleWrapper>
-            <SubTitle>{`글 모임 정보를 수정할 수 있습니다`}</SubTitle>
-            <DeleteGroupBtn onClick={handleDeleteGroup}>삭제하기</DeleteGroupBtn>
-          </SubTitleWrapper>
+        <>
+          <AdminContainer>
+            <Title>모임 정보 수정</Title>
+            <Spacing marginBottom="1.2" />
+            <SubTitleWrapper>
+              <SubTitle>{`글 모임 정보를 수정할 수 있습니다`}</SubTitle>
+              <DeleteGroupBtn onClick={handleShowModal}>삭제하기</DeleteGroupBtn>
+            </SubTitleWrapper>
 
-          <Spacing marginBottom="3.6" />
-          <EditGroupInfo />
-        </AdminContainer>
+            <Spacing marginBottom="3.6" />
+            <EditGroupInfo />
+          </AdminContainer>
+
+          <NegativeModal
+            modalContent={MODAL.DELETE_GROUP}
+            isModalOpen={isModalOpen}
+            modalHandler={() => handleDeleteGroup()}
+            closeModalHandler={() => {
+              handleCloseModal();
+            }}
+          />
+        </>
       );
   }
 };
@@ -98,6 +111,10 @@ const DeleteGroupBtn = styled.button`
 
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.button3};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+  }
 `;
 const SubTitleWrapper = styled.div`
   display: flex;

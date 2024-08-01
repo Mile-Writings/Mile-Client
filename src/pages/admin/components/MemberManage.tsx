@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { MODAL_CONTENT } from '../constants/modal';
+import { MODAL } from '../constants/modal';
 import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 
 import { adminProfileIc, MemberMaster } from '../../../assets/svgs';
@@ -89,7 +89,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
       )}
 
       <NegativeModal
-        modalContent={MODAL_CONTENT.DELETE_MEMBER}
+        modalContent={MODAL.DELETE_MEMBER}
         isModalOpen={isModalOpen}
         modalHandler={() => {
           deleteMember(deleteMemberId);

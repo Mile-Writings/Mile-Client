@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import AddEditTopicModal from './AddEditTopicModal';
 
+import { MODAL } from '../constants/modal';
 import { useDeleteAdminTopic } from '../hooks/queries';
 
 import { DeleteIc, EditIc } from '../../../assets/svgs';
@@ -63,9 +64,7 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
       )}
 
       <NegativeModal
-        modalContent="삭제 시, 해당 글감으로 작성된 글도 함께 삭제되며,
-        삭제된 글감은 복구할 수 없습니다.
-        계속 하시겠습니까?"
+        modalContent={MODAL.DELETE_TOPIC}
         isModalOpen={showDeleteModal}
         modalHandler={() => {
           deleteMutateAdminTopic();
