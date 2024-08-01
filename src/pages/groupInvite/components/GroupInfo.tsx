@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { GroupLeaderIc, GroupMemberIc, GroupDateIc } from './../../../assets/svgs';
+import { GroupDateIc, GroupLeaderIc, GroupMemberIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 interface GroupInfoPropTypes {
@@ -112,6 +112,7 @@ const BorderBar = styled.div`
 
 const GroupDetail = styled.p`
   width: 100%;
+  max-width: 41.4rem;
   height: fit-content;
 
   color: ${({ theme }) => theme.colors.gray70};
