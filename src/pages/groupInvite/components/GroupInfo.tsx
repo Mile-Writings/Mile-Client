@@ -119,5 +119,6 @@ const GroupDetail = styled.p`
   line-height: 2.9rem;
   line-break: auto;
 
+  white-space: pre-wrap;
   word-break: keep-all;
 `;
