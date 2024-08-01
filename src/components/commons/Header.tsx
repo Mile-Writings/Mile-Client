@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import Button from './Button';
@@ -33,7 +33,7 @@ export const AuthorizationHeader = () => {
   const { data } = useFetchHeaderGroup();
   const handleLogOut = () => {
     logout();
-    location.reload();
+    navigateToHome();
   };
   useEffect(() => {
     if (data?.data?.moims) setMoims(data?.data.moims);
