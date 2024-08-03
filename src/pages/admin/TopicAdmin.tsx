@@ -46,7 +46,7 @@ const TopicAdmin = ({
       {data && data.topicCount && (
         <Pagenation
           count={data.topicCount}
-          allocatedCount={5}
+          allocatedCount={4}
           setActivePage={setPageNum}
           activePage={pageNum}
           setActiveChunk={setActiveChunk}
