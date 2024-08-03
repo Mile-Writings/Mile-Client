@@ -63,7 +63,6 @@ const TopicListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 78.1rem;
-  height: 39.2rem;
 `;
 
 const TopicAdminCategory = styled.ul`
