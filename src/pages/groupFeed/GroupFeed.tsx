@@ -27,11 +27,14 @@ import Spacing from '../../components/commons/Spacing';
 const GroupFeed = () => {
   const { groupId } = useParams();
   const accessToken = localStorage.getItem('accessToken');
-  const { isMember, isOwner, isLoading, isError, error } = useGroupFeedAuth(
-    groupId || '',
-    accessToken || '',
-  );
-  const { isPublic } = useGroupFeedPublicStatus(groupId || '');
+  const {
+    isMember,
+    isOwner,
+    isLoading: isAuthLoading,
+    isError,
+    error,
+  } = useGroupFeedAuth(groupId || '', accessToken || '');
+  const { isPublic, isLoading: isPublicLoading } = useGroupFeedPublicStatus(groupId || '');
 
   //sessionStorage에 저장된 카테고리 id 값을 가져옴
   const sessionCategoryId = sessionStorage.getItem('activeCategoryId');
@@ -48,20 +51,30 @@ const GroupFeed = () => {
 
   const navigate = useNavigate();
 
+  //접속시 권한확인
   useEffect(() => {
-    //접속시 권한확인
-    if (!accessToken || (!isPublic && !isMember)) {
-      alert('해당 모임은 비공개 모임입니다');
-      navigate('/');
+    if (!isAuthLoading && !isPublicLoading) {
+      if (accessToken) {
+        if (!isPublic && !isMember) {
+          alert('해당 모임은 비공개 모임입니다');
+          navigate('/');
+        }
+      }
+      if (!accessToken) {
+        if (!isPublic) {
+          alert('해당 모임은 비공개 모임입니다');
+          navigate('/');
+        }
+      }
     }
-  }, []);
+  }, [isAuthLoading, isPublicLoading]);
 
   //라우팅 했을 때 스크롤 맨 위로
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  if (isLoading) {
+  if (isAuthLoading) {
     return <Loading />;
   }
 
