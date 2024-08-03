@@ -102,7 +102,7 @@ const ProfileWrapper = styled.div`
 
 const HeaderWrapper = styled.div`
   position: sticky;
-  top: 6rem;
+  top: 8.4rem;
   display: flex;
   flex-direction: column;
   height: fit-content;
