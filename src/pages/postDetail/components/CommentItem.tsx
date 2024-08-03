@@ -214,6 +214,7 @@ const Modal = styled.div`
   color: ${({ theme }) => theme.colors.gray90};
   text-align: left;
 
+  background-color: white;
   cursor: pointer;
   border: 1px solid ${({ theme }) => theme.colors.gray50};
   ${({ theme }) => theme.fonts.button2};
