@@ -69,11 +69,6 @@ const GroupFeed = () => {
     }
   }, [isAuthLoading, isPublicLoading]);
 
-  //라우팅 했을 때 스크롤 맨 위로
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   if (isAuthLoading) {
     return <Loading />;
   }
