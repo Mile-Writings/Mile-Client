@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import GroupInfo from './components/GroupInfo';
 import Title from './components/Title';
@@ -19,7 +19,7 @@ const GroupInvite = () => {
   const [errorLoading, setErrorLoading] = useState(false);
   const { moimTitle, imageUrl, leader, foundedDate, memberCount, description, error } =
     useGetGroupInfo(groupId);
-
+  const pathname = useLocation();
   useEffect(() => {
     moimTitle === undefined ? setErrorLoading(true) : setErrorLoading(false);
   }, [moimTitle]);
@@ -35,7 +35,7 @@ const GroupInvite = () => {
           alert('해당 모임은 존재하지 않습니다!');
           navigate(`/`);
         } else if (status === 401) {
-          navigate(`/login`);
+          navigate(`/login`, { state: pathname });
         }
       }
     }
