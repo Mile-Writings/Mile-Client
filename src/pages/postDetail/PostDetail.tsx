@@ -229,8 +229,6 @@ const ButtonWrapper = styled.div<{ role: string }>`
   gap: 1.2rem;
   align-items: flex-start;
   justify-content: center;
-
-  /* width: 28rem; */
   width: ${({ role }) => (role === 'writer' ? `28rem` : role === 'owner' ? '12rem' : '0rem')};
 `;
 
