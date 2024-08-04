@@ -20,7 +20,6 @@ export const fetchWriterNameConflict = async (groupId: string, writerName: strin
         },
       },
     );
-    // console.log(response);
     return response.data;
   } catch (err) {
     console.log(err);
