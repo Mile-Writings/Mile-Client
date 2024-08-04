@@ -242,9 +242,9 @@ const CreateGroupInfo = ({
               />{' '}
               <DuplicateCheckBtn
                 type="button"
-                positive={groupName !== ''}
+                positive={groupName !== '' && groupName.length <= 10}
                 onClick={handleDuplicateGroupName}
-                disabled={!groupName}
+                disabled={!groupName || groupName.length > 10}
               >
                 중복확인
               </DuplicateCheckBtn>
