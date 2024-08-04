@@ -239,6 +239,7 @@ const CreateGroupInfo = ({
                 placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
                 isValid={isGroupNameValid}
                 value={groupName}
+                maxLength={11}
               />{' '}
               <DuplicateCheckBtn
                 type="button"
