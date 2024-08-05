@@ -116,7 +116,7 @@ const CreateGroupInfo = ({
           postDirectlyS3Func(url, file);
           setGroupImageView(reader.result);
         } else {
-          console.log('Image Error');
+          console.error(`file resader의 결과값이 string이 아닙니다. ${reader.result}`);
         }
       };
       reader.onerror = (err) => {
@@ -171,7 +171,7 @@ const CreateGroupInfo = ({
     else if (!topic || !topicTag || !topicValidationAll) {
       setIsGroupTopicEmpty(true);
     } else {
-      console.log('예기치 않는 에러');
+      console.error('글모임 생성 페이지 이동시 문제가 발생하였습니다.');
     }
   };
 
@@ -372,7 +372,6 @@ const CreateGroupInfo = ({
       </CreateGroupLayout>
       {topicModal && (
         <Overlay>
-          {' '}
           <CreateGroupTopicModal
             topic={topic}
             topicTag={topicTag}
