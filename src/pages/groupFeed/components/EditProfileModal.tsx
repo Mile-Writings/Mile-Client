@@ -42,6 +42,7 @@ const EditProfileModal = ({ setShowEditProfileModal, writerNameId }: editProfilM
             placeholder="소개글을 입력해주세요"
             onChange={onInputHandler}
             value={content}
+            maxLength={110}
           />
           <div>{content.length}/100</div>
         </ContentWrapper>
