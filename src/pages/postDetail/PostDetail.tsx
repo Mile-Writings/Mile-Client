@@ -83,6 +83,7 @@ const PostDetail = () => {
             <TitleText>{postData?.title}</TitleText>
             <DetailBox>
               <DateText>{postData?.createdAt} </DateText>
+              <DividingLine />
               <CuriousCount>
                 <GroupCuriousIc />
                 {postData?.curiousCount}
@@ -152,6 +153,14 @@ const PostDetail = () => {
 
 export default PostDetail;
 
+const DividingLine = styled.div`
+  width: 0.1rem;
+  height: 1.4rem;
+
+  background-color: ${({ theme }) => theme.colors.gray30};
+  border-radius: 2px;
+`;
+
 const ThumnailImg = styled.img`
   width: 100%;
   height: 37rem;
@@ -185,6 +194,7 @@ const InfoTextBox = styled.div`
 const DetailBox = styled.div`
   display: flex;
   gap: 0.8rem;
+  align-items: center;
 `;
 
 const TitleText = styled.h1`
