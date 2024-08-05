@@ -135,7 +135,7 @@ const CreateGroup = () => {
     if (groupName && topic && topicTag && leaderPenName && leaderDesc.length <= 100) {
       mutate();
     } else {
-      console.log('error');
+      throw new Error('글모임 생성 알 수 없는 에러');
     }
   };
 

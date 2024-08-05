@@ -5,7 +5,7 @@ import {
   MAX_TOPIC_DESC_LENGTH,
   MAX_TOPIC_KEYWORD_LENGTH,
   MAX_TOPIC_LENGTH,
-} from '../constants/topicLenth';
+} from '../constants/topicLength';
 
 interface GroupTopicModalPropTypes {
   topic: string;
@@ -67,6 +67,7 @@ const CreateGroupTopicModal = ({
           value={topic}
           onChange={handleTopic}
           placeholder="가벼운 주제부터 시작해보는 건 어때요? ex) 내가 가장 좋아하는 음식"
+          maxLength={MAX_TOPIC_LENGTH + 1}
         />
         <TopicTextLength isValid={isTopicValid}>
           {topic.length}/{MAX_TOPIC_LENGTH}
@@ -79,6 +80,7 @@ const CreateGroupTopicModal = ({
           value={topicTag}
           onChange={handleTopicTag}
           placeholder="위에 적은 글감을 한 단어로 요약해주세요. ex)음식"
+          maxLength={MAX_TOPIC_KEYWORD_LENGTH + 1}
         />
         <TopicTextLength isValid={isTopicTagValid}>
           {topicTag.length}/{MAX_TOPIC_KEYWORD_LENGTH}
@@ -91,6 +93,7 @@ const CreateGroupTopicModal = ({
           isValid={isTopicDescValid}
           onChange={setTopicDesc}
           placeholder="글감에 대해 자유롭게 소개해주세요. ex) 어떤 음식을 가장 좋아하시나요? 좋아하는 음식에 얽힌 나만의 이야기도 함께 이야기해보는 건 어때요?"
+          maxLength={MAX_TOPIC_DESC_LENGTH + 1}
         />
         <TopicTextLength isValid={isTopicDescValid}>
           {topicDesc.length}/{MAX_TOPIC_DESC_LENGTH}

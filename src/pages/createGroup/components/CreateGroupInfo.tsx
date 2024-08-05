@@ -8,7 +8,7 @@ import {
   MAX_TOPIC_DESC_LENGTH,
   MAX_TOPIC_KEYWORD_LENGTH,
   MAX_TOPIC_LENGTH,
-} from '../constants/topicLenth';
+} from '../constants/topicLength';
 import { useGetGroupNameValidation } from '../hooks/queries';
 import { CurrentPageType } from '../types/stateType';
 
@@ -371,7 +371,7 @@ const CreateGroupInfo = ({
         <NextBtn onClick={handleCurrentPage}>다음</NextBtn>
       </CreateGroupLayout>
       {topicModal && (
-        <Overlay onClick={toggleModal}>
+        <Overlay>
           {' '}
           <CreateGroupTopicModal
             topic={topic}
