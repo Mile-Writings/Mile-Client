@@ -148,8 +148,8 @@ const GroupInfo = styled.div`
 
 const GroupFloatingBtnIcon = styled(GroupFloatingBtnIc)`
   position: fixed;
-  right: 3rem;
-  bottom: 3rem;
+  right: 6rem;
+  bottom: 6rem;
 
   cursor: pointer;
 
