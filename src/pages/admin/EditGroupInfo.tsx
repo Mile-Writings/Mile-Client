@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useState, ChangeEvent, useRef } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useFetchGroupInfo, usePutAdminGroupInfo } from './hooks/queries';
@@ -10,9 +10,9 @@ import { usePresignedUrl } from '../postPage/hooks/queries';
 
 import {
   CreateGroupImageUpload,
+  CreateGroupInfoIc,
   CreateGroupRadioCheckedIc,
   CreateGroupRadioUncheckedIc,
-  CreateGroupInfoIc,
 } from '../../assets/svgs';
 import useHandleGroupImage from '../../hooks/useGroupImage';
 
@@ -121,6 +121,7 @@ const EditGroupInfo = () => {
     if (groupName && groupImageServerUrl) {
       if ((passDuplicate || groupName === beforeGroupName) && groupDesc.length <= 100) {
         await mutate();
+        setEditBtnActive(false);
         alert('글모임 정보가 수정되었습니다.');
       } else if (!passDuplicate && groupName !== beforeGroupName) {
         if (groupNameRef.current) {
