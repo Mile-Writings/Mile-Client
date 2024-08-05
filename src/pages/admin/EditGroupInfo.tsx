@@ -210,7 +210,7 @@ const EditGroupInfo = () => {
           </GroupImageLabel>
 
           <GroupInputDesc>
-            *글모임 페이지 상단에 노출될 대표 이미지입니다. 1366*306사이즈를 권장합니다.
+            *글모임 페이지 상단에 노출될 대표 이미지입니다. 1366*306px사이즈를 권장합니다.
           </GroupInputDesc>
         </GroupInputWrapper>
       </WhiteInputWrapper>
