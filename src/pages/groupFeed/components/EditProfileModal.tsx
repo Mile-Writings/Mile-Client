@@ -45,7 +45,7 @@ const EditProfileModal = ({ setShowEditProfileModal, writerNameId }: editProfilM
             onChange={onInputHandler}
             value={content}
           />
-          <div>{countLength}/100</div>
+          <div>{content?.length}/100</div>
         </ContentWrapper>
         <EditButton
           onClick={() => {
