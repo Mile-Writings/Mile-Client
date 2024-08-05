@@ -24,22 +24,22 @@ import { s3UrlParsing } from '../../../utils/s3UrlParsing';
 import postDirectlyS3 from '../../postPage/apis/postDirectlyS3';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
 
+type Setter<T> = (value: T) => void;
 interface CreateGroupInfoPropTypes {
   setCurrentPage: Dispatch<SetStateAction<CurrentPageType['currentPage']>>;
   groupName: string;
-  setGroupName: (e: ChangeEvent<HTMLInputElement>) => void;
+  setGroupName: Setter<ChangeEvent<HTMLInputElement>>;
   groupInfo: string;
-  setGroupInfo: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-
-  setGroupImageFile: (image: string) => void;
+  setGroupInfo: Setter<ChangeEvent<HTMLTextAreaElement>>;
+  setGroupImageFile: Setter<string>;
   isPublic: boolean;
-  setIsPublic: (value: boolean) => void;
+  setIsPublic: Setter<boolean>;
   topic: string;
   topicTag: string;
   topicDesc: string;
-  setTopic: (e: ChangeEvent<HTMLInputElement>) => void;
-  setTopicTag: (e: ChangeEvent<HTMLInputElement>) => void;
-  setTopicDesc: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  setTopic: Setter<string>;
+  setTopicTag: Setter<string>;
+  setTopicDesc: Setter<string>;
   groupImageView: string;
   setGroupImageView: Dispatch<SetStateAction<string>>;
 }
@@ -373,9 +373,6 @@ const CreateGroupInfo = ({
       {topicModal && (
         <Overlay>
           <CreateGroupTopicModal
-            topic={topic}
-            topicTag={topicTag}
-            topicDesc={topicDesc}
             setTopic={setTopic}
             setTopicTag={setTopicTag}
             setTopicDesc={setTopicDesc}
