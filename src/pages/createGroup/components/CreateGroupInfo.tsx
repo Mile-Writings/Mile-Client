@@ -524,7 +524,7 @@ const GroupIsPublicWrapper = styled.div`
   display: flex;
   gap: 0.8rem;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   width: 8rem;
 `;
 const GroupisPublicLabel = styled.label`
@@ -539,6 +539,7 @@ const GroupisPublicLabel = styled.label`
 const GroupPublicDescContainer = styled.div`
   display: flex;
   gap: 0.8rem;
+  justify-content: flex-end;
   width: 8rem;
   height: 1.9rem;
 `;
