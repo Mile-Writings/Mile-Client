@@ -226,7 +226,7 @@ const CreateGroupInfo = ({
           <SubTitle>안녕하세요. 마일에 오신 것을 환영합니다</SubTitle>
           <Spacing marginBottom="1.1" />
           <Title>나만의 글 모임을 만들어보세요</Title>
-          <Spacing marginBottom="4.8" />
+          <Spacing marginBottom="2.4" />
           <IllustImg />
         </TitleWrapper>
         <WhiteInputWrapper isValid={!isGroupNameEmpty}>
@@ -603,7 +603,6 @@ const TitleWrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 33.2rem;
 `;
 
 const Title = styled.h1`
@@ -617,6 +616,8 @@ const SubTitle = styled.h2`
 `;
 
 const IllustImg = styled(CreateGroupIlust)`
+  display: flex;
+  flex-shrink: 0;
   width: 100%;
   height: 36.6rem;
 `;
