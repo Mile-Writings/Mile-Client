@@ -544,7 +544,7 @@ const GroupPublicDescContainer = styled.div`
 `;
 const GroupPublicDesc = styled.p`
   color: ${({ theme }) => theme.colors.black};
-  ${({ theme }) => theme.fonts.body4};
+  ${({ theme }) => theme.fonts.title8};
 `;
 const GroupPublicDescWrapper = styled.div`
   position: relative;
