@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import RenderAdminContent from './components/RenderAdminContent';
@@ -8,17 +8,23 @@ import { useFetchInvitationLink } from './hooks/queries';
 import { useGroupInfo } from '../groupFeed/hooks/queries';
 
 import { AdminHomeIc } from '../../assets/svgs';
-import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
+import { AuthorizationHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import { copyLink } from '../../utils/copyLink';
 
 const Admin = () => {
   const accessToken = localStorage.getItem('accessToken');
+
   const [admin, setAdmin] = useState<'topic' | 'member' | 'groupInfo'>('topic');
   const { groupId } = useParams();
-  const { invitationCode } = useFetchInvitationLink(groupId);
   const navigate = useNavigate();
+
+  const { invitationCode } = useFetchInvitationLink(groupId);
   const { groupInfoData } = useGroupInfo(groupId || '');
+
+  useEffect(() => {
+    if (!accessToken) navigate('/');
+  }, [accessToken]);
 
   const handleCopyLink = (invitationCode: string) => {
     copyLink(import.meta.env.VITE_INVITE_URL + `group/${invitationCode}/groupInvite`);
@@ -34,7 +40,7 @@ const Admin = () => {
 
   return (
     <AdminWrapper>
-      {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
+      {accessToken && <AuthorizationHeader />}
       <Spacing marginBottom="13.6" />
       <AdminLayout>
         <SideNavbar>
