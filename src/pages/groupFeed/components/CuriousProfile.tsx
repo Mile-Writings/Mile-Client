@@ -19,7 +19,7 @@ const CuriousProfile = (props: CuriousProfilePropTypes) => {
   const { curiousWriterData } = useCuriousWriters(groupId || '');
   return (
     <CuriousProfileWrapper>
-      {curiousWriterData?.length == 0 ? (
+      {curiousWriterData?.length === 0 ? (
         <NoCuriousProfileeWrapper>
           <Spacing marginBottom="4" />
           <GroupNoDataImgIc />
