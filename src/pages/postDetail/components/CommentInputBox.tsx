@@ -50,7 +50,7 @@ const CommentInputBox = (props: CommentPropTypes) => {
   }, [comment]);
   return (
     <CommentPostWrapper>
-      <CommentLayout isMainComment={isMainComment}>
+      <CommentLayout isMainComment={isMainComment} isError={comment.length >= 1500}>
         <CommentForm
           ref={textareaRef}
           value={comment}
@@ -105,7 +105,7 @@ const Checkbox = styled.button<{ isUnknownWriter: boolean }>`
   border-radius: 2px;
 `;
 
-const CommentLayout = styled.div<{ isMainComment: boolean }>`
+const CommentLayout = styled.div<{ isMainComment: boolean; isError: boolean }>`
   display: flex;
   gap: 1rem;
   align-items: flex-end;
@@ -114,7 +114,8 @@ const CommentLayout = styled.div<{ isMainComment: boolean }>`
   padding: 1rem 1.2rem;
 
   background-color: ${({ theme }) => theme.colors.gray5};
-  border: 1px solid ${({ theme }) => theme.colors.gray30};
+  border: 1px solid
+    ${({ theme, isError }) => (isError ? theme.colors.mileRed : theme.colors.gray30)};
   border-radius: 6px;
 `;
 
