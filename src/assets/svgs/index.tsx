@@ -74,6 +74,7 @@ export { default as CreateGroupImageUpload } from './createGroupImageUpload.svg?
 export { default as CreateGroupInfoIc } from './createGroupInfoIc.svg?react';
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
 export { default as faviconMileIc } from './faviconMile.svg?react';
+export { default as CreateGroupImageUploadedIc } from './groupImageUploadedIc.svg?react';
 
 export { default as ArrowTopLeftIc } from './arrow_top_left.svg?react';
 export { default as CheckIc } from './check.svg?react';

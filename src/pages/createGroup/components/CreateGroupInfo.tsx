@@ -15,6 +15,7 @@ import { CurrentPageType } from '../types/stateType';
 import {
   CreateGroupIlust,
   CreateGroupImageUpload,
+  CreateGroupImageUploadedIc,
   CreateGroupInfoIc,
   CreateGroupRadioCheckedIc,
   CreateGroupRadioUncheckedIc,
@@ -276,13 +277,18 @@ const CreateGroupInfo = ({
           <GroupInputWrapper>
             <InputTitleText>글 모임 사진</InputTitleText>
             <GroupImageLabel htmlFor="file">
-              {groupImageView ? (
-                <GroupImagePreview src={groupImageView} />
-              ) : (
-                <GroupImageWrapper>
-                  <CreateGroupImageUploadIcon />
-                </GroupImageWrapper>
-              )}
+              <GroupImageWrapper>
+                {' '}
+                {groupImageView ? (
+                  <GroupImagePreviewWrapper>
+                    <GroupImagePreview src={groupImageView} />
+                    <CreateGroupImageUploadedIcon className="group-image-preview" />
+                  </GroupImagePreviewWrapper>
+                ) : (
+                  <CreateGroupImageUploadIcon className="group-image-preview" />
+                )}
+              </GroupImageWrapper>
+
               <GroupImageInput
                 type="file"
                 name="file"
@@ -555,6 +561,13 @@ const GroupInputDesc = styled.p`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.body4};
 `;
+
+const GroupImagePreviewWrapper = styled.div`
+  /* position: relative; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 const GroupImagePreview = styled.img`
   width: 77rem;
   height: 20rem;
@@ -564,8 +577,34 @@ const GroupImagePreview = styled.img`
   border-radius: 8px;
 `;
 
-const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
+const CreateGroupImageUploadedIcon = styled(CreateGroupImageUploadedIc)`
+  position: absolute;
+  z-index: 2;
+
   cursor: pointer;
+
+  &:hover {
+    g {
+      path {
+        fill: #6139d1;
+      }
+    }
+  }
+`;
+
+const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
+  position: absolute;
+  z-index: 2;
+
+  cursor: pointer;
+
+  &:hover {
+    g {
+      path {
+        fill: #6139d1;
+      }
+    }
+  }
 `;
 
 const GroupImageLabel = styled.label`
@@ -585,6 +624,18 @@ const GroupImageWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.gray10};
   cursor: pointer;
   border-radius: 8px;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.lightViolet};
+
+    .group-image-preview {
+      g {
+        path {
+          fill: #6139d1;
+        }
+      }
+    }
+  }
 `;
 
 const CreateGroupLayout = styled.div`
