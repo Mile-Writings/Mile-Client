@@ -103,6 +103,10 @@ const EditorThuminputIcnUnactiveIcon = styled(EditorThuminputIcnUnactiveIc)`
       fill: ${({ theme }) => theme.colors.mainViolet};
       stroke: ${({ theme }) => theme.colors.mainViolet};
     }
+
+    rect {
+      stroke: ${({ theme }) => theme.colors.mainViolet};
+    }
   }
 `;
 
