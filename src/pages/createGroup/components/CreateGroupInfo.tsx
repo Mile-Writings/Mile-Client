@@ -563,7 +563,6 @@ const GroupInputDesc = styled.p`
 `;
 
 const GroupImagePreviewWrapper = styled.div`
-  /* position: relative; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -579,7 +578,6 @@ const GroupImagePreview = styled.img`
 
 const CreateGroupImageUploadedIcon = styled(CreateGroupImageUploadedIc)`
   position: absolute;
-  z-index: 2;
 
   cursor: pointer;
 
@@ -594,7 +592,7 @@ const CreateGroupImageUploadedIcon = styled(CreateGroupImageUploadedIc)`
 
 const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
   position: absolute;
-  z-index: 2;
+  z-index: 1;
 
   cursor: pointer;
 

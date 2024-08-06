@@ -10,10 +10,12 @@ import { usePresignedUrl } from '../postPage/hooks/queries';
 
 import {
   CreateGroupImageUpload,
+  CreateGroupImageUploadedIc,
   CreateGroupInfoIc,
   CreateGroupRadioCheckedIc,
   CreateGroupRadioUncheckedIc,
 } from '../../assets/svgs';
+import { DEFAULT_IMG_URL } from '../../constants/defaultImgUrl';
 import useHandleGroupImage from '../../hooks/useGroupImage';
 
 const EditGroupInfo = () => {
@@ -177,11 +179,9 @@ const EditGroupInfo = () => {
               isValid={groupDesc.length <= 100}
               onChange={(e) => handleGroupDesc(e)}
               maxLength={110}
-              // ref={groupInfoRef}
               value={groupDesc}
             />
             <TextAreaLength isValid={groupDesc.length <= 100}>
-              {' '}
               {groupDesc.length}/100
             </TextAreaLength>
           </GroupInfoTextareaWrapper>
@@ -191,22 +191,27 @@ const EditGroupInfo = () => {
         <GroupInputWrapper>
           <InputTitleText>글 모임 사진</InputTitleText>
           <GroupImageLabel htmlFor="file">
-            {groupImageView ? (
-              <GroupImagePreview src={groupImageView} />
-            ) : (
-              <GroupImageWrapper>
-                <CreateGroupImageUpload />
-              </GroupImageWrapper>
-            )}
-            <GroupImageInput
-              type="file"
-              name="file"
-              id="file"
-              accept="image/*"
-              onChange={(e) => {
-                handleGroupImage(e);
-              }}
-            />
+            <GroupImageWrapper>
+              <GroupImagePreviewWrapper>
+                {groupImageView !== DEFAULT_IMG_URL ? (
+                  <>
+                    <GroupImagePreview src={groupImageView} />
+                    <CreateGroupImageUploadedIcon className="group-image-preview" />
+                  </>
+                ) : (
+                  <CreateGroupImageUploadIcon className="group-image-preview" />
+                )}
+              </GroupImagePreviewWrapper>
+              <GroupImageInput
+                type="file"
+                name="file"
+                id="file"
+                accept="image/*"
+                onChange={(e) => {
+                  handleGroupImage(e);
+                }}
+              />
+            </GroupImageWrapper>
           </GroupImageLabel>
 
           <GroupInputDesc>
@@ -268,6 +273,39 @@ const EditGroupInfo = () => {
 };
 
 export default EditGroupInfo;
+const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
+  position: absolute;
+  z-index: 1;
+
+  cursor: pointer;
+
+  &:hover {
+    g {
+      path {
+        fill: #6139d1;
+      }
+    }
+  }
+`;
+
+const CreateGroupImageUploadedIcon = styled(CreateGroupImageUploadedIc)`
+  position: absolute;
+
+  cursor: pointer;
+
+  &:hover {
+    g {
+      path {
+        fill: #6139d1;
+      }
+    }
+  }
+`;
+const GroupImagePreviewWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const GroupNameInputWrapper = styled.div`
   position: relative;
@@ -395,6 +433,18 @@ const GroupImageWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.gray10};
   cursor: pointer;
   border-radius: 8px;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.lightViolet};
+
+    .group-image-preview {
+      g {
+        path {
+          fill: #6139d1;
+        }
+      }
+    }
+  }
 `;
 const GroupInfoTextarea = styled.textarea<{ isValid: boolean }>`
   position: relative;
