@@ -66,7 +66,7 @@ const ThumbNailGradient = styled.div`
   width: 100%;
 
   background: ${({ theme }) => theme.colors.thumbnailGradient};
-  border-radius: 10px;
+  border-radius: 0 0 10px 10px;
 `;
 
 const ThumbNailImg = styled.img<{ $imgExist: string }>`
@@ -76,7 +76,7 @@ const ThumbNailImg = styled.img<{ $imgExist: string }>`
   height: 30.7rem;
   object-fit: cover;
 
-  border-radius: 10px;
+  border-radius: 0 0 10px 10px;
   ${({ $imgExist }) => $imgExist && $imgExist.length === 0 && 'content: "";'}
 `;
 
@@ -101,7 +101,6 @@ const EditorThuminputIcnUnactiveIcon = styled(EditorThuminputIcnUnactiveIc)`
   :hover {
     path {
       fill: ${({ theme }) => theme.colors.mainViolet};
-      stroke: ${({ theme }) => theme.colors.mainViolet};
     }
 
     rect {
