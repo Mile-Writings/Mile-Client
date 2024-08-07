@@ -30,13 +30,15 @@ interface MemberManagePropTypes {
 }
 
 const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) => {
-  const { groupId } = useParams();
-  const { memberData } = useFetchMemberInfo(groupId || '', pageCount);
-  const { deleteMember } = useDeleteMember();
   const [activeChunk, setActiveChunk] = useState(1);
+  const [deleteMemberId, setDeleteMemberId] = useState(-1);
+
+  const { groupId } = useParams();
 
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
-  const [deleteMemberId, setDeleteMemberId] = useState(-1);
+
+  const { memberData } = useFetchMemberInfo(groupId || '', pageCount);
+  const { deleteMember } = useDeleteMember();
 
   const handleDeleteMember = (writerNameId: number) => {
     setDeleteMemberId(writerNameId);
@@ -60,7 +62,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
               <MemberItemContainer key={writerNameId}>
                 <AdminProfileIcon />
                 <Name>
-                  {isOwner && <MemberMaster style={{ flexShrink: 0 }} />}
+                  {isOwner && <MemberMaster />}
                   {writerName}
                 </Name>
                 <PostNumber>{postCount}</PostNumber>
