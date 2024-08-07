@@ -156,5 +156,7 @@ const HeaderBtnContainer = styled.div`
 `;
 
 const HeaderLogoIcon = styled(HeaderLogoIc)`
+  flex-shrink: 0;
+
   cursor: pointer;
 `;
