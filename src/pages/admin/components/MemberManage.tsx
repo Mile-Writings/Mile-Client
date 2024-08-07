@@ -40,7 +40,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
   const { memberData } = useFetchMemberInfo(groupId || '', pageCount);
   const { deleteMember } = useDeleteMember();
 
-  const handleDeleteMember = (writerNameId: number) => {
+  const handleExpel = (writerNameId: number) => {
     setDeleteMemberId(writerNameId);
     handleShowModal();
   };
@@ -68,7 +68,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
                 <PostNumber>{postCount}</PostNumber>
                 <CommentNumber>{commentCount}</CommentNumber>
                 {!isOwner && (
-                  <ExpelBtn type="button" onClick={() => handleDeleteMember(writerNameId)}>
+                  <ExpelBtn type="button" onClick={() => handleExpel(writerNameId)}>
                     삭제하기
                   </ExpelBtn>
                 )}
