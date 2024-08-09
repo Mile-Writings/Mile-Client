@@ -59,8 +59,7 @@ const GroupFeed = () => {
           alert('해당 모임은 비공개 모임입니다');
           navigate('/');
         }
-      }
-      if (!accessToken) {
+      } else {
         if (!isPublic) {
           alert('해당 모임은 비공개 모임입니다');
           navigate('/');
