@@ -55,10 +55,7 @@ export { default as EditorDropIcnActiveIc } from './editorDropIcnActive.svg?reac
 export { default as EditorDropIcnActiveOpenIc } from './editorDropIcnActiveopen.svg?react';
 export { default as GroupThumbnailImgIc } from './groupThumbnailImg.svg?react';
 
-export {
-  default as EditorThuminputIcnActiveIc,
-  default as EditorThuminputIcnHoverIc,
-} from './editorThuminputIcnHover.svg?react';
+export { default as EditorThuminputIcnActiveIc } from './editorThuminputIcnActive.svg?react';
 export { default as EditorThuminputIcnUnactiveIc } from './editorThuminputIcnUnactive.svg?react';
 export { default as GroupCardThumnailImgIc } from './groupCardThumnailImg.svg?react';
 
