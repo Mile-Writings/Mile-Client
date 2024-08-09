@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import RenderAdminContent from './components/RenderAdminContent';
@@ -21,10 +21,6 @@ const Admin = () => {
 
   const { invitationCode } = useFetchInvitationLink(groupId);
   const { groupInfoData } = useGroupInfo(groupId || '');
-
-  useEffect(() => {
-    if (!accessToken) navigate('/');
-  }, [accessToken]);
 
   const handleCopyLink = (invitationCode: string) => {
     copyLink(import.meta.env.VITE_INVITE_URL + `group/${invitationCode}/groupInvite`);
