@@ -68,12 +68,13 @@ export { default as LoginIc } from './loginIc.svg?react';
 export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?react';
 
 export { default as adminEmptyMemberIc } from './adminEmptyMember.svg?react';
-export { default as adminProfileIc } from './adminProfileIc.svg?react';
 export { default as AdminHomeIc } from './adminHomeIcn.svg?react';
+export { default as adminProfileIc } from './adminProfileIc.svg?react';
 export { default as CreateGroupImageUpload } from './createGroupImageUpload.svg?react';
 export { default as CreateGroupInfoIc } from './createGroupInfoIc.svg?react';
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
 export { default as faviconMileIc } from './faviconMile.svg?react';
+export { default as CreateGroupImageUploadedIc } from './groupImageUploadedIc.svg?react';
 
 export { default as ArrowTopLeftIc } from './arrow_top_left.svg?react';
 export { default as CheckIc } from './check.svg?react';
@@ -93,11 +94,11 @@ export { default as CreateGroupRadioUncheckedIc } from './createGroupRadioUnchec
 export { default as AniImgProfileIc } from './ani_img_profile.svg?react';
 
 // 글 모임 가입 축하페이지
-export { default as GroupListProfileCloseIc } from './groupListprofileIcnClose.svg?react';
-export { default as JoinCongratulationIc } from './joinCongratulationPng.svg?react';
 export { default as CreateGroupCongrats } from './createGroupCongrats.svg?react';
 export { default as CreateGroupIlust } from './createGroupIlust.svg?react';
+export { default as GroupListProfileCloseIc } from './groupListprofileIcnClose.svg?react';
+export { default as JoinCongratulationIc } from './joinCongratulationPng.svg?react';
 
-export { default as GroupViewIc } from './groupViewIcn.svg?react';
-export { default as GroupCuriousIc } from './groupCuriousIcn.svg?react';
 export { default as GroupChatIc } from './groupChatIcn.svg?react';
+export { default as GroupCuriousIc } from './groupCuriousIcn.svg?react';
+export { default as GroupViewIc } from './groupViewIcn.svg?react';

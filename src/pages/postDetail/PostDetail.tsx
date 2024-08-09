@@ -82,7 +82,8 @@ const PostDetail = () => {
           <InfoTextBox>
             <TitleText>{postData?.title}</TitleText>
             <DetailBox>
-              <DateText>{postData?.createdAt} ·</DateText>
+              <DateText>{postData?.createdAt} </DateText>
+              <DividingLine />
               <CuriousCount>
                 <GroupCuriousIc />
                 {postData?.curiousCount}
@@ -97,16 +98,25 @@ const PostDetail = () => {
               </CommentCount>
             </DetailBox>
           </InfoTextBox>
-          {postAuth?.data?.data?.canEdit && (
-            <ButtonWrapper>
+
+          <ButtonWrapper role={postAuth?.data?.data?.role || ''}>
+            {postAuth?.data?.data?.role === 'writer' ? (
+              <>
+                <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
+                  글 삭제하기
+                </Button>
+                <Button typeName={'submitEditType'} onClick={handleEditBtn}>
+                  글 수정하기
+                </Button>
+              </>
+            ) : postAuth?.data?.data?.role === 'owner' ? (
               <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
                 글 삭제하기
               </Button>
-              <Button typeName={'submitEditType'} onClick={handleEditBtn}>
-                글 수정하기
-              </Button>
-            </ButtonWrapper>
-          )}
+            ) : (
+              <></>
+            )}
+          </ButtonWrapper>
         </PostDetailContainer>
         <PostWrapper>
           <TopicWrapper>
@@ -128,9 +138,13 @@ const PostDetail = () => {
               </WriterDesc>
             </InfoWrapper>
           </WriterInfoContainer>
-          {localStorage.accessToken && <CuriousBtn />}
+          {(postAuth?.data?.data?.role === 'anonymous' || localStorage.accessToken) && (
+            <CuriousBtn />
+          )}
         </WriterInfoWrapper>
-        {localStorage.accessToken && <Comment postId={postId} />}
+        {(postAuth?.data?.data?.role || localStorage.accessToken) === 'anonymous' && (
+          <Comment postId={postId} />
+        )}
         <Spacing marginBottom="8" />
       </PostDetailWrapper>
     </>
@@ -138,6 +152,14 @@ const PostDetail = () => {
 };
 
 export default PostDetail;
+
+const DividingLine = styled.div`
+  width: 0.1rem;
+  height: 1.4rem;
+
+  background-color: ${({ theme }) => theme.colors.gray30};
+  border-radius: 2px;
+`;
 
 const ThumnailImg = styled.img`
   width: 100%;
@@ -166,12 +188,13 @@ const InfoTextBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.1rem;
-  width: 60rem;
+  width: 100%;
 `;
 
 const DetailBox = styled.div`
   display: flex;
   gap: 0.8rem;
+  align-items: center;
 `;
 
 const TitleText = styled.h1`
@@ -211,11 +234,12 @@ const CommentCount = styled.div`
   ${({ theme }) => theme.fonts.subtitle4};
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.div<{ role: string }>`
   display: flex;
   gap: 1.2rem;
   align-items: flex-start;
-  width: 22rem;
+  justify-content: center;
+  width: ${({ role }) => (role === 'writer' ? `28rem` : role === 'owner' ? '12rem' : '0rem')};
 `;
 
 const TopicWrapper = styled.div`

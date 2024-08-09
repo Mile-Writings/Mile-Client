@@ -18,6 +18,7 @@ import Loading from '../../loading/Loading';
 const Carousel = () => {
   const { groupId } = useParams();
   const { groupFeedCategoryData, isLoading, isError, error } = useTopicList(groupId || '');
+
   const [selectedTopicId, setSelectedTopicId] = useState<string>('');
 
   const [categoryId] = useState(Number(sessionStorage.getItem('activeCategoryId')) - 1 || 0);
@@ -65,8 +66,8 @@ const Carousel = () => {
     <>
       {(articleListLoading || isLoading) && <Loading />}
       <CarouselWrapper>
-        {groupFeedCategoryData != undefined && groupFeedCategoryData?.length > 6 && (
-          <GroupTabBtnBaseBeforeIcon />
+        {groupFeedCategoryData !== undefined && groupFeedCategoryData?.length > 6 && (
+          <GroupTabBtnBaseBeforeIcon className="slick-prev" />
         )}
         <Slider {...settings} className="groupFeedCarousel">
           {groupFeedCategoryData?.map((topic, index) => (
@@ -79,8 +80,8 @@ const Carousel = () => {
             </CarouselContainer>
           ))}
         </Slider>
-        {groupFeedCategoryData != undefined && groupFeedCategoryData?.length > 6 && (
-          <GroupTabBtnBaseNextIcon />
+        {groupFeedCategoryData !== undefined && groupFeedCategoryData?.length > 6 && (
+          <GroupTabBtnBaseNextIcon className="slick-next slick-disabled" />
         )}
       </CarouselWrapper>
       <Spacing marginBottom="3.2" />

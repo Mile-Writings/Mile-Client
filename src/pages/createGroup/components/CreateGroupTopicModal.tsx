@@ -1,27 +1,21 @@
 import styled from '@emotion/styled';
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from 'react';
 
 import {
   MAX_TOPIC_DESC_LENGTH,
   MAX_TOPIC_KEYWORD_LENGTH,
   MAX_TOPIC_LENGTH,
-} from '../constants/topicLenth';
+} from '../constants/topicLength';
 
 interface GroupTopicModalPropTypes {
-  topic: string;
-  topicTag: string;
-  topicDesc: string;
   toggleModal: (prev: boolean) => void;
-  setTopic: (e: ChangeEvent<HTMLInputElement>) => void;
-  setTopicTag: (e: ChangeEvent<HTMLInputElement>) => void;
-  setTopicDesc: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  setTopic: (topic: string) => void;
+  setTopicTag: (topicTag: string) => void;
+  setTopicDesc: (topicDesc: string) => void;
   setIsGroupTopicEmpty: Dispatch<SetStateAction<boolean>>;
 }
 
 const CreateGroupTopicModal = ({
-  topic,
-  topicTag,
-  topicDesc,
   setTopic,
   setTopicTag,
   setTopicDesc,
@@ -30,33 +24,48 @@ const CreateGroupTopicModal = ({
 }: GroupTopicModalPropTypes) => {
   const [isTopicEmpty, setIsTopicEmpty] = useState(false);
   const [isTopicTagEmpty, setIsTopicTagEmpty] = useState(false);
+  const [tempTopic, setTempTopic] = useState('');
+  const [tempTopicTag, setTempTopicTag] = useState('');
+  const [tempTopicDesc, setTempTopicDesc] = useState('');
 
-  const isTopicDescValid = topicDesc.length <= MAX_TOPIC_DESC_LENGTH;
-  const isTopicValid = topic.length <= MAX_TOPIC_LENGTH;
-  const isTopicTagValid = topicTag.length <= MAX_TOPIC_KEYWORD_LENGTH;
+  const isTopicDescValid = tempTopicDesc.length <= MAX_TOPIC_DESC_LENGTH;
+  const isTopicValid = tempTopic.length <= MAX_TOPIC_LENGTH;
+  const isTopicTagValid = tempTopicTag.length <= MAX_TOPIC_KEYWORD_LENGTH;
 
+  const topicDescRef = useRef<HTMLTextAreaElement>(null);
   const createTopic = () => {
-    if (topic && topicTag && isTopicDescValid && isTopicValid && isTopicTagValid) {
+    if (tempTopic && tempTopicTag && isTopicDescValid && isTopicValid && isTopicTagValid) {
+      setTopic(tempTopic);
+      setTopicTag(tempTopicTag);
+      setTopicDesc(tempTopicDesc);
+
       setIsGroupTopicEmpty(false);
       toggleModal(false);
-    } else if (!topic || !isTopicValid) {
+    } else if (!tempTopic || !isTopicValid) {
       setIsTopicEmpty(true);
-    } else if (!topicTag || !isTopicTagValid) {
+    } else if (!tempTopicTag || !isTopicTagValid) {
       setIsTopicTagEmpty(true);
     } else if (!isTopicDescValid) {
       console.log('글감 소개 글자수 초과');
+      if (topicDescRef.current) {
+        topicDescRef.current.focus();
+      }
     } else {
-      throw new Error('topic modal Error');
+      console.error('글감 생성시 예기치 못하는 에러');
     }
   };
   const handleTopic = (e: ChangeEvent<HTMLInputElement>) => {
-    setTopic(e);
+    setTempTopic(e.target.value);
     setIsTopicEmpty(false);
   };
 
   const handleTopicTag = (e: ChangeEvent<HTMLInputElement>) => {
-    setTopicTag(e);
+    setTempTopicTag(e.target.value);
     setIsTopicTagEmpty(false);
+  };
+
+  const handleTopicDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setTempTopicDesc(e.target.value);
   };
   return (
     <ModalWrapper onClick={(e) => e.stopPropagation()}>
@@ -64,24 +73,26 @@ const CreateGroupTopicModal = ({
         <InputTitle>글감*</InputTitle>
         <TopicInput
           isValid={!isTopicEmpty && isTopicValid}
-          value={topic}
+          value={tempTopic}
           onChange={handleTopic}
           placeholder="가벼운 주제부터 시작해보는 건 어때요? ex) 내가 가장 좋아하는 음식"
+          maxLength={MAX_TOPIC_LENGTH + 1}
         />
         <TopicTextLength isValid={isTopicValid}>
-          {topic.length}/{MAX_TOPIC_LENGTH}
+          {tempTopic.length}/{MAX_TOPIC_LENGTH}
         </TopicTextLength>
       </InputWrpper>
       <InputWrpper>
         <InputTitle>글감 태그*</InputTitle>
         <TopicInput
           isValid={!isTopicTagEmpty && isTopicTagValid}
-          value={topicTag}
+          value={tempTopicTag}
           onChange={handleTopicTag}
           placeholder="위에 적은 글감을 한 단어로 요약해주세요. ex)음식"
+          maxLength={MAX_TOPIC_KEYWORD_LENGTH + 1}
         />
         <TopicTextLength isValid={isTopicTagValid}>
-          {topicTag.length}/{MAX_TOPIC_KEYWORD_LENGTH}
+          {tempTopicTag.length}/{MAX_TOPIC_KEYWORD_LENGTH}
         </TopicTextLength>
       </InputWrpper>
 
@@ -89,11 +100,14 @@ const CreateGroupTopicModal = ({
         <InputTitle>글감 소개</InputTitle>
         <TopicDescTextArea
           isValid={isTopicDescValid}
-          onChange={setTopicDesc}
+          onChange={handleTopicDesc}
           placeholder="글감에 대해 자유롭게 소개해주세요. ex) 어떤 음식을 가장 좋아하시나요? 좋아하는 음식에 얽힌 나만의 이야기도 함께 이야기해보는 건 어때요?"
+          maxLength={MAX_TOPIC_DESC_LENGTH + 1}
+          ref={topicDescRef}
+          value={tempTopicDesc}
         />
         <TopicTextLength isValid={isTopicDescValid}>
-          {topicDesc.length}/{MAX_TOPIC_DESC_LENGTH}
+          {tempTopicDesc.length}/{MAX_TOPIC_DESC_LENGTH}
         </TopicTextLength>
       </InputWrpper>
       <CreateTopicBtn type="button" onClick={createTopic}>
@@ -114,8 +128,8 @@ const TopicTextLength = styled.span<{ isValid: boolean }>`
 
 const ModalWrapper = styled.div`
   position: fixed;
-  top: 50%; /* 상단에서 50%의 위치 */
-  left: 50%; /* 왼쪽에서 50%의 위치 */
+  top: 50%;
+  left: 50%;
   z-index: 4;
   display: flex;
   flex-direction: column;
@@ -154,8 +168,6 @@ const TopicInput = styled.input<{ isValid: boolean }>`
   background: ${({ theme }) => theme.colors.gray5};
   border: 1px solid
     ${({ theme, isValid }) => (isValid ? theme.colors.gray20 : theme.colors.mileRed)};
-
-  /* border: 1px solid ${({ theme }) => theme.colors.gray20}; */
   border-radius: 6px;
   ${({ theme }) => theme.fonts.button2};
 

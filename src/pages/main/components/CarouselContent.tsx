@@ -35,46 +35,50 @@ const CarouselContent = ({
   };
 
   return (
-    <CarouselContentWrapper>
-      {imageUrl && (
-        <>
-          <ContentLayout onClick={handleRoutingDetail}>
-            <Topic>{topicName}</Topic>
-            <MainText>{postTitle}</MainText>
-            <Spacing marginBottom="2" />
-            <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
-              {postContent}
-            </SubText>
-          </ContentLayout>
-          {isContainPhoto && (
-            <Image
-              src={imageUrl}
-              isLast={isLast}
-              alt="group-content-image"
-              onClick={handleRoutingDetail}
-            />
-          )}
-        </>
-      )}
+    <CarouselWrapper>
+      <CarouselContentLayout>
+        <ContentContainer onClick={handleRoutingDetail}>
+          <Topic>{topicName}</Topic>
+          <Title>{postTitle}</Title>
+          <Spacing marginBottom="2" />
+          <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
+            {postContent}
+          </SubText>
+        </ContentContainer>
+        {isContainPhoto && (
+          <Image
+            src={imageUrl || ''}
+            isLast={isLast}
+            alt={`${groupId}-content-image`}
+            onClick={handleRoutingDetail}
+          />
+        )}
+      </CarouselContentLayout>
+
       {isLast && (
-        <GroupRoutingBtnLayout>
-          <GroupRoutingBox>
+        <LastSlideBtnLayout>
+          <GroupRoutingText>
             이 모임에 대해서
             <br /> 더 궁금하신가요?
-          </GroupRoutingBox>
+          </GroupRoutingText>
           <Spacing marginBottom="1.6" />
           <GroupRoutingBtnBox>
-            <MainGroupRoutingBtnIcon onClick={() => handleRoutingGroup()} />
+            <MainGroupRoutingBtnIcon onClick={handleRoutingGroup} />
           </GroupRoutingBtnBox>
-        </GroupRoutingBtnLayout>
+        </LastSlideBtnLayout>
       )}
-    </CarouselContentWrapper>
+    </CarouselWrapper>
   );
 };
 
 export default CarouselContent;
 
-const CarouselContentWrapper = styled.div`
+const CarouselWrapper = styled.section`
+  display: flex;
+  gap: 5rem;
+`;
+
+const CarouselContentLayout = styled.div`
   display: flex;
   gap: 3.6rem;
   padding: 3.6rem;
@@ -83,24 +87,21 @@ const CarouselContentWrapper = styled.div`
   border-radius: 8px;
 `;
 
-const Topic = styled.div`
+const Topic = styled.h1`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.body6};
 `;
 
-const MainText = styled.p`
+const Title = styled.h2`
   ${({ theme }) => theme.fonts.title10};
 `;
 
-const ContentLayout = styled.div`
+const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-
-  cursor: pointer;
 `;
 
-const SubText = styled.p<{ isContainPhoto: boolean; isLast: boolean }>`
-  display: -webkit-box;
+const SubText = styled.span<{ isContainPhoto: boolean; isLast: boolean }>`
   width: ${({ isContainPhoto, isLast }) =>
     isContainPhoto && isLast
       ? '47.8rem'
@@ -126,20 +127,20 @@ const Image = styled.img<{ isLast: boolean }>`
   height: 16.8rem;
   object-fit: cover;
 
-  cursor: pointer;
   border-radius: 8px;
 `;
 
-const GroupRoutingBtnLayout = styled.section`
+const LastSlideBtnLayout = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 4.2rem;
 
   text-align: center;
+
+  cursor: default;
 `;
 
-const GroupRoutingBox = styled.p`
+const GroupRoutingText = styled.p`
   width: 12.3rem;
 
   color: ${({ theme }) => theme.colors.black};
@@ -147,9 +148,7 @@ const GroupRoutingBox = styled.p`
 `;
 
 const GroupRoutingBtnBox = styled.div`
-  & > svg {
-    cursor: pointer;
-  }
+  cursor: pointer;
 
   & > svg:hover {
     path {
