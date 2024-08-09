@@ -4,7 +4,7 @@ interface CheckPostAuth {
   status: number;
   message: string;
   data: {
-    canEdit: boolean;
+    role: string;
   };
 }
 const checkPostAuth = (postId: string) => {

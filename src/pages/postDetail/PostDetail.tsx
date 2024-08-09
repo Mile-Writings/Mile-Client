@@ -82,7 +82,7 @@ const PostDetail = () => {
           <InfoTextBox>
             <TitleText>{postData?.title}</TitleText>
             <DetailBox>
-              <DateText>{postData?.createdAt} ·</DateText>
+              <DateText>{postData?.createdAt} </DateText>
               <CuriousCount>
                 <GroupCuriousIc />
                 {postData?.curiousCount}
@@ -97,16 +97,25 @@ const PostDetail = () => {
               </CommentCount>
             </DetailBox>
           </InfoTextBox>
-          {postAuth?.data?.data?.canEdit && (
-            <ButtonWrapper>
+
+          <ButtonWrapper role={postAuth?.data?.data?.role || ''}>
+            {postAuth?.data?.data?.role === 'writer' ? (
+              <>
+                <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
+                  글 삭제하기
+                </Button>
+                <Button typeName={'submitEditType'} onClick={handleEditBtn}>
+                  글 수정하기
+                </Button>
+              </>
+            ) : postAuth?.data?.data?.role === 'owner' ? (
               <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
                 글 삭제하기
               </Button>
-              <Button typeName={'submitEditType'} onClick={handleEditBtn}>
-                글 수정하기
-              </Button>
-            </ButtonWrapper>
-          )}
+            ) : (
+              <></>
+            )}
+          </ButtonWrapper>
         </PostDetailContainer>
         <PostWrapper>
           <TopicWrapper>
@@ -128,9 +137,13 @@ const PostDetail = () => {
               </WriterDesc>
             </InfoWrapper>
           </WriterInfoContainer>
-          {localStorage.accessToken && <CuriousBtn />}
+          {(postAuth?.data?.data?.role === 'anonymous' || localStorage.accessToken) && (
+            <CuriousBtn />
+          )}
         </WriterInfoWrapper>
-        {localStorage.accessToken && <Comment postId={postId} />}
+        {(postAuth?.data?.data?.role || localStorage.accessToken) === 'anonymous' && (
+          <Comment postId={postId} />
+        )}
         <Spacing marginBottom="8" />
       </PostDetailWrapper>
     </>
@@ -166,7 +179,7 @@ const InfoTextBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.1rem;
-  width: 60rem;
+  width: 100%;
 `;
 
 const DetailBox = styled.div`
@@ -211,11 +224,12 @@ const CommentCount = styled.div`
   ${({ theme }) => theme.fonts.subtitle4};
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.div<{ role: string }>`
   display: flex;
   gap: 1.2rem;
   align-items: flex-start;
-  width: 22rem;
+  justify-content: center;
+  width: ${({ role }) => (role === 'writer' ? `28rem` : role === 'owner' ? '12rem' : '0rem')};
 `;
 
 const TopicWrapper = styled.div`
