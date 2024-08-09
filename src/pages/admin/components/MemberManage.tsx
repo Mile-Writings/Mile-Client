@@ -177,24 +177,23 @@ const Name = styled.span`
 `;
 
 const PostNumber = styled.span`
-  display: flex;
-  align-items: flex-end;
+  /* display: flex; */
   justify-content: center;
   width: 5.1rem;
   margin-right: 6rem;
 
   color: ${({ theme }) => theme.colors.gray70};
+  text-align: center;
 
   ${({ theme }) => theme.fonts.body1}
 `;
 
 const CommentNumber = styled.span`
-  display: flex;
-  align-items: flex-end;
   justify-content: center;
   width: 5.1rem;
 
   color: ${({ theme }) => theme.colors.gray70};
+  text-align: center;
 
   ${({ theme }) => theme.fonts.body1}
 `;
