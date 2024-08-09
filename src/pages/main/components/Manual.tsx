@@ -12,63 +12,50 @@ import Spacing from '../../../components/commons/Spacing';
 
 const Manual = () => {
   return (
-    <ManualLayout>
-      <TitleWithManualContainer>
-        <ManualTitle>마일 메뉴얼</ManualTitle>
-        <Spacing marginBottom="3.6" />
-        <ManualBox>
-          <ManualRow>
-            <MainManualMakeIc />
-            <MainManualJoinIc />
-            <MainManualWriteIc />
-          </ManualRow>
-          <ManualRow>
-            <MainManualShareIc />
-            <MainManualCuriousIc />
-            <MainManualLookIc />
-          </ManualRow>
-        </ManualBox>
-      </TitleWithManualContainer>
-    </ManualLayout>
+    <ManualWrapper>
+      <ManualTitle>마일 메뉴얼</ManualTitle>
+      <Spacing marginBottom="3.6" />
+      <ManualLayout>
+        <ManualRow>
+          <MainManualMakeIc />
+          <MainManualJoinIc />
+          <MainManualWriteIc />
+        </ManualRow>
+        <ManualRow>
+          <MainManualShareIc />
+          <MainManualCuriousIc />
+          <MainManualLookIc />
+        </ManualRow>
+      </ManualLayout>
+    </ManualWrapper>
   );
 };
 
 export default Manual;
 
-const ManualLayout = styled.section`
+const ManualWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  margin: 0 auto;
   padding-bottom: 10rem;
 `;
 
-const TitleWithManualContainer = styled.div`
+const ManualTitle = styled.h1`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  width: fit-content;
-`;
-
-const ManualTitle = styled.div`
-  display: flex;
-  justify-content: flex-start;
   margin-top: 10rem;
   ${({ theme }) => theme.fonts.title3};
+
+  cursor: default;
 `;
 
-const ManualBox = styled.div`
+const ManualLayout = styled.section`
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  align-items: center;
-  justify-content: center;
   width: 92.8rem;
 `;
 
 const ManualRow = styled.div`
   display: flex;
   gap: 2rem;
-  align-items: center;
-  justify-content: center;
 `;

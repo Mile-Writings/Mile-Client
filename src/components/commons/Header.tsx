@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
 
 import { HeaderLogoIc } from '../../assets/svgs';
 import useNavigateHome from '../../hooks/useNavigateHome';
+import useNavigateLoginWithPath from '../../hooks/useNavigateLoginWithPath';
 import { Moim } from '../../pages/groupFeed/apis/fetchHeaderGroup';
 import CreateGroupBtn from '../../pages/groupFeed/components/CreateGroupBtn';
 import MyGroupDropDown from '../../pages/groupFeed/components/MyGroupDropDown';
@@ -54,17 +54,13 @@ export const AuthorizationHeader = () => {
 
 // 로그아웃된 경우 헤더
 export const UnAuthorizationHeader = () => {
-  const navigate = useNavigate();
-  const pathname = useLocation();
   const { navigateToHome } = useNavigateHome();
-  const handleLogIn = () => {
-    navigate(`/login`, { state: pathname });
-  };
+  const { navigateToLogin } = useNavigateLoginWithPath();
 
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
-      <LogInOutBtn onClick={handleLogIn}>로그인</LogInOutBtn>
+      <LogInOutBtn onClick={navigateToLogin}>로그인</LogInOutBtn>
     </HeaderWrapper>
   );
 };

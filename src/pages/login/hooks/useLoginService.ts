@@ -7,16 +7,16 @@ import { LoginProps } from '../types/loginType';
 
 export const useLoginService = ({ code, socialType }: LoginProps) => {
   const navigate = useNavigate();
-  // const queryClient = useQueryClient();
+  const beforePathname = localStorage.getItem('beforePathname');
   return useMutation({
     mutationFn: () => loginService(code, socialType),
     mutationKey: ['login'],
     onSuccess: (data) => {
-      console.log('success');
-      // queryClient.invalidateQueries({ queryKey: ['products'] });
       localStorage.setItem('accessToken', data.accessToken);
-      if (localStorage.getItem('history')) {
-        navigate(`${localStorage.getItem('history')}`);
+
+      if (beforePathname) {
+        localStorage.removeItem('beforePathname');
+        navigate(beforePathname);
       } else {
         navigate('/');
       }
@@ -24,7 +24,8 @@ export const useLoginService = ({ code, socialType }: LoginProps) => {
     onError: (err) => {
       if (isAxiosError(err) && err.response?.status) {
         if (err.response.status === 400) {
-          navigate('/login');
+          alert(err.response.data.message);
+          navigate('/error');
         } else {
           console.error();
         }

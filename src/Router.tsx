@@ -17,7 +17,7 @@ import PostPage from './pages/postPage/PostPage';
 const Router = () => {
   return (
     <BrowserRouter>
-      <ScrollToTop />
+      <ScrollTotop />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/group/:groupId" element={<GroupFeed />} />

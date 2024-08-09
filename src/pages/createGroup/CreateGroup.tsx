@@ -86,15 +86,15 @@ const CreateGroup = () => {
     dispatch({ type: 'setIsPublic', value: inputValue });
   };
 
-  const setTopic = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'setTopic', value: e.target.value });
+  const setTopic = (topic: string) => {
+    dispatch({ type: 'setTopic', value: topic });
   };
 
-  const setTopicTag = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'setTopicTag', value: e.target.value });
+  const setTopicTag = (topicTag: string) => {
+    dispatch({ type: 'setTopicTag', value: topicTag });
   };
-  const setTopicDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    dispatch({ type: 'setTopicDesc', value: e.target.value });
+  const setTopicDesc = (topicDesc: string) => {
+    dispatch({ type: 'setTopicDesc', value: topicDesc });
   };
   const setLeaderPenName = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'setLeaderPenName', value: e.target.value });
@@ -135,7 +135,7 @@ const CreateGroup = () => {
     if (groupName && topic && topicTag && leaderPenName && leaderDesc.length <= 100) {
       mutate();
     } else {
-      console.log('error');
+      throw new Error('글모임 생성 알 수 없는 에러');
     }
   };
 
