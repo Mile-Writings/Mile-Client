@@ -1,16 +1,16 @@
 import styled from '@emotion/styled';
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useArticleList } from '../hooks/queries';
 
 import spinnerGif from '../../../assets/gifs/loadingSpinner.gif';
 import {
+  GroupChatIc,
+  GroupCuriousIc,
   GroupListProfileIc,
   GroupNoDataImgIc,
   GroupViewIc,
-  GroupCuriousIc,
-  GroupChatIc,
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
@@ -89,8 +89,10 @@ const EachArticle = (props: EachProfilePropTypes) => {
                       <ArticleInfo>
                         <GroupListProfileIc />
                         <ProfileName>{list.writerName}</ProfileName>
-                        <ArticleDetail>{list.createdAt}</ArticleDetail>
-                        <ArticleDetail>·</ArticleDetail>
+                        <ArticleDetail>{list.createdAt} </ArticleDetail>
+                        <ArticleDetail>
+                          <DividingLine />
+                        </ArticleDetail>
                         <ArticleDetail>
                           <GroupCuriousIc />
                         </ArticleDetail>
@@ -118,7 +120,13 @@ const EachArticle = (props: EachProfilePropTypes) => {
 };
 
 export default EachArticle;
+const DividingLine = styled.div`
+  width: 0.1rem;
+  height: 1.4rem;
 
+  background-color: ${({ theme }) => theme.colors.gray30};
+  border-radius: 2px;
+`;
 const LoadingWrapper = styled.img`
   width: 20rem;
   height: 20rem;

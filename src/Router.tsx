@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import ScrollTotop from './components/commons/ScrollToTop';
 import Admin from './pages/admin/Admin';
 import CreateGroup from './pages/createGroup/CreateGroup';
 import CreateGroupSuccess from './pages/createGroupSuccess/CreateGroupSuccess';
@@ -16,6 +17,7 @@ import PostPage from './pages/postPage/PostPage';
 const Router = () => {
   return (
     <BrowserRouter>
+      <ScrollTotop />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/group/:groupId" element={<GroupFeed />} />

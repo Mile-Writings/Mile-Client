@@ -39,6 +39,7 @@ const CreateGroupLeaderInfo = ({
               placeholder="모임에서 사용할 필명 설정 후 가입할 수 있어요!"
               isValid={leaderPenName.length <= 8}
               onChange={(e) => handleLeaderNameInput(e)}
+              maxLength={9}
             />{' '}
             {leaderPenName.length > 8 && <ErrorMsgText>8자 이내로 작성해주세요.</ErrorMsgText>}
           </GroupInputWrapper>
