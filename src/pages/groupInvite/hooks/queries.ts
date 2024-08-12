@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { createGroupMemberJoin } from '../apis/createGroupMemberJoin';
