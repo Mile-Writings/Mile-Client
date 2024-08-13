@@ -9,10 +9,8 @@ const DailyKeyword = () => {
   const { data, error } = useGetRecommendTopic();
 
   if (isAxiosError(error)) {
-    switch (error.response?.data.status) {
-      case 40412:
-        console.error('추천 글감이 존재하지 않습니다');
-        break;
+    if (error.response?.data.status === 40412) {
+      console.error('추천 글감이 존재하지 않습니다');
     }
   }
 
