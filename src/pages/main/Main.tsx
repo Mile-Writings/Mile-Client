@@ -28,27 +28,21 @@ const Main = () => {
       <OnBoarding />
 
       <GroupCarouselLayout>
-        {isLoading || isFetching ? (
-          <>
-            {groupLength && (
-              <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
-                <LazyCarousel data={data} groupLength={groupLength} />
-              </Suspense>
-            )}
-          </>
-        ) : (
+        <CarouselContainer>
+          <CarouselTitle>마일과 함께하고 있는 글 모임이에요</CarouselTitle>
           <CarouselBox>
-            <CarouselTitle>마일과 함께하고 있는 글 모임이에요</CarouselTitle>
-            {groupLength && (
+            {isLoading || isFetching ? (
+              <SkeletonComponent groupLength={groupLength} />
+            ) : (
               <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
                 <LazyCarousel data={data} groupLength={groupLength} />
               </Suspense>
             )}
           </CarouselBox>
-        )}
+        </CarouselContainer>
       </GroupCarouselLayout>
-      <Spacing marginBottom="10" />
 
+      <Spacing marginBottom="10" />
       <DailyKeyword />
       <Spacing marginBottom="10" />
       <Introduction />
@@ -83,18 +77,17 @@ const MainPageWrapper = styled.div`
 
 const GroupCarouselLayout = styled.section`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
-const CarouselBox = styled.div`
-  cursor: default;
+const CarouselContainer = styled.div`
+  width: 93rem;
 `;
 
-const CarouselTitle = styled.h1`
-  padding-top: 7.2rem;
-
-  ${({ theme }) => theme.fonts.title3};
+const CarouselBox = styled.div`
+  cursor: default;
 `;
 
 const FaqLayout = styled.section`
@@ -109,5 +102,10 @@ const FaqContainer = styled.div`
 `;
 
 const FaqTitle = styled.h3`
+  ${({ theme }) => theme.fonts.title3};
+`;
+
+const CarouselTitle = styled.h1`
+  padding-top: 7.2rem;
   ${({ theme }) => theme.fonts.title3};
 `;
