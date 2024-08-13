@@ -95,6 +95,9 @@ export const useDeleteMember = () => {
             alert('해당 멤버가 존재하지 않습니다. 새로고침 하시겠습니까?');
             window.location.reload();
             break;
+          default:
+            alert('에러가 발생했습니다. 다시 시도해 주세요');
+            navigate('/');
         }
       }
     },

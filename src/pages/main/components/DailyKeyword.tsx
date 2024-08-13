@@ -1,16 +1,22 @@
 import styled from '@emotion/styled';
 import { isAxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import { useGetRecommendTopic } from '../hooks/queries';
 
 import Spacing from '../../../components/commons/Spacing';
 
 const DailyKeyword = () => {
+  const navigate = useNavigate();
+
   const { data, error } = useGetRecommendTopic();
 
   if (isAxiosError(error)) {
     if (error.response?.data.status === 40412) {
       console.error('추천 글감이 존재하지 않습니다');
+    } else {
+      alert('에러가 발생했습니다. 다시 시도해 주세요');
+      navigate('/');
     }
   }
 

@@ -48,6 +48,9 @@ export const AuthorizationHeader = () => {
   if (isAxiosError(error)) {
     if (error.response?.data.status === 40103) {
       navigate('/login');
+    } else {
+      alert('에러가 발생했습니다. 다시 시도해 주세요');
+      navigate('/');
     }
   }
 
