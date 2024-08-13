@@ -75,11 +75,27 @@ export const useFetchMemberInfo = (groupId: string, page: number | undefined) =>
 // 멤버 삭제 api
 export const useDeleteMember = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const data = useMutation({
     mutationKey: [QUERY_KEY_ADMIN.useMemberInfo],
     mutationFn: (writerNameId: number) => fetchDeleteMember(writerNameId),
+
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_ADMIN.useMemberInfo] });
+    },
+    onError: (error) => {
+      if (isAxiosError(error)) {
+        switch (error.response?.data.status) {
+          case 40103: // 비공개 글모임인 경우, 로그인을 진행하지 않고 요청을 보냈을 때
+            navigate('/login');
+            break;
+          case 40411: // 삭제하고자 하는 멤버가 존재하지 않을 때
+            alert('해당 멤버가 존재하지 않습니다. 새로고침 하시겠습니까?');
+            window.location.reload();
+            break;
+        }
+      }
     },
   });
   const deleteMember = (writerNameId: number) => {

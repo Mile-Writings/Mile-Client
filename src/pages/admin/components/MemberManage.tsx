@@ -46,7 +46,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
         navigate(-1);
         break;
       case 40400: // 요청한 토큰에 대한 유저가 존재하지 않을 때
-        alert('사용자가 존재하지 않습니다');
+        alert('사용자가 존재하지 않습니다. 새로고침 하시겠습니까?');
         window.location.reload();
         break;
       case 40403: // 해당 글모임이 존재하지 않을 때

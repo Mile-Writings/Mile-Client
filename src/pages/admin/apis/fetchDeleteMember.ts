@@ -12,17 +12,13 @@ interface MembersListTypes {
 }
 
 const fetchDeleteMember = async (writerNameId: number | undefined) => {
-  try {
-    const token = localStorage.getItem('accessToken');
-    const data = await devClient.delete<MembersListTypes>(`/api/writername/${writerNameId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return data;
-  } catch (err) {
-    console.error(err);
-  }
+  const token = localStorage.getItem('accessToken');
+  const data = await devClient.delete<MembersListTypes>(`/api/writername/${writerNameId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
 };
 
 export default fetchDeleteMember;
