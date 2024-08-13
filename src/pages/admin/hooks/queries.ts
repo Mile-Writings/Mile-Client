@@ -92,8 +92,9 @@ export const useDeleteMember = () => {
             navigate('/login');
             break;
           case 40411: // 삭제하고자 하는 멤버가 존재하지 않을 때
-            alert('해당 멤버가 존재하지 않습니다. 새로고침 하시겠습니까?');
-            window.location.reload();
+            if (confirm('해당 멤버가 존재하지 않습니다. 새로고침 하시겠습니까?')) {
+              window.location.reload();
+            }
             break;
           default:
             alert('에러가 발생했습니다. 다시 시도해 주세요');
