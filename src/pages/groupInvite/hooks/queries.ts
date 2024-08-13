@@ -41,9 +41,8 @@ export const useGetWriterNameConflict = (
     enabled: !!isConflictBtnClicked,
   });
 
-  const isConflict = data && data?.data?.isConflict;
-
-  return { isConflict };
+  const isWriterNameConflict = data && data?.data?.isConflict;
+  return { isWriterNameConflict };
 };
 
 // 초대링크를 통한 글모임 사용자 가입
