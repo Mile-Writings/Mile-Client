@@ -18,8 +18,8 @@ import Spacing from '../../../components/commons/Spacing';
 
 export interface carouselItemPropTypes {
   moimId?: string;
-  data: groupPropTypes[] | undefined;
-  groupLength: number | undefined;
+  data?: groupPropTypes[];
+  groupLength: number;
 }
 
 const GroupCarousel = ({ data }: carouselItemPropTypes) => {
@@ -36,41 +36,41 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
   const handleButtonOnClick = (groupId: string) => {
     navigate(`/group/${groupId}`);
   };
-  const [IsHovered, setIsHovered] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   return (
     <>
       {data?.map((moim) => (
         <CarouselWrapper key={moim.moimId}>
           <Spacing marginBottom="3.6" />
-          <CarouselWithButtonLayout key={moim.moimId}>
-            <GroupButtonContainer
-              onClick={() => handleButtonOnClick(moim.moimId)}
-              onMouseOver={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              {moim.moimName}
-              {IsHovered ? <MainIcnArrowPurpleIcon /> : <MainIcnArrowBlackIcon />}
-            </GroupButtonContainer>
-            <Spacing marginBottom="1.6" />
-            <CarouselContainer>
-              <CarouselBox {...settings} className="main">
-                {moim.moimPosts.map((post, index) => (
-                  <CarouselContent
-                    key={index}
-                    topicName={post.topicName}
-                    imageUrl={post.imageUrl}
-                    postTitle={post.postTitle}
-                    postContent={post.postContent}
-                    postId={post.postId}
-                    isContainPhoto={post.isContainPhoto}
-                    groupId={moim.moimId}
-                    isLast={index === moim.moimPosts.length - 1}
-                  />
-                ))}
-              </CarouselBox>
+          <GroupButton
+            type="button"
+            onClick={() => handleButtonOnClick(moim.moimId)}
+            onMouseOver={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            {moim.moimName}
+            {isHovered ? <MainIcnArrowPurpleIcon /> : <MainIcnArrowBlackIcon />}
+          </GroupButton>
+          <Spacing marginBottom="1.6" />
+
+          <CarouselLayout>
+            <CarouselContainer {...settings} className="main">
+              {moim.moimPosts.map((post, index) => (
+                <CarouselContent
+                  key={index}
+                  topicName={post.topicName}
+                  imageUrl={post.imageUrl}
+                  postTitle={post.postTitle}
+                  postContent={post.postContent}
+                  postId={post.postId}
+                  isContainPhoto={post.isContainPhoto}
+                  groupId={moim.moimId}
+                  isLast={index === moim.moimPosts.length - 1}
+                />
+              ))}
             </CarouselContainer>
-          </CarouselWithButtonLayout>
+          </CarouselLayout>
         </CarouselWrapper>
       ))}
     </>
@@ -80,19 +80,13 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
 export default GroupCarousel;
 
 const CarouselWrapper = styled.div`
-  display: flex;
   flex-direction: column;
 `;
 
-const CarouselWithButtonLayout = styled.div`
-  margin-bottom: 3.2rem;
-`;
-
-const GroupButtonContainer = styled.button`
+const GroupButton = styled.button`
   display: flex;
   gap: 0.8rem;
   align-items: center;
-  justify-content: flex-start;
   padding: 0.6rem 1rem;
 
   color: ${({ theme }) => theme.colors.black};
@@ -110,11 +104,13 @@ const GroupButtonContainer = styled.button`
   }
 `;
 
-const CarouselContainer = styled.div`
+const CarouselLayout = styled.div`
   display: flex;
+
+  cursor: pointer;
 `;
 
-const CarouselBox = styled(Slider)`
+const CarouselContainer = styled(Slider)`
   width: 93rem;
   height: 24rem;
 

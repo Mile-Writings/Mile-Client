@@ -12,7 +12,7 @@ const CreateGroupSuccess = () => {
   const navigate = useNavigate();
 
   const handleCopyLink = async () => {
-    copyLink(`https://www.milewriting.com/${groupId}/groupInvite`);
+    copyLink(`https://www.milewriting.com/group/${groupId}/groupInvite`);
   };
 
   return (

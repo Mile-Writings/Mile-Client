@@ -11,17 +11,33 @@ interface ButtonProps {
 const Button = ({ children, onClick, typeName }: ButtonProps) => {
   switch (typeName) {
     case 'deleteTempType':
-      return <DeleteTempStoreBtn onClick={onClick}>{children}</DeleteTempStoreBtn>;
+      return (
+        <DeleteTempStoreBtn onClick={onClick} type="button">
+          {children}
+        </DeleteTempStoreBtn>
+      );
     case 'submitEditType':
-      return <SubmitEditBtn onClick={onClick}>{children}</SubmitEditBtn>;
+      return (
+        <SubmitEditBtn onClick={onClick} type="button">
+          {children}
+        </SubmitEditBtn>
+      );
     case 'disableCommentType':
-      return <DisableCommentBtn onClick={onClick}>{children}</DisableCommentBtn>;
+      return (
+        <DisableCommentBtn onClick={onClick} type="button">
+          {children}
+        </DisableCommentBtn>
+      );
     case 'enableCommentType':
-      return <EnableCommentBtn onClick={onClick}>{children}</EnableCommentBtn>;
+      return (
+        <EnableCommentBtn onClick={onClick} type="button">
+          {children}
+        </EnableCommentBtn>
+      );
     case 'writingFlowType':
       return <WritingFlowBtn onClick={onClick}>{children}</WritingFlowBtn>;
     default:
-      return <button></button>;
+      return <button />;
   }
 };
 

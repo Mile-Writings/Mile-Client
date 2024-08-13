@@ -198,6 +198,7 @@ const CommnertGroupNameText = styled.p`
 const CommentText = styled.p`
   color: ${({ theme }) => theme.colors.gray90};
   ${({ theme }) => theme.fonts.body6};
+  white-space: pre-wrap;
 `;
 
 const Modal = styled.div`
@@ -214,6 +215,7 @@ const Modal = styled.div`
   color: ${({ theme }) => theme.colors.gray90};
   text-align: left;
 
+  background-color: white;
   cursor: pointer;
   border: 1px solid ${({ theme }) => theme.colors.gray50};
   ${({ theme }) => theme.fonts.button2};

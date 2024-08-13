@@ -117,8 +117,7 @@ const GroupDetail = styled.p`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.body2};
   line-height: 2.9rem;
-  line-break: auto;
-
   white-space: pre-wrap;
   word-break: keep-all;
+  line-break: auto;
 `;
