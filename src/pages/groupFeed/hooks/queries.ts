@@ -45,7 +45,6 @@ export const useGroupFeedAuth = (
     queryFn: () => fetchGroupFeedAuth(groupId),
     enabled: !!accessToken,
   });
-
   const isMember = data && data?.data?.isMember;
   const isOwner = data && data?.data?.isOwner;
 
@@ -68,14 +67,15 @@ interface GroupInfoQueryResult {
 }
 
 export const useGroupFeedPublicStatus = (groupId: string) => {
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getGroupFeedPublicStatus, groupId],
     queryFn: () => fetchGroupPublicStatus(groupId),
+    enabled: !!groupId,
   });
 
   const isPublic = data?.data?.isPublic;
 
-  return { isPublic };
+  return { isPublic, isLoading };
 };
 
 export const useGroupInfo = (groupId: string): GroupInfoQueryResult => {

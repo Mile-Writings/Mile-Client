@@ -20,7 +20,7 @@ const EditProfileModal = ({ setShowEditProfileModal, writerNameId }: editProfilM
   const { editMutateWriterIntro } = useEditWriterIntro(writerNameId);
 
   const submitHandler = () => {
-    if (content?.length <= 100) {
+    if (content.length <= 100) {
       editMutateWriterIntro({ description: content });
       setShowEditProfileModal(false);
     }

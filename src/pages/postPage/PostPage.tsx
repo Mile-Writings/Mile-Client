@@ -149,11 +149,6 @@ const PostPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  //라우팅 했을 때 스크롤 맨 위로
-  useEffect(() => {
-    scrollTo(0, 0);
-  }, []);
-
   // editor content API 관련
   const [editorVal, editorContentDispatch] = useReducer(editorContentReducerFn, editorState);
   // editorContentDispatch prop 함수들
