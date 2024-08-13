@@ -1,10 +1,21 @@
 import styled from '@emotion/styled';
+import { isAxiosError } from 'axios';
 
-import { recommendPropsTypes } from '../types/recommendTopic';
+import { useGetRecommendTopic } from '../hooks/queries';
 
 import Spacing from '../../../components/commons/Spacing';
 
-const DailyKeyword = ({ data }: recommendPropsTypes) => {
+const DailyKeyword = () => {
+  const { data, error } = useGetRecommendTopic();
+
+  if (isAxiosError(error)) {
+    switch (error.response?.data.status) {
+      case 40412:
+        console.error('추천 글감이 존재하지 않습니다');
+        break;
+    }
+  }
+
   return (
     <KeyWordWrapper>
       <KeyWordLayout>
@@ -13,7 +24,7 @@ const DailyKeyword = ({ data }: recommendPropsTypes) => {
           <KeywordContentBox>
             <TodayKeyWord>오늘의 글감</TodayKeyWord>
             <Pipe />
-            <KeyWord>{data?.content}</KeyWord>
+            <KeyWord>{data?.data.content}</KeyWord>
           </KeywordContentBox>
         </KeywordHeaderContainer>
       </KeyWordLayout>

@@ -9,7 +9,7 @@ import Manual from './components/Manual';
 import OnBoarding from './components/OnBoarding';
 import { SkeletonComponent } from './components/skeletons/SkeletonComponent';
 import { FAQ_DATA } from './constants/faqData';
-import { useGetGroupContent, useGetRecommendTopic } from './hooks/queries';
+import { useGetGroupContent } from './hooks/queries';
 
 import Footer from './../../components/commons/Footer';
 import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/commons/Header';
@@ -18,8 +18,8 @@ import Spacing from './../../components/commons/Spacing';
 const Main = () => {
   const lazyCarousel = import('./components/GroupCarousel');
   const LazyCarousel = lazy(() => lazyCarousel);
-  const { content, moimId } = useParams();
-  const topic = useGetRecommendTopic(content || '');
+  const { moimId } = useParams();
+
   const { data, groupLength, isFetching, isLoading } = useGetGroupContent(moimId || '');
   return (
     <MainPageWrapper>
@@ -49,7 +49,7 @@ const Main = () => {
       </GroupCarouselLayout>
       <Spacing marginBottom="10" />
 
-      <DailyKeyword data={topic?.data} />
+      <DailyKeyword />
       <Spacing marginBottom="10" />
       <Introduction />
       <Spacing marginBottom="10" />

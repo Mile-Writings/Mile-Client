@@ -19,11 +19,11 @@ export const useGetGroupContent = (moimId: string) => {
   return { data, isFetching, isLoading, groupLength };
 };
 
-export const useGetRecommendTopic = (content: string) => {
-  const { data } = useQuery({
-    queryKey: [QUERY_KEY_MAIN.getRecommendTopic, content],
+export const useGetRecommendTopic = () => {
+  const { data, error } = useQuery({
+    queryKey: [QUERY_KEY_MAIN.getRecommendTopic],
     queryFn: () => getRecommendTopic(),
   });
 
-  return data;
+  return { data, error };
 };
