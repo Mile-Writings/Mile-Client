@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
+import { isAxiosError } from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
@@ -29,15 +31,28 @@ interface OnClickTempExistProps {
 // 로그인된 경우 헤더
 export const AuthorizationHeader = () => {
   const [moims, setMoims] = useState<Moim[]>([]);
+  const navigate = useNavigate();
+
   const { navigateToHome } = useNavigateHome();
-  const { data } = useFetchHeaderGroup();
+  const { data, error } = useFetchHeaderGroup();
+
   const handleLogOut = () => {
     logout();
     location.reload();
   };
+
   useEffect(() => {
     if (data?.data?.moims) setMoims(data?.data.moims);
   }, [data?.data?.moims]);
+
+  if (isAxiosError(error)) {
+    switch (error.response?.data.status) {
+      case 40103:
+        navigate('/login');
+        break;
+    }
+  }
+
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
