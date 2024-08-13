@@ -10,7 +10,7 @@ import './slick.css';
 
 import { useArticleList, useTopicList } from '../hooks/queries';
 
-import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
+// import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 import Error from '../../error/Error';
 import Loading from '../../loading/Loading';
@@ -98,20 +98,20 @@ const CarouselWrapper = styled.div`
   border-bottom: 0.1rem solid ${({ theme }) => theme.colors.gray30};
 `;
 
-const GroupTabBtnBaseBeforeIcon = styled(GroupTabBtnBaseBeforeIc)`
-  position: absolute;
-  left: -1rem;
+// const GroupTabBtnBaseBeforeIcon = styled(GroupTabBtnBaseBeforeIc)`
+//   position: absolute;
+//   left: -1rem;
 
-  pointer-events: none;
-`;
+//   pointer-events: none;
+// `;
 
-const GroupTabBtnBaseNextIcon = styled(GroupTabBtnBaseNextIc)`
-  position: absolute;
-  top: 3.2rem;
-  right: -1rem;
+// const GroupTabBtnBaseNextIcon = styled(GroupTabBtnBaseNextIc)`
+//   position: absolute;
+//   top: 3.2rem;
+//   right: -1rem;
 
-  pointer-events: none;
-`;
+//   pointer-events: none;
+// `;
 
 const Topic = styled.div`
   width: 63.1rem;
