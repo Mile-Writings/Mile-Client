@@ -31,20 +31,16 @@ export interface MemberPropTypes {
 }
 
 const fetchMemberInfo = async (groupId: string, page: number | undefined) => {
-  try {
-    const token = localStorage.getItem('accessToken');
-    const data = await devClient.get<FetchMemberPropTypes>(
-      `/api/moim/${groupId}/writernames?page=${page}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+  const token = localStorage.getItem('accessToken');
+  const data = await devClient.get<FetchMemberPropTypes>(
+    `/api/moim/${groupId}/writernames?page=${page}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-    );
-    return data.data;
-  } catch (error) {
-    console.error();
-  }
+    },
+  );
+  return data.data;
 };
 
 export default fetchMemberInfo;

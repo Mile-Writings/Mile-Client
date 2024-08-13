@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 
 import deleteGroup from '../apis/deleteGroup';
 import {
+  deleteAdminTopic,
   editAdminTopic,
   fetchAdminTopic,
   postAdminTopic,
   postAdminTopicPropTypes,
-  deleteAdminTopic,
 } from '../apis/fetchAdminData';
 import fetchAdminGroupInfo from '../apis/fetchAdminGroupInfo';
 import fetchDeleteMember from '../apis/fetchDeleteMember';
@@ -60,7 +60,7 @@ export const usePostAdminTopic = (groupId: string | undefined, pageNum: number) 
 
 // 멤버 정보 조회 get api
 export const useFetchMemberInfo = (groupId: string, page: number | undefined) => {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: [QUERY_KEY_ADMIN.useMemberInfo, page],
     queryFn: () => fetchMemberInfo(groupId || '', page),
   });
@@ -69,7 +69,7 @@ export const useFetchMemberInfo = (groupId: string, page: number | undefined) =>
   const memberListData = data?.data.writerNameList;
   const pageNumber = data?.data.pageNumber;
 
-  return { memberData, memberListData, totalMember, pageNumber, isLoading, page };
+  return { memberData, memberListData, totalMember, pageNumber, isLoading, page, error };
 };
 
 // 멤버 삭제 api

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { isAxiosError } from 'axios';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 
@@ -30,12 +31,29 @@ interface MemberManagePropTypes {
 
 const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) => {
   const { groupId } = useParams();
-  const { memberData } = useFetchMemberInfo(groupId || '', pageCount);
+  const { memberData, error } = useFetchMemberInfo(groupId || '', pageCount);
   const { deleteMember } = useDeleteMember();
   const [activeChunk, setActiveChunk] = useState(1);
 
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
   const [deleteMemberId, setDeleteMemberId] = useState(-1);
+  const navigate = useNavigate();
+
+  if (isAxiosError(error)) {
+    switch (error.response?.data.status) {
+      case 40303: // 조회 권한이 없을 때 (관리자가 아닐 때)
+        alert('조회 권한이 없습니다.');
+        navigate(-1);
+        break;
+      case 40400: // 요청한 토큰에 대한 유저가 존재하지 않을 때
+        alert('사용자가 존재하지 않습니다');
+        window.location.reload();
+        break;
+      case 40403: // 해당 글모임이 존재하지 않을 때
+        navigate('/');
+        break;
+    }
+  }
 
   return (
     <>
