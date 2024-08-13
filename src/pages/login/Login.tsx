@@ -7,8 +7,9 @@ import Spacing from '../../components/commons/Spacing';
 const Login = () => {
   //const REDIRECT_URL = 'https://www.milewriting.com/redirect-kakao';
   const navigate = useNavigate();
-  const { state } = useLocation();
-  if (state.pathname) {
+  const { state } = useLocation() || {}; // state가 null인 경우 빈 객체 저장
+
+  if (state && state.pathname) {
     localStorage.setItem('beforePathname', state.pathname);
   }
 
