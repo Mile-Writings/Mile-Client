@@ -50,6 +50,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
         window.location.reload();
         break;
       case 40403: // 해당 글모임이 존재하지 않을 때
+        alert('해당 글 모임이 존재하지 않습니다.');
         navigate('/');
         break;
     }

@@ -46,10 +46,8 @@ export const AuthorizationHeader = () => {
   }, [data?.data?.moims]);
 
   if (isAxiosError(error)) {
-    switch (error.response?.data.status) {
-      case 40103:
-        navigate('/login');
-        break;
+    if (error.response?.data.status === 40103) {
+      navigate('/login');
     }
   }
 

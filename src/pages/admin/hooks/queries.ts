@@ -88,6 +88,7 @@ export const useDeleteMember = () => {
       if (isAxiosError(error)) {
         switch (error.response?.data.status) {
           case 40103: // 비공개 글모임인 경우, 로그인을 진행하지 않고 요청을 보냈을 때
+            alert('로그인이 필요한 서비스입니다.');
             navigate('/login');
             break;
           case 40411: // 삭제하고자 하는 멤버가 존재하지 않을 때
