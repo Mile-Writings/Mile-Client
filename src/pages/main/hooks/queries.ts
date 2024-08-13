@@ -9,14 +9,14 @@ export const QUERY_KEY_MAIN = {
 };
 
 export const useGetGroupContent = (moimId: string) => {
-  const { data, isFetching, isLoading } = useQuery({
+  const { data, isFetching, isLoading, error } = useQuery({
     queryKey: [QUERY_KEY_MAIN.getGroupContent, moimId],
     queryFn: () => getGroupContentApi(),
   });
 
   const groupLength = data?.length;
 
-  return { data, isFetching, isLoading, groupLength };
+  return { data, isFetching, isLoading, groupLength, error };
 };
 
 export const useGetRecommendTopic = () => {

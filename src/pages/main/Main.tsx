@@ -20,7 +20,10 @@ const Main = () => {
   const LazyCarousel = lazy(() => lazyCarousel);
   const { moimId } = useParams();
 
-  const { data, groupLength, isFetching, isLoading } = useGetGroupContent(moimId || '');
+  const { data, groupLength, isFetching, isLoading, error } = useGetGroupContent(moimId || '');
+
+  if (error) console.error(error);
+
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
