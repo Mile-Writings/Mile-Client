@@ -32,6 +32,7 @@ const EditGroupInfo = () => {
 
   const { groupId } = useParams();
   const { data } = useFetchGroupInfo(groupId || '');
+  console.log(data);
   const { fileName = '', url = '' } = usePresignedUrl();
   const {
     groupImageView,

@@ -1,6 +1,6 @@
 import { isAxiosError } from 'axios';
 
-import { client } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 interface GetCuriousInfoResponseTypes {
   status: string;
@@ -13,15 +13,8 @@ interface GetCuriousInfoResponseTypes {
 
 const fetchCuriousInfo = async (postId: string) => {
   try {
-    const token = localStorage.getItem('accessToken');
-
-    const { data } = await client.get<GetCuriousInfoResponseTypes>(
+    const { data } = await authClient.get<GetCuriousInfoResponseTypes>(
       `/api/post/${postId}/info/curious`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
     );
     return data;
   } catch (err) {

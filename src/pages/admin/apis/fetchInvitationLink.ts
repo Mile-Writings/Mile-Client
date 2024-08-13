@@ -1,4 +1,4 @@
-import { devClient } from './../../../utils/apis/axios';
+import { authClient } from './../../../utils/apis/axios';
 
 export interface InvitationPropTypes {
   status: number;
@@ -12,14 +12,8 @@ export interface invitationData {
 
 export const fetchInvitationLink = async (groupId: string) => {
   try {
-    const accessToken = localStorage.getItem('accessToken');
-    const { data } = await devClient.get<InvitationPropTypes>(
+    const { data } = await authClient.get<InvitationPropTypes>(
       `/api/moim/${groupId}/invitation-code`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
     );
     return { data: { data }.data.data };
   } catch {
