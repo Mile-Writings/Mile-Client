@@ -35,10 +35,10 @@ authClient.interceptors.response.use(
         originReq._retry = true;
         try {
           const { data } = await refresh();
-          const token = data.data.accessToken;
-          authClient.defaults.headers['Authorization'] = `Bearer ${token}`;
-          originReq.headers.Authorization = `Bearer ${token}`;
-          localStorage.setItem('accessToken', token);
+          const newToken = data.data.accessToken;
+          authClient.defaults.headers['Authorization'] = `Bearer ${newToken}`;
+          originReq.headers.Authorization = `Bearer ${newToken}`;
+          localStorage.setItem('accessToken', newToken);
           return authClient.request(originReq);
         } catch (err) {
           console.error(err);
