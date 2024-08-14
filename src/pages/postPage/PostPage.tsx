@@ -387,11 +387,11 @@ const PostPage = () => {
           ...state,
           title: '임시저장 하시겠습니까?',
           leftBtnText: '아니오',
-          leftBtnFn: () => handleShowModal(),
+          leftBtnFn: () => handleCloseModal(),
           rightBtnText: '예',
           rightBtnFn: tempSaveHandler,
           modalImgType: 'SAVE',
-          handleClickBg: () => handleShowModal(),
+          handleClickBg: () => handleCloseModal(),
         };
       // 최초 제출하기
       case 'postContent':
@@ -451,7 +451,7 @@ const PostPage = () => {
           rightBtnText: '아니오',
           rightBtnFn: () => handleCloseModal(),
           modalImgType: 'CAUTION',
-          handleClickBg: () => handleShowModal(),
+          handleClickBg: () => handleCloseModal(),
         };
       default:
         return state;

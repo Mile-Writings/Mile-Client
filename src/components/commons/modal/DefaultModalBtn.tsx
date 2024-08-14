@@ -26,8 +26,8 @@ const ModalBtn = styled.button<{ $isLeft: boolean }>`
   height: 3.9rem;
   padding: 1rem 0;
 
-  white-space: pre-wrap;
   color: ${({ $isLeft, theme }) => ($isLeft ? theme.colors.mainViolet : theme.colors.white)};
+  white-space: pre-wrap;
 
   background-color: ${({ $isLeft, theme }) =>
     $isLeft ? theme.colors.white : theme.colors.mainViolet};
