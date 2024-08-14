@@ -14,7 +14,6 @@ export const fetchAdminTopic = async (groupId: string | undefined, pageNum: numb
         },
       },
     );
-    console.log(response.data, 'data');
 
     return response.data;
   } catch (error) {

@@ -12,7 +12,6 @@ const deletePost = async (postId: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(data);
     return data;
   } catch (err) {
     console.log(err);

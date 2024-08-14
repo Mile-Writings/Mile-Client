@@ -230,7 +230,6 @@ export const fetchWriterInfo = async (writerNameId: number | undefined) => {
         },
       },
     );
-    console.log(response.data, 'writerInfo');
     return response.data;
   } catch (error) {
     console.error('에러:', error);

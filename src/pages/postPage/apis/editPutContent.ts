@@ -50,7 +50,6 @@ const editPutContent = async ({
           },
         },
       );
-      // console.log(data);
       return data;
     } catch (err) {
       console.log(err);
