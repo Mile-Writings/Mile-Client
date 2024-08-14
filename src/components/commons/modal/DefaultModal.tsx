@@ -15,7 +15,7 @@ import {
 interface ModalPropType {
   isModalOpen: boolean;
   handleClickBg?: () => void;
-  type: 'DEFAULT' | 'MEDIUM' | 'LARGE';
+  type?: 'DEFAULT' | 'MEDIUM' | 'LARGE';
   content: string;
   modalImg?: 'DELETE' | 'POST' | 'EDIT' | 'SAVE' | 'CAUTION' | '';
   children: React.ReactNode;
@@ -24,7 +24,14 @@ interface ModalPropType {
 const portalElement = document.getElementById('modal') as HTMLElement;
 
 const DefaultModal = (props: ModalPropType) => {
-  const { isModalOpen, handleClickBg = () => {}, type, content, children, modalImg } = props;
+  const {
+    isModalOpen,
+    handleClickBg = () => {},
+    type = 'DEFAULT',
+    content,
+    children,
+    modalImg,
+  } = props;
 
   const getModalImg = () => {
     switch (modalImg) {

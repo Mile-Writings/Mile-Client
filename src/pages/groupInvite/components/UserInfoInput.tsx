@@ -5,8 +5,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { useGetWriterNameConflict, usePostGroupMemberJoin } from '../hooks/queries';
 
-import { PositiveModal } from '../../../components/commons/Modal';
+import DefaultModal from '../../../components/commons/modal/DefaultModal';
+import DefaultModalBtn from '../../../components/commons/modal/DefaultModalBtn';
 import Spacing from '../../../components/commons/Spacing';
+import useModal from '../../../hooks/useModal';
 
 interface userInfoStateType {
   writerName?: string;
@@ -51,8 +53,9 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
   const { groupId } = useParams() as { groupId: string };
 
   const [userInfoVal, dispatch] = useReducer(reducerFn, userInfoState);
+
   // 모달 관리
-  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
   // 소개글 글자수 제한
   const [isIntroduceLimit, setIsIntroduceLimit] = useState(false);
   // 필명 글자수 제한
@@ -129,18 +132,10 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
       !isWriterNameConflict &&
       userInfoVal.writerName?.length != 0
     ) {
-      setIsJoinModalOpen(true);
+      handleShowModal();
     }
   };
 
-  // 모달 yes
-  const onClickModalJoinBtn = () => {
-    postGroupJoin();
-  };
-  // 모달 no
-  const onClickModalCloseBtn = () => {
-    setIsJoinModalOpen(false);
-  };
   return (
     <>
       <WriterNameInputWrapper
@@ -212,13 +207,16 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
       </WriterIntroduceInputWrapper>
       <Spacing marginBottom="2.8" />
       <SignUpBtn onClick={onClickSignUp}>가입하기</SignUpBtn>
-      <PositiveModal
-        isModalOpen={isJoinModalOpen}
-        modalContent="가입 완료 시 필명 변경이 불가합니다.
-      계속 하시겠습니까?"
-        modalHandler={onClickModalJoinBtn}
-        closeModalHandler={onClickModalCloseBtn}
-      />
+
+      <DefaultModal
+        isModalOpen={isModalOpen}
+        handleClickBg={handleCloseModal}
+        content={`가입 완료 시 필명 변경이 불가합니다. \n계속 하시겠습니까?`}
+        modalImg="POST"
+      >
+        <DefaultModalBtn isLeft={true} text="아니오" onClickBtn={handleCloseModal} />
+        <DefaultModalBtn isLeft={false} text="예" onClickBtn={postGroupJoin} />
+      </DefaultModal>
     </>
   );
 };

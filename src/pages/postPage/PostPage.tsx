@@ -538,7 +538,6 @@ const PostPage = () => {
       <DefaultModal
         isModalOpen={isModalOpen}
         handleClickBg={editorFlowModalVal.handleClickBg}
-        type="DEFAULT"
         content={editorFlowModalVal.title}
         modalImg={editorFlowModalVal.modalImgType}
       >

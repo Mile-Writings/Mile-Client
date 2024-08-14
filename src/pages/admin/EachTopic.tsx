@@ -6,7 +6,6 @@ import AddEditTopicModal from './AddEditTopicModal';
 import { useDeleteAdminTopic } from './hooks/queries';
 
 import { EditIc, DeleteIc } from '../../assets/svgs';
-import { NegativeModal } from '../../components/commons/Modal';
 import DefaultModal from '../../components/commons/modal/DefaultModal';
 import DefaultModalBtn from '../../components/commons/modal/DefaultModalBtn';
 import useModal from '../../hooks/useModal';
@@ -32,7 +31,6 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
   // modal 열고닫음
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
 
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { deleteMutateAdminTopic } = useDeleteAdminTopic(topicId, groupId, pageNum);
 
   return (
@@ -68,17 +66,6 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
             />
           </>
         )}
-        {/* <NegativeModal
-        modalContent="삭제 시, 해당 글감으로 작성된 글도 함께 삭제되며,
-        삭제된 글감은 복구할 수 없습니다.
-        계속 하시겠습니까?"
-        isModalOpen={showDeleteModal}
-        modalHandler={() => {
-          deleteMutateAdminTopic();
-          setShowDeleteModal(false);
-        }}
-        closeModalHandler={() => setShowDeleteModal(false)}
-      /> */}
       </TopicWrapper>
       <DefaultModal
         isModalOpen={isModalOpen}
