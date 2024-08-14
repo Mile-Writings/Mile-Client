@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import refresh from './refresh';
 // const baseUrl = import.meta.env.VITE_BASE_URL;
 const devBaseUrl = import.meta.env.VITE_DEV_BASE_URL;
 
@@ -28,13 +29,26 @@ authClient.interceptors.response.use(
     return config;
   },
   async (err) => {
-    // const originReq = err.config;
-    if (err.response && err.response.status === 401) {
+    const originReq = err.config;
+    if (err.response && err.response.status === 401 && !originReq._retry) {
       if (err.response.data.status === 40102) {
         //refresh로직 완료되면 개선할 예정
         //현재는 만료된 토큰 지우고 로그인페이지로 이동
-        localStorage.removeItem('accessToken');
-        window.location.href = '/login';
+        // localStorage.removeItem('accessToken');
+        // originReq._retry = true;
+
+        try {
+          const { data } = await refresh();
+          const token = data.accessToken;
+
+          originReq.headers.Authorization = `Bearer ${token}`;
+          localStorage.setItem('accessToken', token);
+          return authClient.request(originReq);
+        } catch (err) {
+          console.error(err);
+          localStorage.removeItem('accessToken');
+          window.location.href = '/';
+        }
       }
     }
   },
