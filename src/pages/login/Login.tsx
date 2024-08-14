@@ -8,7 +8,7 @@ const Login = () => {
   //const REDIRECT_URL = 'https://www.milewriting.com/redirect-kakao';
   const navigate = useNavigate();
   const { state } = useLocation();
-  if (state.pathname) {
+  if (state && state.pathname) {
     localStorage.setItem('beforePathname', state.pathname);
   }
 
