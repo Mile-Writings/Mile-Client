@@ -172,7 +172,7 @@ const PostPage = () => {
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
   // 임시저장 값 여부 확인 (서버값)
-  const { isTemporaryPostExist, tempPostId } = useTempSaveFlag(groupId || '');
+  const { isTemporaryPostExist, tempPostId } = useTempSaveFlag(groupId || '', type === 'post');
   // 임시저장 이어쓰기 yes 인 경우 판별
   const [continueTempPost, setContinueTempPost] = useState(false);
   // 수정하기, 임시저장 postId 저장
@@ -198,6 +198,7 @@ const PostPage = () => {
     useGetTempSaveContent(tempPostId || '', continueTempPost || false);
 
   // 최초 뷰 들어왔을 때 임시저장 이어쓸지 confirm 창
+  console.log(type);
   useEffect(() => {
     if (type === 'post' && isTemporaryPostExist && !continueTempPost) {
       setEditorModalType('continueTempSave');
