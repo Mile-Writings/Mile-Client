@@ -1,6 +1,6 @@
 import { isAxiosError } from 'axios';
 
-import { devClient } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 interface GetCommentListResponseTypes {
   status: string;
@@ -29,15 +29,8 @@ interface ReplyResponseTypes {
 
 const fetchCommentList = async (postId: string) => {
   try {
-    const token = localStorage.getItem('accessToken');
-
-    const response = await devClient.get<GetCommentListResponseTypes>(
+    const response = await authClient.get<GetCommentListResponseTypes>(
       `/api/post/${postId}/comment`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
     );
     return response.data;
   } catch (err) {

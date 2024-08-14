@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient, useMutation, useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
   fetchArticleList,
@@ -168,6 +168,7 @@ export const useFetchHeaderGroup = () => {
   const { data } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
     queryFn: () => fetchHeaderGroup(),
+    retry: 3,
   });
   return { data };
 };

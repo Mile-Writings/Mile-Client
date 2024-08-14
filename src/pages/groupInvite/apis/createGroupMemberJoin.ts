@@ -1,4 +1,4 @@
-import { client } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 interface groupMemberJoinType {
   groupId: string;
@@ -17,18 +17,12 @@ export const createGroupMemberJoin = async ({
   writerDescription,
 }: groupMemberJoinType) => {
   try {
-    const token = localStorage.getItem('accessToken');
-    const { data } = await client.post<PostGroupJoinMemberResponseType>(
+    const { data } = await authClient.post<PostGroupJoinMemberResponseType>(
       `/api/moim/${groupId}/user`,
       {
         moimId: groupId,
         writerName: writerName,
         writerDescription: writerDescription,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       },
     );
     return data;

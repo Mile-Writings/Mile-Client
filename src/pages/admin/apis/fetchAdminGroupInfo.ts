@@ -1,13 +1,8 @@
-import { client } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 const fetchAdminGroupInfo = async (groupId: string) => {
   try {
-    const token = localStorage.getItem('accessToken');
-    const data = await client.get(`/api/moim/${groupId}/info/owner`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const data = await authClient.get(`/api/moim/${groupId}/info/owner`);
     return data.data;
   } catch (err) {
     console.error(err);
