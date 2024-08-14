@@ -8,8 +8,8 @@ export const client = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    withCredentials: true,
   },
+  withCredentials: true,
 });
 const accessToken = localStorage.getItem('accessToken');
 export const authClient = axios.create({
@@ -17,7 +17,25 @@ export const authClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    withCredentials: true,
+
     Authorization: `Bearer ${accessToken}`,
   },
+  withCredentials: true,
 });
+
+authClient.interceptors.response.use(
+  (config) => {
+    return config;
+  },
+  async (err) => {
+    // const originReq = err.config;
+    if (err.response && err.response.status === 401) {
+      if (err.response.data.status === 40102) {
+        //refresh로직 완료되면 개선할 예정
+        //현재는 만료된 토큰 지우고 로그인페이지로 이동
+        localStorage.removeItem('accessToken');
+        window.location.href = '/login';
+      }
+    }
+  },
+);
