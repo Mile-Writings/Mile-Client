@@ -32,15 +32,11 @@ authClient.interceptors.response.use(
     const originReq = err.config;
     if (err.response && err.response.status === 401 && !originReq._retry) {
       if (err.response.data.status === 40102) {
-        //refresh로직 완료되면 개선할 예정
-        //현재는 만료된 토큰 지우고 로그인페이지로 이동
-        // localStorage.removeItem('accessToken');
-        // originReq._retry = true;
-
+        originReq._retry = true;
         try {
           const { data } = await refresh();
-          const token = data.accessToken;
-
+          const token = data.data.accessToken;
+          authClient.defaults.headers['Authorization'] = `Bearer ${token}`;
           originReq.headers.Authorization = `Bearer ${token}`;
           localStorage.setItem('accessToken', token);
           return authClient.request(originReq);

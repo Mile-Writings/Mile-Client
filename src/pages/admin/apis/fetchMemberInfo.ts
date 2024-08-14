@@ -37,7 +37,7 @@ const fetchMemberInfo = async (groupId: string, page: number | undefined) => {
     );
     return data.data;
   } catch (error) {
-    console.error();
+    console.error(error);
   }
 };
 
