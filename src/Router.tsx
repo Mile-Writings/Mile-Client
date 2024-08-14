@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import RefactorModal from './components/commons/RefactorModal';
 import ScrollToTop from './components/commons/ScrollToTop';
 import Admin from './pages/admin/Admin';
 import CreateGroup from './pages/createGroup/CreateGroup';
@@ -32,6 +33,7 @@ const Router = () => {
         <Route path="/group/:groupId/groupInvite" element={<GroupInvite />} />
         <Route path="/group/:groupId/groupJoin" element={<GroupJoinCongrats />} />
         <Route path="/admin/:groupId" element={<Admin />} />
+        <Route path="/test" element={<RefactorModal />} />
       </Routes>
     </BrowserRouter>
   );

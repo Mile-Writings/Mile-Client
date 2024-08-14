@@ -83,9 +83,15 @@ const ModalTitle = styled.p`
   ${({ theme }) => theme.fonts.title8};
 `;
 
+// const BtnWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1.2rem;
+//   align-items: center;
+//   width: 100%;
+// `;
 const BtnWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   gap: 1.2rem;
   align-items: center;
   width: 100%;
