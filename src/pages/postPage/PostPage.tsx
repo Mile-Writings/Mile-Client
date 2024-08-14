@@ -5,7 +5,6 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
-import EditorContinueTempModal from './components/EditorContinueTempModal';
 import ImageUpload from './components/ImageUpload';
 import TipTap from './components/TipTap';
 import { EDITOR_DEFAULT_IMG } from './constants/editorDefaultImg';
@@ -30,6 +29,8 @@ import {
 } from '../../components/commons/Header';
 import DefaultModal from '../../components/commons/modal/DefaultModal';
 import DefaultModalBtn from '../../components/commons/modal/DefaultModalBtn';
+import FullModal from '../../components/commons/modal/FullModal';
+import FullModalBtn from '../../components/commons/modal/FullModalBtn';
 import Spacing from '../../components/commons/Spacing';
 import useModal from '../../hooks/useModal';
 
@@ -212,8 +213,21 @@ const PostPage = () => {
 
   // 임시저장 삭제하기
   const { mutate: deleteTempPost } = useDeleteTempPost(tempPostId || '', groupId);
-  const deleteTempPostHandler = () => {
+
+  // 임시저장 모달 - 삭제하기 함수
+  const onClickDeleteTempPost = () => {
     deleteTempPost();
+    setShowTempContinueModal(false);
+  };
+  // 임시저장 모달 - 새로쓰기 함수
+  const onClickNewPostBtn = () => {
+    setContinueTempPost(false);
+    setShowTempContinueModal(false);
+  };
+  // 임시저장 모달 - 이어쓰기 함수
+  const onClickContinueTempBtn = () => {
+    setContinueTempPost(true);
+    setShowTempContinueModal(false);
   };
 
   // 글감 받아오기
@@ -425,7 +439,7 @@ const PostPage = () => {
           leftBtnText: '예',
           leftBtnFn: tempSaveHandler,
           rightBtnText: '아니오',
-          rightBtnFn: () => handleCloseModal(),
+          rightBtnFn: handleCloseModal,
           modalImgType: 'CAUTION',
           handleClickBg: () => {},
         };
@@ -529,12 +543,66 @@ const PostPage = () => {
 
   return (
     <PostPageWrapper>
-      <EditorContinueTempModal
-        showTempContinueModal={showTempContinueModal}
-        setShowTempContinueModal={setShowTempContinueModal}
-        setContinueTempPost={setContinueTempPost}
-        deleteTempPost={deleteTempPostHandler}
+      {/* 헤더 */}
+      {type === 'edit' ? (
+        <EditorEditHeader onClickEditSave={onClickEditSaveBtn} />
+      ) : continueTempPost ? (
+        <EditorTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />
+      ) : (
+        <EditorTempNotExistHeader
+          onClickTempSave={onClickTempSaveBtn}
+          onClickSubmit={onClickPostContentBtn}
+        />
+      )}
+      <Spacing marginBottom="6.4" />
+
+      {/* 글 제출 막는 toast */}
+      <PostDeclinedWrapper $postAvailable={postErrorMessage.trim().length === 0}>
+        <EditorErrorIcn />
+        <PoseDeclinedText>{postErrorMessage}</PoseDeclinedText>
+      </PostDeclinedWrapper>
+      <ImageUpload
+        setPreviewImgUrl={setPreviewImgUrl}
+        previewImgUrl={previewImgUrl}
+        setImageToServer={setImageToServer}
+        url={url || ''}
+        fileName={fileName || ''}
       />
+
+      {/* 글감 */}
+      {topics && (
+        <DropDown
+          topicList={topics}
+          setTopic={setTopic}
+          setWriter={setWriter}
+          selectedTopic={editorVal.topic}
+          selectedWriter={editorVal.writer}
+        />
+      )}
+      <Spacing marginBottom="2.4" />
+
+      {/* 텍스트 에디터 */}
+      <TipTap
+        title={editorVal.title}
+        setTitle={setTitle}
+        tempContent={tempContent}
+        editContent={type === 'edit' ? location?.state?.content : ''}
+        setEditorContent={setContent}
+        setContentWithoutTag={setContentWithoutTag}
+      />
+      <Spacing marginBottom="8" />
+
+      {/* 임시저장 이어쓰기 관련 모달 */}
+      <FullModal isModalOpen={showTempContinueModal} content="임시 저장된 글을 계속 이어 쓸까요?">
+        <FullModalBtn isTop={true} content="새로 쓰기" onClick={onClickNewPostBtn} />
+        <FullModalBtn isTop={false} content="이어 쓰기" onClick={onClickContinueTempBtn} />
+        <Spacing marginBottom="0.2" />
+        <DeleteTempContentBtn onClick={onClickDeleteTempPost}>
+          임시 저장 삭제하기
+        </DeleteTempContentBtn>
+      </FullModal>
+
+      {/* 글쓰기 관련 모달 */}
       <DefaultModal
         isModalOpen={isModalOpen}
         handleClickBg={editorFlowModalVal.handleClickBg}
@@ -552,47 +620,6 @@ const PostPage = () => {
           onClickBtn={editorFlowModalVal.rightBtnFn}
         />
       </DefaultModal>
-      {type === 'edit' ? (
-        <EditorEditHeader onClickEditSave={onClickEditSaveBtn} />
-      ) : continueTempPost ? (
-        <EditorTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />
-      ) : (
-        <EditorTempNotExistHeader
-          onClickTempSave={onClickTempSaveBtn}
-          onClickSubmit={onClickPostContentBtn}
-        />
-      )}
-      <Spacing marginBottom="6.4" />
-      <PostDeclinedWrapper $postAvailable={postErrorMessage.trim().length === 0}>
-        <EditorErrorIcn />
-        <PoseDeclinedText>{postErrorMessage}</PoseDeclinedText>
-      </PostDeclinedWrapper>
-      <ImageUpload
-        setPreviewImgUrl={setPreviewImgUrl}
-        previewImgUrl={previewImgUrl}
-        setImageToServer={setImageToServer}
-        url={url || ''}
-        fileName={fileName || ''}
-      />
-      {topics && (
-        <DropDown
-          topicList={topics}
-          setTopic={setTopic}
-          setWriter={setWriter}
-          selectedTopic={editorVal.topic}
-          selectedWriter={editorVal.writer}
-        />
-      )}
-      <Spacing marginBottom="2.4" />
-      <TipTap
-        title={editorVal.title}
-        setTitle={setTitle}
-        tempContent={tempContent}
-        editContent={type === 'edit' ? location?.state?.content : ''}
-        setEditorContent={setContent}
-        setContentWithoutTag={setContentWithoutTag}
-      />
-      <Spacing marginBottom="8" />
     </PostPageWrapper>
   );
 };
@@ -628,4 +655,16 @@ const PostDeclinedWrapper = styled.div<{ $postAvailable: boolean }>`
 const PoseDeclinedText = styled.span`
   color: ${({ theme }) => theme.colors.mainViolet};
   ${({ theme }) => theme.fonts.button1};
+`;
+
+// 임시저장된 글 삭제하기 부분
+const DeleteTempContentBtn = styled.span`
+  color: ${({ theme }) => theme.colors.gray60};
+
+  ${({ theme }) => theme.fonts.body6};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.gray20};
+  }
 `;
