@@ -88,17 +88,17 @@ export const useDeleteMember = () => {
       if (isAxiosError(error)) {
         switch (error.response?.data.status) {
           case 40103: // 비공개 글모임인 경우, 로그인을 진행하지 않고 요청을 보냈을 때
-            alert('로그인이 필요한 서비스입니다.');
+            alert('접근 권한이 없습니다.');
             navigate('/login');
             break;
           case 40411: // 삭제하고자 하는 멤버가 존재하지 않을 때
-            if (confirm('해당 멤버가 존재하지 않습니다. 새로고침 하시겠습니까?')) {
+            if (confirm('존재하지 않는 멤버입니다. 새로고침 하시겠습니까?')) {
               window.location.reload();
             }
             break;
           default:
-            alert('에러가 발생했습니다. 다시 시도해 주세요');
-            navigate('/');
+            alert('요청을 제대로 수행할수 없어요. 잠시 후에 다시 시도해주세요.');
+            navigate(-1);
         }
       }
     },

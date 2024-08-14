@@ -47,9 +47,10 @@ export const AuthorizationHeader = () => {
 
   if (isAxiosError(error)) {
     if (error.response?.data.status === 40103) {
+      alert('접근 권한이 없습니다.');
       navigate('/login');
     } else {
-      alert('에러가 발생했습니다. 다시 시도해 주세요');
+      alert('내용을 불러올 수 없어요. 잠시 후에 다시 시도해주세요');
       navigate('/');
     }
   }

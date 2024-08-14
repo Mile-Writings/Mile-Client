@@ -22,7 +22,7 @@ const Main = () => {
 
   const { data, groupLength, isFetching, isLoading, error } = useGetGroupContent(moimId || '');
 
-  if (error) console.error(error);
+  if (error) console.error('내용을 불러올 수 없어요. 잠시 후에 다시 시도해주세요.');
 
   return (
     <MainPageWrapper>
