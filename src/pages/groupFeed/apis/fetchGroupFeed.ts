@@ -10,14 +10,10 @@ interface GroupFeedAuthPropTypes {
 }
 
 export const fetchGroupFeedAuth = async (groupId: string) => {
-  try {
-    const response = await authClient.get<GroupFeedAuthPropTypes>(
-      `/api/moim/${groupId}/authenticate`,
-    );
-    return response.data; //"isMember" : boolean, "isOwner" : boolean
-  } catch (error) {
-    console.error('에러:', error);
-  }
+  const response = await authClient.get<GroupFeedAuthPropTypes>(
+    `/api/moim/${groupId}/authenticate`,
+  );
+  return response.data; //"isMember" : boolean, "isOwner" : boolean
 };
 
 interface GroupInfoPropTypes {
@@ -232,7 +228,7 @@ interface editWriterInfoPropType {
 }
 export const fetchEditIntro = async ({ writerNameId, description }: editWriterInfoPropType) => {
   try {
-    const response = await client.patch<WriterIntroPropTypes>(
+    const response = await authClient.patch<WriterIntroPropTypes>(
       `/api/writername/${writerNameId}/description`,
       {
         description: description,
