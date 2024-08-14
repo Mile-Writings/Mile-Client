@@ -8,7 +8,6 @@ export const fetchAdminTopic = async (groupId: string | undefined, pageNum: numb
     const response = await authClient.get<AdminTopicPropTypes>(
       `/api/moim/${groupId}/admin/topics?page=${pageNum}`,
     );
-    console.log(response.data, 'data');
 
     return response.data;
   } catch (error) {

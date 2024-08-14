@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Suspense, lazy } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Ruler from './components/DailyKeyword';
+import DailyKeyword from './components/DailyKeyword';
 import FaqDropdown from './components/FaqDropdown';
 import Introduction from './components/Introduction';
 import Manual from './components/Manual';
@@ -26,41 +26,45 @@ const Main = () => {
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <Spacing marginBottom="6.4" />
       <OnBoarding />
+
       <GroupCarouselLayout>
         {isLoading || isFetching ? (
-          <CarouselComponentBox>
+          <>
             {groupLength && (
               <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
                 <LazyCarousel data={data} groupLength={groupLength} />
               </Suspense>
             )}
-          </CarouselComponentBox>
+          </>
         ) : (
-          <CarouselWithTitleContainer>
+          <CarouselBox>
             <CarouselTitle>마일과 함께하고 있는 글 모임이에요</CarouselTitle>
-            <CarouselComponentBox>
-              {groupLength && (
-                <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
-                  <LazyCarousel data={data} groupLength={groupLength} />
-                </Suspense>
-              )}
-            </CarouselComponentBox>
-          </CarouselWithTitleContainer>
+            {groupLength && (
+              <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
+                <LazyCarousel data={data} groupLength={groupLength} />
+              </Suspense>
+            )}
+          </CarouselBox>
         )}
       </GroupCarouselLayout>
+      <Spacing marginBottom="10" />
 
-      <Ruler data={topic?.data} />
+      <DailyKeyword data={topic?.data} />
+      <Spacing marginBottom="10" />
       <Introduction />
+      <Spacing marginBottom="10" />
       <Manual />
+
       <FaqLayout>
-        <FaqTitleWithDropDownContainer>
+        <FaqContainer>
           <FaqTitle>자주 묻는 질문</FaqTitle>
           <Spacing marginBottom="3.6" />
           {FAQ_DATA.map(({ id, question, answer }) => (
             <FaqDropdown key={id} id={id} question={question} answer={answer} />
           ))}
-        </FaqTitleWithDropDownContainer>
+        </FaqContainer>
       </FaqLayout>
+
       <Spacing marginBottom="17.3" />
       <Footer />
     </MainPageWrapper>
@@ -79,44 +83,31 @@ const MainPageWrapper = styled.div`
 
 const GroupCarouselLayout = styled.section`
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
 `;
 
-const CarouselWithTitleContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+const CarouselBox = styled.div`
+  cursor: default;
 `;
 
-const CarouselTitle = styled.p`
-  justify-content: flex-start;
-  width: fit-content;
+const CarouselTitle = styled.h1`
   padding-top: 7.2rem;
 
   ${({ theme }) => theme.fonts.title3};
 `;
 
-const CarouselComponentBox = styled.section`
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 10rem;
-`;
-
 const FaqLayout = styled.section`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
-const FaqTitle = styled.p`
-  ${({ theme }) => theme.fonts.title3};
+const FaqContainer = styled.div`
+  cursor: default;
 `;
 
-const FaqTitleWithDropDownContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
+const FaqTitle = styled.h3`
+  ${({ theme }) => theme.fonts.title3};
 `;

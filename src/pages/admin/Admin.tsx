@@ -2,22 +2,24 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import RenderAdminContent from './components/RenderAdminContent';
 import { useFetchInvitationLink } from './hooks/queries';
-import RenderAdminContent from './RenderAdminContent';
 
 import { useGroupInfo } from '../groupFeed/hooks/queries';
 
 import { AdminHomeIc } from '../../assets/svgs';
-import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
+import { AuthorizationHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import { copyLink } from '../../utils/copyLink';
 
 const Admin = () => {
   const accessToken = localStorage.getItem('accessToken');
+
   const [admin, setAdmin] = useState<'topic' | 'member' | 'groupInfo'>('topic');
   const { groupId } = useParams();
-  const { invitationCode } = useFetchInvitationLink(groupId);
   const navigate = useNavigate();
+
+  const { invitationCode } = useFetchInvitationLink(groupId);
   const { groupInfoData } = useGroupInfo(groupId || '');
 
   const handleCopyLink = (invitationCode: string) => {
@@ -34,7 +36,7 @@ const Admin = () => {
 
   return (
     <AdminWrapper>
-      {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
+      {accessToken && <AuthorizationHeader />}
       <Spacing marginBottom="13.6" />
       <AdminLayout>
         <SideNavbar>
@@ -88,6 +90,7 @@ const AdminWrapper = styled.div`
 const AdminLayout = styled.div`
   display: flex;
   gap: 6rem;
+  justify-content: center;
   padding: 0 16.5rem;
 `;
 
@@ -144,6 +147,8 @@ const AdminInviteBtn = styled.button`
     color: ${({ theme }) => theme.colors.mainViolet};
 
     background-color: ${({ theme }) => theme.colors.mileViolet};
+
+    transition: all 0.2s ease-in-out;
   }
 `;
 
@@ -162,7 +167,8 @@ const Menu = styled.div<{ isActive: boolean }>`
   padding: 1rem 1.6rem;
 
   ${({ theme }) => theme.fonts.subtitle3};
-  color: ${({ theme }) => theme.colors.gray70};
+
+  color: ${({ isActive, theme }) => (isActive ? theme.colors.black : theme.colors.gray70)};
 
   background-color: ${({ isActive, theme }) =>
     isActive ? theme.colors.backGroundGray : theme.colors.white};

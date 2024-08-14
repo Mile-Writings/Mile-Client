@@ -17,8 +17,7 @@ export const getGroupNameValidation = (moimName: string) => {
     );
     return data;
   } catch (err) {
-    console.log(err);
-    if (isAxiosError(err) && err) {
+    if (isAxiosError(err)) {
       console.log(err);
     }
   }

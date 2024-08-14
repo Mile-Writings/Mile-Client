@@ -102,7 +102,7 @@ const ProfileWrapper = styled.div`
 
 const HeaderWrapper = styled.div`
   position: sticky;
-  top: 6rem;
+  top: 8.4rem;
   display: flex;
   flex-direction: column;
   height: fit-content;
@@ -165,7 +165,7 @@ const GroupSideHeaderDetailBox = styled.div`
   width: 20.8rem;
 
   color: ${({ theme }) => theme.colors.gray70};
-  word-break: break-all;
+  word-break: keep-all;
 
   ${({ theme }) => theme.fonts.body2};
 `;

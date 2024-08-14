@@ -25,7 +25,6 @@ export const createGroupMemberJoin = async ({
         writerDescription: writerDescription,
       },
     );
-    // console.log(data);
     return data;
   } catch (error) {
     console.log(error);

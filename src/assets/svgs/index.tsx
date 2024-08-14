@@ -55,10 +55,7 @@ export { default as EditorDropIcnActiveIc } from './editorDropIcnActive.svg?reac
 export { default as EditorDropIcnActiveOpenIc } from './editorDropIcnActiveopen.svg?react';
 export { default as GroupThumbnailImgIc } from './groupThumbnailImg.svg?react';
 
-export {
-  default as EditorThuminputIcnActiveIc,
-  default as EditorThuminputIcnHoverIc,
-} from './editorThuminputIcnHover.svg?react';
+export { default as EditorThuminputIcnActiveIc } from './editorThuminputIcnActive.svg?react';
 export { default as EditorThuminputIcnUnactiveIc } from './editorThuminputIcnUnactive.svg?react';
 export { default as GroupCardThumnailImgIc } from './groupCardThumnailImg.svg?react';
 
@@ -99,6 +96,7 @@ export { default as CreateGroupIlust } from './createGroupIlust.svg?react';
 export { default as GroupListProfileCloseIc } from './groupListprofileIcnClose.svg?react';
 export { default as JoinCongratulationIc } from './joinCongratulationPng.svg?react';
 
+export { default as MemberMaster } from './adminMemberMaster.svg?react';
 export { default as GroupChatIc } from './groupChatIcn.svg?react';
 export { default as GroupCuriousIc } from './groupCuriousIcn.svg?react';
 export { default as GroupViewIc } from './groupViewIcn.svg?react';
