@@ -7,7 +7,10 @@ import { usePostCreateGroup } from './hooks/queries';
 import { CreateGroupTypes, CurrentPageType } from './types/stateType';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
+import DefaultModal from '../../components/commons/modal/DefaultModal';
+import DefaultModalBtn from '../../components/commons/modal/DefaultModalBtn';
 import { DEFAULT_IMG_URL } from '../../constants/defaultImgUrl';
+import useModal from '../../hooks/useModal';
 
 type CreateGroupAction =
   | { type: 'setGroupName'; value: string }
@@ -24,6 +27,8 @@ const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
   const [groupImageView, setGroupImageView] = useState('');
+  // modal 열고닫음
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
   const initialState = {
     groupName: '',
     groupInfo: '',
@@ -175,18 +180,9 @@ const CreateGroup = () => {
           isGroupLeaderValid={isGroupLeaderValid}
         />
       )}
-      {/* 모달 추후 추가 */}
-      {/* <EditorFlowModal
-        title={'생성 완료 시 필명 변경이 불가합니다. 계속 하시겠습니까?'}
-        leftBtnText={'아니오'}
-        rightBtnText={'예'}
-        modalImgType="tempSave"
-        leftBtnFn={() => {}}
-        rightBtnFn={() => {}}
-      /> */}
       {currentPage === 'GroupLeaderInfoPage' && (
         <BtnWrapper>
-          <CreateGroupBtn type="button" onClick={createGroup}>
+          <CreateGroupBtn type="button" onClick={handleShowModal}>
             생성하기
           </CreateGroupBtn>
           <BackPageBtn type="button" onClick={handleBackBtn}>
@@ -194,6 +190,16 @@ const CreateGroup = () => {
           </BackPageBtn>
         </BtnWrapper>
       )}
+      <DefaultModal
+        isModalOpen={isModalOpen}
+        handleClickBg={handleCloseModal}
+        type="DEFAULT"
+        content={`생성 완료 시 필명 변경이 불가합니다. \n계속 하시겠습니까?`}
+        modalImg="POST"
+      >
+        <DefaultModalBtn isLeft={true} text="아니오" onClickBtn={handleCloseModal} />
+        <DefaultModalBtn isLeft={false} text="예" onClickBtn={createGroup} />
+      </DefaultModal>
     </CreateGroupWrapper>
   );
 };
