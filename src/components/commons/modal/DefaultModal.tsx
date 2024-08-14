@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import { createPortal } from 'react-dom';
 
 import Spacing from '../Spacing';
 
@@ -20,6 +21,8 @@ interface ModalPropType {
   children: React.ReactNode;
 }
 
+const portalElement = document.getElementById('modal') as HTMLElement;
+
 const DefaultModal = (props: ModalPropType) => {
   const { isModalOpen, handleClickBg = () => {}, type, content, children, modalImg } = props;
 
@@ -39,16 +42,21 @@ const DefaultModal = (props: ModalPropType) => {
   };
 
   return (
-    <Wrapper $showModal={isModalOpen}>
-      <ModalBackground onClick={handleClickBg} />
-      <ModalWrapper $type={type}>
-        <Content>{content}</Content>
-        <Spacing marginBottom="2.4" />
-        {modalImg && getModalImg()}
-        <Spacing marginBottom="2.4" />
-        <BtnWrapper>{children}</BtnWrapper>
-      </ModalWrapper>
-    </Wrapper>
+    <>
+      {createPortal(
+        <Wrapper $showModal={isModalOpen}>
+          <ModalBackground onClick={handleClickBg} />
+          <ModalWrapper $type={type}>
+            <Content>{content}</Content>
+            <Spacing marginBottom="2.4" />
+            {modalImg && getModalImg()}
+            <Spacing marginBottom="2.4" />
+            <BtnWrapper>{children}</BtnWrapper>
+          </ModalWrapper>
+        </Wrapper>,
+        portalElement,
+      )}
+    </>
   );
 };
 

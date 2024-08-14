@@ -22,7 +22,7 @@ const ModalBtn = styled.button<{ $isLeft: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 15.4rem;
+  width: 50%;
   height: 3.9rem;
   padding: 1rem 0;
 

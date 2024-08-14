@@ -7,6 +7,9 @@ import { useDeleteAdminTopic } from './hooks/queries';
 
 import { EditIc, DeleteIc } from '../../assets/svgs';
 import { NegativeModal } from '../../components/commons/Modal';
+import DefaultModal from '../../components/commons/modal/DefaultModal';
+import DefaultModalBtn from '../../components/commons/modal/DefaultModalBtn';
+import useModal from '../../hooks/useModal';
 
 interface AdminTopicPropTypes {
   topicId: string;
@@ -26,42 +29,46 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
   const { groupId } = useParams();
   const [showEditModal, setShowEditModal] = useState(false);
 
+  // modal 열고닫음
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
+
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { deleteMutateAdminTopic } = useDeleteAdminTopic(topicId, groupId, pageNum);
 
   return (
-    <TopicWrapper>
-      <TopicData>
-        <Topic>
-          <TopicTitle>{topicName}</TopicTitle>
-          <TopicDate>{createdAt}</TopicDate>
-        </Topic>
-        <TopicTag>{topicTag}</TopicTag>
-        <TopicDescription>{topicDescription}</TopicDescription>
-      </TopicData>
-      <TopicAction>
-        <EditIcon
-          onClick={() => {
-            setShowEditModal(true);
-          }}
-        />
-        <DeleteIcon onClick={() => setShowDeleteModal(true)} />
-      </TopicAction>
-      {showEditModal && (
-        <>
-          <ModalOverlay onClick={() => setShowEditModal(false)} />
-          <AddEditTopicModal
-            topicStored={topicName}
-            topicTagStored={topicTag}
-            topicDescriptionStored={topicDescription}
-            topicId={topicId}
-            pageNum={pageNum}
-            setShowModal={setShowEditModal}
+    <>
+      <TopicWrapper>
+        <TopicData>
+          <Topic>
+            <TopicTitle>{topicName}</TopicTitle>
+            <TopicDate>{createdAt}</TopicDate>
+          </Topic>
+          <TopicTag>{topicTag}</TopicTag>
+          <TopicDescription>{topicDescription}</TopicDescription>
+        </TopicData>
+        <TopicAction>
+          <EditIcon
+            onClick={() => {
+              setShowEditModal(true);
+            }}
           />
-        </>
-      )}
-
-      <NegativeModal
+          {/* <DeleteIcon onClick={() => setShowDeleteModal(true)} /> */}
+          <DeleteIcon onClick={() => handleShowModal()} />
+        </TopicAction>
+        {showEditModal && (
+          <>
+            <ModalOverlay onClick={() => setShowEditModal(false)} />
+            <AddEditTopicModal
+              topicStored={topicName}
+              topicTagStored={topicTag}
+              topicDescriptionStored={topicDescription}
+              topicId={topicId}
+              pageNum={pageNum}
+              setShowModal={setShowEditModal}
+            />
+          </>
+        )}
+        {/* <NegativeModal
         modalContent="삭제 시, 해당 글감으로 작성된 글도 함께 삭제되며,
         삭제된 글감은 복구할 수 없습니다.
         계속 하시겠습니까?"
@@ -71,8 +78,19 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
           setShowDeleteModal(false);
         }}
         closeModalHandler={() => setShowDeleteModal(false)}
-      />
-    </TopicWrapper>
+      /> */}
+      </TopicWrapper>
+      <DefaultModal
+        isModalOpen={isModalOpen}
+        handleClickBg={handleCloseModal}
+        type="MEDIUM"
+        content={`삭제 시, 해당 글감으로 작성된 글도 함께 삭제되며, \n삭제된 글감은 복구할 수 없습니다. \n계속 하시겠습니까?`}
+        modalImg="POST"
+      >
+        <DefaultModalBtn isLeft={true} text="예" onClickBtn={deleteMutateAdminTopic} />
+        <DefaultModalBtn isLeft={false} text="아니오" onClickBtn={handleCloseModal} />
+      </DefaultModal>
+    </>
   );
 };
 

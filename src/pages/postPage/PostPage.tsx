@@ -593,7 +593,6 @@ const PostPage = () => {
         setEditorContent={setContent}
         setContentWithoutTag={setContentWithoutTag}
       />
-      {/* </DropDownEditorWrapper> */}
       <Spacing marginBottom="8" />
     </PostPageWrapper>
   );
