@@ -36,14 +36,10 @@ interface GroupFeedAuthQueryResult {
   error: Error | null;
 }
 
-export const useGroupFeedAuth = (
-  groupId: string,
-  accessToken: string | null,
-): GroupFeedAuthQueryResult => {
+export const useGroupFeedAuth = (groupId: string): GroupFeedAuthQueryResult => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getGroupFeedAuth, groupId],
     queryFn: () => fetchGroupFeedAuth(groupId),
-    enabled: !!accessToken,
   });
   const isMember = data && data?.data?.isMember;
   const isOwner = data && data?.data?.isOwner;
