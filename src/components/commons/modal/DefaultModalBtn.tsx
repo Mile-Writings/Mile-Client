@@ -3,12 +3,17 @@ import styled from '@emotion/styled';
 interface defaultModalBtnPropType {
   isLeft: boolean;
   onClickBtn: () => void;
+  text: string;
 }
 
 const DefaultModalBtn = (props: defaultModalBtnPropType) => {
-  const { isLeft, onClickBtn } = props;
+  const { isLeft, onClickBtn, text } = props;
 
-  return <ModalBtn $isLeft={isLeft} onClick={onClickBtn} />;
+  return (
+    <ModalBtn $isLeft={isLeft} onClick={onClickBtn}>
+      {text}
+    </ModalBtn>
+  );
 };
 
 export default DefaultModalBtn;

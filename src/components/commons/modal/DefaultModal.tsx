@@ -12,14 +12,16 @@ import {
 } from '../../../assets/svgs/modal/modalSVG';
 
 interface ModalPropType {
+  isModalOpen: boolean;
+  handleClickBg?: () => void;
   type: 'DEFAULT' | 'MEDIUM' | 'LARGE';
   content: string;
-  modalImg?: 'DELETE' | 'POST' | 'EDIT' | 'SAVE' | 'CAUTION';
+  modalImg?: 'DELETE' | 'POST' | 'EDIT' | 'SAVE' | 'CAUTION' | '';
   children: React.ReactNode;
 }
 
-const Modal = (props: ModalPropType) => {
-  const { type, content, children, modalImg } = props;
+const DefaultModal = (props: ModalPropType) => {
+  const { isModalOpen, handleClickBg = () => {}, type, content, children, modalImg } = props;
 
   const getModalImg = () => {
     switch (modalImg) {
@@ -37,21 +39,22 @@ const Modal = (props: ModalPropType) => {
   };
 
   return (
-    <>
-      <ModalBackground $showModal={true} />
-      <Wrapper $type={type}>
+    <Wrapper $showModal={isModalOpen}>
+      <ModalBackground onClick={handleClickBg} />
+      <ModalWrapper $type={type}>
         <Content>{content}</Content>
+        <Spacing marginBottom="2.4" />
         {modalImg && getModalImg()}
         <Spacing marginBottom="2.4" />
-        {children}
-      </Wrapper>
-    </>
+        <BtnWrapper>{children}</BtnWrapper>
+      </ModalWrapper>
+    </Wrapper>
   );
 };
 
-export default Modal;
+export default DefaultModal;
 
-const ModalBackground = styled.div<{ $showModal: boolean }>`
+const Wrapper = styled.div<{ $showModal: boolean }>`
   position: fixed;
   top: 0;
   z-index: 5;
@@ -60,11 +63,20 @@ const ModalBackground = styled.div<{ $showModal: boolean }>`
   justify-content: center;
   width: 100vw;
   height: 100%;
+`;
+
+const ModalBackground = styled.div`
+  position: fixed;
+  top: 0;
+  z-index: 5;
+  width: 100vw;
+  height: 100%;
 
   background-color: #0009;
 `;
 
-const Wrapper = styled.div<{ $type: string }>`
+const ModalWrapper = styled.div<{ $type: string }>`
+  z-index: 6;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,6 +96,13 @@ const Wrapper = styled.div<{ $type: string }>`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 10px;
+`;
+
+const BtnWrapper = styled.div`
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  width: 100%;
 `;
 
 const Content = styled.p`
