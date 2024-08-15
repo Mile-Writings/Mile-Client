@@ -34,11 +34,11 @@ const PostDetail = () => {
   const { data: postAuth } = useCheckPostAuth(postId || '');
   const { mutate: deletePost } = useDeletePost(postId || '', topicId);
   const { isPublic } = useGroupFeedPublicStatus(groupId || '');
-  console.log(isPublic);
+
   const postData = data?.data;
   const accessToken = localStorage.getItem('accessToken');
   const role = postAuth?.data.data.role;
-  console.log(role);
+
   //글 작성 후 뒤로가기 하면 모임페이지로 이동하는 로직
   //메인페이지 -> 글 상세페이지 -> 뒤로가기 -> 글 모임페이지가 되어 UX에 좋은 영향을 끼치지 않는 부분도 있어서 추후 적용
 
