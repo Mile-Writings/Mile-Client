@@ -46,7 +46,6 @@ const Comment = (props: CommentPropTypes) => {
         <>
           <Spacing marginBottom="4" />
           <NoCommentText>아직 댓글이 없어요</NoCommentText>
-          {/* <EditorCatIc /> */}
           <NoCommentIc />
         </>
       ) : (
