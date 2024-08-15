@@ -1,4 +1,4 @@
-import { devClient } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 export interface MembersListTypes {
   writerNameId: number;
@@ -32,18 +32,12 @@ export interface MemberPropTypes {
 
 const fetchMemberInfo = async (groupId: string, page: number | undefined) => {
   try {
-    const token = localStorage.getItem('accessToken');
-    const data = await devClient.get<FetchMemberPropTypes>(
+    const data = await authClient.get<FetchMemberPropTypes>(
       `/api/moim/${groupId}/writernames?page=${page}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
     );
     return data.data;
   } catch (error) {
-    console.error();
+    console.error(error);
   }
 };
 

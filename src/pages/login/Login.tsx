@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { HeaderLogoIc, KakaoLoginBtnIc as KakaoLoginBtnIcon, LoginIc } from '../../assets/svgs';
+import { HeaderLogoIc, KakaoLoginBtnIc, LoginIc } from '../../assets/svgs';
 import Spacing from '../../components/commons/Spacing';
 
 const Login = () => {
   //const REDIRECT_URL = 'https://www.milewriting.com/redirect-kakao';
   const navigate = useNavigate();
   const { state } = useLocation();
-  if (state.pathname) {
+  if (state && state.pathname) {
     localStorage.setItem('beforePathname', state.pathname);
   }
 
@@ -50,6 +50,9 @@ const Login = () => {
 
 export default Login;
 
+const KakaoLoginBtnIcon = styled(KakaoLoginBtnIc)`
+  cursor: pointer;
+`;
 const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;

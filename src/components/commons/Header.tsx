@@ -5,7 +5,10 @@ import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
 
 import { HeaderLogoIc } from '../../assets/svgs';
-import useNavigateHome from '../../hooks/useNavigateHome';
+import {
+  default as useNavigateHome,
+  default as useNavigateToHome,
+} from '../../hooks/useNavigateHome';
 import useNavigateLoginWithPath from '../../hooks/useNavigateLoginWithPath';
 import { Moim } from '../../pages/groupFeed/apis/fetchHeaderGroup';
 import CreateGroupBtn from '../../pages/groupFeed/components/CreateGroupBtn';
@@ -29,11 +32,11 @@ interface OnClickTempExistProps {
 // 로그인된 경우 헤더
 export const AuthorizationHeader = () => {
   const [moims, setMoims] = useState<Moim[]>([]);
-  const { navigateToHome } = useNavigateHome();
+  const { navigateToHome } = useNavigateToHome();
   const { data } = useFetchHeaderGroup();
   const handleLogOut = () => {
     logout();
-    location.reload();
+    navigateToHome();
   };
   useEffect(() => {
     if (data?.data?.moims) setMoims(data?.data.moims);
@@ -152,5 +155,7 @@ const HeaderBtnContainer = styled.div`
 `;
 
 const HeaderLogoIcon = styled(HeaderLogoIc)`
+  flex-shrink: 0;
+
   cursor: pointer;
 `;

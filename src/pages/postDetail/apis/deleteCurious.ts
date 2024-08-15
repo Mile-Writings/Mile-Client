@@ -1,4 +1,4 @@
-import { client } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 interface DeleteResponseType {
   status: number;
@@ -8,13 +8,8 @@ interface DeleteResponseType {
   };
 }
 const deleteCurious = async (postId: string) => {
-  const token = localStorage.getItem('accessToken');
   try {
-    const data = client.delete<DeleteResponseType>(`/api/post/${postId}/curious`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const data = authClient.delete<DeleteResponseType>(`/api/post/${postId}/curious`);
     return data;
   } catch (err) {
     console.log(err);

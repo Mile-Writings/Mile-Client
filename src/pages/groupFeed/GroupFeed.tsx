@@ -27,11 +27,14 @@ import Spacing from '../../components/commons/Spacing';
 const GroupFeed = () => {
   const { groupId } = useParams();
   const accessToken = localStorage.getItem('accessToken');
-  const { isMember, isOwner, isLoading, isError, error } = useGroupFeedAuth(
-    groupId || '',
-    accessToken || '',
-  );
-  const { isPublic } = useGroupFeedPublicStatus(groupId || '');
+  const {
+    isMember,
+    isOwner,
+    isLoading: isAuthLoading,
+    isError,
+    error,
+  } = useGroupFeedAuth(groupId || '', accessToken || '');
+  const { isPublic, isLoading: isPublicLoading } = useGroupFeedPublicStatus(groupId || '');
 
   //sessionStorage에 저장된 카테고리 id 값을 가져옴
   const sessionCategoryId = sessionStorage.getItem('activeCategoryId');
@@ -48,12 +51,24 @@ const GroupFeed = () => {
 
   const navigate = useNavigate();
 
-  //라우팅 했을 때 스크롤 맨 위로
+  //접속시 권한확인
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    if (!isAuthLoading && !isPublicLoading) {
+      if (accessToken) {
+        if (!isPublic && !isMember) {
+          alert('해당 모임은 비공개 모임입니다');
+          navigate('/');
+        }
+      } else {
+        if (!isPublic) {
+          alert('해당 모임은 비공개 모임입니다');
+          navigate('/');
+        }
+      }
+    }
+  }, [isAuthLoading, isPublicLoading]);
 
-  if (isLoading) {
+  if (isAuthLoading) {
     return <Loading />;
   }
 
@@ -61,11 +76,7 @@ const GroupFeed = () => {
     console.log(error?.message, 'error');
     return <Error />;
   }
-  //해당 모임의 멤버도 아니고, 모임이 비공개일때 (비정상적인 접근)
-  if (!isPublic && !isMember) {
-    alert('해당 모임은 비공개 모임입니다');
-    navigate('/');
-  }
+
   return (
     <GroupFeedWrapper>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}

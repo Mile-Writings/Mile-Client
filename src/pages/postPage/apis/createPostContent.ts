@@ -1,4 +1,4 @@
-import { client } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 interface postContentType {
   groupId: string;
@@ -37,26 +37,16 @@ const createPostContent = async ({
     setPostErrorMessage('글을 입력해주세요');
   } else {
     try {
-      const token = localStorage.getItem('accessToken');
-      const { data } = await client.post<PostContentResponseType>(
-        `/api/post`,
-        {
-          moimId: groupId,
-          topicId: topicId,
-          title: title,
-          content: content,
-          imageUrl: imageUrl,
-          anonymous: anonymous,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      // console.log(`data: ${data.data.postId}`);
+      const { data } = await authClient.post<PostContentResponseType>(`/api/post`, {
+        moimId: groupId,
+        topicId: topicId,
+        title: title,
+        content: content,
+        imageUrl: imageUrl,
+        anonymous: anonymous,
+      });
+
       return data.data.postId;
-      setPostErrorMessage('');
     } catch (err) {
       console.log(err);
     }

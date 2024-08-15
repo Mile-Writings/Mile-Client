@@ -84,5 +84,7 @@ const AnswerTextBox = styled.div`
   white-space: pre-wrap;
   word-break: keep-all;
 
+  user-select: none;
+
   ${({ theme }) => theme.fonts.body3};
 `;

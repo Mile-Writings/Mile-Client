@@ -1,4 +1,4 @@
-import { client } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 interface CreateGroupPropTyeps {
   data: {
@@ -31,28 +31,18 @@ export const postCreateGroup = ({
   leaderPenName,
   leaderDesc,
 }: CreateGroupRequestTypes) => {
-  const token = localStorage.getItem('accessToken');
-
   try {
-    const data = client.post<CreateGroupPropTyeps>(
-      `api/moim`,
-      {
-        moimName: groupName,
-        moimDescription: groupInfo,
-        isPublic: isPublic,
-        imageUrl: groupImageFile,
-        writerName: leaderPenName,
-        writerNameDescription: leaderDesc,
-        topic: topic,
-        topicTag: topicTag,
-        topicDescription: topicDesc,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+    const data = authClient.post<CreateGroupPropTyeps>(`api/moim`, {
+      moimName: groupName,
+      moimDescription: groupInfo,
+      isPublic: isPublic,
+      imageUrl: groupImageFile,
+      writerName: leaderPenName,
+      writerNameDescription: leaderDesc,
+      topic: topic,
+      topicTag: topicTag,
+      topicDescription: topicDesc,
+    });
     return data;
   } catch (err) {
     console.log(err);

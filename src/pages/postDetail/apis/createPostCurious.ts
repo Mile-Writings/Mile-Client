@@ -1,4 +1,4 @@
-import { client } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 interface PostCuriousResponseType {
   status: number;
@@ -10,16 +10,7 @@ interface PostCuriousResponseType {
 
 const createPostCurious = async (postId: string) => {
   try {
-    const token = localStorage.getItem('accessToken');
-    const { data } = await client.post<PostCuriousResponseType>(
-      `/api/post/${postId}/curious`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+    const { data } = await authClient.post<PostCuriousResponseType>(`/api/post/${postId}/curious`);
     return data;
   } catch (err) {
     console.log(err);

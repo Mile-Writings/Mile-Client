@@ -2,11 +2,7 @@ import styled from '@emotion/styled';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useFetchGroupInfo, usePutAdminGroupInfo } from './hooks/queries';
-
-import { InputInfoMsg } from '../createGroup/components/CreateGroupInfo';
-import { useGetGroupNameValidation } from '../createGroup/hooks/queries';
-import { usePresignedUrl } from '../postPage/hooks/queries';
+import { useFetchGroupInfo, usePutAdminGroupInfo } from '../hooks/queries';
 
 import {
   CreateGroupImageUpload,
@@ -14,9 +10,12 @@ import {
   CreateGroupInfoIc,
   CreateGroupRadioCheckedIc,
   CreateGroupRadioUncheckedIc,
-} from '../../assets/svgs';
-import { DEFAULT_IMG_URL } from '../../constants/defaultImgUrl';
-import useHandleGroupImage from '../../hooks/useGroupImage';
+} from '../../../assets/svgs';
+import { DEFAULT_IMG_URL } from '../../../constants/defaultImgUrl';
+import useHandleGroupImage from '../../../hooks/useGroupImage';
+import { InputInfoMsg } from '../../createGroup/components/CreateGroupInfo';
+import { useGetGroupNameValidation } from '../../createGroup/hooks/queries';
+import { usePresignedUrl } from '../../postPage/hooks/queries';
 
 const EditGroupInfo = () => {
   const [groupName, setGroupName] = useState('');
@@ -32,6 +31,7 @@ const EditGroupInfo = () => {
 
   const { groupId } = useParams();
   const { data } = useFetchGroupInfo(groupId || '');
+
   const { fileName = '', url = '' } = usePresignedUrl();
   const {
     groupImageView,
@@ -136,139 +136,143 @@ const EditGroupInfo = () => {
   };
 
   return (
-    <CreateGroupLayout>
-      <WhiteInputWrapper isValid={true}>
-        <GroupInputWrapper>
-          <InputTitleText>글 모임 이름*</InputTitleText>
-          <GroupNameInputLayout>
-            <GroupNameInputWrapper>
-              <GroupNameInput
-                ref={groupNameRef}
-                onChange={(e) => handleGroupName(e)}
-                placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
-                isValid={groupNameValid}
-                value={groupName}
-              />{' '}
-              <TextAreaLength isValid={groupName.length <= 10}>
-                {groupName.length}/10
-              </TextAreaLength>
-            </GroupNameInputWrapper>
-            <DuplicateCheckBtn
-              type="button"
-              positive={groupName !== '' && groupName.length <= 10 && beforeGroupName !== groupName}
-              onClick={getGroupNameValidation}
-              disabled={!groupName || groupName.length > 10 || beforeGroupName === groupName}
+    <>
+      <CreateGroupLayout>
+        <WhiteInputWrapper isValid={true}>
+          <GroupInputWrapper>
+            <InputTitleText>글 모임 이름*</InputTitleText>
+            <GroupNameInputLayout>
+              <GroupNameInputWrapper>
+                <GroupNameInput
+                  ref={groupNameRef}
+                  onChange={(e) => handleGroupName(e)}
+                  placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
+                  isValid={groupNameValid}
+                  value={groupName}
+                />{' '}
+                <TextAreaLength isValid={groupName.length <= 10}>
+                  {groupName.length}/10
+                </TextAreaLength>
+              </GroupNameInputWrapper>
+              <DuplicateCheckBtn
+                type="button"
+                positive={
+                  groupName !== '' && groupName.length <= 10 && beforeGroupName !== groupName
+                }
+                onClick={getGroupNameValidation}
+                disabled={!groupName || groupName.length > 10 || beforeGroupName === groupName}
+              >
+                중복확인
+              </DuplicateCheckBtn>
+            </GroupNameInputLayout>
+
+            <GroupNameValidationText
+              validation={InputInfoMsg.groupNameAvailable === groupNameInfoMsg}
             >
-              중복확인
-            </DuplicateCheckBtn>
-          </GroupNameInputLayout>
-
-          <GroupNameValidationText
-            validation={InputInfoMsg.groupNameAvailable === groupNameInfoMsg}
-          >
-            {groupNameInfoMsg}
-          </GroupNameValidationText>
-        </GroupInputWrapper>
-      </WhiteInputWrapper>{' '}
-      <GroupInfoWrppaer>
-        <GroupInputWrapper>
-          <InputTitleText>글 모임 소개</InputTitleText>
-          <GroupInfoTextareaWrapper>
-            <GroupInfoTextarea
-              placeholder="글 모임에 대해 자유롭게 소개해주세요."
-              isValid={groupDesc.length <= 100}
-              onChange={(e) => handleGroupDesc(e)}
-              maxLength={110}
-              value={groupDesc}
-            />
-            <TextAreaLength isValid={groupDesc.length <= 100}>
-              {groupDesc.length}/100
-            </TextAreaLength>
-          </GroupInfoTextareaWrapper>
-        </GroupInputWrapper>
-      </GroupInfoWrppaer>
-      <WhiteInputWrapper isValid={true}>
-        <GroupInputWrapper>
-          <InputTitleText>글 모임 사진</InputTitleText>
-          <GroupImageLabel htmlFor="file">
-            <GroupImageWrapper>
-              <GroupImagePreviewWrapper>
-                {groupImageView !== DEFAULT_IMG_URL ? (
-                  <>
-                    <GroupImagePreview src={groupImageView} />
-                    <CreateGroupImageUploadedIcon className="group-image-preview" />
-                  </>
-                ) : (
-                  <CreateGroupImageUploadIcon className="group-image-preview" />
-                )}
-              </GroupImagePreviewWrapper>
-              <GroupImageInput
-                type="file"
-                name="file"
-                id="file"
-                accept="image/*"
-                onChange={(e) => {
-                  handleGroupImage(e);
-                }}
+              {groupNameInfoMsg}
+            </GroupNameValidationText>
+          </GroupInputWrapper>
+        </WhiteInputWrapper>{' '}
+        <GroupInfoWrppaer>
+          <GroupInputWrapper>
+            <InputTitleText>글 모임 소개</InputTitleText>
+            <GroupInfoTextareaWrapper>
+              <GroupInfoTextarea
+                placeholder="글 모임에 대해 자유롭게 소개해주세요."
+                isValid={groupDesc.length <= 100}
+                onChange={(e) => handleGroupDesc(e)}
+                maxLength={110}
+                value={groupDesc}
               />
-            </GroupImageWrapper>
-          </GroupImageLabel>
+              <TextAreaLength isValid={groupDesc.length <= 100}>
+                {groupDesc.length}/100
+              </TextAreaLength>
+            </GroupInfoTextareaWrapper>
+          </GroupInputWrapper>
+        </GroupInfoWrppaer>
+        <WhiteInputWrapper isValid={true}>
+          <GroupInputWrapper>
+            <InputTitleText>글 모임 사진</InputTitleText>
+            <GroupImageLabel htmlFor="file">
+              <GroupImageWrapper>
+                <GroupImagePreviewWrapper>
+                  {groupImageView !== DEFAULT_IMG_URL ? (
+                    <>
+                      <GroupImagePreview src={groupImageView} />
+                      <CreateGroupImageUploadedIcon className="group-image-preview" />
+                    </>
+                  ) : (
+                    <CreateGroupImageUploadIcon className="group-image-preview" />
+                  )}
+                </GroupImagePreviewWrapper>
+                <GroupImageInput
+                  type="file"
+                  name="file"
+                  id="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    handleGroupImage(e);
+                  }}
+                />
+              </GroupImageWrapper>
+            </GroupImageLabel>
 
-          <GroupInputDesc>
-            *글모임 페이지 상단에 노출될 대표 이미지입니다. 1366*306px사이즈를 권장합니다.
-          </GroupInputDesc>
-        </GroupInputWrapper>
-      </WhiteInputWrapper>
-      <WhiteInputWrapper isValid={true}>
-        <GroupInputHorizonWrapper>
-          <GroupPublicDescWrapper>
-            <GroupPublicDesc>해당 글모임을 공개/비공개로 설정하시겠습니까?</GroupPublicDesc>
-            <CreateGroupInfoIc onMouseLeave={handleHover} onMouseEnter={handleHover} />
-            <PublicInfoWrapper isVisible={isHover}>
-              <PublicInfoText>
-                {' '}
-                글 모임원이 아니더라도 마일에 접속한 모든 사용자가 해당 글 모임에 방문할 수
-                있습니다.
-                <br />
-                활발한 글 모임 활동이 이루어지면, 메인페이지 ‘마일과 함께하는 글모임’에 노출될
-                가능성이 있습니다.
-              </PublicInfoText>
-            </PublicInfoWrapper>
-          </GroupPublicDescWrapper>
-          <GroupPublicDescContainer>
-            <GroupIsPublicWrapper>
-              <GroupisPublicLabel htmlFor="isPublicTrue">
-                {isPublic ? <CreateGroupRadioCheckedIc /> : <CreateGroupRadioUncheckedIc />}
-                공개
+            <GroupInputDesc>
+              *글모임 페이지 상단에 노출될 대표 이미지입니다. 1366*306px사이즈를 권장합니다.
+            </GroupInputDesc>
+          </GroupInputWrapper>
+        </WhiteInputWrapper>
+        <WhiteInputWrapper isValid={true}>
+          <GroupInputHorizonWrapper>
+            <GroupPublicDescWrapper>
+              <GroupPublicDesc>해당 글모임을 공개/비공개로 설정하시겠습니까?</GroupPublicDesc>
+              <CreateGroupInfoIc onMouseLeave={handleHover} onMouseEnter={handleHover} />
+              <PublicInfoWrapper isVisible={isHover}>
+                <PublicInfoText>
+                  {' '}
+                  글 모임원이 아니더라도 마일에 접속한 모든 사용자가 해당 글 모임에 방문할 수
+                  있습니다.
+                  <br />
+                  활발한 글 모임 활동이 이루어지면, 메인페이지 ‘마일과 함께하는 글모임’에 노출될
+                  가능성이 있습니다.
+                </PublicInfoText>
+              </PublicInfoWrapper>
+            </GroupPublicDescWrapper>
+            <GroupPublicDescContainer>
+              <GroupIsPublicWrapper>
+                <GroupisPublicLabel htmlFor="isPublicTrue">
+                  {isPublic ? <CreateGroupRadioCheckedIc /> : <CreateGroupRadioUncheckedIc />}
+                  공개
+                </GroupisPublicLabel>
+              </GroupIsPublicWrapper>
+              <GroupIsPublicRadio
+                type="radio"
+                id="isPublicTrue"
+                name="isPublic"
+                value={'true'}
+                onChange={handleIsPublic}
+              />
+            </GroupPublicDescContainer>
+            <GroupPublicDescContainer>
+              <GroupisPublicLabel htmlFor="isPublicFalse">
+                {!isPublic ? <CreateGroupRadioCheckedIc /> : <CreateGroupRadioUncheckedIc />}
+                비공개
               </GroupisPublicLabel>
-            </GroupIsPublicWrapper>
-            <GroupIsPublicRadio
-              type="radio"
-              id="isPublicTrue"
-              name="isPublic"
-              value={'true'}
-              onChange={handleIsPublic}
-            />
-          </GroupPublicDescContainer>
-          <GroupPublicDescContainer>
-            <GroupisPublicLabel htmlFor="isPublicFalse">
-              {!isPublic ? <CreateGroupRadioCheckedIc /> : <CreateGroupRadioUncheckedIc />}
-              비공개
-            </GroupisPublicLabel>
-            <GroupIsPublicRadio
-              type="radio"
-              id="isPublicFalse"
-              name="isPublic"
-              value={'false'}
-              onChange={handleIsPublic}
-            />
-          </GroupPublicDescContainer>
-        </GroupInputHorizonWrapper>
-      </WhiteInputWrapper>
-      <EditGroupBtn onClick={editGroupInfo} active={editBtnAcitve} disabled={!editBtnAcitve}>
-        수정하기
-      </EditGroupBtn>
-    </CreateGroupLayout>
+              <GroupIsPublicRadio
+                type="radio"
+                id="isPublicFalse"
+                name="isPublic"
+                value={'false'}
+                onChange={handleIsPublic}
+              />
+            </GroupPublicDescContainer>
+          </GroupInputHorizonWrapper>
+        </WhiteInputWrapper>
+        <EditGroupBtn onClick={editGroupInfo} active={editBtnAcitve} disabled={!editBtnAcitve}>
+          수정하기
+        </EditGroupBtn>
+      </CreateGroupLayout>
+    </>
   );
 };
 
@@ -372,7 +376,7 @@ const GroupIsPublicWrapper = styled.div`
   display: flex;
   gap: 0.8rem;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   width: 8rem;
 `;
 const GroupisPublicLabel = styled.label`
@@ -388,6 +392,7 @@ const GroupisPublicLabel = styled.label`
 const GroupPublicDescContainer = styled.div`
   display: flex;
   gap: 0.8rem;
+  justify-content: flex-end;
   width: 8rem;
   height: 1.9rem;
 `;

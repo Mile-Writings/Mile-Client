@@ -1,4 +1,4 @@
-import { devClient } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 interface PostCommentResponseType {
   status: number;
@@ -7,20 +7,10 @@ interface PostCommentResponseType {
 
 const fetchPostNestedComment = async (commentId: string, comment: string, isAnonymous: boolean) => {
   try {
-    const token = localStorage.getItem('accessToken');
-    const response = await devClient.post<PostCommentResponseType>(
-      `/api/comment/${commentId}`,
-      {
-        content: comment,
-        isAnonymous: isAnonymous,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
-    console.log(response.data, 'data');
+    const response = await authClient.post<PostCommentResponseType>(`/api/comment/${commentId}`, {
+      content: comment,
+      isAnonymous: isAnonymous,
+    });
     return response.data;
   } catch (err) {
     console.error();
