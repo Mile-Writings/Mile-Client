@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 
 import { adminEmptyMemberIc as AdminEmptyMemberIcon, adminProfileIc } from '../../../assets/svgs';
-import { NegativeModal } from '../../../components/commons/Modal';
 import DefaultModal from '../../../components/commons/modal/DefaultModal';
 import DefaultModalBtn from '../../../components/commons/modal/DefaultModalBtn';
 import Pagenation from '../../../components/commons/Pagenation';
