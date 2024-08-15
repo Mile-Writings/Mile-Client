@@ -11,12 +11,8 @@ export interface invitationData {
 }
 
 export const fetchInvitationLink = async (groupId: string) => {
-  try {
-    const { data } = await authClient.get<InvitationPropTypes>(
-      `/api/moim/${groupId}/invitation-code`,
-    );
-    return { data: { data }.data.data };
-  } catch (error) {
-    console.error(error);
-  }
+  const { data } = await authClient.get<InvitationPropTypes>(
+    `/api/moim/${groupId}/invitation-code`,
+  );
+  return { data: { data }.data.data };
 };
