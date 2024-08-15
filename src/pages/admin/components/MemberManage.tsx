@@ -43,14 +43,9 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
 
   if (isAxiosError(error)) {
     switch (error.response?.data.status) {
-      case 40303: // 조회 권한이 없을 때 (관리자가 아닐 때)
-        alert('접근 권한이 없습니다.');
-        navigate(-1);
-        break;
       case 40400: // 요청한 토큰에 대한 유저가 존재하지 않을 때
-        if (confirm('존재하지 않는 사용자입니다. 새로고침 하시겠습니까?')) {
-          window.location.reload();
-        }
+        alert('올바르지 않은 접근입니다.');
+        window.location.reload();
         break;
       case 40403: // 해당 글모임이 존재하지 않을 때
         alert('존재하지 않는 글모임입니다.');

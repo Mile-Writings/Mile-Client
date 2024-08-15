@@ -31,14 +31,10 @@ export interface MemberPropTypes {
 }
 
 const fetchMemberInfo = async (groupId: string, page: number | undefined) => {
-  try {
-    const data = await authClient.get<FetchMemberPropTypes>(
-      `/api/moim/${groupId}/writernames?page=${page}`,
-    );
-    return data.data;
-  } catch (error) {
-    console.error(error);
-  }
+  const data = await authClient.get<FetchMemberPropTypes>(
+    `/api/moim/${groupId}/writernames?page=${page}`,
+  );
+  return data.data;
 };
 
 export default fetchMemberInfo;

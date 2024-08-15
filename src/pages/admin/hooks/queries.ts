@@ -75,7 +75,6 @@ export const useFetchMemberInfo = (groupId: string, page: number | undefined) =>
 // 멤버 삭제 api
 export const useDeleteMember = () => {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
   const data = useMutation({
     mutationKey: [QUERY_KEY_ADMIN.useMemberInfo],
@@ -86,19 +85,10 @@ export const useDeleteMember = () => {
     },
     onError: (error) => {
       if (isAxiosError(error)) {
-        switch (error.response?.data.status) {
-          case 40103: // 비공개 글모임인 경우, 로그인을 진행하지 않고 요청을 보냈을 때
-            alert('접근 권한이 없습니다.');
-            navigate('/login');
-            break;
-          case 40411: // 삭제하고자 하는 멤버가 존재하지 않을 때
-            if (confirm('존재하지 않는 멤버입니다. 새로고침 하시겠습니까?')) {
-              window.location.reload();
-            }
-            break;
-          default:
-            alert('요청을 제대로 수행할수 없어요. 잠시 후에 다시 시도해주세요.');
-            navigate(-1);
+        if (error.response?.data.status === 40411) {
+          // 삭제하고자 하는 멤버가 존재하지 않을 때
+          alert('올바르지 않은 접근입니다');
+          window.location.reload();
         }
       }
     },
@@ -110,14 +100,15 @@ export const useDeleteMember = () => {
   return { deleteMember };
 };
 
+// 초대링크 복사 api
 export const useFetchInvitationLink = (groupId: string | undefined) => {
-  const { data } = useQuery({
+  const { data, error } = useQuery({
     queryKey: [QUERY_KEY_ADMIN.fetchInvitationLink],
     queryFn: () => fetchInvitationLink(groupId || ''),
   });
   const invitationCode = data?.data;
 
-  return { invitationCode };
+  return { invitationCode, error };
 };
 
 interface editTopicPropType {

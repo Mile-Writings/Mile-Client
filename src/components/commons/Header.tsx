@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
-import { isAxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
@@ -31,7 +29,6 @@ interface OnClickTempExistProps {
 // 로그인된 경우 헤더
 export const AuthorizationHeader = () => {
   const [moims, setMoims] = useState<Moim[]>([]);
-  const navigate = useNavigate();
 
   const { navigateToHome } = useNavigateToHome();
   const { data, error } = useFetchHeaderGroup();
@@ -45,15 +42,7 @@ export const AuthorizationHeader = () => {
     if (data?.data?.moims) setMoims(data?.data.moims);
   }, [data?.data?.moims]);
 
-  if (isAxiosError(error)) {
-    if (error.response?.data.status === 40103) {
-      alert('접근 권한이 없습니다.');
-      navigate('/login');
-    } else {
-      alert('내용을 불러올 수 없어요. 잠시 후에 다시 시도해주세요');
-      navigate('/');
-    }
-  }
+  if (error) console.error(error);
 
   return (
     <HeaderWrapper>

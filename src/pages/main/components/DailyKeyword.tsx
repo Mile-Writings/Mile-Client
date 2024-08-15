@@ -12,7 +12,7 @@ const DailyKeyword = () => {
     if (error.response?.data.status === 40412) {
       console.error('내용을 불러올 수 없어요. 잠시 후에 다시 시도해주세요.');
     } else {
-      console.error('내용을 불러올 수 없어요. 잠시 후에 다시 시도해주세요.');
+      console.error(error);
     }
   }
 
