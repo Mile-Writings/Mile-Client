@@ -12,7 +12,10 @@ import Error from '../error/Error';
 import Loading from '../loading/Loading';
 
 import { MakeGroupAdminIc } from '../../assets/svgs';
+import DefaultModal from '../../components/commons/modal/DefaultModal';
+import DefaultModalBtn from '../../components/commons/modal/DefaultModalBtn';
 import Spacing from '../../components/commons/Spacing';
+import useModal from '../../hooks/useModal';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
   const { groupId } = useParams();
@@ -20,21 +23,16 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
   const { memberData, totalMember } = useFetchMemberInfo(groupId || '', page);
   const [pageNum, setPageNum] = useState(1);
   const { topicCount, adminTopicData } = useAdminTopic(groupId, pageNum);
+
+  // input 모달 열고 닫기
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
-  const { mutate, isPending, isError } = useDeleteGroup(groupId || '');
+  // 공통 모달 열고 닫기
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
 
-  const handleDeleteGroup = () => {
-    if (
-      confirm(
-        '글모임 삭제 시 모임 내 모든 데이터가 삭제되며 다시 복구할 수 없습니다. 그래도 계속하시겠습니까?',
-      )
-    ) {
-      mutate();
-    }
-  };
+  const { mutate: deleteGroup, isPending, isError } = useDeleteGroup(groupId || '');
 
   if (isError) {
     return <Error />;
@@ -84,11 +82,22 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
           <Spacing marginBottom="1.2" />
           <SubTitleWrapper>
             <SubTitle>{`글 모임 정보를 수정할 수 있습니다`}</SubTitle>
-            <DeleteGroupBtn onClick={handleDeleteGroup}>삭제하기</DeleteGroupBtn>
+            <DeleteGroupBtn onClick={handleShowModal}>삭제하기</DeleteGroupBtn>
           </SubTitleWrapper>
 
           <Spacing marginBottom="3.6" />
           <EditGroupInfo />
+
+          {/* 모임 삭제 모달 */}
+          <DefaultModal
+            isModalOpen={isModalOpen}
+            handleClickBg={handleCloseModal}
+            content={`글모임 삭제 시 모임 내 모든 데이터가 삭제되며 \n다시 복구할 수 없습니다. 그래도 계속하시겠습니까?`}
+            type="LARGE"
+          >
+            <DefaultModalBtn isLeft={true} text="예" onClickBtn={deleteGroup} />
+            <DefaultModalBtn isLeft={false} text="아니오" onClickBtn={handleCloseModal} />
+          </DefaultModal>
         </AdminContainer>
       );
   }

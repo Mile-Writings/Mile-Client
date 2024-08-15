@@ -57,7 +57,7 @@ const DefaultModal = (props: ModalPropType) => {
             <Content>{content}</Content>
             <Spacing marginBottom="2.4" />
             {modalImg && getModalImg()}
-            <Spacing marginBottom="2.4" />
+            {modalImg && <Spacing marginBottom="2.4" />}
             <BtnWrapper>{children}</BtnWrapper>
           </ModalWrapper>
         </Wrapper>,
