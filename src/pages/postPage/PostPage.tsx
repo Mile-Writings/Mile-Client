@@ -198,7 +198,6 @@ const PostPage = () => {
     useGetTempSaveContent(tempPostId || '', continueTempPost || false);
 
   // 최초 뷰 들어왔을 때 임시저장 이어쓸지 confirm 창
-  console.log(type);
   useEffect(() => {
     if (type === 'post' && isTemporaryPostExist && !continueTempPost) {
       setEditorModalType('continueTempSave');
