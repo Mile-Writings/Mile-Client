@@ -16,7 +16,7 @@ export const fetchInvitationLink = async (groupId: string) => {
       `/api/moim/${groupId}/invitation-code`,
     );
     return { data: { data }.data.data };
-  } catch {
-    console.error();
+  } catch (error) {
+    console.error(error);
   }
 };

@@ -19,7 +19,7 @@ const Admin = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
 
-  const { invitationCode } = useFetchInvitationLink(groupId);
+  const { invitationCode, error } = useFetchInvitationLink(groupId);
   const { groupInfoData } = useGroupInfo(groupId || '');
 
   const handleCopyLink = (invitationCode: string) => {
@@ -33,6 +33,8 @@ const Admin = () => {
   const handleInviteBtnClick = () => {
     handleCopyLink(invitationCode?.invitationCode || '');
   };
+
+  if (error) console.error('초대링크 복사 에러');
 
   return (
     <AdminWrapper>
