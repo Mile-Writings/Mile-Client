@@ -15,7 +15,7 @@ import {
 interface ModalPropType {
   isModalOpen: boolean;
   handleClickBg?: () => void;
-  type?: 'DEFAULT' | 'MEDIUM' | 'LARGE';
+  type?: 'DEFAULT' | 'SMALL' | 'MEDIUM' | 'LARGE';
   content: string;
   modalImg?: 'DELETE' | 'POST' | 'EDIT' | 'SAVE' | 'CAUTION' | '';
   children: React.ReactNode;
@@ -98,6 +98,8 @@ const ModalWrapper = styled.div<{ $type: string }>`
   justify-content: center;
   width: ${({ $type }) => {
     switch ($type) {
+      case 'SMALL':
+        return '42.7rem';
       case 'MEDIUM':
         return '43.1rem';
       case 'LARGE':

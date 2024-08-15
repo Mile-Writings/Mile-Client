@@ -6,6 +6,8 @@ import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 
 import { adminEmptyMemberIc as AdminEmptyMemberIcon, adminProfileIc } from '../../../assets/svgs';
 import { NegativeModal } from '../../../components/commons/Modal';
+import DefaultModal from '../../../components/commons/modal/DefaultModal';
+import DefaultModalBtn from '../../../components/commons/modal/DefaultModalBtn';
 import Pagenation from '../../../components/commons/Pagenation';
 import Spacing from '../../../components/commons/Spacing';
 import useModal from '../../../hooks/useModal';
@@ -91,20 +93,30 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
           setActiveChunk={setActiveChunk}
         />
       )}
-      <NegativeModal
-        modalContent={
-          '삭제 시, 해당 멤버와 해당 멤버가 작성한\n글과 댓글도 모두 삭제됩니다. 계속 하시겠습니까?'
-        }
+
+      <DefaultModal
         isModalOpen={isModalOpen}
-        modalHandler={() => {
-          deleteMember(deleteMemberId);
-          handleCloseModal();
-        }}
-        closeModalHandler={() => {
-          setDeleteMemberId(-1);
-          handleCloseModal();
-        }}
-      />
+        handleClickBg={handleCloseModal}
+        content={`삭제 시, 해당 멤버와 해당 멤버가 작성한\n글과 댓글도 모두 삭제됩니다. 계속 하시겠습니까?`}
+        type="SMALL"
+      >
+        <DefaultModalBtn
+          isLeft={true}
+          text="예"
+          onClickBtn={() => {
+            deleteMember(deleteMemberId);
+            handleCloseModal();
+          }}
+        />
+        <DefaultModalBtn
+          isLeft={false}
+          text="아니요"
+          onClickBtn={() => {
+            setDeleteMemberId(-1);
+            handleCloseModal();
+          }}
+        />
+      </DefaultModal>
     </>
   );
 };
