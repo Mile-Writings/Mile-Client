@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { SyntheticEvent } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Comment from './components/Comment';
@@ -18,6 +19,7 @@ import {
 import Button from './../../components/commons/Button';
 import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/commons/Header';
 import Spacing from './../../components/commons/Spacing';
+import { DEFAULT_IMG_URL } from './../../constants/defaultImgUrl';
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -72,11 +74,19 @@ const PostDetail = () => {
     });
   };
 
+  const handleReplaceDefaultImg = (e: SyntheticEvent<HTMLImageElement, ErrorEvent>) => {
+    e.currentTarget.src = DEFAULT_IMG_URL;
+  };
+
   return (
     <>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <Spacing marginBottom="6.4" />
-      <ThumnailImg src={postData?.imageUrl} alt={'썸네일 이미지'} />
+      <ThumnailImg
+        src={postData?.imageUrl}
+        alt={'썸네일 이미지'}
+        onError={handleReplaceDefaultImg}
+      />
       <Spacing marginBottom="4.8" />
       <PostDetailWrapper>
         <PostDetailContainer>

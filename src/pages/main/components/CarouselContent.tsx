@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
+import { SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { MainGroupRoutingBtn as MainGroupRoutingBtnIcon } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
+import { DEFAULT_IMG_URL } from '../../../constants/defaultImgUrl';
 
 export interface groupContentPropTypes {
   topicName: string;
@@ -34,6 +36,10 @@ const CarouselContent = ({
     navigate(`/group/${groupId}`);
   };
 
+  const replaceDefaultImg = (e: SyntheticEvent<HTMLImageElement, ErrorEvent>) => {
+    e.currentTarget.src = DEFAULT_IMG_URL;
+  };
+
   return (
     <CarouselWrapper>
       <CarouselContentLayout>
@@ -49,8 +55,9 @@ const CarouselContent = ({
           <Image
             src={imageUrl || ''}
             isLast={isLast}
-            alt={`${groupId}-content-image`}
+            alt={'썸네일 이미지'}
             onClick={handleRoutingDetail}
+            onError={replaceDefaultImg}
           />
         )}
       </CarouselContentLayout>
