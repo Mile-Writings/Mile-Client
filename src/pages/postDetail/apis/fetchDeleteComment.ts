@@ -1,4 +1,4 @@
-import { devClient } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 interface DeleteCommentResponseType {
   status: number;
@@ -6,13 +6,8 @@ interface DeleteCommentResponseType {
   data: null;
 }
 const fetchDeleteComment = async (commentId: string) => {
-  const token = localStorage.getItem('accessToken');
   try {
-    const data = devClient.delete<DeleteCommentResponseType>(`/api/comment/${commentId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const data = authClient.delete<DeleteCommentResponseType>(`/api/comment/${commentId}`);
     return data;
   } catch (err) {
     console.log(err);

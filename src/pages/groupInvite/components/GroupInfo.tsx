@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { GroupLeaderIc, GroupMemberIc, GroupDateIc } from './../../../assets/svgs';
+import { GroupDateIc, GroupLeaderIc, GroupMemberIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 interface GroupInfoPropTypes {
@@ -117,6 +117,7 @@ const GroupDetail = styled.p`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.body2};
   line-height: 2.9rem;
-
+  white-space: pre-wrap;
+  word-break: keep-all;
   line-break: auto;
 `;

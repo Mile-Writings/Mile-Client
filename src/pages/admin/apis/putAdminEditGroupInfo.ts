@@ -1,5 +1,5 @@
 import { DEFAULT_IMG_URL } from '../../../constants/defaultImgUrl';
-import { client } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 export interface AdminEditGroupInfoPropTypes {
   groupName: string;
@@ -16,23 +16,13 @@ const putAdminEditGroupInfo = async ({
   groupImageServerUrl,
   groupId,
 }: AdminEditGroupInfoPropTypes) => {
-  const token = localStorage.getItem('accessToken');
-
   try {
-    await client.put(
-      `/api/moim/${groupId}/info`,
-      {
-        moimTitle: groupName,
-        description: groupDesc,
-        imageUrl: groupImageServerUrl || DEFAULT_IMG_URL,
-        isPublic: isPublic,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+    await authClient.put(`/api/moim/${groupId}/info`, {
+      moimTitle: groupName,
+      description: groupDesc,
+      imageUrl: groupImageServerUrl || DEFAULT_IMG_URL,
+      isPublic: isPublic,
+    });
   } catch (err) {
     console.error(err);
   }

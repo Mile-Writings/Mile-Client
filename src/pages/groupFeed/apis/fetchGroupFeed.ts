@@ -1,4 +1,4 @@
-import { client, devClient } from '../../../utils/apis/axios';
+import { authClient, client } from '../../../utils/apis/axios';
 
 interface GroupFeedAuthPropTypes {
   data: {
@@ -10,20 +10,10 @@ interface GroupFeedAuthPropTypes {
 }
 
 export const fetchGroupFeedAuth = async (groupId: string) => {
-  try {
-    const accessToken = localStorage.getItem('accessToken');
-    const response = await devClient.get<GroupFeedAuthPropTypes>(
-      `/api/moim/${groupId}/authenticate`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
-    return response.data; //"isMember" : boolean, "isOwner" : boolean
-  } catch (error) {
-    console.error('에러:', error);
-  }
+  const response = await authClient.get<GroupFeedAuthPropTypes>(
+    `/api/moim/${groupId}/authenticate`,
+  );
+  return response.data; //"isMember" : boolean, "isOwner" : boolean
 };
 
 interface GroupInfoPropTypes {
@@ -198,12 +188,7 @@ interface WriterNamePropTypes {
 }
 export const fetchWriterNameOnly = async (groupId: string) => {
   try {
-    const accessToken = localStorage.getItem('accessToken');
-    const response = await client.get<WriterNamePropTypes>(`/api/moim/${groupId}/writername`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await authClient.get<WriterNamePropTypes>(`/api/moim/${groupId}/writername`);
     return response.data;
   } catch (error) {
     console.error('에러:', error);
@@ -221,16 +206,10 @@ interface WriterInfoPropTypes {
 }
 export const fetchWriterInfo = async (writerNameId: number | undefined) => {
   try {
-    const accessToken = localStorage.getItem('accessToken');
-    const response = await client.get<WriterInfoPropTypes>(
+    const response = await authClient.get<WriterInfoPropTypes>(
       `/api/writername/${writerNameId}/profile`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
     );
-    console.log(response.data, 'writerInfo');
+
     return response.data;
   } catch (error) {
     console.error('에러:', error);
@@ -249,16 +228,10 @@ interface editWriterInfoPropType {
 }
 export const fetchEditIntro = async ({ writerNameId, description }: editWriterInfoPropType) => {
   try {
-    const accessToken = localStorage.getItem('accessToken');
-    const response = await client.patch<WriterIntroPropTypes>(
+    const response = await authClient.patch<WriterIntroPropTypes>(
       `/api/writername/${writerNameId}/description`,
       {
         description: description,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
       },
     );
     return response.data;

@@ -1,4 +1,4 @@
-import { devClient } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 interface MembersListTypes {
   pageNumber: number;
@@ -12,13 +12,12 @@ interface MembersListTypes {
 }
 
 const fetchDeleteMember = async (writerNameId: number | undefined) => {
-  const token = localStorage.getItem('accessToken');
-  const data = await devClient.delete<MembersListTypes>(`/api/writername/${writerNameId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return data;
+  try {
+    const data = await authClient.delete<MembersListTypes>(`/api/writername/${writerNameId}`);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 export default fetchDeleteMember;

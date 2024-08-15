@@ -7,7 +7,7 @@ import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
 
 import { HeaderLogoIc } from '../../assets/svgs';
-import useNavigateHome from '../../hooks/useNavigateHome';
+import useNavigateToHome from '../../hooks/useNavigateHome';
 import useNavigateLoginWithPath from '../../hooks/useNavigateLoginWithPath';
 import { Moim } from '../../pages/groupFeed/apis/fetchHeaderGroup';
 import CreateGroupBtn from '../../pages/groupFeed/components/CreateGroupBtn';
@@ -33,12 +33,12 @@ export const AuthorizationHeader = () => {
   const [moims, setMoims] = useState<Moim[]>([]);
   const navigate = useNavigate();
 
-  const { navigateToHome } = useNavigateHome();
+  const { navigateToHome } = useNavigateToHome();
   const { data, error } = useFetchHeaderGroup();
 
   const handleLogOut = () => {
     logout();
-    location.reload();
+    navigateToHome();
   };
 
   useEffect(() => {
@@ -71,7 +71,7 @@ export const AuthorizationHeader = () => {
 
 // 로그아웃된 경우 헤더
 export const UnAuthorizationHeader = () => {
-  const { navigateToHome } = useNavigateHome();
+  const { navigateToHome } = useNavigateToHome();
   const { navigateToLogin } = useNavigateLoginWithPath();
 
   return (
@@ -84,7 +84,7 @@ export const UnAuthorizationHeader = () => {
 
 // 에디터 창에서 글을 수정하고 있을 때 헤더
 export const EditorEditHeader = ({ onClickEditSave }: onClickEditProps) => {
-  const { navigateToHome } = useNavigateHome();
+  const { navigateToHome } = useNavigateToHome();
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
@@ -97,7 +97,7 @@ export const EditorEditHeader = ({ onClickEditSave }: onClickEditProps) => {
 
 // 임시저장 글 존재 X -> 에디터 창에서 글을 쓰고 있을 때
 export const EditorTempNotExistHeader = ({ onClickTempSave, onClickSubmit }: OnClickTwoProps) => {
-  const { navigateToHome } = useNavigateHome();
+  const { navigateToHome } = useNavigateToHome();
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
@@ -115,7 +115,7 @@ export const EditorTempNotExistHeader = ({ onClickTempSave, onClickSubmit }: OnC
 
 // 임시저장 글 존재 O -> 에디터 창에서 글을 쓰고 있을 때
 export const EditorTempExistHeader = ({ onClickSubmit }: OnClickTempExistProps) => {
-  const { navigateToHome } = useNavigateHome();
+  const { navigateToHome } = useNavigateToHome();
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
@@ -130,7 +130,7 @@ export const EditorTempExistHeader = ({ onClickSubmit }: OnClickTempExistProps) 
 
 // 로고만 있는 헤더
 export const DefaultHeader = () => {
-  const { navigateToHome } = useNavigateHome();
+  const { navigateToHome } = useNavigateToHome();
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
@@ -169,5 +169,7 @@ const HeaderBtnContainer = styled.div`
 `;
 
 const HeaderLogoIcon = styled(HeaderLogoIc)`
+  flex-shrink: 0;
+
   cursor: pointer;
 `;

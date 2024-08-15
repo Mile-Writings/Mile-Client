@@ -6,7 +6,11 @@ type LogInOutPropTypes = {
   onClick?: () => void;
 };
 const LogInOutBtn = ({ children, onClick }: LogInOutPropTypes) => {
-  return <LogInOutWrapper onClick={onClick}>{children}</LogInOutWrapper>;
+  return (
+    <LogInOutWrapper type="button" onClick={onClick}>
+      {children}
+    </LogInOutWrapper>
+  );
 };
 
 export default LogInOutBtn;

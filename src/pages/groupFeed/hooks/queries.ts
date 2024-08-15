@@ -168,6 +168,7 @@ export const useFetchHeaderGroup = () => {
   const { data, error } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
     queryFn: () => fetchHeaderGroup(),
+    retry: 3,
   });
   return { data, error };
 };

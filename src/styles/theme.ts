@@ -97,7 +97,7 @@ export const theme = {
       line-height: 130%; /* 23.4px */
     `,
     title9: css`
-      font-weight: 600;
+      font-weight: 700;
       font-size: 2.2rem;
       font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;

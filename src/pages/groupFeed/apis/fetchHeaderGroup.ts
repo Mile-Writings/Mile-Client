@@ -1,4 +1,4 @@
-import { client } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 export interface HeaderGroupPropTypes {
   status: number;
@@ -14,12 +14,7 @@ export interface Moim {
 }
 
 export const fetchHeaderGroup = async () => {
-  const accessToken = localStorage.getItem('accessToken');
-  const data = await client.get<HeaderGroupPropTypes>(`/api/user/moims`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const data = await authClient.get<HeaderGroupPropTypes>(`/api/user/moims`);
 
   return data.data;
 };
