@@ -36,7 +36,7 @@ const CarouselContent = ({
     navigate(`/group/${groupId}`);
   };
 
-  const replaceDefaultImg = (e: SyntheticEvent<HTMLImageElement, ErrorEvent>) => {
+  const handleReplaceDefaultImg = (e: SyntheticEvent<HTMLImageElement, ErrorEvent>) => {
     e.currentTarget.src = DEFAULT_IMG_URL;
   };
 
@@ -57,7 +57,7 @@ const CarouselContent = ({
             isLast={isLast}
             alt={'썸네일 이미지'}
             onClick={handleRoutingDetail}
-            onError={replaceDefaultImg}
+            onError={handleReplaceDefaultImg}
           />
         )}
       </CarouselContentLayout>
