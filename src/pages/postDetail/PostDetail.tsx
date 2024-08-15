@@ -347,6 +347,8 @@ const WriterDesc = styled.div`
   color: ${({ theme }) => theme.colors.gray80};
   text-overflow: ellipsis;
 
+  word-break: keep-all;
+
   ${({ theme }) => theme.fonts.body3};
 `;
 const WriterInfoText = styled.p`
