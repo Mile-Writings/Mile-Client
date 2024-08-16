@@ -47,7 +47,7 @@ const GroupFeed = () => {
   }, [activeCategoryId]);
 
   const { groupInfoData } = useGroupInfo(groupId || '');
-  const { writerName, writerNameId } = useFetchWriterNameOnly(groupId || '');
+  const { writerName, writerNameId } = useFetchWriterNameOnly(groupId || '', isMember, isOwner);
 
   const navigate = useNavigate();
 

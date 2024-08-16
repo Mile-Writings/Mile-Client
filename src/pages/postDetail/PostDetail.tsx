@@ -29,11 +29,11 @@ const PostDetail = () => {
   const location = useLocation();
   const topicId = location.state?.topicId;
 
+  const { isPublic } = useGroupFeedPublicStatus(groupId || '');
   const { isMember } = useGroupFeedAuth(groupId || '');
   const { data, isError, isLoading } = useGetPostDetail(postId || '');
   const { data: postAuth } = useCheckPostAuth(postId || '');
   const { mutate: deletePost } = useDeletePost(postId || '', topicId);
-  const { isPublic } = useGroupFeedPublicStatus(groupId || '');
 
   const postData = data?.data;
   const accessToken = localStorage.getItem('accessToken');

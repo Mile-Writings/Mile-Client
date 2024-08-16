@@ -31,10 +31,10 @@ const GroupInvite = () => {
       if (error.response && error.response.status) {
         const { status } = error.response;
         if (status === 400) {
-          alert('이미 가입한 모임입니다!');
+          alert('이미 가입한 모임입니다.');
           navigate(`/group/${groupId}`);
         } else if (status === 404) {
-          alert('해당 모임은 존재하지 않습니다!');
+          alert('해당 글모임은 존재하지 않는 모임입니다.');
           navigate(`/`);
         } else if (status === 401) {
           navigateToLogin();
