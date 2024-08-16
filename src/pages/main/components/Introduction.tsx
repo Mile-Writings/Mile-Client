@@ -59,7 +59,7 @@ const IntroductionWrapper = styled.section`
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 10.1rem 21.8rem 0 28.4rem;
+  padding: 10rem 21.8rem 10rem 28.4rem;
 
   background-color: ${({ theme }) => theme.colors.backGroundViolet};
 `;
