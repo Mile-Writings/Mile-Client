@@ -3,16 +3,16 @@ import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import GroupInfo from './components/GroupInfo';
-import Title from './components/Title';
-import UserInfoInput from './components/UserInfoInput';
-import { useGetGroupInfo } from './hooks/queries';
-
 import Loading from '../loading/Loading';
 
 import { DefaultHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import useNavigateLoginWithPath from '../../hooks/useNavigateLoginWithPath';
+
+import GroupInfo from './components/GroupInfo';
+import Title from './components/Title';
+import UserInfoInput from './components/UserInfoInput';
+import { useGetGroupInfo } from './hooks/queries';
 
 const GroupInvite = () => {
   const navigate = useNavigate();

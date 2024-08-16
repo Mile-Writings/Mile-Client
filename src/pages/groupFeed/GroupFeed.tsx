@@ -2,6 +2,14 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import Error from '../error/Error';
+import Loading from '../loading/Loading';
+
+import { GroupFloatingBtnIc, GroupThumbnailImgIc } from '../../assets/svgs';
+import Footer from '../../components/commons/Footer';
+import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
+import Spacing from '../../components/commons/Spacing';
+
 import Carousel from './carousel/Carousel';
 import CuriousArticle from './components/CuriousArticle';
 import CuriousProfile from './components/CuriousProfile';
@@ -15,14 +23,6 @@ import {
   useGroupFeedPublicStatus,
   useGroupInfo,
 } from './hooks/queries';
-
-import Error from '../error/Error';
-import Loading from '../loading/Loading';
-
-import { GroupFloatingBtnIc, GroupThumbnailImgIc } from '../../assets/svgs';
-import Footer from '../../components/commons/Footer';
-import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
-import Spacing from '../../components/commons/Spacing';
 
 const GroupFeed = () => {
   const { groupId } = useParams();

@@ -66,7 +66,7 @@ interface GroupInfoQueryResult {
 }
 
 export const useGroupFeedPublicStatus = (groupId: string) => {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getGroupFeedPublicStatus, groupId],
     queryFn: () => fetchGroupPublicStatus(groupId),
     enabled: !!groupId,
@@ -74,7 +74,7 @@ export const useGroupFeedPublicStatus = (groupId: string) => {
 
   const isPublic = data?.data?.isPublic;
 
-  return { isPublic, isLoading };
+  return { isPublic, isLoading, isError };
 };
 
 export const useGroupInfo = (groupId: string): GroupInfoQueryResult => {
