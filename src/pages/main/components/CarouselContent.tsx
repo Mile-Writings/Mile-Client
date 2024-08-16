@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { MainGroupRoutingBtn as MainGroupRoutingBtnIcon } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
+import { replaceDefaultImg } from '../../../utils/replaceDefaultImg';
 
 export interface groupContentPropTypes {
   topicName: string;
@@ -49,8 +50,9 @@ const CarouselContent = ({
           <Image
             src={imageUrl || ''}
             isLast={isLast}
-            alt={`${groupId}-content-image`}
+            alt={`썸네일 이미지`}
             onClick={handleRoutingDetail}
+            onError={replaceDefaultImg}
           />
         )}
       </CarouselContentLayout>

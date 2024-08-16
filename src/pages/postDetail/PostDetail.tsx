@@ -8,6 +8,7 @@ import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queri
 import Error from '../error/Error';
 import Loading from '../loading/Loading';
 
+import { replaceDefaultImg } from '../../utils/replaceDefaultImg';
 import {
   CheckboxIc,
   DefaultProfileIc,
@@ -76,7 +77,7 @@ const PostDetail = () => {
     <>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <Spacing marginBottom="6.4" />
-      <ThumnailImg src={postData?.imageUrl} alt={'썸네일 이미지'} />
+      <ThumnailImg src={postData?.imageUrl} alt={'썸네일 이미지'} onError={replaceDefaultImg} />
       <Spacing marginBottom="4.8" />
       <PostDetailWrapper>
         <PostDetailContainer>
