@@ -14,7 +14,7 @@ import Spacing from '../../../components/commons/Spacing';
 const Introduction = () => {
   const navigate = useNavigate();
   const handleOnClick = () => {
-    navigate('/group/MQ==');
+    navigate('/group/Mzg=');
   };
   const [IsHovered, setIsHovered] = useState(false);
 
