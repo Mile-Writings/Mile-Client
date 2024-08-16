@@ -43,8 +43,25 @@ authClient.interceptors.response.use(
         } catch (err) {
           console.error(err);
           localStorage.removeItem('accessToken');
-          window.location.href = '/';
+          // window.location.href = '/';
         }
+      }
+    }
+  },
+);
+
+client.interceptors.response.use(
+  (config) => {
+    return config;
+  },
+
+  (err) => {
+    const originReq = err.config;
+    if (err.response && err.response.status === 401 && !originReq._retry) {
+      originReq._retry = true;
+      if (err.response.data.status === 40103) {
+        alert('로그인이 필요한 서비스입니다.');
+        window.location.href = '/login';
       }
     }
   },
