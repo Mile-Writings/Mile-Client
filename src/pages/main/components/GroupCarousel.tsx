@@ -19,7 +19,7 @@ import Spacing from '../../../components/commons/Spacing';
 export interface carouselItemPropTypes {
   moimId?: string;
   data?: groupPropTypes[];
-  groupLength: number;
+  groupLength?: number;
 }
 
 const GroupCarousel = ({ data }: carouselItemPropTypes) => {

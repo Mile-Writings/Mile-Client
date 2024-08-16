@@ -28,24 +28,26 @@ const Main = () => {
       <OnBoarding />
 
       <GroupCarouselLayout>
-        {isLoading || isFetching ? (
-          <>
-            {groupLength && (
-              <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
-                <LazyCarousel data={data} groupLength={groupLength} />
-              </Suspense>
-            )}
-          </>
-        ) : (
-          <CarouselBox>
-            <CarouselTitle>마일과 함께하고 있는 글 모임이에요</CarouselTitle>
-            {groupLength && (
-              <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
-                <LazyCarousel data={data} groupLength={groupLength} />
-              </Suspense>
-            )}
-          </CarouselBox>
-        )}
+        <CarouselContainer>
+          <CarouselTitle>마일과 함께하고 있는 글 모임이에요</CarouselTitle>
+          {isLoading || isFetching ? (
+            <>
+              {groupLength && (
+                <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
+                  <LazyCarousel data={data} groupLength={groupLength} />
+                </Suspense>
+              )}
+            </>
+          ) : (
+            <CarouselBox>
+              {groupLength && (
+                <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
+                  <LazyCarousel data={data} groupLength={groupLength} />
+                </Suspense>
+              )}
+            </CarouselBox>
+          )}
+        </CarouselContainer>
       </GroupCarouselLayout>
       <Spacing marginBottom="10" />
 
@@ -85,6 +87,10 @@ const GroupCarouselLayout = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const CarouselContainer = styled.div`
+  width: 93rem;
 `;
 
 const CarouselBox = styled.div`
