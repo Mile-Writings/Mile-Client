@@ -84,6 +84,7 @@ const CarouselWrapper = styled.section`
 const CarouselContentLayout = styled.div`
   display: flex;
   padding: 3.6rem;
+  gap: 3.6rem;
   height: 24rem;
 
   background-color: ${({ theme }) => theme.colors.white};
