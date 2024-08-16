@@ -53,15 +53,17 @@ const GroupFeed = () => {
 
   //접속시 권한확인
   useEffect(() => {
-    if (accessToken) {
-      if (!isPublic && !isMember && !isOwner) {
-        alert('해당 글모임은 비공개 모임입니다');
-        navigate('/');
-      }
-    } else {
-      if (!isPublic) {
-        alert('해당 글모임은 비공개 모임입니다.');
-        navigate('/');
+    if (!isPublicLoading && !isAuthLoading) {
+      if (accessToken) {
+        if (!isPublic && !isMember && !isOwner) {
+          alert('해당 글모임은 비공개 모임입니다');
+          navigate('/');
+        }
+      } else {
+        if (!isPublic) {
+          alert('해당 글모임은 비공개 모임입니다.');
+          navigate('/');
+        }
       }
     }
   }, [isPublic, isMember, isOwner]);
@@ -74,7 +76,6 @@ const GroupFeed = () => {
     console.log(error?.message, 'error');
     return <Error />;
   }
-
   return (
     <GroupFeedWrapper>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
