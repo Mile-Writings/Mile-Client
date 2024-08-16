@@ -1,5 +1,6 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import checkAuthenticate from '../../../utils/checkAuthenticate';
 import {
   fetchArticleList,
   fetchCuriousPost,
@@ -14,8 +15,6 @@ import {
   fetchWriterNameOnly,
 } from '../apis/fetchGroupFeed';
 import { fetchHeaderGroup } from '../apis/fetchHeaderGroup';
-
-import checkAuthenticate from '../../../utils/checkAuthenticate';
 
 export const QUERY_KEY_GROUPFEED = {
   getGroupFeedAuth: 'getGroupFeedAuth',

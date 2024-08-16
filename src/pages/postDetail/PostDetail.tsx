@@ -57,7 +57,7 @@ const PostDetail = () => {
   useEffect(() => {
     if (!publicStatusLoading && !feedAuthLoading) {
       if (!isPublic) {
-        if (!checkAuthenticate() || role === 'anonymous' || role === undefined) {
+        if (!checkAuthenticate() || role === 'anonymous') {
           alert('해당 글모임은 비공개 글모임입니다.');
           navigate('/');
         }

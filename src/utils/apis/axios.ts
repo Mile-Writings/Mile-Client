@@ -46,7 +46,12 @@ authClient.interceptors.response.use(
           // window.location.href = '/';
         }
       }
+      if (err.response.data.status === 40103) {
+        alert('로그인이 필요한 서비스입니다.');
+        window.location.href = '/login';
+      }
     }
+    return Promise.reject(err);
   },
 );
 

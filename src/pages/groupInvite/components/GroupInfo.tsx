@@ -14,7 +14,7 @@ interface GroupInfoPropTypes {
 
 const GroupInfo = (props: GroupInfoPropTypes) => {
   const { moimTitle, imageUrl, leader, foundedDate, memberCount, description } = props;
-
+  console.log(moimTitle);
   return (
     <GroupInfoWrapper>
       <GroupImg src={imageUrl} alt={'모임 이미지'} />

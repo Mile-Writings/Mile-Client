@@ -13,10 +13,10 @@ export const QUERY_KEY_GROUP_INVITE = {
 
 // 글 모임 정보 가져오기
 export const useGetGroupInfo = (groupId: string) => {
-  const { data, error } = useQuery({
+  const { data, error, isError } = useQuery({
     queryKey: [QUERY_KEY_GROUP_INVITE.getGroupInfo, groupId],
     queryFn: () => fetchGroupInfo(groupId),
-    retry: 1,
+    retry: false,
   });
 
   const moimTitle = data && data?.data?.moimTitle;
@@ -25,8 +25,7 @@ export const useGetGroupInfo = (groupId: string) => {
   const foundedDate = data && data?.data?.foundedDate;
   const memberCount = data && data?.data?.memberCount;
   const description = data && data?.data?.description;
-
-  return { moimTitle, imageUrl, leader, foundedDate, memberCount, description, error };
+  return { moimTitle, imageUrl, leader, foundedDate, memberCount, description, error, isError };
 };
 
 // 필명 중복 여부 확인
