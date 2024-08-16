@@ -1,5 +1,6 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import checkAuthenticate from '../../../utils/checkAuthenticate';
 import {
   fetchArticleList,
   fetchCuriousPost,
@@ -174,9 +175,11 @@ export const useFetchHeaderGroup = () => {
 };
 
 export const useFetchWriterNameOnly = (groupId: string) => {
+  const token = checkAuthenticate();
   const { data } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getWriterNameOnly, groupId],
     queryFn: () => fetchWriterNameOnly(groupId),
+    enabled: !!token,
   });
 
   const writerName = data?.data.writerName;
