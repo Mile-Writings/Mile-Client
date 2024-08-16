@@ -6,7 +6,10 @@ import Error from '../error/Error';
 import { useGroupFeedAuth, useGroupFeedPublicStatus } from '../groupFeed/hooks/queries';
 import Loading from '../loading/Loading';
 
+import { replaceDefaultImg } from '../../utils/replaceDefaultImg';
+
 import checkAuthenticate from '../../utils/checkAuthenticate';
+
 import {
   CheckboxIc,
   DefaultProfileIc,
@@ -97,7 +100,7 @@ const PostDetail = () => {
     <>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <Spacing marginBottom="6.4" />
-      <ThumnailImg src={postData?.imageUrl} alt={'썸네일 이미지'} />
+      <ThumnailImg src={postData?.imageUrl} alt={'썸네일 이미지'} onError={replaceDefaultImg} />
       <Spacing marginBottom="4.8" />
       <PostDetailWrapper>
         <PostDetailContainer>
@@ -354,6 +357,7 @@ const WriterDesc = styled.div`
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray80};
+  word-break: keep-all;
   text-overflow: ellipsis;
 
   ${({ theme }) => theme.fonts.body3};
