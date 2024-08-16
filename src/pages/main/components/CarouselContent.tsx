@@ -40,8 +40,9 @@ const CarouselContent = ({
       <CarouselContentLayout>
         <ContentContainer onClick={handleRoutingDetail}>
           <Topic>{topicName}</Topic>
+          <Spacing marginBottom="0.4" />
           <Title>{postTitle}</Title>
-          <Spacing marginBottom="2" />
+          <Spacing marginBottom="3.1" />
           <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
             {postContent}
           </SubText>
@@ -82,7 +83,6 @@ const CarouselWrapper = styled.section`
 
 const CarouselContentLayout = styled.div`
   display: flex;
-  gap: 3.6rem;
   padding: 3.6rem;
   height: 24rem;
 
@@ -97,6 +97,7 @@ const Topic = styled.h1`
 
 const Title = styled.h2`
   ${({ theme }) => theme.fonts.title10};
+  line-height: 120%;
 `;
 
 const ContentContainer = styled.div`
