@@ -10,7 +10,7 @@ import './slick.css';
 
 import { useArticleList, useTopicList } from '../hooks/queries';
 
-import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
+// import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 import Error from '../../error/Error';
 import Loading from '../../loading/Loading';
@@ -21,21 +21,7 @@ const Carousel = () => {
 
   const [selectedTopicId, setSelectedTopicId] = useState<string>('');
 
-  const [categoryId] = useState(Number(sessionStorage.getItem('activeCategoryId')) - 1 || 0);
-
-  const sessionCategoryId = window.sessionStorage.getItem('activeCategoryId');
-
-  const [activeCategoryId, setActiveCategoryId] = useState<number>(Number(sessionCategoryId) || 1);
-
-  useEffect(() => {
-    sessionStorage.setItem('activeCategoryId', String(activeCategoryId));
-  }, [activeCategoryId]);
-
-  useEffect(() => {
-    if (groupFeedCategoryData && groupFeedCategoryData.length > 0) {
-      setSelectedTopicId(groupFeedCategoryData[categoryId]?.topicId);
-    }
-  }, [groupFeedCategoryData]);
+  const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
 
   const settings = {
     dots: false,
@@ -47,6 +33,7 @@ const Carousel = () => {
 
     beforeChange: (_: number, newIndex: number) => {
       setActiveCategoryId(newIndex + 1);
+      groupFeedCategoryData && setSelectedTopicId(groupFeedCategoryData[newIndex]?.topicId);
     },
   };
 
@@ -55,7 +42,13 @@ const Carousel = () => {
     setSelectedTopicId(topicId);
   };
 
-  const { topicInfo, isLoading: articleListLoading } = useArticleList(selectedTopicId || '');
+  const { topicInfo, isLoading: articleListLoading } = useArticleList(selectedTopicId);
+
+  useEffect(() => {
+    if (groupFeedCategoryData) {
+      setSelectedTopicId(groupFeedCategoryData[0]?.topicId);
+    }
+  }, [groupFeedCategoryData]);
 
   if (isError) {
     console.log(error?.message, 'error');
@@ -66,9 +59,9 @@ const Carousel = () => {
     <>
       {(articleListLoading || isLoading) && <Loading />}
       <CarouselWrapper>
-        {groupFeedCategoryData !== undefined && groupFeedCategoryData?.length > 6 && (
-          <GroupTabBtnBaseBeforeIcon className="slick-prev" />
-        )}
+        {/* {groupFeedCategoryData !== undefined && groupFeedCategoryData?.length > 6 && (
+          <GroupTabBtnBaseBeforeIcon className="groupFeedCarousel slick-prev slick-slider slick-initialized slick-disabled" />
+        )} */}
         <Slider {...settings} className="groupFeedCarousel">
           {groupFeedCategoryData?.map((topic, index) => (
             <CarouselContainer
@@ -80,9 +73,9 @@ const Carousel = () => {
             </CarouselContainer>
           ))}
         </Slider>
-        {groupFeedCategoryData !== undefined && groupFeedCategoryData?.length > 6 && (
-          <GroupTabBtnBaseNextIcon className="slick-next slick-disabled" />
-        )}
+        {/* {groupFeedCategoryData !== undefined && groupFeedCategoryData?.length > 6 && (
+          <GroupTabBtnBaseNextIcon className="groupFeedCarousel .slick-next.slick-disabled " />
+        )} */}
       </CarouselWrapper>
       <Spacing marginBottom="3.2" />
       <Topic>{topicInfo?.topic}</Topic>
@@ -105,20 +98,20 @@ const CarouselWrapper = styled.div`
   border-bottom: 0.1rem solid ${({ theme }) => theme.colors.gray30};
 `;
 
-const GroupTabBtnBaseBeforeIcon = styled(GroupTabBtnBaseBeforeIc)`
-  position: absolute;
-  top: 0;
+// const GroupTabBtnBaseBeforeIcon = styled(GroupTabBtnBaseBeforeIc)`
+//   position: absolute;
+//   left: -1rem;
 
-  pointer-events: none;
-`;
+//   pointer-events: none;
+// `;
 
-const GroupTabBtnBaseNextIcon = styled(GroupTabBtnBaseNextIc)`
-  position: absolute;
-  top: 0;
-  right: 0;
+// const GroupTabBtnBaseNextIcon = styled(GroupTabBtnBaseNextIc)`
+//   position: absolute;
+//   top: 3.2rem;
+//   right: -1rem;
 
-  pointer-events: none;
-`;
+//   pointer-events: none;
+// `;
 
 const Topic = styled.div`
   width: 63.1rem;

@@ -2,6 +2,14 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import Error from '../error/Error';
+import Loading from '../loading/Loading';
+
+import { GroupFloatingBtnIc, GroupThumbnailImgIc } from '../../assets/svgs';
+import Footer from '../../components/commons/Footer';
+import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
+import Spacing from '../../components/commons/Spacing';
+
 import Carousel from './carousel/Carousel';
 import CuriousArticle from './components/CuriousArticle';
 import CuriousProfile from './components/CuriousProfile';
@@ -16,14 +24,6 @@ import {
   useGroupInfo,
 } from './hooks/queries';
 
-import Error from '../error/Error';
-import Loading from '../loading/Loading';
-
-import { GroupFloatingBtnIc, GroupThumbnailImgIc } from '../../assets/svgs';
-import Footer from '../../components/commons/Footer';
-import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
-import Spacing from '../../components/commons/Spacing';
-
 const GroupFeed = () => {
   const { groupId } = useParams();
   const accessToken = localStorage.getItem('accessToken');
@@ -33,7 +33,7 @@ const GroupFeed = () => {
     isLoading: isAuthLoading,
     isError,
     error,
-  } = useGroupFeedAuth(groupId || '', accessToken || '');
+  } = useGroupFeedAuth(groupId || '');
   const { isPublic, isLoading: isPublicLoading } = useGroupFeedPublicStatus(groupId || '');
 
   //sessionStorage에 저장된 카테고리 id 값을 가져옴
@@ -47,26 +47,26 @@ const GroupFeed = () => {
   }, [activeCategoryId]);
 
   const { groupInfoData } = useGroupInfo(groupId || '');
-  const { writerName, writerNameId } = useFetchWriterNameOnly(groupId || '');
+  const { writerName, writerNameId } = useFetchWriterNameOnly(groupId || '', isMember, isOwner);
 
   const navigate = useNavigate();
 
   //접속시 권한확인
   useEffect(() => {
-    if (!isAuthLoading && !isPublicLoading) {
+    if (!isPublicLoading && !isAuthLoading) {
       if (accessToken) {
         if (!isPublic && !isMember && !isOwner) {
-          alert('해당 모임은 비공개 모임입니다');
+          alert('해당 글모임은 비공개 모임입니다');
           navigate('/');
         }
       } else {
         if (!isPublic) {
-          alert('해당 모임은 비공개 모임입니다');
+          alert('해당 글모임은 비공개 모임입니다.');
           navigate('/');
         }
       }
     }
-  }, [isAuthLoading, isPublicLoading]);
+  }, [isPublic, isMember, isOwner]);
 
   if (isAuthLoading) {
     return <Loading />;
@@ -76,7 +76,6 @@ const GroupFeed = () => {
     console.log(error?.message, 'error');
     return <Error />;
   }
-
   return (
     <GroupFeedWrapper>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
