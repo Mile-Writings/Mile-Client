@@ -15,13 +15,6 @@ interface FetchGroupInfoResponseTypes {
 }
 
 export const fetchGroupInfo = async (groupId: string) => {
-  try {
-    const response = await authClient.get<FetchGroupInfoResponseTypes>(
-      `/api/moim/${groupId}/invite`,
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+  const response = await authClient.get<FetchGroupInfoResponseTypes>(`/api/moim/${groupId}/invite`);
+  return response.data;
 };
