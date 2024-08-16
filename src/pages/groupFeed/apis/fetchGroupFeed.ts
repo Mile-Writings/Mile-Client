@@ -1,4 +1,5 @@
 import { authClient, client } from '../../../utils/apis/axios';
+import checkAuthenticate from '../../../utils/checkAuthenticate';
 
 interface GroupFeedAuthPropTypes {
   data: {
@@ -10,10 +11,15 @@ interface GroupFeedAuthPropTypes {
 }
 
 export const fetchGroupFeedAuth = async (groupId: string) => {
-  const response = await authClient.get<GroupFeedAuthPropTypes>(
-    `/api/moim/${groupId}/authenticate`,
-  );
-  return response.data; //"isMember" : boolean, "isOwner" : boolean
+  if (checkAuthenticate()) {
+    const response = await authClient.get<GroupFeedAuthPropTypes>(
+      `/api/moim/${groupId}/authenticate`,
+    );
+    return response.data; //"isMember" : boolean, "isOwner" : boolean
+  } else {
+    const response = await client.get<GroupFeedAuthPropTypes>(`/api/moim/${groupId}/authenticate`);
+    return response.data; //"isMember" : boolean, "isOwner" : boolean
+  }
 };
 
 interface GroupInfoPropTypes {
@@ -187,11 +193,12 @@ interface WriterNamePropTypes {
   };
 }
 export const fetchWriterNameOnly = async (groupId: string) => {
-  try {
+  if (checkAuthenticate()) {
     const response = await authClient.get<WriterNamePropTypes>(`/api/moim/${groupId}/writername`);
     return response.data;
-  } catch (error) {
-    console.error('에러:', error);
+  } else {
+    const response = await client.get<WriterNamePropTypes>(`/api/moim/${groupId}/writername`);
+    return response.data;
   }
 };
 
