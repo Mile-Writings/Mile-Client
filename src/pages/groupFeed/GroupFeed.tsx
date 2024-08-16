@@ -55,7 +55,7 @@ const GroupFeed = () => {
   useEffect(() => {
     if (!isAuthLoading && !isPublicLoading) {
       if (accessToken) {
-        if (!isPublic && !isMember) {
+        if (!isPublic && !isMember && !isOwner) {
           alert('해당 모임은 비공개 모임입니다');
           navigate('/');
         }
