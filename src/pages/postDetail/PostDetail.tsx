@@ -1,14 +1,12 @@
 import styled from '@emotion/styled';
+import { useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-
-import Comment from './components/Comment';
-import CuriousBtn from './components/CuriousBtn';
-import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
 
 import Error from '../error/Error';
 import { useGroupFeedAuth, useGroupFeedPublicStatus } from '../groupFeed/hooks/queries';
 import Loading from '../loading/Loading';
 
+import checkAuthenticate from '../../utils/checkAuthenticate';
 import {
   CheckboxIc,
   DefaultProfileIc,
@@ -19,7 +17,9 @@ import {
 import Button from './../../components/commons/Button';
 import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/commons/Header';
 import Spacing from './../../components/commons/Spacing';
-
+import Comment from './components/Comment';
+import CuriousBtn from './components/CuriousBtn';
+import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
 const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
@@ -29,8 +29,16 @@ const PostDetail = () => {
   const location = useLocation();
   const topicId = location.state?.topicId;
 
-  const { isPublic } = useGroupFeedPublicStatus(groupId || '');
-  const { isMember } = useGroupFeedAuth(groupId || '');
+  const {
+    isPublic,
+    isLoading: publicStatusLoading,
+    isError: publicStatusError,
+  } = useGroupFeedPublicStatus(groupId || '');
+  const {
+    isMember,
+    isLoading: feedAuthLoading,
+    isError: groupAuthError,
+  } = useGroupFeedAuth(groupId || '');
   const { data, isError, isLoading } = useGetPostDetail(postId || '');
   const { data: postAuth } = useCheckPostAuth(postId || '');
   const { mutate: deletePost } = useDeletePost(postId || '', topicId);
@@ -46,19 +54,24 @@ const PostDetail = () => {
   //   navigate(`/group/${groupId}`, { replace: true });
   // };
   // useCustomBack(testFunc);
-
-  if (isLoading) {
+  useEffect(() => {
+    if (!publicStatusLoading && !feedAuthLoading) {
+      if (!isPublic) {
+        if (!checkAuthenticate() || role === 'anonymous' || role === undefined) {
+          alert('해당 글모임은 비공개 글모임입니다.');
+          navigate('/');
+        }
+      }
+    }
+  }, [isPublic, role]);
+  if (isLoading || publicStatusLoading || feedAuthLoading) {
     return <Loading />;
   }
 
-  if (isError) {
+  if (isError || publicStatusError || groupAuthError) {
     return <Error />;
   }
 
-  if (!isPublic && role === 'anonymous') {
-    alert('비공개 글모임입니다.');
-    navigate('/');
-  }
   const handleDeletePost = () => {
     const userConfirmed = confirm('삭제하시겠습니까?');
     if (userConfirmed) {
