@@ -336,6 +336,7 @@ const WriterDesc = styled.div`
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray80};
+  word-break: keep-all;
   text-overflow: ellipsis;
 
   ${({ theme }) => theme.fonts.body3};
