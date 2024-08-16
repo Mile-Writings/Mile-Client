@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { createGroupMemberJoin } from '../apis/createGroupMemberJoin';
@@ -41,9 +41,8 @@ export const useGetWriterNameConflict = (
     enabled: !!isConflictBtnClicked,
   });
 
-  const isConflict = data && data?.data?.isConflict;
-
-  return { isConflict };
+  const isWriterNameConflict = data && data?.data?.isConflict;
+  return { isWriterNameConflict };
 };
 
 // 초대링크를 통한 글모임 사용자 가입

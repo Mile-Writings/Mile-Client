@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { usePostAdminTopic, useEditAdminTopic } from './hooks/queries';
+import { useEditAdminTopic, usePostAdminTopic } from '../hooks/queries';
 
-import Spacing from '../../components/commons/Spacing';
+import Spacing from '../../../components/commons/Spacing';
 
 interface topicPropTypes {
   topicStored?: string;

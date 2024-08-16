@@ -1,6 +1,6 @@
 import { isAxiosError } from 'axios';
 
-import { client } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 interface GroupNameValidationPropTypes {
   data: {
@@ -11,26 +11,14 @@ interface GroupNameValidationPropTypes {
 }
 
 export const getGroupNameValidation = (moimName: string) => {
-  if (localStorage.getItem('accessToken')) {
-    const token = localStorage.getItem('accessToken');
-
-    try {
-      const data = client.get<GroupNameValidationPropTypes>(
-        `api/moim/name/validation?moimName=${moimName}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Access-Control-Allow-Origin': '*',
-          },
-        },
-      );
-      console.log(data);
-      return data;
-    } catch (err) {
+  try {
+    const data = authClient.get<GroupNameValidationPropTypes>(
+      `api/moim/name/validation?moimName=${moimName}`,
+    );
+    return data;
+  } catch (err) {
+    if (isAxiosError(err)) {
       console.log(err);
-      if (isAxiosError(err) && err) {
-        console.log(err);
-      }
     }
   }
 };

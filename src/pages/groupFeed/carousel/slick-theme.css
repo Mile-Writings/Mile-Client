@@ -38,6 +38,7 @@
 }
 
 .groupFeedCarousel .slick-prev {
+  z-index: 1;
   left: -2.5rem;
   width: 3.6rem;
   height: 3.7rem;
@@ -58,6 +59,14 @@
 }
 [dir='rtl'] .slick-prev:before {
   content: '→';
+}
+
+.groupFeedCarousel .slick-next.slick-disabled {
+  display: none !important;
+}
+
+.groupFeedCarousel.slick-slider.slick-initialized .slick-prev.slick-disabled {
+  display: none !important;
 }
 
 .groupFeedCarousel .slick-next {

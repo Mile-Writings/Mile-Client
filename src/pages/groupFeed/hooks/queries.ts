@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient, useMutation, useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
   fetchArticleList,
@@ -14,6 +14,8 @@ import {
   fetchWriterNameOnly,
 } from '../apis/fetchGroupFeed';
 import { fetchHeaderGroup } from '../apis/fetchHeaderGroup';
+
+import checkAuthenticate from '../../../utils/checkAuthenticate';
 
 export const QUERY_KEY_GROUPFEED = {
   getGroupFeedAuth: 'getGroupFeedAuth',
@@ -36,16 +38,12 @@ interface GroupFeedAuthQueryResult {
   error: Error | null;
 }
 
-export const useGroupFeedAuth = (
-  groupId: string,
-  accessToken: string | null,
-): GroupFeedAuthQueryResult => {
+export const useGroupFeedAuth = (groupId: string): GroupFeedAuthQueryResult => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getGroupFeedAuth, groupId],
     queryFn: () => fetchGroupFeedAuth(groupId),
-    enabled: !!accessToken,
+    enabled: !!checkAuthenticate(),
   });
-
   const isMember = data && data?.data?.isMember;
   const isOwner = data && data?.data?.isOwner;
 
@@ -68,14 +66,15 @@ interface GroupInfoQueryResult {
 }
 
 export const useGroupFeedPublicStatus = (groupId: string) => {
-  const { data } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getGroupFeedPublicStatus, groupId],
     queryFn: () => fetchGroupPublicStatus(groupId),
+    enabled: !!groupId,
   });
 
   const isPublic = data?.data?.isPublic;
 
-  return { isPublic };
+  return { isPublic, isLoading, isError };
 };
 
 export const useGroupInfo = (groupId: string): GroupInfoQueryResult => {
@@ -168,14 +167,20 @@ export const useFetchHeaderGroup = () => {
   const { data } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
     queryFn: () => fetchHeaderGroup(),
+    retry: 3,
   });
   return { data };
 };
 
-export const useFetchWriterNameOnly = (groupId: string) => {
+export const useFetchWriterNameOnly = (
+  groupId: string,
+  isMember: boolean | undefined,
+  isOwner: boolean | undefined,
+) => {
   const { data } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getWriterNameOnly, groupId],
     queryFn: () => fetchWriterNameOnly(groupId),
+    enabled: !!isMember || !!isOwner,
   });
 
   const writerName = data?.data.writerName;

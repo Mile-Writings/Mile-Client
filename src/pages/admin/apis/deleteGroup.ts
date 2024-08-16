@@ -1,4 +1,4 @@
-import { client } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 interface DeleteGroupResponseType {
   status: number;
@@ -6,13 +6,8 @@ interface DeleteGroupResponseType {
   data: object;
 }
 const deleteGroup = async (moimId: string) => {
-  const token = localStorage.getItem('accessToken');
   try {
-    const data = client.delete<DeleteGroupResponseType>(`/api/moim/${moimId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const data = authClient.delete<DeleteGroupResponseType>(`/api/moim/${moimId}`);
     return data;
   } catch (err) {
     console.log(err);

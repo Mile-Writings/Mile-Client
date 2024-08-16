@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import { createBrowserHistory } from 'history';
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
@@ -11,6 +11,7 @@ import ImageUpload from './components/ImageUpload';
 import TipTap from './components/TipTap';
 import { EDITOR_DEFAULT_IMG } from './constants/editorDefaultImg';
 import {
+  useDeleteTempPost,
   useGetTempSaveContent,
   useGetTopic,
   usePostContent,
@@ -19,9 +20,8 @@ import {
   usePutEditContent,
   usePutTempSaveContent,
   useTempSaveFlag,
-  useDeleteTempPost,
 } from './hooks/queries';
-import { preventScroll, allowScroll } from './utils/modalPreventScroll';
+import { allowScroll, preventScroll } from './utils/modalPreventScroll';
 
 import { EditorErrorIcn } from '../../assets/svgs/editorSVG';
 import {
@@ -149,11 +149,6 @@ const PostPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  //라우팅 했을 때 스크롤 맨 위로
-  useEffect(() => {
-    scrollTo(0, 0);
-  }, []);
-
   // editor content API 관련
   const [editorVal, editorContentDispatch] = useReducer(editorContentReducerFn, editorState);
   // editorContentDispatch prop 함수들
@@ -177,7 +172,7 @@ const PostPage = () => {
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
   // 임시저장 값 여부 확인 (서버값)
-  const { isTemporaryPostExist, tempPostId } = useTempSaveFlag(groupId || '');
+  const { isTemporaryPostExist, tempPostId } = useTempSaveFlag(groupId || '', type === 'post');
   // 임시저장 이어쓰기 yes 인 경우 판별
   const [continueTempPost, setContinueTempPost] = useState(false);
   // 수정하기, 임시저장 postId 저장
@@ -302,15 +297,14 @@ const PostPage = () => {
   });
 
   const onClickEditSaveBtn = () => {
-    putEditContent();
     if (contentWithoutTag.trim().length !== 0 && editorVal.title?.trim().length !== 0) {
-      setShowModal(true);
-      setEditorModalType('editContent');
-      editorFlowModalDispatch({ type: 'editContent' });
-      preventScroll();
+      putEditContent();
     }
+    setShowModal(true);
+    setEditorModalType('editContent');
+    editorFlowModalDispatch({ type: 'editContent' });
+    preventScroll();
   };
-
   // 최초 글 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
     groupId: groupId,
@@ -399,7 +393,7 @@ const PostPage = () => {
           ...state,
           title: '제출이 완료되었습니다',
           leftBtnText: '홈으로 가기',
-          leftBtnFn: () => navigate('/'),
+          leftBtnFn: () => navigate(`/group/${groupId}`),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${postContentId}`),
           modalImgType: 'postContent',
@@ -573,7 +567,7 @@ const PostPage = () => {
         title={editorVal.title}
         setTitle={setTitle}
         tempContent={tempContent}
-        editContent={type === 'edit' ? location.state.content : ''}
+        editContent={type === 'edit' ? location?.state?.content : ''}
         setEditorContent={setContent}
         setContentWithoutTag={setContentWithoutTag}
       />

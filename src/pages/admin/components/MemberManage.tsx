@@ -2,9 +2,10 @@ import styled from '@emotion/styled';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { MODAL } from '../constants/modal';
 import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 
-import { adminEmptyMemberIc as AdminEmptyMemberIcon, adminProfileIc } from '../../../assets/svgs';
+import { adminProfileIc, MemberMaster } from '../../../assets/svgs';
 import { NegativeModal } from '../../../components/commons/Modal';
 import Pagenation from '../../../components/commons/Pagenation';
 import Spacing from '../../../components/commons/Spacing';
@@ -29,58 +30,55 @@ interface MemberManagePropTypes {
 }
 
 const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) => {
-  const { groupId } = useParams();
-  const { memberData } = useFetchMemberInfo(groupId || '', pageCount);
-  const { deleteMember } = useDeleteMember();
   const [activeChunk, setActiveChunk] = useState(1);
+  const [deleteMemberId, setDeleteMemberId] = useState(-1);
+
+  const { groupId } = useParams();
 
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
-  const [deleteMemberId, setDeleteMemberId] = useState(-1);
+
+  const { memberData } = useFetchMemberInfo(groupId || '', pageCount);
+  const { deleteMember } = useDeleteMember();
+
+  const handleExpel = (writerNameId: number) => {
+    setDeleteMemberId(writerNameId);
+    handleShowModal();
+  };
 
   return (
     <>
-      <MemberTableWrapper>
+      <MemberListTableWrapper>
         <TableHeaderLayout>
-          <Header>프로필</Header>
-          <Header>필명</Header>
-          <Header>게시물 수</Header>
-          <Header>댓글 수</Header>
+          <InfoField>프로필</InfoField>
+          <InfoField>필명</InfoField>
+          <InfoField>게시물 수</InfoField>
+          <InfoField>댓글 수</InfoField>
         </TableHeaderLayout>
         <Spacing marginBottom="0.4" />
-        <MemberLayout>
-          {data?.writerNameCount !== 0 ? (
-            data?.writerNameList.map(
-              ({ writerNameId, writerName, postCount, commentCount, isOwner }) => (
-                <MemberItemContainer key={writerNameId}>
-                  <AdminProfileIcon />
-                  <Name>{writerName}</Name>
-                  <PostNumber>{postCount}</PostNumber>
-                  <CommentNumber>{commentCount}</CommentNumber>
-                  {!isOwner ? (
-                    <ExpelBtn
-                      onClick={() => {
-                        setDeleteMemberId(writerNameId);
-                        handleShowModal();
-                      }}
-                    >
-                      삭제하기
-                    </ExpelBtn>
-                  ) : (
-                    <Owner>글 모임 장</Owner>
-                  )}
-                </MemberItemContainer>
-              ),
-            )
-          ) : (
-            <EmptyContainer>
-              <EmptyMemberText>아직 멤버가 없습니다.</EmptyMemberText>
-              <Spacing marginBottom="3" />
-              <AdminEmptyMemberIcon />
-            </EmptyContainer>
+
+        <MemberListLayout>
+          {data?.writerNameList.map(
+            ({ writerNameId, writerName, postCount, commentCount, isOwner }) => (
+              <MemberItemContainer key={writerNameId}>
+                <AdminProfileIcon />
+                <Name>
+                  {isOwner && <MemberMaster />}
+                  {writerName}
+                </Name>
+                <PostNumber>{postCount}</PostNumber>
+                <CommentNumber>{commentCount}</CommentNumber>
+                {!isOwner && (
+                  <ExpelBtn type="button" onClick={() => handleExpel(writerNameId)}>
+                    삭제하기
+                  </ExpelBtn>
+                )}
+              </MemberItemContainer>
+            ),
           )}
-        </MemberLayout>
-      </MemberTableWrapper>
+        </MemberListLayout>
+      </MemberListTableWrapper>
       <Spacing marginBottom="3.6" />
+
       {memberData && memberData.writerNameCount && (
         <Pagenation
           count={memberData.writerNameCount}
@@ -91,10 +89,9 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
           setActiveChunk={setActiveChunk}
         />
       )}
+
       <NegativeModal
-        modalContent={
-          '삭제 시, 해당 멤버와 해당 멤버가 작성한\n글과 댓글도 모두 삭제됩니다. 계속 하시겠습니까?'
-        }
+        modalContent={MODAL.DELETE_MEMBER}
         isModalOpen={isModalOpen}
         modalHandler={() => {
           deleteMember(deleteMemberId);
@@ -111,7 +108,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
 
 export default MemberManage;
 
-const MemberTableWrapper = styled.section`
+const MemberListTableWrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 78.1rem;
@@ -131,7 +128,7 @@ const TableHeaderLayout = styled.div`
   ${({ theme }) => theme.fonts.button3};
 `;
 
-const Header = styled.p`
+const InfoField = styled.div`
   display: flex;
   align-items: flex-start;
 
@@ -148,7 +145,7 @@ const Header = styled.p`
   }
 `;
 
-const MemberLayout = styled.section`
+const MemberListLayout = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 1.8rem;
@@ -166,35 +163,37 @@ const AdminProfileIcon = styled(adminProfileIc)`
   margin-right: 4rem;
 `;
 
-const Name = styled.pre`
+const Name = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 11.1rem;
   margin-right: 6.8rem;
 
   color: ${({ theme }) => theme.colors.black};
-  text-align: center;
+  white-space: nowrap;
 
   ${({ theme }) => theme.fonts.body1};
 `;
 
-const PostNumber = styled.pre`
-  display: flex;
-  align-items: flex-end;
+const PostNumber = styled.span`
+  /* display: flex; */
   justify-content: center;
   width: 5.1rem;
   margin-right: 6rem;
 
   color: ${({ theme }) => theme.colors.gray70};
+  text-align: center;
 
   ${({ theme }) => theme.fonts.body1}
 `;
 
-const CommentNumber = styled.pre`
-  display: flex;
-  align-items: flex-end;
+const CommentNumber = styled.span`
   justify-content: center;
   width: 5.1rem;
 
   color: ${({ theme }) => theme.colors.gray70};
+  text-align: center;
 
   ${({ theme }) => theme.fonts.body1}
 `;
@@ -208,29 +207,7 @@ const ExpelBtn = styled.button`
 
   &:hover {
     color: ${({ theme }) => theme.colors.mainViolet};
+
+    transition: all 0.3s ease-in-out;
   }
-`;
-
-const Owner = styled.span`
-  margin-left: auto;
-
-  color: ${({ theme }) => theme.colors.black};
-
-  ${({ theme }) => theme.fonts.body5};
-  cursor: default;
-`;
-
-const EmptyContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 78.1rem;
-  height: 36.8rem;
-  padding: 0.4rem 1.8rem;
-`;
-
-const EmptyMemberText = styled.div`
-  color: ${({ theme }) => theme.colors.gray50};
-  ${({ theme }) => theme.fonts.title8};
 `;

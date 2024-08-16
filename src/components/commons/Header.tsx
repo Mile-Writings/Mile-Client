@@ -1,12 +1,15 @@
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
 
 import { HeaderLogoIc } from '../../assets/svgs';
-import useNavigateHome from '../../hooks/useNavigateHome';
+import {
+  default as useNavigateHome,
+  default as useNavigateToHome,
+} from '../../hooks/useNavigateHome';
+import useNavigateLoginWithPath from '../../hooks/useNavigateLoginWithPath';
 import { Moim } from '../../pages/groupFeed/apis/fetchHeaderGroup';
 import CreateGroupBtn from '../../pages/groupFeed/components/CreateGroupBtn';
 import MyGroupDropDown from '../../pages/groupFeed/components/MyGroupDropDown';
@@ -29,11 +32,11 @@ interface OnClickTempExistProps {
 // 로그인된 경우 헤더
 export const AuthorizationHeader = () => {
   const [moims, setMoims] = useState<Moim[]>([]);
-  const { navigateToHome } = useNavigateHome();
+  const { navigateToHome } = useNavigateToHome();
   const { data } = useFetchHeaderGroup();
   const handleLogOut = () => {
     logout();
-    location.reload();
+    navigateToHome();
   };
   useEffect(() => {
     if (data?.data?.moims) setMoims(data?.data.moims);
@@ -54,17 +57,13 @@ export const AuthorizationHeader = () => {
 
 // 로그아웃된 경우 헤더
 export const UnAuthorizationHeader = () => {
-  const navigate = useNavigate();
-  const pathname = useLocation();
   const { navigateToHome } = useNavigateHome();
-  const handleLogIn = () => {
-    navigate(`/login`, { state: pathname });
-  };
+  const { navigateToLogin } = useNavigateLoginWithPath();
 
   return (
     <HeaderWrapper>
       <HeaderLogoIcon onClick={navigateToHome} />
-      <LogInOutBtn onClick={handleLogIn}>로그인</LogInOutBtn>
+      <LogInOutBtn onClick={navigateToLogin}>로그인</LogInOutBtn>
     </HeaderWrapper>
   );
 };
@@ -156,5 +155,7 @@ const HeaderBtnContainer = styled.div`
 `;
 
 const HeaderLogoIcon = styled(HeaderLogoIc)`
+  flex-shrink: 0;
+
   cursor: pointer;
 `;

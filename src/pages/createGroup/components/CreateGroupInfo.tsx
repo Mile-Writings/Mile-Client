@@ -8,13 +8,14 @@ import {
   MAX_TOPIC_DESC_LENGTH,
   MAX_TOPIC_KEYWORD_LENGTH,
   MAX_TOPIC_LENGTH,
-} from '../constants/topicLenth';
+} from '../constants/topicLength';
 import { useGetGroupNameValidation } from '../hooks/queries';
 import { CurrentPageType } from '../types/stateType';
 
 import {
   CreateGroupIlust,
   CreateGroupImageUpload,
+  CreateGroupImageUploadedIc,
   CreateGroupInfoIc,
   CreateGroupRadioCheckedIc,
   CreateGroupRadioUncheckedIc,
@@ -24,22 +25,22 @@ import { s3UrlParsing } from '../../../utils/s3UrlParsing';
 import postDirectlyS3 from '../../postPage/apis/postDirectlyS3';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
 
+type Setter<T> = (value: T) => void;
 interface CreateGroupInfoPropTypes {
   setCurrentPage: Dispatch<SetStateAction<CurrentPageType['currentPage']>>;
   groupName: string;
-  setGroupName: (e: ChangeEvent<HTMLInputElement>) => void;
+  setGroupName: Setter<ChangeEvent<HTMLInputElement>>;
   groupInfo: string;
-  setGroupInfo: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-
-  setGroupImageFile: (image: string) => void;
+  setGroupInfo: Setter<ChangeEvent<HTMLTextAreaElement>>;
+  setGroupImageFile: Setter<string>;
   isPublic: boolean;
-  setIsPublic: (value: boolean) => void;
+  setIsPublic: Setter<boolean>;
   topic: string;
   topicTag: string;
   topicDesc: string;
-  setTopic: (e: ChangeEvent<HTMLInputElement>) => void;
-  setTopicTag: (e: ChangeEvent<HTMLInputElement>) => void;
-  setTopicDesc: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  setTopic: Setter<string>;
+  setTopicTag: Setter<string>;
+  setTopicDesc: Setter<string>;
   groupImageView: string;
   setGroupImageView: Dispatch<SetStateAction<string>>;
 }
@@ -116,7 +117,7 @@ const CreateGroupInfo = ({
           postDirectlyS3Func(url, file);
           setGroupImageView(reader.result);
         } else {
-          console.log('Image Error');
+          console.error(`file resader의 결과값이 string이 아닙니다. ${reader.result}`);
         }
       };
       reader.onerror = (err) => {
@@ -171,7 +172,7 @@ const CreateGroupInfo = ({
     else if (!topic || !topicTag || !topicValidationAll) {
       setIsGroupTopicEmpty(true);
     } else {
-      console.log('예기치 않는 에러');
+      console.error('글모임 생성 페이지 이동시 문제가 발생하였습니다.');
     }
   };
 
@@ -226,7 +227,7 @@ const CreateGroupInfo = ({
           <SubTitle>안녕하세요. 마일에 오신 것을 환영합니다</SubTitle>
           <Spacing marginBottom="1.1" />
           <Title>나만의 글 모임을 만들어보세요</Title>
-          <Spacing marginBottom="4.8" />
+          <Spacing marginBottom="2.4" />
           <IllustImg />
         </TitleWrapper>
         <WhiteInputWrapper isValid={!isGroupNameEmpty}>
@@ -239,12 +240,13 @@ const CreateGroupInfo = ({
                 placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
                 isValid={isGroupNameValid}
                 value={groupName}
+                maxLength={11}
               />{' '}
               <DuplicateCheckBtn
                 type="button"
-                positive={groupName !== ''}
+                positive={groupName !== '' && groupName.length <= 10}
                 onClick={handleDuplicateGroupName}
-                disabled={!groupName}
+                disabled={!groupName || groupName.length > 10}
               >
                 중복확인
               </DuplicateCheckBtn>
@@ -275,13 +277,18 @@ const CreateGroupInfo = ({
           <GroupInputWrapper>
             <InputTitleText>글 모임 사진</InputTitleText>
             <GroupImageLabel htmlFor="file">
-              {groupImageView ? (
-                <GroupImagePreview src={groupImageView} />
-              ) : (
-                <GroupImageWrapper>
-                  <CreateGroupImageUploadIcon />
-                </GroupImageWrapper>
-              )}
+              <GroupImageWrapper>
+                {' '}
+                {groupImageView ? (
+                  <GroupImagePreviewWrapper>
+                    <GroupImagePreview src={groupImageView} />
+                    <CreateGroupImageUploadedIcon className="group-image-preview" />
+                  </GroupImagePreviewWrapper>
+                ) : (
+                  <CreateGroupImageUploadIcon className="group-image-preview" />
+                )}
+              </GroupImageWrapper>
+
               <GroupImageInput
                 type="file"
                 name="file"
@@ -294,7 +301,7 @@ const CreateGroupInfo = ({
             </GroupImageLabel>
 
             <GroupInputDesc>
-              *글모임 페이지 상단에 노출될 대표 이미지입니다. 1366*306사이즈를 권장합니다.
+              *글모임 페이지 상단에 노출될 대표 이미지입니다. 1366*306px사이즈를 권장합니다.
             </GroupInputDesc>
           </GroupInputWrapper>
         </WhiteInputWrapper>
@@ -370,12 +377,8 @@ const CreateGroupInfo = ({
         <NextBtn onClick={handleCurrentPage}>다음</NextBtn>
       </CreateGroupLayout>
       {topicModal && (
-        <Overlay onClick={toggleModal}>
-          {' '}
+        <Overlay>
           <CreateGroupTopicModal
-            topic={topic}
-            topicTag={topicTag}
-            topicDesc={topicDesc}
             setTopic={setTopic}
             setTopicTag={setTopicTag}
             setTopicDesc={setTopicDesc}
@@ -524,7 +527,7 @@ const GroupIsPublicWrapper = styled.div`
   display: flex;
   gap: 0.8rem;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   width: 8rem;
 `;
 const GroupisPublicLabel = styled.label`
@@ -539,12 +542,13 @@ const GroupisPublicLabel = styled.label`
 const GroupPublicDescContainer = styled.div`
   display: flex;
   gap: 0.8rem;
+  justify-content: flex-end;
   width: 8rem;
   height: 1.9rem;
 `;
 const GroupPublicDesc = styled.p`
   color: ${({ theme }) => theme.colors.black};
-  ${({ theme }) => theme.fonts.body4};
+  ${({ theme }) => theme.fonts.title8};
 `;
 const GroupPublicDescWrapper = styled.div`
   position: relative;
@@ -558,6 +562,12 @@ const GroupInputDesc = styled.p`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.body4};
 `;
+
+const GroupImagePreviewWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 const GroupImagePreview = styled.img`
   width: 77rem;
   height: 20rem;
@@ -567,8 +577,33 @@ const GroupImagePreview = styled.img`
   border-radius: 8px;
 `;
 
-const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
+const CreateGroupImageUploadedIcon = styled(CreateGroupImageUploadedIc)`
+  position: absolute;
+
   cursor: pointer;
+
+  &:hover {
+    g {
+      path {
+        fill: #6139d1;
+      }
+    }
+  }
+`;
+
+const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
+  position: absolute;
+  z-index: 1;
+
+  cursor: pointer;
+
+  &:hover {
+    g {
+      path {
+        fill: #6139d1;
+      }
+    }
+  }
 `;
 
 const GroupImageLabel = styled.label`
@@ -588,6 +623,18 @@ const GroupImageWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.gray10};
   cursor: pointer;
   border-radius: 8px;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.lightViolet};
+
+    .group-image-preview {
+      g {
+        path {
+          fill: #6139d1;
+        }
+      }
+    }
+  }
 `;
 
 const CreateGroupLayout = styled.div`
@@ -603,7 +650,6 @@ const TitleWrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 33.2rem;
 `;
 
 const Title = styled.h1`
@@ -617,6 +663,8 @@ const SubTitle = styled.h2`
 `;
 
 const IllustImg = styled(CreateGroupIlust)`
+  display: flex;
+  flex-shrink: 0;
   width: 100%;
   height: 36.6rem;
 `;
