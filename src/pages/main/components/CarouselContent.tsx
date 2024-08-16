@@ -84,6 +84,7 @@ const CarouselContentLayout = styled.div`
   display: flex;
   gap: 3.6rem;
   padding: 3.6rem;
+  height: 24rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
