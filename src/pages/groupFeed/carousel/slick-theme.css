@@ -38,7 +38,7 @@
 }
 
 .groupFeedCarousel .slick-prev {
-  z-index: 2;
+  z-index: 1;
   left: -2.5rem;
   width: 3.6rem;
   height: 3.7rem;

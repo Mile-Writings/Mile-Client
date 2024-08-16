@@ -100,3 +100,5 @@ export { default as MemberMaster } from './adminMemberMaster.svg?react';
 export { default as GroupChatIc } from './groupChatIcn.svg?react';
 export { default as GroupCuriousIc } from './groupCuriousIcn.svg?react';
 export { default as GroupViewIc } from './groupViewIcn.svg?react';
+
+export { default as NoCommentIc } from './emptyCommentIc.svg?react';
