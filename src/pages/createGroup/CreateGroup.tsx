@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useReducer, useState } from 'react';
+import { useBlocker } from 'react-router-dom';
 
 import CreateGroupInfo from './components/CreateGroupInfo';
 import CreateGroupLeaderInfo from './components/CreateGroupLeaderInfo';
@@ -29,6 +30,12 @@ const CreateGroup = () => {
   const [groupImageView, setGroupImageView] = useState('');
   // modal 열고닫음
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
+
+  // 페이지 이탈
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) => currentLocation.pathname !== nextLocation.pathname,
+  );
+
   const initialState = {
     groupName: '',
     groupInfo: '',
@@ -198,6 +205,21 @@ const CreateGroup = () => {
       >
         <DefaultModalBtn isLeft={true} text="아니오" onClickBtn={handleCloseModal} />
         <DefaultModalBtn isLeft={false} text="예" onClickBtn={createGroup} />
+      </DefaultModal>
+
+      <DefaultModal
+        isModalOpen={blocker.state === 'blocked'}
+        handleClickBg={handleCloseModal}
+        content={`입력 중인 내용이 있습니다. \n페이지를 나가시겠습니까?`}
+      >
+        <DefaultModalBtn
+          isLeft={true}
+          text="예"
+          onClickBtn={() => {
+            blocker?.proceed && blocker.proceed();
+          }}
+        />
+        <DefaultModalBtn isLeft={false} text="아니오" onClickBtn={handleCloseModal} />
       </DefaultModal>
     </CreateGroupWrapper>
   );
