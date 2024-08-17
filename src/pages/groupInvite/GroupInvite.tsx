@@ -43,9 +43,6 @@ const GroupInvite = () => {
     }
   }, [error, isError, groupId]);
 
-  // if (errorLoading) {
-  //   return <Loading />;
-  // } else {
   return (
     <GroupInviteWrapper>
       <DefaultHeader />
