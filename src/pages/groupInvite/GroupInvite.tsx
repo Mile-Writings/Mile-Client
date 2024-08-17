@@ -29,8 +29,7 @@ const GroupInvite = () => {
           if (error.response.data.status === 40010 || error.response.data.status === 40014) {
             alert('존재하지 않는 글모임입니다.');
             navigateToLogin();
-          }
-          if (error.response.data.status === 40016) {
+          } else if (error.response.data.status === 40016) {
             alert('이미 가입한 모임입니다.');
             navigate(`/group/${groupId}`);
           }
@@ -42,6 +41,9 @@ const GroupInvite = () => {
           navigate('/error');
         }
       }
+    } else {
+      alert('올바르지 않은 접근입니다.');
+      navigate('/error');
     }
   }, [error, isError, groupId]);
 
