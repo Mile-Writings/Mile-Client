@@ -26,15 +26,24 @@ const GroupInvite = () => {
       if (error.response && error.response.status) {
         const { status } = error.response;
         if (status === 400) {
-          alert('이미 가입한 모임입니다.');
-          navigate(`/group/${groupId}`);
+          if (error.response.data.status === 40010 || error.response.data.status === 40014) {
+            alert('존재하지 않는 글모임입니다.');
+            navigateToLogin();
+          } else if (error.response.data.status === 40016) {
+            alert('이미 가입한 모임입니다.');
+            navigate(`/group/${groupId}`);
+          }
         } else if (status === 404) {
-          alert('해당 글모임은 존재하지 않는 모임입니다.');
-          navigate(`/`);
-        } else if (status === 401) {
+          alert('존재하지 않는 글모임입니다.');
           navigateToLogin();
+        } else {
+          alert('올바르지 않은 접근입니다.');
+          navigate('/error');
         }
       }
+    } else {
+      alert('올바르지 않은 접근입니다.');
+      navigate('/error');
     }
   }, [error, isError, groupId]);
 
