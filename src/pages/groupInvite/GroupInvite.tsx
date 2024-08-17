@@ -5,8 +5,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { DefaultHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
-import useNavigateLoginWithPath from '../../hooks/useNavigateLoginWithPath';
-
 import GroupInfo from './components/GroupInfo';
 import Title from './components/Title';
 import UserInfoInput from './components/UserInfoInput';
@@ -19,37 +17,32 @@ const GroupInvite = () => {
   const { moimTitle, imageUrl, leader, foundedDate, memberCount, description, error, isError } =
     useGetGroupInfo(groupId);
 
-  const { navigateToLogin } = useNavigateLoginWithPath();
-
   useEffect(() => {
     if (isError && isAxiosError(error)) {
       if (error.response && error.response.status) {
         const { status } = error.response;
+        console.log(status);
         if (status === 400) {
           if (error.response.data.status === 40010 || error.response.data.status === 40014) {
             alert('존재하지 않는 글모임입니다.');
-            navigateToLogin();
+            navigate('/');
           } else if (error.response.data.status === 40016) {
             alert('이미 가입한 모임입니다.');
             navigate(`/group/${groupId}`);
           }
         } else if (status === 404) {
           alert('존재하지 않는 글모임입니다.');
-          navigateToLogin();
-        } else {
-          alert('올바르지 않은 접근입니다.');
+          navigate('/');
+        } else if (status === 500) {
+          alert('예상치 못한 에러입니다. 다시 시도해주세요.');
           navigate('/error');
+        } else {
+          console.error('groupInvite' + status, error.response.data.status);
         }
       }
-    } else {
-      alert('올바르지 않은 접근입니다.');
-      navigate('/error');
     }
   }, [error, isError, groupId]);
 
-  // if (errorLoading) {
-  //   return <Loading />;
-  // } else {
   return (
     <GroupInviteWrapper>
       <DefaultHeader />
