@@ -33,6 +33,9 @@ const GroupInvite = () => {
         } else if (status === 404) {
           alert('존재하지 않는 글모임입니다.');
           navigate('/');
+        } else if (status === 500) {
+          alert('예상치 못한 에러입니다. 다시 시도해주세요.');
+          navigate('/error');
         } else {
           console.error('groupInvite' + status, error.response.data.status);
         }
