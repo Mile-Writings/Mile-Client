@@ -43,10 +43,11 @@ authClient.interceptors.response.use(
         } catch (err) {
           console.error(err);
           localStorage.removeItem('accessToken');
-          // window.location.href = '/';
+          window.location.href = '/login';
         }
       }
       if (err.response.data.status === 40103) {
+        localStorage.setItem('beforePathname', window.location.pathname);
         alert('로그인이 필요한 서비스입니다.');
         window.location.href = '/login';
       }
