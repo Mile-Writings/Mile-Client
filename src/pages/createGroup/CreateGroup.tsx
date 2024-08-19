@@ -7,8 +7,7 @@ import { usePostCreateGroup } from './hooks/queries';
 import { CreateGroupTypes, CurrentPageType } from './types/stateType';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
-import DefaultModal from '../../components/commons/modal/DefaultModal';
-import DefaultModalBtn from '../../components/commons/modal/DefaultModalBtn';
+import { DefaultModal, YesNoBtn } from '../../components/commons/modal/DefaultModal';
 import { DEFAULT_IMG_URL } from '../../constants/defaultImgUrl';
 import useModal from '../../hooks/useModal';
 
@@ -194,12 +193,11 @@ const CreateGroup = () => {
       <DefaultModal
         isModalOpen={isModalOpen}
         handleClickBg={handleCloseModal}
-        type="DEFAULT"
+        sizeType="DEFAULT"
         content={`생성 완료 시 필명 변경이 불가합니다. \n계속 하시겠습니까?`}
         modalImg="POST"
       >
-        <DefaultModalBtn isLeft={true} text="아니오" onClickBtn={handleCloseModal} />
-        <DefaultModalBtn isLeft={false} text="예" onClickBtn={createGroup} />
+        <YesNoBtn type="POSITIVE" onClickLeft={handleCloseModal} onClickRight={createGroup} />
       </DefaultModal>
     </CreateGroupWrapper>
   );

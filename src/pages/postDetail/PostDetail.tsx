@@ -24,8 +24,7 @@ import Spacing from './../../components/commons/Spacing';
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
 import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
-import DefaultModal from '../../components/commons/modal/DefaultModal';
-import DefaultModalBtn from '../../components/commons/modal/DefaultModalBtn';
+import { DefaultModal, YesNoBtn } from '../../components/commons/modal/DefaultModal';
 import useModal from '../../hooks/useModal';
 
 const PostDetail = () => {

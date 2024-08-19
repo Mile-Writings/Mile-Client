@@ -30,29 +30,29 @@ interface ModalBtnType {
 
 const portalElement = document.getElementById('modal') as HTMLElement;
 
-export const YesNoBtn = (props: ModalBtnType) => {
-  const { type, onClickLeft, onClickRight } = props;
-  return (
-    <>
-      <ModalBtn $isLeft={true} onClick={onClickLeft}>
-        {type === 'POSITIVE' ? '아니요' : '네'}
-      </ModalBtn>
-      <ModalBtn $isLeft={false} onClick={onClickRight}>
-        {type === 'POSITIVE' ? '네' : '아니요'}
-      </ModalBtn>
-    </>
-  );
-};
+export const Button = (props: ModalBtnType) => {
+  const { type, customBtnText, onClickLeft, onClickRight } = props;
 
-export const CustomBtn = (props: ModalBtnType) => {
-  const { customBtnText, onClickLeft, onClickRight } = props;
+  const getModalBtn = () => {
+    switch (type) {
+      case 'CUSTOM':
+        return customBtnText || ['', ''];
+      case 'NEGATIVE':
+        return ['예', '아니요'];
+      case 'POSITIVE':
+        return ['아니요', '예'];
+      default:
+        return ['', ''];
+    }
+  };
+
   return (
     <>
-      <ModalBtn $isLeft={true} onClick={onClickLeft}>
-        {customBtnText && customBtnText[0]}
+      <ModalBtn type="button" $isLeft={true} onClick={onClickLeft}>
+        {getModalBtn()[0]}
       </ModalBtn>
-      <ModalBtn $isLeft={false} onClick={onClickRight}>
-        {customBtnText && customBtnText[1]}
+      <ModalBtn type="button" $isLeft={false} onClick={onClickRight}>
+        {getModalBtn()[1]}
       </ModalBtn>
     </>
   );
