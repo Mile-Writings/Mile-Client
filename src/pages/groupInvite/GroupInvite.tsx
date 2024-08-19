@@ -82,7 +82,7 @@ const GroupInvite = () => {
 
       <FullModal isModalOpen={isModalOpen} content="글모임은 최대 5개까지 가입할 수 있습니다.">
         <FullModalBtn
-          isTop={false}
+          isPrimary={false}
           content="확인"
           onClick={() => {
             handleCloseModal();

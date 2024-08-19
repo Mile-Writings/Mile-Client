@@ -40,7 +40,7 @@ const CreateGroupBtn = ({ groupCount }: groupCountProps) => {
         handleClickBg={handleCloseModal}
       >
         <FullModalBtn
-          isTop={false}
+          isPrimary={false}
           content="확인"
           onClick={() => {
             handleCloseModal();

@@ -593,8 +593,8 @@ const PostPage = () => {
 
       {/* 임시저장 이어쓰기 관련 모달 */}
       <FullModal isModalOpen={showTempContinueModal} content="임시 저장된 글을 계속 이어 쓸까요?">
-        <FullModalBtn isTop={true} content="새로 쓰기" onClick={onClickNewPostBtn} />
-        <FullModalBtn isTop={false} content="이어 쓰기" onClick={onClickContinueTempBtn} />
+        <FullModalBtn isPrimary={true} content="새로 쓰기" onClick={onClickNewPostBtn} />
+        <FullModalBtn isPrimary={false} content="이어 쓰기" onClick={onClickContinueTempBtn} />
         <Spacing marginBottom="0.2" />
         <DeleteTempContentBtn onClick={onClickDeleteTempPost}>
           임시 저장 삭제하기
