@@ -9,13 +9,22 @@ import GroupInfo from './components/GroupInfo';
 import Title from './components/Title';
 import UserInfoInput from './components/UserInfoInput';
 import { useGetGroupInfo } from './hooks/queries';
+import { useFetchHeaderGroup } from '../groupFeed/hooks/queries';
+import FullModal from '../../components/commons/modal/FullModal';
+import FullModalBtn from '../../components/commons/modal/FullModalBtn';
+import useModal from '../../hooks/useModal';
 
 const GroupInvite = () => {
   const navigate = useNavigate();
   const { groupId } = useParams() as { groupId: string };
 
+  // modal 열고닫음
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
+
   const { moimTitle, imageUrl, leader, foundedDate, memberCount, description, error, isError } =
     useGetGroupInfo(groupId);
+  // 글모임 5개 가입 제한
+  const { data } = useFetchHeaderGroup();
 
   useEffect(() => {
     if (isError && isAxiosError(error)) {
@@ -43,26 +52,45 @@ const GroupInvite = () => {
     }
   }, [error, isError, groupId]);
 
+  useEffect(() => {
+    if (data?.data.moims && data?.data.moims.length >= 5) {
+      handleShowModal();
+    }
+  }, [data?.data.moims.length]);
+
   return (
-    <GroupInviteWrapper>
-      <DefaultHeader />
-      <Spacing marginBottom="11.4" />
-      <Title />
-      <Spacing marginBottom="4.8" />
+    <>
+      <GroupInviteWrapper>
+        <DefaultHeader />
+        <Spacing marginBottom="11.4" />
+        <Title />
+        <Spacing marginBottom="4.8" />
 
-      <GroupInfo
-        moimTitle={moimTitle}
-        imageUrl={imageUrl}
-        leader={leader}
-        foundedDate={foundedDate}
-        memberCount={memberCount}
-        description={description}
-      />
-      <Spacing marginBottom="2.8" />
-      <UserInfoInput moimTitle={moimTitle} />
+        <GroupInfo
+          moimTitle={moimTitle}
+          imageUrl={imageUrl}
+          leader={leader}
+          foundedDate={foundedDate}
+          memberCount={memberCount}
+          description={description}
+        />
+        <Spacing marginBottom="2.8" />
+        <UserInfoInput moimTitle={moimTitle} />
 
-      <Spacing marginBottom="7.7" />
-    </GroupInviteWrapper>
+        <Spacing marginBottom="7.7" />
+      </GroupInviteWrapper>
+
+      <FullModal isModalOpen={isModalOpen} content="글모임은 최대 5개까지 가입할 수 있습니다.">
+        <FullModalBtn
+          isTop={false}
+          content="확인"
+          onClick={() => {
+            handleCloseModal();
+            navigate('/');
+          }}
+        />
+      </FullModal>
+    </>
   );
 };
 
