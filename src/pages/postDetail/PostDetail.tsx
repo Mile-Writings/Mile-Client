@@ -24,7 +24,7 @@ import Spacing from './../../components/commons/Spacing';
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
 import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
-import { DefaultModal, YesNoBtn } from '../../components/commons/modal/DefaultModal';
+import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
 import useModal from '../../hooks/useModal';
 
 const PostDetail = () => {
@@ -193,11 +193,10 @@ const PostDetail = () => {
         modalImg={modalType === 'DELETE' ? 'DELETE' : 'EDIT'}
       >
         <DefaultModalBtn
-          isLeft={true}
-          text="예"
-          onClickBtn={modalType === 'DELETE' ? handleDeletePost : handleEdit}
+          type="NEGATIVE"
+          onClickLeft={modalType === 'DELETE' ? handleDeletePost : handleEdit}
+          onClickRight={handleCloseModal}
         />
-        <DefaultModalBtn isLeft={false} text="아니요" onClickBtn={handleCloseModal} />
       </DefaultModal>
     </>
   );

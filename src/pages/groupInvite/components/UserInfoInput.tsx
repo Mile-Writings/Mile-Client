@@ -5,8 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { useGetWriterNameConflict, usePostGroupMemberJoin } from '../hooks/queries';
 
-import DefaultModal from '../../../components/commons/modal/DefaultModal';
-import DefaultModalBtn from '../../../components/commons/modal/DefaultModalBtn';
+import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 import Spacing from '../../../components/commons/Spacing';
 import useModal from '../../../hooks/useModal';
 
@@ -214,8 +213,11 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
         content={`가입 완료 시 필명 변경이 불가합니다. \n계속 하시겠습니까?`}
         modalImg="POST"
       >
-        <DefaultModalBtn isLeft={true} text="아니오" onClickBtn={handleCloseModal} />
-        <DefaultModalBtn isLeft={false} text="예" onClickBtn={postGroupJoin} />
+        <DefaultModalBtn
+          type="POSITIVE"
+          onClickLeft={handleCloseModal}
+          onClickRight={postGroupJoin}
+        />
       </DefaultModal>
     </>
   );

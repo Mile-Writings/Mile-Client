@@ -11,8 +11,7 @@ import { MODAL } from '../constants/modal';
 import { useAdminTopic, useDeleteGroup, useFetchMemberInfo } from '../hooks/queries';
 
 import { MakeGroupAdminIc } from '../../../assets/svgs';
-import DefaultModal from '../../../components/commons/modal/DefaultModal';
-import DefaultModalBtn from '../../../components/commons/modal/DefaultModalBtn';
+import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 import Spacing from '../../../components/commons/Spacing';
 import useModal from '../../../hooks/useModal';
 import Error from '../../error/Error';
@@ -96,10 +95,13 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
             isModalOpen={isModalOpen}
             handleClickBg={handleCloseModal}
             content={MODAL.DELETE_GROUP}
-            type="LARGE"
+            sizeType="LARGE"
           >
-            <DefaultModalBtn isLeft={true} text="예" onClickBtn={deleteGroup} />
-            <DefaultModalBtn isLeft={false} text="아니오" onClickBtn={handleCloseModal} />
+            <DefaultModalBtn
+              type="NEGATIVE"
+              onClickLeft={deleteGroup}
+              onClickRight={handleCloseModal}
+            />
           </DefaultModal>
         </>
       );

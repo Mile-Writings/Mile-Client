@@ -6,8 +6,7 @@ import { MODAL } from '../constants/modal';
 import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 
 import { adminProfileIc, MemberMaster } from '../../../assets/svgs';
-import DefaultModal from '../../../components/commons/modal/DefaultModal';
-import DefaultModalBtn from '../../../components/commons/modal/DefaultModalBtn';
+import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 
 import Pagenation from '../../../components/commons/Pagenation';
 import Spacing from '../../../components/commons/Spacing';
@@ -96,20 +95,15 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
         isModalOpen={isModalOpen}
         handleClickBg={handleCloseModal}
         content={MODAL.DELETE_MEMBER}
-        type="SMALL"
+        sizeType="SMALL"
       >
         <DefaultModalBtn
-          isLeft={true}
-          text="예"
-          onClickBtn={() => {
+          type="NEGATIVE"
+          onClickLeft={() => {
             deleteMember(deleteMemberId);
             handleCloseModal();
           }}
-        />
-        <DefaultModalBtn
-          isLeft={false}
-          text="아니요"
-          onClickBtn={() => {
+          onClickRight={() => {
             setDeleteMemberId(-1);
             handleCloseModal();
           }}

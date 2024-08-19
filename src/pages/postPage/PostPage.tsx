@@ -27,8 +27,7 @@ import {
   EditorTempExistHeader,
   EditorTempNotExistHeader,
 } from '../../components/commons/Header';
-import DefaultModal from '../../components/commons/modal/DefaultModal';
-import DefaultModalBtn from '../../components/commons/modal/DefaultModalBtn';
+import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
 import FullModal from '../../components/commons/modal/FullModal';
 import FullModalBtn from '../../components/commons/modal/FullModalBtn';
 import Spacing from '../../components/commons/Spacing';
@@ -610,14 +609,10 @@ const PostPage = () => {
         modalImg={editorFlowModalVal.modalImgType}
       >
         <DefaultModalBtn
-          isLeft={true}
-          text={editorFlowModalVal.leftBtnText}
-          onClickBtn={editorFlowModalVal.leftBtnFn}
-        />
-        <DefaultModalBtn
-          isLeft={false}
-          text={editorFlowModalVal.rightBtnText}
-          onClickBtn={editorFlowModalVal.rightBtnFn}
+          type="CUSTOM"
+          customBtnText={[editorFlowModalVal.leftBtnText, editorFlowModalVal.rightBtnText]}
+          onClickLeft={editorFlowModalVal.leftBtnFn}
+          onClickRight={editorFlowModalVal.rightBtnFn}
         />
       </DefaultModal>
     </PostPageWrapper>

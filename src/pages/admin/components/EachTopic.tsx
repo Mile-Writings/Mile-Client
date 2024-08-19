@@ -4,8 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import AddEditTopicModal from './AddEditTopicModal';
 
-import DefaultModal from '../../../components/commons/modal/DefaultModal';
-import DefaultModalBtn from '../../../components/commons/modal/DefaultModalBtn';
+import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 import useModal from '../../../hooks/useModal';
 
 import { MODAL } from '../constants/modal';
@@ -74,12 +73,15 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
       <DefaultModal
         isModalOpen={isModalOpen}
         handleClickBg={handleCloseModal}
-        type="MEDIUM"
+        sizeType="MEDIUM"
         content={MODAL.DELETE_TOPIC}
         modalImg="POST"
       >
-        <DefaultModalBtn isLeft={true} text="예" onClickBtn={deleteMutateAdminTopic} />
-        <DefaultModalBtn isLeft={false} text="아니오" onClickBtn={handleCloseModal} />
+        <DefaultModalBtn
+          type="NEGATIVE"
+          onClickLeft={deleteMutateAdminTopic}
+          onClickRight={handleCloseModal}
+        />
       </DefaultModal>
     </>
   );

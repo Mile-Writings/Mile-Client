@@ -30,7 +30,7 @@ interface ModalBtnType {
 
 const portalElement = document.getElementById('modal') as HTMLElement;
 
-export const Button = (props: ModalBtnType) => {
+export const DefaultModalBtn = (props: ModalBtnType) => {
   const { type, customBtnText, onClickLeft, onClickRight } = props;
 
   const getModalBtn = () => {
