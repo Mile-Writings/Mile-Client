@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import React from 'react';
 import { createPortal } from 'react-dom';
 
 import Spacing from '../Spacing';
@@ -11,26 +10,62 @@ import {
   AlertModifyIcn,
   AlertDeleteIcn,
 } from '../../../assets/svgs/modal/modalSVG';
+import React from 'react';
 
 interface ModalPropType {
   isModalOpen: boolean;
-  handleClickBg?: () => void;
-  type?: 'DEFAULT' | 'SMALL' | 'MEDIUM' | 'LARGE';
-  content: string;
+  sizeType?: 'DEFAULT' | 'SMALL' | 'MEDIUM' | 'LARGE';
   modalImg?: 'DELETE' | 'POST' | 'EDIT' | 'SAVE' | 'CAUTION' | '';
   children: React.ReactNode;
+  content: string;
+  handleClickBg?: () => void;
+}
+
+interface ModalBtnType {
+  type: 'POSITIVE' | 'NEGATIVE' | 'CUSTOM';
+  onClickLeft: () => void;
+  onClickRight: () => void;
+  customBtnText?: string[];
 }
 
 const portalElement = document.getElementById('modal') as HTMLElement;
 
-const DefaultModal = (props: ModalPropType) => {
+export const YesNoBtn = (props: ModalBtnType) => {
+  const { type, onClickLeft, onClickRight } = props;
+  return (
+    <>
+      <ModalBtn $isLeft={true} onClick={onClickLeft}>
+        {type === 'POSITIVE' ? '아니요' : '네'}
+      </ModalBtn>
+      <ModalBtn $isLeft={false} onClick={onClickRight}>
+        {type === 'POSITIVE' ? '네' : '아니요'}
+      </ModalBtn>
+    </>
+  );
+};
+
+export const CustomBtn = (props: ModalBtnType) => {
+  const { customBtnText, onClickLeft, onClickRight } = props;
+  return (
+    <>
+      <ModalBtn $isLeft={true} onClick={onClickLeft}>
+        {customBtnText && customBtnText[0]}
+      </ModalBtn>
+      <ModalBtn $isLeft={false} onClick={onClickRight}>
+        {customBtnText && customBtnText[1]}
+      </ModalBtn>
+    </>
+  );
+};
+
+export const DefaultModal = (props: ModalPropType) => {
   const {
     isModalOpen,
-    handleClickBg = () => {},
-    type = 'DEFAULT',
-    content,
-    children,
+    sizeType = 'DEFAULT',
     modalImg,
+    content,
+    handleClickBg = () => {},
+    children,
   } = props;
 
   const getModalImg = () => {
@@ -53,7 +88,7 @@ const DefaultModal = (props: ModalPropType) => {
       {createPortal(
         <Wrapper $showModal={isModalOpen}>
           <ModalBackground onClick={handleClickBg} />
-          <ModalWrapper $type={type}>
+          <ModalWrapper $sizeType={sizeType}>
             <Content>{content}</Content>
             <Spacing marginBottom="2.4" />
             {modalImg && getModalImg()}
@@ -66,8 +101,6 @@ const DefaultModal = (props: ModalPropType) => {
     </>
   );
 };
-
-export default DefaultModal;
 
 const Wrapper = styled.div<{ $showModal: boolean }>`
   position: fixed;
@@ -90,14 +123,40 @@ const ModalBackground = styled.div`
   background-color: #0009;
 `;
 
-const ModalWrapper = styled.div<{ $type: string }>`
+const ModalBtn = styled.button<{ $isLeft: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 3.9rem;
+  padding: 1rem 0;
+
+  color: ${({ $isLeft, theme }) => ($isLeft ? theme.colors.mainViolet : theme.colors.white)};
+  white-space: pre-wrap;
+
+  background-color: ${({ $isLeft, theme }) =>
+    $isLeft ? theme.colors.white : theme.colors.mainViolet};
+  border: 1px solid ${({ theme }) => theme.colors.mainViolet};
+  border-radius: 8px;
+
+  ${({ theme }) => theme.fonts.button2};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+
+    background-color: ${({ theme }) => theme.colors.mileViolet};
+    border: ${({ $isLeft }) => ($isLeft ? '1px solid theme.colors.mainViolet' : 'none')};
+  }
+`;
+
+const ModalWrapper = styled.div<{ $sizeType: string }>`
   z-index: 6;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: ${({ $type }) => {
-    switch ($type) {
+  width: ${({ $sizeType }) => {
+    switch ($sizeType) {
       case 'SMALL':
         return '42.7rem';
       case 'MEDIUM':
