@@ -3,8 +3,8 @@ import { Dispatch, SetStateAction, useState } from 'react';
 
 import EachTopic from './EachTopic';
 
-import Pagenation from '../../components/commons/Pagenation';
-import Spacing from '../../components/commons/Spacing';
+import Pagenation from '../../../components/commons/Pagenation';
+import Spacing from '../../../components/commons/Spacing';
 
 interface AdminTopicPropTypes {
   topicCount: number;

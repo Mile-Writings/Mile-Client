@@ -1,4 +1,4 @@
-import { client } from '../../../utils/apis/axios';
+import { authClient } from '../../../utils/apis/axios';
 
 interface putSaveTempContentType {
   topicId: string;
@@ -29,8 +29,7 @@ const saveTempSavecontent = async ({
   postId,
 }: putSaveTempContentType) => {
   try {
-    const token = localStorage.getItem('accessToken');
-    const { data } = await client.put<saveTempContentResponseType>(
+    const { data } = await authClient.put<saveTempContentResponseType>(
       `/api/post/temporary/${postId}`,
       {
         topicId: topicId,
@@ -40,13 +39,7 @@ const saveTempSavecontent = async ({
         anonymous: anonymous,
         postId: postId,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
     );
-    console.log(data);
     return data;
   } catch (err) {
     console.log(err);

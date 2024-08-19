@@ -1,13 +1,15 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import Comment from './components/Comment';
-import CuriousBtn from './components/CuriousBtn';
-import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
-
 import Error from '../error/Error';
+import { useGroupFeedAuth, useGroupFeedPublicStatus } from '../groupFeed/hooks/queries';
 import Loading from '../loading/Loading';
+
+import { replaceDefaultImg } from '../../utils/replaceDefaultImg';
+
+import checkAuthenticate from '../../utils/checkAuthenticate';
 
 import {
   CheckboxIc,
@@ -19,6 +21,9 @@ import {
 import Button from './../../components/commons/Button';
 import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/commons/Header';
 import Spacing from './../../components/commons/Spacing';
+import Comment from './components/Comment';
+import CuriousBtn from './components/CuriousBtn';
+import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
 import DefaultModal from '../../components/commons/modal/DefaultModal';
 import DefaultModalBtn from '../../components/commons/modal/DefaultModalBtn';
 import useModal from '../../hooks/useModal';
@@ -37,11 +42,23 @@ const PostDetail = () => {
   const location = useLocation();
   const topicId = location.state?.topicId;
 
+  const {
+    isPublic,
+    isLoading: publicStatusLoading,
+    isError: publicStatusError,
+  } = useGroupFeedPublicStatus(groupId || '');
+  const {
+    isMember,
+    isLoading: feedAuthLoading,
+    isError: groupAuthError,
+  } = useGroupFeedAuth(groupId || '');
   const { data, isError, isLoading } = useGetPostDetail(postId || '');
   const { data: postAuth } = useCheckPostAuth(postId || '');
   const { mutate: deletePost } = useDeletePost(postId || '', topicId);
+
   const postData = data?.data;
   const accessToken = localStorage.getItem('accessToken');
+  const role = postAuth?.data.data.role;
 
   //글 작성 후 뒤로가기 하면 모임페이지로 이동하는 로직
   //메인페이지 -> 글 상세페이지 -> 뒤로가기 -> 글 모임페이지가 되어 UX에 좋은 영향을 끼치지 않는 부분도 있어서 추후 적용
@@ -50,12 +67,21 @@ const PostDetail = () => {
   //   navigate(`/group/${groupId}`, { replace: true });
   // };
   // useCustomBack(testFunc);
-
-  if (isLoading) {
+  useEffect(() => {
+    if (!publicStatusLoading && !feedAuthLoading) {
+      if (!isPublic) {
+        if (!checkAuthenticate() || role === 'anonymous') {
+          alert('해당 글모임은 비공개 글모임입니다.');
+          navigate('/');
+        }
+      }
+    }
+  }, [isPublic, role]);
+  if (isLoading || publicStatusLoading || feedAuthLoading) {
     return <Loading />;
   }
 
-  if (isError) {
+  if (isError || publicStatusError || groupAuthError) {
     return <Error />;
   }
 
@@ -93,7 +119,7 @@ const PostDetail = () => {
     <>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <Spacing marginBottom="6.4" />
-      <ThumnailImg src={postData?.imageUrl} alt={'썸네일 이미지'} />
+      <ThumnailImg src={postData?.imageUrl} alt={'썸네일 이미지'} onError={replaceDefaultImg} />
       <Spacing marginBottom="4.8" />
       <PostDetailWrapper>
         <PostDetailContainer>
@@ -117,20 +143,18 @@ const PostDetail = () => {
             </DetailBox>
           </InfoTextBox>
 
-          <ButtonWrapper role={postAuth?.data?.data?.role || ''}>
-            {postAuth?.data?.data?.role === 'writer' ? (
+          <ButtonWrapper role={role || ''}>
+            {role === 'owner' || role === 'writer' ? (
               <>
                 <Button typeName={'deleteTempType'} onClick={handleDeleteBtn}>
                   글 삭제하기
                 </Button>
-                <Button typeName={'submitEditType'} onClick={handleEditBtn}>
-                  글 수정하기
-                </Button>
+                {role === 'writer' && (
+                  <Button typeName={'submitEditType'} onClick={handleEditBtn}>
+                    글 수정하기
+                  </Button>
+                )}
               </>
-            ) : postAuth?.data?.data?.role === 'owner' ? (
-              <Button typeName={'deleteTempType'} onClick={handleDeleteBtn}>
-                글 삭제하기
-              </Button>
             ) : (
               <></>
             )}
@@ -156,13 +180,9 @@ const PostDetail = () => {
               </WriterDesc>
             </InfoWrapper>
           </WriterInfoContainer>
-          {(postAuth?.data?.data?.role === 'anonymous' || localStorage.accessToken) && (
-            <CuriousBtn />
-          )}
+          {isMember && <CuriousBtn />}
         </WriterInfoWrapper>
-        {(postAuth?.data?.data?.role || localStorage.accessToken) === 'anonymous' && (
-          <Comment postId={postId} />
-        )}
+        {isMember && <Comment postId={postId} />}
         <Spacing marginBottom="8" />
       </PostDetailWrapper>
 
@@ -303,6 +323,8 @@ const PostContainer = styled.div`
   min-height: 6rem;
   padding: 3.6rem;
 
+  word-break: keep-all;
+
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 10px;
 
@@ -370,6 +392,7 @@ const WriterDesc = styled.div`
 
   color: ${({ theme }) => theme.colors.gray80};
   text-overflow: ellipsis;
+  word-break: keep-all;
 
   ${({ theme }) => theme.fonts.body3};
 `;

@@ -3,12 +3,15 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import AddEditTopicModal from './AddEditTopicModal';
-import { useDeleteAdminTopic } from './hooks/queries';
 
-import { EditIc, DeleteIc } from '../../assets/svgs';
-import DefaultModal from '../../components/commons/modal/DefaultModal';
-import DefaultModalBtn from '../../components/commons/modal/DefaultModalBtn';
-import useModal from '../../hooks/useModal';
+import DefaultModal from '../../../components/commons/modal/DefaultModal';
+import DefaultModalBtn from '../../../components/commons/modal/DefaultModalBtn';
+import useModal from '../../../hooks/useModal';
+
+import { MODAL } from '../constants/modal';
+import { useDeleteAdminTopic } from '../hooks/queries';
+
+import { DeleteIc, EditIc } from '../../../assets/svgs';
 
 interface AdminTopicPropTypes {
   topicId: string;
@@ -50,6 +53,7 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
               setShowEditModal(true);
             }}
           />
+
           {/* <DeleteIcon onClick={() => setShowDeleteModal(true)} /> */}
           <DeleteIcon onClick={() => handleShowModal()} />
         </TopicAction>
@@ -71,7 +75,7 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
         isModalOpen={isModalOpen}
         handleClickBg={handleCloseModal}
         type="MEDIUM"
-        content={`삭제 시, 해당 글감으로 작성된 글도 함께 삭제되며, \n삭제된 글감은 복구할 수 없습니다. \n계속 하시겠습니까?`}
+        content={MODAL.DELETE_TOPIC}
         modalImg="POST"
       >
         <DefaultModalBtn isLeft={true} text="예" onClickBtn={deleteMutateAdminTopic} />

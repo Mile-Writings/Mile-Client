@@ -7,7 +7,6 @@ interface PresignedUrlPropTypes {
 export const fetchPresignedUrl = async () => {
   try {
     const response = await client.get<PresignedUrlPropTypes>(`/api/image/upload`);
-    console.log(response.data);
     return response.data;
   } catch (err) {
     console.error('에러');

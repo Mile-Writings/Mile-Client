@@ -94,10 +94,11 @@ interface TempSaveFlagQueryResult {
   error: Error | null;
 }
 
-export const useTempSaveFlag = (groupId: string): TempSaveFlagQueryResult => {
+export const useTempSaveFlag = (groupId: string, isPostView: boolean): TempSaveFlagQueryResult => {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId],
+    queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId, isPostView],
     queryFn: () => fetchTempSaveFlag(groupId),
+    enabled: !!isPostView,
   });
 
   const isTemporaryPostExist = data && data?.data?.isTemporaryPostExist;
