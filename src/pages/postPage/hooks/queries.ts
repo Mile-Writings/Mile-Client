@@ -11,6 +11,7 @@ import { fetchTopic } from '../apis/fetchTopic';
 import saveTempSavecontent from '../apis/saveTempSaveContent';
 
 import { QUERY_KEY_POST_DETAIL } from '../../postDetail/hooks/queries';
+import { isAxiosError } from 'axios';
 
 export const QUERY_KEY_POST = {
   postContent: 'postContent',
@@ -269,6 +270,18 @@ export const usePutTempSaveContent = ({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId] });
+    },
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        if (errorCode === 40005) {
+          alert('댓글을 입력해주세요');
+        } else if (errorCode === 40006) {
+          alert('댓글 최대 길이를 초과했습니다');
+        } else {
+          console.error();
+        }
+      }
     },
   });
   return data;

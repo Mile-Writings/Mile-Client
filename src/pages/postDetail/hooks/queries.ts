@@ -13,6 +13,7 @@ import fetchDeleteNestedComment from '../apis/fetchDeleteNestedComment';
 import fetchPostComment from '../apis/fetchPostComment';
 import fetchPostDetail from '../apis/fetchPostDetail';
 import fetchPostNestedComment from '../apis/fetchPostNestedComment';
+import { isAxiosError } from 'axios';
 //쿼리키를 이렇게 두는 이유는 겹치지 않기위해 + 객체로 생성하여 자동완성 하기 위해
 export const QUERY_KEY_POST_DETAIL = {
   getPostDetail: 'getPostDetail',
@@ -123,6 +124,18 @@ export const usePostComment = (postId: string, isAnonymous: boolean) => {
         queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
       });
     },
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        if (errorCode === 40005) {
+          alert('댓글을 입력해주세요');
+        } else if (errorCode === 40006) {
+          alert('댓글 최대 길이를 초과했습니다');
+        } else {
+          console.error();
+        }
+      }
+    },
   });
 
   const postComment = (comment: string) => {
@@ -142,6 +155,18 @@ export const usePostNestedComment = (commentId: string, postId: string, isAnonym
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
       });
+    },
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        if (errorCode === 40005) {
+          alert('댓글을 입력해주세요');
+        } else if (errorCode === 40006) {
+          alert('댓글 최대 길이를 초과했습니다');
+        } else {
+          console.error();
+        }
+      }
     },
   });
 

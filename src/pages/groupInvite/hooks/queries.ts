@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { createGroupMemberJoin } from '../apis/createGroupMemberJoin';
 import { fetchGroupInfo } from '../apis/fetchGroupInfo';
 import { fetchWriterNameConflict } from '../apis/fetchWriterNameConflict';
+import { isAxiosError } from 'axios';
 
 export const QUERY_KEY_GROUP_INVITE = {
   getGroupInfo: 'getGroupInfo',
@@ -75,6 +76,22 @@ export const usePostGroupMemberJoin = ({
           moimTitle: moimTitle,
         },
       });
+    },
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        if (errorCode === 40016) {
+          navigate(`/group/${groupId}/groupJoin`, {
+            state: {
+              moimTitle: moimTitle,
+            },
+          });
+        } else if (errorCode === 40014 || errorCode === 40010) {
+          navigate('/error');
+        } else {
+          console.error();
+        }
+      }
     },
   });
   return { mutate, data, error };
