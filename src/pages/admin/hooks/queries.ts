@@ -216,7 +216,18 @@ export const usePutAdminGroupInfo = ({
       });
     },
     onError: (err) => {
-      if (isAxiosError(err)) {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        if (errorCode === 40005) {
+          alert('요청 값에 빈 값이 존재합니다');
+        } else if (errorCode === 40006) {
+          alert('요청 값이 길이를 초과했습니다');
+        } else if (errorCode === 40018) {
+          alert('사용 불가능한 모임명입니다');
+        } else {
+          console.error();
+        }
+
         if (err?.response?.status === 500) {
           alert('서버내부 오류입니다. ');
         } else if (err?.response?.status === 401) {
@@ -231,23 +242,4 @@ export const usePutAdminGroupInfo = ({
   });
 
   return { mutate, isSuccess, isError };
-};
-
-//모임 정보 삭제
-export const useDeleteGroup = (groupId: string) => {
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
-  const { mutate, isError, isPending } = useMutation({
-    mutationKey: [QUERY_KEY_ADMIN.deleteGroup, groupId],
-    mutationFn: () => deleteGroup(groupId),
-    onSuccess: () => {
-      //key에 대한 정책을 변경해야함, 현재는 key의 unique함은 보장되어있지만 관련성이 적어 key의 역할을 제대로 못하고있음
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
-      });
-      navigate('/');
-    },
-  });
-
-  return { mutate, isError, isPending };
 };
