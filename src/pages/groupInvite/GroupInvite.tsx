@@ -10,8 +10,7 @@ import Title from './components/Title';
 import UserInfoInput from './components/UserInfoInput';
 import { useGetGroupInfo } from './hooks/queries';
 import { useFetchHeaderGroup } from '../groupFeed/hooks/queries';
-import FullModal from '../../components/commons/modal/FullModal';
-import FullModalBtn from '../../components/commons/modal/FullModalBtn';
+import { FullModal, FullModalBtn } from '../../components/commons/modal/FullModal';
 import useModal from '../../hooks/useModal';
 
 const GroupInvite = () => {

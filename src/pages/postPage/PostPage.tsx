@@ -28,8 +28,7 @@ import {
   EditorTempNotExistHeader,
 } from '../../components/commons/Header';
 import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
-import FullModal from '../../components/commons/modal/FullModal';
-import FullModalBtn from '../../components/commons/modal/FullModalBtn';
+import { FullModal, FullModalBtn } from '../../components/commons/modal/FullModal';
 import Spacing from '../../components/commons/Spacing';
 import useModal from '../../hooks/useModal';
 
@@ -205,6 +204,7 @@ const PostPage = () => {
   useEffect(() => {
     if (type === 'post' && isTemporaryPostExist && !continueTempPost) {
       setEditorModalType('continueTempSave');
+
       setShowTempContinueModal(true);
       preventScroll();
     }

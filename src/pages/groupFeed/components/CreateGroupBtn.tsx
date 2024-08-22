@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { MakeGroupPlusBtn, MakeGroupPlusHoverBtn } from '../../../assets/svgs';
-import FullModal from '../../../components/commons/modal/FullModal';
-import FullModalBtn from '../../../components/commons/modal/FullModalBtn';
+import { FullModal, FullModalBtn } from '../../../components/commons/modal/FullModal';
 import useModal from '../../../hooks/useModal';
 
 interface groupCountProps {

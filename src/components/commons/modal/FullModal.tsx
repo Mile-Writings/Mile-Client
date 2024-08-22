@@ -4,6 +4,22 @@ import { createPortal } from 'react-dom';
 
 import Spacing from '../Spacing';
 
+interface FullModalBtnPropType {
+  isPrimary: boolean;
+  onClick: () => void;
+  content: string;
+}
+
+export const FullModalBtn = (props: FullModalBtnPropType) => {
+  const { isPrimary, onClick, content } = props;
+
+  return (
+    <ModalBtn $isPrimary={isPrimary} onClick={onClick}>
+      {content}
+    </ModalBtn>
+  );
+};
+
 interface FullModalPropType {
   isModalOpen: boolean;
   handleClickBg?: () => void;
@@ -13,7 +29,7 @@ interface FullModalPropType {
 
 const portalElement = document.getElementById('modal') as HTMLElement;
 
-const FullModal = (props: FullModalPropType) => {
+export const FullModal = (props: FullModalPropType) => {
   const { isModalOpen, handleClickBg, children, content } = props;
 
   return (
@@ -32,8 +48,6 @@ const FullModal = (props: FullModalPropType) => {
     </>
   );
 };
-
-export default FullModal;
 
 const Wrapper = styled.div<{ $showModal: boolean }>`
   position: fixed;
@@ -82,4 +96,28 @@ const BtnWrapper = styled.div`
   gap: 1.2rem;
   align-items: center;
   width: 100%;
+`;
+
+const ModalBtn = styled.button<{ $isPrimary: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32rem;
+  height: 3.9rem;
+
+  color: ${({ $isPrimary, theme }) => ($isPrimary ? theme.colors.mainViolet : theme.colors.white)};
+
+  background-color: ${({ $isPrimary, theme }) =>
+    $isPrimary ? theme.colors.white : theme.colors.mainViolet};
+  border: 1px solid ${({ theme }) => theme.colors.mainViolet};
+  border-radius: 8px;
+
+  ${({ theme }) => theme.fonts.button2};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.mainViolet};
+
+    background-color: ${({ theme }) => theme.colors.mileViolet};
+    border: ${({ $isPrimary }) => ($isPrimary ? '1px solid theme.colors.mainViolet' : 'none')};
+  }
 `;
