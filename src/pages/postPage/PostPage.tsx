@@ -320,7 +320,6 @@ const PostPage = () => {
     handleShowModal();
     setEditorModalType('editContent');
     editorFlowModalDispatch({ type: 'editContent' });
-    preventScroll();
   };
   // 최초 글 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
@@ -340,12 +339,10 @@ const PostPage = () => {
       handleShowModal();
       setEditorModalType('tempSave');
       editorFlowModalDispatch({ type: 'putNewTempSaveContent' });
-      preventScroll();
     } else {
       handleShowModal();
       setEditorModalType('tempSave');
       editorFlowModalDispatch({ type: 'tempSave' });
-      preventScroll();
     }
   };
 
@@ -374,7 +371,6 @@ const PostPage = () => {
     handleShowModal();
     editorFlowModalDispatch({ type: 'putTempSaveContent' });
     setEditorModalType('putTempSaveContent');
-    preventScroll();
   };
 
   // 글 제출 시 에러 메시지 타이머 설정
@@ -484,7 +480,6 @@ const PostPage = () => {
           onClickTempSaveBtn();
           break;
         case 'postContent':
-          preventScroll();
           break;
         case 'putTempSaveContent':
           onClickTempExistSaveBtn();
@@ -494,17 +489,17 @@ const PostPage = () => {
           break;
         case 'continueTempSave':
           // 렌더링 되자마자 쿼리함수 실행되므로 prevent만 넣어줌
-          preventScroll();
+
           break;
         case 'exitEditPage':
-          preventScroll();
           break;
       }
     }
 
-    return () => {
+    (editorModalType === 'continueTempSave' || editorModalType === 'exitEditPage') &&
+      !isModalOpen &&
+      !showTempContinueModal &&
       allowScroll();
-    };
   }, [isModalOpen, showTempContinueModal, editorModalType]);
 
   // 뒤로가기 방지
@@ -512,7 +507,6 @@ const PostPage = () => {
     handleShowModal();
     editorFlowModalDispatch({ type: 'exitEditPage' });
     setEditorModalType('exitEditPage');
-    preventScroll();
   };
 
   // 새로고침 방지
@@ -521,7 +515,6 @@ const PostPage = () => {
 
     // editorFlowModalDispatch({ type: 'exitEditPage' });
     // setEditorModalType('exitEditPage');
-    // preventScroll();
   };
 
   useEffect(() => {
