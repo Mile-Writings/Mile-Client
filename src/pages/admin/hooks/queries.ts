@@ -207,7 +207,7 @@ export const useDeleteGroup = (groupId: string) => {
     onSuccess: () => {
       //key에 대한 정책을 변경해야함, 현재는 key의 unique함은 보장되어있지만 관련성이 적어 key의 역할을 제대로 못하고있음
       queryClient.invalidateQueries({
-        queryKey: groupQueryKey.info(),
+        queryKey: groupQueryKey.all,
       });
       navigate('/');
     },

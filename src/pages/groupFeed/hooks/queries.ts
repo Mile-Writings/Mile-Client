@@ -56,6 +56,7 @@ export const groupQueryKey = {
     'userInfo',
     writerNameId,
   ],
+  userGroups: () => [...groupQueryKey.user(), 'groups'],
 };
 
 export const useGroupFeedAuth = (groupId: string): GroupFeedAuthQueryResult => {
@@ -109,7 +110,7 @@ export const useGroupInfo = (groupId: string): GroupInfoQueryResult => {
 
   return { groupInfoData, isLoading, isError, error };
 };
-//useTodayTopic
+
 export const useTodayTopic = (groupId: string) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: groupQueryKey.topic(groupId),
@@ -187,7 +188,7 @@ export const useArticleList = (topicId: string, groupId: string) => {
 
 export const useFetchHeaderGroup = () => {
   const { data } = useQuery({
-    queryKey: ['user', 'group'],
+    queryKey: groupQueryKey.userGroups(),
     queryFn: () => fetchHeaderGroup(),
     retry: 3,
   });
