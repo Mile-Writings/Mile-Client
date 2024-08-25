@@ -24,6 +24,19 @@ interface GroupFeedAuthQueryResult {
   error: Error | null;
 }
 
+export const QUERY_KEY_GROUPFEED = {
+  getGroupFeedAuth: 'getGroupFeedAuth',
+  getGroupFeedPublicStatus: 'getGroupFeedPublicStatus',
+  getTodayWritingStyle: 'getTodayWritingStyle',
+  getCuriousPost: 'getCuriousPost',
+  getGroupFeedCategory: 'getGroupFeedCategory',
+  getCuriousWriters: 'getCuriousWriters',
+  getArticleList: 'getArticleList',
+  fetchHeaderGroup: 'fetchHeaderGroup',
+  getWriterNameOnly: 'getWriterNameOnly',
+  getWriterInfo: 'getWriterInfo',
+};
+
 export const groupQueryKey = {
   all: ['group'],
   info: () => [...groupQueryKey.all, 'info'],
@@ -88,6 +101,8 @@ export const useGroupInfo = (groupId: string): GroupInfoQueryResult => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: groupQueryKey.detail(groupId),
     queryFn: () => fetchGroupInfo(groupId),
+    staleTime: 30000,
+    gcTime: 30000,
   });
 
   const groupInfoData = data?.data;

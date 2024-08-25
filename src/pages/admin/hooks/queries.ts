@@ -2,21 +2,20 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import { groupQueryKey } from '../../groupFeed/hooks/queries';
 import deleteGroup from '../apis/deleteGroup';
 import {
+  deleteAdminTopic,
   editAdminTopic,
   fetchAdminTopic,
   postAdminTopic,
   postAdminTopicPropTypes,
-  deleteAdminTopic,
 } from '../apis/fetchAdminData';
 import fetchAdminGroupInfo from '../apis/fetchAdminGroupInfo';
 import fetchDeleteMember from '../apis/fetchDeleteMember';
 import { fetchInvitationLink } from '../apis/fetchInvitationLink';
 import fetchMemberInfo from '../apis/fetchMemberInfo';
 import putAdminEditGroupInfo, { AdminEditGroupInfoPropTypes } from '../apis/putAdminEditGroupInfo';
-
-import { QUERY_KEY_GROUPFEED } from '../../groupFeed/hooks/queries';
 
 export const QUERY_KEY_ADMIN = {
   useMemberInfo: 'fetchMemberInfo',
@@ -25,7 +24,6 @@ export const QUERY_KEY_ADMIN = {
   putAdminEditGroupInfo: 'putAdminEditGroupInfo',
   deleteGroup: 'deleteGroup',
 };
-
 export const useAdminTopic = (groupId: string | undefined, pageNum: number) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['adminTopic', groupId, pageNum],
@@ -178,7 +176,7 @@ export const usePutAdminGroupInfo = ({
       putAdminEditGroupInfo({ groupName, groupDesc, groupImageServerUrl, isPublic, groupId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
+        queryKey: groupQueryKey.info(),
       });
     },
     onError: (err) => {
@@ -209,7 +207,7 @@ export const useDeleteGroup = (groupId: string) => {
     onSuccess: () => {
       //key에 대한 정책을 변경해야함, 현재는 key의 unique함은 보장되어있지만 관련성이 적어 key의 역할을 제대로 못하고있음
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
+        queryKey: groupQueryKey.info(),
       });
       navigate('/');
     },
