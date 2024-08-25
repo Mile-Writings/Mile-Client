@@ -42,11 +42,15 @@ const Carousel = () => {
     setSelectedTopicId(topicId);
   };
 
-  const { topicInfo, isLoading: articleListLoading } = useArticleList(selectedTopicId);
+  const { topicInfo, isLoading: articleListLoading } = useArticleList(
+    selectedTopicId,
+    groupId || '',
+  );
 
   useEffect(() => {
     if (groupFeedCategoryData) {
       setSelectedTopicId(groupFeedCategoryData[0]?.topicId);
+      console.log(groupFeedCategoryData);
     }
   }, [groupFeedCategoryData]);
 
@@ -73,9 +77,6 @@ const Carousel = () => {
             </CarouselContainer>
           ))}
         </Slider>
-        {/* {groupFeedCategoryData !== undefined && groupFeedCategoryData?.length > 6 && (
-          <GroupTabBtnBaseNextIcon className="groupFeedCarousel .slick-next.slick-disabled " />
-        )} */}
       </CarouselWrapper>
       <Spacing marginBottom="3.2" />
       <Topic>{topicInfo?.topic}</Topic>
@@ -97,21 +98,6 @@ const CarouselWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.backGroundGray};
   border-bottom: 0.1rem solid ${({ theme }) => theme.colors.gray30};
 `;
-
-// const GroupTabBtnBaseBeforeIcon = styled(GroupTabBtnBaseBeforeIc)`
-//   position: absolute;
-//   left: -1rem;
-
-//   pointer-events: none;
-// `;
-
-// const GroupTabBtnBaseNextIcon = styled(GroupTabBtnBaseNextIc)`
-//   position: absolute;
-//   top: 3.2rem;
-//   right: -1rem;
-
-//   pointer-events: none;
-// `;
 
 const Topic = styled.div`
   width: 63.1rem;

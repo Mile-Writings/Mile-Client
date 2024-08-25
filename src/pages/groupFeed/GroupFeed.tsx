@@ -34,6 +34,7 @@ const GroupFeed = () => {
     isError,
     error,
   } = useGroupFeedAuth(groupId || '');
+
   const { isPublic, isLoading: isPublicLoading } = useGroupFeedPublicStatus(groupId || '');
 
   //sessionStorage에 저장된 카테고리 id 값을 가져옴

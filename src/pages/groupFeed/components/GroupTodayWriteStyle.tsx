@@ -1,12 +1,10 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { useTodayWritingStyle } from '../hooks/queries';
-
 import Button from '../../../components/commons/Button';
 import Error from '../../error/Error';
 import Loading from '../../loading/Loading';
-
+import { useTodayTopic } from '../hooks/queries';
 interface GroupTodayWriteStylePropTypes {
   isMember: boolean | undefined; //나의 글 작성하기 권한 확인
   groupId: string | undefined; //오늘의 주제
@@ -15,7 +13,7 @@ interface GroupTodayWriteStylePropTypes {
 const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
   const navigate = useNavigate();
   const { isMember, groupId } = props;
-  const { content, isLoading, isError, error } = useTodayWritingStyle(groupId || '');
+  const { content, isLoading, isError, error } = useTodayTopic(groupId || '');
 
   const handleNavigatePostPage = () => {
     navigate(`/post/${groupId}/post`);
