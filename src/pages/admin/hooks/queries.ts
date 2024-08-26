@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-import { groupQueryKey } from '../../groupFeed/hooks/queries';
+import { groupKey } from '../../groupFeed/hooks/queries';
 import deleteGroup from '../apis/deleteGroup';
 import {
   deleteAdminTopic,
@@ -176,7 +176,7 @@ export const usePutAdminGroupInfo = ({
       putAdminEditGroupInfo({ groupName, groupDesc, groupImageServerUrl, isPublic, groupId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: groupQueryKey.info(),
+        queryKey: groupKey.detail(groupId || ''),
       });
     },
     onError: (err) => {
@@ -207,7 +207,7 @@ export const useDeleteGroup = (groupId: string) => {
     onSuccess: () => {
       //key에 대한 정책을 변경해야함, 현재는 key의 unique함은 보장되어있지만 관련성이 적어 key의 역할을 제대로 못하고있음
       queryClient.invalidateQueries({
-        queryKey: groupQueryKey.all,
+        queryKey: groupKey.all,
       });
       navigate('/');
     },
