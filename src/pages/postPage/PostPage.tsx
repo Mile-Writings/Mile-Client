@@ -154,6 +154,7 @@ const PostPage = () => {
     useBlockPageExit();
   const navigate = useNavigate();
   const location = useLocation();
+  const history = createBrowserHistory();
 
   // editor content API 관련
   const [editorVal, editorContentDispatch] = useReducer(editorContentReducerFn, editorState);
@@ -509,36 +510,21 @@ const PostPage = () => {
       allowScroll();
   }, [isModalOpen, showTempContinueModal, editorModalType]);
 
-  // 뒤로가기 방지
-  // const preventGoBack = () => {
-  //   handleShowModal();
-  //   editorFlowModalDispatch({ type: 'exitEditPage' });
-  //   setEditorModalType('exitEditPage');
-  // };
-
   // 새로고침 방지
   const preventReload = (e: Event) => {
     e.preventDefault();
-
-    // editorFlowModalDispatch({ type: 'exitEditPage' });
-    // setEditorModalType('exitEditPage');
   };
 
-  // useEffect(() => {
-  //   (() => {
-  //     // 현재 상태를 세션 히스토리 스택에 추가(push)
-  //     // 뒤로가기 해도 현재 페이지에 일단 머물게 하기
-  //     history.push(history.location);
+  useEffect(() => {
+    (() => {
+      history.push(history.location);
+      window.addEventListener('beforeunload', preventReload);
+    })();
 
-  //     window.addEventListener('popstate', preventGoBack);
-  //     window.addEventListener('beforeunload', preventReload);
-  //   })();
-
-  //   return () => {
-  //     window.removeEventListener('popstate', preventGoBack);
-  //     window.removeEventListener('beforeunload', preventReload);
-  //   };
-  // }, []);
+    return () => {
+      window.removeEventListener('beforeunload', preventReload);
+    };
+  }, []);
 
   return (
     <PostPageWrapper>
