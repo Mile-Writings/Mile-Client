@@ -152,7 +152,6 @@ const PostPage = () => {
   // 페이지 이탈
   const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =
     useBlockPageExit();
-  const history = createBrowserHistory();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -621,7 +620,7 @@ const PostPage = () => {
       <DefaultModal
         isModalOpen={isPageExitModalOpen}
         handleClickBg={handleClosePageExitModal}
-        content={`입력 중인 내용이 있습니다. \n페이지를 나가시겠습니까?`}
+        content={`작성 중이 글이 있습니다. \n페이지를 나가시겠습니까?`}
         modalImg="CAUTION"
       >
         <DefaultModalBtn
