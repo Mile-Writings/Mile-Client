@@ -5,6 +5,8 @@ import CreateGroupInfo from './components/CreateGroupInfo';
 import CreateGroupLeaderInfo from './components/CreateGroupLeaderInfo';
 import { usePostCreateGroup } from './hooks/queries';
 import { CreateGroupTypes, CurrentPageType } from './types/stateType';
+import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
+import useBlockPageExit from '../../hooks/useBlockPageExit';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 import { DEFAULT_IMG_URL } from '../../constants/defaultImgUrl';
@@ -21,6 +23,8 @@ type CreateGroupAction =
   | { type: 'setLeaderDesc'; value: string };
 
 const CreateGroup = () => {
+  // 페이지 이탈 감지
+  const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage } = useBlockPageExit();
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
   const [groupImageView, setGroupImageView] = useState('');
@@ -175,15 +179,6 @@ const CreateGroup = () => {
           isGroupLeaderValid={isGroupLeaderValid}
         />
       )}
-      {/* 모달 추후 추가 */}
-      {/* <EditorFlowModal
-        title={'생성 완료 시 필명 변경이 불가합니다. 계속 하시겠습니까?'}
-        leftBtnText={'아니오'}
-        rightBtnText={'예'}
-        modalImgType="tempSave"
-        leftBtnFn={() => {}}
-        rightBtnFn={() => {}}
-      /> */}
       {currentPage === 'GroupLeaderInfoPage' && (
         <BtnWrapper>
           <CreateGroupBtn type="button" onClick={createGroup}>
@@ -194,6 +189,18 @@ const CreateGroup = () => {
           </BackPageBtn>
         </BtnWrapper>
       )}
+
+      <DefaultModal
+        isModalOpen={isPageExitModalOpen}
+        handleClickBg={handleClosePageExitModal}
+        content={`입력 중인 내용이 있습니다. \n페이지를 나가시겠습니까?`}
+      >
+        <DefaultModalBtn
+          type="NEGATIVE"
+          onClickLeft={handleExitPage}
+          onClickRight={handleClosePageExitModal}
+        />
+      </DefaultModal>
     </CreateGroupWrapper>
   );
 };
