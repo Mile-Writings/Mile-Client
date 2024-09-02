@@ -13,7 +13,7 @@ const CreateGroupBtn = ({ groupCount }: groupCountProps) => {
 
   const handleCreateGroupBtn = () => {
     if (groupCount < 5) {
-      navigate('/createGroup');
+      navigate('/group/create');
     } else {
       alert('글모임은 최대 5개까지 가입할 수 있습니다.');
     }

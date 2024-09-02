@@ -1,6 +1,5 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
-import ScrollToTop from './components/commons/ScrollToTop';
 import Admin from './pages/admin/Admin';
 import CreateGroup from './pages/createGroup/CreateGroup';
 import CreateGroupSuccess from './pages/createGroupSuccess/CreateGroupSuccess';
@@ -13,40 +12,41 @@ import RedirectLogin from './pages/login/RedirectLogin';
 import Main from './pages/main/Main';
 import PostDetail from './pages/postDetail/PostDetail';
 import PostPage from './pages/postPage/PostPage';
+import Layout from './components/commons/Layout';
 
 const router = createBrowserRouter([
   {
     path: '/',
+    element: <Layout />,
     children: [
       { index: true, element: <Main /> },
-      { path: 'detail/:groupId/:postId', element: <PostDetail /> },
-      { path: 'post/:groupId/:type', element: <PostPage /> },
-      { path: 'createGroup', element: <CreateGroup /> },
       { path: 'login', element: <Login /> },
       { path: 'redirect-kakao', element: <RedirectLogin /> },
+      { path: 'admin/:groupId', element: <Admin /> },
+      { path: 'post/:groupId/:type', element: <PostPage /> },
+      { path: 'detail/:groupId/:postId', element: <PostDetail /> },
       { path: 'error', element: <Error /> },
       { path: '*', element: <Error /> },
-      { path: 'admin/:groupId', element: <Admin /> },
     ],
   },
   {
-    path: 'group/:groupId',
-    element: <GroupFeed />,
+    path: 'group',
+    element: <Layout />,
     children: [
-      { path: 'groupInvite', element: <GroupInvite /> },
-      { path: 'groupJoin', element: <GroupJoinCongrats /> },
+      { index: true, element: <Error /> },
+      { path: 'create', element: <CreateGroup /> },
+      { path: 'success/:groupId', element: <CreateGroupSuccess /> },
+      {
+        path: ':groupId',
+        element: <Layout />,
+        children: [
+          { index: true, element: <GroupFeed /> },
+          { path: 'groupInvite', element: <GroupInvite /> },
+          { path: 'groupJoin', element: <GroupJoinCongrats /> },
+        ],
+      },
     ],
   },
-  { path: 'group/success/:groupId', element: <CreateGroupSuccess /> },
 ]);
 
-const Router = () => {
-  return (
-    <>
-      <ScrollToTop />
-      <RouterProvider router={router} />
-    </>
-  );
-};
-
-export default Router;
+export default router;

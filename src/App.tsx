@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import router from './Router';
 
-import Router from './routers/Router';
+import { RouterProvider } from 'react-router-dom';
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -10,7 +11,7 @@ const App = () => {
     <div style={{ fontSize: '16px' }}>
       <QueryClientProvider client={queryClient}>
         <DesktopWrapper>
-          <Router />
+          <RouterProvider router={router} />
         </DesktopWrapper>
         <ReactQueryDevtools initialIsOpen />
       </QueryClientProvider>
