@@ -24,13 +24,15 @@ type CreateGroupAction =
   | { type: 'setLeaderDesc'; value: string };
 
 const CreateGroup = () => {
-  // 페이지 이탈 감지
-  const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage } = useBlockPageExit();
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
   const [groupImageView, setGroupImageView] = useState('');
+
+  // 페이지 이탈 감지
+  const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage } = useBlockPageExit();
   // modal 열고닫음
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
+
   const initialState = {
     groupName: '',
     groupInfo: '',
@@ -200,7 +202,11 @@ const CreateGroup = () => {
         content={`생성 완료 시 필명 변경이 불가합니다. \n계속 하시겠습니까?`}
         modalImg="POST"
       >
-        <DefaultModalBtn type="POSITIVE" onClickLeft={handleCloseModal} onClickRight={createGroup} />
+        <DefaultModalBtn
+          type="POSITIVE"
+          onClickLeft={handleCloseModal}
+          onClickRight={createGroup}
+        />
       </DefaultModal>
 
       {/* 페이지 이탈 모달 */}
