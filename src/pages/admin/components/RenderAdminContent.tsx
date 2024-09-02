@@ -11,7 +11,7 @@ import { MODAL } from '../constants/modal';
 import { useAdminTopic, useDeleteGroup, useFetchMemberInfo } from '../hooks/queries';
 
 import { MakeGroupAdminIc } from '../../../assets/svgs';
-import { NegativeModal } from '../../../components/commons/Modal';
+import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 import Spacing from '../../../components/commons/Spacing';
 import useModal from '../../../hooks/useModal';
 import Error from '../../error/Error';
@@ -23,17 +23,16 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
   const { memberData, totalMember } = useFetchMemberInfo(groupId || '', page);
   const [pageNum, setPageNum] = useState(1);
   const { topicCount, adminTopicData } = useAdminTopic(groupId, pageNum);
+
+  // input 모달 열고 닫기
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
-  const { mutate, isPending, isError } = useDeleteGroup(groupId || '');
-
+  // 공통 모달 열고 닫기
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
 
-  const handleDeleteGroup = () => {
-    mutate();
-  };
+  const { mutate: deleteGroup, isPending, isError } = useDeleteGroup(groupId || '');
 
   if (isError) {
     return <Error />;
@@ -91,14 +90,19 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
             <EditGroupInfo />
           </AdminContainer>
 
-          <NegativeModal
-            modalContent={MODAL.DELETE_GROUP}
+          {/* 모임 삭제 모달 */}
+          <DefaultModal
             isModalOpen={isModalOpen}
-            modalHandler={() => handleDeleteGroup()}
-            closeModalHandler={() => {
-              handleCloseModal();
-            }}
-          />
+            handleClickBg={handleCloseModal}
+            content={MODAL.DELETE_GROUP}
+            sizeType="LARGE"
+          >
+            <DefaultModalBtn
+              type="NEGATIVE"
+              onClickLeft={deleteGroup}
+              onClickRight={handleCloseModal}
+            />
+          </DefaultModal>
         </>
       );
   }

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -23,10 +24,18 @@ import Spacing from './../../components/commons/Spacing';
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
 import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
+import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
+import useModal from '../../hooks/useModal';
+
 const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
   const { groupId } = useParams();
+
+  // 모달 연결 위한 state
+  const [modalType, setModalType] = useState('');
+  // modal 열고닫음
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
 
   //글 삭제시 쿼리키 가져오기 위해서
   const location = useLocation();
@@ -75,15 +84,24 @@ const PostDetail = () => {
     return <Error />;
   }
 
+  // 삭제 모달 활성화 위한 버튼
+  const handleDeleteBtn = () => {
+    setModalType('DELETE');
+    handleShowModal();
+  };
+  // 삭제 동작 버튼
   const handleDeletePost = () => {
-    const userConfirmed = confirm('삭제하시겠습니까?');
-    if (userConfirmed) {
-      deletePost();
-      navigate(`/group/${groupId}`);
-    }
+    deletePost();
+    navigate(`/group/${groupId}`);
   };
 
+  // 수정 모달 활성화 위한 버튼
   const handleEditBtn = () => {
+    setModalType('EDIT');
+    handleShowModal();
+  };
+  // 수정 동작 버튼
+  const handleEdit = () => {
     navigate(`/post/${groupId}/edit`, {
       state: {
         postId: postId,
@@ -127,7 +145,7 @@ const PostDetail = () => {
           <ButtonWrapper role={role || ''}>
             {role === 'owner' || role === 'writer' ? (
               <>
-                <Button typeName={'deleteTempType'} onClick={handleDeletePost}>
+                <Button typeName={'deleteTempType'} onClick={handleDeleteBtn}>
                   글 삭제하기
                 </Button>
                 {role === 'writer' && (
@@ -166,6 +184,20 @@ const PostDetail = () => {
         {isMember && <Comment postId={postId} />}
         <Spacing marginBottom="8" />
       </PostDetailWrapper>
+
+      {/* 우선은 조건부로 연결해두었는데 reducer나 state를 통해서 업데이트 하도록 변경해도 될 듯 */}
+      <DefaultModal
+        isModalOpen={isModalOpen}
+        handleClickBg={handleCloseModal}
+        content={modalType === 'DELETE' ? `정말로 삭제하시겠어요?` : `정말로 수정하시겠어요?`}
+        modalImg={modalType === 'DELETE' ? 'DELETE' : 'EDIT'}
+      >
+        <DefaultModalBtn
+          type="NEGATIVE"
+          onClickLeft={modalType === 'DELETE' ? handleDeletePost : handleEdit}
+          onClickRight={handleCloseModal}
+        />
+      </DefaultModal>
     </>
   );
 };
@@ -357,8 +389,8 @@ const WriterDesc = styled.div`
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray80};
-  word-break: keep-all;
   text-overflow: ellipsis;
+  word-break: keep-all;
 
   ${({ theme }) => theme.fonts.body3};
 `;

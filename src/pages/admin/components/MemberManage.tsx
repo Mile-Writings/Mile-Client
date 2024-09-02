@@ -6,7 +6,8 @@ import { MODAL } from '../constants/modal';
 import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 
 import { adminProfileIc, MemberMaster } from '../../../assets/svgs';
-import { NegativeModal } from '../../../components/commons/Modal';
+import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
+
 import Pagenation from '../../../components/commons/Pagenation';
 import Spacing from '../../../components/commons/Spacing';
 import useModal from '../../../hooks/useModal';
@@ -90,18 +91,24 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
         />
       )}
 
-      <NegativeModal
-        modalContent={MODAL.DELETE_MEMBER}
+      <DefaultModal
         isModalOpen={isModalOpen}
-        modalHandler={() => {
-          deleteMember(deleteMemberId);
-          handleCloseModal();
-        }}
-        closeModalHandler={() => {
-          setDeleteMemberId(-1);
-          handleCloseModal();
-        }}
-      />
+        handleClickBg={handleCloseModal}
+        content={MODAL.DELETE_MEMBER}
+        sizeType="SMALL"
+      >
+        <DefaultModalBtn
+          type="NEGATIVE"
+          onClickLeft={() => {
+            deleteMember(deleteMemberId);
+            handleCloseModal();
+          }}
+          onClickRight={() => {
+            setDeleteMemberId(-1);
+            handleCloseModal();
+          }}
+        />
+      </DefaultModal>
     </>
   );
 };

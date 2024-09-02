@@ -4,11 +4,13 @@ import { useParams } from 'react-router-dom';
 
 import AddEditTopicModal from './AddEditTopicModal';
 
+import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
+import useModal from '../../../hooks/useModal';
+
 import { MODAL } from '../constants/modal';
 import { useDeleteAdminTopic } from '../hooks/queries';
 
 import { DeleteIc, EditIc } from '../../../assets/svgs';
-import { NegativeModal } from '../../../components/commons/Modal';
 
 interface AdminTopicPropTypes {
   topicId: string;
@@ -28,51 +30,60 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
   const { groupId } = useParams();
   const [showEditModal, setShowEditModal] = useState(false);
 
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  // modal 열고닫음
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
+
   const { deleteMutateAdminTopic } = useDeleteAdminTopic(topicId, groupId, pageNum);
 
   return (
-    <TopicWrapper>
-      <TopicData>
-        <Topic>
-          <TopicTitle>{topicName}</TopicTitle>
-          <TopicDate>{createdAt}</TopicDate>
-        </Topic>
-        <TopicTag>{topicTag}</TopicTag>
-        <TopicDescription>{topicDescription}</TopicDescription>
-      </TopicData>
-      <TopicAction>
-        <EditIcon
-          onClick={() => {
-            setShowEditModal(true);
-          }}
-        />
-        <DeleteIcon onClick={() => setShowDeleteModal(true)} />
-      </TopicAction>
-      {showEditModal && (
-        <>
-          <ModalOverlay onClick={() => setShowEditModal(false)} />
-          <AddEditTopicModal
-            topicStored={topicName}
-            topicTagStored={topicTag}
-            topicDescriptionStored={topicDescription}
-            topicId={topicId}
-            pageNum={pageNum}
-            setShowModal={setShowEditModal}
+    <>
+      <TopicWrapper>
+        <TopicData>
+          <Topic>
+            <TopicTitle>{topicName}</TopicTitle>
+            <TopicDate>{createdAt}</TopicDate>
+          </Topic>
+          <TopicTag>{topicTag}</TopicTag>
+          <TopicDescription>{topicDescription}</TopicDescription>
+        </TopicData>
+        <TopicAction>
+          <EditIcon
+            onClick={() => {
+              setShowEditModal(true);
+            }}
           />
-        </>
-      )}
 
-      <NegativeModal
-        modalContent={MODAL.DELETE_TOPIC}
-        isModalOpen={showDeleteModal}
-        modalHandler={() => {
-          deleteMutateAdminTopic();
-          setShowDeleteModal(false);
-        }}
-        closeModalHandler={() => setShowDeleteModal(false)}
-      />
-    </TopicWrapper>
+          {/* <DeleteIcon onClick={() => setShowDeleteModal(true)} /> */}
+          <DeleteIcon onClick={() => handleShowModal()} />
+        </TopicAction>
+        {showEditModal && (
+          <>
+            <ModalOverlay onClick={() => setShowEditModal(false)} />
+            <AddEditTopicModal
+              topicStored={topicName}
+              topicTagStored={topicTag}
+              topicDescriptionStored={topicDescription}
+              topicId={topicId}
+              pageNum={pageNum}
+              setShowModal={setShowEditModal}
+            />
+          </>
+        )}
+      </TopicWrapper>
+      <DefaultModal
+        isModalOpen={isModalOpen}
+        handleClickBg={handleCloseModal}
+        sizeType="MEDIUM"
+        content={MODAL.DELETE_TOPIC}
+        modalImg="POST"
+      >
+        <DefaultModalBtn
+          type="NEGATIVE"
+          onClickLeft={deleteMutateAdminTopic}
+          onClickRight={handleCloseModal}
+        />
+      </DefaultModal>
+    </>
   );
 };
 

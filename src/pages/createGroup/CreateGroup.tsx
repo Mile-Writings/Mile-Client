@@ -9,7 +9,9 @@ import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/De
 import useBlockPageExit from '../../hooks/useBlockPageExit';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
+import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
 import { DEFAULT_IMG_URL } from '../../constants/defaultImgUrl';
+import useModal from '../../hooks/useModal';
 
 type CreateGroupAction =
   | { type: 'setGroupName'; value: string }
@@ -28,6 +30,8 @@ const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
   const [groupImageView, setGroupImageView] = useState('');
+  // modal 열고닫음
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
   const initialState = {
     groupName: '',
     groupInfo: '',
@@ -181,7 +185,7 @@ const CreateGroup = () => {
       )}
       {currentPage === 'GroupLeaderInfoPage' && (
         <BtnWrapper>
-          <CreateGroupBtn type="button" onClick={createGroup}>
+          <CreateGroupBtn type="button" onClick={handleShowModal}>
             생성하기
           </CreateGroupBtn>
           <BackPageBtn type="button" onClick={handleBackBtn}>
@@ -189,6 +193,16 @@ const CreateGroup = () => {
           </BackPageBtn>
         </BtnWrapper>
       )}
+
+      <DefaultModal
+        isModalOpen={isModalOpen}
+        handleClickBg={handleCloseModal}
+        sizeType="DEFAULT"
+        content={`생성 완료 시 필명 변경이 불가합니다. \n계속 하시겠습니까?`}
+        modalImg="POST"
+      >
+        <DefaultModalBtn type="POSITIVE" onClickLeft={handleCloseModal} onClickRight={createGroup} />
+      </DefaultModal>
 
       <DefaultModal
         isModalOpen={isPageExitModalOpen}

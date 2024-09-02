@@ -3,14 +3,14 @@ import { createPortal } from 'react-dom';
 
 import Spacing from '../Spacing';
 
-// import {
-//   AlertStorageIcn,
-//   AlertUploadIcn,
-//   AlertCautionIcn,
-//   AlertModifyIcn,
-//   AlertDeleteIcn,
-// } from '../../../assets/svgs/modal/modalSVG';
-// import React from 'react';
+import {
+  AlertStorageIcn,
+  AlertUploadIcn,
+  AlertCautionIcn,
+  AlertModifyIcn,
+  AlertDeleteIcn,
+} from '../../../assets/svgs/modal/modalSVG';
+import React from 'react';
 
 interface ModalPropType {
   isModalOpen: boolean;
@@ -68,20 +68,20 @@ export const DefaultModal = (props: ModalPropType) => {
     children,
   } = props;
 
-  //   const getModalImg = () => {
-  //     switch (modalImg) {
-  //       case 'POST':
-  //         return <AlertUploadIcn />;
-  //       case 'SAVE':
-  //         return <AlertStorageIcn />;
-  //       case 'CAUTION':
-  //         return <AlertCautionIcn />;
-  //       case 'EDIT':
-  //         return <AlertModifyIcn />;
-  //       case 'DELETE':
-  //         return <AlertDeleteIcn />;
-  //     }
-  //   };
+  const getModalImg = () => {
+    switch (modalImg) {
+      case 'POST':
+        return <AlertUploadIcn />;
+      case 'SAVE':
+        return <AlertStorageIcn />;
+      case 'CAUTION':
+        return <AlertCautionIcn />;
+      case 'EDIT':
+        return <AlertModifyIcn />;
+      case 'DELETE':
+        return <AlertDeleteIcn />;
+    }
+  };
 
   return (
     <>
@@ -91,7 +91,7 @@ export const DefaultModal = (props: ModalPropType) => {
           <ModalWrapper $sizeType={sizeType}>
             <Content>{content}</Content>
             <Spacing marginBottom="2.4" />
-            {/* {modalImg && getModalImg()} */}
+            {modalImg && getModalImg()}
             {modalImg && <Spacing marginBottom="2.4" />}
             <BtnWrapper>{children}</BtnWrapper>
           </ModalWrapper>
@@ -140,6 +140,7 @@ const ModalBtn = styled.button<{ $isLeft: boolean }>`
   border-radius: 8px;
 
   ${({ theme }) => theme.fonts.button2};
+
   &:hover {
     color: ${({ theme }) => theme.colors.mainViolet};
 
