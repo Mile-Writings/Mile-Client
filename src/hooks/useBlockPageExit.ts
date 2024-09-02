@@ -5,7 +5,7 @@ const useBlockPageExit = () => {
     ({ currentLocation, nextLocation }) => currentLocation.pathname !== nextLocation.pathname,
   );
 
-  return blocker;
+  return { blocker };
 };
 
 export default useBlockPageExit;
