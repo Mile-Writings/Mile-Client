@@ -5,7 +5,6 @@ import CreateGroupInfo from './components/CreateGroupInfo';
 import CreateGroupLeaderInfo from './components/CreateGroupLeaderInfo';
 import { usePostCreateGroup } from './hooks/queries';
 import { CreateGroupTypes, CurrentPageType } from './types/stateType';
-import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
 import useBlockPageExit from '../../hooks/useBlockPageExit';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
@@ -204,6 +203,7 @@ const CreateGroup = () => {
         <DefaultModalBtn type="POSITIVE" onClickLeft={handleCloseModal} onClickRight={createGroup} />
       </DefaultModal>
 
+      {/* 페이지 이탈 모달 */}
       <DefaultModal
         isModalOpen={isPageExitModalOpen}
         handleClickBg={handleClosePageExitModal}
