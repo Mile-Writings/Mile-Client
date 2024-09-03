@@ -1,18 +1,19 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 import { useDeleteCurious, useGetCuriousInfo, usePostCurious } from '../hooks/queries';
-
 import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets/svgs';
 
-const CuriousBtn = () => {
-  const { postId } = useParams();
-  const { data, error } = useGetCuriousInfo(postId || '');
+interface CuriousBtnProps {
+  postId: string;
+}
+
+const CuriousBtn = ({ postId }: CuriousBtnProps) => {
+  const { data, error } = useGetCuriousInfo(postId);
   const token = localStorage.getItem('accessToken');
-  const { mutate: postCurious } = usePostCurious(postId || '');
-  const { mutate: deleteCurious } = useDeleteCurious(postId || ' ');
+  const { mutate: postCurious } = usePostCurious(postId);
+  const { mutate: deleteCurious } = useDeleteCurious(postId);
   const isCurious = data?.data?.isCurious;
   const [isClick, setIsClick] = useState(!!isCurious);
 

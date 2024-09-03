@@ -1,15 +1,14 @@
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Error from '../error/Error';
 import { useGroupFeedAuth, useGroupFeedPublicStatus } from '../groupFeed/hooks/queries';
 import Loading from '../loading/Loading';
 
-import { replaceDefaultImg } from '../../utils/replaceDefaultImg';
-
+import { useParams } from 'react-router-dom';
 import checkAuthenticate from '../../utils/checkAuthenticate';
-
+import { replaceDefaultImg } from '../../utils/replaceDefaultImg';
 import {
   CheckboxIc,
   DefaultProfileIc,
@@ -28,6 +27,9 @@ const PostDetail = () => {
   const { postId } = useParams();
   const { groupId } = useParams();
 
+  if (!postId || !groupId) {
+    return <Error />;
+  }
   //글 삭제시 쿼리키 가져오기 위해서
   const location = useLocation();
   const topicId = location.state?.topicId;
@@ -36,15 +38,15 @@ const PostDetail = () => {
     isPublic,
     isLoading: publicStatusLoading,
     isError: publicStatusError,
-  } = useGroupFeedPublicStatus(groupId || '');
+  } = useGroupFeedPublicStatus(groupId);
   const {
     isMember,
     isLoading: feedAuthLoading,
     isError: groupAuthError,
-  } = useGroupFeedAuth(groupId || '');
-  const { data, isError, isLoading } = useGetPostDetail(postId || '');
-  const { data: postAuth } = useCheckPostAuth(postId || '');
-  const { mutate: deletePost } = useDeletePost(postId || '', topicId);
+  } = useGroupFeedAuth(groupId);
+  const { data, isError, isLoading } = useGetPostDetail(postId);
+  const { data: postAuth } = useCheckPostAuth(postId);
+  const { mutate: deletePost } = useDeletePost(postId, topicId);
 
   const postData = data?.data;
   const accessToken = localStorage.getItem('accessToken');
@@ -159,7 +161,7 @@ const PostDetail = () => {
               </WriterDesc>
             </InfoWrapper>
           </WriterInfoContainer>
-          {isMember && <CuriousBtn />}
+          {isMember && <CuriousBtn postId={postId} />}
         </WriterInfoWrapper>
         {isMember && <Comment postId={postId} />}
         <Spacing marginBottom="8" />
