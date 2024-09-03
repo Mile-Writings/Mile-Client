@@ -197,6 +197,25 @@ export const useFetchGroupInfo = (groupId: string) => {
   return data;
 };
 
+//모임 정보 삭제
+export const useDeleteGroup = (groupId: string) => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { mutate, isError, isPending } = useMutation({
+    mutationKey: [QUERY_KEY_ADMIN.deleteGroup, groupId],
+    mutationFn: () => deleteGroup(groupId),
+    onSuccess: () => {
+      //key에 대한 정책을 변경해야함, 현재는 key의 unique함은 보장되어있지만 관련성이 적어 key의 역할을 제대로 못하고있음
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
+      });
+      navigate('/');
+    },
+  });
+
+  return { mutate, isError, isPending };
+};
+
 //모임 정보 수정
 export const usePutAdminGroupInfo = ({
   groupName,
