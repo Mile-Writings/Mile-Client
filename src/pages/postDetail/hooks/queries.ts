@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { isAxiosError } from 'axios';
 import checkPostAuth from '../apis/checkPostAuth';
 import createPostCurious from '../apis/createPostCurious';
 import deleteCurious from '../apis/deleteCurious';
@@ -23,7 +24,7 @@ export const QUERY_KEY_POST_DETAIL = {
   getCommentList: 'getCommentList',
   deleteComment: 'deleteComment',
   getAuthorization: 'getAuthorization',
-  getCurious: 'getCurious',
+  curious: 'curious',
   postNestedComment: 'postNestedComment',
 };
 
@@ -40,12 +41,21 @@ export const useGetPostDetail = (postId: string) => {
 //궁금해요 여부개수 get api
 export const useGetCuriousInfo = (postId: string) => {
   const { data, error } = useQuery({
-    queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId],
+    queryKey: [QUERY_KEY_POST_DETAIL.curious, postId],
     queryFn: () => fetchCuriousInfo(postId),
     retry: false,
   });
   return { data, error };
 };
+
+interface postCuriousProps {
+  status: number;
+  message: string;
+  data: {
+    isCurious: boolean;
+    curiousCount: number;
+  };
+}
 
 //궁금해요 생성 api
 export const usePostCurious = (postId: string) => {
@@ -53,8 +63,51 @@ export const usePostCurious = (postId: string) => {
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.postCurious, postId],
     mutationFn: () => createPostCurious(postId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId] });
+
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: [QUERY_KEY_POST_DETAIL.curious, postId] });
+
+      const prevOption = queryClient.getQueryData([QUERY_KEY_POST_DETAIL.curious, postId]);
+
+      queryClient.setQueryData(
+        [QUERY_KEY_POST_DETAIL.curious, postId],
+        (oldData: postCuriousProps | undefined) => {
+          let updateData = {} as postCuriousProps;
+
+          if (oldData) {
+            Object.assign(updateData, oldData);
+            updateData = {
+              ...oldData,
+              data: {
+                isCurious: true,
+                curiousCount: oldData.data.curiousCount + 1,
+              },
+            };
+
+            return updateData;
+          }
+          return undefined;
+        },
+      );
+      return { prevOption };
+    },
+
+    onError: (err, _, context) => {
+      alert('errpr');
+      if (isAxiosError(err)) {
+        if (err.response?.data.status === 40900) {
+          alert('잘못된 접근입니다.');
+        }
+        if (err.response?.data.status === 40306) {
+          alert('잘못된 접근입니다.');
+        } else {
+          throw new Error('예기치 못한 에러');
+        }
+      }
+      queryClient.setQueryData([QUERY_KEY_POST_DETAIL.curious, postId], context?.prevOption);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.curious, postId] });
     },
   });
   return data;
@@ -78,8 +131,53 @@ export const useDeleteCurious = (postId: string) => {
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.deleteCurious, postId],
     mutationFn: () => deleteCurious(postId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId] });
+
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: [QUERY_KEY_POST_DETAIL.curious, postId] });
+
+      const prevOption = queryClient.getQueryData([QUERY_KEY_POST_DETAIL.curious, postId]);
+
+      queryClient.setQueryData<postCuriousProps>(
+        [QUERY_KEY_POST_DETAIL.curious, postId],
+        (oldData: postCuriousProps | undefined) => {
+          let updateData = {} as postCuriousProps;
+
+          if (oldData) {
+            Object.assign(updateData, oldData);
+
+            let optimisticCuriousCount =
+              oldData.data.curiousCount === 0
+                ? oldData.data.curiousCount
+                : oldData.data.curiousCount - 1;
+            updateData = {
+              ...oldData,
+              data: {
+                isCurious: false,
+                curiousCount: optimisticCuriousCount,
+              },
+            };
+            return updateData;
+          }
+
+          return undefined;
+        },
+      );
+
+      return { prevOption };
+    },
+    onError: (err, _, context) => {
+      if (isAxiosError(err)) {
+        if (err.response?.status === 404) {
+          alert('잘못된 접근입니다.');
+        }
+      }
+
+      if (context) {
+        queryClient.setQueryData([QUERY_KEY_POST_DETAIL.curious, postId], context.prevOption);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.curious, postId] });
     },
   });
   return data;
