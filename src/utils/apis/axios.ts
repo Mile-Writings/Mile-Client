@@ -52,6 +52,10 @@ authClient.interceptors.response.use(
         window.location.href = '/login';
       }
     }
+    if (err.response && err.response.status >= 500 && err.response.status <= 599) {
+      alert('요청을 제대로 수행할 수 없어요. 잠시 후에 다시 시도해주세요.');
+      window.location.href = '/error';
+    }
     return Promise.reject(err);
   },
 );
@@ -69,6 +73,10 @@ client.interceptors.response.use(
         alert('로그인이 필요한 서비스입니다.');
         window.location.href = '/login';
       }
+    }
+    if (err.response && err.response.status >= 500 && err.response.status <= 599) {
+      alert('요청을 제대로 수행할 수 없어요. 잠시 후에 다시 시도해주세요.');
+      window.location.href = '/error';
     }
   },
 );
