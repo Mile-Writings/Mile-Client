@@ -3,8 +3,6 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tansta
 import checkAuthenticate from '../../../utils/checkAuthenticate';
 import {
   fetchArticleList,
-  fetchCuriousPost,
-  fetchCuriousWriters,
   fetchEditIntro,
   fetchGroupFeedAuth,
   fetchGroupInfo,
@@ -49,21 +47,6 @@ export const useGroupFeedAuth = (groupId: string): GroupFeedAuthQueryResult => {
   return { isMember, isOwner, isLoading, isError, error };
 };
 
-interface GroupInfoQueryResult {
-  groupInfoData?: {
-    imageUrl: string;
-    moimName: string;
-    ownerName: string;
-    startDate: string;
-    writerCount: number;
-    description: string | undefined;
-  };
-
-  isLoading: boolean;
-  isError: boolean;
-  error: Error | null;
-}
-
 export const useGroupFeedPublicStatus = (groupId: string) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getGroupFeedPublicStatus, groupId],
@@ -76,15 +59,17 @@ export const useGroupFeedPublicStatus = (groupId: string) => {
   return { isPublic, isLoading, isError };
 };
 
-export const useGroupInfo = (groupId: string): GroupInfoQueryResult => {
+export const useGroupInfo = (groupId: string) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['groupFeed_Info_moimId', groupId],
     queryFn: () => fetchGroupInfo(groupId),
   });
 
-  const groupInfoData = data?.data;
+  const infoResponse = data?.data.infoResponse;
+  const mostCuriousPost = data?.data.mostCuriousPost;
+  const mostCuriousWriter = data?.data.mostCuriousWriter;
 
-  return { groupInfoData, isLoading, isError, error };
+  return { infoResponse, mostCuriousPost, mostCuriousWriter, isLoading, isError, error };
 };
 
 export const useTodayWritingStyle = (groupId: string) => {
@@ -97,17 +82,6 @@ export const useTodayWritingStyle = (groupId: string) => {
   return { content, isLoading, isError, error };
 };
 
-export const useCuriousPost = (groupId: string) => {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getCuriousPost, groupId],
-    queryFn: () => fetchCuriousPost(groupId),
-  });
-
-  const curiousPostData = data && data.data.postList;
-
-  return { curiousPostData, isLoading, isError, error };
-};
-
 export const useTopicList = (groupId: string) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [QUERY_KEY_GROUPFEED.getGroupFeedCategory, groupId],
@@ -117,17 +91,6 @@ export const useTopicList = (groupId: string) => {
   const groupFeedCategoryData = data && data.data.topicList;
 
   return { groupFeedCategoryData, isLoading, isError, error };
-};
-
-export const useCuriousWriters = (groupId: string) => {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getCuriousWriters, groupId],
-    queryFn: () => fetchCuriousWriters(groupId),
-  });
-
-  const curiousWriterData = data && data.data.popularWriters;
-
-  return { curiousWriterData, isLoading, isError, error };
 };
 
 export const useArticleList = (topicId: string) => {
