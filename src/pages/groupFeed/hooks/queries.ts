@@ -66,8 +66,8 @@ export const useGroupInfo = (groupId: string) => {
   });
 
   const infoResponse = data?.data.infoResponse;
-  const mostCuriousPost = data?.data.mostCuriousPost;
-  const mostCuriousWriter = data?.data.mostCuriousWriter;
+  const mostCuriousPost = data?.data.mostCuriousPost.postList;
+  const mostCuriousWriter = data?.data.mostCuriousWriter.popularWriters;
 
   return { infoResponse, mostCuriousPost, mostCuriousWriter, isLoading, isError, error };
 };

@@ -32,27 +32,27 @@ interface InfoResPropTypes {
 }
 
 interface CuriousWriterPropTypes {
-  popularWriters: {
-    writerName: string;
-  }[];
+  writerName: string;
 }
 
 interface CuriousPostPropTypes {
-  postList: {
-    postId: string;
-    imageUrl: string;
-    topic: string;
-    title: string;
-    content: string;
-    isContainPhoto: boolean;
-  }[];
+  postId: string;
+  imageUrl: string;
+  topic: string;
+  title: string;
+  content: string;
+  isContainPhoto: boolean;
 }
 
 interface GroupInfoPropTypes {
   data: {
     infoResponse: InfoResPropTypes;
-    mostCuriousPost: CuriousPostPropTypes[];
-    mostCuriousWriter: CuriousWriterPropTypes[];
+    mostCuriousPost: {
+      postList: CuriousPostPropTypes[];
+    };
+    mostCuriousWriter: {
+      popularWriters: CuriousWriterPropTypes[];
+    };
   };
   status: number;
   message: string;

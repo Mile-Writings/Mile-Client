@@ -46,7 +46,7 @@ const GroupFeed = () => {
     sessionStorage.setItem('activeCategoryId', String(activeCategoryId));
   }, [activeCategoryId]);
 
-  const { groupInfoData } = useGroupInfo(groupId || '');
+  const { infoResponse, mostCuriousPost, mostCuriousWriter } = useGroupInfo(groupId || '');
   const { writerName, writerNameId } = useFetchWriterNameOnly(groupId || '', isMember, isOwner);
 
   const navigate = useNavigate();
@@ -80,12 +80,12 @@ const GroupFeed = () => {
     <GroupFeedWrapper>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <Spacing marginBottom="6.4" />
-      <GroupFeedThumnail imageUrl={groupInfoData?.imageUrl} />
+      <GroupFeedThumnail imageUrl={infoResponse?.imageUrl} />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
-        {groupInfoData && (
+        {infoResponse && (
           <GroupSideHeader
-            groupInfoData={groupInfoData}
+            groupInfoData={infoResponse}
             isMember={isMember}
             isOwner={isOwner}
             setShowEditProfileModal={setShowEditProfileModal}
@@ -100,14 +100,14 @@ const GroupFeed = () => {
             subText="매주 월요일마다 업데이트 됩니다"
           />
           <Spacing marginBottom="2" />
-          <CuriousProfile groupId={groupId} />
+          <CuriousProfile mostCuriousWriter={mostCuriousWriter} />
           <Spacing marginBottom="6.4" />
           <GroupCuriousTitle
             mainText="우리 모임에서 인기 있는 글이에요"
             subText="매주 월요일마다 업데이트 됩니다"
           />
           <Spacing marginBottom="2" />
-          <CuriousArticle groupId={groupId} />
+          <CuriousArticle groupId={groupId} mostCuriousPost={mostCuriousPost} />
           <Spacing marginBottom="6.4" />
           <Carousel />
         </GroupInfo>
