@@ -22,22 +22,45 @@ export const fetchGroupFeedAuth = async (groupId: string) => {
   }
 };
 
+interface InfoResPropTypes {
+  imageUrl: string;
+  moimName: string;
+  ownerName: string;
+  startDate: string;
+  writerCount: number;
+  description: string;
+}
+
+interface CuriousWriterPropTypes {
+  popularWriters: {
+    writerName: string;
+  }[];
+}
+
+interface CuriousPostPropTypes {
+  postList: {
+    postId: string;
+    imageUrl: string;
+    topic: string;
+    title: string;
+    content: string;
+    isContainPhoto: boolean;
+  }[];
+}
+
 interface GroupInfoPropTypes {
   data: {
-    imageUrl: string;
-    moimName: string;
-    ownerName: string;
-    startDate: string;
-    writerCount: number;
-    description: string;
+    infoResponse: InfoResPropTypes;
+    mostCuriousPost: CuriousPostPropTypes[];
+    mostCuriousWriter: CuriousWriterPropTypes[];
   };
   status: number;
   message: string;
 }
-
+//[GET] 글모임 통합 정보 GET
 export const fetchGroupInfo = async (groupId: string) => {
   try {
-    const response = await client.get<GroupInfoPropTypes>(`/api/moim/${groupId}/info`);
+    const response = await client.get<GroupInfoPropTypes>(`/api/moim/${groupId}/information`);
     return response.data;
   } catch (error) {
     console.error('에러:', error);
@@ -81,28 +104,6 @@ export const fetchTodayTopic = async (groupId: string) => {
   }
 };
 
-interface CuriousWriterPropTypes {
-  data: {
-    popularWriters: {
-      writerName: string;
-      information: string;
-    }[];
-  };
-  status: number;
-  message: string;
-}
-
-export const fetchCuriousWriters = async (groupId: string) => {
-  try {
-    const response = await client.get<CuriousWriterPropTypes>(
-      `/api/moim/${groupId}/writers/top-rank`,
-    );
-    return response.data;
-  } catch (error) {
-    console.error('에러:', error);
-  }
-};
-
 interface TopicListPropTypes {
   data: {
     topicList: {
@@ -117,30 +118,6 @@ interface TopicListPropTypes {
 export const fetchTopicList = async (groupId: string) => {
   try {
     const response = await client.get<TopicListPropTypes>(`/api/moim/${groupId}/topics`);
-    return response.data;
-  } catch (error) {
-    console.error('에러:', error);
-  }
-};
-
-interface CuriousPostPropTypes {
-  data: {
-    postList: {
-      postId: string;
-      imageUrl: string;
-      topic: string;
-      title: string;
-      content: string;
-      isContainPhoto: boolean;
-    }[];
-  };
-  status: number;
-  message: string;
-}
-
-export const fetchCuriousPost = async (groupId: string) => {
-  try {
-    const response = await client.get<CuriousPostPropTypes>(`/api/moim/${groupId}/posts/top-rank`);
     return response.data;
   } catch (error) {
     console.error('에러:', error);
