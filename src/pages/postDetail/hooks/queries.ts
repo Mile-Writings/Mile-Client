@@ -1,7 +1,7 @@
 //한 파일에서 사용하는 쿼리키를 모아두고 쿼리를 선언해주세요
-
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
+import { errorText } from '../../../constants/errorText';
 import checkPostAuth from '../apis/checkPostAuth';
 import createPostCurious from '../apis/createPostCurious';
 import deleteCurious from '../apis/deleteCurious';
@@ -91,11 +91,11 @@ export const usePostCurious = (postId: string) => {
         const errCode = err.response?.data.status;
         const errStatus = err.response?.status;
         if (errCode === 40900 || errCode === 40306) {
-          alert('잘못된 접근입니다. errorCode: ' + errCode);
+          alert(errorText.approach + errCode);
         } else if (errStatus === 500) {
-          alert('네트워크 에러');
+          alert(errorText.network);
         } else {
-          throw new Error('예기치 못한 에러');
+          throw new Error(errorText.unexpected);
         }
       }
 
@@ -160,11 +160,11 @@ export const useDeleteCurious = (postId: string) => {
       if (isAxiosError(err)) {
         const errStatus = err.response?.status;
         if (errStatus === 404) {
-          alert('잘못된 접근입니다. errorCode: ' + errStatus);
+          alert(errorText.approach + errStatus);
         } else if (errStatus === 500) {
-          alert('네트워크 에러입니다. 잠시후 다시 시도해주세요. ');
+          alert(errorText.network);
         } else {
-          throw new Error('');
+          throw new Error(errorText.unexpected);
         }
       }
       queryClient.setQueryData([QUERY_KEY_POST_DETAIL.curious, postId], context?.prevOption);
