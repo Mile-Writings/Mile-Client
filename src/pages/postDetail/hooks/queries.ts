@@ -1,7 +1,6 @@
 //한 파일에서 사용하는 쿼리키를 모아두고 쿼리를 선언해주세요
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-
 import { isAxiosError } from 'axios';
 import checkPostAuth from '../apis/checkPostAuth';
 import createPostCurious from '../apis/createPostCurious';
@@ -28,6 +27,15 @@ export const QUERY_KEY_POST_DETAIL = {
   postNestedComment: 'postNestedComment',
 };
 
+export interface postCuriousProps {
+  status: number;
+  message: string;
+  data: {
+    isCurious: boolean;
+    curiousCount: number;
+  };
+}
+
 // 글정보 조회 get api
 export const useGetPostDetail = (postId: string) => {
   const data = useQuery({
@@ -48,15 +56,6 @@ export const useGetCuriousInfo = (postId: string) => {
   return { data, error };
 };
 
-interface postCuriousProps {
-  status: number;
-  message: string;
-  data: {
-    isCurious: boolean;
-    curiousCount: number;
-  };
-}
-
 //궁금해요 생성 api
 export const usePostCurious = (postId: string) => {
   const queryClient = useQueryClient();
@@ -71,39 +70,35 @@ export const usePostCurious = (postId: string) => {
 
       queryClient.setQueryData(
         [QUERY_KEY_POST_DETAIL.curious, postId],
-        (oldData: postCuriousProps | undefined) => {
-          let updateData = {} as postCuriousProps;
+        (oldData: postCuriousProps) => {
+          let updateData = {};
+          updateData = {
+            ...oldData,
+            data: {
+              isCurious: true,
+              curiousCount: oldData.data.curiousCount + 1,
+            },
+          };
 
-          if (oldData) {
-            Object.assign(updateData, oldData);
-            updateData = {
-              ...oldData,
-              data: {
-                isCurious: true,
-                curiousCount: oldData.data.curiousCount + 1,
-              },
-            };
-
-            return updateData;
-          }
-          return undefined;
+          return updateData;
         },
       );
       return { prevOption };
     },
 
     onError: (err, _, context) => {
-      alert('errpr');
       if (isAxiosError(err)) {
-        if (err.response?.data.status === 40900) {
-          alert('잘못된 접근입니다.');
-        }
-        if (err.response?.data.status === 40306) {
-          alert('잘못된 접근입니다.');
+        const errCode = err.response?.data.status;
+        const errStatus = err.response?.status;
+        if (errCode === 40900 || errCode === 40306) {
+          alert('잘못된 접근입니다. errorCode: ' + errCode);
+        } else if (errStatus === 500) {
+          alert('네트워크 에러');
         } else {
           throw new Error('예기치 못한 에러');
         }
       }
+
       queryClient.setQueryData([QUERY_KEY_POST_DETAIL.curious, postId], context?.prevOption);
     },
     onSettled: () => {
@@ -137,29 +132,25 @@ export const useDeleteCurious = (postId: string) => {
 
       const prevOption = queryClient.getQueryData([QUERY_KEY_POST_DETAIL.curious, postId]);
 
-      queryClient.setQueryData<postCuriousProps>(
+      queryClient.setQueryData(
         [QUERY_KEY_POST_DETAIL.curious, postId],
-        (oldData: postCuriousProps | undefined) => {
-          let updateData = {} as postCuriousProps;
+        (oldData: postCuriousProps) => {
+          let updateData = {};
 
-          if (oldData) {
-            Object.assign(updateData, oldData);
+          let optimisticCuriousCount =
+            oldData.data.curiousCount === 0
+              ? oldData.data.curiousCount
+              : oldData.data.curiousCount - 1;
 
-            let optimisticCuriousCount =
-              oldData.data.curiousCount === 0
-                ? oldData.data.curiousCount
-                : oldData.data.curiousCount - 1;
-            updateData = {
-              ...oldData,
-              data: {
-                isCurious: false,
-                curiousCount: optimisticCuriousCount,
-              },
-            };
-            return updateData;
-          }
+          updateData = {
+            ...oldData,
+            data: {
+              isCurious: false,
+              curiousCount: optimisticCuriousCount,
+            },
+          };
 
-          return undefined;
+          return updateData;
         },
       );
 
@@ -167,14 +158,16 @@ export const useDeleteCurious = (postId: string) => {
     },
     onError: (err, _, context) => {
       if (isAxiosError(err)) {
-        if (err.response?.status === 404) {
-          alert('잘못된 접근입니다.');
+        const errStatus = err.response?.status;
+        if (errStatus === 404) {
+          alert('잘못된 접근입니다. errorCode: ' + errStatus);
+        } else if (errStatus === 500) {
+          alert('네트워크 에러입니다. 잠시후 다시 시도해주세요. ');
+        } else {
+          throw new Error('');
         }
       }
-
-      if (context) {
-        queryClient.setQueryData([QUERY_KEY_POST_DETAIL.curious, postId], context.prevOption);
-      }
+      queryClient.setQueryData([QUERY_KEY_POST_DETAIL.curious, postId], context?.prevOption);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.curious, postId] });
