@@ -21,7 +21,7 @@ import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import { Editor, EditorContent, useEditor } from '@tiptap/react';
 import classNames from 'classnames';
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 // custom
 import { FontSize } from '../utils/fontSize';
@@ -729,14 +729,14 @@ const TipTapWrapper = styled.div`
 `;
 
 const StickyWrapper = styled.div`
-  position: sticky;
-  top: 9.4rem;
+  height: 100%;
 `;
 
 // 툴바 전체 감싸기
 const ToolbarWrapper = styled.div`
-  /* position: sticky;
-  top: 6.4rem; */
+  position: sticky;
+  top: 7.4rem;
+  z-index: 1;
   display: flex;
   align-items: center;
   width: 82.6rem;
