@@ -4,8 +4,8 @@ import React, { Dispatch, SetStateAction } from 'react';
 import postDirectlyS3 from '../apis/postDirectlyS3';
 import { EDITOR_DEFAULT_IMG } from '../constants/editorDefaultImg';
 
-import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 import { s3UrlParsing } from '../../../utils/s3UrlParsing';
+import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 
 interface ImageUploadPropTypes {
   setPreviewImgUrl: Dispatch<SetStateAction<string>>;
@@ -85,7 +85,10 @@ const ImageUploadLabel = styled.label`
   top: -7.1rem;
   right: 0;
   z-index: 3;
-  width: 100%;
+
+  display: flex;
+  justify-content: end;
+  width: 82.8rem;
 
   cursor: pointer;
   border-radius: 10px;
