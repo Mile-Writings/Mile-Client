@@ -32,7 +32,6 @@ import { LineHeight } from '../utils/lineHeight';
 import './tiptap.css';
 // editor svg
 import * as ToolbarIcon from '../../../assets/svgs/editorSVG';
-import Spacing from '../../../components/commons/Spacing';
 import useClickOutside from '../../../hooks/useClickOutside';
 
 interface EditorPropTypes {
@@ -246,9 +245,9 @@ const TipTap = (props: EditorPropTypes) => {
         rows={1}
         ref={titleRef}
       />
-      <StickyWrapper>
-        <Spacing marginBottom="2.4" />
-        <ToolbarWrapper className="menu">
+      <ToolbarWrapper>
+        <ToolbarPaddingDiv divHeight={2.4} />
+        <ToolbarContainer className="menu">
           {/* 글자 크기 */}
           <ToolbarDropDownWrapper ref={fontSizeDropDownRef}>
             <FontSizeToggle onClick={onClickFontSizeToggle}>
@@ -690,16 +689,22 @@ const TipTap = (props: EditorPropTypes) => {
               <ToolbarIcon.EditorDividerIcn />
             </ToolbarSvg>
           </ToolbarSvgBtnLast>
-        </ToolbarWrapper>
-        <Spacing marginBottom="2.4" />
-        <EditorContent editor={editor} />
-      </StickyWrapper>
+        </ToolbarContainer>
+        <ToolbarPaddingDiv divHeight={2.2} />
+      </ToolbarWrapper>
+
+      <EditorContent editor={editor} />
     </TipTapWrapper>
   );
 };
 
 export default TipTap;
 
+const ToolbarPaddingDiv = styled.div<{ divHeight: number }>`
+  height: ${({ divHeight }) => `${divHeight}rem`};
+
+  background-color: ${({ theme }) => theme.colors.backGroundGray};
+`;
 const Title = styled.textarea`
   width: 82.6rem;
   max-height: 13.2rem;
@@ -728,15 +733,8 @@ const TipTapWrapper = styled.div`
   width: 82.6rem;
 `;
 
-const StickyWrapper = styled.div`
-  height: 100%;
-`;
-
 // 툴바 전체 감싸기
-const ToolbarWrapper = styled.div`
-  position: sticky;
-  top: 7.4rem;
-  z-index: 1;
+const ToolbarContainer = styled.div`
   display: flex;
   align-items: center;
   width: 82.6rem;
@@ -746,6 +744,13 @@ const ToolbarWrapper = styled.div`
 
   background-color: white;
   border-radius: 0.8rem;
+`;
+const ToolbarWrapper = styled.div`
+  position: sticky;
+  top: 5rem;
+  z-index: 1;
+
+  background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
 
 // 드롭다운 리스트
