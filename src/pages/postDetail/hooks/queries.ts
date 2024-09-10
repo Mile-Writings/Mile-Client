@@ -70,8 +70,11 @@ export const usePostCurious = (postId: string) => {
 
       queryClient.setQueryData(
         [QUERY_KEY_POST_DETAIL.curious, postId],
-        (oldData: postCuriousProps) => {
+        (oldData: postCuriousProps | undefined) => {
           let updateData = {};
+          if (oldData === undefined) {
+            return undefined;
+          }
           updateData = {
             ...oldData,
             data: {
@@ -134,9 +137,12 @@ export const useDeleteCurious = (postId: string) => {
 
       queryClient.setQueryData(
         [QUERY_KEY_POST_DETAIL.curious, postId],
-        (oldData: postCuriousProps) => {
+        (oldData: postCuriousProps | undefined) => {
           let updateData = {};
 
+          if (oldData === undefined) {
+            return undefined;
+          }
           let optimisticCuriousCount =
             oldData.data.curiousCount === 0
               ? oldData.data.curiousCount
