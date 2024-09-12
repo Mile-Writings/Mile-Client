@@ -11,6 +11,7 @@ import {
   AlertDeleteIcn,
 } from '../../../assets/svgs/modal/modalSVG';
 import React from 'react';
+import { MODAL_SIZES } from './constants';
 
 interface ModalPropType {
   isModalOpen: boolean;
@@ -159,14 +160,14 @@ const ModalWrapper = styled.div<{ $sizeType: string }>`
   width: ${({ $sizeType }) => {
     switch ($sizeType) {
       case 'SMALL':
-        return '42.7rem';
+        return MODAL_SIZES.SMALL;
       case 'MEDIUM':
-        return '43.1rem';
+        return MODAL_SIZES.MEDIUM;
       case 'LARGE':
-        return '44.2rem';
+        return MODAL_SIZES.LARGE;
       case 'DEFAULT':
       default:
-        return '40rem';
+        return MODAL_SIZES.DEFAULT;
     }
   }};
   padding: 3.2rem 4rem;
