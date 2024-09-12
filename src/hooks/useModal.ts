@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { preventScroll, allowScroll } from '../pages/postPage/utils/modalPreventScroll';
 
 const useModal = () => {
@@ -12,13 +12,8 @@ const useModal = () => {
     allowScroll();
   };
 
-  useEffect(() => {
-    !isModalOpen && allowScroll();
-  }, [isModalOpen]);
-
   return {
     isModalOpen,
-    setIsModalOpen,
     handleShowModal,
     handleCloseModal,
   };
