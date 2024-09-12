@@ -341,17 +341,13 @@ const PostPage = () => {
 
   // 임시저장 버튼 누르면 열리는 모달
   const onClickTempSaveBtn = () => {
-    if (isTemporaryPostExist) {
-      handleShowModal();
-      setEditorModalType('tempSave');
-      editorFlowModalDispatch({ type: 'putNewTempSaveContent' });
-      setIgnoreBlocker(true);
-    } else {
-      handleShowModal();
-      setEditorModalType('tempSave');
-      editorFlowModalDispatch({ type: 'tempSave' });
-      setIgnoreBlocker(true);
-    }
+    handleShowModal();
+    setEditorModalType('tempSave');
+    setIgnoreBlocker(true);
+
+    isTemporaryPostExist
+      ? editorFlowModalDispatch({ type: 'putNewTempSaveContent' })
+      : editorFlowModalDispatch({ type: 'tempSave' });
   };
 
   // 임시저장 모달 -> '예' 누르면 쿼리 동작
