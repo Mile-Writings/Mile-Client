@@ -36,7 +36,7 @@ const CreateGroupBtn = ({ groupCount }: groupCountProps) => {
       <FullModal
         isModalOpen={isModalOpen}
         content="글모임은 최대 5개까지 가입할 수 있습니다."
-        handleClickBg={handleCloseModal}
+        onClickBg={handleCloseModal}
       >
         <FullModalBtn
           isPrimary={false}

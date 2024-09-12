@@ -93,7 +93,7 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
           {/* 모임 삭제 모달 */}
           <DefaultModal
             isModalOpen={isModalOpen}
-            handleClickBg={handleCloseModal}
+            onClickBg={handleCloseModal}
             content={MODAL.DELETE_GROUP}
             sizeType="LARGE"
           >

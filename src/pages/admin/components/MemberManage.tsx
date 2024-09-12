@@ -93,7 +93,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
 
       <DefaultModal
         isModalOpen={isModalOpen}
-        handleClickBg={handleCloseModal}
+        onClickBg={handleCloseModal}
         content={MODAL.DELETE_MEMBER}
         sizeType="SMALL"
       >

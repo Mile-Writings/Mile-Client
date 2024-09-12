@@ -188,7 +188,7 @@ const PostDetail = () => {
       {/* 우선은 조건부로 연결해두었는데 reducer나 state를 통해서 업데이트 하도록 변경해도 될 듯 */}
       <DefaultModal
         isModalOpen={isModalOpen}
-        handleClickBg={handleCloseModal}
+        onClickBg={handleCloseModal}
         content={modalType === 'DELETE' ? `정말로 삭제하시겠어요?` : `정말로 수정하시겠어요?`}
         modalImg={modalType === 'DELETE' ? 'DELETE' : 'EDIT'}
       >

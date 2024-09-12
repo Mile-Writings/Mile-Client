@@ -22,7 +22,7 @@ export const FullModalBtn = (props: FullModalBtnPropType) => {
 
 interface FullModalPropType {
   isModalOpen: boolean;
-  handleClickBg?: () => void;
+  onClickBg?: () => void;
   children: React.ReactNode;
   content: string;
 }
@@ -30,14 +30,14 @@ interface FullModalPropType {
 const portalElement = document.getElementById('modal') as HTMLElement;
 
 export const FullModal = (props: FullModalPropType) => {
-  const { isModalOpen, handleClickBg, children, content } = props;
+  const { isModalOpen, onClickBg, children, content } = props;
 
   return (
     <>
       {isModalOpen &&
         createPortal(
           <Wrapper>
-            <ModalBackground onClick={handleClickBg} />
+            <ModalBackground onClick={onClickBg} />
             <ModalWrapper>
               <Content>{content}</Content>
               <Spacing marginBottom="2.8" />

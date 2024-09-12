@@ -18,7 +18,7 @@ interface ModalPropType {
   modalImg?: 'DELETE' | 'POST' | 'EDIT' | 'SAVE' | 'CAUTION' | '';
   children: React.ReactNode;
   content: string;
-  handleClickBg?: () => void;
+  onClickBg?: () => void;
 }
 
 interface ModalBtnType {
@@ -64,7 +64,7 @@ export const DefaultModal = (props: ModalPropType) => {
     sizeType = 'DEFAULT',
     modalImg,
     content,
-    handleClickBg = () => {},
+    onClickBg = () => {},
     children,
   } = props;
 
@@ -88,7 +88,7 @@ export const DefaultModal = (props: ModalPropType) => {
       {isModalOpen &&
         createPortal(
           <Wrapper>
-            <ModalBackground onClick={handleClickBg} />
+            <ModalBackground onClick={onClickBg} />
             <ModalWrapper $sizeType={sizeType}>
               <Content>{content}</Content>
               <Spacing marginBottom="2.4" />

@@ -130,7 +130,7 @@ interface editorFlowModalType {
   rightBtnText: string;
   rightBtnFn: () => void;
   modalImgType: 'DELETE' | 'POST' | 'EDIT' | 'SAVE' | 'CAUTION' | '';
-  handleClickBg: () => void;
+  onClickBg: () => void;
 }
 
 interface editorFlowModalActionType {
@@ -144,7 +144,7 @@ const editorFlowModalState: editorFlowModalType = {
   rightBtnText: '',
   rightBtnFn: () => {},
   modalImgType: '',
-  handleClickBg: () => {},
+  onClickBg: () => {},
 };
 
 const PostPage = () => {
@@ -400,7 +400,7 @@ const PostPage = () => {
           rightBtnText: '예',
           rightBtnFn: tempSaveHandler,
           modalImgType: 'SAVE',
-          handleClickBg: () => handleCloseModal(),
+          onClickBg: () => handleCloseModal(),
         };
       // 최초 제출하기
       case 'postContent':
@@ -412,7 +412,7 @@ const PostPage = () => {
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${postContentId}`),
           modalImgType: 'POST',
-          handleClickBg: () => {},
+          onClickBg: () => {},
         };
       // 임시저장 이어쓰기 -> 제출하기
       case 'putTempSaveContent':
@@ -424,7 +424,7 @@ const PostPage = () => {
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${tempPostId}`),
           modalImgType: 'POST',
-          handleClickBg: () => {},
+          onClickBg: () => {},
         };
       // 임시저장 존재하는데 다른 글 임시저장
       case 'putNewTempSaveContent':
@@ -436,7 +436,7 @@ const PostPage = () => {
           rightBtnText: '아니오',
           rightBtnFn: handleCloseModal,
           modalImgType: 'CAUTION',
-          handleClickBg: () => {},
+          onClickBg: () => {},
         };
       // 수정하기
       case 'editContent':
@@ -448,7 +448,7 @@ const PostPage = () => {
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${editPostId}`),
           modalImgType: 'POST',
-          handleClickBg: () => {},
+          onClickBg: () => {},
         };
       // 페이지 이탈
       case 'exitEditPage':
@@ -460,7 +460,7 @@ const PostPage = () => {
           rightBtnText: '아니오',
           rightBtnFn: () => handleCloseModal(),
           modalImgType: 'CAUTION',
-          handleClickBg: () => handleCloseModal(),
+          onClickBg: () => handleCloseModal(),
         };
       default:
         return state;
@@ -597,7 +597,7 @@ const PostPage = () => {
       {/* 글쓰기 관련 모달 */}
       <DefaultModal
         isModalOpen={isModalOpen}
-        handleClickBg={editorFlowModalVal.handleClickBg}
+        onClickBg={editorFlowModalVal.onClickBg}
         content={editorFlowModalVal.title}
         modalImg={editorFlowModalVal.modalImgType}
       >
