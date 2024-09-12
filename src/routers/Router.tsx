@@ -1,8 +1,5 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
-import PrivateRoute from './PrivateRoute';
-
-import ScrollTotop from '../components/commons/ScrollToTop';
 import Admin from '../pages/admin/Admin';
 import CreateGroup from '../pages/createGroup/CreateGroup';
 import CreateGroupSuccess from '../pages/createGroupSuccess/CreateGroupSuccess';
@@ -15,32 +12,42 @@ import RedirectLogin from '../pages/login/RedirectLogin';
 import Main from '../pages/main/Main';
 import PostDetail from '../pages/postDetail/PostDetail';
 import PostPage from '../pages/postPage/PostPage';
+import Layout from '../components/commons/Layout';
+import PrivateRoute from './PrivateRoute';
 
-const Router = () => {
-  return (
-    <BrowserRouter>
-      <ScrollTotop />
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/group/:groupId" element={<GroupFeed />} />
-        <Route path="/detail/:groupId/:postId" element={<PostDetail />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/redirect-kakao" element={<RedirectLogin />} />
-        <Route path="/error" element={<Error />} />
-        <Route path="*" element={<Error />} />
-        <Route path="/group/:groupId/groupInvite" element={<GroupInvite />} />
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Layout />,
+    children: [
+      { index: true, element: <Main /> },
+      { path: 'login', element: <Login /> },
+      { path: 'redirect-kakao', element: <RedirectLogin /> },
+      { path: 'detail/:groupId/:postId', element: <PostDetail /> },
+      { path: 'error', element: <Error /> },
+      { path: '*', element: <Error /> },
 
-        {/* 로그인 여부를 판단해 접근을 막는 Private Route */}
-        <Route element={<PrivateRoute />}>
-          <Route path="/post/:groupId/:type" element={<PostPage />} />
-          <Route path="/group/success/:groupId" element={<CreateGroupSuccess />} />
-          <Route path="/createGroup" element={<CreateGroup />} />
-          <Route path="/group/:groupId/groupJoin" element={<GroupJoinCongrats />} />
-          <Route path="/admin/:groupId" element={<Admin />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
-};
+      // PrivateRoute 적용
+      {
+        element: <PrivateRoute />,
+        children: [
+          { path: 'admin/:groupId', element: <Admin /> },
+          { path: 'post/:groupId/:type', element: <PostPage /> },
+          { path: 'group/create', element: <CreateGroup /> },
+          { path: 'group/success/:groupId', element: <CreateGroupSuccess /> },
+          { path: 'group/:groupId/groupJoin', element: <GroupJoinCongrats /> },
+        ],
+      },
+    ],
+  },
+  {
+    path: 'group/:groupId',
+    element: <Layout />,
+    children: [
+      { index: true, element: <GroupFeed /> },
+      { path: 'groupInvite', element: <GroupInvite /> },
+    ],
+  },
+]);
 
-export default Router;
+export default router;

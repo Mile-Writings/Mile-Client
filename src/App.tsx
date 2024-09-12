@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import router from './Router';
+import router from './routers/Router';
 
 import { RouterProvider } from 'react-router-dom';
 
