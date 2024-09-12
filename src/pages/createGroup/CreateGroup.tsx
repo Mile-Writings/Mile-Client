@@ -10,6 +10,7 @@ import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/com
 import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
 import { DEFAULT_IMG_URL } from '../../constants/defaultImgUrl';
 import useModal from '../../hooks/useModal';
+import { MODAL } from './constants/modalContent';
 
 type CreateGroupAction =
   | { type: 'setGroupName'; value: string }
@@ -194,10 +195,14 @@ const CreateGroup = () => {
         isModalOpen={isModalOpen}
         onClickBg={handleCloseModal}
         sizeType="DEFAULT"
-        content={`생성 완료 시 필명 변경이 불가합니다. \n계속 하시겠습니까?`}
+        content={MODAL.ALERT_NICKNAME}
         modalImg="POST"
       >
-        <DefaultModalBtn type="POSITIVE" onClickLeft={handleCloseModal} onClickRight={createGroup} />
+        <DefaultModalBtn
+          type="POSITIVE"
+          onClickLeft={handleCloseModal}
+          onClickRight={createGroup}
+        />
       </DefaultModal>
     </CreateGroupWrapper>
   );

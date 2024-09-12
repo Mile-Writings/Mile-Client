@@ -26,6 +26,7 @@ import CuriousBtn from './components/CuriousBtn';
 import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
 import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
 import useModal from '../../hooks/useModal';
+import { MODAL } from './constants/modalContent';
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -189,7 +190,7 @@ const PostDetail = () => {
       <DefaultModal
         isModalOpen={isModalOpen}
         onClickBg={handleCloseModal}
-        content={modalType === 'DELETE' ? `정말로 삭제하시겠어요?` : `정말로 수정하시겠어요?`}
+        content={modalType === 'DELETE' ? MODAL.POST_DELETE : MODAL.POST_EDIT}
         modalImg={modalType === 'DELETE' ? 'DELETE' : 'EDIT'}
       >
         <DefaultModalBtn

@@ -31,6 +31,7 @@ import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/De
 import { FullModal, FullModalBtn } from '../../components/commons/modal/FullModal';
 import Spacing from '../../components/commons/Spacing';
 import useModal from '../../hooks/useModal';
+import { MODAL } from './constants/modalContent';
 
 // editor content API 관련
 interface editorStateType {
@@ -394,7 +395,7 @@ const PostPage = () => {
       case 'tempSave':
         return {
           ...state,
-          title: '임시저장 하시겠습니까?',
+          title: MODAL.TEMP_SAVE,
           leftBtnText: '아니오',
           leftBtnFn: () => handleCloseModal(),
           rightBtnText: '예',
@@ -406,7 +407,7 @@ const PostPage = () => {
       case 'postContent':
         return {
           ...state,
-          title: '제출이 완료되었습니다',
+          title: MODAL.POST_CONTENT,
           leftBtnText: '홈으로 가기',
           leftBtnFn: () => navigate(`/group/${groupId}`),
           rightBtnText: '글 확인하기',
@@ -418,7 +419,7 @@ const PostPage = () => {
       case 'putTempSaveContent':
         return {
           ...state,
-          title: '제출이 완료되었습니다',
+          title: MODAL.POST_CONTENT,
           leftBtnText: '홈으로 가기',
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
@@ -430,7 +431,7 @@ const PostPage = () => {
       case 'putNewTempSaveContent':
         return {
           ...state,
-          title: '이미 임시저장된 글이 있습니다. \n덮어쓰시겠습니까?',
+          title: MODAL.PUT_NEW_TEMP_SAVE_CONTENT,
           leftBtnText: '예',
           leftBtnFn: tempSaveHandler,
           rightBtnText: '아니오',
@@ -442,7 +443,7 @@ const PostPage = () => {
       case 'editContent':
         return {
           ...state,
-          title: '수정이 완료되었습니다.',
+          title: MODAL.EDIT_CONTENT,
           leftBtnText: '홈으로 가기',
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
@@ -454,7 +455,7 @@ const PostPage = () => {
       case 'exitEditPage':
         return {
           ...state,
-          title: '작성 중이 글이 있습니다. \n 페이지를 나가시겠습니까?',
+          title: MODAL.EXIT_EDIT_PAGE,
           leftBtnText: '예',
           leftBtnFn: () => navigate(`/group/${groupId}`),
           rightBtnText: '아니오',
@@ -585,7 +586,7 @@ const PostPage = () => {
       <Spacing marginBottom="8" />
 
       {/* 임시저장 이어쓰기 관련 모달 */}
-      <FullModal isModalOpen={showTempContinueModal} content="임시 저장된 글을 계속 이어 쓸까요?">
+      <FullModal isModalOpen={showTempContinueModal} content={MODAL.TEMP_CONTINUE}>
         <FullModalBtn isPrimary={true} content="새로 쓰기" onClick={onClickNewPostBtn} />
         <FullModalBtn isPrimary={false} content="이어 쓰기" onClick={onClickContinueTempBtn} />
         <Spacing marginBottom="0.2" />
