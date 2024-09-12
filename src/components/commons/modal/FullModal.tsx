@@ -53,7 +53,7 @@ export const FullModal = (props: FullModalPropType) => {
 const Wrapper = styled.div`
   position: fixed;
   top: 0;
-  z-index: 5;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,7 +64,7 @@ const Wrapper = styled.div`
 const ModalBackground = styled.div`
   position: fixed;
   top: 0;
-  z-index: 5;
+  z-index: 3;
   width: 100vw;
   height: 100%;
 
@@ -72,7 +72,7 @@ const ModalBackground = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  z-index: 6;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
