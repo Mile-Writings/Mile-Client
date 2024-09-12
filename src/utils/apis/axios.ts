@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { errorText } from '../../constants/errorText';
+import { ERROR_MESSAGE } from '../../constants/errorText';
 import refresh from './refresh';
 // const baseUrl = import.meta.env.VITE_BASE_URL;
 const devBaseUrl = import.meta.env.VITE_DEV_BASE_URL;
@@ -52,7 +52,7 @@ authClient.interceptors.response.use(
       }
       if (errorCode === 40103) {
         localStorage.setItem('beforePathname', window.location.pathname);
-        alert(errorText.authentication);
+        alert(ERROR_MESSAGE.authentication);
         window.location.href = '/login';
       }
     }
@@ -74,7 +74,7 @@ client.interceptors.response.use(
     if (err.response && errorStatus === 401 && !originReq._retry) {
       originReq._retry = true;
       if (errorCode === 40103) {
-        alert(errorText.authentication);
+        alert(ERROR_MESSAGE.authentication);
         window.location.href = '/login';
       }
     }

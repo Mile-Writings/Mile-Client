@@ -1,4 +1,4 @@
-export const errorText = {
+export const ERROR_MESSAGE = {
   approach: '잘못된 접근입니다. error code: ',
   authorization: '접근 권한이 없습니다. error code: ',
   authentication: '로그인이 필요한 서비스입니다. ',
