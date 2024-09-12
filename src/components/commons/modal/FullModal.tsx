@@ -34,26 +34,27 @@ export const FullModal = (props: FullModalPropType) => {
 
   return (
     <>
-      {createPortal(
-        <Wrapper $showModal={isModalOpen}>
-          <ModalBackground onClick={handleClickBg} />
-          <ModalWrapper>
-            <Content>{content}</Content>
-            <Spacing marginBottom="2.8" />
-            <BtnWrapper>{children}</BtnWrapper>
-          </ModalWrapper>
-        </Wrapper>,
-        portalElement,
-      )}
+      {isModalOpen &&
+        createPortal(
+          <Wrapper>
+            <ModalBackground onClick={handleClickBg} />
+            <ModalWrapper>
+              <Content>{content}</Content>
+              <Spacing marginBottom="2.8" />
+              <BtnWrapper>{children}</BtnWrapper>
+            </ModalWrapper>
+          </Wrapper>,
+          portalElement,
+        )}
     </>
   );
 };
 
-const Wrapper = styled.div<{ $showModal: boolean }>`
+const Wrapper = styled.div`
   position: fixed;
   top: 0;
   z-index: 5;
-  display: ${({ $showModal }) => ($showModal ? 'flex' : 'none')};
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 100vw;
