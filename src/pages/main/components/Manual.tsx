@@ -1,14 +1,7 @@
 import styled from '@emotion/styled';
 
-import {
-  MainManualCuriousIc,
-  MainManualJoinIc,
-  MainManualLookIc,
-  MainManualMakeIc,
-  MainManualShareIc,
-  MainManualWriteIc,
-} from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
+import { MAIN_MANUAL_IMG_URL } from '../constants/mainManualImgURL';
 
 const Manual = () => {
   return (
@@ -16,16 +9,9 @@ const Manual = () => {
       <ManualTitle>마일 메뉴얼</ManualTitle>
       <Spacing marginBottom="3.6" />
       <ManualLayout>
-        <ManualRow>
-          <MainManualMakeIc />
-          <MainManualJoinIc />
-          <MainManualWriteIc />
-        </ManualRow>
-        <ManualRow>
-          <MainManualShareIc />
-          <MainManualCuriousIc />
-          <MainManualLookIc />
-        </ManualRow>
+        {MAIN_MANUAL_IMG_URL.map((item, idx) => (
+          <ManualImage src={item} alt={`매뉴얼 이미지${idx}`} key={idx} />
+        ))}
       </ManualLayout>
     </ManualWrapper>
   );
@@ -49,8 +35,8 @@ const ManualTitle = styled.h1`
 `;
 
 const ManualLayout = styled.section`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   width: 92.8rem;
 `;
@@ -59,3 +45,5 @@ const ManualRow = styled.div`
   display: flex;
   gap: 2rem;
 `;
+
+const ManualImage = styled.img``;
