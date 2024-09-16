@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
-
-import { MainOnBoardingIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-
+import mainOnBoradingImg from '/src/assets/images/mainOnBoarding.png';
 const OnBoarding = () => {
   return (
     <OnBoardingWrapper>
@@ -17,7 +15,8 @@ const OnBoarding = () => {
           </SubText>
         </TextLayout>
         <Spacing marginBottom="3.2" />
-        <MainOnBoardingIcon />
+
+        <MainOnboardingImg src={mainOnBoradingImg} alt="메인 온보딩 이미지" />
       </OnBoardingIcWithTextLayout>
     </OnBoardingWrapper>
   );
@@ -60,6 +59,7 @@ const SubText = styled.p`
   ${({ theme }) => theme.fonts.subtitle7};
 `;
 
-const MainOnBoardingIcon = styled(MainOnBoardingIc)`
-  padding: 0 2.2rem;
+const MainOnboardingImg = styled.img`
+  width: 93rem;
+  height: 35.7rem;
 `;
