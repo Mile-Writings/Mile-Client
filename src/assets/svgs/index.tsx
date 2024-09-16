@@ -37,7 +37,6 @@ export { default as MakeGroupPlusBtn } from './mainMakeGroupPlusBtn.svg?react';
 export { default as MainTogglearrowClosedIc } from './mainTogglearrowClosedIc.svg?react';
 export { default as MainToggleArrowOpenedIc } from './mainTogglearrowOpenedIc.svg?react';
 
-export { default as MainOnBoardingIc } from './mainOnBoarding.svg?react';
 export { default as CheckboxIc } from './postDetailCheckIc.svg?react';
 export { default as QuestionDefaultIc } from './questionDefaultIc.svg?react';
 export { default as QuestioHoverIc } from './questionHoverIc.svg?react';
@@ -94,5 +93,3 @@ export { default as MemberMaster } from './adminMemberMaster.svg?react';
 export { default as GroupChatIc } from './groupChatIcn.svg?react';
 export { default as GroupCuriousIc } from './groupCuriousIcn.svg?react';
 export { default as GroupViewIc } from './groupViewIcn.svg?react';
-
-export { default as NoCommentIc } from './emptyCommentIc.svg?react';
