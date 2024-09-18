@@ -87,23 +87,6 @@ export const fetchGroupPublicStatus = async (groupId: string) => {
   }
 };
 
-interface TodayTopicPropTypes {
-  data: {
-    content: string;
-  };
-  status: number;
-  message: string;
-}
-
-export const fetchTodayTopic = async (groupId: string) => {
-  try {
-    const response = await client.get<TodayTopicPropTypes>(`/api/moim/${groupId}/topic/today`);
-    return response.data;
-  } catch (error) {
-    console.error('에러:', error);
-  }
-};
-
 interface TopicListPropTypes {
   data: {
     topicList: {
@@ -114,7 +97,7 @@ interface TopicListPropTypes {
   status: number;
   message: string;
 }
-
+//[GET] 글모임별 글감 카테고리
 export const fetchTopicList = async (groupId: string) => {
   try {
     const response = await client.get<TopicListPropTypes>(`/api/moim/${groupId}/topics`);

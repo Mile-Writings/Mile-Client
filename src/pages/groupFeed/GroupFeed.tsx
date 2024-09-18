@@ -22,6 +22,7 @@ import {
   useGroupFeedAuth,
   useGroupFeedPublicStatus,
   useGroupInfo,
+  useTopicList,
 } from './hooks/queries';
 
 const GroupFeed = () => {
@@ -48,8 +49,11 @@ const GroupFeed = () => {
 
   const { infoResponse, mostCuriousPost, mostCuriousWriter } = useGroupInfo(groupId || '');
   const { writerName, writerNameId } = useFetchWriterNameOnly(groupId || '', isMember, isOwner);
+  const { groupFeedCategoryData, isLoading } = useTopicList(groupId || '');
 
   const navigate = useNavigate();
+
+  const todayTopic = groupFeedCategoryData && groupFeedCategoryData[0].topicName;
 
   //접속시 권한확인
   useEffect(() => {
@@ -68,7 +72,7 @@ const GroupFeed = () => {
     }
   }, [isPublic, isMember, isOwner]);
 
-  if (isAuthLoading) {
+  if (isAuthLoading || isLoading) {
     return <Loading />;
   }
 
@@ -93,7 +97,7 @@ const GroupFeed = () => {
           />
         )}
         <GroupInfo>
-          <GroupTodayWriteStyle isMember={isMember} groupId={groupId} />
+          <GroupTodayWriteStyle todayTopic={todayTopic} isMember={isMember} groupId={groupId} />
           <Spacing marginBottom="6.4" />
           <GroupCuriousTitle
             mainText="우리 모임에서 궁금한 글쓴이에요"
@@ -109,7 +113,7 @@ const GroupFeed = () => {
           <Spacing marginBottom="2" />
           <CuriousArticle groupId={groupId} mostCuriousPost={mostCuriousPost} />
           <Spacing marginBottom="6.4" />
-          <Carousel />
+          <Carousel categoryData={groupFeedCategoryData || []} isLoading={isLoading} />
         </GroupInfo>
       </GroupInfoWrapper>
       <Spacing marginBottom="14" />

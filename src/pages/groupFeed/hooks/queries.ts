@@ -7,7 +7,6 @@ import {
   fetchGroupFeedAuth,
   fetchGroupInfo,
   fetchGroupPublicStatus,
-  fetchTodayTopic,
   fetchTopicList,
   fetchWriterInfo,
   fetchWriterNameOnly,
@@ -70,16 +69,6 @@ export const useGroupInfo = (groupId: string) => {
   const mostCuriousWriter = data?.data.mostCuriousWriter.popularWriters;
 
   return { infoResponse, mostCuriousPost, mostCuriousWriter, isLoading, isError, error };
-};
-
-export const useTodayWritingStyle = (groupId: string) => {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getTodayWritingStyle, groupId],
-    queryFn: () => fetchTodayTopic(groupId),
-  });
-
-  const content = data && data.data.content;
-  return { content, isLoading, isError, error };
 };
 
 export const useTopicList = (groupId: string) => {
