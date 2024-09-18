@@ -23,6 +23,7 @@ import {
   useGroupFeedPublicStatus,
   useGroupInfo,
   useTopicList,
+  useFetchWriterInfo,
 } from './hooks/queries';
 
 const GroupFeed = () => {
@@ -54,6 +55,7 @@ const GroupFeed = () => {
   const navigate = useNavigate();
 
   const todayTopic = groupFeedCategoryData && groupFeedCategoryData[0].topicName;
+  const { name, description } = useFetchWriterInfo(writerNameId);
 
   //접속시 권한확인
   useEffect(() => {
@@ -125,6 +127,8 @@ const GroupFeed = () => {
         <EditProfileModal
           setShowEditProfileModal={setShowEditProfileModal}
           writerNameId={writerNameId}
+          name={name || ''}
+          description={description || ''}
         />
       )}
     </GroupFeedWrapper>
