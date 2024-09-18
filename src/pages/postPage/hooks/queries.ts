@@ -12,6 +12,7 @@ import saveTempSavecontent from '../apis/saveTempSaveContent';
 
 import { QUERY_KEY_POST_DETAIL } from '../../postDetail/hooks/queries';
 import { isAxiosError } from 'axios';
+import { LONG_COMMENT_ERROR, NO_COMMENT_ERROR } from '../../../constants/commentErrorMessage';
 
 export const QUERY_KEY_POST = {
   postContent: 'postContent',
@@ -275,9 +276,9 @@ export const usePutTempSaveContent = ({
       if (isAxiosError(err) && err.response?.status) {
         const errorCode = err.response?.data.status;
         if (errorCode === 40005) {
-          alert('댓글을 입력해주세요');
+          alert(NO_COMMENT_ERROR);
         } else if (errorCode === 40006) {
-          alert('댓글 최대 길이를 초과했습니다');
+          alert(LONG_COMMENT_ERROR);
         } else {
           console.error();
         }

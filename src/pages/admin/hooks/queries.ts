@@ -53,12 +53,13 @@ export const usePostAdminTopic = (groupId: string | undefined, pageNum: number) 
     onError: (err) => {
       if (isAxiosError(err) && err.response?.status) {
         const errorCode = err.response?.data.status;
+        console.log(errorCode, 'code');
         if (errorCode === 40005) {
           alert('요청 값에 빈 값이 존재합니다');
         } else if (errorCode === 40006) {
           alert('요청 값이 길이를 초과했습니다');
         } else {
-          console.error();
+          console.log(err.response.data.message);
         }
       }
     },

@@ -81,7 +81,7 @@ export const usePostGroupMemberJoin = ({
       if (isAxiosError(err) && err.response?.status) {
         const errorCode = err.response?.data.status;
         if (errorCode === 40016) {
-          navigate(`/group/${groupId}/groupJoin`, {
+          navigate(`/group/${groupId}`, {
             state: {
               moimTitle: moimTitle,
             },
