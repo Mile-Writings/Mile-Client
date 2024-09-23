@@ -32,6 +32,7 @@ import { FullModal, FullModalBtn } from '../../components/commons/modal/FullModa
 import Spacing from '../../components/commons/Spacing';
 import useModal from '../../hooks/useModal';
 import useBlockPageExit from '../../hooks/useBlockPageExit';
+import { MODAL } from './constants/modalContent';
 
 // editor content API 관련
 interface editorStateType {
@@ -131,7 +132,7 @@ interface editorFlowModalType {
   rightBtnText: string;
   rightBtnFn: () => void;
   modalImgType: 'DELETE' | 'POST' | 'EDIT' | 'SAVE' | 'CAUTION' | '';
-  handleClickBg: () => void;
+  onClickBg: () => void;
 }
 
 interface editorFlowModalActionType {
@@ -145,7 +146,7 @@ const editorFlowModalState: editorFlowModalType = {
   rightBtnText: '',
   rightBtnFn: () => {},
   modalImgType: '',
-  handleClickBg: () => {},
+  onClickBg: () => {},
 };
 
 const PostPage = () => {
@@ -399,73 +400,73 @@ const PostPage = () => {
       case 'tempSave':
         return {
           ...state,
-          title: '임시저장 하시겠습니까?',
+          title: MODAL.TEMP_SAVE,
           leftBtnText: '아니오',
           leftBtnFn: () => handleCloseModal(),
           rightBtnText: '예',
           rightBtnFn: tempSaveHandler,
           modalImgType: 'SAVE',
-          handleClickBg: () => handleCloseModal(),
+          onClickBg: () => handleCloseModal(),
         };
       // 최초 제출하기
       case 'postContent':
         return {
           ...state,
-          title: '제출이 완료되었습니다',
+          title: MODAL.POST_CONTENT,
           leftBtnText: '홈으로 가기',
           leftBtnFn: () => navigate(`/group/${groupId}`),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${postContentId}`),
           modalImgType: 'POST',
-          handleClickBg: () => {},
+          onClickBg: () => {},
         };
       // 임시저장 이어쓰기 -> 제출하기
       case 'putTempSaveContent':
         return {
           ...state,
-          title: '제출이 완료되었습니다',
+          title: MODAL.POST_CONTENT,
           leftBtnText: '홈으로 가기',
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${tempPostId}`),
           modalImgType: 'POST',
-          handleClickBg: () => {},
+          onClickBg: () => {},
         };
       // 임시저장 존재하는데 다른 글 임시저장
       case 'putNewTempSaveContent':
         return {
           ...state,
-          title: '이미 임시저장된 글이 있습니다. \n덮어쓰시겠습니까?',
+          title: MODAL.PUT_NEW_TEMP_SAVE_CONTENT,
           leftBtnText: '예',
           leftBtnFn: tempSaveHandler,
           rightBtnText: '아니오',
           rightBtnFn: handleCloseModal,
           modalImgType: 'CAUTION',
-          handleClickBg: () => {},
+          onClickBg: () => {},
         };
       // 수정하기
       case 'editContent':
         return {
           ...state,
-          title: '수정이 완료되었습니다.',
+          title: MODAL.EDIT_CONTENT,
           leftBtnText: '홈으로 가기',
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${editPostId}`),
           modalImgType: 'POST',
-          handleClickBg: () => {},
+          onClickBg: () => {},
         };
       // 페이지 이탈
       case 'exitEditPage':
         return {
           ...state,
-          title: '작성 중이 글이 있습니다. \n 페이지를 나가시겠습니까?',
+          title: MODAL.EXIT_EDIT_PAGE,
           leftBtnText: '예',
           leftBtnFn: () => navigate(`/group/${groupId}`),
           rightBtnText: '아니오',
           rightBtnFn: () => handleCloseModal(),
           modalImgType: 'CAUTION',
-          handleClickBg: () => handleCloseModal(),
+          onClickBg: () => handleCloseModal(),
         };
       default:
         return state;
@@ -574,7 +575,7 @@ const PostPage = () => {
       <Spacing marginBottom="8" />
 
       {/* 임시저장 이어쓰기 관련 모달 */}
-      <FullModal isModalOpen={showTempContinueModal} content="임시 저장된 글을 계속 이어 쓸까요?">
+      <FullModal isModalOpen={showTempContinueModal} content={MODAL.TEMP_CONTINUE}>
         <FullModalBtn isPrimary={true} content="새로 쓰기" onClick={onClickNewPostBtn} />
         <FullModalBtn isPrimary={false} content="이어 쓰기" onClick={onClickContinueTempBtn} />
         <Spacing marginBottom="0.2" />
@@ -586,7 +587,7 @@ const PostPage = () => {
       {/* 글쓰기 관련 모달 */}
       <DefaultModal
         isModalOpen={isModalOpen}
-        handleClickBg={editorFlowModalVal.handleClickBg}
+        onClickBg={editorFlowModalVal.onClickBg}
         content={editorFlowModalVal.title}
         modalImg={editorFlowModalVal.modalImgType}
       >

@@ -8,6 +8,7 @@ import { useGetWriterNameConflict, usePostGroupMemberJoin } from '../hooks/queri
 import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 import Spacing from '../../../components/commons/Spacing';
 import useModal from '../../../hooks/useModal';
+import { MODAL } from '../constants/modalContent';
 
 interface userInfoStateType {
   writerName?: string;
@@ -209,8 +210,8 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
 
       <DefaultModal
         isModalOpen={isModalOpen}
-        handleClickBg={handleCloseModal}
-        content={`가입 완료 시 필명 변경이 불가합니다. \n계속 하시겠습니까?`}
+        onClickBg={handleCloseModal}
+        content={MODAL.ALERT_NICKNAME}
         modalImg="POST"
       >
         <DefaultModalBtn

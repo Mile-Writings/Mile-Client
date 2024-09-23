@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { MakeGroupPlusBtn, MakeGroupPlusHoverBtn } from '../../../assets/svgs';
 import { FullModal, FullModalBtn } from '../../../components/commons/modal/FullModal';
 import useModal from '../../../hooks/useModal';
+import { MODAL } from '../constants/modalContent';
 
 interface groupCountProps {
   groupCount: number;
@@ -35,8 +36,8 @@ const CreateGroupBtn = ({ groupCount }: groupCountProps) => {
       </CreateGroupBtnWrapper>
       <FullModal
         isModalOpen={isModalOpen}
-        content="글모임은 최대 5개까지 가입할 수 있습니다."
-        handleClickBg={handleCloseModal}
+        content={MODAL.ALERT_GROUP_LIMIT}
+        onClickBg={handleCloseModal}
       >
         <FullModalBtn
           isPrimary={false}

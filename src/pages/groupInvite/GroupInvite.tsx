@@ -12,6 +12,7 @@ import { useGetGroupInfo } from './hooks/queries';
 import { useFetchHeaderGroup } from '../groupFeed/hooks/queries';
 import { FullModal, FullModalBtn } from '../../components/commons/modal/FullModal';
 import useModal from '../../hooks/useModal';
+import { MODAL } from './constants/modalContent';
 
 const GroupInvite = () => {
   const navigate = useNavigate();
@@ -79,7 +80,7 @@ const GroupInvite = () => {
         <Spacing marginBottom="7.7" />
       </GroupInviteWrapper>
 
-      <FullModal isModalOpen={isModalOpen} content="글모임은 최대 5개까지 가입할 수 있습니다.">
+      <FullModal isModalOpen={isModalOpen} content={MODAL.ALERT_GROUP_LIMIT}>
         <FullModalBtn
           isPrimary={false}
           content="확인"

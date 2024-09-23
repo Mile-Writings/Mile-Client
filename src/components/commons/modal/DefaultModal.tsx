@@ -11,6 +11,7 @@ import {
   AlertDeleteIcn,
 } from '../../../assets/svgs/modal/modalSVG';
 import React from 'react';
+import { MODAL_SIZES } from './constants';
 
 interface ModalPropType {
   isModalOpen: boolean;
@@ -18,7 +19,7 @@ interface ModalPropType {
   modalImg?: 'DELETE' | 'POST' | 'EDIT' | 'SAVE' | 'CAUTION' | '';
   children: React.ReactNode;
   content: string;
-  handleClickBg?: () => void;
+  onClickBg?: () => void;
 }
 
 interface ModalBtnType {
@@ -64,7 +65,7 @@ export const DefaultModal = (props: ModalPropType) => {
     sizeType = 'DEFAULT',
     modalImg,
     content,
-    handleClickBg = () => {},
+    onClickBg = () => {},
     children,
   } = props;
 
@@ -85,28 +86,29 @@ export const DefaultModal = (props: ModalPropType) => {
 
   return (
     <>
-      {createPortal(
-        <Wrapper $showModal={isModalOpen}>
-          <ModalBackground onClick={handleClickBg} />
-          <ModalWrapper $sizeType={sizeType}>
-            <Content>{content}</Content>
-            <Spacing marginBottom="2.4" />
-            {modalImg && getModalImg()}
-            {modalImg && <Spacing marginBottom="2.4" />}
-            <BtnWrapper>{children}</BtnWrapper>
-          </ModalWrapper>
-        </Wrapper>,
-        portalElement,
-      )}
+      {isModalOpen &&
+        createPortal(
+          <Wrapper>
+            <ModalBackground onClick={onClickBg} />
+            <ModalWrapper $sizeType={sizeType}>
+              <Content>{content}</Content>
+              <Spacing marginBottom="2.4" />
+              {modalImg && getModalImg()}
+              {modalImg && <Spacing marginBottom="2.4" />}
+              <BtnWrapper>{children}</BtnWrapper>
+            </ModalWrapper>
+          </Wrapper>,
+          portalElement,
+        )}
     </>
   );
 };
 
-const Wrapper = styled.div<{ $showModal: boolean }>`
+const Wrapper = styled.div`
   position: fixed;
   top: 0;
-  z-index: 5;
-  display: ${({ $showModal }) => ($showModal ? 'flex' : 'none')};
+  z-index: 3;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 100vw;
@@ -116,7 +118,7 @@ const Wrapper = styled.div<{ $showModal: boolean }>`
 const ModalBackground = styled.div`
   position: fixed;
   top: 0;
-  z-index: 5;
+  z-index: 3;
   width: 100vw;
   height: 100%;
 
@@ -150,7 +152,7 @@ const ModalBtn = styled.button<{ $isLeft: boolean }>`
 `;
 
 const ModalWrapper = styled.div<{ $sizeType: string }>`
-  z-index: 6;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -158,14 +160,14 @@ const ModalWrapper = styled.div<{ $sizeType: string }>`
   width: ${({ $sizeType }) => {
     switch ($sizeType) {
       case 'SMALL':
-        return '42.7rem';
+        return MODAL_SIZES.SMALL;
       case 'MEDIUM':
-        return '43.1rem';
+        return MODAL_SIZES.MEDIUM;
       case 'LARGE':
-        return '44.2rem';
+        return MODAL_SIZES.LARGE;
       case 'DEFAULT':
       default:
-        return '40rem';
+        return MODAL_SIZES.DEFAULT;
     }
   }};
   padding: 3.2rem 4rem;

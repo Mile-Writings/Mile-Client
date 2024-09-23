@@ -84,7 +84,7 @@ const ImageUploadLabel = styled.label`
   position: relative;
   top: -7.1rem;
   right: 0;
-  z-index: 3;
+  z-index: 2;
   width: 100%;
 
   cursor: pointer;

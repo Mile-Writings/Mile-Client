@@ -26,6 +26,7 @@ import CuriousBtn from './components/CuriousBtn';
 import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
 import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
 import useModal from '../../hooks/useModal';
+import { MODAL } from './constants/modalContent';
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -188,8 +189,8 @@ const PostDetail = () => {
       {/* 우선은 조건부로 연결해두었는데 reducer나 state를 통해서 업데이트 하도록 변경해도 될 듯 */}
       <DefaultModal
         isModalOpen={isModalOpen}
-        handleClickBg={handleCloseModal}
-        content={modalType === 'DELETE' ? `정말로 삭제하시겠어요?` : `정말로 수정하시겠어요?`}
+        onClickBg={handleCloseModal}
+        content={modalType === 'DELETE' ? MODAL.POST_DELETE : MODAL.POST_EDIT}
         modalImg={modalType === 'DELETE' ? 'DELETE' : 'EDIT'}
       >
         <DefaultModalBtn

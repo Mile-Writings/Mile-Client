@@ -22,7 +22,7 @@ export const FullModalBtn = (props: FullModalBtnPropType) => {
 
 interface FullModalPropType {
   isModalOpen: boolean;
-  handleClickBg?: () => void;
+  onClickBg?: () => void;
   children: React.ReactNode;
   content: string;
 }
@@ -30,30 +30,31 @@ interface FullModalPropType {
 const portalElement = document.getElementById('modal') as HTMLElement;
 
 export const FullModal = (props: FullModalPropType) => {
-  const { isModalOpen, handleClickBg, children, content } = props;
+  const { isModalOpen, onClickBg, children, content } = props;
 
   return (
     <>
-      {createPortal(
-        <Wrapper $showModal={isModalOpen}>
-          <ModalBackground onClick={handleClickBg} />
-          <ModalWrapper>
-            <Content>{content}</Content>
-            <Spacing marginBottom="2.8" />
-            <BtnWrapper>{children}</BtnWrapper>
-          </ModalWrapper>
-        </Wrapper>,
-        portalElement,
-      )}
+      {isModalOpen &&
+        createPortal(
+          <Wrapper>
+            <ModalBackground onClick={onClickBg} />
+            <ModalWrapper>
+              <Content>{content}</Content>
+              <Spacing marginBottom="2.8" />
+              <BtnWrapper>{children}</BtnWrapper>
+            </ModalWrapper>
+          </Wrapper>,
+          portalElement,
+        )}
     </>
   );
 };
 
-const Wrapper = styled.div<{ $showModal: boolean }>`
+const Wrapper = styled.div`
   position: fixed;
   top: 0;
-  z-index: 5;
-  display: ${({ $showModal }) => ($showModal ? 'flex' : 'none')};
+  z-index: 3;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 100vw;
@@ -63,7 +64,7 @@ const Wrapper = styled.div<{ $showModal: boolean }>`
 const ModalBackground = styled.div`
   position: fixed;
   top: 0;
-  z-index: 5;
+  z-index: 3;
   width: 100vw;
   height: 100%;
 
@@ -71,7 +72,7 @@ const ModalBackground = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  z-index: 6;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;

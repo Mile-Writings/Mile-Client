@@ -72,7 +72,7 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
       </TopicWrapper>
       <DefaultModal
         isModalOpen={isModalOpen}
-        handleClickBg={handleCloseModal}
+        onClickBg={handleCloseModal}
         sizeType="MEDIUM"
         content={MODAL.DELETE_TOPIC}
         modalImg="POST"
