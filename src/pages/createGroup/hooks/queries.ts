@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { getGroupNameValidation } from '../apis/getGroupNameValidation';
 import { CreateGroupRequestTypes, postCreateGroup } from '../apis/postGroup';
+import { isAxiosError } from 'axios';
 
 export const QUERY_KEY_CREATE_GROUP = {
   getGroupNameValidation: 'getGroupNameValidation',
@@ -65,6 +66,23 @@ export const usePostCreateGroup = ({
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_CREATE_GROUP.postCreateGroup] });
       navigate(`/group/success/${data.data.data.moimId}`);
+    },
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        if (errorCode === 40005) {
+          alert('요청 값에 빈 값이 존재합니다');
+          window.location.reload();
+        } else if (errorCode === 40006) {
+          alert('요청 값이 길이를 초과했습니다');
+        } else if (errorCode === 40018) {
+          alert('사용불가능한 모임명입니다');
+        } else if (errorCode === 40019) {
+          alert('최대 가입 가능 모임 개수를 초과했습니다');
+        } else {
+          console.error();
+        }
+      }
     },
   });
 
