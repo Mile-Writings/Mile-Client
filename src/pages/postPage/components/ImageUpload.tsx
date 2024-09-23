@@ -4,8 +4,8 @@ import React, { Dispatch, SetStateAction } from 'react';
 import postDirectlyS3 from '../apis/postDirectlyS3';
 import { EDITOR_DEFAULT_IMG } from '../constants/editorDefaultImg';
 
-import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 import { s3UrlParsing } from '../../../utils/s3UrlParsing';
+import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 
 interface ImageUploadPropTypes {
   setPreviewImgUrl: Dispatch<SetStateAction<string>>;
@@ -47,15 +47,17 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
     <>
       <ThumbNailGradient>
         <ThumbNailImg src={previewImgUrl} $imgExist={previewImgUrl} />
+        <ImageInput type="file" accept="image/*" id="editorImg" onChange={onImageUpload} />
+        <ImageUploadLabel htmlFor="editorImg">
+          <ImageIconWrapper>
+            {previewImgUrl !== EDITOR_DEFAULT_IMG ? (
+              <EditorThuminputIcnActiveIcon />
+            ) : (
+              <EditorThuminputIcnUnactiveIcon />
+            )}
+          </ImageIconWrapper>
+        </ImageUploadLabel>
       </ThumbNailGradient>
-      <ImageInput type="file" accept="image/*" id="editorImg" onChange={onImageUpload} />
-      <ImageUploadLabel htmlFor="editorImg">
-        {previewImgUrl !== EDITOR_DEFAULT_IMG ? (
-          <EditorThuminputIcnActiveIcon />
-        ) : (
-          <EditorThuminputIcnUnactiveIcon />
-        )}
-      </ImageUploadLabel>
     </>
   );
 };
@@ -63,7 +65,9 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
 export default ImageUpload;
 
 const ThumbNailGradient = styled.div`
+  position: relative;
   width: 100%;
+  height: 30.7rem;
 
   background: ${({ theme }) => theme.colors.thumbnailGradient};
   border-radius: 0 0 10px 10px;
@@ -71,7 +75,7 @@ const ThumbNailGradient = styled.div`
 
 const ThumbNailImg = styled.img<{ $imgExist: string }>`
   position: relative;
-  display: inline-block;
+
   width: 100%;
   height: 30.7rem;
   object-fit: cover;
@@ -81,22 +85,35 @@ const ThumbNailImg = styled.img<{ $imgExist: string }>`
 `;
 
 const ImageUploadLabel = styled.label`
-  position: relative;
-  top: -7.1rem;
-  right: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   z-index: 3;
+
+  display: flex;
+  justify-content: center;
   width: 100%;
+  height: 100%;
 
   cursor: pointer;
   border-radius: 10px;
 `;
 
+const ImageIconWrapper = styled.div`
+  position: relative;
+  width: 82.8rem;
+  height: 100%;
+`;
 const EditorThuminputIcnActiveIcon = styled(EditorThuminputIcnActiveIc)`
-  margin-left: 74%;
+  position: absolute;
+  right: 0.5rem;
+  bottom: 2.25rem;
 `;
 
 const EditorThuminputIcnUnactiveIcon = styled(EditorThuminputIcnUnactiveIc)`
-  margin-left: 74%;
+  position: absolute;
+  right: 0.5rem;
+  bottom: 2.25rem;
 
   :hover {
     path {
