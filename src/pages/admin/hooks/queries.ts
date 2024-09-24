@@ -48,6 +48,19 @@ export const usePostAdminTopic = (groupId: string | undefined, pageNum: number) 
         queryKey: ['adminTopic', groupId, pageNum],
       });
     },
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        console.log(errorCode, 'code');
+        if (errorCode === 40005) {
+          alert('요청 값에 빈 값이 존재합니다');
+        } else if (errorCode === 40006) {
+          alert('요청 값이 길이를 초과했습니다');
+        } else {
+          console.log(err.response.data.message);
+        }
+      }
+    },
   });
 
   const postMutateAdminTopic = ({ topic, topicTag, topicDescription }: postAdminTopicPropTypes) =>
@@ -120,6 +133,18 @@ export const useEditAdminTopic = (
         queryKey: ['adminTopic', groupId, pageNum],
       });
     },
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        if (errorCode === 40005) {
+          alert('요청 값에 빈 값이 존재합니다');
+        } else if (errorCode === 40006) {
+          alert('요청 값이 길이를 초과했습니다');
+        } else {
+          console.error();
+        }
+      }
+    },
   });
 
   const editMutateAdminTopic = ({ topic, topicTag, topicDescription }: editTopicPropType) =>
@@ -142,6 +167,16 @@ export const useDeleteAdminTopic = (
       queryClient.invalidateQueries({
         queryKey: ['adminTopic', groupId, pageNum],
       });
+    },
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        if (errorCode === 40015) {
+          alert('모임에 최소 하나의 글감이 있어야 합니다');
+        } else {
+          console.error();
+        }
+      }
     },
   });
 
@@ -180,7 +215,18 @@ export const usePutAdminGroupInfo = ({
       });
     },
     onError: (err) => {
-      if (isAxiosError(err)) {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        if (errorCode === 40005) {
+          alert('요청 값에 빈 값이 존재합니다');
+        } else if (errorCode === 40006) {
+          alert('요청 값이 길이를 초과했습니다');
+        } else if (errorCode === 40018) {
+          alert('사용 불가능한 모임명입니다');
+        } else {
+          console.error();
+        }
+
         if (err?.response?.status === 500) {
           alert('서버내부 오류입니다. ');
         } else if (err?.response?.status === 401) {

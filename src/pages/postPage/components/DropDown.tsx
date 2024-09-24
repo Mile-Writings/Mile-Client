@@ -5,8 +5,8 @@ import React from 'react';
 import TopicDropDown from './TopicDropDown';
 import WriterDropDown from './WriterDropDown';
 
+import Spacing from '../../../components/commons/Spacing';
 import { Topics } from '../apis/fetchTopic';
-
 interface DropDownDataPropsType {
   topicList: Topics[];
   setTopic: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -19,10 +19,13 @@ const DropDown = (props: DropDownDataPropsType) => {
   const { topicList, setTopic, setWriter, selectedTopic, selectedWriter } = props;
 
   return (
-    <DropDownWrapper>
-      <TopicDropDown setTopic={setTopic} selectedTopic={selectedTopic} topicList={topicList} />
-      <WriterDropDown setWriter={setWriter} selectedWriter={selectedWriter} />
-    </DropDownWrapper>
+    <>
+      <Spacing marginBottom="3.36" />
+      <DropDownWrapper>
+        <TopicDropDown setTopic={setTopic} selectedTopic={selectedTopic} topicList={topicList} />
+        <WriterDropDown setWriter={setWriter} selectedWriter={selectedWriter} />
+      </DropDownWrapper>
+    </>
   );
 };
 
