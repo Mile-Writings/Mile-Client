@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import Spacing from '../../../components/commons/Spacing';
 import { MAIN_MANUAL_IMG_URL } from '../constants/mainManualImgURL';
-
+// import LazyImage from './LazyImage';
 const Manual = () => {
   return (
     <ManualWrapper>
@@ -10,7 +10,8 @@ const Manual = () => {
       <Spacing marginBottom="3.6" />
       <ManualLayout>
         {MAIN_MANUAL_IMG_URL.map((item, idx) => (
-          <ManualImage src={item} alt={`매뉴얼 이미지${idx}`} key={idx} />
+          <img src={item} alt={`매뉴얼 이미지${idx}`} key={idx} />
+          // <LazyImage src={item} alt={`매뉴얼 이미지${idx}`} key={idx} />
         ))}
       </ManualLayout>
     </ManualWrapper>
@@ -40,10 +41,3 @@ const ManualLayout = styled.section`
   gap: 2rem;
   width: 92.8rem;
 `;
-
-const ManualRow = styled.div`
-  display: flex;
-  gap: 2rem;
-`;
-
-const ManualImage = styled.img``;
