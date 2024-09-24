@@ -1,19 +1,17 @@
 import styled from '@emotion/styled';
 
-import { recommendPropsTypes } from '../types/recommendTopic';
-
-import Spacing from '../../../components/commons/Spacing';
-
-const DailyKeyword = ({ data }: recommendPropsTypes) => {
+interface recommendPropsTypes {
+  content: string | undefined;
+}
+const DailyKeyword = ({ content }: recommendPropsTypes) => {
   return (
     <KeyWordWrapper>
       <KeyWordLayout>
         <KeywordHeaderContainer>
-          <Spacing marginBottom="0.5" />
           <KeywordContentBox>
             <TodayKeyWord>오늘의 글감</TodayKeyWord>
             <Pipe />
-            <KeyWord>{data?.content}</KeyWord>
+            <KeyWord>{content}</KeyWord>
           </KeywordContentBox>
         </KeywordHeaderContainer>
       </KeyWordLayout>
@@ -27,6 +25,7 @@ const KeyWordWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 `;
 
 const KeyWordLayout = styled.div`
@@ -40,6 +39,7 @@ const KeyWordLayout = styled.div`
 const KeywordHeaderContainer = styled.section`
   display: flex;
   flex-direction: column;
+  height: 100%;
 
   background-color: ${({ theme }) => theme.colors.mileViolet};
   border-radius: 1rem;
@@ -50,6 +50,7 @@ const KeywordContentBox = styled.div`
   display: flex;
   gap: 4.8rem;
   align-items: center;
+  height: 100%;
   margin-right: 3.6rem;
   margin-left: 3.6rem;
 `;
@@ -70,6 +71,7 @@ const Pipe = styled.div`
 
 const KeyWord = styled.div`
   width: fit-content;
+  height: 100%;
   padding: 1.6rem;
 
   white-space: nowrap;

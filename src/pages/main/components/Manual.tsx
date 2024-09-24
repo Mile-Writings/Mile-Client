@@ -9,7 +9,7 @@ const Manual = () => {
       <Spacing marginBottom="3.6" />
       <ManualLayout>
         {MAIN_MANUAL_IMG_URL.map((item, idx) => (
-          <img src={item} alt={`매뉴얼 이미지${idx}`} key={idx} />
+          <ManualImg src={item} alt={`매뉴얼 이미지${idx}`} key={idx} />
         ))}
       </ManualLayout>
     </ManualWrapper>
@@ -38,4 +38,9 @@ const ManualLayout = styled.section`
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   width: 92.8rem;
+`;
+
+const ManualImg = styled.img`
+  width: 29.6rem;
+  height: 37.2rem;
 `;
