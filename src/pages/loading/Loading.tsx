@@ -1,11 +1,13 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import spinnerGif from '../../assets/gifs/loadingSpinner.gif';
-import { LoadingIc } from '../../assets/svgs';
+import Lottie from 'lottie-react';
+import LoadingLottie from '../../assets/gifs/loading.json';
+// import { LoadingIc } from '../../assets/svgs';
 const Loading = () => {
   return (
     <SpinnerWrapper>
-      <img src={spinnerGif} alt="로딩 중" />
+      {/* <img src={spinnerGif} alt="로딩 중" /> */}
+      <Lottie animationData={LoadingLottie} />
       {/* <LoadingIcon /> */}
     </SpinnerWrapper>
   );
@@ -28,9 +30,9 @@ const LoadingSpinner = keyframes`
     transform: rotate(360deg);
   }
   `;
-const LoadingIcon = styled(LoadingIc)`
-  width: 8.4rem;
-  height: 8.4rem;
+// const LoadingIcon = styled(LoadingIc)`
+//   width: 8.4rem;
+//   height: 8.4rem;
 
-  animation: ${LoadingSpinner} 1s linear infinite;
-`;
+//   animation: ${LoadingSpinner} 1s linear infinite;
+// `;

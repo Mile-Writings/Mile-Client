@@ -91,4 +91,4 @@ export { default as GroupChatIc } from './groupChatIcn.svg?react';
 export { default as GroupCuriousIc } from './groupCuriousIcn.svg?react';
 export { default as GroupViewIc } from './groupViewIcn.svg?react';
 
-export { default as LoadingIc } from './loadingSvg.svg?react';
+// export { default as LoadingIc } from './loadingSvg.svg?react';
