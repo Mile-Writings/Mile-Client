@@ -71,19 +71,17 @@ export const usePostCurious = (postId: string) => {
       queryClient.setQueryData(
         [QUERY_KEY_POST_DETAIL.curious, postId],
         (oldData: postCuriousProps | undefined) => {
-          let updateData = {};
           if (oldData === undefined) {
             return undefined;
           }
-          updateData = {
+
+          return {
             ...oldData,
             data: {
               isCurious: true,
               curiousCount: oldData.data.curiousCount + 1,
             },
           };
-
-          return updateData;
         },
       );
       return { prevOption };
@@ -138,8 +136,6 @@ export const useDeleteCurious = (postId: string) => {
       queryClient.setQueryData(
         [QUERY_KEY_POST_DETAIL.curious, postId],
         (oldData: postCuriousProps | undefined) => {
-          let updateData = {};
-
           if (oldData === undefined) {
             return undefined;
           }
@@ -148,15 +144,13 @@ export const useDeleteCurious = (postId: string) => {
               ? oldData.data.curiousCount
               : oldData.data.curiousCount - 1;
 
-          updateData = {
+          return {
             ...oldData,
             data: {
               isCurious: false,
               curiousCount: optimisticCuriousCount,
             },
           };
-
-          return updateData;
         },
       );
 
