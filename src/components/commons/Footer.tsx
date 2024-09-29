@@ -2,7 +2,13 @@ import styled from '@emotion/styled';
 
 import Spacing from './Spacing';
 
-import { FooterInstaIc, FooterKakaoIc, FooterLogoIc, FooterMailIc } from './../../assets/svgs';
+import {
+  FooterInstaIc,
+  FooterLogoIc,
+  FooterMailIc,
+  FooterNotionIc,
+  FooterWallaIc,
+} from './../../assets/svgs';
 import theme from './../../styles/theme';
 
 const Footer = () => {
@@ -16,8 +22,9 @@ const Footer = () => {
       <FooterLayout>
         <IconContainer>
           <FooterMailIc />
-          <FooterKakaoIc />
           <FooterInstaIc />
+          <FooterNotionIc />
+          <FooterWallaIc />
         </IconContainer>
         <Spacing marginBottom="2" />
         <MilePrivacy>이용약관 및 개인정보 취급방침</MilePrivacy>
