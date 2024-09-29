@@ -443,6 +443,7 @@ const TextAreaLength = styled.p<{ isValid: boolean }>`
   position: relative;
   bottom: 4rem;
   left: 70.6rem;
+  width: fit-content;
 
   ${({ theme }) => theme.fonts.button3};
   color: ${({ theme, isValid }) => (isValid ? theme.colors.gray70 : theme.colors.mileRed)};
