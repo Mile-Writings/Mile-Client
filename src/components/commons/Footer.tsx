@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import Spacing from './Spacing';
+import { FOOTER_LINK } from '../../constants/footerLink';
 
 import {
   FooterInstaIc,
@@ -21,10 +22,18 @@ const Footer = () => {
       </FooterLayout>
       <FooterLayout>
         <IconContainer>
-          <FooterMailIc />
-          <FooterInstaIc />
-          <FooterNotionIc />
-          <FooterWallaIc />
+          <a href={FOOTER_LINK.MAIL} target="_blank">
+            <FooterMailIc />
+          </a>
+          <a href={FOOTER_LINK.INSTAGRAM} target="_blank">
+            <FooterInstaIc />
+          </a>
+          <a href={FOOTER_LINK.NOTION} target="_blank">
+            <FooterNotionIc />
+          </a>
+          <a href={FOOTER_LINK.WALLA} target="_blank">
+            <FooterWallaIc />
+          </a>
         </IconContainer>
         <Spacing marginBottom="2" />
         <MilePrivacy>이용약관 및 개인정보 취급방침</MilePrivacy>
