@@ -1,5 +1,4 @@
 import { http, HttpResponse } from 'msw';
-
 export const handlers = [
   http.get('/api/moim/moimId/topicList', ({ request }) => {
     const url = new URL(request.url);
@@ -47,7 +46,6 @@ export const handlers = [
   http.put('/api/topic/topicId', () => {
     return HttpResponse.json({ status: 200, message: '글감 수정이 완료되었습니다.' });
   }),
-
   http.get('/api/moim/:moimId/authenticate', () => {
     return HttpResponse.json({
       status: 200,
@@ -57,7 +55,6 @@ export const handlers = [
       },
     });
   }),
-
   http.get('/api/moim/:moimId/public-status', () => {
     return HttpResponse.json({
       status: 200,
@@ -65,6 +62,24 @@ export const handlers = [
         isPublic: false,
       },
       message: '공개/비공개 확인',
+    });
+  }),
+  http.post('https://dev.milewriting.com/api/post/:postId/curious', () => {
+    console.log('mocking 완료');
+    return HttpResponse.json({
+      status: 403,
+      message: '접근권한없음',
+      data: {
+        message: "'궁금해요'는 이미 존재합니다.",
+        status: 40306,
+      },
+    });
+  }),
+  http.delete('https://dev.milewriting.com/api/post/:postId/curious', async () => {
+    console.log('삭제 mocking 완료');
+    return HttpResponse.json({
+      status: 500,
+      message: '접근권한없음',
     });
   }),
 ];

@@ -11,6 +11,7 @@ interface GroupTodayWriteStylePropTypes {
 
 const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
   const navigate = useNavigate();
+
   const { todayTopic, isMember, groupId } = props;
 
   const handleNavigatePostPage = () => {
