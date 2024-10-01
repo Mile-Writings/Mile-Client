@@ -4,6 +4,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useEditWriterIntro } from '../hooks/queries';
 
 import { AniImgProfileIc } from '../../../assets/svgs';
+import { useParams } from 'react-router-dom';
 
 interface editProfilModalPropTypes {
   setShowEditProfileModal: Dispatch<SetStateAction<boolean>>;
@@ -20,10 +21,11 @@ const EditProfileModal = ({
 }: editProfilModalPropTypes) => {
   const [content, setContent] = useState(description || '');
   const modalRef = useRef(null);
+  const { groupId } = useParams();
   const onInputHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
-  const { editMutateWriterIntro } = useEditWriterIntro(writerNameId);
+  const { editMutateWriterIntro } = useEditWriterIntro(writerNameId, groupId || '');
 
   const submitHandler = () => {
     if (content.length <= 100) {

@@ -18,12 +18,11 @@ import GroupCuriousTitle from './components/GroupCuriousTitle';
 import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
 import {
-  useFetchWriterNameOnly,
+  useFetchWriterInfo,
   useGroupFeedAuth,
   useGroupFeedPublicStatus,
   useGroupInfo,
   useTopicList,
-  useFetchWriterInfo,
 } from './hooks/queries';
 
 const GroupFeed = () => {
@@ -49,13 +48,17 @@ const GroupFeed = () => {
   }, [activeCategoryId]);
 
   const { infoResponse, mostCuriousPost, mostCuriousWriter } = useGroupInfo(groupId || '');
-  const { writerName, writerNameId } = useFetchWriterNameOnly(groupId || '', isMember, isOwner);
+  const { writerName, writerNameId, writerDescription } = useFetchWriterInfo(
+    groupId || '',
+    isMember,
+    isOwner,
+  );
   const { groupFeedCategoryData, isLoading } = useTopicList(groupId || '');
 
   const navigate = useNavigate();
 
   const todayTopic = groupFeedCategoryData && groupFeedCategoryData[0].topicName;
-  const { name, description } = useFetchWriterInfo(writerNameId);
+  //const { name, description } = useFetchWriterInfo(writerNameId);
 
   //접속시 권한확인
   useEffect(() => {
@@ -127,8 +130,8 @@ const GroupFeed = () => {
         <EditProfileModal
           setShowEditProfileModal={setShowEditProfileModal}
           writerNameId={writerNameId}
-          name={name || ''}
-          description={description || ''}
+          name={writerName || ''}
+          description={writerDescription || ''}
         />
       )}
     </GroupFeedWrapper>

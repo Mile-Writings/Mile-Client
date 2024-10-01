@@ -143,43 +143,24 @@ export const fetchArticleList = async (topicId: string, pageParam: string | null
   }
 };
 
-//[GET] 필명만 GET
+//[GET] 필명 + 프로필 설명 GET
 interface WriterNamePropTypes {
   status: number;
   message: string;
   data: {
     writerName: string;
     writerNameId: number;
+    description: string;
   };
 }
-export const fetchWriterNameOnly = async (groupId: string) => {
+export const fetchWriterInfo = async (groupId: string) => {
   if (checkAuthenticate()) {
     const response = await authClient.get<WriterNamePropTypes>(`/api/moim/${groupId}/writername`);
+    console.log(response.data, 'fetch');
     return response.data;
   } else {
     const response = await client.get<WriterNamePropTypes>(`/api/moim/${groupId}/writername`);
     return response.data;
-  }
-};
-
-//[GET] 필명 + 프로필 설명 GET
-interface WriterInfoPropTypes {
-  status: number;
-  message: string;
-  data: {
-    name: string;
-    description: string;
-  };
-}
-export const fetchWriterInfo = async (writerNameId: number | undefined) => {
-  try {
-    const response = await authClient.get<WriterInfoPropTypes>(
-      `/api/writername/${writerNameId}/profile`,
-    );
-
-    return response.data;
-  } catch (error) {
-    console.error('에러:', error);
   }
 };
 

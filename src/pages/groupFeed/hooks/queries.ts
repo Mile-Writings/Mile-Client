@@ -9,7 +9,6 @@ import {
   fetchGroupPublicStatus,
   fetchTopicList,
   fetchWriterInfo,
-  fetchWriterNameOnly,
 } from '../apis/fetchGroupFeed';
 import { fetchHeaderGroup } from '../apis/fetchHeaderGroup';
 
@@ -22,7 +21,6 @@ export const QUERY_KEY_GROUPFEED = {
   getCuriousWriters: 'getCuriousWriters',
   getArticleList: 'getArticleList',
   fetchHeaderGroup: 'fetchHeaderGroup',
-  getWriterNameOnly: 'getWriterNameOnly',
   getWriterInfo: 'getWriterInfo',
 };
 
@@ -123,38 +121,25 @@ export const useFetchHeaderGroup = () => {
   return { data };
 };
 
-export const useFetchWriterNameOnly = (
+export const useFetchWriterInfo = (
   groupId: string,
   isMember: boolean | undefined,
   isOwner: boolean | undefined,
 ) => {
   const { data } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getWriterNameOnly, groupId],
-    queryFn: () => fetchWriterNameOnly(groupId),
+    queryKey: [QUERY_KEY_GROUPFEED.getWriterInfo, groupId],
+    queryFn: () => fetchWriterInfo(groupId),
     enabled: !!isMember || !!isOwner,
   });
-
+  console.log(data, 'data');
   const writerName = data?.data.writerName;
   const writerNameId = data?.data.writerNameId;
-  return { writerName, writerNameId };
-};
-
-//[GET] 필명 + 프로필 설명 GET
-export const useFetchWriterInfo = (writerNameId: number | undefined) => {
-  const { data } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getWriterInfo, writerNameId],
-    queryFn: () => fetchWriterInfo(writerNameId),
-    enabled: writerNameId !== undefined,
-  });
-
-  const name = data?.data.name;
-  const description = data?.data.description;
-
-  return { name, description };
+  const writerDescription = data?.data.description;
+  return { writerName, writerNameId, writerDescription };
 };
 
 //[PATCH] 필명 소개글 수정
-export const useEditWriterIntro = (writerNameId: number | undefined) => {
+export const useEditWriterIntro = (writerNameId: number | undefined, groupId: string) => {
   const queryClient = useQueryClient();
   const { mutate, isError, error } = useMutation({
     mutationKey: ['editWriterIntro', writerNameId],
@@ -162,7 +147,7 @@ export const useEditWriterIntro = (writerNameId: number | undefined) => {
       fetchEditIntro({ writerNameId, description }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY_GROUPFEED.getWriterInfo, writerNameId],
+        queryKey: [QUERY_KEY_GROUPFEED.getWriterInfo, groupId],
       });
     },
   });
