@@ -62,11 +62,11 @@ export const useGroupInfo = (groupId: string) => {
     queryFn: () => fetchGroupInfo(groupId),
   });
 
-  const infoResponse = data?.data.infoResponse;
+  const groupInfo = data?.data.groupInfo;
   const mostCuriousPost = data?.data.mostCuriousPost.postList;
   const mostCuriousWriter = data?.data.mostCuriousWriter.popularWriters;
 
-  return { infoResponse, mostCuriousPost, mostCuriousWriter, isLoading, isError, error };
+  return { groupInfo, mostCuriousPost, mostCuriousWriter, isLoading, isError, error };
 };
 
 export const useTopicList = (groupId: string) => {
