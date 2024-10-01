@@ -48,7 +48,7 @@ const GroupFeed = () => {
     sessionStorage.setItem('activeCategoryId', String(activeCategoryId));
   }, [activeCategoryId]);
 
-  const { groupInfo, mostCuriousPost, mostCuriousWriter } = useGroupInfo(groupId || '');
+  const { infoResponse, mostCuriousPost, mostCuriousWriter } = useGroupInfo(groupId || '');
   const { writerName, writerNameId, writerDescription } = useFetchWriterInfo(
     groupId || '',
     isMember,
@@ -59,6 +59,7 @@ const GroupFeed = () => {
   const navigate = useNavigate();
 
   const todayTopic = groupFeedCategoryData && groupFeedCategoryData[0].topicName;
+  //const { name, description } = useFetchWriterInfo(writerNameId);
 
   //접속시 권한확인
   useEffect(() => {
@@ -89,12 +90,12 @@ const GroupFeed = () => {
     <GroupFeedWrapper>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <Spacing marginBottom="6.4" />
-      <GroupFeedThumnail imageUrl={groupInfo?.imageUrl} />
+      <GroupFeedThumnail imageUrl={infoResponse?.imageUrl} />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
-        {groupInfo && (
+        {infoResponse && (
           <GroupSideHeader
-            groupInfoData={groupInfo}
+            groupInfoData={infoResponse}
             isMember={isMember}
             isOwner={isOwner}
             setShowEditProfileModal={setShowEditProfileModal}

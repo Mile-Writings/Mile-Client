@@ -46,7 +46,7 @@ interface CuriousPostPropTypes {
 
 interface GroupInfoPropTypes {
   data: {
-    groupInfo: InfoResPropTypes;
+    infoResponse: InfoResPropTypes;
     mostCuriousPost: {
       postList: CuriousPostPropTypes[];
     };
