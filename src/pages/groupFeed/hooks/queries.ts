@@ -131,7 +131,7 @@ export const useFetchWriterInfo = (
     queryFn: () => fetchWriterInfo(groupId),
     enabled: !!isMember || !!isOwner,
   });
-  console.log(data, 'data');
+
   const writerName = data?.data.writerName;
   const writerNameId = data?.data.writerNameId;
   const writerDescription = data?.data.description;
