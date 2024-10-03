@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { ErrorIc } from '../../assets/svgs';
 import Spacing from '../../components/commons/Spacing';
+import errorIlust from '/src/assets/images/errorIlust.png';
 
 const Error = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Error = () => {
 
   return (
     <ErrorWrapper>
-      <ErrorIc />
+      <ErrorIlustImage src={errorIlust} />
       <Spacing marginBottom="0.8" />
       <Title>페이지를 찾지 못했어요</Title>
       <Spacing marginBottom="1.2" />
@@ -68,4 +68,9 @@ const BackToPrevPageBtn = styled.button`
   background-color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.button3};
   border-radius: 8px;
+`;
+
+const ErrorIlustImage = styled.img`
+  width: 51rem;
+  height: 24.5rem;
 `;

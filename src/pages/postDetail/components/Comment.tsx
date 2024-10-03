@@ -5,8 +5,9 @@ import CommentItem from './CommentItem';
 
 import { useGetCommentList } from '../hooks/queries';
 
-import { ArrowTopLeftIc, NoCommentIc } from '../../../assets/svgs';
+import { ArrowTopLeftIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
+import noCommentImg from '/src/assets/images/noCommentImage.png';
 
 interface CommentPropTypes {
   postId: string | undefined;
@@ -46,7 +47,7 @@ const Comment = (props: CommentPropTypes) => {
         <>
           <Spacing marginBottom="4" />
           <NoCommentText>아직 댓글이 없어요</NoCommentText>
-          <NoCommentIc />
+          <img src={noCommentImg} alt="댓글없음 이미지" />
         </>
       ) : (
         commentListData?.map((data: CommentListPropTypes) => (

@@ -1,6 +1,8 @@
 //한 파일에서 사용하는 쿼리키를 모아두고 쿼리를 선언해주세요
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import { isAxiosError } from 'axios';
+import { LONG_COMMENT_ERROR, NO_COMMENT_ERROR } from '../../../constants/commentErrorMessage';
 import { ERROR_MESSAGE } from '../../../constants/errorText';
 import checkPostAuth from '../apis/checkPostAuth';
 import createPostCurious from '../apis/createPostCurious';
@@ -13,8 +15,6 @@ import fetchDeleteNestedComment from '../apis/fetchDeleteNestedComment';
 import fetchPostComment from '../apis/fetchPostComment';
 import fetchPostDetail from '../apis/fetchPostDetail';
 import fetchPostNestedComment from '../apis/fetchPostNestedComment';
-import { isAxiosError } from 'axios';
-import { LONG_COMMENT_ERROR, NO_COMMENT_ERROR } from '../../../constants/commentErrorMessage';
 //쿼리키를 이렇게 두는 이유는 겹치지 않기위해 + 객체로 생성하여 자동완성 하기 위해
 export const QUERY_KEY_POST_DETAIL = {
   getPostDetail: 'getPostDetail',

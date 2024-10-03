@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { Suspense, lazy } from 'react';
 import { useParams } from 'react-router-dom';
 
 import DailyKeyword from './components/DailyKeyword';
@@ -14,13 +13,13 @@ import { useGetGroupContent, useGetRecommendTopic } from './hooks/queries';
 import Footer from './../../components/commons/Footer';
 import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/commons/Header';
 import Spacing from './../../components/commons/Spacing';
+import GroupCarousel from './components/GroupCarousel';
 
 const Main = () => {
-  const lazyCarousel = import('./components/GroupCarousel');
-  const LazyCarousel = lazy(() => lazyCarousel);
   const { content, moimId } = useParams();
   const topic = useGetRecommendTopic(content || '');
-  const { data, groupLength, isFetching, isLoading } = useGetGroupContent(moimId || '');
+  const { data, isFetching, isLoading } = useGetGroupContent(moimId || '');
+  const groupLength = data?.length;
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
@@ -31,27 +30,17 @@ const Main = () => {
         <CarouselContainer>
           <CarouselTitle>마일과 함께하고 있는 글 모임이에요</CarouselTitle>
           {isLoading || isFetching ? (
-            <>
-              {groupLength && (
-                <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
-                  <LazyCarousel data={data} groupLength={groupLength} />
-                </Suspense>
-              )}
-            </>
+            <SkeletonComponent groupLength={groupLength} />
           ) : (
             <CarouselBox>
-              {groupLength && (
-                <Suspense fallback={<SkeletonComponent groupLength={groupLength} />}>
-                  <LazyCarousel data={data} groupLength={groupLength} />
-                </Suspense>
-              )}
+              <GroupCarousel data={data} />
             </CarouselBox>
           )}
         </CarouselContainer>
       </GroupCarouselLayout>
       <Spacing marginBottom="10" />
 
-      <DailyKeyword data={topic?.data} />
+      <DailyKeyword content={topic?.data?.content} />
       <Spacing marginBottom="10" />
       <Introduction />
       <Spacing marginBottom="10" />
@@ -87,10 +76,12 @@ const GroupCarouselLayout = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 110rem;
 `;
 
 const CarouselContainer = styled.div`
   width: 93rem;
+  height: 100%;
 `;
 
 const CarouselBox = styled.div`

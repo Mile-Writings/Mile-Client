@@ -37,13 +37,6 @@ export { default as MakeGroupPlusBtn } from './mainMakeGroupPlusBtn.svg?react';
 export { default as MainTogglearrowClosedIc } from './mainTogglearrowClosedIc.svg?react';
 export { default as MainToggleArrowOpenedIc } from './mainTogglearrowOpenedIc.svg?react';
 
-export { default as MainManualCuriousIc } from './mainManualCurious.svg?react';
-export { default as MainManualJoinIc } from './mainManualJoin.svg?react';
-export { default as MainManualLookIc } from './mainManualLook.svg?react';
-export { default as MainManualMakeIc } from './mainManualMake.svg?react';
-export { default as MainManualShareIc } from './mainManualShare.svg?react';
-export { default as MainManualWriteIc } from './mainManualWrite.svg?react';
-export { default as MainOnBoardingIc } from './mainOnBoarding.svg?react';
 export { default as CheckboxIc } from './postDetailCheckIc.svg?react';
 export { default as QuestionDefaultIc } from './questionDefaultIc.svg?react';
 export { default as QuestioHoverIc } from './questionHoverIc.svg?react';
@@ -59,9 +52,8 @@ export { default as EditorThuminputIcnActiveIc } from './editorThuminputIcnActiv
 export { default as EditorThuminputIcnUnactiveIc } from './editorThuminputIcnUnactive.svg?react';
 export { default as GroupCardThumnailImgIc } from './groupCardThumnailImg.svg?react';
 
-export { default as ErrorIc } from './errorIc.svg?react';
 export { default as KakaoLoginBtnIc } from './kakaoLoginBtn.svg?react';
-export { default as LoginIc } from './loginIc.svg?react';
+
 export { default as TextCommentProfileIc } from './textComentprofileSvg.svg?react';
 
 export { default as adminEmptyMemberIc } from './adminEmptyMember.svg?react';
@@ -91,14 +83,12 @@ export { default as CreateGroupRadioUncheckedIc } from './createGroupRadioUnchec
 export { default as AniImgProfileIc } from './ani_img_profile.svg?react';
 
 // 글 모임 가입 축하페이지
-export { default as CreateGroupCongrats } from './createGroupCongrats.svg?react';
-export { default as CreateGroupIlust } from './createGroupIlust.svg?react';
+
 export { default as GroupListProfileCloseIc } from './groupListprofileIcnClose.svg?react';
-export { default as JoinCongratulationIc } from './joinCongratulationPng.svg?react';
 
 export { default as MemberMaster } from './adminMemberMaster.svg?react';
 export { default as GroupChatIc } from './groupChatIcn.svg?react';
 export { default as GroupCuriousIc } from './groupCuriousIcn.svg?react';
 export { default as GroupViewIc } from './groupViewIcn.svg?react';
 
-export { default as NoCommentIc } from './emptyCommentIc.svg?react';
+// export { default as LoadingIc } from './loadingSvg.svg?react';
