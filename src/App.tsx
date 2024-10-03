@@ -5,7 +5,13 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Router from './routers/Router';
 
 const App = () => {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 20 * 1000,
+      },
+    },
+  });
   return (
     <div style={{ fontSize: '16px' }}>
       <QueryClientProvider client={queryClient}>
