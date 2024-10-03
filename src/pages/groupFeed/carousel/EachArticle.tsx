@@ -22,6 +22,7 @@ const EachArticle = (props: EachProfilePropTypes) => {
   const { groupId, selectedTopicId } = props;
   const { postListData, fetchNextPage, hasNextPage, isFetchingNextPage } = useArticleList(
     selectedTopicId || '',
+    groupId,
   );
   const navigate = useNavigate();
   const handleGoPostDetail = (postId: string) => {

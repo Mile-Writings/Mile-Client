@@ -2,21 +2,20 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import { groupKey } from '../../groupFeed/hooks/queries';
 import deleteGroup from '../apis/deleteGroup';
 import {
+  deleteAdminTopic,
   editAdminTopic,
   fetchAdminTopic,
   postAdminTopic,
   postAdminTopicPropTypes,
-  deleteAdminTopic,
 } from '../apis/fetchAdminData';
 import fetchAdminGroupInfo from '../apis/fetchAdminGroupInfo';
 import fetchDeleteMember from '../apis/fetchDeleteMember';
 import { fetchInvitationLink } from '../apis/fetchInvitationLink';
 import fetchMemberInfo from '../apis/fetchMemberInfo';
 import putAdminEditGroupInfo, { AdminEditGroupInfoPropTypes } from '../apis/putAdminEditGroupInfo';
-
-import { QUERY_KEY_GROUPFEED } from '../../groupFeed/hooks/queries';
 
 export const QUERY_KEY_ADMIN = {
   useMemberInfo: 'fetchMemberInfo',
@@ -25,7 +24,6 @@ export const QUERY_KEY_ADMIN = {
   putAdminEditGroupInfo: 'putAdminEditGroupInfo',
   deleteGroup: 'deleteGroup',
 };
-
 export const useAdminTopic = (groupId: string | undefined, pageNum: number) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['adminTopic', groupId, pageNum],
@@ -49,6 +47,19 @@ export const usePostAdminTopic = (groupId: string | undefined, pageNum: number) 
       queryClient.invalidateQueries({
         queryKey: ['adminTopic', groupId, pageNum],
       });
+    },
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        console.log(errorCode, 'code');
+        if (errorCode === 40005) {
+          alert('요청 값에 빈 값이 존재합니다');
+        } else if (errorCode === 40006) {
+          alert('요청 값이 길이를 초과했습니다');
+        } else {
+          console.log(err.response.data.message);
+        }
+      }
     },
   });
 
@@ -122,6 +133,18 @@ export const useEditAdminTopic = (
         queryKey: ['adminTopic', groupId, pageNum],
       });
     },
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        if (errorCode === 40005) {
+          alert('요청 값에 빈 값이 존재합니다');
+        } else if (errorCode === 40006) {
+          alert('요청 값이 길이를 초과했습니다');
+        } else {
+          console.error();
+        }
+      }
+    },
   });
 
   const editMutateAdminTopic = ({ topic, topicTag, topicDescription }: editTopicPropType) =>
@@ -144,6 +167,16 @@ export const useDeleteAdminTopic = (
       queryClient.invalidateQueries({
         queryKey: ['adminTopic', groupId, pageNum],
       });
+    },
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        if (errorCode === 40015) {
+          alert('모임에 최소 하나의 글감이 있어야 합니다');
+        } else {
+          console.error();
+        }
+      }
     },
   });
 
@@ -178,11 +211,22 @@ export const usePutAdminGroupInfo = ({
       putAdminEditGroupInfo({ groupName, groupDesc, groupImageServerUrl, isPublic, groupId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
+        queryKey: groupKey.detail(groupId || ''),
       });
     },
     onError: (err) => {
-      if (isAxiosError(err)) {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        if (errorCode === 40005) {
+          alert('요청 값에 빈 값이 존재합니다');
+        } else if (errorCode === 40006) {
+          alert('요청 값이 길이를 초과했습니다');
+        } else if (errorCode === 40018) {
+          alert('사용 불가능한 모임명입니다');
+        } else {
+          console.error();
+        }
+
         if (err?.response?.status === 500) {
           alert('서버내부 오류입니다. ');
         } else if (err?.response?.status === 401) {
@@ -209,7 +253,7 @@ export const useDeleteGroup = (groupId: string) => {
     onSuccess: () => {
       //key에 대한 정책을 변경해야함, 현재는 key의 unique함은 보장되어있지만 관련성이 적어 key의 역할을 제대로 못하고있음
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
+        queryKey: groupKey.all,
       });
       navigate('/');
     },

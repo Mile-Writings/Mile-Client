@@ -50,7 +50,7 @@ export const postAdminTopic = async ({
     });
     return response.data;
   } catch (error) {
-    console.log('에러:', error);
+    throw error;
   }
 };
 
