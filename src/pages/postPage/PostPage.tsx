@@ -602,8 +602,8 @@ const PostPage = () => {
       {/* 페이지 이탈 모달 */}
       <DefaultModal
         isModalOpen={isPageExitModalOpen}
-        handleClickBg={handleClosePageExitModal}
-        content={`작성 중이 글이 있습니다. \n페이지를 나가시겠습니까?`}
+        onClickBg={handleClosePageExitModal}
+        content={MODAL.PAGE_EXIT_WARN}
         modalImg="CAUTION"
       >
         <DefaultModalBtn
