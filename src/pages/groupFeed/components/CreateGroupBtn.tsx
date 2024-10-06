@@ -19,7 +19,7 @@ const CreateGroupBtn = ({ groupCount }: groupCountProps) => {
 
   const handleCreateGroupBtn = () => {
     if (groupCount < 5) {
-      navigate('/createGroup');
+      navigate('/group/create');
     } else {
       handleShowModal();
     }

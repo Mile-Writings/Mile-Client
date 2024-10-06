@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import AddEditTopicModal from './AddEditTopicModal';
@@ -16,12 +16,14 @@ import Spacing from '../../../components/commons/Spacing';
 import useModal from '../../../hooks/useModal';
 import Error from '../../error/Error';
 import Loading from '../../loading/Loading';
+import useBlockPageExit from '../../../hooks/useBlockPageExit';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
   const { groupId } = useParams();
   const [page, setPage] = useState(1);
-  const { memberData, totalMember } = useFetchMemberInfo(groupId || '', page);
   const [pageNum, setPageNum] = useState(1);
+
+  const { memberData, totalMember } = useFetchMemberInfo(groupId || '', page);
   const { topicCount, adminTopicData } = useAdminTopic(groupId, pageNum);
 
   // input 모달 열고 닫기
@@ -31,6 +33,15 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
 
   // 공통 모달 열고 닫기
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
+
+  // 페이지 이탈 감지
+  const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =
+    useBlockPageExit();
+
+  // groupInfo일 때만 페이지 이탈 감지 활성화
+  useEffect(() => {
+    admin === 'groupInfo' ? setIgnoreBlocker(false) : setIgnoreBlocker(true);
+  }, [admin]);
 
   const { mutate: deleteGroup, isPending, isError } = useDeleteGroup(groupId || '');
 
@@ -101,6 +112,19 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
               type="NEGATIVE"
               onClickLeft={deleteGroup}
               onClickRight={handleCloseModal}
+            />
+          </DefaultModal>
+
+          {/* 페이지 이탈 모달 */}
+          <DefaultModal
+            isModalOpen={isPageExitModalOpen}
+            handleClickBg={handleClosePageExitModal}
+            content={`입력 중인 내용이 있습니다. \n페이지를 나가시겠습니까?`}
+          >
+            <DefaultModalBtn
+              type="NEGATIVE"
+              onClickLeft={handleExitPage}
+              onClickRight={handleClosePageExitModal}
             />
           </DefaultModal>
         </>

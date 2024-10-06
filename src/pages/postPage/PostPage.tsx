@@ -31,6 +31,7 @@ import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/De
 import { FullModal, FullModalBtn } from '../../components/commons/modal/FullModal';
 import Spacing from '../../components/commons/Spacing';
 import useModal from '../../hooks/useModal';
+import useBlockPageExit from '../../hooks/useBlockPageExit';
 import { MODAL } from './constants/modalContent';
 
 // editor content API 관련
@@ -149,9 +150,12 @@ const editorFlowModalState: editorFlowModalType = {
 };
 
 const PostPage = () => {
-  const history = createBrowserHistory();
+  // 페이지 이탈
+  const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =
+    useBlockPageExit();
   const navigate = useNavigate();
   const location = useLocation();
+  const history = createBrowserHistory();
 
   // editor content API 관련
   const [editorVal, editorContentDispatch] = useReducer(editorContentReducerFn, editorState);
@@ -266,6 +270,7 @@ const PostPage = () => {
       handleShowModal();
       setEditorModalType('postContent');
       editorFlowModalDispatch({ type: 'postContent' });
+      setIgnoreBlocker(true);
     }
   }, [postContentId]);
 
@@ -321,6 +326,7 @@ const PostPage = () => {
     handleShowModal();
     setEditorModalType('editContent');
     editorFlowModalDispatch({ type: 'editContent' });
+    setIgnoreBlocker(true);
   };
   // 최초 글 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
@@ -336,15 +342,13 @@ const PostPage = () => {
 
   // 임시저장 버튼 누르면 열리는 모달
   const onClickTempSaveBtn = () => {
-    if (isTemporaryPostExist) {
-      handleShowModal();
-      setEditorModalType('tempSave');
-      editorFlowModalDispatch({ type: 'putNewTempSaveContent' });
-    } else {
-      handleShowModal();
-      setEditorModalType('tempSave');
-      editorFlowModalDispatch({ type: 'tempSave' });
-    }
+    handleShowModal();
+    setEditorModalType('tempSave');
+    setIgnoreBlocker(true);
+
+    isTemporaryPostExist
+      ? editorFlowModalDispatch({ type: 'putNewTempSaveContent' })
+      : editorFlowModalDispatch({ type: 'tempSave' });
   };
 
   // 임시저장 모달 -> '예' 누르면 쿼리 동작
@@ -371,6 +375,7 @@ const PostPage = () => {
 
     handleShowModal();
     editorFlowModalDispatch({ type: 'putTempSaveContent' });
+    setIgnoreBlocker(true);
     setEditorModalType('putTempSaveContent');
   };
 
@@ -490,7 +495,6 @@ const PostPage = () => {
           break;
         case 'continueTempSave':
           // 렌더링 되자마자 쿼리함수 실행되므로 prevent만 넣어줌
-
           break;
         case 'exitEditPage':
           break;
@@ -503,33 +507,18 @@ const PostPage = () => {
       allowScroll();
   }, [isModalOpen, showTempContinueModal, editorModalType]);
 
-  // 뒤로가기 방지
-  const preventGoBack = () => {
-    handleShowModal();
-    editorFlowModalDispatch({ type: 'exitEditPage' });
-    setEditorModalType('exitEditPage');
-  };
-
   // 새로고침 방지
   const preventReload = (e: Event) => {
     e.preventDefault();
-
-    // editorFlowModalDispatch({ type: 'exitEditPage' });
-    // setEditorModalType('exitEditPage');
   };
 
   useEffect(() => {
     (() => {
-      // 현재 상태를 세션 히스토리 스택에 추가(push)
-      // 뒤로가기 해도 현재 페이지에 일단 머물게 하기
       history.push(history.location);
-
-      window.addEventListener('popstate', preventGoBack);
       window.addEventListener('beforeunload', preventReload);
     })();
 
     return () => {
-      window.removeEventListener('popstate', preventGoBack);
       window.removeEventListener('beforeunload', preventReload);
     };
   }, []);
@@ -607,6 +596,20 @@ const PostPage = () => {
           customBtnText={[editorFlowModalVal.leftBtnText, editorFlowModalVal.rightBtnText]}
           onClickLeft={editorFlowModalVal.leftBtnFn}
           onClickRight={editorFlowModalVal.rightBtnFn}
+        />
+      </DefaultModal>
+
+      {/* 페이지 이탈 모달 */}
+      <DefaultModal
+        isModalOpen={isPageExitModalOpen}
+        handleClickBg={handleClosePageExitModal}
+        content={`작성 중이 글이 있습니다. \n페이지를 나가시겠습니까?`}
+        modalImg="CAUTION"
+      >
+        <DefaultModalBtn
+          type="NEGATIVE"
+          onClickLeft={handleExitPage}
+          onClickRight={handleClosePageExitModal}
         />
       </DefaultModal>
     </PostPageWrapper>

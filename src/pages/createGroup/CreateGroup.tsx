@@ -5,6 +5,7 @@ import CreateGroupInfo from './components/CreateGroupInfo';
 import CreateGroupLeaderInfo from './components/CreateGroupLeaderInfo';
 import { usePostCreateGroup } from './hooks/queries';
 import { CreateGroupTypes, CurrentPageType } from './types/stateType';
+import useBlockPageExit from '../../hooks/useBlockPageExit';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
@@ -27,8 +28,12 @@ const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
   const [groupImageView, setGroupImageView] = useState('');
+
+  // 페이지 이탈 감지
+  const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage } = useBlockPageExit();
   // modal 열고닫음
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
+
   const initialState = {
     groupName: '',
     groupInfo: '',
@@ -204,6 +209,19 @@ const CreateGroup = () => {
           onClickRight={createGroup}
         />
       </DefaultModal>
+
+      {/* 페이지 이탈 모달 */}
+      <DefaultModal
+        isModalOpen={isPageExitModalOpen}
+        handleClickBg={handleClosePageExitModal}
+        content={`입력 중인 내용이 있습니다. \n페이지를 나가시겠습니까?`}
+      >
+        <DefaultModalBtn
+          type="NEGATIVE"
+          onClickLeft={handleExitPage}
+          onClickRight={handleClosePageExitModal}
+        />
+      </DefaultModal>
     </CreateGroupWrapper>
   );
 };
@@ -243,6 +261,7 @@ const CreateGroupWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   margin-top: 11.4rem;
 `;
 const CreateGroupBtn = styled.button`
