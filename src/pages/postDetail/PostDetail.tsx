@@ -194,7 +194,7 @@ const PostDetail = () => {
         modalImg={modalType === 'DELETE' ? 'DELETE' : 'EDIT'}
       >
         <DefaultModalBtn
-          type="NEGATIVE"
+          btnText={['예', '아니요']}
           onClickLeft={modalType === 'DELETE' ? handleDeletePost : handleEdit}
           onClickRight={handleCloseModal}
         />

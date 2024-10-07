@@ -109,7 +109,7 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
             sizeType="LARGE"
           >
             <DefaultModalBtn
-              type="NEGATIVE"
+              btnText={['예', '아니요']}
               onClickLeft={deleteGroup}
               onClickRight={handleCloseModal}
             />
@@ -122,7 +122,7 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
             content={MODAL.PAGE_EXIT_WARN}
           >
             <DefaultModalBtn
-              type="NEGATIVE"
+              btnText={['예', '아니요']}
               onClickLeft={handleExitPage}
               onClickRight={handleClosePageExitModal}
             />

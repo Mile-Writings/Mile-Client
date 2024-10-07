@@ -204,7 +204,7 @@ const CreateGroup = () => {
         modalImg="POST"
       >
         <DefaultModalBtn
-          type="POSITIVE"
+          btnText={['아니요', '예']}
           onClickLeft={handleCloseModal}
           onClickRight={createGroup}
         />
@@ -217,7 +217,7 @@ const CreateGroup = () => {
         content={MODAL.PAGE_EXIT_WARN}
       >
         <DefaultModalBtn
-          type="NEGATIVE"
+          btnText={['예', '아니요']}
           onClickLeft={handleExitPage}
           onClickRight={handleClosePageExitModal}
         />

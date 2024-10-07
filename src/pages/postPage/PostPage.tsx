@@ -592,8 +592,7 @@ const PostPage = () => {
         modalImg={editorFlowModalVal.modalImgType}
       >
         <DefaultModalBtn
-          type="CUSTOM"
-          customBtnText={[editorFlowModalVal.leftBtnText, editorFlowModalVal.rightBtnText]}
+          btnText={[editorFlowModalVal.leftBtnText, editorFlowModalVal.rightBtnText]}
           onClickLeft={editorFlowModalVal.leftBtnFn}
           onClickRight={editorFlowModalVal.rightBtnFn}
         />
@@ -601,13 +600,13 @@ const PostPage = () => {
 
       {/* 페이지 이탈 모달 */}
       <DefaultModal
-        isModalOpen={isPageExitModalOpen}
+        isModalOpen={isPageExitModalOpen} 
         onClickBg={handleClosePageExitModal}
         content={MODAL.PAGE_EXIT_WARN}
         modalImg="CAUTION"
       >
         <DefaultModalBtn
-          type="NEGATIVE"
+          btnText={['예', '아니요']}
           onClickLeft={handleExitPage}
           onClickRight={handleClosePageExitModal}
         />

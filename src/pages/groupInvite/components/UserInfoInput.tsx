@@ -215,7 +215,7 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
         modalImg="POST"
       >
         <DefaultModalBtn
-          type="POSITIVE"
+          btnText={['아니요', '예']}
           onClickLeft={handleCloseModal}
           onClickRight={postGroupJoin}
         />

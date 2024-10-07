@@ -98,7 +98,7 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
         sizeType="SMALL"
       >
         <DefaultModalBtn
-          type="NEGATIVE"
+          btnText={['예', '아니요']}
           onClickLeft={() => {
             deleteMember(deleteMemberId);
             handleCloseModal();

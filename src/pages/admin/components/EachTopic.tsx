@@ -78,7 +78,7 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
         modalImg="POST"
       >
         <DefaultModalBtn
-          type="NEGATIVE"
+          btnText={['예', '아니요']}
           onClickLeft={deleteMutateAdminTopic}
           onClickRight={handleCloseModal}
         />

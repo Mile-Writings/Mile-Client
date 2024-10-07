@@ -23,37 +23,23 @@ interface ModalPropType {
 }
 
 interface ModalBtnType {
-  type: 'POSITIVE' | 'NEGATIVE' | 'CUSTOM';
+  btnText: string[];
   onClickLeft: () => void;
   onClickRight: () => void;
-  customBtnText?: string[];
 }
 
 const portalElement = document.getElementById('modal') as HTMLElement;
 
 export const DefaultModalBtn = (props: ModalBtnType) => {
-  const { type, customBtnText, onClickLeft, onClickRight } = props;
-
-  const getModalBtn = () => {
-    switch (type) {
-      case 'CUSTOM':
-        return customBtnText || ['', ''];
-      case 'NEGATIVE':
-        return ['예', '아니요'];
-      case 'POSITIVE':
-        return ['아니요', '예'];
-      default:
-        return ['', ''];
-    }
-  };
+  const { btnText, onClickLeft, onClickRight } = props;
 
   return (
     <>
       <ModalBtn type="button" $isLeft={true} onClick={onClickLeft}>
-        {getModalBtn()[0]}
+        {btnText[0]}
       </ModalBtn>
       <ModalBtn type="button" $isLeft={false} onClick={onClickRight}>
-        {getModalBtn()[1]}
+        {btnText[1]}
       </ModalBtn>
     </>
   );
