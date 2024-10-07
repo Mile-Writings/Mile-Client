@@ -1,35 +1,41 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
+import checkAuthenticate from '../../../utils/checkAuthenticate';
 import { useDeleteCurious, useGetCuriousInfo, usePostCurious } from '../hooks/queries';
-
 import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets/svgs';
+interface CuriousBtnProps {
+  postId: string;
+}
 
-const CuriousBtn = () => {
-  const { postId } = useParams();
-  const { data, error } = useGetCuriousInfo(postId || '');
-  const token = localStorage.getItem('accessToken');
-  const { mutate: postCurious } = usePostCurious(postId || '');
-  const { mutate: deleteCurious } = useDeleteCurious(postId || ' ');
-  const isCurious = data?.data?.isCurious;
+const CuriousBtn = ({ postId }: CuriousBtnProps) => {
+  const { data, error } = useGetCuriousInfo(postId);
+
+  const isCurious = data?.data?.isCurious ?? false;
+
+  const curiousCount = data?.data?.curiousCount ?? 0;
+  const { mutate: deleteCurious } = useDeleteCurious(postId);
+  const { mutate: postCurious } = usePostCurious(postId);
   const [isClick, setIsClick] = useState(!!isCurious);
 
   const handleBtnClick = () => {
-    if (token) {
-      isClick ? deleteCurious() : postCurious();
-      setIsClick((prev) => !prev);
+    if (checkAuthenticate()) {
+      if (isClick) {
+        deleteCurious();
+      } else {
+        postCurious();
+      }
     } else {
       alert('모임의 유저가 아닙니다.');
     }
   };
 
   useEffect(() => {
-    setIsClick(!!data?.data?.isCurious);
-  }, [data?.data?.isCurious]);
+    setIsClick(!!isCurious);
+  }, [isCurious]);
 
-  return error?.message == '403' || !token ? (
+  return error?.message == '403' || !checkAuthenticate() ? (
     <div />
   ) : (
     <CuriousBtnWrapper onClick={handleBtnClick} $isClick={isClick}>
@@ -38,7 +44,7 @@ const CuriousBtn = () => {
           {isClick ? <DetailWhiteFavoriteIc /> : <DetailPurpleFavoriteIc />}
           궁금해요
         </CuriousTextContainer>
-        <CuriousTextWrapper>{data?.data?.curiousCount}</CuriousTextWrapper>
+        <CuriousTextWrapper>{curiousCount}</CuriousTextWrapper>
       </CuriousTextWrapper>
     </CuriousBtnWrapper>
   );

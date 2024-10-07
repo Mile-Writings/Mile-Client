@@ -11,9 +11,9 @@ import {
 } from '../constants/topicLength';
 import { useGetGroupNameValidation } from '../hooks/queries';
 import { CurrentPageType } from '../types/stateType';
+import createGroupIlust from '/src/assets/images/createGroupIlust.png';
 
 import {
-  CreateGroupIlust,
   CreateGroupImageUpload,
   CreateGroupImageUploadedIc,
   CreateGroupInfoIc,
@@ -228,7 +228,7 @@ const CreateGroupInfo = ({
           <Spacing marginBottom="1.1" />
           <Title>나만의 글 모임을 만들어보세요</Title>
           <Spacing marginBottom="2.4" />
-          <IllustImg />
+          <IllustImg src={createGroupIlust} />
         </TitleWrapper>
         <WhiteInputWrapper isValid={!isGroupNameEmpty}>
           <GroupInputWrapper>
@@ -662,7 +662,7 @@ const SubTitle = styled.h2`
   ${({ theme }) => theme.fonts.title5};
 `;
 
-const IllustImg = styled(CreateGroupIlust)`
+const IllustImg = styled.img`
   display: flex;
   flex-shrink: 0;
   width: 100%;

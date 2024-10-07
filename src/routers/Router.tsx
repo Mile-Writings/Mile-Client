@@ -1,19 +1,22 @@
 import { createBrowserRouter } from 'react-router-dom';
+import { lazy } from 'react';
 
-import Admin from '../pages/admin/Admin';
-import CreateGroup from '../pages/createGroup/CreateGroup';
-import CreateGroupSuccess from '../pages/createGroupSuccess/CreateGroupSuccess';
-import Error from '../pages/error/Error';
-import GroupFeed from '../pages/groupFeed/GroupFeed';
-import GroupInvite from '../pages/groupInvite/GroupInvite';
-import GroupJoinCongrats from '../pages/groupJoinCongrats/GroupJoinCongrats';
-import Login from '../pages/login/Login';
 import RedirectLogin from '../pages/login/RedirectLogin';
-import Main from '../pages/main/Main';
-import PostDetail from '../pages/postDetail/PostDetail';
-import PostPage from '../pages/postPage/PostPage';
+
 import Layout from '../components/commons/Layout';
 import PrivateRoute from './PrivateRoute';
+
+const Main = lazy(() => import('../pages/main/Main'));
+const PostDetail = lazy(() => import('../pages/postDetail/PostDetail'));
+const GroupInvite = lazy(() => import('../pages/groupInvite/GroupInvite'));
+const CreateGroup = lazy(() => import('../pages/createGroup/CreateGroup'));
+const PostPage = lazy(() => import('../pages/postPage/PostPage'));
+const GroupJoinCongrats = lazy(() => import('../pages/groupJoinCongrats/GroupJoinCongrats'));
+const CreateGroupSuccess = lazy(() => import('../pages/createGroupSuccess/CreateGroupSuccess'));
+const GroupFeed = lazy(() => import('../pages/groupFeed/GroupFeed'));
+const Admin = lazy(() => import('../pages/admin/Admin'));
+const Error = lazy(() => import('../pages/error/Error'));
+const Login = lazy(() => import('../pages/login/Login'));
 
 const router = createBrowserRouter([
   {

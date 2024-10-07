@@ -9,11 +9,8 @@ interface PostCuriousResponseType {
 }
 
 const createPostCurious = async (postId: string) => {
-  try {
-    const { data } = await authClient.post<PostCuriousResponseType>(`/api/post/${postId}/curious`);
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
+  const { data } = await authClient.post<PostCuriousResponseType>(`/api/post/${postId}/curious`);
+
+  return data;
 };
 export default createPostCurious;

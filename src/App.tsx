@@ -4,14 +4,24 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import router from './routers/Router';
 
 import { RouterProvider } from 'react-router-dom';
+import { Suspense } from 'react';
+import Loading from './pages/loading/Loading';
 
 const App = () => {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 20 * 1000,
+      },
+    },
+  });
   return (
     <div style={{ fontSize: '16px' }}>
       <QueryClientProvider client={queryClient}>
         <DesktopWrapper>
-          <RouterProvider router={router} />
+          <Suspense fallback={<Loading />}>
+            <RouterProvider router={router} />
+          </Suspense>
         </DesktopWrapper>
         <ReactQueryDevtools initialIsOpen />
       </QueryClientProvider>

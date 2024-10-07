@@ -1,16 +1,15 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Error from '../error/Error';
 import { useGroupFeedAuth, useGroupFeedPublicStatus } from '../groupFeed/hooks/queries';
 import Loading from '../loading/Loading';
 
-import { replaceDefaultImg } from '../../utils/replaceDefaultImg';
-
+import { useParams } from 'react-router-dom';
 import checkAuthenticate from '../../utils/checkAuthenticate';
-
+import { replaceDefaultImg } from '../../utils/replaceDefaultImg';
 import {
   CheckboxIc,
   DefaultProfileIc,
@@ -38,6 +37,9 @@ const PostDetail = () => {
   // modal 열고닫음
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
 
+  if (!postId || !groupId) {
+    return <Error />;
+  }
   //글 삭제시 쿼리키 가져오기 위해서
   const location = useLocation();
   const topicId = location.state?.topicId;
@@ -46,15 +48,15 @@ const PostDetail = () => {
     isPublic,
     isLoading: publicStatusLoading,
     isError: publicStatusError,
-  } = useGroupFeedPublicStatus(groupId || '');
+  } = useGroupFeedPublicStatus(groupId);
   const {
     isMember,
     isLoading: feedAuthLoading,
     isError: groupAuthError,
-  } = useGroupFeedAuth(groupId || '');
-  const { data, isError, isLoading } = useGetPostDetail(postId || '');
-  const { data: postAuth } = useCheckPostAuth(postId || '');
-  const { mutate: deletePost } = useDeletePost(postId || '', topicId);
+  } = useGroupFeedAuth(groupId);
+  const { data, isError, isLoading } = useGetPostDetail(postId);
+  const { data: postAuth } = useCheckPostAuth(postId);
+  const { mutate: deletePost } = useDeletePost(postId, topicId);
 
   const postData = data?.data;
   const accessToken = localStorage.getItem('accessToken');
@@ -63,10 +65,6 @@ const PostDetail = () => {
   //글 작성 후 뒤로가기 하면 모임페이지로 이동하는 로직
   //메인페이지 -> 글 상세페이지 -> 뒤로가기 -> 글 모임페이지가 되어 UX에 좋은 영향을 끼치지 않는 부분도 있어서 추후 적용
 
-  // const testFunc = () => {
-  //   navigate(`/group/${groupId}`, { replace: true });
-  // };
-  // useCustomBack(testFunc);
   useEffect(() => {
     if (!publicStatusLoading && !feedAuthLoading) {
       if (!isPublic) {
@@ -143,22 +141,24 @@ const PostDetail = () => {
             </DetailBox>
           </InfoTextBox>
 
-          <ButtonWrapper role={role || ''}>
-            {role === 'owner' || role === 'writer' ? (
-              <>
-                <Button typeName={'deleteTempType'} onClick={handleDeleteBtn}>
-                  글 삭제하기
-                </Button>
-                {role === 'writer' && (
-                  <Button typeName={'submitEditType'} onClick={handleEditBtn}>
-                    글 수정하기
-                  </Button>
-                )}
-              </>
-            ) : (
-              <></>
-            )}
-          </ButtonWrapper>
+          {role === 'writer' && (
+            <ButtonWrapper role={role || ''}>
+              <Button typeName={'deleteTempType'} onClick={handleDeleteBtn}>
+                글 삭제하기
+              </Button>
+
+              <Button typeName={'submitEditType'} onClick={handleEditBtn}>
+                글 수정하기
+              </Button>
+            </ButtonWrapper>
+          )}
+          {role === 'owner' && (
+            <ButtonWrapper role={role || ''}>
+              <Button typeName={'deleteTempType'} onClick={handleDeleteBtn}>
+                글 삭제하기
+              </Button>
+            </ButtonWrapper>
+          )}
         </PostDetailContainer>
         <PostWrapper>
           <TopicWrapper>
@@ -180,7 +180,7 @@ const PostDetail = () => {
               </WriterDesc>
             </InfoWrapper>
           </WriterInfoContainer>
-          {isMember && <CuriousBtn />}
+          {isMember && <CuriousBtn postId={postId} />}
         </WriterInfoWrapper>
         {isMember && <Comment postId={postId} />}
         <Spacing marginBottom="8" />
@@ -233,6 +233,7 @@ const PostDetailWrapper = styled.div`
 
 const PostDetailContainer = styled.div`
   display: flex;
+  gap: 1.8rem;
   justify-content: space-between;
   width: 100%;
 `;
@@ -241,6 +242,7 @@ const InfoTextBox = styled.div`
   flex-direction: column;
   gap: 1.1rem;
   width: 100%;
+  max-width: 71rem;
 `;
 
 const DetailBox = styled.div`
@@ -291,7 +293,9 @@ const ButtonWrapper = styled.div<{ role: string }>`
   gap: 1.2rem;
   align-items: flex-start;
   justify-content: center;
-  width: ${({ role }) => (role === 'writer' ? `28rem` : role === 'owner' ? '12rem' : '0rem')};
+  max-width: ${({ role }) => (role === 'writer' ? `20.4rem` : role === 'owner' ? '12rem' : '0rem')};
+  height: 4rem;
+  padding-top: 0.4rem;
 `;
 
 const TopicWrapper = styled.div`

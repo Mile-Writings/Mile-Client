@@ -14,11 +14,6 @@ export interface Moim {
 }
 
 export const fetchHeaderGroup = async () => {
-  try {
-    const data = await authClient.get<HeaderGroupPropTypes>(`/api/user/moims`);
-
-    return data.data;
-  } catch {
-    console.error();
-  }
+  const data = await authClient.get<HeaderGroupPropTypes>(`/api/user/moims`);
+  return data.data;
 };

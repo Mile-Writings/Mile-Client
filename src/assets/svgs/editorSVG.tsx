@@ -1,7 +1,7 @@
 // 에디터 툴바 아이콘
 // 드롭다운 위아래 화살표
-export { default as EditorDropIcnOpen } from './editorDropIcnOpen.svg?react';
 export { default as EditorDropIcnClose } from './editorDropIcnClose.svg?react';
+export { default as EditorDropIcnOpen } from './editorDropIcnOpen.svg?react';
 
 // 글자색
 export { default as EditorTextColorBlackIcn } from './stickyeditorTextcolorIcnBlack.svg?react';
@@ -47,6 +47,3 @@ export { default as EditorDividerIcn } from './stickyeditorHorizonSvg.svg?react'
 export { default as EditorErrorIcn } from './editorErrorSvg.svg?react';
 
 // 에디터 모달 이미지
-export { default as AlertStorageIcn } from './alertStoragePng.svg?react';
-export { default as AlertUploadIcn } from './alertUploadPng.svg?react';
-export { default as AlertCautionIcn } from './alertCautionPng.svg?react';
