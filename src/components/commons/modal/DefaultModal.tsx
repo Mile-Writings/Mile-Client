@@ -3,19 +3,11 @@ import { createPortal } from 'react-dom';
 
 import Spacing from '../Spacing';
 
-// import {
-//   AlertStorageIcn,
-//   AlertUploadIcn,
-//   AlertCautionIcn,
-//   AlertModifyIcn,
-//   AlertDeleteIcn,
-// } from '../../../assets/svgs/modal/modalSVG';
 import alertCautionPng from '/src/assets/images/alertCaution.png';
 import alertStoragePng from '/src/assets/images/alertStorage.png';
 import alertUploadPng from '/src/assets/images/alertUpload.png';
-// 얘네 둘 import해와야함
-// import alertModifyPng from '/src/assets/images/alertModify.png';
-// import alertDeletePng from '/src/assets/images/alertDelete.png';
+import alertModifyPng from '/src/assets/images/alertModify.png';
+import alertDeletePng from '/src/assets/images/alertDelete.png';
 
 import React from 'react';
 import { MODAL_SIZES } from './constants';
@@ -62,21 +54,6 @@ export const DefaultModal = (props: ModalPropType) => {
     children,
   } = props;
 
-  // const getModalImg = () => {
-  //   switch (modalImg) {
-  //     case 'POST':
-  //       return <AlertUploadIcn />;
-  //     case 'SAVE':
-  //       return <AlertStorageIcn />;
-  //     case 'CAUTION':
-  //       return <AlertCautionIcn />;
-  //     case 'EDIT':
-  //       return <AlertModifyIcn />;
-  //     case 'DELETE':
-  //       return <AlertDeleteIcn />;
-  //   }
-  // };
-
   const getModalImg = () => {
     switch (modalImg) {
       case 'POST':
@@ -85,10 +62,10 @@ export const DefaultModal = (props: ModalPropType) => {
         return <img src={alertStoragePng} />;
       case 'CAUTION':
         return <img src={alertCautionPng} />;
-      // case 'EDIT':
-      //   return <AlertModifyIcn />;
-      // case 'DELETE':
-      //   return <AlertDeleteIcn />;
+      case 'EDIT':
+        return <img src={alertModifyPng} />;
+      case 'DELETE':
+        return <img src={alertDeletePng} />;
     }
   };
 
