@@ -156,7 +156,6 @@ interface WriterNamePropTypes {
 export const fetchWriterInfo = async (groupId: string) => {
   if (checkAuthenticate()) {
     const response = await authClient.get<WriterNamePropTypes>(`/api/moim/${groupId}/writername`);
-    console.log(response.data, 'fetch');
     return response.data;
   } else {
     const response = await client.get<WriterNamePropTypes>(`/api/moim/${groupId}/writername`);
