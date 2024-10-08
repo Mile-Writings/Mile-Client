@@ -88,7 +88,7 @@ const ImageUploadLabel = styled.label`
   position: absolute;
   bottom: 0;
   left: 0;
-  z-index: 3;
+  z-index: 2;
 
   display: flex;
   justify-content: center;

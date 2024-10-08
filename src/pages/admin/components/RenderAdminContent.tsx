@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import AddEditTopicModal from './AddEditTopicModal';
@@ -11,29 +11,39 @@ import { MODAL } from '../constants/modal';
 import { useAdminTopic, useDeleteGroup, useFetchMemberInfo } from '../hooks/queries';
 
 import { MakeGroupAdminIc } from '../../../assets/svgs';
-import { NegativeModal } from '../../../components/commons/Modal';
+import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 import Spacing from '../../../components/commons/Spacing';
 import useModal from '../../../hooks/useModal';
 import Error from '../../error/Error';
 import Loading from '../../loading/Loading';
+import useBlockPageExit from '../../../hooks/useBlockPageExit';
 
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
   const { groupId } = useParams();
   const [page, setPage] = useState(1);
-  const { memberData, totalMember } = useFetchMemberInfo(groupId || '', page);
   const [pageNum, setPageNum] = useState(1);
+
+  const { memberData, totalMember } = useFetchMemberInfo(groupId || '', page);
   const { topicCount, adminTopicData } = useAdminTopic(groupId, pageNum);
+
+  // input 모달 열고 닫기
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
-  const { mutate, isPending, isError } = useDeleteGroup(groupId || '');
-
+  // 공통 모달 열고 닫기
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
 
-  const handleDeleteGroup = () => {
-    mutate();
-  };
+  // 페이지 이탈 감지
+  const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =
+    useBlockPageExit();
+
+  // groupInfo일 때만 페이지 이탈 감지 활성화
+  useEffect(() => {
+    admin === 'groupInfo' ? setIgnoreBlocker(false) : setIgnoreBlocker(true);
+  }, [admin]);
+
+  const { mutate: deleteGroup, isPending, isError } = useDeleteGroup(groupId || '');
 
   if (isError) {
     return <Error />;
@@ -91,14 +101,32 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
             <EditGroupInfo />
           </AdminContainer>
 
-          <NegativeModal
-            modalContent={MODAL.DELETE_GROUP}
+          {/* 모임 삭제 모달 */}
+          <DefaultModal
             isModalOpen={isModalOpen}
-            modalHandler={() => handleDeleteGroup()}
-            closeModalHandler={() => {
-              handleCloseModal();
-            }}
-          />
+            onClickBg={handleCloseModal}
+            content={MODAL.DELETE_GROUP}
+            sizeType="LARGE"
+          >
+            <DefaultModalBtn
+              btnText={['예', '아니요']}
+              onClickLeft={deleteGroup}
+              onClickRight={handleCloseModal}
+            />
+          </DefaultModal>
+
+          {/* 페이지 이탈 모달 */}
+          <DefaultModal
+            isModalOpen={isPageExitModalOpen}
+            onClickBg={handleClosePageExitModal}
+            content={MODAL.PAGE_EXIT_WARN}
+          >
+            <DefaultModalBtn
+              btnText={['예', '아니요']}
+              onClickLeft={handleExitPage}
+              onClickRight={handleClosePageExitModal}
+            />
+          </DefaultModal>
         </>
       );
   }

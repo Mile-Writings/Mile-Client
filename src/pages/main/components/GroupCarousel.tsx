@@ -81,6 +81,7 @@ export default GroupCarousel;
 
 const CarouselWrapper = styled.div`
   flex-direction: column;
+  height: 29.4rem;
 `;
 
 const GroupButton = styled.button`

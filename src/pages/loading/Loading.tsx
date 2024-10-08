@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
-
-import spinnerGif from '../../assets/gifs/loadingSpinner.gif';
+import Lottie from 'lottie-react';
+import LoadingLottie from '../../assets/gifs/loading.json';
 
 const Loading = () => {
   return (
     <SpinnerWrapper>
-      <img src={spinnerGif} alt="로딩 중" />
+      <Lottie animationData={LoadingLottie} />
     </SpinnerWrapper>
   );
 };

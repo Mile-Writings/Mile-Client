@@ -1,6 +1,5 @@
 import { css } from '@emotion/react';
 import reset from 'emotion-reset';
-
 import theme from './theme';
 
 const globalStyle = css`
@@ -9,7 +8,6 @@ const globalStyle = css`
     box-sizing: border-box;
 
     font-family:
-      'Pretendard Variable',
       Pretendard,
       -apple-system,
       BlinkMacSystemFont,
@@ -28,7 +26,7 @@ const globalStyle = css`
 
   html,
   body {
-    box-sizing: border-box; /* default */
+    box-sizing: border-box;
     margin: 0 auto;
 
     font-size: 62.5%;

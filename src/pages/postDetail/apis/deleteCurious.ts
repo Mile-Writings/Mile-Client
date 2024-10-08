@@ -8,12 +8,8 @@ interface DeleteResponseType {
   };
 }
 const deleteCurious = async (postId: string) => {
-  try {
-    const data = authClient.delete<DeleteResponseType>(`/api/post/${postId}/curious`);
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
+  const data = await authClient.delete<DeleteResponseType>(`/api/post/${postId}/curious`);
+  return data;
 };
 
 export default deleteCurious;

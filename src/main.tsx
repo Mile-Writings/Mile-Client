@@ -2,7 +2,7 @@ import { Global, ThemeProvider } from '@emotion/react';
 import ReactDOM from 'react-dom/client';
 
 import App from './App.tsx';
-import globalStyle from './styles/GlobalStyle.tsx';
+import globalStyle from './styles/GlobalStyle.ts';
 import { theme } from './styles/theme.ts';
 
 // async function enableMocking() {

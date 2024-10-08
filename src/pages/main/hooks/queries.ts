@@ -14,9 +14,7 @@ export const useGetGroupContent = (moimId: string) => {
     queryFn: () => getGroupContentApi(),
   });
 
-  const groupLength = data?.length;
-
-  return { data, isFetching, isLoading, groupLength };
+  return { data, isFetching, isLoading };
 };
 
 export const useGetRecommendTopic = (content: string) => {

@@ -1,15 +1,17 @@
 import styled from '@emotion/styled';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-
-import { JoinCongratulationIc } from '../../assets/svgs';
 import { DefaultHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
+import groupJoinCongratsIlust from '/src/assets/images/createGroupCongrats.png';
 
 const GroupJoinCongrats = () => {
   const { groupId } = useParams() as { groupId: string };
   const location = useLocation();
   const navigate = useNavigate();
 
+  if (!location?.state?.moinTitle) {
+    navigate('/error');
+  }
   const onClickGoToGroupFeedBtn = () => {
     navigate(`/group/${groupId}`);
   };
@@ -19,11 +21,11 @@ const GroupJoinCongrats = () => {
       <Spacing marginBottom="11.4" />
       <GroupJoinCongratsContainer>
         <GroupJoinTitleWrapper>
-          <GroupJoinTitle>{location.state.moimTitle} 가입을 축하해요!</GroupJoinTitle>
+          <GroupJoinTitle>{location?.state?.moimTitle} 가입을 축하해요!</GroupJoinTitle>
           <GroupJoinText>글 모임에서 당신의 소중한 이야기를 들려주세요.</GroupJoinText>
         </GroupJoinTitleWrapper>
         <Spacing marginBottom="4.8" />
-        <JoinCongratulationIc />
+        <img src={groupJoinCongratsIlust} />
         <Spacing marginBottom="4.8" />
         <GoToGroupFeedBtn onClick={onClickGoToGroupFeedBtn}>모임 페이지 보러가기</GoToGroupFeedBtn>
       </GroupJoinCongratsContainer>

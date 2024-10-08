@@ -49,6 +49,9 @@ const basicCSS = css`
   justify-content: center;
   padding: 1rem 1.6rem;
 
+  white-space: nowrap;
+  text-align: center;
+
   cursor: pointer;
   border-radius: 0.8rem;
 `;
