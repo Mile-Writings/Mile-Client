@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import router from './routers/Router';
-// import mileLinkImg from '../src/assets/images/mileLinkImg.png';
 import { RouterProvider } from 'react-router-dom';
 import { Suspense } from 'react';
 import Loading from './pages/loading/Loading';
