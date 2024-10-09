@@ -20,7 +20,7 @@ const Admin = () => {
   const navigate = useNavigate();
 
   const { invitationCode } = useFetchInvitationLink(groupId);
-  const { groupInfoData } = useGroupInfo(groupId || '');
+  const { infoResponse } = useGroupInfo(groupId || '');
 
   const handleCopyLink = (invitationCode: string) => {
     copyLink(import.meta.env.VITE_INVITE_URL + `group/${invitationCode}/groupInvite`);
@@ -45,7 +45,7 @@ const Admin = () => {
               <AdminHomeIc />
               Home
             </HomeBtn>
-            <GroupName>{groupInfoData?.moimName}</GroupName>
+            <GroupName>{infoResponse?.moimName}</GroupName>
           </AdminGroupInfo>
           <Spacing marginBottom="2.4" />
           <AdminMenu>

@@ -5,8 +5,6 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
-import EditorContinueTempModal from './components/EditorContinueTempModal';
-import EditorFlowModal from './components/EditorFlowModal';
 import ImageUpload from './components/ImageUpload';
 import TipTap from './components/TipTap';
 import { EDITOR_DEFAULT_IMG } from './constants/editorDefaultImg';
@@ -29,7 +27,12 @@ import {
   EditorTempExistHeader,
   EditorTempNotExistHeader,
 } from '../../components/commons/Header';
+import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
+import { FullModal, FullModalBtn } from '../../components/commons/modal/FullModal';
 import Spacing from '../../components/commons/Spacing';
+import useModal from '../../hooks/useModal';
+import useBlockPageExit from '../../hooks/useBlockPageExit';
+import { MODAL } from './constants/modalContent';
 
 // editor content API 관련
 interface editorStateType {
@@ -128,7 +131,8 @@ interface editorFlowModalType {
   leftBtnFn: () => void;
   rightBtnText: string;
   rightBtnFn: () => void;
-  modalImgType: string;
+  modalImgType: 'DELETE' | 'POST' | 'EDIT' | 'SAVE' | 'CAUTION' | '';
+  onClickBg: () => void;
 }
 
 interface editorFlowModalActionType {
@@ -142,12 +146,16 @@ const editorFlowModalState: editorFlowModalType = {
   rightBtnText: '',
   rightBtnFn: () => {},
   modalImgType: '',
+  onClickBg: () => {},
 };
 
 const PostPage = () => {
-  const history = createBrowserHistory();
+  // 페이지 이탈
+  const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =
+    useBlockPageExit();
   const navigate = useNavigate();
   const location = useLocation();
+  const history = createBrowserHistory();
 
   // editor content API 관련
   const [editorVal, editorContentDispatch] = useReducer(editorContentReducerFn, editorState);
@@ -179,7 +187,7 @@ const PostPage = () => {
   const [editPostId, setEditPostId] = useState('');
   const [previewImgUrl, setPreviewImgUrl] = useState(EDITOR_DEFAULT_IMG);
   // modal 열고닫음
-  const [showModal, setShowModal] = useState(false);
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
   const [showTempContinueModal, setShowTempContinueModal] = useState(false);
   // 어떤 모달 열려야 하는지 handling
   const [editorModalType, setEditorModalType] = useState('');
@@ -201,6 +209,7 @@ const PostPage = () => {
   useEffect(() => {
     if (type === 'post' && isTemporaryPostExist && !continueTempPost) {
       setEditorModalType('continueTempSave');
+
       setShowTempContinueModal(true);
       preventScroll();
     }
@@ -208,8 +217,21 @@ const PostPage = () => {
 
   // 임시저장 삭제하기
   const { mutate: deleteTempPost } = useDeleteTempPost(tempPostId || '', groupId);
-  const deleteTempPostHandler = () => {
+
+  // 임시저장 모달 - 삭제하기 함수
+  const onClickDeleteTempPost = () => {
     deleteTempPost();
+    setShowTempContinueModal(false);
+  };
+  // 임시저장 모달 - 새로쓰기 함수
+  const onClickNewPostBtn = () => {
+    setContinueTempPost(false);
+    setShowTempContinueModal(false);
+  };
+  // 임시저장 모달 - 이어쓰기 함수
+  const onClickContinueTempBtn = () => {
+    setContinueTempPost(true);
+    setShowTempContinueModal(false);
   };
 
   // 글감 받아오기
@@ -245,9 +267,10 @@ const PostPage = () => {
   // 쿼리가 실행되고 postContentId를 받아온 후 모달 열리도록
   useEffect(() => {
     if (postContentId !== undefined) {
-      setShowModal(true);
+      handleShowModal();
       setEditorModalType('postContent');
       editorFlowModalDispatch({ type: 'postContent' });
+      setIgnoreBlocker(true);
     }
   }, [postContentId]);
 
@@ -300,10 +323,10 @@ const PostPage = () => {
     if (contentWithoutTag.trim().length !== 0 && editorVal.title?.trim().length !== 0) {
       putEditContent();
     }
-    setShowModal(true);
+    handleShowModal();
     setEditorModalType('editContent');
     editorFlowModalDispatch({ type: 'editContent' });
-    preventScroll();
+    setIgnoreBlocker(true);
   };
   // 최초 글 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
@@ -319,17 +342,13 @@ const PostPage = () => {
 
   // 임시저장 버튼 누르면 열리는 모달
   const onClickTempSaveBtn = () => {
-    if (isTemporaryPostExist) {
-      setShowModal(true);
-      setEditorModalType('tempSave');
-      editorFlowModalDispatch({ type: 'putNewTempSaveContent' });
-      preventScroll();
-    } else {
-      setShowModal(true);
-      setEditorModalType('tempSave');
-      editorFlowModalDispatch({ type: 'tempSave' });
-      preventScroll();
-    }
+    handleShowModal();
+    setEditorModalType('tempSave');
+    setIgnoreBlocker(true);
+
+    isTemporaryPostExist
+      ? editorFlowModalDispatch({ type: 'putNewTempSaveContent' })
+      : editorFlowModalDispatch({ type: 'tempSave' });
   };
 
   // 임시저장 모달 -> '예' 누르면 쿼리 동작
@@ -353,10 +372,11 @@ const PostPage = () => {
 
   const onClickTempExistSaveBtn = () => {
     putTempSaveContent();
-    setShowModal(true);
+
+    handleShowModal();
     editorFlowModalDispatch({ type: 'putTempSaveContent' });
+    setIgnoreBlocker(true);
     setEditorModalType('putTempSaveContent');
-    preventScroll();
   };
 
   // 글 제출 시 에러 메시지 타이머 설정
@@ -380,67 +400,73 @@ const PostPage = () => {
       case 'tempSave':
         return {
           ...state,
-          title: '임시저장 하시겠습니까?',
+          title: MODAL.TEMP_SAVE,
           leftBtnText: '아니오',
-          leftBtnFn: () => setShowModal(false),
+          leftBtnFn: () => handleCloseModal(),
           rightBtnText: '예',
           rightBtnFn: tempSaveHandler,
-          modalImgType: 'tempSave',
+          modalImgType: 'SAVE',
+          onClickBg: () => handleCloseModal(),
         };
       // 최초 제출하기
       case 'postContent':
         return {
           ...state,
-          title: '제출이 완료되었습니다',
+          title: MODAL.POST_CONTENT,
           leftBtnText: '홈으로 가기',
           leftBtnFn: () => navigate(`/group/${groupId}`),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${postContentId}`),
-          modalImgType: 'postContent',
+          modalImgType: 'POST',
+          onClickBg: () => {},
         };
       // 임시저장 이어쓰기 -> 제출하기
       case 'putTempSaveContent':
         return {
           ...state,
-          title: '제출이 완료되었습니다',
+          title: MODAL.POST_CONTENT,
           leftBtnText: '홈으로 가기',
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${tempPostId}`),
-          modalImgType: 'postContent',
+          modalImgType: 'POST',
+          onClickBg: () => {},
         };
       // 임시저장 존재하는데 다른 글 임시저장
       case 'putNewTempSaveContent':
         return {
           ...state,
-          title: '이미 임시저장된 글이 있습니다. \n덮어쓰시겠습니까?',
+          title: MODAL.PUT_NEW_TEMP_SAVE_CONTENT,
           leftBtnText: '예',
           leftBtnFn: tempSaveHandler,
           rightBtnText: '아니오',
-          rightBtnFn: () => setShowModal(false),
-          modalImgType: 'editorWarn',
+          rightBtnFn: handleCloseModal,
+          modalImgType: 'CAUTION',
+          onClickBg: () => {},
         };
       // 수정하기
       case 'editContent':
         return {
           ...state,
-          title: '수정이 완료되었습니다.',
+          title: MODAL.EDIT_CONTENT,
           leftBtnText: '홈으로 가기',
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${editPostId}`),
-          modalImgType: 'postContent',
+          modalImgType: 'POST',
+          onClickBg: () => {},
         };
       // 페이지 이탈
       case 'exitEditPage':
         return {
           ...state,
-          title: '작성 중이 글이 있습니다. \n 페이지를 나가시겠습니까?',
+          title: MODAL.EXIT_EDIT_PAGE,
           leftBtnText: '예',
           leftBtnFn: () => navigate(`/group/${groupId}`),
           rightBtnText: '아니오',
-          rightBtnFn: () => setShowModal(false),
-          modalImgType: 'editorWarn',
+          rightBtnFn: () => handleCloseModal(),
+          modalImgType: 'CAUTION',
+          onClickBg: () => handleCloseModal(),
         };
       default:
         return state;
@@ -454,13 +480,12 @@ const PostPage = () => {
 
   // 모달 스크롤 방지 제거
   useEffect(() => {
-    if (showModal || showTempContinueModal) {
+    if (isModalOpen || showTempContinueModal) {
       switch (editorModalType) {
         case 'tempSave':
           onClickTempSaveBtn();
           break;
         case 'postContent':
-          preventScroll();
           break;
         case 'putTempSaveContent':
           onClickTempExistSaveBtn();
@@ -470,66 +495,37 @@ const PostPage = () => {
           break;
         case 'continueTempSave':
           // 렌더링 되자마자 쿼리함수 실행되므로 prevent만 넣어줌
-          preventScroll();
           break;
         case 'exitEditPage':
-          preventScroll();
           break;
       }
     }
 
-    return () => {
+    (editorModalType === 'continueTempSave' || editorModalType === 'exitEditPage') &&
+      !isModalOpen &&
+      !showTempContinueModal &&
       allowScroll();
-    };
-  }, [showModal, showTempContinueModal, editorModalType]);
-
-  // 뒤로가기 방지
-  const preventGoBack = () => {
-    setShowModal(true);
-    editorFlowModalDispatch({ type: 'exitEditPage' });
-    setEditorModalType('exitEditPage');
-    preventScroll();
-  };
+  }, [isModalOpen, showTempContinueModal, editorModalType]);
 
   // 새로고침 방지
   const preventReload = (e: Event) => {
     e.preventDefault();
-    // setShowModal(true);
-    // editorFlowModalDispatch({ type: 'exitEditPage' });
-    // setEditorModalType('exitEditPage');
-    // preventScroll();
   };
 
   useEffect(() => {
     (() => {
-      // 현재 상태를 세션 히스토리 스택에 추가(push)
-      // 뒤로가기 해도 현재 페이지에 일단 머물게 하기
       history.push(history.location);
-
-      window.addEventListener('popstate', preventGoBack);
       window.addEventListener('beforeunload', preventReload);
     })();
 
     return () => {
-      window.removeEventListener('popstate', preventGoBack);
       window.removeEventListener('beforeunload', preventReload);
     };
   }, []);
 
   return (
     <PostPageWrapper>
-      <EditorContinueTempModal
-        showTempContinueModal={showTempContinueModal}
-        setShowTempContinueModal={setShowTempContinueModal}
-        setContinueTempPost={setContinueTempPost}
-        deleteTempPost={deleteTempPostHandler}
-      />
-      <EditorFlowModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        editorFlowModalContent={editorFlowModalVal}
-        editorModalType={editorModalType}
-      />
+      {/* 헤더 */}
       {type === 'edit' ? (
         <EditorEditHeader onClickEditSave={onClickEditSaveBtn} />
       ) : continueTempPost ? (
@@ -541,6 +537,8 @@ const PostPage = () => {
         />
       )}
       <Spacing marginBottom="6.4" />
+
+      {/* 글 제출 막는 toast */}
       <PostDeclinedWrapper $postAvailable={postErrorMessage.trim().length === 0}>
         <EditorErrorIcn />
         <PoseDeclinedText>{postErrorMessage}</PoseDeclinedText>
@@ -552,7 +550,8 @@ const PostPage = () => {
         url={url || ''}
         fileName={fileName || ''}
       />
-      {/* <DropDownEditorWrapper> */}
+
+      {/* 글감 */}
       {topics && (
         <DropDown
           topicList={topics}
@@ -563,6 +562,8 @@ const PostPage = () => {
         />
       )}
       <Spacing marginBottom="2.4" />
+
+      {/* 텍스트 에디터 */}
       <TipTap
         title={editorVal.title}
         setTitle={setTitle}
@@ -571,8 +572,45 @@ const PostPage = () => {
         setEditorContent={setContent}
         setContentWithoutTag={setContentWithoutTag}
       />
-      {/* </DropDownEditorWrapper> */}
       <Spacing marginBottom="8" />
+
+      {/* 임시저장 이어쓰기 관련 모달 */}
+      <FullModal isModalOpen={showTempContinueModal} content={MODAL.TEMP_CONTINUE}>
+        <FullModalBtn isPrimary={true} content="새로 쓰기" onClick={onClickNewPostBtn} />
+        <FullModalBtn isPrimary={false} content="이어 쓰기" onClick={onClickContinueTempBtn} />
+        <Spacing marginBottom="0.2" />
+        <DeleteTempContentBtn onClick={onClickDeleteTempPost}>
+          임시 저장 삭제하기
+        </DeleteTempContentBtn>
+      </FullModal>
+
+      {/* 글쓰기 관련 모달 */}
+      <DefaultModal
+        isModalOpen={isModalOpen}
+        onClickBg={editorFlowModalVal.onClickBg}
+        content={editorFlowModalVal.title}
+        modalImg={editorFlowModalVal.modalImgType}
+      >
+        <DefaultModalBtn
+          btnText={[editorFlowModalVal.leftBtnText, editorFlowModalVal.rightBtnText]}
+          onClickLeft={editorFlowModalVal.leftBtnFn}
+          onClickRight={editorFlowModalVal.rightBtnFn}
+        />
+      </DefaultModal>
+
+      {/* 페이지 이탈 모달 */}
+      <DefaultModal
+        isModalOpen={isPageExitModalOpen} 
+        onClickBg={handleClosePageExitModal}
+        content={MODAL.PAGE_EXIT_WARN}
+        modalImg="CAUTION"
+      >
+        <DefaultModalBtn
+          btnText={['예', '아니요']}
+          onClickLeft={handleExitPage}
+          onClickRight={handleClosePageExitModal}
+        />
+      </DefaultModal>
     </PostPageWrapper>
   );
 };
@@ -608,4 +646,16 @@ const PostDeclinedWrapper = styled.div<{ $postAvailable: boolean }>`
 const PoseDeclinedText = styled.span`
   color: ${({ theme }) => theme.colors.mainViolet};
   ${({ theme }) => theme.fonts.button1};
+`;
+
+// 임시저장된 글 삭제하기 부분
+const DeleteTempContentBtn = styled.span`
+  color: ${({ theme }) => theme.colors.gray60};
+
+  ${({ theme }) => theme.fonts.body6};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.gray20};
+  }
 `;

@@ -11,12 +11,8 @@ interface getGroupContentResponseTypes {
 }
 
 const getGroupContentApi = async () => {
-  try {
-    const { data } = await client.get<getGroupContentResponseTypes>('/api/moim/best');
-    return data.data.moim;
-  } catch (error) {
-    console.error(error);
-  }
+  const { data } = await client.get<getGroupContentResponseTypes>('/api/moim/best');
+  return data.data.moim;
 };
 
 export default getGroupContentApi;

@@ -1,33 +1,15 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-
 import checkAuthenticate from '../../../utils/checkAuthenticate';
 import {
   fetchArticleList,
-  fetchCuriousPost,
-  fetchCuriousWriters,
   fetchEditIntro,
   fetchGroupFeedAuth,
   fetchGroupInfo,
   fetchGroupPublicStatus,
-  fetchTodayTopic,
   fetchTopicList,
   fetchWriterInfo,
-  fetchWriterNameOnly,
 } from '../apis/fetchGroupFeed';
 import { fetchHeaderGroup } from '../apis/fetchHeaderGroup';
-
-export const QUERY_KEY_GROUPFEED = {
-  getGroupFeedAuth: 'getGroupFeedAuth',
-  getGroupFeedPublicStatus: 'getGroupFeedPublicStatus',
-  getTodayWritingStyle: 'getTodayWritingStyle',
-  getCuriousPost: 'getCuriousPost',
-  getGroupFeedCategory: 'getGroupFeedCategory',
-  getCuriousWriters: 'getCuriousWriters',
-  getArticleList: 'getArticleList',
-  fetchHeaderGroup: 'fetchHeaderGroup',
-  getWriterNameOnly: 'getWriterNameOnly',
-  getWriterInfo: 'getWriterInfo',
-};
 
 interface GroupFeedAuthQueryResult {
   isMember: boolean | undefined;
@@ -37,9 +19,22 @@ interface GroupFeedAuthQueryResult {
   error: Error | null;
 }
 
+export const groupKey = {
+  all: ['group'] as const,
+  info: () => [...groupKey.all, 'info'] as const,
+  detail: (groupId: string) => [...groupKey.info(), 'detail', groupId] as const,
+  auth: (groupId: string) => [...groupKey.info(), 'auth', groupId] as const,
+  isPublic: (groupId: string) => [...groupKey.info(), 'public', groupId] as const,
+  topics: (groupId: string) => [...groupKey.all, 'topic', groupId] as const,
+  posts: (topicId: string, groupId: string) =>
+    [...groupKey.topics(groupId), 'posts', topicId] as const,
+  user: () => [...groupKey.all, 'user'] as const,
+  userInfo: (groupId: string | undefined) => [...groupKey.user(), 'userInfo', groupId] as const,
+  userGroups: () => [...groupKey.user(), 'groups'] as const,
+};
 export const useGroupFeedAuth = (groupId: string): GroupFeedAuthQueryResult => {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getGroupFeedAuth, groupId],
+    queryKey: groupKey.auth(groupId),
     queryFn: () => fetchGroupFeedAuth(groupId),
     enabled: !!checkAuthenticate(),
   });
@@ -49,24 +44,9 @@ export const useGroupFeedAuth = (groupId: string): GroupFeedAuthQueryResult => {
   return { isMember, isOwner, isLoading, isError, error };
 };
 
-interface GroupInfoQueryResult {
-  groupInfoData?: {
-    imageUrl: string;
-    moimName: string;
-    ownerName: string;
-    startDate: string;
-    writerCount: number;
-    description: string | undefined;
-  };
-
-  isLoading: boolean;
-  isError: boolean;
-  error: Error | null;
-}
-
 export const useGroupFeedPublicStatus = (groupId: string) => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getGroupFeedPublicStatus, groupId],
+    queryKey: groupKey.isPublic(groupId),
     queryFn: () => fetchGroupPublicStatus(groupId),
     enabled: !!groupId,
   });
@@ -76,41 +56,22 @@ export const useGroupFeedPublicStatus = (groupId: string) => {
   return { isPublic, isLoading, isError };
 };
 
-export const useGroupInfo = (groupId: string): GroupInfoQueryResult => {
+export const useGroupInfo = (groupId: string) => {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['groupFeed_Info_moimId', groupId],
+    queryKey: groupKey.detail(groupId),
     queryFn: () => fetchGroupInfo(groupId),
   });
 
-  const groupInfoData = data?.data;
+  const infoResponse = data?.data.infoResponse;
+  const mostCuriousPost = data?.data.mostCuriousPost.postList;
+  const mostCuriousWriter = data?.data.mostCuriousWriter.popularWriters;
 
-  return { groupInfoData, isLoading, isError, error };
-};
-
-export const useTodayWritingStyle = (groupId: string) => {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getTodayWritingStyle, groupId],
-    queryFn: () => fetchTodayTopic(groupId),
-  });
-
-  const content = data && data.data.content;
-  return { content, isLoading, isError, error };
-};
-
-export const useCuriousPost = (groupId: string) => {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getCuriousPost, groupId],
-    queryFn: () => fetchCuriousPost(groupId),
-  });
-
-  const curiousPostData = data && data.data.postList;
-
-  return { curiousPostData, isLoading, isError, error };
+  return { infoResponse, mostCuriousPost, mostCuriousWriter, isLoading, isError, error };
 };
 
 export const useTopicList = (groupId: string) => {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getGroupFeedCategory, groupId],
+    queryKey: groupKey.topics(groupId),
     queryFn: () => fetchTopicList(groupId),
   });
 
@@ -119,21 +80,10 @@ export const useTopicList = (groupId: string) => {
   return { groupFeedCategoryData, isLoading, isError, error };
 };
 
-export const useCuriousWriters = (groupId: string) => {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getCuriousWriters, groupId],
-    queryFn: () => fetchCuriousWriters(groupId),
-  });
-
-  const curiousWriterData = data && data.data.popularWriters;
-
-  return { curiousWriterData, isLoading, isError, error };
-};
-
-export const useArticleList = (topicId: string) => {
+export const useArticleList = (topicId: string, groupId: string) => {
   const { data, isLoading, isError, error, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: [QUERY_KEY_GROUPFEED.getArticleList, topicId],
+      queryKey: groupKey.posts(topicId, groupId),
       queryFn: ({ pageParam }) => fetchArticleList(topicId, pageParam),
       staleTime: 10000, //20초 캐시
       enabled: !!topicId,
@@ -164,45 +114,32 @@ export const useArticleList = (topicId: string) => {
 
 export const useFetchHeaderGroup = () => {
   const { data } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.fetchHeaderGroup],
+    queryKey: groupKey.userGroups(),
     queryFn: () => fetchHeaderGroup(),
     retry: 3,
   });
   return { data };
 };
 
-export const useFetchWriterNameOnly = (
+export const useFetchWriterInfo = (
   groupId: string,
   isMember: boolean | undefined,
   isOwner: boolean | undefined,
 ) => {
   const { data } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getWriterNameOnly, groupId],
-    queryFn: () => fetchWriterNameOnly(groupId),
+    queryKey: groupKey.userInfo(groupId),
+    queryFn: () => fetchWriterInfo(groupId),
     enabled: !!isMember || !!isOwner,
   });
 
   const writerName = data?.data.writerName;
   const writerNameId = data?.data.writerNameId;
-  return { writerName, writerNameId };
-};
-
-//[GET] 필명 + 프로필 설명 GET
-export const useFetchWriterInfo = (writerNameId: number | undefined) => {
-  const { data } = useQuery({
-    queryKey: [QUERY_KEY_GROUPFEED.getWriterInfo, writerNameId],
-    queryFn: () => fetchWriterInfo(writerNameId),
-    enabled: writerNameId !== undefined,
-  });
-
-  const name = data?.data.name;
-  const description = data?.data.description;
-
-  return { name, description };
+  const writerDescription = data?.data.description;
+  return { writerName, writerNameId, writerDescription };
 };
 
 //[PATCH] 필명 소개글 수정
-export const useEditWriterIntro = (writerNameId: number | undefined) => {
+export const useEditWriterIntro = (writerNameId: number | undefined, groupId: string) => {
   const queryClient = useQueryClient();
   const { mutate, isError, error } = useMutation({
     mutationKey: ['editWriterIntro', writerNameId],
@@ -210,7 +147,7 @@ export const useEditWriterIntro = (writerNameId: number | undefined) => {
       fetchEditIntro({ writerNameId, description }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY_GROUPFEED.getWriterInfo, writerNameId],
+        queryKey: groupKey.userInfo(groupId),
       });
     },
   });

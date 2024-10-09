@@ -1,23 +1,31 @@
 import styled from '@emotion/styled';
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from 'react';
 
-import { useEditWriterIntro, useFetchWriterInfo } from '../hooks/queries';
+import { useEditWriterIntro } from '../hooks/queries';
 
 import { AniImgProfileIc } from '../../../assets/svgs';
+import { useParams } from 'react-router-dom';
 
 interface editProfilModalPropTypes {
   setShowEditProfileModal: Dispatch<SetStateAction<boolean>>;
   writerNameId: number | undefined;
+  name: string;
+  description: string;
 }
 
-const EditProfileModal = ({ setShowEditProfileModal, writerNameId }: editProfilModalPropTypes) => {
-  const { name, description } = useFetchWriterInfo(writerNameId);
-  const [content, setContent] = useState('');
+const EditProfileModal = ({
+  setShowEditProfileModal,
+  writerNameId,
+  name,
+  description,
+}: editProfilModalPropTypes) => {
+  const [content, setContent] = useState(description || '');
   const modalRef = useRef(null);
+  const { groupId } = useParams();
   const onInputHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
-  const { editMutateWriterIntro } = useEditWriterIntro(writerNameId);
+  const { editMutateWriterIntro } = useEditWriterIntro(writerNameId, groupId || '');
 
   const submitHandler = () => {
     if (content.length <= 100) {
@@ -26,9 +34,6 @@ const EditProfileModal = ({ setShowEditProfileModal, writerNameId }: editProfilM
     }
   };
 
-  useEffect(() => {
-    setContent(description || '');
-  }, [description]);
   return (
     <>
       <BackgroundWrapper onClick={() => setShowEditProfileModal(false)} />

@@ -1,10 +1,8 @@
 import styled from '@emotion/styled';
+import Lottie from 'lottie-react';
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { useArticleList } from '../hooks/queries';
-
-import spinnerGif from '../../../assets/gifs/loadingSpinner.gif';
+import LoadingLottie from '../../../assets/gifs/loading.json';
 import {
   GroupChatIc,
   GroupCuriousIc,
@@ -13,6 +11,7 @@ import {
   GroupViewIc,
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
+import { useArticleList } from '../hooks/queries';
 
 interface EachProfilePropTypes {
   groupId: string;
@@ -23,6 +22,7 @@ const EachArticle = (props: EachProfilePropTypes) => {
   const { groupId, selectedTopicId } = props;
   const { postListData, fetchNextPage, hasNextPage, isFetchingNextPage } = useArticleList(
     selectedTopicId || '',
+    groupId,
   );
   const navigate = useNavigate();
   const handleGoPostDetail = (postId: string) => {
@@ -112,7 +112,7 @@ const EachArticle = (props: EachProfilePropTypes) => {
                 </div>
               )),
           )}
-          {isFetchingNextPage && <LoadingWrapper src={spinnerGif} alt="로딩" />}
+          {isFetchingNextPage && <Lottie animationData={LoadingLottie} />}
         </>
       )}
     </ArticlePostWrapper>
@@ -126,11 +126,6 @@ const DividingLine = styled.div`
 
   background-color: ${({ theme }) => theme.colors.gray30};
   border-radius: 2px;
-`;
-const LoadingWrapper = styled.img`
-  width: 20rem;
-  height: 20rem;
-  margin: 0 auto;
 `;
 
 const ArticlePostWrapper = styled.div`

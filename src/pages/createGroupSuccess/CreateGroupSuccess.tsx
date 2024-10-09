@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { CreateGroupCongrats } from '../../assets/svgs';
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 import { copyLink } from '../../utils/copyLink';
+import createGroupCongrats from '/src/assets/images/createGroupCongrats.png';
 
 const CreateGroupSuccess = () => {
   const token = localStorage.getItem('accessToken');
@@ -23,7 +23,7 @@ const CreateGroupSuccess = () => {
           <MainTitle>글 모임 생성을 축하해요!</MainTitle>
           <SubTitle>초대 링크 복사 후, 생성된 글 모임 페이지를 확인해볼까요?</SubTitle>
         </TitleWrapper>
-        <CreateGroupCongratsImg />
+        <CreateGroupCongratsImg src={createGroupCongrats} />
         <ButtonWrapper>
           <CopyLinkBtn onClick={handleCopyLink}>초대 링크 복사하기</CopyLinkBtn>
           <NavigateGroupPageBtn onClick={() => navigate(`/group/${groupId}`)}>
@@ -37,7 +37,7 @@ const CreateGroupSuccess = () => {
 
 export default CreateGroupSuccess;
 
-const CreateGroupCongratsImg = styled(CreateGroupCongrats)`
+const CreateGroupCongratsImg = styled.img`
   width: 40.8rem;
   height: 29.2rem;
 `;
@@ -56,6 +56,7 @@ const CreatGroupSection = styled.section`
   gap: 4rem;
   align-items: center;
   width: 72rem;
+  margin-top: 7.4rem;
   padding: 6.4rem 0;
 
   background-color: ${({ theme }) => theme.colors.white};

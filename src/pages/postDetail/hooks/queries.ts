@@ -1,7 +1,9 @@
 //한 파일에서 사용하는 쿼리키를 모아두고 쿼리를 선언해주세요
-
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { isAxiosError } from 'axios';
+import { LONG_COMMENT_ERROR, NO_COMMENT_ERROR } from '../../../constants/commentErrorMessage';
+import { ERROR_MESSAGE } from '../../../constants/errorText';
 import checkPostAuth from '../apis/checkPostAuth';
 import createPostCurious from '../apis/createPostCurious';
 import deleteCurious from '../apis/deleteCurious';
@@ -23,9 +25,18 @@ export const QUERY_KEY_POST_DETAIL = {
   getCommentList: 'getCommentList',
   deleteComment: 'deleteComment',
   getAuthorization: 'getAuthorization',
-  getCurious: 'getCurious',
+  curious: 'curious',
   postNestedComment: 'postNestedComment',
 };
+
+export interface postCuriousProps {
+  status: number;
+  message: string;
+  data: {
+    isCurious: boolean;
+    curiousCount: number;
+  };
+}
 
 // 글정보 조회 get api
 export const useGetPostDetail = (postId: string) => {
@@ -40,7 +51,7 @@ export const useGetPostDetail = (postId: string) => {
 //궁금해요 여부개수 get api
 export const useGetCuriousInfo = (postId: string) => {
   const { data, error } = useQuery({
-    queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId],
+    queryKey: [QUERY_KEY_POST_DETAIL.curious, postId],
     queryFn: () => fetchCuriousInfo(postId),
     retry: false,
   });
@@ -53,8 +64,48 @@ export const usePostCurious = (postId: string) => {
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.postCurious, postId],
     mutationFn: () => createPostCurious(postId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId] });
+
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: [QUERY_KEY_POST_DETAIL.curious, postId] });
+
+      const prevOption = queryClient.getQueryData([QUERY_KEY_POST_DETAIL.curious, postId]);
+
+      queryClient.setQueryData(
+        [QUERY_KEY_POST_DETAIL.curious, postId],
+        (oldData: postCuriousProps | undefined) => {
+          if (oldData === undefined) {
+            return undefined;
+          }
+
+          return {
+            ...oldData,
+            data: {
+              isCurious: true,
+              curiousCount: oldData.data.curiousCount + 1,
+            },
+          };
+        },
+      );
+      return { prevOption };
+    },
+
+    onError: (err, _, context) => {
+      if (isAxiosError(err)) {
+        const errCode = err.response?.data.status;
+        const errStatus = err.response?.status;
+        if (errCode === 40900 || errCode === 40306) {
+          alert(ERROR_MESSAGE.approach + errCode);
+        } else if (errStatus === 500) {
+          alert(ERROR_MESSAGE.network);
+        } else {
+          throw new Error(ERROR_MESSAGE.unexpected);
+        }
+      }
+
+      queryClient.setQueryData([QUERY_KEY_POST_DETAIL.curious, postId], context?.prevOption);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.curious, postId] });
     },
   });
   return data;
@@ -78,8 +129,50 @@ export const useDeleteCurious = (postId: string) => {
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.deleteCurious, postId],
     mutationFn: () => deleteCurious(postId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getCurious, postId] });
+
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: [QUERY_KEY_POST_DETAIL.curious, postId] });
+
+      const prevOption = queryClient.getQueryData([QUERY_KEY_POST_DETAIL.curious, postId]);
+
+      queryClient.setQueryData(
+        [QUERY_KEY_POST_DETAIL.curious, postId],
+        (oldData: postCuriousProps | undefined) => {
+          if (oldData === undefined) {
+            return undefined;
+          }
+          let optimisticCuriousCount =
+            oldData.data.curiousCount === 0
+              ? oldData.data.curiousCount
+              : oldData.data.curiousCount - 1;
+
+          return {
+            ...oldData,
+            data: {
+              isCurious: false,
+              curiousCount: optimisticCuriousCount,
+            },
+          };
+        },
+      );
+
+      return { prevOption };
+    },
+    onError: (err, _, context) => {
+      if (isAxiosError(err)) {
+        const errStatus = err.response?.status;
+        if (errStatus === 404) {
+          alert(ERROR_MESSAGE.approach + errStatus);
+        } else if (errStatus === 500) {
+          alert(ERROR_MESSAGE.network);
+        } else {
+          throw new Error(ERROR_MESSAGE.unexpected);
+        }
+      }
+      queryClient.setQueryData([QUERY_KEY_POST_DETAIL.curious, postId], context?.prevOption);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.curious, postId] });
     },
   });
   return data;
@@ -123,6 +216,18 @@ export const usePostComment = (postId: string, isAnonymous: boolean) => {
         queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
       });
     },
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        if (errorCode === 40005) {
+          alert(NO_COMMENT_ERROR);
+        } else if (errorCode === 40006) {
+          alert(LONG_COMMENT_ERROR);
+        } else {
+          console.error();
+        }
+      }
+    },
   });
 
   const postComment = (comment: string) => {
@@ -142,6 +247,18 @@ export const usePostNestedComment = (commentId: string, postId: string, isAnonym
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY_POST_DETAIL.getCommentList, postId],
       });
+    },
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status) {
+        const errorCode = err.response?.data.status;
+        if (errorCode === 40005) {
+          alert(NO_COMMENT_ERROR);
+        } else if (errorCode === 40006) {
+          alert(LONG_COMMENT_ERROR);
+        } else {
+          console.error();
+        }
+      }
     },
   });
 
