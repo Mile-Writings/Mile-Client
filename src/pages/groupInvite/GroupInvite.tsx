@@ -23,6 +23,7 @@ const GroupInvite = () => {
 
   const { moimTitle, imageUrl, leader, foundedDate, memberCount, description, error, isError } =
     useGetGroupInfo(groupId);
+
   // 글모임 5개 가입 제한
   const { data } = useFetchHeaderGroup();
 
