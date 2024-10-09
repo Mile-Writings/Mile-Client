@@ -45,6 +45,11 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
 
   const { mutate: deleteGroup, isPending, isError } = useDeleteGroup(groupId || '');
 
+  const handleDeleteGroup = () => {
+    deleteGroup();
+    setIgnoreBlocker(true);
+  };
+
   if (isError) {
     return <Error />;
   }
@@ -110,7 +115,7 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
           >
             <DefaultModalBtn
               btnText={['예', '아니요']}
-              onClickLeft={deleteGroup}
+              onClickLeft={handleDeleteGroup}
               onClickRight={handleCloseModal}
             />
           </DefaultModal>
