@@ -253,7 +253,7 @@ const BtnWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  width: 100%;
+  width: 82.6rem;
 `;
 
 const CreateGroupWrapper = styled.div`
