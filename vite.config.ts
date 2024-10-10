@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig, type PluginOption } from 'vite';
 import svgr from 'vite-plugin-svgr';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,5 +21,6 @@ export default defineConfig({
       },
     }),
     svgr(),
+    visualizer() as PluginOption,
   ],
 });
