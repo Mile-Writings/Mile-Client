@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
+import Lottie from 'lottie-react';
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Loading from '../../loading/Loading';
+import LoadingLottie from '../../../assets/gifs/loading.json';
 import {
   GroupChatIc,
   GroupCuriousIc,
@@ -111,7 +112,7 @@ const EachArticle = (props: EachProfilePropTypes) => {
                 </div>
               )),
           )}
-          {isFetchingNextPage && <Loading />}
+          {isFetchingNextPage && <Lottie animationData={LoadingLottie} />}
         </>
       )}
     </ArticlePostWrapper>
