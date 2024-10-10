@@ -23,4 +23,14 @@ export default defineConfig({
     svgr(),
     visualizer() as PluginOption,
   ],
+  build: {
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+        },
+      },
+    },
+  },
 });
