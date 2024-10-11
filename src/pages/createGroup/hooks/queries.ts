@@ -36,7 +36,7 @@ export const usePostCreateGroup = ({
 }: CreateGroupRequestTypes) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { mutate, data } = useMutation({
+  const { mutate } = useMutation({
     mutationKey: [
       QUERY_KEY_CREATE_GROUP.postCreateGroup,
       {
@@ -65,7 +65,7 @@ export const usePostCreateGroup = ({
       }),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_CREATE_GROUP.postCreateGroup] });
-      navigate(`/group/success/${data.data.data.moimId}`);
+      navigate(`/group/success/${data.data.response.moimId}`);
     },
     onError: (err) => {
       if (isAxiosError(err) && err.response?.status) {
@@ -86,5 +86,5 @@ export const usePostCreateGroup = ({
     },
   });
 
-  return { mutate, data };
+  return { mutate };
 };
