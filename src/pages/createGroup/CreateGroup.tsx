@@ -30,7 +30,8 @@ const CreateGroup = () => {
   const [groupImageView, setGroupImageView] = useState('');
 
   // 페이지 이탈 감지
-  const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage } = useBlockPageExit();
+  const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =
+    useBlockPageExit();
   // modal 열고닫음
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
 
@@ -143,11 +144,13 @@ const CreateGroup = () => {
     }
 
     if (groupName && topic && topicTag && leaderPenName && leaderDesc.length <= 100) {
+      setIgnoreBlocker(true);
       mutate();
     } else {
       throw new Error('글모임 생성 알 수 없는 에러');
     }
   };
+
 
   const handleBackBtn = () => {
     setCurrentPage('GroupInfoPage');
@@ -253,7 +256,7 @@ const BtnWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  width: 100%;
+  width: 82.6rem;
 `;
 
 const CreateGroupWrapper = styled.div`
