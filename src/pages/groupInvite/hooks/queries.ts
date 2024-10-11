@@ -5,6 +5,7 @@ import { createGroupMemberJoin } from '../apis/createGroupMemberJoin';
 import { fetchGroupInfo } from '../apis/fetchGroupInfo';
 import { fetchWriterNameConflict } from '../apis/fetchWriterNameConflict';
 import { isAxiosError } from 'axios';
+import { authClient } from '../../../utils/apis/axios';
 
 export const QUERY_KEY_GROUP_INVITE = {
   getGroupInfo: 'getGroupInfo',
@@ -70,7 +71,10 @@ export const usePostGroupMemberJoin = ({
     ],
     mutationFn: () => createGroupMemberJoin({ groupId, writerName, writerDescription }),
     retry: 1,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      localStorage.setItem('accessToken', data.data.accessToken);
+      authClient.defaults.headers['Authorization'] = `Bearer ${data.data.accessToken}`;
+
       navigate(`/group/${groupId}/groupJoin`, {
         state: {
           moimTitle: moimTitle,

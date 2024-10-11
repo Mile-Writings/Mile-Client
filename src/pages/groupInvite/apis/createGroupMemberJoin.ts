@@ -9,6 +9,9 @@ interface groupMemberJoinType {
 interface PostGroupJoinMemberResponseType {
   status: number;
   message: string;
+  data: {
+    accessToken: string;
+  };
 }
 
 export const createGroupMemberJoin = async ({
@@ -17,7 +20,7 @@ export const createGroupMemberJoin = async ({
   writerDescription,
 }: groupMemberJoinType) => {
   try {
-    const { data } = await authClient.post<PostGroupJoinMemberResponseType>(
+    const data = await authClient.post<PostGroupJoinMemberResponseType>(
       `/api/moim/${groupId}/user`,
       {
         moimId: groupId,
@@ -25,7 +28,7 @@ export const createGroupMemberJoin = async ({
         writerDescription: writerDescription,
       },
     );
-    return data;
+    return data.data;
   } catch (error) {
     console.log(error);
     throw error;
