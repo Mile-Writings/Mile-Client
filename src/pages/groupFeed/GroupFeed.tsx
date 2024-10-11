@@ -28,6 +28,7 @@ import {
 const GroupFeed = () => {
   const { groupId } = useParams();
   const accessToken = localStorage.getItem('accessToken');
+
   const {
     isMember,
     isOwner,
