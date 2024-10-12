@@ -13,6 +13,7 @@ export const client = axios.create({
   withCredentials: true,
 });
 const accessToken = localStorage.getItem('accessToken');
+
 export const authClient = axios.create({
   baseURL: `${devBaseUrl}`,
   headers: {
@@ -23,6 +24,19 @@ export const authClient = axios.create({
   },
   withCredentials: true,
 });
+
+// authClient.interceptors.request.use(
+//   (config) => {
+//     const accessToken = localStorage.getItem('accessToken');
+//     if (accessToken) {
+//       config.headers.Authorization = `Bearer ${accessToken}`;
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   },
+// );
 
 authClient.interceptors.response.use(
   (config) => {
