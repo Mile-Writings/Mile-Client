@@ -18,7 +18,7 @@ const GroupJoinCongrats = () => {
   return (
     <GroupJoinCongratsWrapper>
       <DefaultHeader />
-      <Spacing marginBottom="11.4" />
+      <Spacing marginBottom="15.6" />
       <GroupJoinCongratsContainer>
         <GroupJoinTitleWrapper>
           <GroupJoinTitle>{location?.state?.moimTitle} 가입을 축하해요!</GroupJoinTitle>
