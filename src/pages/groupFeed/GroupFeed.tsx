@@ -59,8 +59,7 @@ const GroupFeed = () => {
 
   const navigate = useNavigate();
 
-  const todayTopic = groupFeedCategoryData && groupFeedCategoryData[0].topicName;
-  //const { name, description } = useFetchWriterInfo(writerNameId);
+  const todayInfo = groupFeedCategoryData && groupFeedCategoryData[0];
 
   //접속시 권한확인
   useEffect(() => {
@@ -104,7 +103,7 @@ const GroupFeed = () => {
           />
         )}
         <GroupInfo>
-          <GroupTodayWriteStyle todayTopic={todayTopic} isMember={isMember} groupId={groupId} />
+          <GroupTodayWriteStyle todayInfo={todayInfo} isMember={isMember} groupId={groupId} />
           <Spacing marginBottom="6.4" />
           <GroupCuriousTitle
             mainText="우리 모임에서 궁금한 글쓴이에요"
