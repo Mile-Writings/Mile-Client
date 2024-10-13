@@ -28,9 +28,9 @@ const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
   return (
     <TodayWriteStyleWrapper>
       <TextLayout>
-        <MainText>{todayInfo.topicName}</MainText>
+        <MainText>{todayInfo?.topicName}</MainText>
         <SubText>
-          오늘의 주제는 <SubBoldText>{todayInfo.content}</SubBoldText> 입니다.
+          오늘의 주제는 <SubBoldText>{todayInfo?.content}</SubBoldText> 입니다.
         </SubText>
       </TextLayout>
       {isMember && (
