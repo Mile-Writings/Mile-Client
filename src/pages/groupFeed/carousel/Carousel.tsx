@@ -8,16 +8,28 @@ import EachArticle from './EachArticle';
 import './slick-theme.css';
 import './slick.css';
 
-import { useArticleList, useTopicList } from '../hooks/queries';
+import { useArticleList } from '../hooks/queries';
 
 // import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 import Error from '../../error/Error';
 import Loading from '../../loading/Loading';
 
-const Carousel = () => {
+type Topic = {
+  topicId: string;
+  topicName: string;
+};
+
+type GroupFeedCategoryData = Topic[];
+
+type CarouselPropsType<TError = Error> = {
+  groupFeedCategoryData: GroupFeedCategoryData | undefined;
+  isError: boolean;
+  isLoading: boolean;
+  error: TError | null;
+};
+const Carousel = ({ groupFeedCategoryData, isError, isLoading, error }: CarouselPropsType) => {
   const { groupId } = useParams();
-  const { groupFeedCategoryData, isLoading, isError, error } = useTopicList(groupId || '');
 
   const [selectedTopicId, setSelectedTopicId] = useState<string>('');
 

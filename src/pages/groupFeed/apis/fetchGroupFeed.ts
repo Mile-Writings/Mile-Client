@@ -108,6 +108,7 @@ interface TopicListPropTypes {
     topicList: {
       topicId: string;
       topicName: string;
+      content: string;
     }[];
   };
   status: number;

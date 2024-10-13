@@ -22,6 +22,7 @@ import {
   useGroupFeedAuth,
   useGroupFeedPublicStatus,
   useGroupInfo,
+  useTopicList,
 } from './hooks/queries';
 
 const GroupFeed = () => {
@@ -49,6 +50,12 @@ const GroupFeed = () => {
 
   const { groupInfoData } = useGroupInfo(groupId || '');
   const { writerName, writerNameId } = useFetchWriterNameOnly(groupId || '', isMember, isOwner);
+  const {
+    groupFeedCategoryData,
+    isLoading: topicListLoading,
+    isError: topicListisError,
+    error: topicListError,
+  } = useTopicList(groupId || '');
 
   const navigate = useNavigate();
 
@@ -94,7 +101,12 @@ const GroupFeed = () => {
           />
         )}
         <GroupInfo>
-          <GroupTodayWriteStyle isMember={isMember} groupId={groupId} />
+          <GroupTodayWriteStyle
+            isMember={isMember}
+            groupId={groupId}
+            groupFeedTopic={groupFeedCategoryData && groupFeedCategoryData[0].topicName}
+            groupFeedCategory={groupFeedCategoryData && groupFeedCategoryData[0].content}
+          />
           <Spacing marginBottom="6.4" />
           <GroupCuriousTitle
             mainText="우리 모임에서 궁금한 글쓴이에요"
@@ -110,7 +122,12 @@ const GroupFeed = () => {
           <Spacing marginBottom="2" />
           <CuriousArticle groupId={groupId} />
           <Spacing marginBottom="6.4" />
-          <Carousel />
+          <Carousel
+            groupFeedCategoryData={groupFeedCategoryData}
+            isError={topicListisError}
+            error={topicListError}
+            isLoading={topicListLoading}
+          />
         </GroupInfo>
       </GroupInfoWrapper>
       <Spacing marginBottom="14" />
