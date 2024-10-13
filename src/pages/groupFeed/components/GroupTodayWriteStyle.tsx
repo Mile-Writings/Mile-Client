@@ -3,8 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '../../../components/commons/Button';
 
+interface TodayInfoPropTypes {
+  topicId: string;
+  topicName: string;
+  content: string;
+}
+
 interface GroupTodayWriteStylePropTypes {
-  todayTopic: string | undefined;
+  todayInfo: TodayInfoPropTypes | undefined;
   isMember: boolean | undefined; //나의 글 작성하기 권한 확인
   groupId: string | undefined; //오늘의 주제
 }
@@ -12,7 +18,8 @@ interface GroupTodayWriteStylePropTypes {
 const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
   const navigate = useNavigate();
 
-  const { todayTopic, isMember, groupId } = props;
+  const { todayInfo, isMember, groupId } = props;
+  console.log(todayInfo, 'in');
 
   const handleNavigatePostPage = () => {
     navigate(`/post/${groupId}/post`);
@@ -21,9 +28,9 @@ const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
   return (
     <TodayWriteStyleWrapper>
       <TextLayout>
-        <MainText>글감 카테고리 자리</MainText>
+        <MainText>{todayInfo.topicName}</MainText>
         <SubText>
-          오늘의 주제는 <SubBoldText>{todayTopic}</SubBoldText> 입니다.
+          오늘의 주제는 <SubBoldText>{todayInfo.content}</SubBoldText> 입니다.
         </SubText>
       </TextLayout>
       {isMember && (
