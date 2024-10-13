@@ -8,7 +8,6 @@ import {
   fetchGroupFeedAuth,
   fetchGroupInfo,
   fetchGroupPublicStatus,
-  fetchTodayTopic,
   fetchTopicList,
   fetchWriterInfo,
   fetchWriterNameOnly,
@@ -89,16 +88,6 @@ export const useGroupInfo = (groupId: string): GroupInfoQueryResult => {
   const groupInfoData = data?.data;
 
   return { groupInfoData, isLoading, isError, error };
-};
-
-export const useTodayTopic = (groupId: string) => {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: groupKey.topic(groupId),
-    queryFn: () => fetchTodayTopic(groupId),
-  });
-
-  const content = data && data.data.content;
-  return { content, isLoading, isError, error };
 };
 
 export const useCuriousPost = (groupId: string) => {

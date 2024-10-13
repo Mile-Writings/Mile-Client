@@ -63,24 +63,6 @@ export const fetchGroupPublicStatus = async (groupId: string) => {
     console.error('에러:', error);
   }
 };
-
-interface TodayTopicPropTypes {
-  data: {
-    content: string;
-  };
-  status: number;
-  message: string;
-}
-
-export const fetchTodayTopic = async (groupId: string) => {
-  try {
-    const response = await client.get<TodayTopicPropTypes>(`/api/moim/${groupId}/topic/today`);
-    return response.data;
-  } catch (error) {
-    console.error('에러:', error);
-  }
-};
-
 interface CuriousWriterPropTypes {
   data: {
     popularWriters: {
