@@ -14,6 +14,8 @@ export { default as FooterInstaIc } from './footerInstaSvg.svg?react';
 export { default as FooterKakaoIc } from './footerKakaoSvg.svg?react';
 export { default as FooterLogoIc } from './footerLogoSvg.svg?react';
 export { default as FooterMailIc } from './footerMailSvg.svg?react';
+export { default as FooterNotionIc } from './iconNotion.svg?react';
+export { default as FooterWallaIc } from './iconWalla.svg?react';
 export { default as GroupCuriousProfileOpenIc } from './groupBestProfileIcnOpen.svg?react';
 export { default as GroupDateIc } from './groupDateIcn.svg?react';
 export { default as GroupLeaderIc } from './groupLeaderIcn.svg?react';

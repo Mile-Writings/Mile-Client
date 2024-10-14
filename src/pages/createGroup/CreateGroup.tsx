@@ -5,9 +5,13 @@ import CreateGroupInfo from './components/CreateGroupInfo';
 import CreateGroupLeaderInfo from './components/CreateGroupLeaderInfo';
 import { usePostCreateGroup } from './hooks/queries';
 import { CreateGroupTypes, CurrentPageType } from './types/stateType';
+import useBlockPageExit from '../../hooks/useBlockPageExit';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
+import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
 import { DEFAULT_IMG_URL } from '../../constants/defaultImgUrl';
+import useModal from '../../hooks/useModal';
+import { MODAL } from './constants/modalContent';
 
 type CreateGroupAction =
   | { type: 'setGroupName'; value: string }
@@ -24,6 +28,13 @@ const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
   const [groupImageView, setGroupImageView] = useState('');
+
+  // 페이지 이탈 감지
+  const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =
+    useBlockPageExit();
+  // modal 열고닫음
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
+
   const initialState = {
     groupName: '',
     groupInfo: '',
@@ -133,11 +144,13 @@ const CreateGroup = () => {
     }
 
     if (groupName && topic && topicTag && leaderPenName && leaderDesc.length <= 100) {
+      setIgnoreBlocker(true);
       mutate();
     } else {
       throw new Error('글모임 생성 알 수 없는 에러');
     }
   };
+
 
   const handleBackBtn = () => {
     setCurrentPage('GroupInfoPage');
@@ -175,18 +188,9 @@ const CreateGroup = () => {
           isGroupLeaderValid={isGroupLeaderValid}
         />
       )}
-      {/* 모달 추후 추가 */}
-      {/* <EditorFlowModal
-        title={'생성 완료 시 필명 변경이 불가합니다. 계속 하시겠습니까?'}
-        leftBtnText={'아니오'}
-        rightBtnText={'예'}
-        modalImgType="tempSave"
-        leftBtnFn={() => {}}
-        rightBtnFn={() => {}}
-      /> */}
       {currentPage === 'GroupLeaderInfoPage' && (
         <BtnWrapper>
-          <CreateGroupBtn type="button" onClick={createGroup}>
+          <CreateGroupBtn type="button" onClick={handleShowModal}>
             생성하기
           </CreateGroupBtn>
           <BackPageBtn type="button" onClick={handleBackBtn}>
@@ -194,6 +198,33 @@ const CreateGroup = () => {
           </BackPageBtn>
         </BtnWrapper>
       )}
+
+      <DefaultModal
+        isModalOpen={isModalOpen}
+        onClickBg={handleCloseModal}
+        sizeType="DEFAULT"
+        content={MODAL.ALERT_NICKNAME}
+        modalImg="POST"
+      >
+        <DefaultModalBtn
+          btnText={['아니요', '예']}
+          onClickLeft={handleCloseModal}
+          onClickRight={createGroup}
+        />
+      </DefaultModal>
+
+      {/* 페이지 이탈 모달 */}
+      <DefaultModal
+        isModalOpen={isPageExitModalOpen}
+        onClickBg={handleClosePageExitModal}
+        content={MODAL.PAGE_EXIT_WARN}
+      >
+        <DefaultModalBtn
+          btnText={['예', '아니요']}
+          onClickLeft={handleExitPage}
+          onClickRight={handleClosePageExitModal}
+        />
+      </DefaultModal>
     </CreateGroupWrapper>
   );
 };
@@ -225,7 +256,7 @@ const BtnWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  width: 100%;
+  width: 82.6rem;
 `;
 
 const CreateGroupWrapper = styled.div`
@@ -233,6 +264,7 @@ const CreateGroupWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   margin-top: 11.4rem;
 `;
 const CreateGroupBtn = styled.button`

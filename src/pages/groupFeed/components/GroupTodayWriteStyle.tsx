@@ -2,7 +2,12 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '../../../components/commons/Button';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 104c7bedfc1c290a9116be5b06265c76d7c52fb5
 interface GroupTodayWriteStylePropTypes {
+  todayTopic: string | undefined;
   isMember: boolean | undefined; //나의 글 작성하기 권한 확인
   groupId: string | undefined; //오늘의 주제
   groupFeedTopic: string | undefined;
@@ -11,7 +16,12 @@ interface GroupTodayWriteStylePropTypes {
 
 const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
   const navigate = useNavigate();
+<<<<<<< HEAD
   const { isMember, groupId, groupFeedTopic, groupFeedCategory } = props;
+=======
+
+  const { todayTopic, isMember, groupId } = props;
+>>>>>>> 104c7bedfc1c290a9116be5b06265c76d7c52fb5
 
   const handleNavigatePostPage = () => {
     navigate(`/post/${groupId}/post`);
@@ -22,7 +32,11 @@ const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
       <TextLayout>
         <MainText>{groupFeedTopic}</MainText>
         <SubText>
+<<<<<<< HEAD
           오늘의 주제는 <SubBoldText>{groupFeedCategory}</SubBoldText> 입니다.
+=======
+          오늘의 주제는 <SubBoldText>{todayTopic}</SubBoldText> 입니다.
+>>>>>>> 104c7bedfc1c290a9116be5b06265c76d7c52fb5
         </SubText>
       </TextLayout>
       {isMember && (

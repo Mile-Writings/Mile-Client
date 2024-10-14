@@ -22,22 +22,45 @@ export const fetchGroupFeedAuth = async (groupId: string) => {
   }
 };
 
+interface InfoResPropTypes {
+  imageUrl: string;
+  moimName: string;
+  ownerName: string;
+  startDate: string;
+  writerCount: number;
+  description: string;
+}
+
+interface CuriousWriterPropTypes {
+  writerName: string;
+}
+
+interface CuriousPostPropTypes {
+  postId: string;
+  imageUrl: string;
+  topic: string;
+  title: string;
+  content: string;
+  isContainPhoto: boolean;
+}
+
 interface GroupInfoPropTypes {
   data: {
-    imageUrl: string;
-    moimName: string;
-    ownerName: string;
-    startDate: string;
-    writerCount: number;
-    description: string;
+    infoResponse: InfoResPropTypes;
+    mostCuriousPost: {
+      postList: CuriousPostPropTypes[];
+    };
+    mostCuriousWriter: {
+      popularWriters: CuriousWriterPropTypes[];
+    };
   };
   status: number;
   message: string;
 }
-
+//[GET] 글모임 통합 정보 GET
 export const fetchGroupInfo = async (groupId: string) => {
   try {
-    const response = await client.get<GroupInfoPropTypes>(`/api/moim/${groupId}/info`);
+    const response = await client.get<GroupInfoPropTypes>(`/api/moim/${groupId}/information`);
     return response.data;
   } catch (error) {
     console.error('에러:', error);
@@ -63,27 +86,6 @@ export const fetchGroupPublicStatus = async (groupId: string) => {
     console.error('에러:', error);
   }
 };
-interface CuriousWriterPropTypes {
-  data: {
-    popularWriters: {
-      writerName: string;
-      information: string;
-    }[];
-  };
-  status: number;
-  message: string;
-}
-
-export const fetchCuriousWriters = async (groupId: string) => {
-  try {
-    const response = await client.get<CuriousWriterPropTypes>(
-      `/api/moim/${groupId}/writers/top-rank`,
-    );
-    return response.data;
-  } catch (error) {
-    console.error('에러:', error);
-  }
-};
 
 interface TopicListPropTypes {
   data: {
@@ -96,34 +98,10 @@ interface TopicListPropTypes {
   status: number;
   message: string;
 }
-
+//[GET] 글모임별 글감 카테고리
 export const fetchTopicList = async (groupId: string) => {
   try {
     const response = await client.get<TopicListPropTypes>(`/api/moim/${groupId}/topics`);
-    return response.data;
-  } catch (error) {
-    console.error('에러:', error);
-  }
-};
-
-interface CuriousPostPropTypes {
-  data: {
-    postList: {
-      postId: string;
-      imageUrl: string;
-      topic: string;
-      title: string;
-      content: string;
-      isContainPhoto: boolean;
-    }[];
-  };
-  status: number;
-  message: string;
-}
-
-export const fetchCuriousPost = async (groupId: string) => {
-  try {
-    const response = await client.get<CuriousPostPropTypes>(`/api/moim/${groupId}/posts/top-rank`);
     return response.data;
   } catch (error) {
     console.error('에러:', error);
@@ -166,43 +144,23 @@ export const fetchArticleList = async (topicId: string, pageParam: string | null
   }
 };
 
-//[GET] 필명만 GET
+//[GET] 필명 + 프로필 설명 GET
 interface WriterNamePropTypes {
   status: number;
   message: string;
   data: {
     writerName: string;
     writerNameId: number;
+    description: string;
   };
 }
-export const fetchWriterNameOnly = async (groupId: string) => {
+export const fetchWriterInfo = async (groupId: string) => {
   if (checkAuthenticate()) {
     const response = await authClient.get<WriterNamePropTypes>(`/api/moim/${groupId}/writername`);
     return response.data;
   } else {
     const response = await client.get<WriterNamePropTypes>(`/api/moim/${groupId}/writername`);
     return response.data;
-  }
-};
-
-//[GET] 필명 + 프로필 설명 GET
-interface WriterInfoPropTypes {
-  status: number;
-  message: string;
-  data: {
-    name: string;
-    description: string;
-  };
-}
-export const fetchWriterInfo = async (writerNameId: number | undefined) => {
-  try {
-    const response = await authClient.get<WriterInfoPropTypes>(
-      `/api/writername/${writerNameId}/profile`,
-    );
-
-    return response.data;
-  } catch (error) {
-    console.error('에러:', error);
   }
 };
 

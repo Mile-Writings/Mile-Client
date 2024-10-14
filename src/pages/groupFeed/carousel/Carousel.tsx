@@ -12,7 +12,7 @@ import { useArticleList } from '../hooks/queries';
 
 // import { GroupTabBtnBaseBeforeIc, GroupTabBtnBaseNextIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-import Error from '../../error/Error';
+
 import Loading from '../../loading/Loading';
 
 type Topic = {
@@ -45,7 +45,7 @@ const Carousel = ({ groupFeedCategoryData, isError, isLoading, error }: Carousel
 
     beforeChange: (_: number, newIndex: number) => {
       setActiveCategoryId(newIndex + 1);
-      groupFeedCategoryData && setSelectedTopicId(groupFeedCategoryData[newIndex]?.topicId);
+      categoryData && setSelectedTopicId(categoryData[newIndex]?.topicId);
     },
   };
 
@@ -60,16 +60,10 @@ const Carousel = ({ groupFeedCategoryData, isError, isLoading, error }: Carousel
   );
 
   useEffect(() => {
-    if (groupFeedCategoryData) {
-      setSelectedTopicId(groupFeedCategoryData[0]?.topicId);
-      console.log(groupFeedCategoryData);
+    if (categoryData) {
+      setSelectedTopicId(categoryData[0]?.topicId);
     }
-  }, [groupFeedCategoryData]);
-
-  if (isError) {
-    console.log(error?.message, 'error');
-    return <Error />;
-  }
+  }, [categoryData]);
 
   return (
     <>
@@ -79,7 +73,7 @@ const Carousel = ({ groupFeedCategoryData, isError, isLoading, error }: Carousel
           <GroupTabBtnBaseBeforeIcon className="groupFeedCarousel slick-prev slick-slider slick-initialized slick-disabled" />
         )} */}
         <Slider {...settings} className="groupFeedCarousel">
-          {groupFeedCategoryData?.map((topic, index) => (
+          {categoryData?.map((topic, index) => (
             <CarouselContainer
               key={index}
               onClick={() => handleCategoryClick(index + 1, topic.topicId)}

@@ -18,7 +18,7 @@ import GroupCuriousTitle from './components/GroupCuriousTitle';
 import GroupSideHeader from './components/GroupSideHeader';
 import GroupTodayWriteStyle from './components/GroupTodayWriteStyle';
 import {
-  useFetchWriterNameOnly,
+  useFetchWriterInfo,
   useGroupFeedAuth,
   useGroupFeedPublicStatus,
   useGroupInfo,
@@ -28,6 +28,7 @@ import {
 const GroupFeed = () => {
   const { groupId } = useParams();
   const accessToken = localStorage.getItem('accessToken');
+
   const {
     isMember,
     isOwner,
@@ -48,6 +49,7 @@ const GroupFeed = () => {
     sessionStorage.setItem('activeCategoryId', String(activeCategoryId));
   }, [activeCategoryId]);
 
+<<<<<<< HEAD
   const { groupInfoData } = useGroupInfo(groupId || '');
   const { writerName, writerNameId } = useFetchWriterNameOnly(groupId || '', isMember, isOwner);
   const {
@@ -56,8 +58,20 @@ const GroupFeed = () => {
     isError: topicListisError,
     error: topicListError,
   } = useTopicList(groupId || '');
+=======
+  const { infoResponse, mostCuriousPost, mostCuriousWriter } = useGroupInfo(groupId || '');
+  const { writerName, writerNameId, writerDescription } = useFetchWriterInfo(
+    groupId || '',
+    isMember,
+    isOwner,
+  );
+  const { groupFeedCategoryData, isLoading } = useTopicList(groupId || '');
+>>>>>>> 104c7bedfc1c290a9116be5b06265c76d7c52fb5
 
   const navigate = useNavigate();
+
+  const todayTopic = groupFeedCategoryData && groupFeedCategoryData[0].topicName;
+  //const { name, description } = useFetchWriterInfo(writerNameId);
 
   //접속시 권한확인
   useEffect(() => {
@@ -76,7 +90,7 @@ const GroupFeed = () => {
     }
   }, [isPublic, isMember, isOwner]);
 
-  if (isAuthLoading) {
+  if (isAuthLoading || isLoading) {
     return <Loading />;
   }
 
@@ -88,12 +102,12 @@ const GroupFeed = () => {
     <GroupFeedWrapper>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <Spacing marginBottom="6.4" />
-      <GroupFeedThumnail imageUrl={groupInfoData?.imageUrl} />
+      <GroupFeedThumnail imageUrl={infoResponse?.imageUrl} />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
-        {groupInfoData && (
+        {infoResponse && (
           <GroupSideHeader
-            groupInfoData={groupInfoData}
+            groupInfoData={infoResponse}
             isMember={isMember}
             isOwner={isOwner}
             setShowEditProfileModal={setShowEditProfileModal}
@@ -101,33 +115,41 @@ const GroupFeed = () => {
           />
         )}
         <GroupInfo>
+<<<<<<< HEAD
           <GroupTodayWriteStyle
             isMember={isMember}
             groupId={groupId}
             groupFeedTopic={groupFeedCategoryData && groupFeedCategoryData[0].topicName}
             groupFeedCategory={groupFeedCategoryData && groupFeedCategoryData[0].content}
           />
+=======
+          <GroupTodayWriteStyle todayTopic={todayTopic} isMember={isMember} groupId={groupId} />
+>>>>>>> 104c7bedfc1c290a9116be5b06265c76d7c52fb5
           <Spacing marginBottom="6.4" />
           <GroupCuriousTitle
             mainText="우리 모임에서 궁금한 글쓴이에요"
             subText="매주 월요일마다 업데이트 됩니다"
           />
           <Spacing marginBottom="2" />
-          <CuriousProfile groupId={groupId} />
+          <CuriousProfile mostCuriousWriter={mostCuriousWriter} />
           <Spacing marginBottom="6.4" />
           <GroupCuriousTitle
             mainText="우리 모임에서 인기 있는 글이에요"
             subText="매주 월요일마다 업데이트 됩니다"
           />
           <Spacing marginBottom="2" />
-          <CuriousArticle groupId={groupId} />
+          <CuriousArticle groupId={groupId} mostCuriousPost={mostCuriousPost} />
           <Spacing marginBottom="6.4" />
+<<<<<<< HEAD
           <Carousel
             groupFeedCategoryData={groupFeedCategoryData}
             isError={topicListisError}
             error={topicListError}
             isLoading={topicListLoading}
           />
+=======
+          <Carousel categoryData={groupFeedCategoryData || []} isLoading={isLoading} />
+>>>>>>> 104c7bedfc1c290a9116be5b06265c76d7c52fb5
         </GroupInfo>
       </GroupInfoWrapper>
       <Spacing marginBottom="14" />
@@ -139,6 +161,8 @@ const GroupFeed = () => {
         <EditProfileModal
           setShowEditProfileModal={setShowEditProfileModal}
           writerNameId={writerNameId}
+          name={writerName || ''}
+          description={writerDescription || ''}
         />
       )}
     </GroupFeedWrapper>
