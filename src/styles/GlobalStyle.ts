@@ -62,6 +62,14 @@ const globalStyle = css`
 
     resize: none;
   }
+
+  strong {
+    font-weight: bold;
+  }
+
+  em {
+    font-style: italic;
+  }
 `;
 
 export default globalStyle;
