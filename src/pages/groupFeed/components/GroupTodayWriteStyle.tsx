@@ -19,7 +19,6 @@ const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
   const navigate = useNavigate();
 
   const { todayInfo, isMember, groupId } = props;
-  console.log(todayInfo, 'in');
 
   const handleNavigatePostPage = () => {
     navigate(`/post/${groupId}/post`);
