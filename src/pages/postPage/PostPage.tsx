@@ -322,6 +322,16 @@ const PostPage = () => {
     }
   }, [type, continueTempPost, tempTitle, tempContent]);
 
+  const setEditorContent = () => {
+    const savedState = localStorage.getItem('editPostState');
+    if (savedState) {
+      const { content } = JSON.parse(savedState);
+      return content;
+    } else {
+      return location.state.content;
+    }
+  };
+
   // 수정하기 제출하기
   const { mutate: putEditContent } = usePutEditContent({
     topicId: topics
@@ -610,7 +620,7 @@ const PostPage = () => {
         title={editorVal.title}
         setTitle={setTitle}
         tempContent={tempContent}
-        editContent={type === 'edit' ? editorVal.content : ''}
+        editContent={type === 'edit' ? setEditorContent() : ''}
         setEditorContent={setContent}
         setContentWithoutTag={setContentWithoutTag}
       />
