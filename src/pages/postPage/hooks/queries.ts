@@ -10,9 +10,10 @@ import { fetchTempSaveFlag } from '../apis/fetchTempSaveFlag';
 import { fetchTopic } from '../apis/fetchTopic';
 import saveTempSavecontent from '../apis/saveTempSaveContent';
 
-import { QUERY_KEY_POST_DETAIL } from '../../postDetail/hooks/queries';
 import { isAxiosError } from 'axios';
+import { Dispatch, SetStateAction } from 'react';
 import { LONG_COMMENT_ERROR, NO_COMMENT_ERROR } from '../../../constants/commentErrorMessage';
+import { QUERY_KEY_POST_DETAIL } from '../../postDetail/hooks/queries';
 
 export const QUERY_KEY_POST = {
   postContent: 'postContent',
@@ -37,6 +38,8 @@ interface postContentType {
   contentWithoutTag: string;
   // eslint-disable-next-line no-unused-vars
   setPostErrorMessage: (errorMessage: string) => void;
+  modalOpen: () => void;
+  setPostContentId: Dispatch<SetStateAction<string | undefined>>;
 }
 
 export const usePostContent = ({
@@ -48,6 +51,8 @@ export const usePostContent = ({
   anonymous,
   contentWithoutTag,
   setPostErrorMessage,
+  modalOpen,
+  setPostContentId,
 }: postContentType) => {
   const { mutate, data: postContentId } = useMutation({
     mutationKey: [
@@ -74,7 +79,14 @@ export const usePostContent = ({
         contentWithoutTag,
         setPostErrorMessage,
       }),
+    onSuccess: (data) => {
+      if (data) {
+        setPostContentId(data);
+        modalOpen();
+      }
+    },
   });
+
   return { mutate, postContentId };
 };
 

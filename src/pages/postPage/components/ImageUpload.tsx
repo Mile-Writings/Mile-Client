@@ -9,14 +9,15 @@ import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../.
 
 interface ImageUploadPropTypes {
   setPreviewImgUrl: Dispatch<SetStateAction<string>>;
-  url: string;
+  // url: string;
   setImageToServer: (imageUrl: string) => void;
-  fileName: string;
+  setImageFile: Dispatch<SetStateAction<File | null>>;
+  // fileName: string;
   previewImgUrl: string;
 }
 
 const ImageUpload = (props: ImageUploadPropTypes) => {
-  const { previewImgUrl, setPreviewImgUrl, url, setImageToServer, fileName } = props;
+  const { previewImgUrl, setPreviewImgUrl, setImageToServer, setImageFile } = props;
   const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -27,7 +28,8 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
     };
     if (e.target.files && e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
-      postDirectlyS3Func(url, e.target.files[0], fileName); //url 파싱해서 넣기
+      setImageFile(e.target.files[0]);
+      // postDirectlyS3Func(url, e.target.files[0], fileName); //url 파싱해서 넣기
     }
   };
 

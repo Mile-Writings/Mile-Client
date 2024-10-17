@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import postDirectlyS3 from '../pages/postPage/apis/postDirectlyS3';
 import { s3UrlParsing } from '../utils/s3UrlParsing';

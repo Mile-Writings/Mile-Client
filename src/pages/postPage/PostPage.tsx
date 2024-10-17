@@ -31,6 +31,7 @@ import {
 } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 
+import postDirectlyS3Func from '../../utils/apis/postDirectlyS3Func';
 // editor content API 관련
 interface editorStateType {
   topic: string | undefined;
@@ -188,6 +189,8 @@ const PostPage = () => {
   // 에디터 글 내용 태그 제외한 값 (valid 확인용)
   const [contentWithoutTag, setContentWithoutTag] = useState('');
 
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [postContentId, setPostContentId] = useState<string | undefined>('');
   // 임시저장 불러오기
   interface tempTopicListType {
     topicId: string;
@@ -197,6 +200,7 @@ const PostPage = () => {
   const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
     useGetTempSaveContent(tempPostId || '', continueTempPost || false);
 
+  const { fileName = '', url = '' } = usePresignedUrl();
   // 최초 뷰 들어왔을 때 임시저장 이어쓸지 confirm 창
   useEffect(() => {
     if (type === 'post' && isTemporaryPostExist && !continueTempPost) {
@@ -220,11 +224,16 @@ const PostPage = () => {
     }
   }, [topics]);
 
-  // 이미지 보낼 url 받아오기
-  const { fileName, url } = usePresignedUrl();
-
   // 최초저장
-  const { mutate: postContent, postContentId } = usePostContent({
+
+  const modalOpen = () => {
+    setShowModal(true);
+    setEditorModalType('postContent');
+    editorFlowModalDispatch({ type: 'postContent' });
+    console.log('modalOoeb');
+  };
+
+  const { mutate: postContent } = usePostContent({
     groupId: groupId,
     topicId: topics
       ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId ?? ''
@@ -235,21 +244,28 @@ const PostPage = () => {
     anonymous: editorVal.writer === '작자미상',
     contentWithoutTag: contentWithoutTag,
     setPostErrorMessage: setPostErrorMessage,
+    modalOpen: modalOpen,
+    setPostContentId: setPostContentId,
   });
 
   // 최초저장 -> 제출하기 누르면 열리는 모달
-  const onClickPostContentBtn = () => {
-    postContent();
+  const onClickPostContentBtn = async () => {
+    try {
+      await postDirectlyS3Func(url, imageFile, fileName, setImageToServer);
+
+      postContent();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // 쿼리가 실행되고 postContentId를 받아온 후 모달 열리도록
-  useEffect(() => {
-    if (postContentId !== undefined) {
-      setShowModal(true);
-      setEditorModalType('postContent');
-      editorFlowModalDispatch({ type: 'postContent' });
-    }
-  }, [postContentId]);
+  // useEffect(() => {
+  //   if (postContentId !== undefined) {
+
+  //   }
+  //   console.log(postContentId);
+  // }, [postContentId]);
 
   useEffect(() => {
     // 수정하기에서 넘어온 view일 경우 값 업데이트
@@ -319,6 +335,10 @@ const PostPage = () => {
 
   // 임시저장 버튼 누르면 열리는 모달
   const onClickTempSaveBtn = () => {
+    // 이미지 보낼 url 받아오기
+
+    postDirectlyS3Func(url, imageFile, fileName, setImageToServer);
+
     if (isTemporaryPostExist) {
       setShowModal(true);
       setEditorModalType('tempSave');
@@ -461,6 +481,7 @@ const PostPage = () => {
           break;
         case 'postContent':
           preventScroll();
+          console.log('postContentModal');
           break;
         case 'putTempSaveContent':
           onClickTempExistSaveBtn();
@@ -549,8 +570,9 @@ const PostPage = () => {
         setPreviewImgUrl={setPreviewImgUrl}
         previewImgUrl={previewImgUrl}
         setImageToServer={setImageToServer}
-        url={url || ''}
-        fileName={fileName || ''}
+        setImageFile={setImageFile}
+        // url={url || ''}
+        // fileName={fileName || ''}
       />
       {/* <DropDownEditorWrapper> */}
       {topics && (
