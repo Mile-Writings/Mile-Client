@@ -152,7 +152,7 @@ const editorFlowModalState: editorFlowModalType = {
 const PostPage = () => {
   // 페이지 이탈
   const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =
-    useBlockPageExit();
+    useBlockPageExit(() => localStorage.removeItem('editPostState'));
   const navigate = useNavigate();
   const location = useLocation();
   const history = createBrowserHistory();
@@ -277,17 +277,34 @@ const PostPage = () => {
   useEffect(() => {
     // 수정하기에서 넘어온 view일 경우 값 업데이트
     if (type === 'edit') {
-      setEditPostId(location.state.postId);
-      setPreviewImgUrl(location.state.imageUrl);
-      setContentWithoutTag(location.state.title);
-      editorContentDispatch({
-        type: 'setEditValue',
-        topic: location.state.topic,
-        imageUrl: location.state.imageUrl,
-        title: location.state.title,
-        writer: location.state.writer === '작자미상' ? '작자미상' : '필명',
-        content: location.state.content,
-      });
+      const savedState = localStorage.getItem('editPostState');
+
+      if (savedState) {
+        const { postId, topic, writer, title, content, imageUrl } = JSON.parse(savedState);
+        setEditPostId(postId);
+        setPreviewImgUrl(imageUrl);
+        setContentWithoutTag(title);
+        editorContentDispatch({
+          type: 'setEditValue',
+          topic,
+          imageUrl,
+          title,
+          writer: writer === '작자미상' ? '작자미상' : '필명',
+          content: content,
+        });
+      } else {
+        setEditPostId(location.state.postId);
+        setPreviewImgUrl(location.state.imageUrl);
+        setContentWithoutTag(location.state.title);
+        editorContentDispatch({
+          type: 'setEditValue',
+          topic: location.state.topic,
+          imageUrl: location.state.imageUrl,
+          title: location.state.title,
+          writer: location.state.writer === '작자미상' ? '작자미상' : '필명',
+          content: location.state.content,
+        });
+      }
     }
     // 임시저장된 값으로 업데이트
     if (type === 'post' && continueTempPost) {
@@ -323,6 +340,7 @@ const PostPage = () => {
     if (contentWithoutTag.trim().length !== 0 && editorVal.title?.trim().length !== 0) {
       putEditContent();
     }
+    localStorage.removeItem('editPostState');
     handleShowModal();
     setEditorModalType('editContent');
     editorFlowModalDispatch({ type: 'editContent' });
@@ -510,11 +528,35 @@ const PostPage = () => {
   // 새로고침 방지
   const preventReload = (e: Event) => {
     e.preventDefault();
+
+    const stateData = {
+      postId: location.state?.postId,
+      topic: location.state?.topic,
+      writer: location.state?.writer,
+      title: location.state?.title,
+      content: location.state?.content,
+      imageUrl: location.state?.imageUrl,
+    };
+
+    // 로컬스토리지에 기존 데이터가 있으면 가져오고, 없으면 새로운 값으로 설정
+    const savedState = localStorage.getItem('editPostState');
+    const existingState = savedState ? JSON.parse(savedState) : null;
+
+    if (type === 'edit') {
+      // 이전 저장된 값이 있으면 다시 저장
+      if (existingState) {
+        localStorage.setItem('editPostState', JSON.stringify(existingState));
+      } else {
+        // 새로 저장
+        localStorage.setItem('editPostState', JSON.stringify(stateData));
+      }
+    }
   };
 
   useEffect(() => {
     (() => {
       history.push(history.location);
+
       window.addEventListener('beforeunload', preventReload);
     })();
 
@@ -568,7 +610,7 @@ const PostPage = () => {
         title={editorVal.title}
         setTitle={setTitle}
         tempContent={tempContent}
-        editContent={type === 'edit' ? location?.state?.content : ''}
+        editContent={type === 'edit' ? editorVal.content : ''}
         setEditorContent={setContent}
         setContentWithoutTag={setContentWithoutTag}
       />
@@ -600,7 +642,7 @@ const PostPage = () => {
 
       {/* 페이지 이탈 모달 */}
       <DefaultModal
-        isModalOpen={isPageExitModalOpen} 
+        isModalOpen={isPageExitModalOpen}
         onClickBg={handleClosePageExitModal}
         content={MODAL.PAGE_EXIT_WARN}
         modalImg="CAUTION"

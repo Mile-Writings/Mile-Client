@@ -1,7 +1,7 @@
 import { useBlocker } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-const useBlockPageExit = () => {
+const useBlockPageExit = (handleExitAction?: () => void) => {
   const [isPageExitModalOpen, setIsPageExitModalOpen] = useState(false);
   const [ignoreBlocker, setIgnoreBlocker] = useState(false);
 
@@ -30,6 +30,7 @@ const useBlockPageExit = () => {
   // 페이지 나가기 (이탈 모달 확인 누를 경우)
   const handleExitPage = () => {
     blocker?.proceed && blocker.proceed();
+    handleExitAction && handleExitAction();
   };
 
   return {

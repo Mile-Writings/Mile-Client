@@ -38,7 +38,7 @@ interface EditorPropTypes {
   title: string | undefined;
   setTitle: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   tempContent: string;
-  editContent: string;
+  editContent: string | undefined;
   setEditorContent: (content: string) => void;
   setContentWithoutTag: (content: string) => void;
 }
