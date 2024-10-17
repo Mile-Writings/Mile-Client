@@ -55,7 +55,7 @@ authClient.interceptors.response.use(
         alert(ERROR_MESSAGE.authentication);
         window.location.href = '/login';
       }
-    } else if (err.response && err.response.status >= 500 && err.response.status <= 599) {
+    } else if (err.response && err.response.status === 500) {
       alert('authError : 요청을 제대로 수행할 수 없어요. 잠시 후에 다시 시도해주세요.');
       window.location.href = '/error';
     }
