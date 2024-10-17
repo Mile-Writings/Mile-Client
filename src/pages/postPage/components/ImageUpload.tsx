@@ -27,17 +27,16 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
     };
     if (e.target.files && e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
-      postDirectlyS3Func(url, e.target.files[0]); //url 파싱해서 넣기
+      postDirectlyS3Func(url, e.target.files[0], fileName); //url 파싱해서 넣기
     }
   };
 
-  const postDirectlyS3Func = async (url: string, imageFile: File) => {
+  const postDirectlyS3Func = async (url: string, imageFile: File, fileName: string) => {
     try {
-      const data = await postDirectlyS3(url, imageFile);
+      await postDirectlyS3(url, imageFile);
       const s3url = s3UrlParsing(url);
       const urlToServer = `${s3url + fileName}`;
       setImageToServer(urlToServer);
-      return data;
     } catch (err) {
       console.log(err);
     }
