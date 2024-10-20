@@ -1,23 +1,19 @@
 import styled from '@emotion/styled';
 import React, { Dispatch, SetStateAction } from 'react';
 
-import postDirectlyS3 from '../apis/postDirectlyS3';
 import { EDITOR_DEFAULT_IMG } from '../constants/editorDefaultImg';
 
-import { s3UrlParsing } from '../../../utils/s3UrlParsing';
 import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 
 interface ImageUploadPropTypes {
   setPreviewImgUrl: Dispatch<SetStateAction<string>>;
-  // url: string;
   setImageToServer: (imageUrl: string) => void;
   setImageFile: Dispatch<SetStateAction<File | null>>;
-  // fileName: string;
   previewImgUrl: string;
 }
 
 const ImageUpload = (props: ImageUploadPropTypes) => {
-  const { previewImgUrl, setPreviewImgUrl, setImageToServer, setImageFile } = props;
+  const { previewImgUrl, setPreviewImgUrl, setImageFile } = props;
   const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -29,18 +25,6 @@ const ImageUpload = (props: ImageUploadPropTypes) => {
     if (e.target.files && e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
       setImageFile(e.target.files[0]);
-      // postDirectlyS3Func(url, e.target.files[0], fileName); //url 파싱해서 넣기
-    }
-  };
-
-  const postDirectlyS3Func = async (url: string, imageFile: File, fileName: string) => {
-    try {
-      await postDirectlyS3(url, imageFile);
-      const s3url = s3UrlParsing(url);
-      const urlToServer = `${s3url + fileName}`;
-      setImageToServer(urlToServer);
-    } catch (err) {
-      console.log(err);
     }
   };
 

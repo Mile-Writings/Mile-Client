@@ -55,7 +55,7 @@ const editorState: editorStateType = {
   writer: '필명',
   title: '',
   content: '',
-  imageUrl: EDITOR_DEFAULT_IMG,
+  imageUrl: '',
 };
 
 const editorContentReducerFn = (
@@ -112,12 +112,13 @@ const editorContentReducerFn = (
         imageUrl: action.imageUrl,
       };
     default:
+      console.log('default Reducer');
       return {
         topic: '',
         writer: '필명',
         title: '',
         content: '',
-        imageUrl: EDITOR_DEFAULT_IMG,
+        imageUrl: '',
       };
   }
 };
@@ -167,6 +168,7 @@ const PostPage = () => {
     editorContentDispatch({ type: 'setContent', content: content });
   };
   const setImageToServer = (imageUrl: string) => {
+    console.log(imageUrl);
     editorContentDispatch({ type: 'setImageToServer', imageUrl: imageUrl });
   };
 
@@ -201,6 +203,7 @@ const PostPage = () => {
     useGetTempSaveContent(tempPostId || '', continueTempPost || false);
 
   const { fileName = '', url = '' } = usePresignedUrl();
+
   // 최초 뷰 들어왔을 때 임시저장 이어쓸지 confirm 창
   useEffect(() => {
     if (type === 'post' && isTemporaryPostExist && !continueTempPost) {
@@ -225,12 +228,11 @@ const PostPage = () => {
   }, [topics]);
 
   // 최초저장
-
   const modalOpen = () => {
     setShowModal(true);
     setEditorModalType('postContent');
     editorFlowModalDispatch({ type: 'postContent' });
-    console.log('modalOoeb');
+    console.log('modalOpen');
   };
 
   const { mutate: postContent } = usePostContent({
@@ -252,20 +254,17 @@ const PostPage = () => {
   const onClickPostContentBtn = async () => {
     try {
       await postDirectlyS3Func(url, imageFile, fileName, setImageToServer);
-
-      postContent();
     } catch (err) {
       console.error(err);
     }
   };
 
-  // 쿼리가 실행되고 postContentId를 받아온 후 모달 열리도록
-  // useEffect(() => {
-  //   if (postContentId !== undefined) {
-
-  //   }
-  //   console.log(postContentId);
-  // }, [postContentId]);
+  useEffect(() => {
+    if (editorVal.imageUrl) {
+      console.log('post api 작동');
+      postContent();
+    }
+  }, [editorVal.imageUrl]);
 
   useEffect(() => {
     // 수정하기에서 넘어온 view일 경우 값 업데이트

@@ -1,6 +1,5 @@
 import postDirectlyS3 from '../../pages/postPage/apis/postDirectlyS3';
-import { s3UrlParsing } from '../s3UrlParsing';
-
+import { EDITOR_DEFAULT_IMG } from '../../pages/postPage/constants/editorDefaultImg';
 const postDirectlyS3Func = async (
   url: string,
   imageFile: File | null,
@@ -8,13 +7,16 @@ const postDirectlyS3Func = async (
   setImageToServer: (str: string) => void,
 ) => {
   try {
+    console.log(setImageToServer);
     if (imageFile) {
-      await postDirectlyS3(url, imageFile);
-      const s3url = s3UrlParsing(url);
-      const urlToServer = `${s3url + fileName}`;
-      setImageToServer(urlToServer);
-      console.log(urlToServer);
-      console.log('post Direfctly Func Test');
+      console.log('valid ImageFile if logic');
+      // const urlToServer = urlToServerParsing(url, fileName);
+
+      // await setImageToServer(urlToServer);
+      await postDirectlyS3(url, imageFile, setImageToServer, fileName);
+    } else {
+      console.log('no Image file else logic');
+      await setImageToServer(EDITOR_DEFAULT_IMG);
     }
   } catch (err) {
     console.log(err);

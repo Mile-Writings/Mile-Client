@@ -131,6 +131,8 @@ export const usePresignedUrl = (): PresignedUrlQueryResult => {
   const { data } = useQuery({
     queryKey: [QUERY_KEY_POST.getPresignedUrl],
     queryFn: () => fetchPresignedUrl(),
+    staleTime: 6000,
+    gcTime: 6000,
   });
 
   const fileName = data && data?.data?.fileName;
@@ -147,7 +149,6 @@ interface putEditContentType {
   anonymous: boolean;
   postId: string;
   contentWithoutTag: string;
-  // eslint-disable-next-line no-unused-vars
   setPostErrorMessage: (errorMessage: string) => void;
 }
 
