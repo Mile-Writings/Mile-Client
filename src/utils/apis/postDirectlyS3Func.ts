@@ -13,18 +13,14 @@ const postDirectlyS3Func = async (
     console.log(setImageToServer);
     if (imageFile) {
       console.log('valid ImageFile if logic');
-      // const urlToServer = urlToServerParsing(url, fileName);
 
-      // await setImageToServer(urlToServer);
       await postDirectlyS3(url, imageFile, setImageToServer, fileName, setReadyPresignedURL);
-    } else if (!imageUrl) {
+    } else if (imageUrl === '') {
       console.log('no Image file else logic');
       await setImageToServer(EDITOR_DEFAULT_IMG);
       setReadyPresignedURL(true);
     } else {
-      console.log(imageUrl);
-      console.log(imageFile);
-      console.log('pDs3 else logic');
+      return;
     }
   } catch (err) {
     console.log(err);
