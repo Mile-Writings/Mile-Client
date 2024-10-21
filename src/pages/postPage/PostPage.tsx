@@ -262,7 +262,7 @@ const PostPage = () => {
       setPostErrorMessage('제목을 입력해주세요');
       return;
     } else if (contentWithoutTag.trim().length === 0) {
-      setPostErrorMessage('글을 입력해주세요!');
+      setPostErrorMessage('글을 입력해주세요');
 
       return;
     }
@@ -332,27 +332,27 @@ const PostPage = () => {
   });
 
   const onClickEditSaveBtn = async () => {
-    // if (editorVal.title?.trim().length === 0) {
-    //   setPostErrorMessage('제목을 입력해주세요');
-    //   return;
-    // } else if (contentWithoutTag.trim().length === 0) {
-    //   setPostErrorMessage('글을 입력해주세요');
+    if (editorVal.title?.trim().length === 0) {
+      setPostErrorMessage('제목을 입력해주세요');
+      return;
+    } else if (contentWithoutTag.trim().length === 0) {
+      setPostErrorMessage('글을 입력해주세요');
 
-    //   return;
-    // }
+      return;
+    } else {
+      try {
+        await postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
 
-    try {
-      await postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
+        putEditContent();
+      } catch (err) {
+        console.error(err);
+      }
 
-      putEditContent();
-    } catch (err) {
-      console.error(err);
+      setShowModal(true);
+      setEditorModalType('editContent');
+      editorFlowModalDispatch({ type: 'editContent' });
+      preventScroll();
     }
-
-    setShowModal(true);
-    setEditorModalType('editContent');
-    editorFlowModalDispatch({ type: 'editContent' });
-    preventScroll();
   };
   // 최초 글 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
@@ -490,7 +490,7 @@ const PostPage = () => {
           ...state,
           title: '수정이 완료되었습니다.',
           leftBtnText: '홈으로 가기',
-          leftBtnFn: () => navigate('/'),
+          leftBtnFn: () => navigate(`/group/${groupId}`),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${editPostId}`),
           modalImgType: 'postContent',
