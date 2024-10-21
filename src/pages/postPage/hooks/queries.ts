@@ -35,9 +35,7 @@ interface postContentType {
   content: string;
   imageUrl: string;
   anonymous: boolean;
-  contentWithoutTag: string;
   // eslint-disable-next-line no-unused-vars
-  setPostErrorMessage: (errorMessage: string) => void;
   modalOpen: () => void;
   setPostContentId: Dispatch<SetStateAction<string | undefined>>;
 }
@@ -49,8 +47,6 @@ export const usePostContent = ({
   content,
   imageUrl,
   anonymous,
-  contentWithoutTag,
-  setPostErrorMessage,
   modalOpen,
   setPostContentId,
 }: postContentType) => {
@@ -65,8 +61,6 @@ export const usePostContent = ({
         content,
         imageUrl,
         anonymous,
-        contentWithoutTag,
-        setPostErrorMessage,
       },
     ],
     mutationFn: () =>
@@ -77,8 +71,6 @@ export const usePostContent = ({
         content,
         imageUrl,
         anonymous,
-        contentWithoutTag,
-        setPostErrorMessage,
       }),
     onSuccess: (data) => {
       if (data) {

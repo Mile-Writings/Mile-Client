@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Dispatch, SetStateAction } from 'react';
 import { urlToServerParsing } from '../../../utils/s3UrlParsing';
 import { fetchPresignedUrl } from './fetchPresignedUrl';
 const postDirectlyS3 = async (
@@ -6,6 +7,7 @@ const postDirectlyS3 = async (
   imageFile: File,
   setImageToServer: (str: string) => void,
   fileName: string,
+  setReadyPresignedURL: Dispatch<SetStateAction<boolean>>,
 ) => {
   console.log(setImageToServer);
   try {
@@ -19,6 +21,7 @@ const postDirectlyS3 = async (
     });
     const urlToServer = urlToServerParsing(url, fileName);
     await setImageToServer(urlToServer);
+    setReadyPresignedURL(true);
   } catch (err) {
     if (axios.isAxiosError(err) && err.response?.status === 403) {
       try {
@@ -38,6 +41,8 @@ const postDirectlyS3 = async (
           const newUrl = urlToServerParsing(data?.data.url, data?.data.fileName);
           await setImageToServer(newUrl);
         }
+
+        setReadyPresignedURL(true);
       } catch (err) {
         console.log('new Error' + err);
       }

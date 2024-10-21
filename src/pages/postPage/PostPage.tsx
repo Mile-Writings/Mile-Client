@@ -198,6 +198,7 @@ const PostPage = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [postContentId, setPostContentId] = useState<string | undefined>('');
 
+  const [readyPresignedURL, setReadyPresignedURL] = useState(false);
   // 임시저장 불러오기
   interface tempTopicListType {
     topicId: string;
@@ -249,28 +250,44 @@ const PostPage = () => {
     content: editorVal.content || '',
     imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
-    contentWithoutTag: contentWithoutTag,
-    setPostErrorMessage: setPostErrorMessage,
     modalOpen: modalOpen,
     setPostContentId: setPostContentId,
   });
 
   // 최초저장 -> 제출하기 누르면 열리는 모달
   const onClickPostContentBtn = async () => {
-    try {
-      await postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
-      // await postContent();
-    } catch (err) {
-      console.error(err);
+    console.log(editorVal);
+    if (editorVal.content && editorVal.title) {
+      try {
+        await postDirectlyS3Func(
+          url,
+          fileName,
+          imageFile,
+          editorVal.imageUrl,
+          setImageToServer,
+          setReadyPresignedURL,
+        );
+        // await postContent();
+      } catch (err) {
+        console.error(err);
+      }
+    } else if (editorVal.title === '') {
+      setPostErrorMessage('제목을 입력해주세요');
+    } else if (editorVal.content === '') {
+      setPostErrorMessage('글을 입력해주세요');
+    } else {
+      throw new Error('글 제츨 Error');
     }
   };
 
   useEffect(() => {
-    if (editorVal.imageUrl && type === 'post') {
+    console.log(readyPresignedURL);
+    if (editorVal.imageUrl && type === 'post' && readyPresignedURL) {
       console.log('post api 작동');
       postContent();
+      setReadyPresignedURL(false);
     }
-  }, [editorVal.imageUrl]);
+  }, [editorVal.imageUrl, readyPresignedURL, type]);
 
   useEffect(() => {
     // 수정하기에서 넘어온 view일 경우 값 업데이트
@@ -322,9 +339,15 @@ const PostPage = () => {
     console.log('수정하기 버튼 클릭');
     if (contentWithoutTag.trim().length !== 0 && editorVal.title?.trim().length !== 0) {
       try {
-        await postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
+        await postDirectlyS3Func(
+          url,
+          fileName,
+          imageFile,
+          editorVal.imageUrl,
+          setImageToServer,
+          setReadyPresignedURL,
+        );
 
-        // await postContent();
         putEditContent();
       } catch (err) {
         console.error(err);
@@ -351,8 +374,15 @@ const PostPage = () => {
   const onClickTempSaveBtn = () => {
     // 이미지 보낼 url 받아오기
 
-    postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
-
+    postDirectlyS3Func(
+      url,
+      fileName,
+      imageFile,
+      editorVal.imageUrl,
+      setImageToServer,
+      setReadyPresignedURL,
+    );
+    console.log(isTemporaryPostExist);
     if (isTemporaryPostExist) {
       setShowModal(true);
       setEditorModalType('tempSave');
