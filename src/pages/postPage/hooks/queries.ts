@@ -163,6 +163,7 @@ export const usePutEditContent = ({
   contentWithoutTag,
   setPostErrorMessage,
 }: putEditContentType) => {
+  const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [
       QUERY_KEY_POST.putEditContent,
@@ -188,6 +189,9 @@ export const usePutEditContent = ({
         contentWithoutTag,
         setPostErrorMessage,
       }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
+    },
   });
   return data;
 };
