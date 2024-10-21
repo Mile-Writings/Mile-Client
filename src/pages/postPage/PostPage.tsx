@@ -257,26 +257,27 @@ const PostPage = () => {
   // 최초저장 -> 제출하기 누르면 열리는 모달
   const onClickPostContentBtn = async () => {
     console.log(editorVal);
-    if (editorVal.content && editorVal.title) {
-      try {
-        await postDirectlyS3Func(
-          url,
-          fileName,
-          imageFile,
-          editorVal.imageUrl,
-          setImageToServer,
-          setReadyPresignedURL,
-        );
-        // await postContent();
-      } catch (err) {
-        console.error(err);
-      }
-    } else if (editorVal.title === '') {
+    if (editorVal.title?.trim().length === 0) {
       setPostErrorMessage('제목을 입력해주세요');
-    } else if (editorVal.content === '') {
+      return;
+    } else if (contentWithoutTag.trim().length === 0) {
       setPostErrorMessage('글을 입력해주세요');
-    } else {
-      throw new Error('글 제츨 Error');
+
+      return;
+    }
+
+    try {
+      await postDirectlyS3Func(
+        url,
+        fileName,
+        imageFile,
+        editorVal.imageUrl,
+        setImageToServer,
+        setReadyPresignedURL,
+      );
+      // await postContent();
+    } catch (err) {
+      console.error(err);
     }
   };
 
