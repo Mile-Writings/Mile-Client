@@ -468,7 +468,7 @@ const PostPage = () => {
           ...state,
           title: '제출이 완료되었습니다',
           leftBtnText: '홈으로 가기',
-          leftBtnFn: () => navigate('/'),
+          leftBtnFn: () => navigate(`/group/${groupId}`),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${tempPostId}`),
           modalImgType: 'postContent',
