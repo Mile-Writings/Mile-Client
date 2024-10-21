@@ -18,7 +18,7 @@ const postDirectlyS3 = async (
       },
     });
     const urlToServer = urlToServerParsing(url, fileName);
-    setImageToServer(urlToServer);
+    await setImageToServer(urlToServer);
   } catch (err) {
     if (axios.isAxiosError(err) && err.response?.status === 403) {
       try {
@@ -36,7 +36,7 @@ const postDirectlyS3 = async (
           console.log('fileName Change');
           console.log(setImageToServer);
           const newUrl = urlToServerParsing(data?.data.url, data?.data.fileName);
-          setImageToServer(newUrl);
+          await setImageToServer(newUrl);
         }
       } catch (err) {
         console.log('new Error' + err);

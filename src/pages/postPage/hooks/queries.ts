@@ -54,6 +54,7 @@ export const usePostContent = ({
   modalOpen,
   setPostContentId,
 }: postContentType) => {
+  console.log('postContent api logic');
   const { mutate, data: postContentId } = useMutation({
     mutationKey: [
       QUERY_KEY_POST.postContent,

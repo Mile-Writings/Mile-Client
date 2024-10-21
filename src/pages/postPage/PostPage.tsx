@@ -167,9 +167,13 @@ const PostPage = () => {
   const setContent = (content: string) => {
     editorContentDispatch({ type: 'setContent', content: content });
   };
-  const setImageToServer = (imageUrl: string) => {
+  const setImageToServer = (imageUrl: string | undefined) => {
     console.log(imageUrl);
-    editorContentDispatch({ type: 'setImageToServer', imageUrl: imageUrl });
+    if (typeof imageUrl === 'string') {
+      editorContentDispatch({ type: 'setImageToServer', imageUrl: imageUrl });
+    } else {
+      console.log('imageUrl Type Error' + typeof imageUrl);
+    }
   };
 
   // 모임 ID, url에서 받아오기
@@ -193,6 +197,7 @@ const PostPage = () => {
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [postContentId, setPostContentId] = useState<string | undefined>('');
+
   // 임시저장 불러오기
   interface tempTopicListType {
     topicId: string;
@@ -253,14 +258,15 @@ const PostPage = () => {
   // 최초저장 -> 제출하기 누르면 열리는 모달
   const onClickPostContentBtn = async () => {
     try {
-      await postDirectlyS3Func(url, imageFile, fileName, setImageToServer);
+      await postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
+      // await postContent();
     } catch (err) {
       console.error(err);
     }
   };
 
   useEffect(() => {
-    if (editorVal.imageUrl) {
+    if (editorVal.imageUrl && type === 'post') {
       console.log('post api 작동');
       postContent();
     }
@@ -272,6 +278,7 @@ const PostPage = () => {
       setEditPostId(location.state.postId);
       setPreviewImgUrl(location.state.imageUrl);
       setContentWithoutTag(location.state.title);
+      console.log(location.state.imageUrl);
       editorContentDispatch({
         type: 'setEditValue',
         topic: location.state.topic,
@@ -311,9 +318,17 @@ const PostPage = () => {
     setPostErrorMessage: setPostErrorMessage,
   });
 
-  const onClickEditSaveBtn = () => {
+  const onClickEditSaveBtn = async () => {
+    console.log('수정하기 버튼 클릭');
     if (contentWithoutTag.trim().length !== 0 && editorVal.title?.trim().length !== 0) {
-      putEditContent();
+      try {
+        await postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
+
+        // await postContent();
+        putEditContent();
+      } catch (err) {
+        console.error(err);
+      }
     }
     setShowModal(true);
     setEditorModalType('editContent');
@@ -336,7 +351,7 @@ const PostPage = () => {
   const onClickTempSaveBtn = () => {
     // 이미지 보낼 url 받아오기
 
-    postDirectlyS3Func(url, imageFile, fileName, setImageToServer);
+    postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
 
     if (isTemporaryPostExist) {
       setShowModal(true);
