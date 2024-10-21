@@ -198,7 +198,7 @@ const PostPage = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [postContentId, setPostContentId] = useState<string | undefined>('');
 
-  const [readyPresignedURL, setReadyPresignedURL] = useState(false);
+  const [postBtnClick, setPostBtnClick] = useState(false);
   // 임시저장 불러오기
   interface tempTopicListType {
     topicId: string;
@@ -267,14 +267,8 @@ const PostPage = () => {
     }
 
     try {
-      await postDirectlyS3Func(
-        url,
-        fileName,
-        imageFile,
-        editorVal.imageUrl,
-        setImageToServer,
-        setReadyPresignedURL,
-      );
+      setPostBtnClick(true);
+      await postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
       // await postContent();
     } catch (err) {
       console.error(err);
@@ -282,13 +276,12 @@ const PostPage = () => {
   };
 
   useEffect(() => {
-    console.log(readyPresignedURL);
-    if (editorVal.imageUrl && type === 'post' && readyPresignedURL) {
+    if (editorVal.imageUrl && type === 'post' && postBtnClick) {
       console.log('post api 작동');
       postContent();
-      setReadyPresignedURL(false);
+      setPostBtnClick(false);
     }
-  }, [editorVal.imageUrl, readyPresignedURL, type]);
+  }, [editorVal.imageUrl, type]);
 
   useEffect(() => {
     // 수정하기에서 넘어온 view일 경우 값 업데이트
@@ -340,14 +333,7 @@ const PostPage = () => {
     console.log('수정하기 버튼 클릭');
     if (contentWithoutTag.trim().length !== 0 && editorVal.title?.trim().length !== 0) {
       try {
-        await postDirectlyS3Func(
-          url,
-          fileName,
-          imageFile,
-          editorVal.imageUrl,
-          setImageToServer,
-          setReadyPresignedURL,
-        );
+        await postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
 
         putEditContent();
       } catch (err) {
@@ -375,14 +361,7 @@ const PostPage = () => {
   const onClickTempSaveBtn = () => {
     // 이미지 보낼 url 받아오기
 
-    postDirectlyS3Func(
-      url,
-      fileName,
-      imageFile,
-      editorVal.imageUrl,
-      setImageToServer,
-      setReadyPresignedURL,
-    );
+    postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
     console.log(isTemporaryPostExist);
     if (isTemporaryPostExist) {
       setShowModal(true);
