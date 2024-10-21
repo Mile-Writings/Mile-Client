@@ -110,6 +110,7 @@ export const useTempSaveFlag = (groupId: string, isPostView: boolean): TempSaveF
 
   const isTemporaryPostExist = data && data?.data?.isTemporaryPostExist;
   const tempPostId = data && data?.data?.postId;
+  console.log('🚀 ~ useTempSaveFlag ~ tempPostId:', tempPostId);
 
   return { isTemporaryPostExist, tempPostId, isLoading, isError, error };
 };
@@ -196,6 +197,7 @@ interface postTempSaveType {
   content: string;
   imageUrl: string;
   anonymous: boolean;
+  isPostView: boolean;
 }
 
 export const usePostTempSaveContent = ({
@@ -205,6 +207,7 @@ export const usePostTempSaveContent = ({
   content,
   imageUrl,
   anonymous,
+  isPostView,
 }: postTempSaveType) => {
   const queryClient = useQueryClient();
   const data = useMutation({
@@ -217,12 +220,15 @@ export const usePostTempSaveContent = ({
         content,
         imageUrl,
         anonymous,
+        isPostView,
       },
     ],
     mutationFn: () =>
       createTempSaveContent({ groupId, topicId, title, content, imageUrl, anonymous }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId, isPostView],
+      });
     },
   });
   return data;
@@ -230,10 +236,12 @@ export const usePostTempSaveContent = ({
 
 // 임시저장 불러오기 GET
 export const useGetTempSaveContent = (postId: string, isTempClicked: boolean) => {
+  console.log('🚀 ~ useGetTempSaveContent ~ postId:', postId);
+
   const { data } = useQuery({
     queryKey: [QUERY_KEY_POST.getTempSaveContent, postId],
     queryFn: () => fetchTempSaveContent(postId),
-    enabled: !!isTempClicked,
+    enabled: !!isTempClicked && postId !== 'MA==',
   });
 
   const tempTopicList = data && data?.data?.topicList;

@@ -180,6 +180,7 @@ const PostPage = () => {
   const { groupId, type } = useParams() as { groupId: string; type: string };
   // 임시저장 값 여부 확인 (서버값)
   const { isTemporaryPostExist, tempPostId } = useTempSaveFlag(groupId || '', type === 'post');
+  console.log('🚀 ~ PostPage ~ tempPostId:', tempPostId);
   // 임시저장 이어쓰기 yes 인 경우 판별
   const [continueTempPost, setContinueTempPost] = useState(false);
   // 수정하기, 임시저장 postId 저장
@@ -261,7 +262,7 @@ const PostPage = () => {
       setPostErrorMessage('제목을 입력해주세요');
       return;
     } else if (contentWithoutTag.trim().length === 0) {
-      setPostErrorMessage('글을 입력해주세요');
+      setPostErrorMessage('글을 입력해주세요!');
 
       return;
     }
@@ -303,6 +304,7 @@ const PostPage = () => {
     if (type === 'post' && continueTempPost) {
       setEditPostId(tempPostId || '');
       setPreviewImgUrl(tempImageUrl);
+      setContentWithoutTag(tempContent);
       editorContentDispatch({
         type: 'setTempValue',
         topic:
@@ -330,16 +332,23 @@ const PostPage = () => {
   });
 
   const onClickEditSaveBtn = async () => {
-    console.log('수정하기 버튼 클릭');
-    if (contentWithoutTag.trim().length !== 0 && editorVal.title?.trim().length !== 0) {
-      try {
-        await postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
+    // if (editorVal.title?.trim().length === 0) {
+    //   setPostErrorMessage('제목을 입력해주세요');
+    //   return;
+    // } else if (contentWithoutTag.trim().length === 0) {
+    //   setPostErrorMessage('글을 입력해주세요');
 
-        putEditContent();
-      } catch (err) {
-        console.error(err);
-      }
+    //   return;
+    // }
+
+    try {
+      await postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
+
+      putEditContent();
+    } catch (err) {
+      console.error(err);
     }
+
     setShowModal(true);
     setEditorModalType('editContent');
     editorFlowModalDispatch({ type: 'editContent' });
@@ -355,6 +364,7 @@ const PostPage = () => {
     content: editorVal.content || '',
     imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
+    isPostView: type === 'post',
   });
 
   // 임시저장 버튼 누르면 열리는 모달
@@ -396,6 +406,16 @@ const PostPage = () => {
   });
 
   const onClickTempExistSaveBtn = () => {
+    if (editorVal.title?.trim().length === 0) {
+      setPostErrorMessage('제목을 입력해주세요');
+      return;
+    } else if (contentWithoutTag.trim().length === 0) {
+      console.log('🚀 ~ onClickTempExistSaveBtn ~ contentWithoutTag:', contentWithoutTag);
+      console.log(contentWithoutTag);
+      setPostErrorMessage('글을 입력해주세요');
+
+      return;
+    }
     putTempSaveContent();
     setShowModal(true);
     editorFlowModalDispatch({ type: 'putTempSaveContent' });
