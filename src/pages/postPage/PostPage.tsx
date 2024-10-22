@@ -2,7 +2,7 @@
 import styled from '@emotion/styled';
 import { createBrowserHistory } from 'history';
 import React, { useEffect, useReducer, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { replace, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
 import ImageUpload from './components/ImageUpload';
@@ -33,6 +33,7 @@ import Spacing from '../../components/commons/Spacing';
 import useModal from '../../hooks/useModal';
 import useBlockPageExit from '../../hooks/useBlockPageExit';
 import { MODAL } from './constants/modalContent';
+import Error from '../error/Error';
 
 // editor content API 관련
 interface editorStateType {
@@ -360,7 +361,7 @@ const PostPage = () => {
   // 수정하기 모달 확인
   const onClickEditSaveModalBtn = () => {
     localStorage.removeItem('editPostState');
-    navigate(`/detail/${groupId}/${editPostId}`);
+    navigate(`/detail/${groupId}/${editPostId}`, { replace: true });
   };
   // 최초 글 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
