@@ -325,7 +325,6 @@ const PostPage = () => {
   const setEditorContent = () => {
     // 수정하기 -> 새로고침해서 값이 저장되어 있는 경우
     const savedState = localStorage.getItem('editPostState');
-    console.log(savedState);
     if (savedState) {
       const { content } = JSON.parse(savedState);
       return content;
