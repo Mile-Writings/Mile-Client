@@ -2,7 +2,7 @@
 import styled from '@emotion/styled';
 import { createBrowserHistory } from 'history';
 import React, { useEffect, useReducer, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { replace, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
 import ImageUpload from './components/ImageUpload';
@@ -33,6 +33,7 @@ import Spacing from '../../components/commons/Spacing';
 import useModal from '../../hooks/useModal';
 import useBlockPageExit from '../../hooks/useBlockPageExit';
 import { MODAL } from './constants/modalContent';
+import Error from '../error/Error';
 
 // editor content API 관련
 interface editorStateType {
@@ -152,7 +153,7 @@ const editorFlowModalState: editorFlowModalType = {
 const PostPage = () => {
   // 페이지 이탈
   const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =
-    useBlockPageExit();
+    useBlockPageExit(() => localStorage.removeItem('editPostState'));
   const navigate = useNavigate();
   const location = useLocation();
   const history = createBrowserHistory();
@@ -277,17 +278,34 @@ const PostPage = () => {
   useEffect(() => {
     // 수정하기에서 넘어온 view일 경우 값 업데이트
     if (type === 'edit') {
-      setEditPostId(location.state.postId);
-      setPreviewImgUrl(location.state.imageUrl);
-      setContentWithoutTag(location.state.title);
-      editorContentDispatch({
-        type: 'setEditValue',
-        topic: location.state.topic,
-        imageUrl: location.state.imageUrl,
-        title: location.state.title,
-        writer: location.state.writer === '작자미상' ? '작자미상' : '필명',
-        content: location.state.content,
-      });
+      const savedState = localStorage.getItem('editPostState');
+
+      if (savedState) {
+        const { postId, topic, writer, title, content, imageUrl } = JSON.parse(savedState);
+        setEditPostId(postId);
+        setPreviewImgUrl(imageUrl);
+        setContentWithoutTag(title);
+        editorContentDispatch({
+          type: 'setEditValue',
+          topic,
+          imageUrl,
+          title,
+          writer: writer === '작자미상' ? '작자미상' : '필명',
+          content: content,
+        });
+      } else {
+        setEditPostId(location.state.postId);
+        setPreviewImgUrl(location.state.imageUrl);
+        setContentWithoutTag(location.state.title);
+        editorContentDispatch({
+          type: 'setEditValue',
+          topic: location.state.topic,
+          imageUrl: location.state.imageUrl,
+          title: location.state.title,
+          writer: location.state.writer === '작자미상' ? '작자미상' : '필명',
+          content: location.state.content,
+        });
+      }
     }
     // 임시저장된 값으로 업데이트
     if (type === 'post' && continueTempPost) {
@@ -304,6 +322,18 @@ const PostPage = () => {
       });
     }
   }, [type, continueTempPost, tempTitle, tempContent]);
+
+  const setEditorContent = () => {
+    // 수정하기 -> 새로고침해서 값이 저장되어 있는 경우
+    const savedState = localStorage.getItem('editPostState');
+    if (savedState) {
+      const { content } = JSON.parse(savedState);
+      return content;
+    } else {
+      // 수정하기 -> 새로고침 안 한 상태일 경우
+      return location.state.content;
+    }
+  };
 
   // 수정하기 제출하기
   const { mutate: putEditContent } = usePutEditContent({
@@ -327,6 +357,11 @@ const PostPage = () => {
     setEditorModalType('editContent');
     editorFlowModalDispatch({ type: 'editContent' });
     setIgnoreBlocker(true);
+  };
+  // 수정하기 모달 확인
+  const onClickEditSaveModalBtn = () => {
+    localStorage.removeItem('editPostState');
+    navigate(`/detail/${groupId}/${editPostId}`, { replace: true });
   };
   // 최초 글 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
@@ -452,7 +487,7 @@ const PostPage = () => {
           leftBtnText: '홈으로 가기',
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
-          rightBtnFn: () => navigate(`/detail/${groupId}/${editPostId}`),
+          rightBtnFn: onClickEditSaveModalBtn,
           modalImgType: 'POST',
           onClickBg: () => {},
         };
@@ -510,11 +545,35 @@ const PostPage = () => {
   // 새로고침 방지
   const preventReload = (e: Event) => {
     e.preventDefault();
+
+    const stateData = {
+      postId: location.state?.postId,
+      topic: location.state?.topic,
+      writer: location.state?.writer,
+      title: location.state?.title,
+      content: location.state?.content,
+      imageUrl: location.state?.imageUrl,
+    };
+
+    // 로컬스토리지에 기존 데이터가 있으면 가져오고, 없으면 새로운 값으로 설정
+    const savedState = localStorage.getItem('editPostState');
+    const existingState = savedState ? JSON.parse(savedState) : null;
+
+    if (type === 'edit') {
+      // 이전 저장된 값이 있으면 다시 저장
+      if (existingState) {
+        localStorage.setItem('editPostState', JSON.stringify(existingState));
+      } else {
+        // 새로 저장
+        localStorage.setItem('editPostState', JSON.stringify(stateData));
+      }
+    }
   };
 
   useEffect(() => {
     (() => {
       history.push(history.location);
+
       window.addEventListener('beforeunload', preventReload);
     })();
 
@@ -568,7 +627,7 @@ const PostPage = () => {
         title={editorVal.title}
         setTitle={setTitle}
         tempContent={tempContent}
-        editContent={type === 'edit' ? location?.state?.content : ''}
+        editContent={type === 'edit' ? setEditorContent() : ''}
         setEditorContent={setContent}
         setContentWithoutTag={setContentWithoutTag}
       />
@@ -600,7 +659,7 @@ const PostPage = () => {
 
       {/* 페이지 이탈 모달 */}
       <DefaultModal
-        isModalOpen={isPageExitModalOpen} 
+        isModalOpen={isPageExitModalOpen}
         onClickBg={handleClosePageExitModal}
         content={MODAL.PAGE_EXIT_WARN}
         modalImg="CAUTION"
