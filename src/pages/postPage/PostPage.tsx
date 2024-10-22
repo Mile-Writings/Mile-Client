@@ -323,11 +323,14 @@ const PostPage = () => {
   }, [type, continueTempPost, tempTitle, tempContent]);
 
   const setEditorContent = () => {
+    // 수정하기 -> 새로고침해서 값이 저장되어 있는 경우
     const savedState = localStorage.getItem('editPostState');
+    console.log(savedState);
     if (savedState) {
       const { content } = JSON.parse(savedState);
       return content;
     } else {
+      // 수정하기 -> 새로고침 안 한 상태일 경우
       return location.state.content;
     }
   };
@@ -350,11 +353,15 @@ const PostPage = () => {
     if (contentWithoutTag.trim().length !== 0 && editorVal.title?.trim().length !== 0) {
       putEditContent();
     }
-    localStorage.removeItem('editPostState');
     handleShowModal();
     setEditorModalType('editContent');
     editorFlowModalDispatch({ type: 'editContent' });
     setIgnoreBlocker(true);
+  };
+  // 수정하기 모달 확인
+  const onClickEditSaveModalBtn = () => {
+    localStorage.removeItem('editPostState');
+    navigate(`/detail/${groupId}/${editPostId}`);
   };
   // 최초 글 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
@@ -480,7 +487,7 @@ const PostPage = () => {
           leftBtnText: '홈으로 가기',
           leftBtnFn: () => navigate('/'),
           rightBtnText: '글 확인하기',
-          rightBtnFn: () => navigate(`/detail/${groupId}/${editPostId}`),
+          rightBtnFn: onClickEditSaveModalBtn,
           modalImgType: 'POST',
           onClickBg: () => {},
         };
