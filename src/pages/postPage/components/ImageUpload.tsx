@@ -16,7 +16,13 @@ export const ImageUpload = (props: ImageUploadPropTypes) => {
   const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     console.log('🚀 ~ onImageUpload ~ file:', file);
-    if (file && file.type === ('image/png' || 'image/jpeg' || 'image/jpg' || 'image/webp')) {
+    if (
+      file &&
+      (file.type === 'image/png' ||
+        file.type === 'image/jpeg' ||
+        file.type === 'image/jpg' ||
+        file.type === 'image/webp')
+    ) {
       console.log('🚀 ~ onImageUpload ~ file.type :', file.type);
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -34,7 +40,7 @@ export const ImageUpload = (props: ImageUploadPropTypes) => {
         alert(err);
       };
     } else {
-      alert('file 형식을 확인해주세요. ' + (file && file.type));
+      alert('등록할 수 없는 file형식입니다. ' + (file && file.type));
     }
   };
 
