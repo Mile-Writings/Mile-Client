@@ -613,10 +613,7 @@ const PostPage = () => {
       <ImageUpload
         setPreviewImgUrl={setPreviewImgUrl}
         previewImgUrl={previewImgUrl}
-        setImageToServer={setImageToServer}
         setImageFile={setImageFile}
-        // url={url || ''}
-        // fileName={fileName || ''}
       />
       {/* <DropDownEditorWrapper> */}
       {topics && (

@@ -7,24 +7,34 @@ import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../.
 
 interface ImageUploadPropTypes {
   setPreviewImgUrl: Dispatch<SetStateAction<string>>;
-  setImageToServer: (imageUrl: string) => void;
   setImageFile: Dispatch<SetStateAction<File | null>>;
   previewImgUrl: string;
 }
 
-const ImageUpload = (props: ImageUploadPropTypes) => {
+export const ImageUpload = (props: ImageUploadPropTypes) => {
   const { previewImgUrl, setPreviewImgUrl, setImageFile } = props;
   const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const target = e.target as FileReader;
-      if (target) {
-        setPreviewImgUrl(target.result as string);
-      }
-    };
-    if (e.target.files && e.target.files[0]) {
-      reader.readAsDataURL(e.target.files[0]);
-      setImageFile(e.target.files[0]);
+    const file = e.target.files && e.target.files[0];
+    console.log('🚀 ~ onImageUpload ~ file:', file);
+    if (file && file.type === ('image/png' || 'image/jpeg' || 'image/jpg' || 'image/webp')) {
+      console.log('🚀 ~ onImageUpload ~ file.type :', file.type);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        const target = e.target as FileReader;
+        console.log('🚀 ~ onImageUpload ~ target:', target);
+        if (target && typeof target.result === 'string') {
+          setPreviewImgUrl(target.result);
+          setImageFile(file);
+        } else {
+          console.error(`file reader의 결과값이 string이 아닙니다. ${reader.result}`);
+        }
+      };
+      reader.onerror = (err) => {
+        alert(err);
+      };
+    } else {
+      alert('file 형식을 확인해주세요. ' + (file && file.type));
     }
   };
 
