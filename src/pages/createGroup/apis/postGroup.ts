@@ -2,8 +2,11 @@ import { authClient } from '../../../utils/apis/axios';
 
 interface CreateGroupPropTyeps {
   data: {
-    moimId: string;
-    inviteCode: string;
+    accessToken: string;
+    response : {
+      moimId: string;
+      inviteCode: string;
+    }
   };
   status: number;
   message: string;
@@ -20,7 +23,7 @@ export interface CreateGroupRequestTypes {
   topicDesc?: string;
 }
 
-export const postCreateGroup = ({
+export const postCreateGroup = async ({
   groupName,
   groupInfo,
   groupImageUrl,
@@ -32,7 +35,7 @@ export const postCreateGroup = ({
   leaderDesc,
 }: CreateGroupRequestTypes) => {
   try {
-    const data = authClient.post<CreateGroupPropTyeps>(`api/moim`, {
+    const data = await authClient.post<CreateGroupPropTyeps>(`api/moim`, {
       moimName: groupName,
       moimDescription: groupInfo,
       isPublic: isPublic,
@@ -43,7 +46,8 @@ export const postCreateGroup = ({
       topicTag: topicTag,
       topicDescription: topicDesc,
     });
-    return data;
+
+    return data.data;
   } catch (err) {
     console.log(err);
     throw err;

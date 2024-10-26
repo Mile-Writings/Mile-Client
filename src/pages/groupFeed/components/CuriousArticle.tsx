@@ -1,15 +1,8 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-
-import { useCuriousPost } from '../hooks/queries';
-
 import { GroupNoDataImgIc } from '../../../assets/svgs';
-
 import GroupThumbnailImg from '/src/assets/svgs/groupCardThumnailImg.svg';
-
 import Spacing from '../../../components/commons/Spacing';
-import Error from '../../error/Error';
-import Loading from '../../loading/Loading';
 
 interface ArticlePropTypes {
   topic: string;
@@ -22,28 +15,20 @@ interface ArticlePropTypes {
 
 interface CuriousArticlePropTypes {
   groupId: string | undefined;
+  mostCuriousPost?: ArticlePropTypes[];
 }
 
 const CuriousArticle = (props: CuriousArticlePropTypes) => {
-  const { groupId } = props;
-  const { curiousPostData, isLoading, isError, error } = useCuriousPost(groupId || '');
+  const { groupId, mostCuriousPost } = props;
+
   const navigate = useNavigate();
   const handleGoPostDetail = (postId: string) => {
     navigate(`/detail/${groupId}/${postId}`);
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    console.log(error?.message, 'error');
-    return <Error />;
-  }
-
   return (
     <CuriousArticleWrapper>
-      {curiousPostData?.length == 0 ? (
+      {mostCuriousPost?.length == 0 ? (
         <NoCuriousArticleWrapper>
           <Spacing marginBottom="4" />
           <GroupNoDataImgIc />
@@ -52,7 +37,7 @@ const CuriousArticle = (props: CuriousArticlePropTypes) => {
           <Spacing marginBottom="4" />
         </NoCuriousArticleWrapper>
       ) : (
-        curiousPostData?.map((article: ArticlePropTypes, index: number) => (
+        mostCuriousPost?.map((article: ArticlePropTypes, index: number) => (
           <CuriousArticleLayout key={index} onClick={() => handleGoPostDetail(article.postId)}>
             <ArticleThumbnail src={article.isContainPhoto ? article.imageUrl : GroupThumbnailImg} />
             <Spacing marginBottom="1.6" />

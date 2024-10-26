@@ -51,9 +51,8 @@ const Comment = (props: CommentPropTypes) => {
         </>
       ) : (
         commentListData?.map((data: CommentListPropTypes) => (
-          <>
+          <div key={data.commentId}>
             <CommentItem
-              key={data.commentId}
               name={data.name}
               moimName={data.moimName}
               content={data.content}
@@ -81,7 +80,7 @@ const Comment = (props: CommentPropTypes) => {
                   />
                 </NestedWrapper>
               ))}
-          </>
+          </div>
         ))
       )}
     </CommentWrapper>

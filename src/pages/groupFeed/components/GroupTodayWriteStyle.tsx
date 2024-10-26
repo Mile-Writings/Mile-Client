@@ -2,36 +2,35 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '../../../components/commons/Button';
-import Error from '../../error/Error';
-import Loading from '../../loading/Loading';
-import { useTodayTopic } from '../hooks/queries';
+
+interface TodayInfoPropTypes {
+  topicId: string;
+  topicName: string;
+  content: string;
+}
+
 interface GroupTodayWriteStylePropTypes {
+  todayInfo: TodayInfoPropTypes | undefined;
   isMember: boolean | undefined; //나의 글 작성하기 권한 확인
   groupId: string | undefined; //오늘의 주제
 }
 
 const GroupTodayWriteStyle = (props: GroupTodayWriteStylePropTypes) => {
   const navigate = useNavigate();
-  const { isMember, groupId } = props;
-  const { content, isLoading, isError, error } = useTodayTopic(groupId || '');
+
+  const { todayInfo, isMember, groupId } = props;
+  console.log(todayInfo, 'in');
 
   const handleNavigatePostPage = () => {
     navigate(`/post/${groupId}/post`);
   };
-  if (isLoading) {
-    return <Loading />;
-  }
 
-  if (isError) {
-    console.log(error?.message, 'error');
-    return <Error />;
-  }
   return (
     <TodayWriteStyleWrapper>
       <TextLayout>
-        <MainText>글감 카테고리 자리</MainText>
+        <MainText>{todayInfo?.topicName}</MainText>
         <SubText>
-          오늘의 주제는 <SubBoldText>{content}</SubBoldText> 입니다.
+          오늘의 주제는 <SubBoldText>{todayInfo?.content}</SubBoldText> 입니다.
         </SubText>
       </TextLayout>
       {isMember && (
