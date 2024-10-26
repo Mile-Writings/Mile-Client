@@ -12,7 +12,7 @@ export interface CreateGroupRequestTypes {
   groupName: string;
   groupInfo?: string;
   isPublic: boolean;
-  groupImageFile: string;
+  groupImageUrl: string;
   leaderPenName: string;
   leaderDesc?: string;
   topic: string;
@@ -23,7 +23,7 @@ export interface CreateGroupRequestTypes {
 export const postCreateGroup = ({
   groupName,
   groupInfo,
-  groupImageFile,
+  groupImageUrl,
   isPublic,
   topic,
   topicTag,
@@ -36,7 +36,7 @@ export const postCreateGroup = ({
       moimName: groupName,
       moimDescription: groupInfo,
       isPublic: isPublic,
-      imageUrl: groupImageFile,
+      imageUrl: groupImageUrl,
       writerName: leaderPenName,
       writerNameDescription: leaderDesc,
       topic: topic,

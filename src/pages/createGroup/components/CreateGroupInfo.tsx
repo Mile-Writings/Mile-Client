@@ -5,15 +5,6 @@ import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } fr
 import CreateGroupTopicModal from './CreateGroupTopicModal';
 
 import {
-  MAX_TOPIC_DESC_LENGTH,
-  MAX_TOPIC_KEYWORD_LENGTH,
-  MAX_TOPIC_LENGTH,
-} from '../constants/topicLength';
-import { useGetGroupNameValidation } from '../hooks/queries';
-import { CurrentPageType } from '../types/stateType';
-import createGroupIlust from '/src/assets/images/createGroupIlust.png';
-
-import {
   CreateGroupImageUpload,
   CreateGroupImageUploadedIc,
   CreateGroupInfoIc,
@@ -21,10 +12,15 @@ import {
   CreateGroupRadioUncheckedIc,
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-import { s3UrlParsing } from '../../../utils/s3UrlParsing';
-import postDirectlyS3 from '../../postPage/apis/postDirectlyS3';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
-
+import {
+  MAX_TOPIC_DESC_LENGTH,
+  MAX_TOPIC_KEYWORD_LENGTH,
+  MAX_TOPIC_LENGTH,
+} from '../constants/topicLength';
+import { useGetGroupNameValidation } from '../hooks/queries';
+import { CurrentPageType } from '../types/stateType';
+import createGroupIlust from '/src/assets/images/createGroupIlust.png';
 type Setter<T> = (value: T) => void;
 interface CreateGroupInfoPropTypes {
   setCurrentPage: Dispatch<SetStateAction<CurrentPageType['currentPage']>>;
@@ -32,7 +28,7 @@ interface CreateGroupInfoPropTypes {
   setGroupName: Setter<ChangeEvent<HTMLInputElement>>;
   groupInfo: string;
   setGroupInfo: Setter<ChangeEvent<HTMLTextAreaElement>>;
-  setGroupImageFile: Setter<string>;
+  setGroupImageUrl: Setter<string>;
   isPublic: boolean;
   setIsPublic: Setter<boolean>;
   topic: string;
@@ -57,7 +53,7 @@ const CreateGroupInfo = ({
   setGroupName,
   groupInfo,
   setGroupInfo,
-  setGroupImageFile,
+  setGroupImageUrl,
   isPublic,
   setIsPublic,
   topic,
@@ -77,6 +73,8 @@ const CreateGroupInfo = ({
   const [groupNameInputMsg, setGroupNameInputMsg] = useState<string>(InputInfoMsg.emptyText);
   const [isHovered, setIsHovered] = useState(false);
 
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
   const groupNameRef = useRef<HTMLInputElement>(null);
   const groupInfoRef = useRef<HTMLTextAreaElement>(null);
   const isGroupInfoValid = groupInfo.length <= 100;
@@ -87,23 +85,12 @@ const CreateGroupInfo = ({
     topicTag.length <= MAX_TOPIC_KEYWORD_LENGTH &&
     topicDesc.length <= MAX_TOPIC_DESC_LENGTH;
   const { data, refetch, isSuccess, error } = useGetGroupNameValidation(groupName);
+  console.log(groupImageView);
 
   // 이미지 보낼 url 받아오기
   const { fileName, url = '' } = usePresignedUrl();
 
-  const postDirectlyS3Func = async (url: string, imageFile: File) => {
-    try {
-      await postDirectlyS3(url, imageFile);
-      const s3url = s3UrlParsing(url) || '';
-
-      const urlToServer = `${s3url + fileName}`;
-
-      setGroupImageFile(urlToServer);
-    } catch (err) {
-      if (err instanceof Error) throw err;
-    }
-  };
-
+  // ImageUpload(setGroupImageView, setGroupImageUrl, groupImageView)
   const handleGroupImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (
@@ -114,8 +101,8 @@ const CreateGroupInfo = ({
       reader.readAsDataURL(file);
       reader.onload = () => {
         if (typeof reader.result === 'string') {
-          postDirectlyS3Func(url, file);
           setGroupImageView(reader.result);
+          setImageFile(file);
         } else {
           console.error(`file resader의 결과값이 string이 아닙니다. ${reader.result}`);
         }

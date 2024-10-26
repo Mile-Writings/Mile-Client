@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
+import { isAxiosError } from 'axios';
 import { getGroupNameValidation } from '../apis/getGroupNameValidation';
 import { CreateGroupRequestTypes, postCreateGroup } from '../apis/postGroup';
-import { isAxiosError } from 'axios';
 
 export const QUERY_KEY_CREATE_GROUP = {
   getGroupNameValidation: 'getGroupNameValidation',
@@ -27,7 +27,7 @@ export const usePostCreateGroup = ({
   groupName,
   groupInfo,
   isPublic,
-  groupImageFile,
+  groupImageUrl,
   leaderPenName,
   leaderDesc,
   topic,
@@ -43,7 +43,7 @@ export const usePostCreateGroup = ({
         groupName,
         groupInfo,
         isPublic,
-        groupImageFile,
+        groupImageUrl,
         leaderPenName,
         leaderDesc,
         topic,
@@ -56,7 +56,7 @@ export const usePostCreateGroup = ({
         groupName,
         groupInfo,
         isPublic,
-        groupImageFile,
+        groupImageUrl,
         leaderPenName,
         leaderDesc,
         topic,

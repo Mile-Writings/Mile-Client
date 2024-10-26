@@ -12,7 +12,7 @@ import { DEFAULT_IMG_URL } from '../../constants/defaultImgUrl';
 type CreateGroupAction =
   | { type: 'setGroupName'; value: string }
   | { type: 'setGroupInfo'; value: string }
-  | { type: 'setGroupImageFile'; value: string }
+  | { type: 'setGroupImageUrl'; value: string }
   | { type: 'setIsPublic'; value: boolean }
   | { type: 'setTopic'; value: string }
   | { type: 'setTopicTag'; value: string }
@@ -27,7 +27,7 @@ const CreateGroup = () => {
   const initialState = {
     groupName: '',
     groupInfo: '',
-    groupImageFile: '',
+    groupImageUrl: '',
     isPublic: true,
     topic: '',
     topicTag: '',
@@ -40,7 +40,7 @@ const CreateGroup = () => {
     switch (action.type) {
       case 'setGroupName':
       case 'setGroupInfo':
-      case 'setGroupImageFile':
+      case 'setGroupImageUrl':
       case 'setTopic':
       case 'setTopicTag':
       case 'setLeaderPenName':
@@ -67,7 +67,7 @@ const CreateGroup = () => {
     topicDesc,
     leaderPenName,
     leaderDesc,
-    groupImageFile,
+    groupImageUrl,
   } = state;
 
   const setGroupName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -78,8 +78,8 @@ const CreateGroup = () => {
     dispatch({ type: 'setGroupInfo', value: e.target.value });
   };
 
-  const setGroupImageFile = (inputValue: string) => {
-    dispatch({ type: 'setGroupImageFile', value: inputValue });
+  const setGroupImageUrl = (inputValue: string) => {
+    dispatch({ type: 'setGroupImageUrl', value: inputValue });
   };
 
   const setIsPublic = (inputValue: boolean) => {
@@ -104,12 +104,12 @@ const CreateGroup = () => {
   };
 
   // 빈 문자열인 경우 DEFAULT_IMG_URL로 대체
-  const finalGroupImageFile = groupImageFile === '' ? DEFAULT_IMG_URL : groupImageFile;
+  const finalGroupImageFile = groupImageUrl === '' ? DEFAULT_IMG_URL : groupImageUrl;
 
   const { mutate } = usePostCreateGroup({
     groupName,
     groupInfo,
-    groupImageFile: finalGroupImageFile,
+    groupImageUrl: finalGroupImageFile,
     isPublic,
     topic,
     topicTag,
@@ -142,6 +142,7 @@ const CreateGroup = () => {
   const handleBackBtn = () => {
     setCurrentPage('GroupInfoPage');
   };
+  console.log(groupImageUrl);
   return (
     <CreateGroupWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
@@ -152,7 +153,7 @@ const CreateGroup = () => {
           setGroupName={setGroupName}
           groupInfo={groupInfo}
           setGroupInfo={setGroupInfo}
-          setGroupImageFile={setGroupImageFile}
+          setGroupImageUrl={setGroupImageUrl}
           isPublic={isPublic}
           setIsPublic={setIsPublic}
           topic={topic}
