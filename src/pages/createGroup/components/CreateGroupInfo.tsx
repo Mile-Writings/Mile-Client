@@ -2,8 +2,6 @@ import styled from '@emotion/styled';
 import { AxiosError } from 'axios';
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
-import CreateGroupTopicModal from './CreateGroupTopicModal';
-
 import {
   CreateGroupImageUpload,
   CreateGroupImageUploadedIc,
@@ -12,6 +10,7 @@ import {
   CreateGroupRadioUncheckedIc,
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
+import useImageUpload from '../../../hooks/useImageUpload';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
 import {
   MAX_TOPIC_DESC_LENGTH,
@@ -20,6 +19,7 @@ import {
 } from '../constants/topicLength';
 import { useGetGroupNameValidation } from '../hooks/queries';
 import { CurrentPageType } from '../types/stateType';
+import CreateGroupTopicModal from './CreateGroupTopicModal';
 import createGroupIlust from '/src/assets/images/createGroupIlust.png';
 type Setter<T> = (value: T) => void;
 interface CreateGroupInfoPropTypes {
@@ -84,6 +84,8 @@ const CreateGroupInfo = ({
     topic.length <= MAX_TOPIC_LENGTH &&
     topicTag.length <= MAX_TOPIC_KEYWORD_LENGTH &&
     topicDesc.length <= MAX_TOPIC_DESC_LENGTH;
+
+  const { onImageUpload } = useImageUpload({ setPreviewImgUrl: setGroupImageView, setImageFile });
   const { data, refetch, isSuccess, error } = useGetGroupNameValidation(groupName);
   console.log(groupImageView);
 
@@ -91,29 +93,6 @@ const CreateGroupInfo = ({
   const { fileName, url = '' } = usePresignedUrl();
 
   // ImageUpload(setGroupImageView, setGroupImageUrl, groupImageView)
-  const handleGroupImage = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0];
-    if (
-      file &&
-      (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg')
-    ) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        if (typeof reader.result === 'string') {
-          setGroupImageView(reader.result);
-          setImageFile(file);
-        } else {
-          console.error(`file resader의 결과값이 string이 아닙니다. ${reader.result}`);
-        }
-      };
-      reader.onerror = (err) => {
-        alert(err);
-      };
-    } else {
-      alert('file 형식을 확인해주세요.');
-    }
-  };
 
   const handleDuplicateGroupName = () => {
     refetch();
@@ -281,9 +260,7 @@ const CreateGroupInfo = ({
                 name="file"
                 id="file"
                 accept="image/*"
-                onChange={(e) => {
-                  handleGroupImage(e);
-                }}
+                onChange={onImageUpload}
               />
             </GroupImageLabel>
 

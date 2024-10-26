@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import React, { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import { EDITOR_DEFAULT_IMG } from '../constants/editorDefaultImg';
 
+import useImageUpload from '../../../hooks/useImageUpload';
 import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
-
 interface ImageUploadPropTypes {
   setPreviewImgUrl: Dispatch<SetStateAction<string>>;
   setImageFile: Dispatch<SetStateAction<File | null>>;
@@ -13,36 +13,8 @@ interface ImageUploadPropTypes {
 
 export const ImageUpload = (props: ImageUploadPropTypes) => {
   const { previewImgUrl, setPreviewImgUrl, setImageFile } = props;
-  const onImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0];
-    console.log('🚀 ~ onImageUpload ~ file:', file);
-    if (
-      file &&
-      (file.type === 'image/png' ||
-        file.type === 'image/jpeg' ||
-        file.type === 'image/jpg' ||
-        file.type === 'image/webp')
-    ) {
-      console.log('🚀 ~ onImageUpload ~ file.type :', file.type);
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (e) => {
-        const target = e.target as FileReader;
-        console.log('🚀 ~ onImageUpload ~ target:', target);
-        if (target && typeof target.result === 'string') {
-          setPreviewImgUrl(target.result);
-          setImageFile(file);
-        } else {
-          console.error(`file reader의 결과값이 string이 아닙니다. ${reader.result}`);
-        }
-      };
-      reader.onerror = (err) => {
-        alert(err);
-      };
-    } else {
-      alert('등록할 수 없는 file형식입니다. ' + (file && file.type));
-    }
-  };
+
+  const { onImageUpload } = useImageUpload({ setPreviewImgUrl, setImageFile });
 
   return (
     <>
