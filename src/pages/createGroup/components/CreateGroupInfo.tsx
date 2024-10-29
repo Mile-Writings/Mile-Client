@@ -11,7 +11,6 @@ import {
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 import useImageUpload from '../../../hooks/useImageUpload';
-import { usePresignedUrl } from '../../postPage/hooks/queries';
 import {
   MAX_TOPIC_DESC_LENGTH,
   MAX_TOPIC_KEYWORD_LENGTH,
@@ -21,6 +20,7 @@ import { useGetGroupNameValidation } from '../hooks/queries';
 import { CurrentPageType } from '../types/stateType';
 import CreateGroupTopicModal from './CreateGroupTopicModal';
 import createGroupIlust from '/src/assets/images/createGroupIlust.png';
+
 type Setter<T> = (value: T) => void;
 interface CreateGroupInfoPropTypes {
   setCurrentPage: Dispatch<SetStateAction<CurrentPageType['currentPage']>>;
@@ -28,7 +28,6 @@ interface CreateGroupInfoPropTypes {
   setGroupName: Setter<ChangeEvent<HTMLInputElement>>;
   groupInfo: string;
   setGroupInfo: Setter<ChangeEvent<HTMLTextAreaElement>>;
-  setGroupImageUrl: Setter<string>;
   isPublic: boolean;
   setIsPublic: Setter<boolean>;
   topic: string;
@@ -39,6 +38,7 @@ interface CreateGroupInfoPropTypes {
   setTopicDesc: Setter<string>;
   groupImageView: string;
   setGroupImageView: Dispatch<SetStateAction<string>>;
+  setImageFile: Dispatch<SetStateAction<File | null>>;
 }
 export const InputInfoMsg = {
   groupNameLength: '10자 이내로 작성해주세요.',
@@ -53,7 +53,6 @@ const CreateGroupInfo = ({
   setGroupName,
   groupInfo,
   setGroupInfo,
-  setGroupImageUrl,
   isPublic,
   setIsPublic,
   topic,
@@ -64,6 +63,7 @@ const CreateGroupInfo = ({
   setTopicDesc,
   groupImageView,
   setGroupImageView,
+  setImageFile,
 }: CreateGroupInfoPropTypes) => {
   const [isGroupNameEmpty, setIsGroupNameEmpty] = useState(false);
   const [isGroupNameValid, setIsGroupNameValid] = useState(true);
@@ -72,8 +72,6 @@ const CreateGroupInfo = ({
   const [passDuplicate, setPassDuplicate] = useState(false);
   const [groupNameInputMsg, setGroupNameInputMsg] = useState<string>(InputInfoMsg.emptyText);
   const [isHovered, setIsHovered] = useState(false);
-
-  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const groupNameRef = useRef<HTMLInputElement>(null);
   const groupInfoRef = useRef<HTMLTextAreaElement>(null);
@@ -87,12 +85,8 @@ const CreateGroupInfo = ({
 
   const { onImageUpload } = useImageUpload({ setPreviewImgUrl: setGroupImageView, setImageFile });
   const { data, refetch, isSuccess, error } = useGetGroupNameValidation(groupName);
-  console.log(groupImageView);
 
   // 이미지 보낼 url 받아오기
-  const { fileName, url = '' } = usePresignedUrl();
-
-  // ImageUpload(setGroupImageView, setGroupImageUrl, groupImageView)
 
   const handleDuplicateGroupName = () => {
     refetch();

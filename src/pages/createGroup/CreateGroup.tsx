@@ -1,16 +1,17 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useReducer, useState } from 'react';
 
+import useBlockPageExit from '../../hooks/useBlockPageExit';
 import CreateGroupInfo from './components/CreateGroupInfo';
 import CreateGroupLeaderInfo from './components/CreateGroupLeaderInfo';
 import { usePostCreateGroup } from './hooks/queries';
 import { CreateGroupTypes, CurrentPageType } from './types/stateType';
-import useBlockPageExit from '../../hooks/useBlockPageExit';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
-import { DEFAULT_IMG_URL } from '../../constants/defaultImgUrl';
 import useModal from '../../hooks/useModal';
+import postDirectlyS3Func from '../../utils/apis/postDirectlyS3Func';
+import { usePresignedUrl } from '../postPage/hooks/queries';
 import { MODAL } from './constants/modalContent';
 
 type CreateGroupAction =
@@ -28,12 +29,14 @@ const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
   const [groupImageView, setGroupImageView] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   // 페이지 이탈 감지
   const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =
     useBlockPageExit();
   // modal 열고닫음
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
+  const { fileName = '', url = '' } = usePresignedUrl();
 
   const initialState = {
     groupName: '',
@@ -115,12 +118,11 @@ const CreateGroup = () => {
   };
 
   // 빈 문자열인 경우 DEFAULT_IMG_URL로 대체
-  const finalGroupImageFile = groupImageUrl === '' ? DEFAULT_IMG_URL : groupImageUrl;
+  // const finalGroupImageFile = groupImageUrl === '' ? DEFAULT_IMG_URL : groupImageUrl;
 
   const { mutate } = usePostCreateGroup({
     groupName,
     groupInfo,
-    groupImageUrl: finalGroupImageFile,
     isPublic,
     topic,
     topicTag,
@@ -129,7 +131,7 @@ const CreateGroup = () => {
     leaderDesc,
   });
 
-  const createGroup = () => {
+  const createGroup = async () => {
     if (!leaderPenName) {
       setIsGroupLeaderValid(false);
       return;
@@ -145,12 +147,23 @@ const CreateGroup = () => {
 
     if (groupName && topic && topicTag && leaderPenName && leaderDesc.length <= 100) {
       setIgnoreBlocker(true);
-      mutate();
+      const imageUrl = await postDirectlyS3Func(
+        url,
+        fileName,
+        imageFile,
+        groupImageUrl,
+        setGroupImageUrl,
+      );
+      console.log('🚀 ~ createGroup ~ imageUrl:', imageUrl);
+
+      if (imageUrl) {
+        console.log('🚀 ~ createGroup ~ if 문:', imageUrl);
+        mutate(imageUrl);
+      }
     } else {
       throw new Error('글모임 생성 알 수 없는 에러');
     }
   };
-
 
   const handleBackBtn = () => {
     setCurrentPage('GroupInfoPage');
@@ -166,7 +179,6 @@ const CreateGroup = () => {
           setGroupName={setGroupName}
           groupInfo={groupInfo}
           setGroupInfo={setGroupInfo}
-          setGroupImageUrl={setGroupImageUrl}
           isPublic={isPublic}
           setIsPublic={setIsPublic}
           topic={topic}
@@ -177,6 +189,7 @@ const CreateGroup = () => {
           setTopicDesc={setTopicDesc}
           groupImageView={groupImageView}
           setGroupImageView={setGroupImageView}
+          setImageFile={setImageFile}
         />
       )}
       {currentPage === 'GroupLeaderInfoPage' && (

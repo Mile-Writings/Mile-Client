@@ -26,7 +26,7 @@ const postDirectlyS3Func = async (
       return EDITOR_DEFAULT_IMG;
     } else {
       console.log('🚀 ~ imageUrl 없는 else logic:', imageUrl);
-      return EDITOR_DEFAULT_IMG;
+      return imageUrl;
     }
   } catch (err) {
     console.log(err);

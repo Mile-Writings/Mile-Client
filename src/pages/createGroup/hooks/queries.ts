@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { isAxiosError } from 'axios';
 import { authClient } from '../../../utils/apis/axios';
 import { getGroupNameValidation } from '../apis/getGroupNameValidation';
-import { CreateGroupRequestTypes, postCreateGroup } from '../apis/postGroup';
+import { CreateGroupRequestWithoutImageUrl, postCreateGroup } from '../apis/postGroup';
 
 export const QUERY_KEY_CREATE_GROUP = {
   getGroupNameValidation: 'getGroupNameValidation',
@@ -28,13 +28,12 @@ export const usePostCreateGroup = ({
   groupName,
   groupInfo,
   isPublic,
-  groupImageUrl,
   leaderPenName,
   leaderDesc,
   topic,
   topicTag,
   topicDesc,
-}: CreateGroupRequestTypes) => {
+}: CreateGroupRequestWithoutImageUrl) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { mutate } = useMutation({
@@ -44,7 +43,6 @@ export const usePostCreateGroup = ({
         groupName,
         groupInfo,
         isPublic,
-        groupImageUrl,
         leaderPenName,
         leaderDesc,
         topic,
@@ -52,7 +50,7 @@ export const usePostCreateGroup = ({
         topicDesc,
       },
     ],
-    mutationFn: () =>
+    mutationFn: (groupImageUrl: string) =>
       postCreateGroup({
         groupName,
         groupInfo,
