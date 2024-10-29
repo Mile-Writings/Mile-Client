@@ -12,7 +12,8 @@ import {
   CreateGroupRadioUncheckedIc,
 } from '../../../assets/svgs';
 import { DEFAULT_IMG_URL } from '../../../constants/defaultImgUrl';
-import useHandleGroupImage from '../../../hooks/useGroupImage';
+import useImageUpload from '../../../hooks/useImageUpload';
+import postDirectlyS3Func from '../../../utils/apis/postDirectlyS3Func';
 import { InputInfoMsg } from '../../createGroup/components/CreateGroupInfo';
 import { useGetGroupNameValidation } from '../../createGroup/hooks/queries';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
@@ -30,24 +31,17 @@ const EditGroupInfo = () => {
   const groupNameRef = useRef<HTMLInputElement>(null);
 
   const { groupId } = useParams();
-  const { data } = useFetchGroupInfo(groupId || '');
 
   const { fileName = '', url = '' } = usePresignedUrl();
-  const {
-    groupImageView,
-    handleGroupImageUpload,
-    setGroupImageView,
-    groupImageServerUrl,
-    setGroupImageServerUrl,
-  } = useHandleGroupImage(fileName, url);
 
+  const [previewImgUrl, setPreviewImgUrl] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const [groupImageServerUrl, setGroupImageServerUrl] = useState('');
+
+  const { onImageUpload } = useImageUpload({ setPreviewImgUrl, setImageFile });
   const [passDuplicate, setPassDuplicate] = useState(false);
   const [editBtnAcitve, setEditBtnActive] = useState(false);
-  const {
-    data: groupNameValidationData,
-    refetch,
-    isSuccess,
-  } = useGetGroupNameValidation(groupName);
 
   const handleHover = () => {
     setIsHover((prev) => !prev);
@@ -71,7 +65,7 @@ const EditGroupInfo = () => {
   };
 
   const handleGroupImage = (e: ChangeEvent<HTMLInputElement>) => {
-    handleGroupImageUpload(e);
+    onImageUpload(e);
     setEditBtnActive(true);
   };
 
@@ -85,19 +79,48 @@ const EditGroupInfo = () => {
       await refetch();
     }
   };
-  useEffect(() => {
-    if (data?.data) {
-      setGroupName(data?.data.moimTitle);
-      setBeforeGroupName(data?.data.moimTitle);
-      setGroupDesc(data?.data.description);
-      setIsPublic(data?.data.isPublic);
-    }
 
-    if (data?.data?.imageUrl !== '') {
-      setGroupImageView(data?.data.imageUrl);
-      setGroupImageServerUrl(data?.data.imageUrl);
+  const { data } = useFetchGroupInfo(groupId || '');
+
+  const { mutate } = usePutAdminGroupInfo({
+    groupName,
+    groupDesc,
+    isPublic,
+    groupId,
+  });
+  const {
+    data: groupNameValidationData,
+    refetch,
+    isSuccess,
+  } = useGetGroupNameValidation(groupName);
+
+  const editGroupInfo = async () => {
+    if (groupName) {
+      console.log('🚀 ~ editGroupInfo ~ groupName:', groupName);
+
+      if ((passDuplicate || groupName === beforeGroupName) && groupDesc.length <= 100) {
+        const groupImageServerUrl1 = await postDirectlyS3Func(
+          url,
+          fileName,
+          imageFile,
+          previewImgUrl,
+          setGroupImageServerUrl,
+        );
+        console.log(groupImageServerUrl1);
+        if (groupImageServerUrl1) {
+          await mutate(groupImageServerUrl1);
+          alert('글모임 정보가 수정되었습니다.');
+          setEditBtnActive(false);
+        }
+      } else if (!passDuplicate && groupName !== beforeGroupName) {
+        if (groupNameRef.current) {
+          groupNameRef.current && groupNameRef.current.focus();
+          groupNameRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
+          setGroupNameInfoMsg(InputInfoMsg.groupNameNotCheck);
+        }
+      }
     }
-  }, [data]);
+  };
 
   useEffect(() => {
     if (isSuccess) {
@@ -111,30 +134,19 @@ const EditGroupInfo = () => {
     }
   }, [groupNameValidationData, isSuccess]);
 
-  const { mutate } = usePutAdminGroupInfo({
-    groupName,
-    groupDesc,
-    groupImageServerUrl,
-    isPublic,
-    groupId,
-  });
-
-  const editGroupInfo = async () => {
-    if (groupName && groupImageServerUrl) {
-      if ((passDuplicate || groupName === beforeGroupName) && groupDesc.length <= 100) {
-        await mutate();
-        setEditBtnActive(false);
-        alert('글모임 정보가 수정되었습니다.');
-      } else if (!passDuplicate && groupName !== beforeGroupName) {
-        if (groupNameRef.current) {
-          groupNameRef.current && groupNameRef.current.focus();
-          groupNameRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
-          setGroupNameInfoMsg(InputInfoMsg.groupNameNotCheck);
-        }
-      }
+  useEffect(() => {
+    if (data?.data) {
+      setGroupName(data?.data.moimTitle);
+      setBeforeGroupName(data?.data.moimTitle);
+      setGroupDesc(data?.data.description);
+      setIsPublic(data?.data.isPublic);
     }
-  };
 
+    if (data?.data?.imageUrl !== '') {
+      setPreviewImgUrl(data?.data.imageUrl);
+      // setGroupImageServerUrl(data?.data.imageUrl);
+    }
+  }, [data]);
   return (
     <>
       <CreateGroupLayout>
@@ -196,9 +208,9 @@ const EditGroupInfo = () => {
             <GroupImageLabel htmlFor="file">
               <GroupImageWrapper>
                 <GroupImagePreviewWrapper>
-                  {groupImageView !== DEFAULT_IMG_URL ? (
+                  {previewImgUrl !== DEFAULT_IMG_URL ? (
                     <>
-                      <GroupImagePreview src={groupImageView} />
+                      <GroupImagePreview src={previewImgUrl} />
                       <CreateGroupImageUploadedIcon className="group-image-preview" />
                     </>
                   ) : (

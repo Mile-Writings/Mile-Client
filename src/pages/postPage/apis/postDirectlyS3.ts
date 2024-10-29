@@ -22,6 +22,7 @@ const postDirectlyS3 = async (
   } catch (err) {
     if (axios.isAxiosError(err) && err.response?.status === 403) {
       try {
+        // presigned url 발급로직
         const data = await fetchPresignedUrl();
         console.log(data);
 
@@ -38,7 +39,7 @@ const postDirectlyS3 = async (
           return newUrl;
         }
       } catch (err) {
-        console.log('new Error' + err);
+        throw new Error(`알 수 없는 에러 ${err}`);
       }
     } else {
       console.log(err);

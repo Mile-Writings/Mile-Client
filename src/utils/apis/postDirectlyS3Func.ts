@@ -15,17 +15,18 @@ const postDirectlyS3Func = async (
       const serverImageUrl = await postDirectlyS3(url, imageFile, fileName);
       if (serverImageUrl) {
         console.log('🚀 post Directly S3 리턴받은 ~ serverImageUrl:', serverImageUrl);
-
         setImageToServer(serverImageUrl);
+        return serverImageUrl;
       } else {
         throw new Error('서버로 보내는 이미지가 undefined 입니다.');
       }
     } else if (imageUrl === '') {
       console.log('no Image file else logic');
       setImageToServer(EDITOR_DEFAULT_IMG);
+      return EDITOR_DEFAULT_IMG;
     } else {
       console.log('🚀 ~ imageUrl 없는 else logic:', imageUrl);
-      return;
+      return EDITOR_DEFAULT_IMG;
     }
   } catch (err) {
     console.log(err);

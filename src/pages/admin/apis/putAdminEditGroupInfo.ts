@@ -8,6 +8,10 @@ export interface AdminEditGroupInfoPropTypes {
   isPublic: boolean;
   groupId: string | undefined;
 }
+export type AdminEditGroupInfoWithoutImage = Omit<
+  AdminEditGroupInfoPropTypes,
+  'groupImageServerUrl'
+>;
 
 const putAdminEditGroupInfo = async ({
   groupName,

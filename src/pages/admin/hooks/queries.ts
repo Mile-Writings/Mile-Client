@@ -15,7 +15,9 @@ import fetchAdminGroupInfo from '../apis/fetchAdminGroupInfo';
 import fetchDeleteMember from '../apis/fetchDeleteMember';
 import { fetchInvitationLink } from '../apis/fetchInvitationLink';
 import fetchMemberInfo from '../apis/fetchMemberInfo';
-import putAdminEditGroupInfo, { AdminEditGroupInfoPropTypes } from '../apis/putAdminEditGroupInfo';
+import putAdminEditGroupInfo, {
+  AdminEditGroupInfoWithoutImage,
+} from '../apis/putAdminEditGroupInfo';
 
 export const QUERY_KEY_ADMIN = {
   useMemberInfo: 'fetchMemberInfo',
@@ -200,18 +202,22 @@ export const useFetchGroupInfo = (groupId: string) => {
 export const usePutAdminGroupInfo = ({
   groupName,
   groupDesc,
-  groupImageServerUrl,
+
   isPublic,
   groupId,
-}: AdminEditGroupInfoPropTypes) => {
+}: AdminEditGroupInfoWithoutImage) => {
   const queryClient = useQueryClient();
   const { mutate, isSuccess, isError } = useMutation({
     mutationKey: [QUERY_KEY_ADMIN.putAdminEditGroupInfo, groupId],
-    mutationFn: () =>
+    mutationFn: (groupImageServerUrl: string) =>
       putAdminEditGroupInfo({ groupName, groupDesc, groupImageServerUrl, isPublic, groupId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: groupKey.detail(groupId || ''),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_ADMIN.fetchAdminGroupInfo, groupId],
       });
     },
     onError: (err) => {
