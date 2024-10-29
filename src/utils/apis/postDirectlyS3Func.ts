@@ -8,28 +8,22 @@ const postDirectlyS3Func = async (
   setImageToServer: (str: string) => void,
 ) => {
   try {
-    console.log(setImageToServer);
     if (imageFile) {
-      console.log('valid ImageFile if logic');
-
       const serverImageUrl = await postDirectlyS3(url, imageFile, fileName);
       if (serverImageUrl) {
-        console.log('🚀 post Directly S3 리턴받은 ~ serverImageUrl:', serverImageUrl);
         setImageToServer(serverImageUrl);
         return serverImageUrl;
       } else {
         throw new Error('서버로 보내는 이미지가 undefined 입니다.');
       }
     } else if (imageUrl === '') {
-      console.log('no Image file else logic');
       setImageToServer(EDITOR_DEFAULT_IMG);
       return EDITOR_DEFAULT_IMG;
     } else {
-      console.log('🚀 ~ imageUrl 없는 else logic:', imageUrl);
       return imageUrl;
     }
   } catch (err) {
-    console.log(err);
+    throw new Error(`예기치 못한 에러 ${JSON.stringify(err)}`);
   }
 };
 export default postDirectlyS3Func;

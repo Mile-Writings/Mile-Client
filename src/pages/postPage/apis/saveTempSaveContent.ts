@@ -29,8 +29,6 @@ const saveTempSavecontent = async ({
   postId,
 }: putSaveTempContentType) => {
   try {
-    console.log(postId);
-
     const { data } = await authClient.put<saveTempContentResponseType>(
       `/api/post/temporary/${postId}`,
       {

@@ -11,7 +11,6 @@ const postDirectlyS3 = async (url: string, imageFile: File, fileName: string) =>
       },
     });
     const urlToServer = urlToServerParsing(url, fileName);
-    console.log('🚀 ~ urlToServer:', urlToServer);
 
     return urlToServer;
   } catch (err) {
@@ -19,7 +18,6 @@ const postDirectlyS3 = async (url: string, imageFile: File, fileName: string) =>
       try {
         // presigned url 발급로직
         const data = await fetchPresignedUrl();
-        console.log(data);
 
         await axios.put(`${data?.data.url}`, imageFile, {
           headers: {
@@ -29,15 +27,14 @@ const postDirectlyS3 = async (url: string, imageFile: File, fileName: string) =>
         });
 
         if (data?.data.fileName) {
-          console.log('fileName Change');
           const newUrl = urlToServerParsing(data?.data.url, data?.data.fileName);
           return newUrl;
         }
       } catch (err) {
-        throw new Error(`알 수 없는 에러 ${err}`);
+        throw new Error(`알 수 없는 에러 ${JSON.stringify(err)}`);
       }
     } else {
-      console.log(err);
+      throw new Error(` ${JSON.stringify(err)}`);
     }
   }
 };

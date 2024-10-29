@@ -7,7 +7,6 @@ interface UseImageUploadPropTypes {
 const useImageUpload = ({ setPreviewImgUrl, setImageFile }: UseImageUploadPropTypes) => {
   const onImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
-    console.log('🚀 ~ onImageUpload ~ file:', file);
     if (
       file &&
       (file.type === 'image/png' ||
@@ -15,12 +14,11 @@ const useImageUpload = ({ setPreviewImgUrl, setImageFile }: UseImageUploadPropTy
         file.type === 'image/jpg' ||
         file.type === 'image/webp')
     ) {
-      console.log('🚀 ~ onImageUpload ~ file.type :', file.type);
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
         const target = e.target as FileReader;
-        console.log('🚀 ~ onImageUpload ~ target:', target);
+
         if (target && typeof target.result === 'string') {
           setPreviewImgUrl(target.result);
           setImageFile(file);

@@ -83,7 +83,6 @@ const GroupFeed = () => {
   }
 
   if (isError) {
-    console.log(error?.message, 'error');
     return <Error />;
   }
   return (

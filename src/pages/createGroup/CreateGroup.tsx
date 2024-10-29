@@ -154,10 +154,8 @@ const CreateGroup = () => {
         groupImageUrl,
         setGroupImageUrl,
       );
-      console.log('🚀 ~ createGroup ~ imageUrl:', imageUrl);
 
       if (imageUrl) {
-        console.log('🚀 ~ createGroup ~ if 문:', imageUrl);
         mutate(imageUrl);
       }
     } else {
@@ -168,7 +166,6 @@ const CreateGroup = () => {
   const handleBackBtn = () => {
     setCurrentPage('GroupInfoPage');
   };
-  console.log(groupImageUrl);
   return (
     <CreateGroupWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}

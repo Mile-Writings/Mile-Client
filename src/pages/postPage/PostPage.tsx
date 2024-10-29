@@ -115,7 +115,6 @@ const editorContentReducerFn = (
         imageUrl: action.imageUrl,
       };
     default:
-      console.log('default Reducer');
       return {
         topic: '',
         writer: '필명',
@@ -176,7 +175,6 @@ const PostPage = () => {
     editorContentDispatch({ type: 'setContent', content: content });
   };
   const setImageToServer = (imageUrl: string | undefined) => {
-    console.log(imageUrl);
     if (typeof imageUrl === 'string') {
       editorContentDispatch({ type: 'setImageToServer', imageUrl: imageUrl });
     } else {
@@ -188,7 +186,6 @@ const PostPage = () => {
   const { groupId, type } = useParams() as { groupId: string; type: string };
   // 임시저장 값 여부 확인 (서버값)
   const { isTemporaryPostExist, tempPostId } = useTempSaveFlag(groupId || '', type === 'post');
-  console.log('🚀 ~ PostPage ~ tempPostId:', tempPostId);
   // 임시저장 이어쓰기 yes 인 경우 판별
   const [continueTempPost, setContinueTempPost] = useState(false);
   // 수정하기, 임시저장 postId 저장
@@ -262,7 +259,6 @@ const PostPage = () => {
     setEditorModalType('postContent');
     editorFlowModalDispatch({ type: 'postContent' });
     setIgnoreBlocker(true);
-    console.log('modalOpen');
   };
 
   const { mutate: postContent } = usePostContent({
@@ -280,7 +276,6 @@ const PostPage = () => {
 
   // 최초저장 -> 제출하기 누르면 열리는 모달
   const onClickPostContentBtn = async () => {
-    console.log(editorVal);
     if (editorVal.title?.trim().length === 0) {
       setPostErrorMessage('제목을 입력해주세요');
       return;
@@ -301,7 +296,6 @@ const PostPage = () => {
 
   useEffect(() => {
     if (editorVal.imageUrl && type === 'post' && postBtnClick) {
-      console.log('post api 작동');
       postContent();
       setPostBtnClick(false);
     }
@@ -313,7 +307,6 @@ const PostPage = () => {
       setEditPostId(location.state.postId);
       setPreviewImgUrl(location.state.imageUrl);
       setContentWithoutTag(location.state.title);
-      console.log(location.state.imageUrl);
       editorContentDispatch({
         type: 'setEditValue',
         topic: location.state.topic,
@@ -428,8 +421,6 @@ const PostPage = () => {
       setPostErrorMessage('제목을 입력해주세요');
       return;
     } else if (contentWithoutTag.trim().length === 0) {
-      console.log('🚀 ~ onClickTempExistSaveBtn ~ contentWithoutTag:', contentWithoutTag);
-      console.log(contentWithoutTag);
       setPostErrorMessage('글을 입력해주세요');
 
       return;

@@ -50,7 +50,6 @@ export const usePostContent = ({
   modalOpen,
   setPostContentId,
 }: postContentType) => {
-  console.log('postContent api logic');
   const { mutate, data: postContentId } = useMutation({
     mutationKey: [
       QUERY_KEY_POST.postContent,
@@ -110,7 +109,6 @@ export const useTempSaveFlag = (groupId: string, isPostView: boolean): TempSaveF
 
   const isTemporaryPostExist = data && data?.data?.isTemporaryPostExist;
   const tempPostId = data && data?.data?.postId;
-  console.log('🚀 ~ useTempSaveFlag ~ tempPostId:', tempPostId);
 
   return { isTemporaryPostExist, tempPostId, isLoading, isError, error };
 };
@@ -236,8 +234,6 @@ export const usePostTempSaveContent = ({
 
 // 임시저장 불러오기 GET
 export const useGetTempSaveContent = (postId: string, isTempClicked: boolean) => {
-  console.log('🚀 ~ useGetTempSaveContent ~ postId:', postId);
-
   const { data } = useQuery({
     queryKey: [QUERY_KEY_POST.getTempSaveContent, postId],
     queryFn: () => fetchTempSaveContent(postId),
