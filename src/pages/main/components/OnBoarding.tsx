@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import Spacing from '../../../components/commons/Spacing';
 import mainOnBoradingImg from '/src/assets/images/mainOnBoarding.png';
+import mainOnBoardingWebP from '/src/assets/webps/mainonboarding.webp';
+
 const OnBoarding = () => {
   return (
     <OnBoardingWrapper>
@@ -15,8 +17,10 @@ const OnBoarding = () => {
           </SubText>
         </TextLayout>
         <Spacing marginBottom="3.2" />
-
-        <MainOnboardingImg src={mainOnBoradingImg} alt="메인 온보딩 이미지" />
+        <MainOnboardingImg>
+          <source srcSet={mainOnBoardingWebP} type="image/webp" />
+          <img src={mainOnBoradingImg} alt="메인 온보딩 이미지" />
+        </MainOnboardingImg>
       </OnBoardingIcWithTextLayout>
     </OnBoardingWrapper>
   );
@@ -59,7 +63,7 @@ const SubText = styled.p`
   ${({ theme }) => theme.fonts.subtitle7};
 `;
 
-const MainOnboardingImg = styled.img`
+const MainOnboardingImg = styled.picture`
   width: 93rem;
   height: 35.7rem;
 `;
