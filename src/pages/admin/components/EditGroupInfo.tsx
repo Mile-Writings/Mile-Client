@@ -96,8 +96,6 @@ const EditGroupInfo = () => {
 
   const editGroupInfo = async () => {
     if (groupName) {
-      console.log('🚀 ~ editGroupInfo ~ groupName:', groupName);
-
       if ((passDuplicate || groupName === beforeGroupName) && groupDesc.length <= 100) {
         const groupImageServerUrl1 = await postDirectlyS3Func(
           url,
@@ -106,10 +104,8 @@ const EditGroupInfo = () => {
           previewImgUrl,
           setGroupImageServerUrl,
         );
-        console.log(groupImageServerUrl1);
         if (groupImageServerUrl1) {
           await mutate(groupImageServerUrl1);
-
           setEditBtnActive(false);
         }
       } else if (!passDuplicate && groupName !== beforeGroupName) {
@@ -118,6 +114,12 @@ const EditGroupInfo = () => {
           groupNameRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
           setGroupNameInfoMsg(InputInfoMsg.groupNameNotCheck);
         }
+      }
+    } else {
+      if (groupNameRef.current) {
+        groupNameRef.current && groupNameRef.current.focus();
+        groupNameRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
+        setGroupNameInfoMsg(InputInfoMsg.groupNameEmpty);
       }
     }
   };
