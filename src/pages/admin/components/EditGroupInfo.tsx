@@ -109,7 +109,7 @@ const EditGroupInfo = () => {
         console.log(groupImageServerUrl1);
         if (groupImageServerUrl1) {
           await mutate(groupImageServerUrl1);
-          alert('글모임 정보가 수정되었습니다.');
+
           setEditBtnActive(false);
         }
       } else if (!passDuplicate && groupName !== beforeGroupName) {

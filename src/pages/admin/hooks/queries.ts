@@ -220,28 +220,32 @@ export const usePutAdminGroupInfo = ({
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY_ADMIN.fetchAdminGroupInfo, groupId],
       });
+      alert('글모임 정보가 수정되었습니다.');
     },
     onError: (err) => {
       if (isAxiosError(err) && err.response?.status) {
         const errorCode = err.response?.data.status;
-        if (errorCode === 40005) {
-          alert('요청 값에 빈 값이 존재합니다');
-        } else if (errorCode === 40006) {
-          alert('요청 값이 길이를 초과했습니다');
-        } else if (errorCode === 40018) {
-          alert('사용 불가능한 모임명입니다');
-        } else {
-          console.error();
-        }
 
         if (err?.response?.status === 500) {
           alert('서버내부 오류입니다. ');
+        } else if (err?.response.status === 400) {
+          if (errorCode === 40005) {
+            alert('요청 값에 빈 값이 존재합니다');
+          } else if (errorCode === 40006) {
+            alert('요청 값이 길이를 초과했습니다');
+          } else if (errorCode === 40018) {
+            alert('사용 불가능한 모임명입니다');
+          } else if (errorCode === 40005) {
+            alert('요청에 빈 값이 존재합니다.');
+          } else {
+            console.error();
+          }
         } else if (err?.response?.status === 401) {
           alert('파일 형식을 확인해주세요');
         } else if (err?.response?.status === 413) {
           alert(`파일 형식을 확인해주세요 Error Code ${err.response.status}`);
         } else {
-          alert(`${err?.response}`);
+          alert(`${JSON.stringify(err?.response)}`);
         }
       }
     },
