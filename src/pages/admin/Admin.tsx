@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { useGroupInfo } from '../groupFeed/hooks/queries';
+import Loading from '../loading/Loading';
 import RenderAdminContent from './components/RenderAdminContent';
 import { useFetchInvitationLink } from './hooks/queries';
-
-import { useGroupInfo } from '../groupFeed/hooks/queries';
 
 import { AdminHomeIc } from '../../assets/svgs';
 import { AuthorizationHeader } from '../../components/commons/Header';
@@ -20,7 +20,7 @@ const Admin = () => {
   const navigate = useNavigate();
 
   const { invitationCode } = useFetchInvitationLink(groupId);
-  const { infoResponse } = useGroupInfo(groupId || '');
+  const { infoResponse, isLoading } = useGroupInfo(groupId || '');
 
   const handleCopyLink = (invitationCode: string) => {
     copyLink(import.meta.env.VITE_INVITE_URL + `group/${invitationCode}/groupInvite`);
@@ -34,6 +34,9 @@ const Admin = () => {
     handleCopyLink(invitationCode?.invitationCode || '');
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <AdminWrapper>
       {accessToken && <AuthorizationHeader />}

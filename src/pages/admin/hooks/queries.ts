@@ -30,6 +30,7 @@ export const useAdminTopic = (groupId: string | undefined, pageNum: number) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['adminTopic', groupId, pageNum],
     queryFn: () => fetchAdminTopic(groupId, pageNum),
+    retry: 1,
   });
 
   const topicCount = data && data.data.topicCount;
@@ -257,9 +258,8 @@ export const useDeleteGroup = (groupId: string) => {
     mutationKey: [QUERY_KEY_ADMIN.deleteGroup, groupId],
     mutationFn: () => deleteGroup(groupId),
     onSuccess: () => {
-      //key에 대한 정책을 변경해야함, 현재는 key의 unique함은 보장되어있지만 관련성이 적어 key의 역할을 제대로 못하고있음
       queryClient.invalidateQueries({
-        queryKey: groupKey.all,
+        queryKey: [QUERY_KEY_ADMIN.fetchAdminGroupInfo, groupId],
       });
       navigate('/');
     },

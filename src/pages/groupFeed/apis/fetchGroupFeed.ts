@@ -59,12 +59,8 @@ interface GroupInfoPropTypes {
 }
 //[GET] 글모임 통합 정보 GET
 export const fetchGroupInfo = async (groupId: string) => {
-  try {
-    const response = await client.get<GroupInfoPropTypes>(`/api/moim/${groupId}/information`);
-    return response.data;
-  } catch (error) {
-    console.error('에러:', error);
-  }
+  const response = await client.get<GroupInfoPropTypes>(`/api/moim/${groupId}/information`);
+  return response.data;
 };
 
 interface GroupPublicStatusPropTypes {
