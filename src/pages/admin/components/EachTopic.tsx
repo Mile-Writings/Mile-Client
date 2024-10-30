@@ -155,6 +155,7 @@ const TopicTag = styled.p`
 const TopicDescription = styled.p`
   display: -webkit-box;
   width: 29rem;
+  padding-top: 0.2rem;
   overflow: hidden;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
