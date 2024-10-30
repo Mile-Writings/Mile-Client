@@ -120,7 +120,7 @@ const TopicWrapper = styled.div`
 const TopicData = styled.div`
   display: flex;
   gap: 4rem;
-  align-items: center;
+  align-items: flex-start;
   width: 64.9rem;
   height: 5.2rem;
 `;
@@ -145,6 +145,7 @@ const TopicDate = styled.p`
 
 const TopicTag = styled.p`
   width: 7rem;
+  padding: 0.6rem 0;
 
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.body1};
