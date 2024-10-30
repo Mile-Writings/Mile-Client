@@ -411,12 +411,11 @@ const PostPage = () => {
       : '',
     title: editorVal.title || '',
     content: editorVal.content || '',
-    imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
     postId: tempPostId || '',
   });
 
-  const onClickTempExistSaveBtn = () => {
+  const onClickTempExistSaveBtn = async () => {
     if (editorVal.title?.trim().length === 0) {
       setPostErrorMessage('제목을 입력해주세요');
       return;
@@ -425,7 +424,17 @@ const PostPage = () => {
 
       return;
     }
-    putTempSaveContent();
+
+    const imgUrl = await postDirectlyS3Func(
+      url,
+      fileName,
+      imageFile,
+      editorVal.imageUrl,
+      setImageToServer,
+    );
+    if (imgUrl) {
+      putTempSaveContent(imgUrl);
+    }
 
     handleShowModal();
     editorFlowModalDispatch({ type: 'putTempSaveContent' });

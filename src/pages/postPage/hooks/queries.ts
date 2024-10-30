@@ -254,7 +254,7 @@ interface putTempSaveContentType {
   topicId: string;
   title: string;
   content: string;
-  imageUrl: string;
+
   anonymous: boolean;
   postId: string;
   groupId: string;
@@ -264,7 +264,7 @@ export const usePutTempSaveContent = ({
   topicId,
   title,
   content,
-  imageUrl,
+
   anonymous,
   postId,
   groupId,
@@ -277,11 +277,12 @@ export const usePutTempSaveContent = ({
         topicId,
         title,
         content,
-        imageUrl,
+
         anonymous,
       },
     ],
-    mutationFn: () => saveTempSavecontent({ topicId, title, content, imageUrl, anonymous, postId }),
+    mutationFn: (imageUrl: string) =>
+      saveTempSavecontent({ topicId, title, content, imageUrl, anonymous, postId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId] });
