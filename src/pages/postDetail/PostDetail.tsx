@@ -326,7 +326,7 @@ const PostContainer = styled.div`
   min-height: 6rem;
   padding: 3.6rem;
 
-  word-break: keep-all;
+  word-break: break-all;
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 10px;
