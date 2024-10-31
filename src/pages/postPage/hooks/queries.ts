@@ -220,7 +220,7 @@ export const usePostTempSaveContent = ({
     mutationFn: (imageUrl: string) =>
       createTempSaveContent({ groupId, topicId, title, content, imageUrl, anonymous }),
     onSuccess: () => {
-      // navigate(`/group/${groupId}`);
+      navigate(`/group/${groupId}`);
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId, isPostView],
       });
