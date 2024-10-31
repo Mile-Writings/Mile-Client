@@ -13,7 +13,7 @@ import {
 } from '../../../assets/svgs';
 import { DEFAULT_IMG_URL } from '../../../constants/defaultImgUrl';
 import useImageUpload from '../../../hooks/useImageUpload';
-import postDirectlyS3Func from '../../../utils/apis/postDirectlyS3Func';
+import handleImageUpload from '../../../utils/handleImageUpload';
 import { InputInfoMsg } from '../../createGroup/components/CreateGroupInfo';
 import { useGetGroupNameValidation } from '../../createGroup/hooks/queries';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
@@ -36,8 +36,6 @@ const EditGroupInfo = () => {
 
   const [previewImgUrl, setPreviewImgUrl] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
-
-  const [groupImageServerUrl, setGroupImageServerUrl] = useState('');
 
   const { onImageUpload } = useImageUpload({ setPreviewImgUrl, setImageFile });
   const [passDuplicate, setPassDuplicate] = useState(false);
@@ -97,12 +95,11 @@ const EditGroupInfo = () => {
   const editGroupInfo = async () => {
     if (groupName) {
       if ((passDuplicate || groupName === beforeGroupName) && groupDesc.length <= 100) {
-        const groupImageServerUrl1 = await postDirectlyS3Func(
+        const groupImageServerUrl1 = await handleImageUpload(
           url,
           fileName,
           imageFile,
           previewImgUrl,
-          setGroupImageServerUrl,
         );
         if (groupImageServerUrl1) {
           await mutate(groupImageServerUrl1);

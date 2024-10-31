@@ -26,7 +26,6 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
   const {
     topicCount,
     adminTopicData,
-    isLoading,
     isError: isAdminTopicError,
   } = useAdminTopic(groupId, pageNum);
 

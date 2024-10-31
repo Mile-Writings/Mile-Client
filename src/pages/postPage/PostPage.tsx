@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { createBrowserHistory } from 'history';
 import React, { useEffect, useReducer, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-
+import handleImageUpload from '../../utils/handleImageUpload';
 import DropDown from './components/DropDown';
 import ImageUpload from './components/ImageUpload';
 import TipTap from './components/TipTap';
@@ -34,7 +34,6 @@ import useBlockPageExit from '../../hooks/useBlockPageExit';
 import useModal from '../../hooks/useModal';
 import { MODAL } from './constants/modalContent';
 
-import postDirectlyS3Func from '../../utils/apis/postDirectlyS3Func';
 // editor content API 관련
 interface editorStateType {
   topic: string | undefined;
@@ -109,11 +108,7 @@ const editorContentReducerFn = (
         content: action.content,
         imageUrl: action.imageUrl,
       };
-    case 'setImageToServer':
-      return {
-        ...state,
-        imageUrl: action.imageUrl,
-      };
+
     default:
       return {
         topic: '',
@@ -174,13 +169,6 @@ const PostPage = () => {
   const setContent = (content: string) => {
     editorContentDispatch({ type: 'setContent', content: content });
   };
-  const setImageToServer = (imageUrl: string | undefined) => {
-    if (typeof imageUrl === 'string') {
-      editorContentDispatch({ type: 'setImageToServer', imageUrl: imageUrl });
-    } else {
-      console.log('imageUrl Type Error' + typeof imageUrl);
-    }
-  };
 
   // 모임 ID, url에서 받아오기
   const { groupId, type } = useParams() as { groupId: string; type: string };
@@ -204,7 +192,6 @@ const PostPage = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [postContentId, setPostContentId] = useState<string | undefined>('');
 
-  const [postBtnClick, setPostBtnClick] = useState(false);
   // 임시저장 불러오기
   interface tempTopicListType {
     topicId: string;
@@ -268,7 +255,6 @@ const PostPage = () => {
       : '',
     title: editorVal.title || '',
     content: editorVal.content || '',
-    imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
     modalOpen: modalOpen,
     setPostContentId: setPostContentId,
@@ -285,21 +271,11 @@ const PostPage = () => {
       return;
     }
 
-    try {
-      setPostBtnClick(true);
-      await postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
-      // await postContent();
-    } catch (err) {
-      console.error(err);
+    const imageUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+    if (imageUrl) {
+      postContent(imageUrl);
     }
   };
-
-  useEffect(() => {
-    if (editorVal.imageUrl && type === 'post' && postBtnClick) {
-      postContent();
-      setPostBtnClick(false);
-    }
-  }, [editorVal.imageUrl, type]);
 
   useEffect(() => {
     // 수정하기에서 넘어온 view일 경우 값 업데이트
@@ -357,7 +333,7 @@ const PostPage = () => {
       return;
     } else {
       try {
-        await postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
+        await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
 
         putEditContent();
         handleShowModal();
@@ -377,7 +353,6 @@ const PostPage = () => {
       : '',
     title: editorVal.title || '',
     content: editorVal.content || '',
-    imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
     isPostView: type === 'post',
   });
@@ -385,8 +360,6 @@ const PostPage = () => {
   // 임시저장 버튼 누르면 열리는 모달
   const onClickTempSaveBtn = () => {
     // 이미지 보낼 url 받아오기
-
-    postDirectlyS3Func(url, fileName, imageFile, editorVal.imageUrl, setImageToServer);
 
     handleShowModal();
     setEditorModalType('tempSave');
@@ -398,9 +371,12 @@ const PostPage = () => {
   };
 
   // 임시저장 모달 -> '예' 누르면 쿼리 동작
-  const tempSaveHandler = () => {
-    postTempSaveContent();
-    navigate(`/group/${groupId}`);
+  const tempSaveHandler = async () => {
+    const imageUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+
+    if (imageUrl) {
+      postTempSaveContent(imageUrl);
+    }
   };
 
   // 임시 저장 글 -> 저장하기
@@ -425,13 +401,7 @@ const PostPage = () => {
       return;
     }
 
-    const imgUrl = await postDirectlyS3Func(
-      url,
-      fileName,
-      imageFile,
-      editorVal.imageUrl,
-      setImageToServer,
-    );
+    const imgUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
     if (imgUrl) {
       putTempSaveContent(imgUrl);
     }

@@ -12,9 +12,9 @@ import saveTempSavecontent from '../apis/saveTempSaveContent';
 
 import { isAxiosError } from 'axios';
 import { Dispatch, SetStateAction } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { LONG_COMMENT_ERROR, NO_COMMENT_ERROR } from '../../../constants/commentErrorMessage';
 import { QUERY_KEY_POST_DETAIL } from '../../postDetail/hooks/queries';
-
 export const QUERY_KEY_POST = {
   postContent: 'postContent',
   getTopic: 'getTopic',
@@ -33,7 +33,6 @@ interface postContentType {
   topicId: string;
   title: string;
   content: string;
-  imageUrl: string;
   anonymous: boolean;
   // eslint-disable-next-line no-unused-vars
   modalOpen: () => void;
@@ -45,7 +44,6 @@ export const usePostContent = ({
   topicId,
   title,
   content,
-  imageUrl,
   anonymous,
   modalOpen,
   setPostContentId,
@@ -58,11 +56,10 @@ export const usePostContent = ({
         topicId,
         title,
         content,
-        imageUrl,
         anonymous,
       },
     ],
-    mutationFn: () =>
+    mutationFn: (imageUrl: string) =>
       createPostContent({
         groupId,
         topicId,
@@ -193,7 +190,6 @@ interface postTempSaveType {
   topicId: string;
   title: string;
   content: string;
-  imageUrl: string;
   anonymous: boolean;
   isPostView: boolean;
 }
@@ -203,11 +199,11 @@ export const usePostTempSaveContent = ({
   topicId,
   title,
   content,
-  imageUrl,
   anonymous,
   isPostView,
 }: postTempSaveType) => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const data = useMutation({
     mutationKey: [
       QUERY_KEY_POST.postSaveTempContent,
@@ -216,14 +212,15 @@ export const usePostTempSaveContent = ({
         topicId,
         title,
         content,
-        imageUrl,
+
         anonymous,
         isPostView,
       },
     ],
-    mutationFn: () =>
+    mutationFn: (imageUrl: string) =>
       createTempSaveContent({ groupId, topicId, title, content, imageUrl, anonymous }),
     onSuccess: () => {
+      // navigate(`/group/${groupId}`);
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId, isPostView],
       });

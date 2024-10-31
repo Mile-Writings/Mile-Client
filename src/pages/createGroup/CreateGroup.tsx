@@ -10,7 +10,7 @@ import { CreateGroupTypes, CurrentPageType } from './types/stateType';
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
 import useModal from '../../hooks/useModal';
-import postDirectlyS3Func from '../../utils/apis/postDirectlyS3Func';
+import handleImageUpload from '../../utils/handleImageUpload';
 import { usePresignedUrl } from '../postPage/hooks/queries';
 import { MODAL } from './constants/modalContent';
 
@@ -92,10 +92,6 @@ const CreateGroup = () => {
     dispatch({ type: 'setGroupInfo', value: e.target.value });
   };
 
-  const setGroupImageUrl = (inputValue: string) => {
-    dispatch({ type: 'setGroupImageUrl', value: inputValue });
-  };
-
   const setIsPublic = (inputValue: boolean) => {
     dispatch({ type: 'setIsPublic', value: inputValue });
   };
@@ -116,9 +112,6 @@ const CreateGroup = () => {
   const setLeaderDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'setLeaderDesc', value: e.target.value });
   };
-
-  // 빈 문자열인 경우 DEFAULT_IMG_URL로 대체
-  // const finalGroupImageFile = groupImageUrl === '' ? DEFAULT_IMG_URL : groupImageUrl;
 
   const { mutate } = usePostCreateGroup({
     groupName,
@@ -147,13 +140,7 @@ const CreateGroup = () => {
 
     if (groupName && topic && topicTag && leaderPenName && leaderDesc.length <= 100) {
       setIgnoreBlocker(true);
-      const imageUrl = await postDirectlyS3Func(
-        url,
-        fileName,
-        imageFile,
-        groupImageUrl,
-        setGroupImageUrl,
-      );
+      const imageUrl = await handleImageUpload(url, fileName, imageFile, groupImageUrl);
 
       if (imageUrl) {
         mutate(imageUrl);
