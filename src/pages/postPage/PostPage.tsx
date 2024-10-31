@@ -359,8 +359,6 @@ const PostPage = () => {
 
   // 임시저장 버튼 누르면 열리는 모달
   const onClickTempSaveBtn = () => {
-    // 이미지 보낼 url 받아오기
-
     handleShowModal();
     setEditorModalType('tempSave');
     setIgnoreBlocker(true);
@@ -513,27 +511,6 @@ const PostPage = () => {
 
   // 모달 스크롤 방지 제거
   useEffect(() => {
-    if (isModalOpen || showTempContinueModal) {
-      switch (editorModalType) {
-        case 'tempSave':
-          onClickTempSaveBtn();
-          break;
-        case 'postContent':
-          break;
-        case 'putTempSaveContent':
-          onClickTempExistSaveBtn();
-          break;
-        case 'editContent':
-          onClickEditSaveBtn();
-          break;
-        case 'continueTempSave':
-          // 렌더링 되자마자 쿼리함수 실행되므로 prevent만 넣어줌
-          break;
-        case 'exitEditPage':
-          break;
-      }
-    }
-
     (editorModalType === 'continueTempSave' || editorModalType === 'exitEditPage') &&
       !isModalOpen &&
       !showTempContinueModal &&

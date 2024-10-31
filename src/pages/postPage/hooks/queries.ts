@@ -251,7 +251,6 @@ interface putTempSaveContentType {
   topicId: string;
   title: string;
   content: string;
-
   anonymous: boolean;
   postId: string;
   groupId: string;
@@ -261,7 +260,6 @@ export const usePutTempSaveContent = ({
   topicId,
   title,
   content,
-
   anonymous,
   postId,
   groupId,
@@ -274,7 +272,6 @@ export const usePutTempSaveContent = ({
         topicId,
         title,
         content,
-
         anonymous,
       },
     ],
