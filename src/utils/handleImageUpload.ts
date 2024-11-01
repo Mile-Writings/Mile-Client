@@ -14,7 +14,7 @@ const handleImageUpload = async (
       } else {
         throw new Error('서버로 보내는 이미지가 undefined 입니다.');
       }
-    } else if (imageUrl === '' || imageUrl === undefined) {
+    } else if (imageUrl === '' || imageUrl === null) {
       return EDITOR_DEFAULT_IMG;
     } else {
       return imageUrl;

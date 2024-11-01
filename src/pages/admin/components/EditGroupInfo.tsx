@@ -135,14 +135,14 @@ const EditGroupInfo = () => {
 
   useEffect(() => {
     if (data?.data) {
-      setGroupName(data?.data.moimTitle);
-      setBeforeGroupName(data?.data.moimTitle);
-      setGroupDesc(data?.data.description);
-      setIsPublic(data?.data.isPublic);
+      setGroupName(data?.data?.moimTitle);
+      setBeforeGroupName(data?.data?.moimTitle);
+      setGroupDesc(data?.data?.description);
+      setIsPublic(data?.data?.isPublic);
     }
 
-    if (data?.data?.imageUrl !== '') {
-      setPreviewImgUrl(data?.data.imageUrl);
+    if (data?.data?.imageUrl) {
+      setPreviewImgUrl(data?.data?.imageUrl);
       // setGroupImageServerUrl(data?.data.imageUrl);
     }
   }, [data]);
