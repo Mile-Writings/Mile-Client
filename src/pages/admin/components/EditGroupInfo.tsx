@@ -80,7 +80,7 @@ const EditGroupInfo = () => {
 
   const { data } = useFetchGroupInfo(groupId || '');
 
-  const { mutate } = usePutAdminGroupInfo({
+  const { mutate: putAdminGroupInfo } = usePutAdminGroupInfo({
     groupName,
     groupDesc,
     isPublic,
@@ -102,7 +102,7 @@ const EditGroupInfo = () => {
           previewImgUrl,
         );
         if (groupImageServerUrl) {
-          await mutate(groupImageServerUrl);
+          await putAdminGroupInfo(groupImageServerUrl);
           setEditBtnActive(false);
         }
       } else if (!passDuplicate && groupName !== beforeGroupName) {
