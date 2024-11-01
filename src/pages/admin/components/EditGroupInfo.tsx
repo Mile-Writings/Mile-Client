@@ -2,8 +2,6 @@ import styled from '@emotion/styled';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useFetchGroupInfo, usePutAdminGroupInfo } from '../hooks/queries';
-
 import {
   CreateGroupImageUpload,
   CreateGroupImageUploadedIc,
@@ -17,6 +15,7 @@ import handleImageUpload from '../../../utils/handleImageUpload';
 import { InputInfoMsg } from '../../createGroup/components/CreateGroupInfo';
 import { useGetGroupNameValidation } from '../../createGroup/hooks/queries';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
+import { useFetchGroupInfo, usePutAdminGroupInfo } from '../hooks/queries';
 
 const EditGroupInfo = () => {
   const [groupName, setGroupName] = useState('');
@@ -78,7 +77,7 @@ const EditGroupInfo = () => {
     }
   };
 
-  const { data } = useFetchGroupInfo(groupId || '');
+  const groupInfo = useFetchGroupInfo(groupId || '');
 
   const { mutate: putAdminGroupInfo } = usePutAdminGroupInfo({
     groupName,
@@ -131,18 +130,18 @@ const EditGroupInfo = () => {
   }, [groupNameValidationData, isSuccess]);
 
   useEffect(() => {
-    if (data?.data) {
-      setGroupName(data?.data?.moimTitle);
-      setBeforeGroupName(data?.data?.moimTitle);
-      setGroupDesc(data?.data?.description);
-      setIsPublic(data?.data?.isPublic);
+    if (groupInfo) {
+      setGroupName(groupInfo?.moimTitle);
+      setBeforeGroupName(groupInfo?.moimTitle);
+      setGroupDesc(groupInfo?.description);
+      setIsPublic(groupInfo?.isPublic);
     }
 
-    if (data?.data?.imageUrl) {
-      setPreviewImgUrl(data?.data?.imageUrl);
-      // setGroupImageServerUrl(data?.data.imageUrl);
+    if (groupInfo?.imageUrl) {
+      setPreviewImgUrl(groupInfo?.imageUrl);
     }
-  }, [data]);
+  }, [groupInfo]);
+
   return (
     <>
       <CreateGroupLayout>

@@ -191,12 +191,11 @@ export const useDeleteAdminTopic = (
 
 //모임 정보 수정 정보 get
 export const useFetchGroupInfo = (groupId: string) => {
-  const data = useQuery({
+  const { data } = useQuery({
     queryKey: [QUERY_KEY_ADMIN.fetchAdminGroupInfo, groupId],
     queryFn: () => fetchAdminGroupInfo(groupId),
   });
-
-  return data;
+  return data?.data?.data;
 };
 
 //모임 정보 수정
