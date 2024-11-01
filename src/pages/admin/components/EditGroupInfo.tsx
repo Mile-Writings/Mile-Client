@@ -95,14 +95,14 @@ const EditGroupInfo = () => {
   const editGroupInfo = async () => {
     if (groupName) {
       if ((passDuplicate || groupName === beforeGroupName) && groupDesc.length <= 100) {
-        const groupImageServerUrl1 = await handleImageUpload(
+        const groupImageServerUrl = await handleImageUpload(
           url,
           fileName,
           imageFile,
           previewImgUrl,
         );
-        if (groupImageServerUrl1) {
-          await mutate(groupImageServerUrl1);
+        if (groupImageServerUrl) {
+          await mutate(groupImageServerUrl);
           setEditBtnActive(false);
         }
       } else if (!passDuplicate && groupName !== beforeGroupName) {
