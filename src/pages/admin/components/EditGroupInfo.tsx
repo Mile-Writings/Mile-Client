@@ -86,11 +86,7 @@ const EditGroupInfo = () => {
     isPublic,
     groupId,
   });
-  const {
-    data: groupNameValidationData,
-    refetch,
-    isSuccess,
-  } = useGetGroupNameValidation(groupName);
+  const { groupNameValidationData, refetch, isSuccess } = useGetGroupNameValidation(groupName);
 
   const editGroupInfo = async () => {
     if (groupName) {
@@ -123,10 +119,11 @@ const EditGroupInfo = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      if (groupNameValidationData?.data?.data?.isValidate === true) {
+      console.log(groupNameValidationData);
+      if (groupNameValidationData === true) {
         setGroupNameInfoMsg(InputInfoMsg.groupNameAvailable);
         setPassDuplicate(true);
-      } else if (groupNameValidationData?.data?.data?.isValidate === false) {
+      } else if (groupNameValidationData === false) {
         setGroupNameInfoMsg(InputInfoMsg.groupNameNotAvailable);
         setGroupNameValid(false);
       }

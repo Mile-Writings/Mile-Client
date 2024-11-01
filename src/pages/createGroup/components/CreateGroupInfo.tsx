@@ -85,9 +85,10 @@ const CreateGroupInfo = ({
     topicDesc.length <= MAX_TOPIC_DESC_LENGTH;
 
   const { onImageUpload } = useImageUpload({ setPreviewImgUrl: setGroupImageView, setImageFile });
-  const { data, refetch, isSuccess, error } = useGetGroupNameValidation(groupName);
+  const { groupNameValidationData, refetch, isSuccess, error } =
+    useGetGroupNameValidation(groupName);
 
-  // 이미지 보낼 url 받아오기
+  // 이미지 보낼 url 받아오기groupNameValidationData
 
   const handleDuplicateGroupName = () => {
     refetch();
@@ -122,7 +123,7 @@ const CreateGroupInfo = ({
       }
     }
     //중복검사를 하지 않았거나 통과하지 못했을 때
-    else if ((isSuccess && data === undefined) || !passDuplicate) {
+    else if ((isSuccess && groupNameValidationData === undefined) || !passDuplicate) {
       setGroupNameInputMsg(InputInfoMsg.groupNameNotCheck);
       setIsGroupNameEmpty(true);
       if (groupNameRef.current) {
@@ -164,7 +165,7 @@ const CreateGroupInfo = ({
   useEffect(() => {
     if (isSuccess) {
       // API 호출 성공 시 응답 데이터에 따라 메시지 설정
-      if (data?.data?.data?.isValidate) {
+      if (groupNameValidationData) {
         setGroupNameInputMsg(InputInfoMsg.groupNameAvailable);
         setIsGroupNameValid(true);
         setIsGroupNameEmpty(false);
@@ -179,7 +180,7 @@ const CreateGroupInfo = ({
     if (groupName.length > 10) {
       setGroupNameInputMsg(InputInfoMsg.groupNameLength);
     }
-  }, [isSuccess, data, error, groupName]);
+  }, [isSuccess, groupNameValidationData, error, groupName]);
 
   return (
     <>
