@@ -120,7 +120,7 @@ const TopicWrapper = styled.div`
 const TopicData = styled.div`
   display: flex;
   gap: 4rem;
-  align-items: center;
+  align-items: flex-start;
   width: 64.9rem;
   height: 5.2rem;
 `;
@@ -145,6 +145,7 @@ const TopicDate = styled.p`
 
 const TopicTag = styled.p`
   width: 7rem;
+  padding: 0.6rem 0;
 
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.body1};
@@ -154,6 +155,7 @@ const TopicTag = styled.p`
 const TopicDescription = styled.p`
   display: -webkit-box;
   width: 29rem;
+  padding-top: 0.2rem;
   overflow: hidden;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;

@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
-import Lottie from 'lottie-react';
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import LoadingLottie from '../../../assets/gifs/loading.json';
+import Loading from '../../loading/Loading';
 import {
   GroupChatIc,
   GroupCuriousIc,
@@ -112,7 +111,7 @@ const EachArticle = (props: EachProfilePropTypes) => {
                 </div>
               )),
           )}
-          {isFetchingNextPage && <Lottie animationData={LoadingLottie} />}
+          {isFetchingNextPage && <Loading />}
         </>
       )}
     </ArticlePostWrapper>
@@ -188,8 +187,8 @@ const ArticleContent = styled.div`
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray70};
-
   ${({ theme }) => theme.fonts.body3};
+  word-break: break-all;
 `;
 
 const ArticleInfo = styled.div`
