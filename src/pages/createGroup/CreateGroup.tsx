@@ -1,22 +1,23 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useReducer, useState } from 'react';
 
+import useBlockPageExit from '../../hooks/useBlockPageExit';
 import CreateGroupInfo from './components/CreateGroupInfo';
 import CreateGroupLeaderInfo from './components/CreateGroupLeaderInfo';
 import { usePostCreateGroup } from './hooks/queries';
 import { CreateGroupTypes, CurrentPageType } from './types/stateType';
-import useBlockPageExit from '../../hooks/useBlockPageExit';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
-import { DEFAULT_IMG_URL } from '../../constants/defaultImgUrl';
 import useModal from '../../hooks/useModal';
+import handleImageUpload from '../../utils/handleImageUpload';
+import { usePresignedUrl } from '../postPage/hooks/queries';
 import { MODAL } from './constants/modalContent';
 
 type CreateGroupAction =
   | { type: 'setGroupName'; value: string }
   | { type: 'setGroupInfo'; value: string }
-  | { type: 'setGroupImageFile'; value: string }
+  | { type: 'setGroupImageUrl'; value: string }
   | { type: 'setIsPublic'; value: boolean }
   | { type: 'setTopic'; value: string }
   | { type: 'setTopicTag'; value: string }
@@ -28,17 +29,19 @@ const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
   const [groupImageView, setGroupImageView] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   // 페이지 이탈 감지
   const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =
     useBlockPageExit();
   // modal 열고닫음
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
+  const { fileName = '', url = '' } = usePresignedUrl();
 
   const initialState = {
     groupName: '',
     groupInfo: '',
-    groupImageFile: '',
+    groupImageUrl: '',
     isPublic: true,
     topic: '',
     topicTag: '',
@@ -51,7 +54,7 @@ const CreateGroup = () => {
     switch (action.type) {
       case 'setGroupName':
       case 'setGroupInfo':
-      case 'setGroupImageFile':
+      case 'setGroupImageUrl':
       case 'setTopic':
       case 'setTopicTag':
       case 'setLeaderPenName':
@@ -78,7 +81,7 @@ const CreateGroup = () => {
     topicDesc,
     leaderPenName,
     leaderDesc,
-    groupImageFile,
+    groupImageUrl,
   } = state;
 
   const setGroupName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -87,10 +90,6 @@ const CreateGroup = () => {
 
   const setGroupInfo = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'setGroupInfo', value: e.target.value });
-  };
-
-  const setGroupImageFile = (inputValue: string) => {
-    dispatch({ type: 'setGroupImageFile', value: inputValue });
   };
 
   const setIsPublic = (inputValue: boolean) => {
@@ -114,13 +113,9 @@ const CreateGroup = () => {
     dispatch({ type: 'setLeaderDesc', value: e.target.value });
   };
 
-  // 빈 문자열인 경우 DEFAULT_IMG_URL로 대체
-  const finalGroupImageFile = groupImageFile === '' ? DEFAULT_IMG_URL : groupImageFile;
-
   const { mutate } = usePostCreateGroup({
     groupName,
     groupInfo,
-    groupImageFile: finalGroupImageFile,
     isPublic,
     topic,
     topicTag,
@@ -129,7 +124,7 @@ const CreateGroup = () => {
     leaderDesc,
   });
 
-  const createGroup = () => {
+  const createGroup = async () => {
     if (!leaderPenName) {
       setIsGroupLeaderValid(false);
       return;
@@ -145,12 +140,15 @@ const CreateGroup = () => {
 
     if (groupName && topic && topicTag && leaderPenName && leaderDesc.length <= 100) {
       setIgnoreBlocker(true);
-      mutate();
+      const imageUrl = await handleImageUpload(url, fileName, imageFile, groupImageUrl);
+
+      if (imageUrl) {
+        mutate(imageUrl);
+      }
     } else {
       throw new Error('글모임 생성 알 수 없는 에러');
     }
   };
-
 
   const handleBackBtn = () => {
     setCurrentPage('GroupInfoPage');
@@ -165,7 +163,6 @@ const CreateGroup = () => {
           setGroupName={setGroupName}
           groupInfo={groupInfo}
           setGroupInfo={setGroupInfo}
-          setGroupImageFile={setGroupImageFile}
           isPublic={isPublic}
           setIsPublic={setIsPublic}
           topic={topic}
@@ -176,6 +173,7 @@ const CreateGroup = () => {
           setTopicDesc={setTopicDesc}
           groupImageView={groupImageView}
           setGroupImageView={setGroupImageView}
+          setImageFile={setImageFile}
         />
       )}
       {currentPage === 'GroupLeaderInfoPage' && (

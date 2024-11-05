@@ -3,10 +3,10 @@ import { authClient } from '../../../utils/apis/axios';
 interface CreateGroupPropTyeps {
   data: {
     accessToken: string;
-    response : {
+    response: {
       moimId: string;
       inviteCode: string;
-    }
+    };
   };
   status: number;
   message: string;
@@ -14,8 +14,8 @@ interface CreateGroupPropTyeps {
 export interface CreateGroupRequestTypes {
   groupName: string;
   groupInfo?: string;
+  groupImageUrl: string;
   isPublic: boolean;
-  groupImageFile: string;
   leaderPenName: string;
   leaderDesc?: string;
   topic: string;
@@ -23,10 +23,11 @@ export interface CreateGroupRequestTypes {
   topicDesc?: string;
 }
 
+export type CreateGroupRequestWithoutImageUrl = Omit<CreateGroupRequestTypes, 'groupImageUrl'>;
 export const postCreateGroup = async ({
   groupName,
   groupInfo,
-  groupImageFile,
+  groupImageUrl,
   isPublic,
   topic,
   topicTag,
@@ -39,7 +40,7 @@ export const postCreateGroup = async ({
       moimName: groupName,
       moimDescription: groupInfo,
       isPublic: isPublic,
-      imageUrl: groupImageFile,
+      imageUrl: groupImageUrl,
       writerName: leaderPenName,
       writerNameDescription: leaderDesc,
       topic: topic,

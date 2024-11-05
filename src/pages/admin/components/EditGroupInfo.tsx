@@ -1,9 +1,6 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
-import { useFetchGroupInfo, usePutAdminGroupInfo } from '../hooks/queries';
-
 import {
   CreateGroupImageUpload,
   CreateGroupImageUploadedIc,
@@ -12,10 +9,12 @@ import {
   CreateGroupRadioUncheckedIc,
 } from '../../../assets/svgs';
 import { DEFAULT_IMG_URL } from '../../../constants/defaultImgUrl';
-import useHandleGroupImage from '../../../hooks/useGroupImage';
+import useImageUpload from '../../../hooks/useImageUpload';
+import handleImageUpload from '../../../utils/handleImageUpload';
 import { InputInfoMsg } from '../../createGroup/components/CreateGroupInfo';
 import { useGetGroupNameValidation } from '../../createGroup/hooks/queries';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
+import { useFetchGroupInfo, usePutAdminGroupInfo } from '../hooks/queries';
 
 const EditGroupInfo = () => {
   const [groupName, setGroupName] = useState('');
@@ -25,30 +24,22 @@ const EditGroupInfo = () => {
   const [isHover, setIsHover] = useState(false);
 
   const [groupNameInfoMsg, setGroupNameInfoMsg] = useState(InputInfoMsg.emptyText);
-  const [groupNameValid, setGroupNameValid] = useState(true);
 
   const groupNameRef = useRef<HTMLInputElement>(null);
 
   const { groupId } = useParams();
-  const { data } = useFetchGroupInfo(groupId || '');
 
   const { fileName = '', url = '' } = usePresignedUrl();
-  const {
-    groupImageView,
-    handleGroupImageUpload,
-    setGroupImageView,
-    groupImageServerUrl,
-    setGroupImageServerUrl,
-  } = useHandleGroupImage(fileName, url);
 
+  const [previewImgUrl, setPreviewImgUrl] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const { onImageUpload } = useImageUpload({ setPreviewImgUrl, setImageFile });
   const [passDuplicate, setPassDuplicate] = useState(false);
   const [editBtnAcitve, setEditBtnActive] = useState(false);
-  const {
-    data: groupNameValidationData,
-    refetch,
-    isSuccess,
-  } = useGetGroupNameValidation(groupName);
 
+  let isGroupNameChanged = beforeGroupName !== groupName;
+  let groupNameLengthValid = groupName.length <= 10;
   const handleHover = () => {
     setIsHover((prev) => !prev);
   };
@@ -59,10 +50,8 @@ const EditGroupInfo = () => {
     setEditBtnActive(true);
     if (e.target.value.length > 10) {
       setGroupNameInfoMsg(InputInfoMsg.groupNameLength);
-      setGroupNameValid(false);
     } else {
       setGroupNameInfoMsg(InputInfoMsg.emptyText);
-      setGroupNameValid(true);
     }
   };
   const handleGroupDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -71,7 +60,7 @@ const EditGroupInfo = () => {
   };
 
   const handleGroupImage = (e: ChangeEvent<HTMLInputElement>) => {
-    handleGroupImageUpload(e);
+    onImageUpload(e);
     setEditBtnActive(true);
   };
 
@@ -81,59 +70,73 @@ const EditGroupInfo = () => {
   };
 
   const getGroupNameValidation = async () => {
-    if (groupName.length <= 10 && beforeGroupName !== groupName) {
+    if (groupNameLengthValid && isGroupNameChanged) {
       await refetch();
+    } else {
+      throw new Error('잘못된 그룹명 변경 접근입니다.');
     }
   };
-  useEffect(() => {
-    if (data?.data) {
-      setGroupName(data?.data.moimTitle);
-      setBeforeGroupName(data?.data.moimTitle);
-      setGroupDesc(data?.data.description);
-      setIsPublic(data?.data.isPublic);
-    }
 
-    if (data?.data?.imageUrl !== '') {
-      setGroupImageView(data?.data.imageUrl);
-      setGroupImageServerUrl(data?.data.imageUrl);
-    }
-  }, [data]);
+  const { groupInfo, isSuccess: groupInfoSuccess } = useFetchGroupInfo(groupId || '');
 
-  useEffect(() => {
-    if (isSuccess) {
-      if (groupNameValidationData?.data?.data?.isValidate === true) {
-        setGroupNameInfoMsg(InputInfoMsg.groupNameAvailable);
-        setPassDuplicate(true);
-      } else if (groupNameValidationData?.data?.data?.isValidate === false) {
-        setGroupNameInfoMsg(InputInfoMsg.groupNameNotAvailable);
-        setGroupNameValid(false);
-      }
-    }
-  }, [groupNameValidationData, isSuccess]);
-
-  const { mutate } = usePutAdminGroupInfo({
+  const { mutate: putAdminGroupInfo } = usePutAdminGroupInfo({
     groupName,
     groupDesc,
-    groupImageServerUrl,
     isPublic,
     groupId,
   });
+  const { groupNameValidationData, refetch, isSuccess } = useGetGroupNameValidation(groupName);
 
   const editGroupInfo = async () => {
-    if (groupName && groupImageServerUrl) {
-      if ((passDuplicate || groupName === beforeGroupName) && groupDesc.length <= 100) {
-        await mutate();
-        setEditBtnActive(false);
-        alert('글모임 정보가 수정되었습니다.');
-      } else if (!passDuplicate && groupName !== beforeGroupName) {
+    if (groupName) {
+      if ((passDuplicate || !isGroupNameChanged) && groupDesc.length <= 100) {
+        const groupImageServerUrl = await handleImageUpload(
+          url,
+          fileName,
+          imageFile,
+          previewImgUrl,
+        );
+        if (groupImageServerUrl) {
+          await putAdminGroupInfo(groupImageServerUrl);
+          setEditBtnActive(false);
+        }
+      } else if (!passDuplicate && isGroupNameChanged) {
         if (groupNameRef.current) {
           groupNameRef.current && groupNameRef.current.focus();
           groupNameRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
           setGroupNameInfoMsg(InputInfoMsg.groupNameNotCheck);
         }
       }
+    } else {
+      if (groupNameRef.current) {
+        groupNameRef.current && groupNameRef.current.focus();
+        groupNameRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
+        setGroupNameInfoMsg(InputInfoMsg.groupNameEmpty);
+      }
     }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      if (groupNameValidationData === true) {
+        setGroupNameInfoMsg(InputInfoMsg.groupNameAvailable);
+        setPassDuplicate(true);
+      } else if (groupNameValidationData === false) {
+        setGroupNameInfoMsg(InputInfoMsg.groupNameNotAvailable);
+        // setGroupNameValid(false);
+      }
+    }
+  }, [groupNameValidationData, isSuccess]);
+
+  useEffect(() => {
+    if (groupInfoSuccess) {
+      setGroupName(groupInfo?.moimTitle);
+      setBeforeGroupName(groupInfo?.moimTitle);
+      setGroupDesc(groupInfo?.description);
+      setIsPublic(groupInfo?.isPublic);
+      setPreviewImgUrl(groupInfo?.imageUrl);
+    }
+  }, [groupInfo, groupInfoSuccess]);
 
   return (
     <>
@@ -147,20 +150,18 @@ const EditGroupInfo = () => {
                   ref={groupNameRef}
                   onChange={(e) => handleGroupName(e)}
                   placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
-                  isValid={groupNameValid}
+                  isValid={groupNameLengthValid}
                   value={groupName}
                 />{' '}
-                <TextAreaLength isValid={groupName.length <= 10}>
+                <TextAreaLength isValid={groupNameLengthValid}>
                   {groupName.length}/10
                 </TextAreaLength>
               </GroupNameInputWrapper>
               <DuplicateCheckBtn
                 type="button"
-                positive={
-                  groupName !== '' && groupName.length <= 10 && beforeGroupName !== groupName
-                }
+                positive={!!groupName && groupNameLengthValid && isGroupNameChanged}
                 onClick={getGroupNameValidation}
-                disabled={!groupName || groupName.length > 10 || beforeGroupName === groupName}
+                disabled={!groupName || !groupNameLengthValid || !isGroupNameChanged}
               >
                 중복확인
               </DuplicateCheckBtn>
@@ -196,9 +197,9 @@ const EditGroupInfo = () => {
             <GroupImageLabel htmlFor="file">
               <GroupImageWrapper>
                 <GroupImagePreviewWrapper>
-                  {groupImageView !== DEFAULT_IMG_URL ? (
+                  {previewImgUrl !== DEFAULT_IMG_URL ? (
                     <>
-                      <GroupImagePreview src={groupImageView} />
+                      <GroupImagePreview src={previewImgUrl} />
                       <CreateGroupImageUploadedIcon className="group-image-preview" />
                     </>
                   ) : (

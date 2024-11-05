@@ -7,9 +7,8 @@ interface postContentType {
   content: string;
   imageUrl: string;
   anonymous: boolean;
-  contentWithoutTag: string;
+
   // eslint-disable-next-line no-unused-vars
-  setPostErrorMessage: (errorMessage: string) => void;
 }
 
 interface PostContentResponseType {
@@ -28,28 +27,20 @@ const createPostContent = async ({
   content,
   imageUrl,
   anonymous,
-  contentWithoutTag,
-  setPostErrorMessage,
 }: postContentType) => {
-  if (title.trim().length === 0) {
-    setPostErrorMessage('제목을 입력해주세요');
-  } else if (contentWithoutTag.trim().length === 0) {
-    setPostErrorMessage('글을 입력해주세요');
-  } else {
-    try {
-      const { data } = await authClient.post<PostContentResponseType>(`/api/post`, {
-        moimId: groupId,
-        topicId: topicId,
-        title: title,
-        content: content,
-        imageUrl: imageUrl,
-        anonymous: anonymous,
-      });
+  try {
+    const { data } = await authClient.post<PostContentResponseType>(`/api/post`, {
+      moimId: groupId,
+      topicId: topicId,
+      title: title,
+      content: content,
+      imageUrl: imageUrl,
+      anonymous: anonymous,
+    });
 
-      return data.data.postId;
-    } catch (err) {
-      console.log(err);
-    }
+    return data.data.postId;
+  } catch (err) {
+    console.log(err);
   }
 };
 

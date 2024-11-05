@@ -4,15 +4,15 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { DefaultHeader } from '../../components/commons/Header';
+import { FullModal, FullModalBtn } from '../../components/commons/modal/FullModal';
 import Spacing from '../../components/commons/Spacing';
+import useModal from '../../hooks/useModal';
+import { useFetchHeaderGroup } from '../groupFeed/hooks/queries';
 import GroupInfo from './components/GroupInfo';
 import Title from './components/Title';
 import UserInfoInput from './components/UserInfoInput';
-import { useGetGroupInfo } from './hooks/queries';
-import { useFetchHeaderGroup } from '../groupFeed/hooks/queries';
-import { FullModal, FullModalBtn } from '../../components/commons/modal/FullModal';
-import useModal from '../../hooks/useModal';
 import { MODAL } from './constants/modalContent';
+import { useGetGroupInfo } from './hooks/queries';
 
 const GroupInvite = () => {
   const navigate = useNavigate();
@@ -31,7 +31,6 @@ const GroupInvite = () => {
     if (isError && isAxiosError(error)) {
       if (error.response && error.response.status) {
         const { status } = error.response;
-        console.log(status);
         if (status === 400) {
           if (error.response.data.status === 40010 || error.response.data.status === 40014) {
             alert('존재하지 않는 글모임입니다.');

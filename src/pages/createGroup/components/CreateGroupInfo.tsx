@@ -2,17 +2,6 @@ import styled from '@emotion/styled';
 import { AxiosError } from 'axios';
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
-import CreateGroupTopicModal from './CreateGroupTopicModal';
-
-import {
-  MAX_TOPIC_DESC_LENGTH,
-  MAX_TOPIC_KEYWORD_LENGTH,
-  MAX_TOPIC_LENGTH,
-} from '../constants/topicLength';
-import { useGetGroupNameValidation } from '../hooks/queries';
-import { CurrentPageType } from '../types/stateType';
-import createGroupIlust from '/src/assets/images/createGroupIlust.png';
-
 import {
   CreateGroupImageUpload,
   CreateGroupImageUploadedIc,
@@ -21,9 +10,16 @@ import {
   CreateGroupRadioUncheckedIc,
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
-import { s3UrlParsing } from '../../../utils/s3UrlParsing';
-import postDirectlyS3 from '../../postPage/apis/postDirectlyS3';
-import { usePresignedUrl } from '../../postPage/hooks/queries';
+import useImageUpload from '../../../hooks/useImageUpload';
+import {
+  MAX_TOPIC_DESC_LENGTH,
+  MAX_TOPIC_KEYWORD_LENGTH,
+  MAX_TOPIC_LENGTH,
+} from '../constants/topicLength';
+import { useGetGroupNameValidation } from '../hooks/queries';
+import { CurrentPageType } from '../types/stateType';
+import CreateGroupTopicModal from './CreateGroupTopicModal';
+import createGroupIlust from '/src/assets/images/createGroupIlust.png';
 
 type Setter<T> = (value: T) => void;
 interface CreateGroupInfoPropTypes {
@@ -32,7 +28,6 @@ interface CreateGroupInfoPropTypes {
   setGroupName: Setter<ChangeEvent<HTMLInputElement>>;
   groupInfo: string;
   setGroupInfo: Setter<ChangeEvent<HTMLTextAreaElement>>;
-  setGroupImageFile: Setter<string>;
   isPublic: boolean;
   setIsPublic: Setter<boolean>;
   topic: string;
@@ -43,12 +38,14 @@ interface CreateGroupInfoPropTypes {
   setTopicDesc: Setter<string>;
   groupImageView: string;
   setGroupImageView: Dispatch<SetStateAction<string>>;
+  setImageFile: Dispatch<SetStateAction<File | null>>;
 }
 export const InputInfoMsg = {
   groupNameLength: '10자 이내로 작성해주세요.',
   groupNameNotAvailable: '이미 사용중인 모임명입니다.',
   groupNameNotCheck: '중복확인을 해주세요.',
   groupNameAvailable: '사용 가능한 모임명입니다.',
+  groupNameEmpty: '글모임 이름을 입력해주세요.',
   emptyText: '',
 };
 const CreateGroupInfo = ({
@@ -57,7 +54,6 @@ const CreateGroupInfo = ({
   setGroupName,
   groupInfo,
   setGroupInfo,
-  setGroupImageFile,
   isPublic,
   setIsPublic,
   topic,
@@ -68,6 +64,7 @@ const CreateGroupInfo = ({
   setTopicDesc,
   groupImageView,
   setGroupImageView,
+  setImageFile,
 }: CreateGroupInfoPropTypes) => {
   const [isGroupNameEmpty, setIsGroupNameEmpty] = useState(false);
   const [isGroupNameValid, setIsGroupNameValid] = useState(true);
@@ -86,47 +83,12 @@ const CreateGroupInfo = ({
     topic.length <= MAX_TOPIC_LENGTH &&
     topicTag.length <= MAX_TOPIC_KEYWORD_LENGTH &&
     topicDesc.length <= MAX_TOPIC_DESC_LENGTH;
-  const { data, refetch, isSuccess, error } = useGetGroupNameValidation(groupName);
 
-  // 이미지 보낼 url 받아오기
-  const { fileName, url = '' } = usePresignedUrl();
+  const { onImageUpload } = useImageUpload({ setPreviewImgUrl: setGroupImageView, setImageFile });
+  const { groupNameValidationData, refetch, isSuccess, error } =
+    useGetGroupNameValidation(groupName);
 
-  const postDirectlyS3Func = async (url: string, imageFile: File) => {
-    try {
-      await postDirectlyS3(url, imageFile);
-      const s3url = s3UrlParsing(url) || '';
-
-      const urlToServer = `${s3url + fileName}`;
-
-      setGroupImageFile(urlToServer);
-    } catch (err) {
-      if (err instanceof Error) throw err;
-    }
-  };
-
-  const handleGroupImage = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0];
-    if (
-      file &&
-      (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg')
-    ) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        if (typeof reader.result === 'string') {
-          postDirectlyS3Func(url, file);
-          setGroupImageView(reader.result);
-        } else {
-          console.error(`file resader의 결과값이 string이 아닙니다. ${reader.result}`);
-        }
-      };
-      reader.onerror = (err) => {
-        alert(err);
-      };
-    } else {
-      alert('file 형식을 확인해주세요.');
-    }
-  };
+  // 이미지 보낼 url 받아오기groupNameValidationData
 
   const handleDuplicateGroupName = () => {
     refetch();
@@ -161,7 +123,7 @@ const CreateGroupInfo = ({
       }
     }
     //중복검사를 하지 않았거나 통과하지 못했을 때
-    else if ((isSuccess && data === undefined) || !passDuplicate) {
+    else if ((isSuccess && groupNameValidationData === undefined) || !passDuplicate) {
       setGroupNameInputMsg(InputInfoMsg.groupNameNotCheck);
       setIsGroupNameEmpty(true);
       if (groupNameRef.current) {
@@ -203,7 +165,7 @@ const CreateGroupInfo = ({
   useEffect(() => {
     if (isSuccess) {
       // API 호출 성공 시 응답 데이터에 따라 메시지 설정
-      if (data?.data?.data?.isValidate) {
+      if (groupNameValidationData) {
         setGroupNameInputMsg(InputInfoMsg.groupNameAvailable);
         setIsGroupNameValid(true);
         setIsGroupNameEmpty(false);
@@ -218,7 +180,7 @@ const CreateGroupInfo = ({
     if (groupName.length > 10) {
       setGroupNameInputMsg(InputInfoMsg.groupNameLength);
     }
-  }, [isSuccess, data, error, groupName]);
+  }, [isSuccess, groupNameValidationData, error, groupName]);
 
   return (
     <>
@@ -294,9 +256,7 @@ const CreateGroupInfo = ({
                 name="file"
                 id="file"
                 accept="image/*"
-                onChange={(e) => {
-                  handleGroupImage(e);
-                }}
+                onChange={onImageUpload}
               />
             </GroupImageLabel>
 

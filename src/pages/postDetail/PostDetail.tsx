@@ -56,7 +56,7 @@ const PostDetail = () => {
   } = useGroupFeedAuth(groupId);
   const { data, isError, isLoading } = useGetPostDetail(postId);
   const { data: postAuth } = useCheckPostAuth(postId);
-  const { mutate: deletePost } = useDeletePost(postId, topicId);
+  const { mutate: deletePost } = useDeletePost(postId, topicId, groupId);
 
   const postData = data?.data;
   const accessToken = localStorage.getItem('accessToken');

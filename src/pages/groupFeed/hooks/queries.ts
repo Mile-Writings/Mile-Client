@@ -60,6 +60,7 @@ export const useGroupInfo = (groupId: string) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: groupKey.detail(groupId),
     queryFn: () => fetchGroupInfo(groupId),
+    enabled: !!groupId,
   });
 
   const infoResponse = data?.data.infoResponse;

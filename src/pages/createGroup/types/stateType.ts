@@ -1,7 +1,7 @@
 export interface CreateGroupTypes {
   groupName: string;
   groupInfo: string;
-  groupImageFile: string;
+  groupImageUrl: string;
   isPublic: boolean;
   topic: string;
   topicTag: string;

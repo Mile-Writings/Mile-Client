@@ -15,6 +15,8 @@ import fetchDeleteNestedComment from '../apis/fetchDeleteNestedComment';
 import fetchPostComment from '../apis/fetchPostComment';
 import fetchPostDetail from '../apis/fetchPostDetail';
 import fetchPostNestedComment from '../apis/fetchPostNestedComment';
+
+import { groupKey } from '../../groupFeed/hooks/queries';
 //쿼리키를 이렇게 두는 이유는 겹치지 않기위해 + 객체로 생성하여 자동완성 하기 위해
 export const QUERY_KEY_POST_DETAIL = {
   getPostDetail: 'getPostDetail',
@@ -190,14 +192,17 @@ export const useCheckPostAuth = (postId: string) => {
 };
 
 // 글 삭제
-export const useDeletePost = (postId: string, topicId: string) => {
+export const useDeletePost = (postId: string, topicId: string, groupId: string) => {
   const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [QUERY_KEY_POST_DETAIL.deletePost, postId],
     mutationFn: () => deletePost(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['getArticleList', topicId],
+        queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: groupKey.posts(topicId, groupId),
       });
     },
   });

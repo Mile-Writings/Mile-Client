@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { createBrowserHistory } from 'history';
 import React, { useEffect, useReducer, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import handleImageUpload from '../../utils/handleImageUpload';
 import DropDown from './components/DropDown';
 import ImageUpload from './components/ImageUpload';
 import TipTap from './components/TipTap';
@@ -31,8 +31,8 @@ import {
 import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
 import { FullModal, FullModalBtn } from '../../components/commons/modal/FullModal';
 import Spacing from '../../components/commons/Spacing';
-import useModal from '../../hooks/useModal';
 import useBlockPageExit from '../../hooks/useBlockPageExit';
+import useModal from '../../hooks/useModal';
 import { MODAL } from './constants/modalContent';
 
 // editor content API 관련
@@ -58,7 +58,7 @@ const editorState: editorStateType = {
   writer: '필명',
   title: '',
   content: '',
-  imageUrl: EDITOR_DEFAULT_IMG,
+  imageUrl: '',
 };
 
 const editorContentReducerFn = (
@@ -109,18 +109,14 @@ const editorContentReducerFn = (
         content: action.content,
         imageUrl: action.imageUrl,
       };
-    case 'setImageToServer':
-      return {
-        ...state,
-        imageUrl: action.imageUrl,
-      };
+
     default:
       return {
         topic: '',
         writer: '필명',
         title: '',
         content: '',
-        imageUrl: EDITOR_DEFAULT_IMG,
+        imageUrl: '',
       };
   }
 };
@@ -173,9 +169,6 @@ const PostPage = () => {
   const setContent = (content: string) => {
     editorContentDispatch({ type: 'setContent', content: content });
   };
-  const setImageToServer = (imageUrl: string) => {
-    editorContentDispatch({ type: 'setImageToServer', imageUrl: imageUrl });
-  };
 
   // 모임 ID, url에서 받아오기
   const { groupId, viewType, editPostId } = useParams() as {
@@ -198,6 +191,9 @@ const PostPage = () => {
   // 에디터 글 내용 태그 제외한 값 (valid 확인용)
   const [contentWithoutTag, setContentWithoutTag] = useState('');
 
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [postContentId, setPostContentId] = useState<string>('');
+
   // 임시저장 불러오기
   interface tempTopicListType {
     topicId: string;
@@ -206,6 +202,8 @@ const PostPage = () => {
   }
   const { tempTopicList, tempTitle, tempContent, tempImageUrl, tempAnonymous } =
     useGetTempSaveContent(tempPostId || '', continueTempPost || false);
+
+  const { fileName = '', url = '' } = usePresignedUrl();
 
   // 최초 뷰 들어왔을 때 임시저장 이어쓸지 confirm 창
   useEffect(() => {
@@ -244,37 +242,42 @@ const PostPage = () => {
     }
   }, [topics]);
 
-  // 이미지 보낼 url 받아오기
-  const { fileName, url } = usePresignedUrl();
-
   // 최초저장
-  const { mutate: postContent, postContentId } = usePostContent({
+  const modalOpen = () => {
+    handleShowModal();
+    setEditorModalType('postContent');
+    editorFlowModalDispatch({ type: 'postContent' });
+    setIgnoreBlocker(true);
+  };
+
+  const { mutate: postContent } = usePostContent({
     groupId: groupId,
     topicId: topics
       ? topics.find((topic) => topic.topicName === editorVal.topic)?.topicId ?? ''
       : '',
     title: editorVal.title || '',
     content: editorVal.content || '',
-    imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
-    contentWithoutTag: contentWithoutTag,
-    setPostErrorMessage: setPostErrorMessage,
+    modalOpen: modalOpen,
+    setPostContentId: setPostContentId,
   });
 
   // 최초저장 -> 제출하기 누르면 열리는 모달
-  const onClickPostContentBtn = () => {
-    postContent();
-  };
+  const onClickPostContentBtn = async () => {
+    if (editorVal.title?.trim().length === 0) {
+      setPostErrorMessage('제목을 입력해주세요');
+      return;
+    } else if (contentWithoutTag.trim().length === 0) {
+      setPostErrorMessage('글을 입력해주세요');
 
-  // 쿼리가 실행되고 postContentId를 받아온 후 모달 열리도록
-  useEffect(() => {
-    if (postContentId !== undefined) {
-      handleShowModal();
-      setEditorModalType('postContent');
-      editorFlowModalDispatch({ type: 'postContent' });
-      setIgnoreBlocker(true);
+      return;
     }
-  }, [postContentId]);
+
+    const imageUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+    if (imageUrl) {
+      postContent(imageUrl);
+    }
+  };
 
   // 수정하기 글 내용 받아오기
   const { editPostTopicList, editPostTitle, editPostContent, editPostImageUrl, editPostAnonymous } =
@@ -298,6 +301,7 @@ const PostPage = () => {
     // 임시저장된 값으로 업데이트
     if (viewType === 'post' && continueTempPost) {
       setPreviewImgUrl(tempImageUrl);
+      setContentWithoutTag(tempContent);
       editorContentDispatch({
         type: 'setTempValue',
         topic:
@@ -324,14 +328,27 @@ const PostPage = () => {
     setPostErrorMessage: setPostErrorMessage,
   });
 
-  const onClickEditSaveBtn = () => {
-    if (contentWithoutTag.trim().length !== 0 && editorVal.title?.trim().length !== 0) {
-      putEditContent();
+  const onClickEditSaveBtn = async () => {
+    if (editorVal.title?.trim().length === 0) {
+      setPostErrorMessage('제목을 입력해주세요');
+      return;
+    } else if (contentWithoutTag.trim().length === 0) {
+      setPostErrorMessage('글을 입력해주세요');
+
+      return;
+    } else {
+      try {
+        await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+
+        putEditContent();
+        handleShowModal();
+        setEditorModalType('editContent');
+        editorFlowModalDispatch({ type: 'editContent' });
+        setIgnoreBlocker(true);
+      } catch (err) {
+        console.error(err);
+      }
     }
-    handleShowModal();
-    setEditorModalType('editContent');
-    editorFlowModalDispatch({ type: 'editContent' });
-    setIgnoreBlocker(true);
   };
   // 최초 글 임시 저장
   const { mutate: postTempSaveContent } = usePostTempSaveContent({
@@ -341,8 +358,8 @@ const PostPage = () => {
       : '',
     title: editorVal.title || '',
     content: editorVal.content || '',
-    imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
+    isPostView: viewType === 'post',
   });
 
   // 임시저장 버튼 누르면 열리는 모달
@@ -357,9 +374,12 @@ const PostPage = () => {
   };
 
   // 임시저장 모달 -> '예' 누르면 쿼리 동작
-  const tempSaveHandler = () => {
-    postTempSaveContent();
-    navigate(`/group/${groupId}`);
+  const tempSaveHandler = async () => {
+    const imageUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+
+    if (imageUrl) {
+      postTempSaveContent(imageUrl);
+    }
   };
 
   // 임시 저장 글 -> 저장하기
@@ -370,13 +390,24 @@ const PostPage = () => {
       : '',
     title: editorVal.title || '',
     content: editorVal.content || '',
-    imageUrl: editorVal.imageUrl || '',
     anonymous: editorVal.writer === '작자미상',
     postId: tempPostId || '',
   });
 
-  const onClickTempExistSaveBtn = () => {
-    putTempSaveContent();
+  const onClickTempExistSaveBtn = async () => {
+    if (editorVal.title?.trim().length === 0) {
+      setPostErrorMessage('제목을 입력해주세요');
+      return;
+    } else if (contentWithoutTag.trim().length === 0) {
+      setPostErrorMessage('글을 입력해주세요');
+
+      return;
+    }
+
+    const imgUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+    if (imgUrl) {
+      putTempSaveContent(imgUrl);
+    }
 
     handleShowModal();
     editorFlowModalDispatch({ type: 'putTempSaveContent' });
@@ -431,7 +462,7 @@ const PostPage = () => {
           ...state,
           title: MODAL.POST_CONTENT,
           leftBtnText: '홈으로 가기',
-          leftBtnFn: () => navigate('/'),
+          leftBtnFn: () => navigate(`/group/${groupId}`),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${tempPostId}`),
           modalImgType: 'POST',
@@ -455,7 +486,7 @@ const PostPage = () => {
           ...state,
           title: MODAL.EDIT_CONTENT,
           leftBtnText: '홈으로 가기',
-          leftBtnFn: () => navigate('/'),
+          leftBtnFn: () => navigate(`/group/${groupId}`),
           rightBtnText: '글 확인하기',
           rightBtnFn: () => navigate(`/detail/${groupId}/${editPostId}`),
           modalImgType: 'POST',
@@ -485,27 +516,6 @@ const PostPage = () => {
 
   // 모달 스크롤 방지 제거
   useEffect(() => {
-    if (isModalOpen || showTempContinueModal) {
-      switch (editorModalType) {
-        case 'tempSave':
-          onClickTempSaveBtn();
-          break;
-        case 'postContent':
-          break;
-        case 'putTempSaveContent':
-          onClickTempExistSaveBtn();
-          break;
-        case 'editContent':
-          onClickEditSaveBtn();
-          break;
-        case 'continueTempSave':
-          // 렌더링 되자마자 쿼리함수 실행되므로 prevent만 넣어줌
-          break;
-        case 'exitEditPage':
-          break;
-      }
-    }
-
     (editorModalType === 'continueTempSave' || editorModalType === 'exitEditPage') &&
       !isModalOpen &&
       !showTempContinueModal &&
@@ -551,9 +561,7 @@ const PostPage = () => {
       <ImageUpload
         setPreviewImgUrl={setPreviewImgUrl}
         previewImgUrl={previewImgUrl}
-        setImageToServer={setImageToServer}
-        url={url || ''}
-        fileName={fileName || ''}
+        setImageFile={setImageFile}
       />
 
       {/* 글감 */}
