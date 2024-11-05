@@ -36,7 +36,7 @@ interface postContentType {
   anonymous: boolean;
   // eslint-disable-next-line no-unused-vars
   modalOpen: () => void;
-  setPostContentId: Dispatch<SetStateAction<string | undefined>>;
+  setPostContentId: Dispatch<SetStateAction<string>>;
 }
 
 export const usePostContent = ({
@@ -72,6 +72,8 @@ export const usePostContent = ({
       if (data) {
         setPostContentId(data);
         modalOpen();
+      } else {
+        throw new Error('Data를 받아오지 못했습니다.');
       }
     },
   });

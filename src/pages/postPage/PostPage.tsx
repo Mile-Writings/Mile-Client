@@ -190,7 +190,7 @@ const PostPage = () => {
   const [contentWithoutTag, setContentWithoutTag] = useState('');
 
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [postContentId, setPostContentId] = useState<string | undefined>('');
+  const [postContentId, setPostContentId] = useState<string>('');
 
   // 임시저장 불러오기
   interface tempTopicListType {
