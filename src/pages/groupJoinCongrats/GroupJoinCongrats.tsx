@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { DefaultHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import groupJoinCongratsIlust from '/src/assets/images/createGroupCongrats.png';
+import groupJoinCongratsWebp from '/src/assets/webps/joincongratulation.webp';
 
 const GroupJoinCongrats = () => {
   const { groupId } = useParams() as { groupId: string };
@@ -25,7 +26,10 @@ const GroupJoinCongrats = () => {
           <GroupJoinText>글 모임에서 당신의 소중한 이야기를 들려주세요.</GroupJoinText>
         </GroupJoinTitleWrapper>
         <Spacing marginBottom="4.8" />
-        <img src={groupJoinCongratsIlust} />
+        <picture>
+          <source srcSet={groupJoinCongratsWebp} />
+          <img src={groupJoinCongratsIlust} />
+        </picture>
         <Spacing marginBottom="4.8" />
         <GoToGroupFeedBtn onClick={onClickGoToGroupFeedBtn}>모임 페이지 보러가기</GoToGroupFeedBtn>
       </GroupJoinCongratsContainer>
