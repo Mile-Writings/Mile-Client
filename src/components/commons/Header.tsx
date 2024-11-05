@@ -47,7 +47,7 @@ export const AuthorizationHeader = () => {
       <HeaderLayout>
         <MyGroupDropDown groupData={moims ?? []} />
         <HeaderBtnContainer>
-          <CreateGroupBtn groupCount={data?.data?.moims.length ?? 0} />
+          <CreateGroupBtn groupCount={data?.data.moims.length ?? 0} />
           <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
         </HeaderBtnContainer>
       </HeaderLayout>

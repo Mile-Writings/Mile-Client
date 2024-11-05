@@ -1,18 +1,15 @@
 import styled from '@emotion/styled';
 
 import Spacing from '../../../components/commons/Spacing';
-import { MAIN_MANUAL_IMG_URL, MAIN_MANUAL_WEBP_URL } from '../constants/mainManualImgURL';
+import { MAIN_MANUAL_IMG_URL } from '../constants/mainManualImgURL';
 const Manual = () => {
   return (
     <ManualWrapper>
       <ManualTitle>마일 메뉴얼</ManualTitle>
       <Spacing marginBottom="3.6" />
       <ManualLayout>
-        {MAIN_MANUAL_WEBP_URL.map((webpSrc, idx) => (
-          <ManualPicture key={idx}>
-            <source srcSet={webpSrc} type="image/webp" />
-            <ManualImg src={MAIN_MANUAL_IMG_URL[idx]} alt={`매뉴얼 이미지 ${idx}`} />
-          </ManualPicture>
+        {MAIN_MANUAL_IMG_URL.map((item, idx) => (
+          <ManualImg src={item} alt={`매뉴얼 이미지${idx}`} key={idx} />
         ))}
       </ManualLayout>
     </ManualWrapper>
@@ -20,11 +17,6 @@ const Manual = () => {
 };
 
 export default Manual;
-
-const ManualPicture = styled.picture`
-  width: 29.6rem;
-  height: 37.2rem;
-`;
 
 const ManualWrapper = styled.div`
   display: flex;
