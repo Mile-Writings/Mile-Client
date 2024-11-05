@@ -191,18 +191,18 @@ export const useDeleteAdminTopic = (
 
 //모임 정보 수정 정보 get
 export const useFetchGroupInfo = (groupId: string) => {
-  const { data } = useQuery({
+  const { data, isSuccess } = useQuery({
     queryKey: [QUERY_KEY_ADMIN.fetchAdminGroupInfo, groupId],
     queryFn: () => fetchAdminGroupInfo(groupId),
   });
-  return data?.data?.data;
+  const groupInfo = data?.data?.data;
+  return { groupInfo, isSuccess };
 };
 
 //모임 정보 수정
 export const usePutAdminGroupInfo = ({
   groupName,
   groupDesc,
-
   isPublic,
   groupId,
 }: AdminEditGroupInfoWithoutImage) => {
@@ -235,7 +235,7 @@ export const usePutAdminGroupInfo = ({
           } else if (errorCode === 40018) {
             alert('사용 불가능한 모임명입니다');
           } else {
-            console.error();
+            throw new Error('예측되지 않은 에러');
           }
         } else if (err?.response?.status === 401) {
           alert('파일 형식을 확인해주세요');

@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
 import {
   CreateGroupImageUpload,
   CreateGroupImageUploadedIc,
@@ -25,7 +24,6 @@ const EditGroupInfo = () => {
   const [isHover, setIsHover] = useState(false);
 
   const [groupNameInfoMsg, setGroupNameInfoMsg] = useState(InputInfoMsg.emptyText);
-  const [groupNameValid, setGroupNameValid] = useState(true);
 
   const groupNameRef = useRef<HTMLInputElement>(null);
 
@@ -40,6 +38,8 @@ const EditGroupInfo = () => {
   const [passDuplicate, setPassDuplicate] = useState(false);
   const [editBtnAcitve, setEditBtnActive] = useState(false);
 
+  let isGroupNameChanged = beforeGroupName !== groupName;
+  let groupNameLengthValid = groupName.length <= 10;
   const handleHover = () => {
     setIsHover((prev) => !prev);
   };
@@ -50,10 +50,8 @@ const EditGroupInfo = () => {
     setEditBtnActive(true);
     if (e.target.value.length > 10) {
       setGroupNameInfoMsg(InputInfoMsg.groupNameLength);
-      setGroupNameValid(false);
     } else {
       setGroupNameInfoMsg(InputInfoMsg.emptyText);
-      setGroupNameValid(true);
     }
   };
   const handleGroupDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -72,12 +70,14 @@ const EditGroupInfo = () => {
   };
 
   const getGroupNameValidation = async () => {
-    if (groupName.length <= 10 && beforeGroupName !== groupName) {
+    if (groupNameLengthValid && isGroupNameChanged) {
       await refetch();
+    } else {
+      throw new Error('잘못된 그룹명 변경 접근입니다.');
     }
   };
 
-  const groupInfo = useFetchGroupInfo(groupId || '');
+  const { groupInfo, isSuccess: groupInfoSuccess } = useFetchGroupInfo(groupId || '');
 
   const { mutate: putAdminGroupInfo } = usePutAdminGroupInfo({
     groupName,
@@ -89,7 +89,7 @@ const EditGroupInfo = () => {
 
   const editGroupInfo = async () => {
     if (groupName) {
-      if ((passDuplicate || groupName === beforeGroupName) && groupDesc.length <= 100) {
+      if ((passDuplicate || !isGroupNameChanged) && groupDesc.length <= 100) {
         const groupImageServerUrl = await handleImageUpload(
           url,
           fileName,
@@ -100,7 +100,7 @@ const EditGroupInfo = () => {
           await putAdminGroupInfo(groupImageServerUrl);
           setEditBtnActive(false);
         }
-      } else if (!passDuplicate && groupName !== beforeGroupName) {
+      } else if (!passDuplicate && isGroupNameChanged) {
         if (groupNameRef.current) {
           groupNameRef.current && groupNameRef.current.focus();
           groupNameRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
@@ -118,29 +118,25 @@ const EditGroupInfo = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(groupNameValidationData);
       if (groupNameValidationData === true) {
         setGroupNameInfoMsg(InputInfoMsg.groupNameAvailable);
         setPassDuplicate(true);
       } else if (groupNameValidationData === false) {
         setGroupNameInfoMsg(InputInfoMsg.groupNameNotAvailable);
-        setGroupNameValid(false);
+        // setGroupNameValid(false);
       }
     }
   }, [groupNameValidationData, isSuccess]);
 
   useEffect(() => {
-    if (groupInfo) {
+    if (groupInfoSuccess) {
       setGroupName(groupInfo?.moimTitle);
       setBeforeGroupName(groupInfo?.moimTitle);
       setGroupDesc(groupInfo?.description);
       setIsPublic(groupInfo?.isPublic);
-    }
-
-    if (groupInfo?.imageUrl) {
       setPreviewImgUrl(groupInfo?.imageUrl);
     }
-  }, [groupInfo]);
+  }, [groupInfo, groupInfoSuccess]);
 
   return (
     <>
@@ -154,20 +150,18 @@ const EditGroupInfo = () => {
                   ref={groupNameRef}
                   onChange={(e) => handleGroupName(e)}
                   placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
-                  isValid={groupNameValid}
+                  isValid={groupNameLengthValid}
                   value={groupName}
                 />{' '}
-                <TextAreaLength isValid={groupName.length <= 10}>
+                <TextAreaLength isValid={groupNameLengthValid}>
                   {groupName.length}/10
                 </TextAreaLength>
               </GroupNameInputWrapper>
               <DuplicateCheckBtn
                 type="button"
-                positive={
-                  groupName !== '' && groupName.length <= 10 && beforeGroupName !== groupName
-                }
+                positive={!!groupName && groupNameLengthValid && isGroupNameChanged}
                 onClick={getGroupNameValidation}
-                disabled={!groupName || groupName.length > 10 || beforeGroupName === groupName}
+                disabled={!groupName || !groupNameLengthValid || !isGroupNameChanged}
               >
                 중복확인
               </DuplicateCheckBtn>
