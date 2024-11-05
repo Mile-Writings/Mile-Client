@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import Spacing from '../../../components/commons/Spacing';
-import mainOnBoradingImg from '/src/assets/images/mainOnBoarding.png';
+import mainOnBoardingImg from '/src/assets/images/mainOnBoarding.png';
+import mainOnBoardingWebp from '/src/assets/webps/mainonboarding.webp';
 const OnBoarding = () => {
   return (
     <OnBoardingWrapper>
@@ -15,8 +16,10 @@ const OnBoarding = () => {
           </SubText>
         </TextLayout>
         <Spacing marginBottom="3.2" />
-
-        <MainOnboardingImg src={mainOnBoradingImg} alt="메인 온보딩 이미지" />
+        <picture>
+          <source srcSet={mainOnBoardingWebp} type="image/webp" />
+          <MainOnboardingImg src={mainOnBoardingImg} alt="메인 온보딩 이미지" />
+        </picture>
       </OnBoardingIcWithTextLayout>
     </OnBoardingWrapper>
   );

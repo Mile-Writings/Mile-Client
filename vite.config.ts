@@ -24,7 +24,7 @@ export default defineConfig({
     visualizer() as PluginOption,
   ],
   build: {
-    sourcemap: true,
+    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { HeaderLogoIc, KakaoLoginBtnIc } from '../../assets/svgs';
 import Spacing from '../../components/commons/Spacing';
 import loginIlust from '/src/assets/images/loginIlust.png';
+import loginWebP from '/src/assets/webps/login.webp';
 
 const Login = () => {
   //const REDIRECT_URL = 'https://www.milewriting.com/redirect-kakao';
@@ -39,7 +40,10 @@ const Login = () => {
             <SubText>Make it look easy 글쓰기를 쉽고 편안하게</SubText>
           </LoginTextBox>
           <Spacing marginBottom="2.4" />
-          <img src={loginIlust} />
+          <picture>
+            <source srcSet={loginWebP} type="image/webp" />
+            <img src={loginIlust} />
+          </picture>
           <Spacing marginBottom="2.4" />
           <KakaoLoginBtnIcon onClick={handleKakaoLogin} />
         </LoginContainer>

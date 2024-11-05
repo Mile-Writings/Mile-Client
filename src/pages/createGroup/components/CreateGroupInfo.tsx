@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { AxiosError } from 'axios';
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-
+import createGroupWebp from '/src/assets/webps/creategroup.webp';
 import {
   CreateGroupImageUpload,
   CreateGroupImageUploadedIc,
@@ -190,7 +190,10 @@ const CreateGroupInfo = ({
           <Spacing marginBottom="1.1" />
           <Title>나만의 글 모임을 만들어보세요</Title>
           <Spacing marginBottom="2.4" />
-          <IllustImg src={createGroupIlust} />
+          <picture>
+            <source srcSet={createGroupWebp} />
+            <img src={createGroupIlust} />
+          </picture>
         </TitleWrapper>
         <WhiteInputWrapper isValid={!isGroupNameEmpty}>
           <GroupInputWrapper>
@@ -621,13 +624,6 @@ const Title = styled.h1`
 const SubTitle = styled.h2`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.title5};
-`;
-
-const IllustImg = styled.img`
-  display: flex;
-  flex-shrink: 0;
-  width: 100%;
-  height: 36.6rem;
 `;
 
 const WhiteInputWrapper = styled.section<{ isValid: boolean }>`
