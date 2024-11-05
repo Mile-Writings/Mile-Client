@@ -15,7 +15,9 @@ import fetchAdminGroupInfo from '../apis/fetchAdminGroupInfo';
 import fetchDeleteMember from '../apis/fetchDeleteMember';
 import { fetchInvitationLink } from '../apis/fetchInvitationLink';
 import fetchMemberInfo from '../apis/fetchMemberInfo';
-import putAdminEditGroupInfo, { AdminEditGroupInfoPropTypes } from '../apis/putAdminEditGroupInfo';
+import putAdminEditGroupInfo, {
+  AdminEditGroupInfoWithoutImage,
+} from '../apis/putAdminEditGroupInfo';
 
 export const QUERY_KEY_ADMIN = {
   useMemberInfo: 'fetchMemberInfo',
@@ -28,6 +30,7 @@ export const useAdminTopic = (groupId: string | undefined, pageNum: number) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['adminTopic', groupId, pageNum],
     queryFn: () => fetchAdminTopic(groupId, pageNum),
+    retry: 1,
   });
 
   const topicCount = data && data.data.topicCount;
@@ -188,53 +191,58 @@ export const useDeleteAdminTopic = (
 
 //모임 정보 수정 정보 get
 export const useFetchGroupInfo = (groupId: string) => {
-  const data = useQuery({
+  const { data, isSuccess } = useQuery({
     queryKey: [QUERY_KEY_ADMIN.fetchAdminGroupInfo, groupId],
     queryFn: () => fetchAdminGroupInfo(groupId),
   });
-
-  return data;
+  const groupInfo = data?.data?.data;
+  return { groupInfo, isSuccess };
 };
 
 //모임 정보 수정
 export const usePutAdminGroupInfo = ({
   groupName,
   groupDesc,
-  groupImageServerUrl,
   isPublic,
   groupId,
-}: AdminEditGroupInfoPropTypes) => {
+}: AdminEditGroupInfoWithoutImage) => {
   const queryClient = useQueryClient();
   const { mutate, isSuccess, isError } = useMutation({
     mutationKey: [QUERY_KEY_ADMIN.putAdminEditGroupInfo, groupId],
-    mutationFn: () =>
+    mutationFn: (groupImageServerUrl: string) =>
       putAdminEditGroupInfo({ groupName, groupDesc, groupImageServerUrl, isPublic, groupId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: groupKey.detail(groupId || ''),
       });
+
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_ADMIN.fetchAdminGroupInfo, groupId],
+      });
+      alert('글모임 정보가 수정되었습니다.');
     },
     onError: (err) => {
       if (isAxiosError(err) && err.response?.status) {
         const errorCode = err.response?.data.status;
-        if (errorCode === 40005) {
-          alert('요청 값에 빈 값이 존재합니다');
-        } else if (errorCode === 40006) {
-          alert('요청 값이 길이를 초과했습니다');
-        } else if (errorCode === 40018) {
-          alert('사용 불가능한 모임명입니다');
-        } else {
-          console.error();
-        }
 
         if (err?.response?.status === 500) {
           alert('서버내부 오류입니다. ');
+        } else if (err?.response.status === 400) {
+          if (errorCode === 40005) {
+            alert('요청 값에 빈 값이 존재합니다');
+          } else if (errorCode === 40006) {
+            alert('요청 값이 길이를 초과했습니다');
+          } else if (errorCode === 40018) {
+            alert('사용 불가능한 모임명입니다');
+          } else {
+            throw new Error('예측되지 않은 에러');
+          }
         } else if (err?.response?.status === 401) {
           alert('파일 형식을 확인해주세요');
         } else if (err?.response?.status === 413) {
           alert(`파일 형식을 확인해주세요 Error Code ${err.response.status}`);
         } else {
-          alert(`${err?.response}`);
+          alert(`${JSON.stringify(err?.response)}`);
         }
       }
     },
@@ -251,9 +259,8 @@ export const useDeleteGroup = (groupId: string) => {
     mutationKey: [QUERY_KEY_ADMIN.deleteGroup, groupId],
     mutationFn: () => deleteGroup(groupId),
     onSuccess: () => {
-      //key에 대한 정책을 변경해야함, 현재는 key의 unique함은 보장되어있지만 관련성이 적어 key의 역할을 제대로 못하고있음
       queryClient.invalidateQueries({
-        queryKey: groupKey.all,
+        queryKey: [QUERY_KEY_ADMIN.fetchAdminGroupInfo, groupId],
       });
       navigate('/');
     },

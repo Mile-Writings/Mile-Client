@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { getGroupNameValidation } from '../apis/getGroupNameValidation';
-import { CreateGroupRequestTypes, postCreateGroup } from '../apis/postGroup';
 import { isAxiosError } from 'axios';
 import { authClient } from '../../../utils/apis/axios';
+import { getGroupNameValidation } from '../apis/getGroupNameValidation';
+import { CreateGroupRequestWithoutImageUrl, postCreateGroup } from '../apis/postGroup';
 
 export const QUERY_KEY_CREATE_GROUP = {
   getGroupNameValidation: 'getGroupNameValidation',
@@ -21,20 +21,21 @@ export const useGetGroupNameValidation = (moimName: string) => {
     throwOnError: true,
   });
   queryClient.removeQueries({ queryKey: [QUERY_KEY_CREATE_GROUP.getGroupNameValidation] });
-  return { data, refetch, isSuccess, isError, error };
+
+  const groupNameValidationData = data?.data?.data?.isValidate;
+  return { groupNameValidationData, refetch, isSuccess, isError, error };
 };
 
 export const usePostCreateGroup = ({
   groupName,
   groupInfo,
   isPublic,
-  groupImageFile,
   leaderPenName,
   leaderDesc,
   topic,
   topicTag,
   topicDesc,
-}: CreateGroupRequestTypes) => {
+}: CreateGroupRequestWithoutImageUrl) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { mutate } = useMutation({
@@ -44,7 +45,6 @@ export const usePostCreateGroup = ({
         groupName,
         groupInfo,
         isPublic,
-        groupImageFile,
         leaderPenName,
         leaderDesc,
         topic,
@@ -52,12 +52,12 @@ export const usePostCreateGroup = ({
         topicDesc,
       },
     ],
-    mutationFn: () =>
+    mutationFn: (groupImageUrl: string) =>
       postCreateGroup({
         groupName,
         groupInfo,
         isPublic,
-        groupImageFile,
+        groupImageUrl,
         leaderPenName,
         leaderDesc,
         topic,

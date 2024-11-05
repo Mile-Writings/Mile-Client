@@ -1,18 +1,14 @@
 import { isAxiosError } from 'axios';
 
 import { authClient } from '../../../utils/apis/axios';
-
 //[GET] 관리자페이지 글감 LIST
-export const fetchAdminTopic = async (groupId: string | undefined, pageNum: number) => {
-  try {
-    const response = await authClient.get<AdminTopicPropTypes>(
-      `/api/moim/${groupId}/admin/topics?page=${pageNum}`,
-    );
 
-    return response.data;
-  } catch (error) {
-    console.log('에러:', error);
-  }
+export const fetchAdminTopic = async (groupId: string | undefined, pageNum: number) => {
+  const response = await authClient.get<AdminTopicPropTypes>(
+    `/api/moim/${groupId}/admin/topics?page=${pageNum}`,
+  );
+
+  return response.data;
 };
 
 interface AdminTopicPropTypes {

@@ -6,12 +6,8 @@ interface DeleteGroupResponseType {
   data: object;
 }
 const deleteGroup = async (moimId: string) => {
-  try {
-    const data = authClient.delete<DeleteGroupResponseType>(`/api/moim/${moimId}`);
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
+  const data = authClient.delete<DeleteGroupResponseType>(`/api/moim/${moimId}`);
+  return data;
 };
 
 export default deleteGroup;
