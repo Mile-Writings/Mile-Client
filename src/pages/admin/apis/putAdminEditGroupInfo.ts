@@ -8,6 +8,10 @@ export interface AdminEditGroupInfoPropTypes {
   isPublic: boolean;
   groupId: string | undefined;
 }
+export type AdminEditGroupInfoWithoutImage = Omit<
+  AdminEditGroupInfoPropTypes,
+  'groupImageServerUrl'
+>;
 
 const putAdminEditGroupInfo = async ({
   groupName,
@@ -16,16 +20,12 @@ const putAdminEditGroupInfo = async ({
   groupImageServerUrl,
   groupId,
 }: AdminEditGroupInfoPropTypes) => {
-  try {
-    await authClient.put(`/api/moim/${groupId}/info`, {
-      moimTitle: groupName,
-      description: groupDesc,
-      imageUrl: groupImageServerUrl || DEFAULT_IMG_URL,
-      isPublic: isPublic,
-    });
-  } catch (err) {
-    console.error(err);
-  }
+  await authClient.put(`/api/moim/${groupId}/info`, {
+    moimTitle: groupName,
+    description: groupDesc,
+    imageUrl: groupImageServerUrl || DEFAULT_IMG_URL,
+    isPublic: isPublic,
+  });
 };
 
 export default putAdminEditGroupInfo;

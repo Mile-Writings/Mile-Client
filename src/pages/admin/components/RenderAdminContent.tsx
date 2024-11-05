@@ -10,26 +10,31 @@ import TopicAdmin from './TopicAdmin';
 import { MODAL } from '../constants/modal';
 import { useAdminTopic, useDeleteGroup, useFetchMemberInfo } from '../hooks/queries';
 
+import { useNavigate } from 'react-router-dom';
 import { MakeGroupAdminIc } from '../../../assets/svgs';
 import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 import Spacing from '../../../components/commons/Spacing';
-import useModal from '../../../hooks/useModal';
-import Error from '../../error/Error';
-import Loading from '../../loading/Loading';
 import useBlockPageExit from '../../../hooks/useBlockPageExit';
-
+import useModal from '../../../hooks/useModal';
+import Loading from '../../loading/Loading';
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
   const { groupId } = useParams();
   const [page, setPage] = useState(1);
   const [pageNum, setPageNum] = useState(1);
 
   const { memberData, totalMember } = useFetchMemberInfo(groupId || '', page);
-  const { topicCount, adminTopicData } = useAdminTopic(groupId, pageNum);
+  const {
+    topicCount,
+    adminTopicData,
+    isError: isAdminTopicError,
+  } = useAdminTopic(groupId, pageNum);
 
   // input 모달 열고 닫기
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
+
+  const navigate = useNavigate();
 
   // 공통 모달 열고 닫기
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
@@ -50,8 +55,8 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
     setIgnoreBlocker(true);
   };
 
-  if (isError) {
-    return <Error />;
+  if (isError || isAdminTopicError) {
+    navigate('/error');
   }
   if (isPending) {
     return <Loading />;

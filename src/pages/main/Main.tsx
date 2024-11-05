@@ -14,12 +14,12 @@ import Footer from './../../components/commons/Footer';
 import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/commons/Header';
 import Spacing from './../../components/commons/Spacing';
 import GroupCarousel from './components/GroupCarousel';
-
 const Main = () => {
   const { content, moimId } = useParams();
   const topic = useGetRecommendTopic(content || '');
   const { data, isFetching, isLoading } = useGetGroupContent(moimId || '');
   const groupLength = data?.length;
+
   return (
     <MainPageWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
