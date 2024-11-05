@@ -187,8 +187,8 @@ const ArticleContent = styled.div`
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray70};
-
   ${({ theme }) => theme.fonts.body3};
+  word-break: break-all;
 `;
 
 const ArticleInfo = styled.div`
