@@ -2,7 +2,7 @@
 import styled from '@emotion/styled';
 import { createBrowserHistory } from 'history';
 import React, { useEffect, useReducer, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import DropDown from './components/DropDown';
 import ImageUpload from './components/ImageUpload';
@@ -155,7 +155,6 @@ const PostPage = () => {
   const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =
     useBlockPageExit();
   const navigate = useNavigate();
-  const location = useLocation();
   const history = createBrowserHistory();
 
   // editor content API 관련
@@ -179,13 +178,15 @@ const PostPage = () => {
   };
 
   // 모임 ID, url에서 받아오기
-  const { groupId, viewType } = useParams() as { groupId: string; viewType: string };
+  const { groupId, viewType, editPostId } = useParams() as {
+    groupId: string;
+    viewType: string;
+    editPostId: string;
+  };
   // 임시저장 값 여부 확인 (서버값)
   const { isTemporaryPostExist, tempPostId } = useTempSaveFlag(groupId || '', viewType === 'post');
   // 임시저장 이어쓰기 yes 인 경우 판별
   const [continueTempPost, setContinueTempPost] = useState(false);
-  // 수정하기, 임시저장 postId 저장
-  const [editPostId, setEditPostId] = useState('');
   const [previewImgUrl, setPreviewImgUrl] = useState(EDITOR_DEFAULT_IMG);
   // modal 열고닫음
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
@@ -275,24 +276,27 @@ const PostPage = () => {
     }
   }, [postContentId]);
 
+  // 수정하기 글 내용 받아오기
+  const { editPostTopicList, editPostTitle, editPostContent, editPostImageUrl, editPostAnonymous } =
+    useGetEditPostContent(editPostId, viewType === 'edit');
+
   useEffect(() => {
     // 수정하기에서 넘어온 view일 경우 값 업데이트
     if (viewType === 'edit') {
-      setEditPostId(location.state.postId);
-      setPreviewImgUrl(location.state.imageUrl);
-      setContentWithoutTag(location.state.title);
+      setPreviewImgUrl(editPostImageUrl);
       editorContentDispatch({
         type: 'setEditValue',
-        topic: location.state.topic,
-        imageUrl: location.state.imageUrl,
-        title: location.state.title,
-        writer: location.state.writer === '작자미상' ? '작자미상' : '필명',
-        content: location.state.content,
+        topic:
+          editPostTopicList?.find((topicEl: tempTopicListType) => topicEl.isSelected)?.topicName ||
+          '',
+        imageUrl: editPostImageUrl,
+        title: editPostTitle,
+        writer: editPostAnonymous ? '작자미상' : '필명',
+        content: editPostContent,
       });
     }
     // 임시저장된 값으로 업데이트
     if (viewType === 'post' && continueTempPost) {
-      setEditPostId(tempPostId || '');
       setPreviewImgUrl(tempImageUrl);
       editorContentDispatch({
         type: 'setTempValue',
@@ -304,7 +308,7 @@ const PostPage = () => {
         writer: tempAnonymous ? '작자미상' : '필명',
       });
     }
-  }, [viewType, continueTempPost, tempTitle, tempContent]);
+  }, [viewType, editPostId, continueTempPost, tempTitle, tempContent, editPostTitle]);
 
   // 수정하기 제출하기
   const { mutate: putEditContent } = usePutEditContent({
@@ -569,7 +573,7 @@ const PostPage = () => {
         title={editorVal.title}
         setTitle={setTitle}
         tempContent={tempContent}
-        editContent={viewType === 'edit' ? location?.state?.content : ''}
+        editContent={viewType === 'edit' ? editPostContent : ''}
         setEditorContent={setContent}
         setContentWithoutTag={setContentWithoutTag}
       />

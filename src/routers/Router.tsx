@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         element: <PrivateRoute />,
         children: [
           { path: 'admin/:groupId', element: <Admin /> },
-          { path: 'post/:groupId/:viewType', element: <PostPage /> },
+          { path: 'post/:groupId/:viewType/:editPostId?', element: <PostPage /> },
           { path: 'group/create', element: <CreateGroup /> },
           { path: 'group/success/:groupId', element: <CreateGroupSuccess /> },
           { path: 'group/:groupId/groupJoin', element: <GroupJoinCongrats /> },
