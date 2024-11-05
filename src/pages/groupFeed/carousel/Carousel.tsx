@@ -114,6 +114,5 @@ const TopicDescription = styled.div`
   width: 63.1rem;
 
   color: ${({ theme }) => theme.colors.gray70};
-
   ${({ theme }) => theme.fonts.body3};
 `;
