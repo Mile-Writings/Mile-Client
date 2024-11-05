@@ -231,7 +231,7 @@ const CreateGroupInfo = ({
           <Spacing marginBottom="2.4" />
           <picture>
             <source srcSet={createGroupWebp} />
-            <IllustImg src={createGroupIlust} />
+            <img src={createGroupIlust} />
           </picture>
         </TitleWrapper>
         <WhiteInputWrapper isValid={!isGroupNameEmpty}>
@@ -665,13 +665,6 @@ const Title = styled.h1`
 const SubTitle = styled.h2`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.title5};
-`;
-
-const IllustImg = styled.img`
-  display: flex;
-  flex-shrink: 0;
-  width: 100%;
-  height: 36.6rem;
 `;
 
 const WhiteInputWrapper = styled.section<{ isValid: boolean }>`

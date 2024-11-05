@@ -15,7 +15,7 @@ const Error = () => {
     <ErrorWrapper>
       <picture>
         <source srcSet={errorWebp} type="image/webp" />
-        <ErrorIlustImg src={errorIlust} />
+        <img src={errorIlust} />
       </picture>
       <Spacing marginBottom="0.8" />
       <Title>페이지를 찾지 못했어요</Title>
@@ -72,9 +72,4 @@ const BackToPrevPageBtn = styled.button`
   background-color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.button3};
   border-radius: 8px;
-`;
-
-const ErrorIlustImg = styled.img`
-  width: 51rem;
-  height: 24.5rem;
 `;
