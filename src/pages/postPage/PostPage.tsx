@@ -287,6 +287,7 @@ const PostPage = () => {
     // 수정하기에서 넘어온 view일 경우 값 업데이트
     if (viewType === 'edit') {
       setPreviewImgUrl(editPostImageUrl);
+      setContentWithoutTag(editPostContent);
       editorContentDispatch({
         type: 'setEditValue',
         topic:
