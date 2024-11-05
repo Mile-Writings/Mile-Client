@@ -12,6 +12,7 @@ import {
 import { useGetGroupNameValidation } from '../hooks/queries';
 import { CurrentPageType } from '../types/stateType';
 import createGroupIlust from '/src/assets/images/createGroupIlust.png';
+import createGroupWebp from '/src/assets/webps/createGroup.webp';
 
 import {
   CreateGroupImageUpload,
@@ -228,7 +229,10 @@ const CreateGroupInfo = ({
           <Spacing marginBottom="1.1" />
           <Title>나만의 글 모임을 만들어보세요</Title>
           <Spacing marginBottom="2.4" />
-          <IllustImg src={createGroupIlust} />
+          <picture>
+            <source srcSet={createGroupWebp} />
+            <IllustImg src={createGroupIlust} />
+          </picture>
         </TitleWrapper>
         <WhiteInputWrapper isValid={!isGroupNameEmpty}>
           <GroupInputWrapper>

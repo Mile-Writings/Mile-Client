@@ -74,10 +74,6 @@ const BackToPrevPageBtn = styled.button`
   border-radius: 8px;
 `;
 
-const ErrorIlust = styled.picture`
-  width: 51rem;
-  height: 24.5rem;
-`;
 const ErrorIlustImg = styled.img`
   width: 51rem;
   height: 24.5rem;
