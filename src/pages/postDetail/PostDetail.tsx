@@ -254,6 +254,7 @@ const DetailBox = styled.div`
 const TitleText = styled.h1`
   color: ${({ theme }) => theme.colors.grayBlack};
   ${({ theme }) => theme.fonts.title1};
+  word-break: break-all;
 `;
 
 const DateText = styled.p`
