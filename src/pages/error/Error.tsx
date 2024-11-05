@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Spacing from '../../components/commons/Spacing';
 import errorIlust from '/src/assets/images/errorIlust.png';
+import errorWebp from '/src/assets/webps/error.webp';
 
 const Error = () => {
   const navigate = useNavigate();
@@ -12,7 +13,10 @@ const Error = () => {
 
   return (
     <ErrorWrapper>
-      <ErrorIlustImage src={errorIlust} />
+      <picture>
+        <source srcSet={errorWebp} type="image/webp" />
+        <ErrorIlustImg src={errorIlust} />
+      </picture>
       <Spacing marginBottom="0.8" />
       <Title>페이지를 찾지 못했어요</Title>
       <Spacing marginBottom="1.2" />
@@ -70,7 +74,11 @@ const BackToPrevPageBtn = styled.button`
   border-radius: 8px;
 `;
 
-const ErrorIlustImage = styled.img`
+const ErrorIlust = styled.picture`
+  width: 51rem;
+  height: 24.5rem;
+`;
+const ErrorIlustImg = styled.img`
   width: 51rem;
   height: 24.5rem;
 `;
