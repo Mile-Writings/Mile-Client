@@ -101,16 +101,7 @@ const PostDetail = () => {
   };
   // 수정 동작 버튼
   const handleEdit = () => {
-    navigate(`/post/${groupId}/edit`, {
-      state: {
-        postId: postId,
-        topic: postData?.topic,
-        writer: postData?.writerName,
-        title: postData?.title,
-        content: postData?.content,
-        imageUrl: postData?.imageUrl,
-      },
-    });
+    navigate(`/post/${groupId}/edit/${postId}`);
   };
 
   return (

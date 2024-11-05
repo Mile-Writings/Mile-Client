@@ -2,7 +2,7 @@
 import styled from '@emotion/styled';
 import { createBrowserHistory } from 'history';
 import React, { useEffect, useReducer, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import handleImageUpload from '../../utils/handleImageUpload';
 import DropDown from './components/DropDown';
 import ImageUpload from './components/ImageUpload';
@@ -18,6 +18,7 @@ import {
   usePutEditContent,
   usePutTempSaveContent,
   useTempSaveFlag,
+  useGetEditPostContent,
 } from './hooks/queries';
 import { allowScroll, preventScroll } from './utils/modalPreventScroll';
 
@@ -150,7 +151,6 @@ const PostPage = () => {
   const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =
     useBlockPageExit();
   const navigate = useNavigate();
-  const location = useLocation();
   const history = createBrowserHistory();
 
   // editor content API 관련
@@ -171,13 +171,15 @@ const PostPage = () => {
   };
 
   // 모임 ID, url에서 받아오기
-  const { groupId, type } = useParams() as { groupId: string; type: string };
+  const { groupId, viewType, editPostId } = useParams() as {
+    groupId: string;
+    viewType: string;
+    editPostId: string;
+  };
   // 임시저장 값 여부 확인 (서버값)
-  const { isTemporaryPostExist, tempPostId } = useTempSaveFlag(groupId || '', type === 'post');
+  const { isTemporaryPostExist, tempPostId } = useTempSaveFlag(groupId || '', viewType === 'post');
   // 임시저장 이어쓰기 yes 인 경우 판별
   const [continueTempPost, setContinueTempPost] = useState(false);
-  // 수정하기, 임시저장 postId 저장
-  const [editPostId, setEditPostId] = useState('');
   const [previewImgUrl, setPreviewImgUrl] = useState(EDITOR_DEFAULT_IMG);
   // modal 열고닫음
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
@@ -205,13 +207,13 @@ const PostPage = () => {
 
   // 최초 뷰 들어왔을 때 임시저장 이어쓸지 confirm 창
   useEffect(() => {
-    if (type === 'post' && isTemporaryPostExist && !continueTempPost) {
+    if (viewType === 'post' && isTemporaryPostExist && !continueTempPost) {
       setEditorModalType('continueTempSave');
 
       setShowTempContinueModal(true);
       preventScroll();
     }
-  }, [isTemporaryPostExist, type, continueTempPost]);
+  }, [isTemporaryPostExist, viewType, continueTempPost]);
 
   // 임시저장 삭제하기
   const { mutate: deleteTempPost } = useDeleteTempPost(tempPostId || '', groupId);
@@ -277,24 +279,28 @@ const PostPage = () => {
     }
   };
 
+  // 수정하기 글 내용 받아오기
+  const { editPostTopicList, editPostTitle, editPostContent, editPostImageUrl, editPostAnonymous } =
+    useGetEditPostContent(editPostId, viewType === 'edit');
+
   useEffect(() => {
     // 수정하기에서 넘어온 view일 경우 값 업데이트
-    if (type === 'edit') {
-      setEditPostId(location.state.postId);
-      setPreviewImgUrl(location.state.imageUrl);
-      setContentWithoutTag(location.state.title);
+    if (viewType === 'edit') {
+      setPreviewImgUrl(editPostImageUrl);
+      setContentWithoutTag(editPostContent);
       editorContentDispatch({
         type: 'setEditValue',
-        topic: location.state.topic,
-        imageUrl: location.state.imageUrl,
-        title: location.state.title,
-        writer: location.state.writer === '작자미상' ? '작자미상' : '필명',
-        content: location.state.content,
+        topic:
+          editPostTopicList?.find((topicEl: tempTopicListType) => topicEl.isSelected)?.topicName ||
+          '',
+        imageUrl: editPostImageUrl,
+        title: editPostTitle,
+        writer: editPostAnonymous ? '작자미상' : '필명',
+        content: editPostContent,
       });
     }
     // 임시저장된 값으로 업데이트
-    if (type === 'post' && continueTempPost) {
-      setEditPostId(tempPostId || '');
+    if (viewType === 'post' && continueTempPost) {
       setPreviewImgUrl(tempImageUrl);
       setContentWithoutTag(tempContent);
       editorContentDispatch({
@@ -307,7 +313,7 @@ const PostPage = () => {
         writer: tempAnonymous ? '작자미상' : '필명',
       });
     }
-  }, [type, continueTempPost, tempTitle, tempContent]);
+  }, [viewType, editPostId, continueTempPost, tempTitle, tempContent, editPostTitle]);
 
   // 수정하기 제출하기
   const { mutate: putEditContent } = usePutEditContent({
@@ -354,7 +360,7 @@ const PostPage = () => {
     title: editorVal.title || '',
     content: editorVal.content || '',
     anonymous: editorVal.writer === '작자미상',
-    isPostView: type === 'post',
+    isPostView: viewType === 'post',
   });
 
   // 임시저장 버튼 누르면 열리는 모달
@@ -536,7 +542,7 @@ const PostPage = () => {
   return (
     <PostPageWrapper>
       {/* 헤더 */}
-      {type === 'edit' ? (
+      {viewType === 'edit' ? (
         <EditorEditHeader onClickEditSave={onClickEditSaveBtn} />
       ) : continueTempPost ? (
         <EditorTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />
@@ -576,7 +582,7 @@ const PostPage = () => {
         title={editorVal.title}
         setTitle={setTitle}
         tempContent={tempContent}
-        editContent={type === 'edit' ? location?.state?.content : ''}
+        editContent={viewType === 'edit' ? editPostContent : ''}
         setEditorContent={setContent}
         setContentWithoutTag={setContentWithoutTag}
       />
