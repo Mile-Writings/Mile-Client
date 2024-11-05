@@ -12,7 +12,7 @@ import {
 import { useGetGroupNameValidation } from '../hooks/queries';
 import { CurrentPageType } from '../types/stateType';
 import createGroupIlust from '/src/assets/images/createGroupIlust.png';
-import createGroupWebp from '/src/assets/webps/createGroup.webp';
+import createGroupWebp from '/src/assets/webps/creategroup.webp';
 
 import {
   CreateGroupImageUpload,
