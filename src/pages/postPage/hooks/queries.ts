@@ -9,6 +9,7 @@ import { fetchTempSaveContent } from '../apis/fetchTempSaveContent';
 import { fetchTempSaveFlag } from '../apis/fetchTempSaveFlag';
 import { fetchTopic } from '../apis/fetchTopic';
 import saveTempSavecontent from '../apis/saveTempSaveContent';
+import { fetchEditPostContent } from '../apis/fetchEditPostContent';
 
 import { QUERY_KEY_POST_DETAIL } from '../../postDetail/hooks/queries';
 import { isAxiosError } from 'axios';
@@ -19,6 +20,7 @@ export const QUERY_KEY_POST = {
   getTopic: 'getTopic',
   getTempSaveFlag: 'getTempSaveFlag',
   getPresignedUrl: 'getPresignedUrl',
+  getEditPostContent: 'getEditPostContent',
   putEditContent: 'putEditContent',
   postSaveTempContent: 'postSaveTempContent',
   getTempSaveContent: 'getTempSaveContent',
@@ -124,6 +126,23 @@ export const usePresignedUrl = (): PresignedUrlQueryResult => {
   const fileName = data && data?.data?.fileName;
   const url = data && data?.data?.url;
   return { fileName, url };
+};
+
+// 글 수정시 글 조회 GET
+export const useGetEditPostContent = (postId: string, isEditView: boolean) => {
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY_POST.getEditPostContent, postId],
+    queryFn: () => fetchEditPostContent(postId),
+    enabled: !!isEditView,
+  });
+
+  const editPostTopicList = data && data?.data?.topicList;
+  const editPostTitle = data && data?.data?.title;
+  const editPostContent = data && data?.data?.content;
+  const editPostImageUrl = data && data?.data?.imageUrl;
+  const editPostAnonymous = data && data?.data?.anonymous;
+
+  return { editPostTopicList, editPostTitle, editPostContent, editPostImageUrl, editPostAnonymous };
 };
 
 // 글 수정하기 Put
