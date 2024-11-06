@@ -313,7 +313,7 @@ const PostPage = () => {
         writer: tempAnonymous ? '작자미상' : '필명',
       });
     }
-  }, [viewType, editPostId, continueTempPost, tempTitle, tempContent, editPostTitle]);
+  }, [viewType, continueTempPost, tempTitle, tempContent, editPostTitle, editPostContent]);
 
   // 수정하기 제출하기
   const { mutate: putEditContent } = usePutEditContent({

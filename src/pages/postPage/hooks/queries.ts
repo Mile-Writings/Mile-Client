@@ -136,9 +136,10 @@ export const usePresignedUrl = (): PresignedUrlQueryResult => {
 // 글 수정시 글 조회 GET
 export const useGetEditPostContent = (postId: string, isEditView: boolean) => {
   const { data } = useQuery({
-    queryKey: [QUERY_KEY_POST.getEditPostContent, postId],
+    queryKey: [QUERY_KEY_POST.getEditPostContent, postId, isEditView],
     queryFn: () => fetchEditPostContent(postId),
     enabled: !!isEditView,
+    staleTime: 0,
   });
 
   const editPostTopicList = data && data?.data?.topicList;
