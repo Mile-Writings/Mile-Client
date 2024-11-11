@@ -13,6 +13,8 @@ import OnBoarding from './components/OnBoarding';
 import { SkeletonComponent } from './components/skeletons/SkeletonComponent';
 import { FAQ_DATA } from './constants/faqData';
 import { useGetGroupContent, useGetRecommendTopic } from './hooks/queries';
+
+import Footer from '../../components/commons/Footer';
 const Main = () => {
   const { content, moimId } = useParams();
   const topic = useGetRecommendTopic(content || '');
@@ -57,9 +59,9 @@ const Main = () => {
           ))}
         </FaqContainer>
       </FaqLayout>
-      {/*
+
       <Spacing marginBottom="17.3" />
-      <Footer /> */}
+      <Footer />
     </MainPageWrapper>
   );
 };
