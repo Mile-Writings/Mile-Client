@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import router from './routers/Router';
-import { RouterProvider } from 'react-router-dom';
 import { Suspense } from 'react';
+import { RouterProvider } from 'react-router-dom';
+import ResponsiveProvider from './components/commons/Responsive/ResponsiveProvider';
 import Loading from './pages/loading/Loading';
-
+import router from './routers/Router';
 const App = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -18,11 +18,13 @@ const App = () => {
     <>
       <div style={{ fontSize: '16px' }}>
         <QueryClientProvider client={queryClient}>
-          <DesktopWrapper>
-            <Suspense fallback={<Loading />}>
-              <RouterProvider router={router} />
-            </Suspense>
-          </DesktopWrapper>
+          <ResponsiveProvider>
+            <DesktopWrapper>
+              <Suspense fallback={<Loading />}>
+                <RouterProvider router={router} />
+              </Suspense>
+            </DesktopWrapper>
+          </ResponsiveProvider>
           <ReactQueryDevtools initialIsOpen />
         </QueryClientProvider>
       </div>
