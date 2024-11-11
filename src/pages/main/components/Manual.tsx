@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import Spacing from '../../../components/commons/Spacing';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 import { MAIN_MANUAL_IMG_URL, MAIN_MANUAL_WEBP_URL } from '../constants/mainManualImgURL';
 
 const Manual = () => {
@@ -42,9 +43,19 @@ const ManualLayout = styled.section`
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   width: 92.8rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+  }
 `;
 
 const ManualImg = styled.img`
   width: 29.6rem;
   height: 37.2rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 16.2rem;
+    height: 20rem;
+  }
 `;

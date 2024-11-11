@@ -7,6 +7,7 @@ import Spacing from './../../components/commons/Spacing';
 import DailyKeyword from './components/DailyKeyword';
 import GroupCarousel from './components/GroupCarousel';
 import Introduction from './components/Introduction';
+import Manual from './components/Manual';
 import OnBoarding from './components/OnBoarding';
 import { SkeletonComponent } from './components/skeletons/SkeletonComponent';
 import { useGetGroupContent, useGetRecommendTopic } from './hooks/queries';
@@ -42,9 +43,9 @@ const Main = () => {
       <Spacing marginBottom="10" />
       <Introduction />
       <Spacing marginBottom="10" />
-      {/*
-      <Manual />
 
+      <Manual />
+      {/*
       <FaqLayout>
         <FaqContainer>
           <FaqTitle>자주 묻는 질문</FaqTitle>
