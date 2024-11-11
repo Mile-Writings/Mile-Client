@@ -1,15 +1,15 @@
 import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
 import Responsive from '../../components/commons/Responsive/Responsive';
-import DailyKeyword from './components/DailyKeyword';
-import OnBoarding from './components/OnBoarding';
-import { SkeletonComponent } from './components/skeletons/SkeletonComponent';
-import { useGetGroupContent, useGetRecommendTopic } from './hooks/queries';
-
 import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/commons/Header';
 import Spacing from './../../components/commons/Spacing';
+import DailyKeyword from './components/DailyKeyword';
 import GroupCarousel from './components/GroupCarousel';
+import Introduction from './components/Introduction';
+import OnBoarding from './components/OnBoarding';
+import { SkeletonComponent } from './components/skeletons/SkeletonComponent';
+import { useGetGroupContent, useGetRecommendTopic } from './hooks/queries';
 const Main = () => {
   const { content, moimId } = useParams();
   const topic = useGetRecommendTopic(content || '');
@@ -40,8 +40,9 @@ const Main = () => {
 
       <DailyKeyword content={topic?.data?.content} />
       <Spacing marginBottom="10" />
-      {/* <Introduction />
+      <Introduction />
       <Spacing marginBottom="10" />
+      {/*
       <Manual />
 
       <FaqLayout>
