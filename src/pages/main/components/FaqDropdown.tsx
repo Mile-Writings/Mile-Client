@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 import { MainToggleArrowOpenedIc, MainTogglearrowClosedIc } from './../../../assets/svgs';
 import { faqDataPropTypes } from './../constants/faqData';
 
@@ -15,16 +16,14 @@ const FaqDropdown = ({ id, question, answer }: faqDataPropTypes) => {
   return (
     <FaqWrapper>
       <DropdownLayout onClick={handleDropDown}>
-        <FaqContainer>
-          <QuestionAnswerBox key={id}>
-            <Question>
-              <QuestionMarkText>Q.</QuestionMarkText>
-              <QuestionText>{question}</QuestionText>
-              {dropDownOpened ? <MainTogglearrowClosedIc /> : <MainToggleArrowOpenedIc />}
-            </Question>
-            {dropDownOpened && <AnswerTextBox>{answer}</AnswerTextBox>}
-          </QuestionAnswerBox>
-        </FaqContainer>
+        <QuestionAnswerBox key={id}>
+          <Question>
+            <QuestionMarkText>Q.</QuestionMarkText>
+            <QuestionText>{question}</QuestionText>
+            {dropDownOpened ? <MainTogglearrowClosedIc /> : <MainToggleArrowOpenedIc />}
+          </Question>
+          {dropDownOpened && <AnswerTextBox>{answer}</AnswerTextBox>}
+        </QuestionAnswerBox>
       </DropdownLayout>
     </FaqWrapper>
   );
@@ -42,16 +41,23 @@ const FaqWrapper = styled.section`
 
 const DropdownLayout = styled.section`
   width: fit-content;
+  width: 87.4rem;
   padding: 2.4rem 2.8rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    min-width: 33.5rem;
+    max-width: 81rem;
+  }
 `;
 
-const FaqContainer = styled.div`
-  width: 87.4rem;
-`;
+// const FaqContainer = styled.div`
+
+// `;
 
 const QuestionAnswerBox = styled.div`
   display: flex;

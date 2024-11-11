@@ -5,11 +5,13 @@ import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/commons/Header';
 import Spacing from './../../components/commons/Spacing';
 import DailyKeyword from './components/DailyKeyword';
+import FaqDropdown from './components/FaqDropdown';
 import GroupCarousel from './components/GroupCarousel';
 import Introduction from './components/Introduction';
 import Manual from './components/Manual';
 import OnBoarding from './components/OnBoarding';
 import { SkeletonComponent } from './components/skeletons/SkeletonComponent';
+import { FAQ_DATA } from './constants/faqData';
 import { useGetGroupContent, useGetRecommendTopic } from './hooks/queries';
 const Main = () => {
   const { content, moimId } = useParams();
@@ -45,7 +47,7 @@ const Main = () => {
       <Spacing marginBottom="10" />
 
       <Manual />
-      {/*
+
       <FaqLayout>
         <FaqContainer>
           <FaqTitle>자주 묻는 질문</FaqTitle>
@@ -55,7 +57,7 @@ const Main = () => {
           ))}
         </FaqContainer>
       </FaqLayout>
-
+      {/*
       <Spacing marginBottom="17.3" />
       <Footer /> */}
     </MainPageWrapper>
@@ -111,6 +113,8 @@ const FaqLayout = styled.section`
 `;
 
 const FaqContainer = styled.div`
+  padding: 0 2rem;
+
   cursor: default;
 `;
 
