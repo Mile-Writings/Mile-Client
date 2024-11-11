@@ -18,9 +18,13 @@ const FaqDropdown = ({ id, question, answer }: faqDataPropTypes) => {
       <DropdownLayout onClick={handleDropDown}>
         <QuestionAnswerBox key={id}>
           <Question>
-            <QuestionMarkText>Q.</QuestionMarkText>
-            <QuestionText>{question}</QuestionText>
-            {dropDownOpened ? <MainTogglearrowClosedIc /> : <MainToggleArrowOpenedIc />}
+            <TextWrapper>
+              <QuestionMarkText>Q.</QuestionMarkText>
+              <QuestionText>{question}</QuestionText>
+            </TextWrapper>
+            <ToggleWrapper>
+              {dropDownOpened ? <MainTogglearrowClosedIc /> : <MainToggleArrowOpenedIc />}
+            </ToggleWrapper>
           </Question>
           {dropDownOpened && <AnswerTextBox>{answer}</AnswerTextBox>}
         </QuestionAnswerBox>
@@ -31,6 +35,19 @@ const FaqDropdown = ({ id, question, answer }: faqDataPropTypes) => {
 
 export default FaqDropdown;
 
+const ToggleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: cneter;
+  width: 1.4rem;
+  height: 1.4rem;
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+`;
 const FaqWrapper = styled.section`
   display: flex;
   flex-direction: column;
@@ -65,22 +82,46 @@ const QuestionAnswerBox = styled.div`
 `;
 
 const Question = styled.div`
+  /* position: relative; */
   display: flex;
   gap: 0.8rem;
   align-items: center;
+  justify-content: space-between;
 
   & > svg {
-    margin-left: auto;
+    /* position: absolute;
+    right: 0; */
   }
 `;
 
 const QuestionMarkText = styled.p`
   color: ${({ theme }) => theme.colors.mainViolet};
   ${({ theme }) => theme.fonts.title5};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    font-weight: 400;
+    font-size: 14px;
+
+    /* mBody 2 */
+
+    font-style: normal;
+    line-height: 140%; /* 19.6px */
+  }
 `;
 
 const QuestionText = styled.p`
   ${({ theme }) => theme.fonts.title5};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 85%;
+
+    font-weight: 600;
+    font-size: 16px;
+
+    /* mTitle 6 */
+
+    font-style: normal;
+  }
 `;
 
 const AnswerTextBox = styled.div`
