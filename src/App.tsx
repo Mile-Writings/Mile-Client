@@ -6,6 +6,7 @@ import { RouterProvider } from 'react-router-dom';
 import ResponsiveProvider from './components/commons/Responsive/ResponsiveProvider';
 import Loading from './pages/loading/Loading';
 import router from './routers/Router';
+import { MOBILE_MEDIA_QUERY } from './styles/mediaQuery';
 const App = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -25,7 +26,7 @@ const App = () => {
               </Suspense>
             </DesktopWrapper>
           </ResponsiveProvider>
-          <ReactQueryDevtools initialIsOpen />
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </div>
     </>
@@ -40,4 +41,9 @@ const DesktopWrapper = styled.div`
   align-items: center;
   width: 100%;
   scroll-behavior: smooth;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    /* width: 100%; */
+    max-width: 83rem;
+  }
 `;

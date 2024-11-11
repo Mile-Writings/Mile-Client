@@ -5,7 +5,7 @@ import { ResponsiveContext } from './context';
 interface ResponsivePropTypes {
   children: ReactNode;
   only: AvailableSize;
-  asChild: boolean;
+  asChild?: boolean;
 }
 
 type AvailableSize = 'mobile' | 'desktop';
@@ -39,7 +39,7 @@ const Responsive = ({ children, only, asChild }: ResponsivePropTypes) => {
     };
   }, []);
   return current === null || only === current ? (
-    <Comp className={`${selectedClassName}`}>{children}</Comp>
+    <Comp className={`${selectedClassName()}`}>{children}</Comp>
   ) : (
     <></>
   );
