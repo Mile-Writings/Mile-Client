@@ -74,7 +74,7 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
               </CarouselContainer>
             </Responsive>
 
-            <Responsive only="mobile">
+            <Responsive only="mobile" asChild>
               <CarouselContainer {...settings} className="main">
                 {moim.moimPosts.map((post, index) => (
                   <CarouselContent
@@ -145,11 +145,13 @@ const CarouselContainer = styled(Slider)`
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
+    /* width: 45rem; */
+
     width: 100%;
     max-width: 65rem;
 
     .slick-slide.slick-active:last-child {
-      width: 45rem !important;
+      width: 42rem !important;
     }
   }
 `;

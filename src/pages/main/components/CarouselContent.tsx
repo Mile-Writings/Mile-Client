@@ -168,7 +168,7 @@ const SubText = styled.span<{ isContainPhoto: boolean; isLast: boolean }>`
 
   ${({ theme }) => theme.fonts.body3};
   @media ${MOBILE_MEDIA_QUERY} {
-    width: 42rem;
+    width: 40rem;
     height: ${({ isContainPhoto }) => (isContainPhoto ? 6.4 : 19.8)}rem;
     margin-top: 1rem;
     -webkit-line-clamp: ${({ isContainPhoto }) => (isContainPhoto ? 3 : 9)};

@@ -2,16 +2,11 @@ import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
 import Responsive from '../../components/commons/Responsive/Responsive';
 import DailyKeyword from './components/DailyKeyword';
-import FaqDropdown from './components/FaqDropdown';
-import Introduction from './components/Introduction';
-import Manual from './components/Manual';
 import OnBoarding from './components/OnBoarding';
 import { SkeletonComponent } from './components/skeletons/SkeletonComponent';
-import { FAQ_DATA } from './constants/faqData';
 import { useGetGroupContent, useGetRecommendTopic } from './hooks/queries';
 
 import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
-import Footer from './../../components/commons/Footer';
 import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/commons/Header';
 import Spacing from './../../components/commons/Spacing';
 import GroupCarousel from './components/GroupCarousel';
@@ -45,7 +40,7 @@ const Main = () => {
 
       <DailyKeyword content={topic?.data?.content} />
       <Spacing marginBottom="10" />
-      <Introduction />
+      {/* <Introduction />
       <Spacing marginBottom="10" />
       <Manual />
 
@@ -60,7 +55,7 @@ const Main = () => {
       </FaqLayout>
 
       <Spacing marginBottom="17.3" />
-      <Footer />
+      <Footer /> */}
     </MainPageWrapper>
   );
 };
