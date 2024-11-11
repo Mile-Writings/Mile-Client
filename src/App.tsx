@@ -17,18 +17,18 @@ const App = () => {
   });
   return (
     <>
-      <div style={{ fontSize: '16px' }}>
-        <QueryClientProvider client={queryClient}>
-          <ResponsiveProvider>
-            <DesktopWrapper>
-              <Suspense fallback={<Loading />}>
-                <RouterProvider router={router} />
-              </Suspense>
-            </DesktopWrapper>
-          </ResponsiveProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </div>
+      {/* <div style={{ fontSize: '16px' }}> */}
+      <QueryClientProvider client={queryClient}>
+        <ResponsiveProvider>
+          <DesktopWrapper>
+            <Suspense fallback={<Loading />}>
+              <RouterProvider router={router} />
+            </Suspense>
+          </DesktopWrapper>
+        </ResponsiveProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+      {/* </div> */}
     </>
   );
 };
@@ -44,6 +44,7 @@ const DesktopWrapper = styled.div`
 
   @media ${MOBILE_MEDIA_QUERY} {
     /* width: 100%; */
+    width: 100%;
     max-width: 83rem;
   }
 `;
