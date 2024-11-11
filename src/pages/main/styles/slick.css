@@ -25,6 +25,10 @@
 
   margin: 0;
   padding: 0;
+  @media screen and (max-width: 850px) {
+    width: 100%;
+    max-width: 45rem;
+  }
 }
 .slick-list:focus {
   outline: none;
@@ -75,6 +79,10 @@
 .slick-slide {
   width: 45.4rem;
   height: 24rem;
+
+  @media screen and (max-width: 850px) {
+    height: 29rem;
+  }
 }
 [dir='rtl'] .slick-slide {
   float: right;

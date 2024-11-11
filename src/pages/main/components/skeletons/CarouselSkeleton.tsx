@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import Skeleton from './Skeleton';
 
 import Spacing from '../../../../components/commons/Spacing';
+import { MOBILE_MEDIA_QUERY } from '../../../../styles/mediaQuery';
 
 const CarouselSkeleton = () => {
   return (
@@ -43,6 +44,11 @@ const CarouselBox = styled.section`
 
   background-color: ${({ theme }) => theme.colors.grayViolet};
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    max-width: 83rem;
+  }
 `;
 
 const TextContainer = styled.div`
