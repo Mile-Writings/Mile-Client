@@ -29,13 +29,7 @@ const GroupFeed = () => {
   const { groupId } = useParams();
   const accessToken = localStorage.getItem('accessToken');
 
-  const {
-    isMember,
-    isOwner,
-    isLoading: isAuthLoading,
-    isError,
-    error,
-  } = useGroupFeedAuth(groupId || '');
+  const { isMember, isOwner, isLoading: isAuthLoading, isError } = useGroupFeedAuth(groupId || '');
 
   const { isPublic, isLoading: isPublicLoading } = useGroupFeedPublicStatus(groupId || '');
 
@@ -83,7 +77,6 @@ const GroupFeed = () => {
   }
 
   if (isError) {
-    console.log(error?.message, 'error');
     return <Error />;
   }
   return (

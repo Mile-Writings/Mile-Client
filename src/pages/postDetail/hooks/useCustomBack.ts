@@ -15,7 +15,6 @@ const useCustomBack = (customBack: () => void) => {
     history.pushState(null, '', location.href);
 
     window.addEventListener('popstate', handlePopstate);
-    console.log(window.history);
     return () => {
       window.removeEventListener('popstate', handlePopstate);
     };

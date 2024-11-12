@@ -9,16 +9,19 @@ import { fetchTempSaveContent } from '../apis/fetchTempSaveContent';
 import { fetchTempSaveFlag } from '../apis/fetchTempSaveFlag';
 import { fetchTopic } from '../apis/fetchTopic';
 import saveTempSavecontent from '../apis/saveTempSaveContent';
+import { fetchEditPostContent } from '../apis/fetchEditPostContent';
 
-import { QUERY_KEY_POST_DETAIL } from '../../postDetail/hooks/queries';
 import { isAxiosError } from 'axios';
+import { Dispatch, SetStateAction } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { LONG_COMMENT_ERROR, NO_COMMENT_ERROR } from '../../../constants/commentErrorMessage';
-
+import { QUERY_KEY_POST_DETAIL } from '../../postDetail/hooks/queries';
 export const QUERY_KEY_POST = {
   postContent: 'postContent',
   getTopic: 'getTopic',
   getTempSaveFlag: 'getTempSaveFlag',
   getPresignedUrl: 'getPresignedUrl',
+  getEditPostContent: 'getEditPostContent',
   putEditContent: 'putEditContent',
   postSaveTempContent: 'postSaveTempContent',
   getTempSaveContent: 'getTempSaveContent',
@@ -32,11 +35,10 @@ interface postContentType {
   topicId: string;
   title: string;
   content: string;
-  imageUrl: string;
   anonymous: boolean;
-  contentWithoutTag: string;
   // eslint-disable-next-line no-unused-vars
-  setPostErrorMessage: (errorMessage: string) => void;
+  modalOpen: () => void;
+  setPostContentId: Dispatch<SetStateAction<string>>;
 }
 
 export const usePostContent = ({
@@ -44,10 +46,9 @@ export const usePostContent = ({
   topicId,
   title,
   content,
-  imageUrl,
   anonymous,
-  contentWithoutTag,
-  setPostErrorMessage,
+  modalOpen,
+  setPostContentId,
 }: postContentType) => {
   const { mutate, data: postContentId } = useMutation({
     mutationKey: [
@@ -57,13 +58,10 @@ export const usePostContent = ({
         topicId,
         title,
         content,
-        imageUrl,
         anonymous,
-        contentWithoutTag,
-        setPostErrorMessage,
       },
     ],
-    mutationFn: () =>
+    mutationFn: (imageUrl: string) =>
       createPostContent({
         groupId,
         topicId,
@@ -71,10 +69,17 @@ export const usePostContent = ({
         content,
         imageUrl,
         anonymous,
-        contentWithoutTag,
-        setPostErrorMessage,
       }),
+    onSuccess: (data) => {
+      if (data) {
+        setPostContentId(data);
+        modalOpen();
+      } else {
+        throw new Error('Data를 받아오지 못했습니다.');
+      }
+    },
   });
+
   return { mutate, postContentId };
 };
 
@@ -119,11 +124,30 @@ export const usePresignedUrl = (): PresignedUrlQueryResult => {
   const { data } = useQuery({
     queryKey: [QUERY_KEY_POST.getPresignedUrl],
     queryFn: () => fetchPresignedUrl(),
+    staleTime: 6000,
+    gcTime: 6000,
   });
 
   const fileName = data && data?.data?.fileName;
   const url = data && data?.data?.url;
   return { fileName, url };
+};
+
+// 글 수정시 글 조회 GET
+export const useGetEditPostContent = (postId: string, isEditView: boolean) => {
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY_POST.getEditPostContent, postId, isEditView],
+    queryFn: () => fetchEditPostContent(postId),
+    enabled: !!isEditView,
+  });
+
+  const editPostTopicList = data && data?.data?.topicList;
+  const editPostTitle = data && data?.data?.title;
+  const editPostContent = data && data?.data?.content;
+  const editPostImageUrl = data && data?.data?.imageUrl;
+  const editPostAnonymous = data && data?.data?.anonymous;
+
+  return { editPostTopicList, editPostTitle, editPostContent, editPostImageUrl, editPostAnonymous };
 };
 
 // 글 수정하기 Put
@@ -135,7 +159,6 @@ interface putEditContentType {
   anonymous: boolean;
   postId: string;
   contentWithoutTag: string;
-  // eslint-disable-next-line no-unused-vars
   setPostErrorMessage: (errorMessage: string) => void;
 }
 
@@ -143,12 +166,12 @@ export const usePutEditContent = ({
   topicId,
   title,
   content,
-  imageUrl,
   anonymous,
   postId,
   contentWithoutTag,
   setPostErrorMessage,
 }: putEditContentType) => {
+  const queryClient = useQueryClient();
   const data = useMutation({
     mutationKey: [
       QUERY_KEY_POST.putEditContent,
@@ -156,14 +179,13 @@ export const usePutEditContent = ({
         topicId,
         title,
         content,
-        imageUrl,
         anonymous,
         postId,
         contentWithoutTag,
         setPostErrorMessage,
       },
     ],
-    mutationFn: () =>
+    mutationFn: (imageUrl: string) =>
       editPutContent({
         topicId,
         title,
@@ -174,6 +196,10 @@ export const usePutEditContent = ({
         contentWithoutTag,
         setPostErrorMessage,
       }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST.getEditPostContent, postId] });
+    },
   });
   return data;
 };
@@ -184,8 +210,8 @@ interface postTempSaveType {
   topicId: string;
   title: string;
   content: string;
-  imageUrl: string;
   anonymous: boolean;
+  isPostView: boolean;
 }
 
 export const usePostTempSaveContent = ({
@@ -193,10 +219,11 @@ export const usePostTempSaveContent = ({
   topicId,
   title,
   content,
-  imageUrl,
   anonymous,
+  isPostView,
 }: postTempSaveType) => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const data = useMutation({
     mutationKey: [
       QUERY_KEY_POST.postSaveTempContent,
@@ -205,14 +232,18 @@ export const usePostTempSaveContent = ({
         topicId,
         title,
         content,
-        imageUrl,
+
         anonymous,
+        isPostView,
       },
     ],
-    mutationFn: () =>
+    mutationFn: (imageUrl: string) =>
       createTempSaveContent({ groupId, topicId, title, content, imageUrl, anonymous }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId] });
+      navigate(`/group/${groupId}`);
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId, isPostView],
+      });
     },
   });
   return data;
@@ -223,7 +254,7 @@ export const useGetTempSaveContent = (postId: string, isTempClicked: boolean) =>
   const { data } = useQuery({
     queryKey: [QUERY_KEY_POST.getTempSaveContent, postId],
     queryFn: () => fetchTempSaveContent(postId),
-    enabled: !!isTempClicked,
+    enabled: !!isTempClicked && postId !== 'MA==',
   });
 
   const tempTopicList = data && data?.data?.topicList;
@@ -240,7 +271,6 @@ interface putTempSaveContentType {
   topicId: string;
   title: string;
   content: string;
-  imageUrl: string;
   anonymous: boolean;
   postId: string;
   groupId: string;
@@ -250,7 +280,6 @@ export const usePutTempSaveContent = ({
   topicId,
   title,
   content,
-  imageUrl,
   anonymous,
   postId,
   groupId,
@@ -263,11 +292,11 @@ export const usePutTempSaveContent = ({
         topicId,
         title,
         content,
-        imageUrl,
         anonymous,
       },
     ],
-    mutationFn: () => saveTempSavecontent({ topicId, title, content, imageUrl, anonymous, postId }),
+    mutationFn: (imageUrl: string) =>
+      saveTempSavecontent({ topicId, title, content, imageUrl, anonymous, postId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST.getTempSaveFlag, groupId] });

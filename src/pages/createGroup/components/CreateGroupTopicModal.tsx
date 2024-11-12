@@ -46,7 +46,6 @@ const CreateGroupTopicModal = ({
     } else if (!tempTopicTag || !isTopicTagValid) {
       setIsTopicTagEmpty(true);
     } else if (!isTopicDescValid) {
-      console.log('글감 소개 글자수 초과');
       if (topicDescRef.current) {
         topicDescRef.current.focus();
       }

@@ -56,7 +56,7 @@ const PostDetail = () => {
   } = useGroupFeedAuth(groupId);
   const { data, isError, isLoading } = useGetPostDetail(postId);
   const { data: postAuth } = useCheckPostAuth(postId);
-  const { mutate: deletePost } = useDeletePost(postId, topicId);
+  const { mutate: deletePost } = useDeletePost(postId, topicId, groupId);
 
   const postData = data?.data;
   const accessToken = localStorage.getItem('accessToken');
@@ -101,16 +101,7 @@ const PostDetail = () => {
   };
   // 수정 동작 버튼
   const handleEdit = () => {
-    navigate(`/post/${groupId}/edit`, {
-      state: {
-        postId: postId,
-        topic: postData?.topic,
-        writer: postData?.writerName,
-        title: postData?.title,
-        content: postData?.content,
-        imageUrl: postData?.imageUrl,
-      },
-    });
+    navigate(`/post/${groupId}/edit/${postId}`);
   };
 
   return (
@@ -254,6 +245,7 @@ const DetailBox = styled.div`
 const TitleText = styled.h1`
   color: ${({ theme }) => theme.colors.grayBlack};
   ${({ theme }) => theme.fonts.title1};
+  word-break: break-all;
 `;
 
 const DateText = styled.p`
@@ -326,7 +318,7 @@ const PostContainer = styled.div`
   min-height: 6rem;
   padding: 3.6rem;
 
-  word-break: keep-all;
+  word-break: break-all;
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 10px;
