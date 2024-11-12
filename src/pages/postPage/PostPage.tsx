@@ -339,9 +339,11 @@ const PostPage = () => {
       return;
     } else {
       try {
-        await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+        const imgUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+        if (imgUrl) {
+          putEditContent(imgUrl);
+        }
 
-        putEditContent();
         handleShowModal();
         setEditorModalType('editContent');
         editorFlowModalDispatch({ type: 'editContent' });

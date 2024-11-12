@@ -139,7 +139,6 @@ export const useGetEditPostContent = (postId: string, isEditView: boolean) => {
     queryKey: [QUERY_KEY_POST.getEditPostContent, postId, isEditView],
     queryFn: () => fetchEditPostContent(postId),
     enabled: !!isEditView,
-    staleTime: 0,
   });
 
   const editPostTopicList = data && data?.data?.topicList;
@@ -167,7 +166,6 @@ export const usePutEditContent = ({
   topicId,
   title,
   content,
-  imageUrl,
   anonymous,
   postId,
   contentWithoutTag,
@@ -181,14 +179,13 @@ export const usePutEditContent = ({
         topicId,
         title,
         content,
-        imageUrl,
         anonymous,
         postId,
         contentWithoutTag,
         setPostErrorMessage,
       },
     ],
-    mutationFn: () =>
+    mutationFn: (imageUrl: string) =>
       editPutContent({
         topicId,
         title,
@@ -201,6 +198,7 @@ export const usePutEditContent = ({
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST.getEditPostContent, postId] });
     },
   });
   return data;
