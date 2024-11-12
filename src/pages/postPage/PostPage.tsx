@@ -313,7 +313,7 @@ const PostPage = () => {
         writer: tempAnonymous ? '작자미상' : '필명',
       });
     }
-  }, [viewType, editPostId, continueTempPost, tempTitle, tempContent, editPostTitle]);
+  }, [viewType, continueTempPost, tempTitle, tempContent, editPostTitle, editPostContent]);
 
   // 수정하기 제출하기
   const { mutate: putEditContent } = usePutEditContent({
@@ -339,9 +339,11 @@ const PostPage = () => {
       return;
     } else {
       try {
-        await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+        const imgUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+        if (imgUrl) {
+          putEditContent(imgUrl);
+        }
 
-        putEditContent();
         handleShowModal();
         setEditorModalType('editContent');
         editorFlowModalDispatch({ type: 'editContent' });

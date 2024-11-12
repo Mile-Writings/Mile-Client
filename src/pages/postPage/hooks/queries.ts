@@ -136,7 +136,7 @@ export const usePresignedUrl = (): PresignedUrlQueryResult => {
 // 글 수정시 글 조회 GET
 export const useGetEditPostContent = (postId: string, isEditView: boolean) => {
   const { data } = useQuery({
-    queryKey: [QUERY_KEY_POST.getEditPostContent, postId],
+    queryKey: [QUERY_KEY_POST.getEditPostContent, postId, isEditView],
     queryFn: () => fetchEditPostContent(postId),
     enabled: !!isEditView,
   });
@@ -166,7 +166,6 @@ export const usePutEditContent = ({
   topicId,
   title,
   content,
-  imageUrl,
   anonymous,
   postId,
   contentWithoutTag,
@@ -180,14 +179,13 @@ export const usePutEditContent = ({
         topicId,
         title,
         content,
-        imageUrl,
         anonymous,
         postId,
         contentWithoutTag,
         setPostErrorMessage,
       },
     ],
-    mutationFn: () =>
+    mutationFn: (imageUrl: string) =>
       editPutContent({
         topicId,
         title,
@@ -200,6 +198,7 @@ export const usePutEditContent = ({
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST_DETAIL.getPostDetail, postId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_POST.getEditPostContent, postId] });
     },
   });
   return data;
