@@ -21,6 +21,10 @@
   border: none;
   outline: none;
   background: transparent;
+
+  @media screen and (max-width: 850px) {
+    display: none !important;
+  }
 }
 .slick-prev:hover,
 .slick-prev:focus,

@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 
-import Spacing from './Spacing';
 import { FOOTER_LINK } from '../../constants/footerLink';
+import Spacing from './Spacing';
 
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import {
   FooterInstaIc,
   FooterLogoIc,
@@ -53,11 +54,19 @@ const FooterWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  min-width: 136.7rem;
+
+  /* min-width: 136.7rem; */
   height: 24.6rem;
   padding: 8rem 16.5rem;
 
   background-color: ${({ theme }) => theme.colors.grayViolet};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
+    gap: 4rem;
+    align-items: center;
+    padding: 5rem;
+  }
 `;
 
 const FooterLayout = styled.div`

@@ -1,8 +1,12 @@
 import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
-
+import Responsive from '../../components/commons/Responsive/Responsive';
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
+import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/commons/Header';
+import Spacing from './../../components/commons/Spacing';
 import DailyKeyword from './components/DailyKeyword';
 import FaqDropdown from './components/FaqDropdown';
+import GroupCarousel from './components/GroupCarousel';
 import Introduction from './components/Introduction';
 import Manual from './components/Manual';
 import OnBoarding from './components/OnBoarding';
@@ -10,10 +14,7 @@ import { SkeletonComponent } from './components/skeletons/SkeletonComponent';
 import { FAQ_DATA } from './constants/faqData';
 import { useGetGroupContent, useGetRecommendTopic } from './hooks/queries';
 
-import Footer from './../../components/commons/Footer';
-import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/commons/Header';
-import Spacing from './../../components/commons/Spacing';
-import GroupCarousel from './components/GroupCarousel';
+import Footer from '../../components/commons/Footer';
 const Main = () => {
   const { content, moimId } = useParams();
   const topic = useGetRecommendTopic(content || '');
@@ -28,7 +29,9 @@ const Main = () => {
 
       <GroupCarouselLayout>
         <CarouselContainer>
-          <CarouselTitle>마일과 함께하고 있는 글 모임이에요</CarouselTitle>
+          <Responsive only={'desktop'}>
+            <CarouselTitle>마일과 함께하고 있는 글 모임이에요</CarouselTitle>
+          </Responsive>
           {isLoading || isFetching ? (
             <SkeletonComponent groupLength={groupLength} />
           ) : (
@@ -44,6 +47,7 @@ const Main = () => {
       <Spacing marginBottom="10" />
       <Introduction />
       <Spacing marginBottom="10" />
+
       <Manual />
 
       <FaqLayout>
@@ -70,6 +74,10 @@ const MainPageWrapper = styled.div`
   width: 100%;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
+
+  /* @media ${MOBILE_MEDIA_QUERY} {
+    max-width: 76rem;
+  } */
 `;
 
 const GroupCarouselLayout = styled.section`
@@ -82,6 +90,11 @@ const GroupCarouselLayout = styled.section`
 const CarouselContainer = styled.div`
   width: 93rem;
   height: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    max-width: 420px;
+  }
 `;
 
 const CarouselBox = styled.div`
@@ -102,6 +115,8 @@ const FaqLayout = styled.section`
 `;
 
 const FaqContainer = styled.div`
+  padding: 0 2rem;
+
   cursor: default;
 `;
 
