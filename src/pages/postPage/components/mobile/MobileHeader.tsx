@@ -80,6 +80,7 @@ export const MobileEditHeader = (props: MobileHeaderPropType) => {
 const Header = styled.header`
   position: fixed;
   top: 0;
+  left: 0;
   display: flex;
   flex-grow: 1;
   align-items: center;

@@ -549,43 +549,45 @@ const PostPage = () => {
     };
   }, []);
 
+  // 헤더 컴포넌트
+  const HeaderComponent = (() => {
+    if (viewType === 'edit') {
+      return {
+        desktop: <EditorEditHeader onClickEditSave={onClickEditSaveBtn} />,
+        mobile: <MobileEditHeader onClickEditSave={onClickEditSaveBtn} />,
+      };
+    } else if (continueTempPost) {
+      return {
+        desktop: <EditorTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />,
+        mobile: <MobileTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />,
+      };
+    } else {
+      return {
+        desktop: (
+          <EditorTempNotExistHeader
+            onClickTempSave={onClickTempSaveBtn}
+            onClickSubmit={onClickPostContentBtn}
+          />
+        ),
+        mobile: (
+          <MobileTempNotExistHeader
+            onClickTempSave={onClickTempSaveBtn}
+            onClickSubmit={onClickPostContentBtn}
+          />
+        ),
+      };
+    }
+  })();
+
   return (
     <PostPageWrapper>
       {/* 헤더 */}
-      {viewType === 'edit' ? (
-        <>
-          <Responsive only="desktop" asChild={true}>
-            <EditorEditHeader onClickEditSave={onClickEditSaveBtn} />
-          </Responsive>
-          <Responsive only="mobile" asChild={true}>
-            <MobileEditHeader onClickEditSave={onClickEditSaveBtn} />
-          </Responsive>
-        </>
-      ) : continueTempPost ? (
-        <>
-          <Responsive only="desktop" asChild={true}>
-            <EditorTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />
-          </Responsive>
-          <Responsive only="mobile" asChild={true}>
-            <MobileTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />
-          </Responsive>
-        </>
-      ) : (
-        <>
-          <Responsive only="desktop" asChild={true}>
-            <EditorTempNotExistHeader
-              onClickTempSave={onClickTempSaveBtn}
-              onClickSubmit={onClickPostContentBtn}
-            />
-          </Responsive>
-          <Responsive only="mobile" asChild={true}>
-            <MobileTempNotExistHeader
-              onClickTempSave={onClickTempSaveBtn}
-              onClickSubmit={onClickPostContentBtn}
-            />
-          </Responsive>
-        </>
-      )}
+      <Responsive only="desktop" asChild>
+        {HeaderComponent.desktop}
+      </Responsive>
+      <Responsive only="mobile" asChild>
+        {HeaderComponent.mobile}
+      </Responsive>
       <Spacing marginBottom="6.4" />
 
       {/* 글 제출 막는 toast */}
