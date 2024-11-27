@@ -50,3 +50,6 @@ export { default as EditorErrorIcn } from './editorErrorSvg.svg?react';
 
 // 모바일 헤더
 export { default as CloseIcn } from './closeIcn.svg?react';
+
+// 모바일 썸네일 이미지 삭제 아이콘
+export { default as BinIcn } from './bin.svg?react';

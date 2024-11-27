@@ -588,7 +588,7 @@ const PostPage = () => {
       <Responsive only="mobile" asChild>
         {HeaderComponent.mobile}
       </Responsive>
-      <Spacing marginBottom="6.4" />
+      <Spacing marginBottom="6.4" mobileMarginBottom="5.6" />
 
       {/* 글 제출 막는 toast */}
       <PostDeclinedWrapper $postAvailable={postErrorMessage.trim().length === 0}>
