@@ -96,7 +96,7 @@ const BinIcon = styled(BinIcn)`
   position: absolute;
   right: 2rem;
   bottom: 2.2rem;
-  z-index: 3;
+  z-index: 2;
 
   cursor: pointer;
 
