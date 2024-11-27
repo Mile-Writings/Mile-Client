@@ -35,6 +35,14 @@ import useBlockPageExit from '../../hooks/useBlockPageExit';
 import useModal from '../../hooks/useModal';
 import { MODAL } from './constants/modalContent';
 
+// 반응형
+import Responsive from '../../components/commons/Responsive/Responsive';
+import {
+  MobileEditHeader,
+  MobileTempExistHeader,
+  MobileTempNotExistHeader,
+} from './components/mobile/MobileHeader';
+
 // editor content API 관련
 interface editorStateType {
   topic: string | undefined;
@@ -545,14 +553,38 @@ const PostPage = () => {
     <PostPageWrapper>
       {/* 헤더 */}
       {viewType === 'edit' ? (
-        <EditorEditHeader onClickEditSave={onClickEditSaveBtn} />
+        <>
+          <Responsive only="desktop" asChild={true}>
+            <EditorEditHeader onClickEditSave={onClickEditSaveBtn} />
+          </Responsive>
+          <Responsive only="mobile" asChild={true}>
+            <MobileEditHeader onClickEditSave={onClickEditSaveBtn} />
+          </Responsive>
+        </>
       ) : continueTempPost ? (
-        <EditorTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />
+        <>
+          <Responsive only="desktop" asChild={true}>
+            <EditorTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />
+          </Responsive>
+          <Responsive only="mobile" asChild={true}>
+            <MobileTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />
+          </Responsive>
+        </>
       ) : (
-        <EditorTempNotExistHeader
-          onClickTempSave={onClickTempSaveBtn}
-          onClickSubmit={onClickPostContentBtn}
-        />
+        <>
+          <Responsive only="desktop" asChild={true}>
+            <EditorTempNotExistHeader
+              onClickTempSave={onClickTempSaveBtn}
+              onClickSubmit={onClickPostContentBtn}
+            />
+          </Responsive>
+          <Responsive only="mobile" asChild={true}>
+            <MobileTempNotExistHeader
+              onClickTempSave={onClickTempSaveBtn}
+              onClickSubmit={onClickPostContentBtn}
+            />
+          </Responsive>
+        </>
       )}
       <Spacing marginBottom="6.4" />
 
@@ -637,6 +669,7 @@ const PostPageWrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   align-items: center;
   justify-content: center;
   width: 100%;

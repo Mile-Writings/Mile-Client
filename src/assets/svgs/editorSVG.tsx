@@ -47,3 +47,6 @@ export { default as EditorDividerIcn } from './stickyeditorHorizonSvg.svg?react'
 export { default as EditorErrorIcn } from './editorErrorSvg.svg?react';
 
 // 에디터 모달 이미지
+
+// 모바일 헤더
+export { default as CloseIcn } from './closeIcn.svg?react';
