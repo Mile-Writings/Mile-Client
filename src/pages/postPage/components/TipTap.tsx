@@ -33,6 +33,7 @@ import './tiptap.css';
 // editor svg
 import * as ToolbarIcon from '../../../assets/svgs/editorSVG';
 import useClickOutside from '../../../hooks/useClickOutside';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface EditorPropTypes {
   title: string | undefined;
@@ -721,6 +722,14 @@ const Title = styled.textarea`
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray40};
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    height: 6.1rem;
+    padding: 1.6rem;
+
+    ${({ theme }) => theme.fonts.mTitle3};
+  }
 `;
 
 // 에디터 전체 wrapper
@@ -731,6 +740,10 @@ const TipTapWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 82.6rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 // 툴바 전체 감싸기
@@ -744,6 +757,10 @@ const ToolbarContainer = styled.div`
 
   background-color: white;
   border-radius: 0.8rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 const ToolbarWrapper = styled.div`
   position: sticky;
@@ -751,6 +768,10 @@ const ToolbarWrapper = styled.div`
   z-index: 1;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 // 드롭다운 리스트
