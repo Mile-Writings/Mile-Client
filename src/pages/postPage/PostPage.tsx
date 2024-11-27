@@ -42,6 +42,7 @@ import {
   MobileTempExistHeader,
   MobileTempNotExistHeader,
 } from './components/mobile/MobileHeader';
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 
 // editor content API 관련
 interface editorStateType {
@@ -601,27 +602,29 @@ const PostPage = () => {
         setImageFile={setImageFile}
       />
 
-      {/* 글감 */}
-      {topics && (
-        <DropDown
-          topicList={topics}
-          setTopic={setTopic}
-          setWriter={setWriter}
-          selectedTopic={editorVal.topic}
-          selectedWriter={editorVal.writer}
-        />
-      )}
-      <Spacing marginBottom="2.4" />
+      <TagEditorWrapper>
+        {/* 글감 */}
+        {topics && (
+          <DropDown
+            topicList={topics}
+            setTopic={setTopic}
+            setWriter={setWriter}
+            selectedTopic={editorVal.topic}
+            selectedWriter={editorVal.writer}
+          />
+        )}
+        <Spacing marginBottom="2.4" />
 
-      {/* 텍스트 에디터 */}
-      <TipTap
-        title={editorVal.title}
-        setTitle={setTitle}
-        tempContent={tempContent}
-        editContent={viewType === 'edit' ? editPostContent : ''}
-        setEditorContent={setContent}
-        setContentWithoutTag={setContentWithoutTag}
-      />
+        {/* 텍스트 에디터 */}
+        <TipTap
+          title={editorVal.title}
+          setTitle={setTitle}
+          tempContent={tempContent}
+          editContent={viewType === 'edit' ? editPostContent : ''}
+          setEditorContent={setContent}
+          setContentWithoutTag={setContentWithoutTag}
+        />
+      </TagEditorWrapper>
       <Spacing marginBottom="8" />
 
       {/* 임시저장 이어쓰기 관련 모달 */}
@@ -675,6 +678,17 @@ const PostPageWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+`;
+
+const TagEditorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    padding: 0 2rem;
+  }
 `;
 
 const PostDeclinedWrapper = styled.div<{ $postAvailable: boolean }>`

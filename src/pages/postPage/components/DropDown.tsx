@@ -7,6 +7,7 @@ import WriterDropDown from './WriterDropDown';
 
 import Spacing from '../../../components/commons/Spacing';
 import { Topics } from '../apis/fetchTopic';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 interface DropDownDataPropsType {
   topicList: Topics[];
   setTopic: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -37,7 +38,14 @@ const DropDownWrapper = styled.div`
   gap: 1.2rem;
   align-items: center;
   justify-content: flex-start;
+
+  /* padding-left: 27rem; */
+
   width: 82.6rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 export const DropDownToggle = styled.div`
