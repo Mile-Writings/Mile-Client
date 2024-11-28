@@ -6,6 +6,7 @@ import { DropDownToggle, DropDownContent } from './DropDown';
 
 import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../assets/svgs';
 import useClickOutside from '../../../hooks/useClickOutside';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface WriterPropType {
   setWriter: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -66,6 +67,11 @@ const WriterDropDownWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 const WriterListWrapper = styled.div<{ $isOpen: boolean }>`
@@ -84,6 +90,10 @@ const WriterListWrapper = styled.div<{ $isOpen: boolean }>`
   background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.gray50};
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 const WriterList = styled.div<{ $selected: boolean }>`
@@ -99,6 +109,10 @@ const WriterList = styled.div<{ $selected: boolean }>`
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.gray20};
+  }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
   }
 `;
 

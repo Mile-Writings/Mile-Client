@@ -38,12 +38,10 @@ const DropDownWrapper = styled.div`
   gap: 1.2rem;
   align-items: center;
   justify-content: flex-start;
-
-  /* padding-left: 27rem; */
-
   width: 82.6rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
     width: 100%;
   }
 `;
@@ -64,6 +62,11 @@ export const DropDownToggle = styled.div`
   &:hover {
     border: 1px solid ${({ theme }) => theme.colors.mainViolet};
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    justify-content: flex-start;
+    width: 100%;
+  }
 `;
 
 export const DropDownContent = styled.span<{ $contentWidth: number }>`
@@ -72,4 +75,8 @@ export const DropDownContent = styled.span<{ $contentWidth: number }>`
 
   color: ${({ theme }) => theme.colors.mainViolet};
   ${({ theme }) => theme.fonts.button2};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
