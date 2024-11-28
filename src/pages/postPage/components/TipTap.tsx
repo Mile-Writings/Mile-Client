@@ -34,6 +34,7 @@ import './tiptap.css';
 import * as ToolbarIcon from '../../../assets/svgs/editorSVG';
 import useClickOutside from '../../../hooks/useClickOutside';
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
+import Responsive from '../../../components/commons/Responsive/Responsive';
 
 interface EditorPropTypes {
   title: string | undefined;
@@ -263,12 +264,14 @@ const TipTap = (props: EditorPropTypes) => {
                         ? '제목 1'
                         : '본문 1'}
               </FontSizeLabel>
-              <ToolbarFontSizeDropDonwOpen $isOpen={isFontSizeOpen}>
-                <ToolbarIcon.EditorDropIcnOpen />
-              </ToolbarFontSizeDropDonwOpen>
-              <ToolbarFontSizeDropDonwClose $isOpen={isFontSizeOpen}>
-                <ToolbarIcon.EditorDropIcnClose />
-              </ToolbarFontSizeDropDonwClose>
+              <Responsive only="desktop">
+                <ToolbarFontSizeDropDonwOpen $isOpen={isFontSizeOpen}>
+                  <ToolbarIcon.EditorDropIcnOpen />
+                </ToolbarFontSizeDropDonwOpen>
+                <ToolbarFontSizeDropDonwClose $isOpen={isFontSizeOpen}>
+                  <ToolbarIcon.EditorDropIcnClose />
+                </ToolbarFontSizeDropDonwClose>
+              </Responsive>
             </FontSizeToggle>
             <FontSizeOptionList $isFontSizeOpen={isFontSizeOpen}>
               <FontSizeOption onClick={() => toggleFontSize('2.6rem', '700', '200%')}>
@@ -334,12 +337,14 @@ const TipTap = (props: EditorPropTypes) => {
               ) : (
                 <ToolbarIcon.EditorTextColorBlackIcn />
               )}
-              <ToolbarFontColorDropDonwOpen $isOpen={isFontColorOpen}>
-                <ToolbarIcon.EditorDropIcnOpen />
-              </ToolbarFontColorDropDonwOpen>
-              <ToolbarFontColorDropDonwClose $isOpen={isFontColorOpen}>
-                <ToolbarIcon.EditorDropIcnClose />
-              </ToolbarFontColorDropDonwClose>
+              <Responsive only="desktop">
+                <ToolbarFontColorDropDonwOpen $isOpen={isFontColorOpen}>
+                  <ToolbarIcon.EditorDropIcnOpen />
+                </ToolbarFontColorDropDonwOpen>
+                <ToolbarFontColorDropDonwClose $isOpen={isFontColorOpen}>
+                  <ToolbarIcon.EditorDropIcnClose />
+                </ToolbarFontColorDropDonwClose>
+              </Responsive>
             </TextColorToggle>
             <TextColorList $isFontColorOpen={isFontColorOpen}>
               <TextColorOptionWrapper onClick={() => toggleTextColor('#010101')}>
@@ -459,12 +464,14 @@ const TipTap = (props: EditorPropTypes) => {
               ) : (
                 <ToolbarIcon.EditorTextBgColorWhiteIcn />
               )}
-              <ToolbarFontBgColorDropDonwOpen $isOpen={isFontBgColorOpen}>
-                <ToolbarIcon.EditorDropIcnOpen />
-              </ToolbarFontBgColorDropDonwOpen>
-              <ToolbarFontBgColorDropDonwClose $isOpen={isFontBgColorOpen}>
-                <ToolbarIcon.EditorDropIcnClose />
-              </ToolbarFontBgColorDropDonwClose>
+              <Responsive only="desktop">
+                <ToolbarFontBgColorDropDonwOpen $isOpen={isFontBgColorOpen}>
+                  <ToolbarIcon.EditorDropIcnOpen />
+                </ToolbarFontBgColorDropDonwOpen>
+                <ToolbarFontBgColorDropDonwClose $isOpen={isFontBgColorOpen}>
+                  <ToolbarIcon.EditorDropIcnClose />
+                </ToolbarFontBgColorDropDonwClose>
+              </Responsive>
             </TextColorToggle>
             <TextColorBgList $isFontBgColorOpen={isFontBgColorOpen}>
               <TextColorOptionWrapper onClick={() => toggleTextBgColor('#FFFFFF')}>
@@ -760,6 +767,26 @@ const ToolbarContainer = styled.div`
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
+    height: 5.2rem;
+    padding: 1rem 1.6rem;
+    overflow: scroll hidden;
+
+    ::after {
+      position: absolute;
+      right: 0;
+      bottom: 2.2rem;
+      width: 4.6rem;
+      height: 5.2rem;
+
+      background: linear-gradient(to left, #fff, transparent);
+      border-radius: 0.8rem;
+
+      content: '';
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;
 const ToolbarWrapper = styled.div`
@@ -786,6 +813,14 @@ const ToolbarDropDownWrapper = styled.div`
 
   cursor: pointer;
   border-right: 1px solid ${({ theme }) => theme.colors.gray30};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: fit-content;
+    height: 100%;
+    padding: 0;
+
+    border: none;
+  }
 `;
 
 // 글자 크기 드롭다운 리스트
@@ -799,6 +834,13 @@ const FontSizeToggle = styled.div`
 
   background-color: white;
   border-radius: 0.8rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 4.9rem;
+    height: 3.2rem;
+    margin-right: 0.8rem;
+    padding: 0 0.7rem;
+  }
 `;
 
 const FontSizeLabel = styled.p`
@@ -807,6 +849,12 @@ const FontSizeLabel = styled.p`
 
   color: ${({ theme }) => theme.colors.gray90};
   ${({ theme }) => theme.fonts.body1}
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle2};
+    width: 100%;
+    margin-right: 0;
+  }
 `;
 
 const FontSizeOptionList = styled.div<{ $isFontSizeOpen: boolean }>`
@@ -860,6 +908,13 @@ const TextColorToggle = styled.div`
   padding: 0 1.66rem;
 
   background-color: ${({ theme }) => theme.colors.white};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    margin-right: 1.2rem;
+    padding: 0;
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 
 const TextColorList = styled.div<{ $isFontColorOpen: boolean }>`
@@ -930,6 +985,14 @@ const ToolbarSvgBtn = styled.div`
   height: 4.6rem;
 
   border-right: 0.96px solid ${({ theme }) => theme.colors.gray30};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 3.2rem;
+    height: 3.2rem;
+    margin-right: 0.8rem;
+
+    border: none;
+  }
 `;
 
 const ToolbarSvgBtnLast = styled.div`
@@ -961,6 +1024,10 @@ const ToolbarSvg = styled.button`
 
   :hover {
     background-color: ${({ theme }) => theme.colors.mileViolet};
+  }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    margin: 0;
   }
 `;
 
