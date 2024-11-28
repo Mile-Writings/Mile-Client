@@ -13,10 +13,12 @@ import { useAdminTopic, useDeleteGroup, useFetchMemberInfo } from '../hooks/quer
 import { useNavigate } from 'react-router-dom';
 import { MakeGroupAdminIc } from '../../../assets/svgs';
 import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
+import Responsive from '../../../components/commons/Responsive/Responsive';
 import Spacing from '../../../components/commons/Spacing';
 import useBlockPageExit from '../../../hooks/useBlockPageExit';
 import useModal from '../../../hooks/useModal';
 import Loading from '../../loading/Loading';
+
 const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
   const { groupId } = useParams();
   const [page, setPage] = useState(1);
@@ -68,11 +70,23 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
         <AdminContainer>
           <AdminLayout>
             <div>
-              <Title>글감 설정</Title>
-              <Spacing marginBottom="1.2" />
+              <Responsive only="desktop">
+                <Title>글감 설정</Title>
+                <Spacing marginBottom="1.2" />
+              </Responsive>
               <SubTitle>{`${topicCount}개의 글감이 저장되어있어요`}</SubTitle>
             </div>
-            <MakeGroupAdminIc style={{ cursor: 'pointer' }} onClick={openModal} />
+            <Responsive only="desktop">
+              <MakeGroupAdminIc style={{ cursor: 'pointer' }} onClick={openModal} />
+            </Responsive>
+            <Responsive only="mobile">
+              <MakeGroupAdminIc
+                width={32}
+                height={32}
+                style={{ cursor: 'pointer' }}
+                onClick={openModal}
+              />
+            </Responsive>
           </AdminLayout>
           <Spacing marginBottom="3.6" />
           {showModal && (

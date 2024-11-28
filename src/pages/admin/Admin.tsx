@@ -9,8 +9,11 @@ import { useFetchInvitationLink } from './hooks/queries';
 
 import { AdminHomeIc } from '../../assets/svgs';
 import { AuthorizationHeader } from '../../components/commons/Header';
+import Responsive from '../../components/commons/Responsive/Responsive';
 import Spacing from '../../components/commons/Spacing';
 import { copyLink } from '../../utils/copyLink';
+import DesktopNav from './components/navbar/DesktopNav';
+import MobileNav from './components/navbar/MobileNav';
 
 const Admin = () => {
   const accessToken = localStorage.getItem('accessToken');
@@ -38,49 +41,37 @@ const Admin = () => {
     return <Loading />;
   }
   return (
-    <AdminWrapper>
+    <>
       {accessToken && <AuthorizationHeader />}
-      <Spacing marginBottom="13.6" />
-      <AdminLayout>
-        <SideNavbar>
-          <AdminGroupInfo>
-            <HomeBtn type="button" onClick={handleRoutingGroup}>
-              <AdminHomeIc />
-              Home
-            </HomeBtn>
-            <GroupName>{infoResponse?.moimName}</GroupName>
-          </AdminGroupInfo>
-          <Spacing marginBottom="2.4" />
-          <AdminMenu>
-            <Title>관리자 페이지</Title>
-            <Spacing marginBottom="1.6" />
-            <MenuList>
-              <Menu
-                onClick={() => {
-                  setAdmin('topic');
-                }}
-                isActive={admin === 'topic'}
-              >
-                글감 설정
-              </Menu>
-              <Menu onClick={() => setAdmin('member')} isActive={admin === 'member'}>
-                멤버 관리
-              </Menu>
-              <Menu onClick={() => setAdmin('groupInfo')} isActive={admin === 'groupInfo'}>
-                모임 정보 수정
-              </Menu>
-            </MenuList>
-          </AdminMenu>
-          <Spacing marginBottom="1.6" />
-          {invitationCode && (
-            <AdminInviteBtn type="button" onClick={handleInviteBtnClick}>
-              초대링크 복사하기
-            </AdminInviteBtn>
-          )}
-        </SideNavbar>
-        <RenderAdminContent admin={admin} />
-      </AdminLayout>
-    </AdminWrapper>
+      <AdminWrapper>
+        <Spacing marginBottom="13.6" />
+        <Responsive only="mobile">
+          <MobileNav />
+        </Responsive>
+        <AdminLayout>
+          <Responsive only="desktop">
+            <SideNavbar>
+              <AdminGroupInfo>
+                <HomeBtn type="button" onClick={handleRoutingGroup}>
+                  <AdminHomeIc />
+                  Home
+                </HomeBtn>
+                <GroupName>{infoResponse?.moimName}</GroupName>
+              </AdminGroupInfo>
+              <Spacing marginBottom="2.4" />
+              <DesktopNav />
+              <Spacing marginBottom="1.6" />
+              {invitationCode && (
+                <AdminInviteBtn type="button" onClick={handleInviteBtnClick}>
+                  초대링크 복사하기
+                </AdminInviteBtn>
+              )}
+            </SideNavbar>
+          </Responsive>
+          <RenderAdminContent admin={admin} />
+        </AdminLayout>
+      </AdminWrapper>
+    </>
   );
 };
 
@@ -88,6 +79,7 @@ export default Admin;
 
 const AdminWrapper = styled.div`
   width: 100%;
+  padding: 0 2rem;
 `;
 
 const AdminLayout = styled.div`
