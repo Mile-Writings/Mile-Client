@@ -48,7 +48,7 @@ const Admin = () => {
           <Spacing marginBottom="13.6" />
         </Responsive>
         <Responsive only="mobile">
-          <Spacing marginBottom="11.8" />
+          <Spacing marginBottom="8.8" />
         </Responsive>
         <Responsive only="mobile">
           <GroupLayout>
