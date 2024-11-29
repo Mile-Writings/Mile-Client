@@ -44,9 +44,28 @@ const Admin = () => {
     <>
       {accessToken && <AuthorizationHeader />}
       <AdminWrapper>
-        <Spacing marginBottom="13.6" />
+        <Responsive only="desktop">
+          <Spacing marginBottom="13.6" />
+        </Responsive>
+        <Responsive only="mobile">
+          <Spacing marginBottom="11.8" />
+        </Responsive>
+        <Responsive only="mobile">
+          <GroupLayout>
+            <NameBox>
+              <GroupName>{infoResponse?.moimName}</GroupName>
+              <PageName>관리자 페이지</PageName>
+            </NameBox>
+            <HomeBtn type="button" onClick={handleRoutingGroup}>
+              <AdminHomeIc />
+              Home
+            </HomeBtn>
+          </GroupLayout>
+          <Spacing marginBottom="1.2" />
+        </Responsive>
         <Responsive only="mobile">
           <MobileNav handleMenuItem={handleMenuItem} isClicked={isClicked} />
+          <Spacing marginBottom="2.8" />
         </Responsive>
         <AdminLayout>
           <Responsive only="desktop">
@@ -116,15 +135,6 @@ const GroupName = styled.h3`
   cursor: default;
 `;
 
-const AdminMenu = styled.div`
-  width: 100%;
-  height: 23.8rem;
-  padding: 2.4rem;
-
-  background: ${({ theme }) => theme.colors.white};
-  border-radius: 8px;
-`;
-
 const AdminInviteBtn = styled.button`
   display: flex;
   align-items: center;
@@ -147,26 +157,17 @@ const AdminInviteBtn = styled.button`
   }
 `;
 
-const Title = styled.h1`
-  ${({ theme }) => theme.fonts.title9};
-  color: ${({ theme }) => theme.colors.mainViolet};
+const GroupLayout = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
-const MenuList = styled.div`
+const NameBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
 `;
 
-const Menu = styled.div<{ isActive: boolean }>`
-  padding: 1rem 1.6rem;
-
-  ${({ theme }) => theme.fonts.subtitle3};
-
-  color: ${({ isActive, theme }) => (isActive ? theme.colors.black : theme.colors.gray70)};
-
-  background-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.backGroundGray : theme.colors.white};
-  cursor: pointer;
-  border-radius: 8px;
+const PageName = styled.h1`
+  color: ${({ theme }) => theme.colors.mainViolet};
+  ${({ theme }) => theme.fonts.mTitle6};
 `;
