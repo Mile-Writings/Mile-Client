@@ -53,7 +53,7 @@ const Admin = () => {
         <Responsive only="mobile">
           <GroupLayout>
             <NameBox>
-              <GroupName>{infoResponse?.moimName}</GroupName>
+              <MobileGroupName>{infoResponse?.moimName}</MobileGroupName>
               <PageName>관리자 페이지</PageName>
             </NameBox>
             <HomeBtn type="button" onClick={handleRoutingGroup}>
@@ -133,6 +133,10 @@ const HomeBtn = styled.button`
 const GroupName = styled.h3`
   ${({ theme }) => theme.fonts.title9};
   cursor: default;
+`;
+
+const MobileGroupName = styled.h3`
+  ${({ theme }) => theme.fonts.mSubtitle4};
 `;
 
 const AdminInviteBtn = styled.button`

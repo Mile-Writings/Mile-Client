@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import EachTopic from './EachTopic';
 
 import Pagenation from '../../../components/commons/Pagenation';
+import Responsive from '../../../components/commons/Responsive/Responsive';
 import Spacing from '../../../components/commons/Spacing';
 
 interface AdminTopicPropTypes {
@@ -42,7 +43,12 @@ const TopicAdmin = ({
             ))}
         </TopicList>
       </TopicListWrapper>
-      <Spacing marginBottom="3.2" />
+      <Responsive only="desktop">
+        <Spacing marginBottom="3.2" />
+      </Responsive>
+      <Responsive only="mobile">
+        <Spacing marginBottom="1.6" />
+      </Responsive>
       {data && data.topicCount && (
         <Pagenation
           count={data.topicCount}
