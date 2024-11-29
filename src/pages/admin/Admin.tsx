@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useGroupInfo } from '../groupFeed/hooks/queries';
@@ -14,16 +13,17 @@ import Spacing from '../../components/commons/Spacing';
 import { copyLink } from '../../utils/copyLink';
 import DesktopNav from './components/navbar/DesktopNav';
 import MobileNav from './components/navbar/MobileNav';
+import useMenu from './hooks/useMenu';
 
 const Admin = () => {
   const accessToken = localStorage.getItem('accessToken');
-
-  const [admin, setAdmin] = useState<'topic' | 'member' | 'groupInfo'>('topic');
   const { groupId } = useParams();
   const navigate = useNavigate();
 
   const { invitationCode } = useFetchInvitationLink(groupId);
   const { infoResponse, isLoading } = useGroupInfo(groupId || '');
+
+  const { menu, handleMenuItem, isClicked } = useMenu();
 
   const handleCopyLink = (invitationCode: string) => {
     copyLink(import.meta.env.VITE_INVITE_URL + `group/${invitationCode}/groupInvite`);
@@ -46,7 +46,7 @@ const Admin = () => {
       <AdminWrapper>
         <Spacing marginBottom="13.6" />
         <Responsive only="mobile">
-          <MobileNav />
+          <MobileNav handleMenuItem={handleMenuItem} isClicked={isClicked} />
         </Responsive>
         <AdminLayout>
           <Responsive only="desktop">
@@ -59,7 +59,7 @@ const Admin = () => {
                 <GroupName>{infoResponse?.moimName}</GroupName>
               </AdminGroupInfo>
               <Spacing marginBottom="2.4" />
-              <DesktopNav />
+              <DesktopNav handleMenuItem={handleMenuItem} isClicked={isClicked} />
               <Spacing marginBottom="1.6" />
               {invitationCode && (
                 <AdminInviteBtn type="button" onClick={handleInviteBtnClick}>
@@ -68,7 +68,7 @@ const Admin = () => {
               )}
             </SideNavbar>
           </Responsive>
-          <RenderAdminContent admin={admin} />
+          <RenderAdminContent menu={menu} />
         </AdminLayout>
       </AdminWrapper>
     </>

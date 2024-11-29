@@ -1,27 +1,28 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 import Spacing from '../../../../components/commons/Spacing';
+import type { Menu } from '../../types/menu';
 
-const DesktopNav = () => {
-  const [admin, setAdmin] = useState<'topic' | 'member' | 'groupInfo'>('topic');
+interface DesktopNavPropTypes {
+  isClicked: Record<Menu, boolean>;
+  handleMenuItem: (menu: Menu) => void;
+}
 
+const DesktopNav = ({ isClicked, handleMenuItem }: DesktopNavPropTypes) => {
   return (
     <AdminMenu>
       <Title>관리자 페이지</Title>
       <Spacing marginBottom="1.6" />
       <MenuList>
-        <Menu
-          onClick={() => {
-            setAdmin('topic');
-          }}
-          isActive={admin === 'topic'}
-        >
+        <Menu onClick={() => handleMenuItem('글감 설정')} isActive={isClicked['글감 설정']}>
           글감 설정
         </Menu>
-        <Menu onClick={() => setAdmin('member')} isActive={admin === 'member'}>
+        <Menu onClick={() => handleMenuItem('멤버 관리')} isActive={isClicked['멤버 관리']}>
           멤버 관리
         </Menu>
-        <Menu onClick={() => setAdmin('groupInfo')} isActive={admin === 'groupInfo'}>
+        <Menu
+          onClick={() => handleMenuItem('모임 정보 수정')}
+          isActive={isClicked['모임 정보 수정']}
+        >
           모임 정보 수정
         </Menu>
       </MenuList>

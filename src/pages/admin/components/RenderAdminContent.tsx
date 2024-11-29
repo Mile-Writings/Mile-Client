@@ -18,8 +18,13 @@ import Spacing from '../../../components/commons/Spacing';
 import useBlockPageExit from '../../../hooks/useBlockPageExit';
 import useModal from '../../../hooks/useModal';
 import Loading from '../../loading/Loading';
+import { Menu } from '../types/menu';
 
-const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
+interface RenderAdminContentPropTypes {
+  menu: Menu;
+}
+
+const RenderAdminContent = ({ menu }: RenderAdminContentPropTypes) => {
   const { groupId } = useParams();
   const [page, setPage] = useState(1);
   const [pageNum, setPageNum] = useState(1);
@@ -47,8 +52,8 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
 
   // groupInfo일 때만 페이지 이탈 감지 활성화
   useEffect(() => {
-    admin === 'groupInfo' ? setIgnoreBlocker(false) : setIgnoreBlocker(true);
-  }, [admin]);
+    menu === '모임 정보 수정' ? setIgnoreBlocker(false) : setIgnoreBlocker(true);
+  }, [menu]);
 
   const { mutate: deleteGroup, isPending, isError } = useDeleteGroup(groupId || '');
 
@@ -64,8 +69,8 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
     return <Loading />;
   }
 
-  switch (admin) {
-    case 'topic':
+  switch (menu) {
+    case '글감 설정':
       return (
         <AdminContainer>
           <AdminLayout>
@@ -99,7 +104,7 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
         </AdminContainer>
       );
 
-    case 'member':
+    case '멤버 관리':
       return (
         <AdminContainer>
           <Title>멤버 관리</Title>
@@ -110,7 +115,7 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
         </AdminContainer>
       );
 
-    case 'groupInfo':
+    case '모임 정보 수정':
       return (
         <>
           <AdminContainer>
