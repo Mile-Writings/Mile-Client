@@ -8,7 +8,7 @@ import RenderAdminContent from './components/RenderAdminContent';
 import { useFetchInvitationLink } from './hooks/queries';
 
 import { AdminHomeIc } from '../../assets/svgs';
-import { AuthorizationHeader } from '../../components/commons/Header';
+import { AdminHeader, AuthorizationHeader } from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import { copyLink } from '../../utils/copyLink';
 
@@ -39,7 +39,7 @@ const Admin = () => {
   }
   return (
     <AdminWrapper>
-      {accessToken && <AuthorizationHeader />}
+      {accessToken && <AdminHeader />}
       <Spacing marginBottom="13.6" />
       <AdminLayout>
         <SideNavbar>

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
 
-import { HeaderLogoIc } from '../../assets/svgs';
+import { HamburgerIc, HeaderLogoIc, LinkIc } from '../../assets/svgs';
 import {
   default as useNavigateHome,
   default as useNavigateToHome,
@@ -17,6 +17,7 @@ import { useFetchHeaderGroup } from '../../pages/groupFeed/hooks/queries';
 import logout from '../../utils/logout';
 
 import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
+import Responsive from './Responsive/Responsive';
 
 interface onClickEditProps {
   onClickEditSave: () => void;
@@ -126,6 +127,27 @@ export const DefaultHeader = () => {
   );
 };
 
+// 관리자 헤더
+export const AdminHeader = () => {
+  const { navigateToHome } = useNavigateHome();
+  return (
+    <>
+      <Responsive only="desktop">
+        <AuthorizationHeader />
+      </Responsive>
+      <Responsive only="mobile">
+        <HeaderWrapper>
+          <HeaderLogoIcon onClick={navigateToHome} />
+          <MobileHeaderButtons>
+            <LinkIc />
+            <HamburgerIc />
+          </MobileHeaderButtons>
+        </HeaderWrapper>
+      </Responsive>
+    </>
+  );
+};
+
 const HeaderWrapper = styled.div`
   position: fixed;
   top: 0%;
@@ -147,6 +169,13 @@ const HeaderWrapper = styled.div`
     padding-right: 2rem;
     padding-left: 2rem;
   }
+`;
+
+const MobileHeaderButtons = styled.div`
+  display: flex;
+  gap: 1.6rem;
+  align-items: center;
+  ${({ theme }) => theme.fonts.mSubtitle4};
 `;
 
 const HeaderLayout = styled.div`
