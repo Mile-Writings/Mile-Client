@@ -10,6 +10,7 @@ import { AdminHomeIc } from '../../assets/svgs';
 import { AuthorizationHeader } from '../../components/commons/Header';
 import Responsive from '../../components/commons/Responsive/Responsive';
 import Spacing from '../../components/commons/Spacing';
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import { copyLink } from '../../utils/copyLink';
 import DesktopNav from './components/navbar/DesktopNav';
 import MobileNav from './components/navbar/MobileNav';
@@ -41,7 +42,7 @@ const Admin = () => {
     return <Loading />;
   }
   return (
-    <>
+    <Wrapper>
       {accessToken && <AuthorizationHeader />}
       <AdminWrapper>
         <Responsive only="desktop">
@@ -90,22 +91,35 @@ const Admin = () => {
           <RenderAdminContent menu={menu} />
         </AdminLayout>
       </AdminWrapper>
-    </>
+    </Wrapper>
   );
 };
 
 export default Admin;
 
+const Wrapper = styled.div`
+  width: 100%;
+`;
+
 const AdminWrapper = styled.div`
   width: 100%;
-  padding: 0 2rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    padding: 2rem;
+  }
 `;
 
 const AdminLayout = styled.div`
   display: flex;
   gap: 6rem;
   justify-content: center;
-  padding: 0 16.5rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    display: flex;
+    flex-basis: 100%;
+    width: 100%;
+  }
 `;
 
 const SideNavbar = styled.nav`
@@ -128,6 +142,10 @@ const HomeBtn = styled.button`
 
   color: ${({ theme }) => theme.colors.gray60};
   ${({ theme }) => theme.fonts.body1};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle4};
+  }
 `;
 
 const GroupName = styled.h3`
@@ -137,6 +155,7 @@ const GroupName = styled.h3`
 
 const MobileGroupName = styled.h3`
   ${({ theme }) => theme.fonts.mSubtitle4};
+  white-space: nowrap;
 `;
 
 const AdminInviteBtn = styled.button`
@@ -174,4 +193,5 @@ const NameBox = styled.div`
 const PageName = styled.h1`
   color: ${({ theme }) => theme.colors.mainViolet};
   ${({ theme }) => theme.fonts.mTitle6};
+  white-space: nowrap;
 `;

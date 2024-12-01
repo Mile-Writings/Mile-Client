@@ -6,6 +6,7 @@ import EachTopic from './EachTopic';
 import Pagenation from '../../../components/commons/Pagenation';
 import Responsive from '../../../components/commons/Responsive/Responsive';
 import Spacing from '../../../components/commons/Spacing';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface AdminTopicPropTypes {
   topicCount: number;
@@ -34,7 +35,9 @@ const TopicAdmin = ({
         <TopicAdminCategory>
           <Topic>글감</Topic>
           <TopicTag>글감 태그</TopicTag>
-          <TopicDescription>글감 설명</TopicDescription>
+          <Responsive only="desktop">
+            <TopicDescription>글감 설명</TopicDescription>
+          </Responsive>
         </TopicAdminCategory>
         <TopicList>
           {data &&
@@ -68,7 +71,7 @@ export default TopicAdmin;
 const TopicListWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 78.1rem;
+  width: 100%;
 `;
 
 const TopicAdminCategory = styled.ul`
@@ -84,16 +87,31 @@ const TopicAdminCategory = styled.ul`
 
   background-color: ${({ theme }) => theme.colors.mileViolet};
   border-radius: 8px 8px 0 0;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    height: 4rem;
+  }
 `;
 
 const Topic = styled.li`
   width: 20.8rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 13rem;
+    ${({ theme }) => theme.fonts.editor};
+  }
 `;
 
 const TopicTag = styled.li`
   width: 7rem;
 
   text-align: center;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 6.1rem;
+    ${({ theme }) => theme.fonts.editor};
+  }
 `;
 
 const TopicDescription = styled.li`
@@ -108,4 +126,9 @@ const TopicList = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 0 0 8px 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    ${({ theme }) => theme.fonts.editor};
+  }
 `;

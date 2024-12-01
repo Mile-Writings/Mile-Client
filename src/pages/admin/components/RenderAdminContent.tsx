@@ -196,8 +196,7 @@ const ModalOverlay = styled.div`
 const AdminContainer = styled.div`
   display: flex;
   flex-direction: column;
-
-  /* width: 78.1rem; */
+  width: 100%;
 `;
 
 const Title = styled.h1`

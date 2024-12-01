@@ -11,6 +11,8 @@ import { MODAL } from '../constants/modal';
 import { useDeleteAdminTopic } from '../hooks/queries';
 
 import { DeleteIc, EditIc } from '../../../assets/svgs';
+import Responsive from '../../../components/commons/Responsive/Responsive';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface AdminTopicPropTypes {
   topicId: string;
@@ -44,7 +46,9 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
             <TopicDate>{createdAt}</TopicDate>
           </Topic>
           <TopicTag>{topicTag}</TopicTag>
-          <TopicDescription>{topicDescription}</TopicDescription>
+          <Responsive only="desktop">
+            <TopicDescription>{topicDescription}</TopicDescription>
+          </Responsive>
         </TopicData>
         <TopicAction>
           <EditIcon
@@ -115,6 +119,11 @@ const TopicWrapper = styled.div`
   align-items: center;
   width: 74.5rem;
   height: 8.4rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    max-width: 81rem;
+  }
 `;
 
 const TopicData = styled.div`
@@ -123,6 +132,10 @@ const TopicData = styled.div`
   align-items: flex-start;
   width: 64.9rem;
   height: 5.2rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 const Topic = styled.div`
@@ -131,16 +144,33 @@ const Topic = styled.div`
   gap: 0.4rem;
   width: 20.8rem;
   padding: 0.6rem 0;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 const TopicTitle = styled.p`
+  overflow: hidden;
+
   color: ${({ theme }) => theme.colors.black};
+  white-space: nowrap;
+  text-overflow: ellipsis;
   ${({ theme }) => theme.fonts.body1};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    max-width: 13rem;
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 
 const TopicDate = styled.p`
   color: ${({ theme }) => theme.colors.gray60};
   ${({ theme }) => theme.fonts.body6};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle1};
+  }
 `;
 
 const TopicTag = styled.p`
@@ -150,6 +180,10 @@ const TopicTag = styled.p`
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.body1};
   text-align: center;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 
 const TopicDescription = styled.p`

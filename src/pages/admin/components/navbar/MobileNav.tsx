@@ -39,6 +39,7 @@ export default MobileNav;
 const NavWrapper = styled.nav`
   display: flex;
   width: 100%;
+  min-width: 33.5rem;
   padding: 0.2rem 0.48rem;
 
   background-color: ${({ theme }) => theme.colors.white};
@@ -47,6 +48,7 @@ const NavWrapper = styled.nav`
 
 const NavListLayout = styled.ul`
   display: flex;
+  gap: 0.2rem;
   justify-content: space-between;
   width: 100%;
 `;
@@ -55,7 +57,7 @@ const NavListItem = styled.li<{ $isClicked: boolean }>`
   display: flex;
   flex: 1;
   justify-content: center;
-  padding: 1.1rem 2.8rem;
+  padding: 1.1rem;
 
   white-space: nowrap;
 
