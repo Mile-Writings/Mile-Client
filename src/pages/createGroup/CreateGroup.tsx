@@ -10,6 +10,7 @@ import { CreateGroupTypes, CurrentPageType } from './types/stateType';
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
 import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
 import useModal from '../../hooks/useModal';
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import handleImageUpload from '../../utils/handleImageUpload';
 import { usePresignedUrl } from '../postPage/hooks/queries';
 import { MODAL } from './constants/modalContent';
@@ -255,6 +256,11 @@ const BtnWrapper = styled.div`
   flex-direction: column;
   gap: 1.2rem;
   width: 82.6rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: row-reverse;
+    width: 100%;
+  }
 `;
 
 const CreateGroupWrapper = styled.div`
@@ -264,6 +270,7 @@ const CreateGroupWrapper = styled.div`
   justify-content: center;
   width: 100%;
   margin-top: 11.4rem;
+  padding: 0 2rem;
 `;
 const CreateGroupBtn = styled.button`
   display: flex;
@@ -284,5 +291,9 @@ const CreateGroupBtn = styled.button`
 
     background-color: ${({ theme }) => theme.colors.mileViolet};
     border: 1px solid ${({ theme }) => theme.colors.mileViolet};
+  }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    max-width:;
   }
 `;
