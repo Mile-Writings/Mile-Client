@@ -45,16 +45,28 @@ export const AuthorizationHeader = () => {
     if (data?.data?.moims) setMoims(data?.data.moims);
   }, [data?.data?.moims]);
   return (
-    <HeaderWrapper>
-      <HeaderLogoIcon onClick={navigateToHome} />
-      <HeaderLayout>
-        <MyGroupDropDown groupData={moims ?? []} />
-        <HeaderBtnContainer>
-          <CreateGroupBtn groupCount={data?.data.moims.length ?? 0} />
-          <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
-        </HeaderBtnContainer>
-      </HeaderLayout>
-    </HeaderWrapper>
+    <>
+      <Responsive only="desktop">
+        <HeaderWrapper>
+          <HeaderLogoIcon onClick={navigateToHome} />
+          <HeaderLayout>
+            <MyGroupDropDown groupData={moims ?? []} />
+            <HeaderBtnContainer>
+              <CreateGroupBtn groupCount={data?.data.moims.length ?? 0} />
+              <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
+            </HeaderBtnContainer>
+          </HeaderLayout>
+        </HeaderWrapper>
+      </Responsive>
+      <Responsive only="mobile">
+        <HeaderWrapper>
+          <HeaderLogoIcon onClick={navigateToHome} />
+          <MobileHeaderButtons>
+            <HamburgerIcon />
+          </MobileHeaderButtons>
+        </HeaderWrapper>
+      </Responsive>
+    </>
   );
 };
 
@@ -64,10 +76,22 @@ export const UnAuthorizationHeader = () => {
   const { navigateToLogin } = useNavigateLoginWithPath();
 
   return (
-    <HeaderWrapper>
-      <HeaderLogoIcon onClick={navigateToHome} />
-      <LogInOutBtn onClick={navigateToLogin}>로그인</LogInOutBtn>
-    </HeaderWrapper>
+    <>
+      <Responsive only="desktop">
+        <HeaderWrapper>
+          <HeaderLogoIcon onClick={navigateToHome} />
+          <LogInOutBtn onClick={navigateToLogin}>로그인</LogInOutBtn>
+        </HeaderWrapper>
+      </Responsive>
+      <Responsive only="mobile">
+        <HeaderWrapper>
+          <HeaderLogoIcon onClick={navigateToHome} />
+          <MobileHeaderButtons>
+            <HamburgerIcon />
+          </MobileHeaderButtons>
+        </HeaderWrapper>
+      </Responsive>
+    </>
   );
 };
 
@@ -139,8 +163,8 @@ export const AdminHeader = () => {
         <HeaderWrapper>
           <HeaderLogoIcon onClick={navigateToHome} />
           <MobileHeaderButtons>
-            <LinkIc />
-            <HamburgerIc />
+            <LinkIcon />
+            <HamburgerIcon />
           </MobileHeaderButtons>
         </HeaderWrapper>
       </Responsive>
@@ -169,6 +193,13 @@ const HeaderWrapper = styled.div`
     padding-right: 2rem;
     padding-left: 2rem;
   }
+`;
+
+const LinkIcon = styled(LinkIc)`
+  cursor: pointer;
+`;
+const HamburgerIcon = styled(HamburgerIc)`
+  cursor: pointer;
 `;
 
 const MobileHeaderButtons = styled.div`
