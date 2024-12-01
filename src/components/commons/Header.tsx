@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
 
-import { HeaderLogoIc } from '../../assets/svgs';
+import { HeaderLogoIc, MobileHeaderImg } from '../../assets/svgs';
 import {
   default as useNavigateHome,
   default as useNavigateToHome,
@@ -15,6 +15,8 @@ import CreateGroupBtn from '../../pages/groupFeed/components/CreateGroupBtn';
 import MyGroupDropDown from '../../pages/groupFeed/components/MyGroupDropDown';
 import { useFetchHeaderGroup } from '../../pages/groupFeed/hooks/queries';
 import logout from '../../utils/logout';
+import Responsive from './Responsive/Responsive';
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 
 interface onClickEditProps {
   onClickEditSave: () => void;
@@ -61,10 +63,19 @@ export const UnAuthorizationHeader = () => {
   const { navigateToLogin } = useNavigateLoginWithPath();
 
   return (
-    <HeaderWrapper>
-      <HeaderLogoIcon onClick={navigateToHome} />
-      <LogInOutBtn onClick={navigateToLogin}>로그인</LogInOutBtn>
-    </HeaderWrapper>
+    <>
+      <Responsive only="desktop">
+        <HeaderWrapper>
+          <HeaderLogoIcon onClick={navigateToHome} />
+          <LogInOutBtn onClick={navigateToLogin}>로그인</LogInOutBtn>
+        </HeaderWrapper>
+      </Responsive>
+      <Responsive only="mobile">
+        <HeaderWrapper>
+          <MobileHeaderIcon onClick={navigateToHome}></MobileHeaderIcon>
+        </HeaderWrapper>
+      </Responsive>
+    </>
   );
 };
 
@@ -124,6 +135,12 @@ export const DefaultHeader = () => {
   );
 };
 
+const MobileHeaderIcon = styled(MobileHeaderImg)`
+  flex-shrink: 0;
+
+  cursor: pointer;
+`;
+
 const HeaderWrapper = styled.div`
   position: fixed;
   top: 0%;
@@ -138,6 +155,12 @@ const HeaderWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    height: 5.6rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
 `;
 
 const HeaderLayout = styled.div`
