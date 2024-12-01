@@ -17,34 +17,43 @@ const GroupJoinCongrats = () => {
     navigate(`/group/${groupId}`);
   };
   return (
-    <GroupJoinCongratsWrapper>
+    <JoinWrapper>
       <DefaultHeader />
-      <Spacing marginBottom="15.6" />
-      <GroupJoinCongratsContainer>
-        <GroupJoinTitleWrapper>
-          <GroupJoinTitle>{location?.state?.moimTitle} 가입을 축하해요!</GroupJoinTitle>
-          <GroupJoinText>글 모임에서 당신의 소중한 이야기를 들려주세요.</GroupJoinText>
-        </GroupJoinTitleWrapper>
-        <Spacing marginBottom="4.8" />
-        <picture>
-          <source srcSet={groupJoinCongratsWebp} />
-          <img src={groupJoinCongratsIlust} />
-        </picture>
-        <Spacing marginBottom="4.8" />
-        <GoToGroupFeedBtn onClick={onClickGoToGroupFeedBtn}>모임 페이지 보러가기</GoToGroupFeedBtn>
-      </GroupJoinCongratsContainer>
-    </GroupJoinCongratsWrapper>
+      <GroupJoinCongratsWrapper>
+        <Spacing marginBottom="15.6" />
+        <GroupJoinCongratsContainer>
+          <GroupJoinTitleWrapper>
+            <GroupJoinTitle>{location?.state?.moimTitle} 가입을 축하해요!</GroupJoinTitle>
+            <GroupJoinText>글 모임에서 당신의 소중한 이야기를 들려주세요.</GroupJoinText>
+          </GroupJoinTitleWrapper>
+          <Spacing marginBottom="4.8" />
+          <picture>
+            <source srcSet={groupJoinCongratsWebp} />
+            <img src={groupJoinCongratsIlust} />
+          </picture>
+          <Spacing marginBottom="4.8" />
+          <GoToGroupFeedBtn onClick={onClickGoToGroupFeedBtn}>
+            모임 페이지 보러가기
+          </GoToGroupFeedBtn>
+        </GroupJoinCongratsContainer>
+      </GroupJoinCongratsWrapper>
+    </JoinWrapper>
   );
 };
 
 export default GroupJoinCongrats;
+
+const JoinWrapper = styled.div`
+  display: flex;
+  width: 100%;
+`;
 
 const GroupJoinCongratsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 82.6rem;
+  width: 100%;
 `;
 
 const GroupJoinCongratsContainer = styled.main`

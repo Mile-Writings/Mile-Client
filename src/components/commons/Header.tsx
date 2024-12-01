@@ -129,9 +129,18 @@ export const EditorTempExistHeader = ({ onClickSubmit }: OnClickTempExistProps) 
 export const DefaultHeader = () => {
   const { navigateToHome } = useNavigateHome();
   return (
-    <HeaderWrapper>
-      <HeaderLogoIcon onClick={navigateToHome} />
-    </HeaderWrapper>
+    <>
+      <Responsive only="desktop">
+        <HeaderWrapper>
+          <HeaderLogoIcon onClick={navigateToHome} />
+        </HeaderWrapper>
+      </Responsive>
+      <Responsive only="mobile">
+        <HeaderWrapper>
+          <MobileHeaderIcon onClick={navigateToHome}></MobileHeaderIcon>
+        </HeaderWrapper>
+      </Responsive>
+    </>
   );
 };
 
@@ -157,6 +166,7 @@ const HeaderWrapper = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
 
   @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
     height: 5.6rem;
     padding-right: 2rem;
     padding-left: 2rem;
