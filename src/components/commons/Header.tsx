@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Button from './Button';
 import LogInOutBtn from './LogInOutBtn';
 
-import { HeaderLogoIc, MobileHeaderImg } from '../../assets/svgs';
+import { HeaderLogoIc } from '../../assets/svgs';
 import {
   default as useNavigateHome,
   default as useNavigateToHome,
@@ -15,7 +15,7 @@ import CreateGroupBtn from '../../pages/groupFeed/components/CreateGroupBtn';
 import MyGroupDropDown from '../../pages/groupFeed/components/MyGroupDropDown';
 import { useFetchHeaderGroup } from '../../pages/groupFeed/hooks/queries';
 import logout from '../../utils/logout';
-import Responsive from './Responsive/Responsive';
+
 import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 
 interface onClickEditProps {
@@ -63,19 +63,10 @@ export const UnAuthorizationHeader = () => {
   const { navigateToLogin } = useNavigateLoginWithPath();
 
   return (
-    <>
-      <Responsive only="desktop">
-        <HeaderWrapper>
-          <HeaderLogoIcon onClick={navigateToHome} />
-          <LogInOutBtn onClick={navigateToLogin}>로그인</LogInOutBtn>
-        </HeaderWrapper>
-      </Responsive>
-      <Responsive only="mobile">
-        <HeaderWrapper>
-          <MobileHeaderIcon onClick={navigateToHome}></MobileHeaderIcon>
-        </HeaderWrapper>
-      </Responsive>
-    </>
+    <HeaderWrapper>
+      <HeaderLogoIcon onClick={navigateToHome} />
+      <LogInOutBtn onClick={navigateToLogin}>로그인</LogInOutBtn>
+    </HeaderWrapper>
   );
 };
 
@@ -129,26 +120,11 @@ export const EditorTempExistHeader = ({ onClickSubmit }: OnClickTempExistProps) 
 export const DefaultHeader = () => {
   const { navigateToHome } = useNavigateHome();
   return (
-    <>
-      <Responsive only="desktop">
-        <HeaderWrapper>
-          <HeaderLogoIcon onClick={navigateToHome} />
-        </HeaderWrapper>
-      </Responsive>
-      <Responsive only="mobile">
-        <HeaderWrapper>
-          <MobileHeaderIcon onClick={navigateToHome}></MobileHeaderIcon>
-        </HeaderWrapper>
-      </Responsive>
-    </>
+    <HeaderWrapper>
+      <HeaderLogoIcon onClick={navigateToHome}></HeaderLogoIcon>
+    </HeaderWrapper>
   );
 };
-
-const MobileHeaderIcon = styled(MobileHeaderImg)`
-  flex-shrink: 0;
-
-  cursor: pointer;
-`;
 
 const HeaderWrapper = styled.div`
   position: fixed;
@@ -191,4 +167,9 @@ const HeaderLogoIcon = styled(HeaderLogoIc)`
   flex-shrink: 0;
 
   cursor: pointer;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 7rem;
+    height: 1.68rem;
+  }
 `;
