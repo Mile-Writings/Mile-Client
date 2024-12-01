@@ -11,7 +11,7 @@ import {
 import { DEFAULT_IMG_URL } from '../../../constants/defaultImgUrl';
 import useImageUpload from '../../../hooks/useImageUpload';
 import handleImageUpload from '../../../utils/handleImageUpload';
-import { InputInfoMsg } from '../../createGroup/components/CreateGroupInfo';
+import { InputInfoMsg } from '../../createGroup/constants/inputInfoMsg';
 import { useGetGroupNameValidation } from '../../createGroup/hooks/queries';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
 import { useFetchGroupInfo, usePutAdminGroupInfo } from '../hooks/queries';

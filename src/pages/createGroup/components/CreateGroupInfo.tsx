@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { AxiosError } from 'axios';
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import createGroupWebp from '/src/assets/webps/creategroup.webp';
 import {
   CreateGroupImageUpload,
   CreateGroupImageUploadedIc,
@@ -11,6 +10,7 @@ import {
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 import useImageUpload from '../../../hooks/useImageUpload';
+import { InputInfoMsg } from '../constants/inputInfoMsg';
 import {
   MAX_TOPIC_DESC_LENGTH,
   MAX_TOPIC_KEYWORD_LENGTH,
@@ -20,6 +20,7 @@ import { useGetGroupNameValidation } from '../hooks/queries';
 import { CurrentPageType } from '../types/stateType';
 import CreateGroupTopicModal from './CreateGroupTopicModal';
 import createGroupIlust from '/src/assets/images/createGroupIlust.png';
+import createGroupWebp from '/src/assets/webps/creategroup.webp';
 
 type Setter<T> = (value: T) => void;
 interface CreateGroupInfoPropTypes {
@@ -40,14 +41,7 @@ interface CreateGroupInfoPropTypes {
   setGroupImageView: Dispatch<SetStateAction<string>>;
   setImageFile: Dispatch<SetStateAction<File | null>>;
 }
-export const InputInfoMsg = {
-  groupNameLength: '10자 이내로 작성해주세요.',
-  groupNameNotAvailable: '이미 사용중인 모임명입니다.',
-  groupNameNotCheck: '중복확인을 해주세요.',
-  groupNameAvailable: '사용 가능한 모임명입니다.',
-  groupNameEmpty: '글모임 이름을 입력해주세요.',
-  emptyText: '',
-};
+
 const CreateGroupInfo = ({
   setCurrentPage,
   groupName,
