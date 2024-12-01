@@ -50,6 +50,13 @@ declare module '@emotion/react' {
       title11: SerializedStyles;
       title12: SerializedStyles;
       title13: SerializedStyles;
+      mTitle1: SerializedStyles;
+      mTitle2: SerializedStyles;
+      mTitle3: SerializedStyles;
+      mTitle4: SerializedStyles;
+      mTitle5: SerializedStyles;
+      mTitle6: SerializedStyles;
+      mTitle7: SerializedStyles;
       subtitle1: SerializedStyles;
       subtitle2: SerializedStyles;
       subtitle3: SerializedStyles;
@@ -57,6 +64,10 @@ declare module '@emotion/react' {
       subtitle5: SerializedStyles;
       subtitle6: SerializedStyles;
       subtitle7: SerializedStyles;
+      mSubtitle1: SerializedStyles;
+      mSubtitle2: SerializedStyles;
+      mSubtitle3: SerializedStyles;
+      mSubtitle4: SerializedStyles;
       body1: SerializedStyles;
       body2: SerializedStyles;
       body3: SerializedStyles;
@@ -66,10 +77,16 @@ declare module '@emotion/react' {
       body7: SerializedStyles;
       body8: SerializedStyles;
       body9: SerializedStyles;
+      mBody1: SerializedStyles;
+      mBody2: SerializedStyles;
+      mBody3: SerializedStyles;
+      mBody4: SerializedStyles;
       button1: SerializedStyles;
       button2: SerializedStyles;
       button3: SerializedStyles;
       button4: SerializedStyles;
+      mButton1: SerializedStyles;
+      editor: SerializedStyles;
     };
   }
 }
