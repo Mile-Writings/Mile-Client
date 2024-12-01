@@ -94,3 +94,6 @@ export { default as GroupCuriousIc } from './groupCuriousIcn.svg?react';
 export { default as GroupViewIc } from './groupViewIcn.svg?react';
 
 // export { default as LoadingIc } from './loadingSvg.svg?react';
+
+//헤더용 마일 아이콘
+export { default as MobileHeaderImg } from './mobileHeaderLogo.svg?react';
