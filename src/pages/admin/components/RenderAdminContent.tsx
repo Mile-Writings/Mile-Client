@@ -94,6 +94,7 @@ const RenderAdminContent = ({ menu }: RenderAdminContentPropTypes) => {
               />
             </Responsive>
           </AdminLayout>
+
           <Responsive only="desktop">
             <Spacing marginBottom="3.6" />
           </Responsive>
@@ -204,7 +205,6 @@ const AdminContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-right: 16.5rem;
 `;
 
 const Title = styled.h1`
