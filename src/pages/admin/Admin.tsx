@@ -50,8 +50,6 @@ const Admin = () => {
         </Responsive>
         <Responsive only="mobile">
           <Spacing marginBottom="8.8" />
-        </Responsive>
-        <Responsive only="mobile">
           <GroupLayout>
             <NameBox>
               <MobileGroupName>{infoResponse?.moimName}</MobileGroupName>
@@ -63,11 +61,10 @@ const Admin = () => {
             </HomeBtn>
           </GroupLayout>
           <Spacing marginBottom="1.2" />
-        </Responsive>
-        <Responsive only="mobile">
           <MobileNav handleMenuItem={handleMenuItem} isClicked={isClicked} />
           <Spacing marginBottom="2.8" />
         </Responsive>
+
         <AdminLayout>
           <Responsive only="desktop">
             <SideNavbar>
