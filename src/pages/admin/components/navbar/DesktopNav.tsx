@@ -46,13 +46,13 @@ const Title = styled.h1`
   color: ${({ theme }) => theme.colors.mainViolet};
 `;
 
-const MenuList = styled.div`
+const MenuList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
 `;
 
-const Menu = styled.div<{ isActive: boolean }>`
+const Menu = styled.li<{ isActive: boolean }>`
   padding: 1rem 1.6rem;
 
   ${({ theme }) => theme.fonts.subtitle3};
