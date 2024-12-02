@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import AddEditTopicModal from './AddEditTopicModal';
 import EditGroupInfo from './EditGroupInfo';
 import MemberManage from './MemberManage';
 import TopicAdmin from './TopicAdmin';
@@ -12,9 +11,11 @@ import { useAdminTopic, useDeleteGroup, useFetchMemberInfo } from '../hooks/quer
 
 import { useNavigate } from 'react-router-dom';
 import { MakeGroupAdminIc } from '../../../assets/svgs';
+import InputModal from '../../../components/commons/inputModal/InputModal';
 import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 import Responsive from '../../../components/commons/Responsive/Responsive';
 import Spacing from '../../../components/commons/Spacing';
+import { ADMIN } from '../../../constants/modal';
 import useBlockPageExit from '../../../hooks/useBlockPageExit';
 import useModal from '../../../hooks/useModal';
 import Loading from '../../loading/Loading';
@@ -102,7 +103,13 @@ const RenderAdminContent = ({ menu }: RenderAdminContentPropTypes) => {
           {showModal && (
             <>
               <ModalOverlay onClick={closeModal} />
-              <AddEditTopicModal pageNum={pageNum} setShowModal={setShowModal} />
+              <InputModal
+                pageNum={pageNum}
+                setShowModal={setShowModal}
+                topicPlaceholder={ADMIN.PLACEHOLER.TOPIC}
+                tagPlaceholder={ADMIN.PLACEHOLER.TAG}
+                descPlaceholder={ADMIN.PLACEHOLER.DESC}
+              />
             </>
           )}
           <TopicAdmin data={adminTopicData} setPageNum={setPageNum} pageNum={pageNum} />
@@ -197,6 +204,7 @@ const AdminContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-right: 16.5rem;
 `;
 
 const Title = styled.h1`

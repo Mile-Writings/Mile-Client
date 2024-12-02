@@ -134,6 +134,7 @@ const TopicData = styled.div`
   height: 5.2rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
+    gap: 1.6rem;
     width: 100%;
   }
 `;
@@ -147,6 +148,7 @@ const Topic = styled.div`
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
+    max-width: 13rem;
   }
 `;
 
@@ -174,14 +176,22 @@ const TopicDate = styled.p`
 `;
 
 const TopicTag = styled.p`
+  align-content: center;
   width: 7rem;
   padding: 0.6rem 0;
 
   color: ${({ theme }) => theme.colors.black};
-  ${({ theme }) => theme.fonts.body1};
+  white-space: nowrap;
   text-align: center;
+  text-overflow: ellipsis;
+
+  ${({ theme }) => theme.fonts.body1};
 
   @media ${MOBILE_MEDIA_QUERY} {
+    display: flex;
+    justify-content: center;
+    width: 6.1rem;
+
     ${({ theme }) => theme.fonts.mSubtitle2};
   }
 `;
@@ -200,5 +210,6 @@ const TopicDescription = styled.p`
 
 const TopicAction = styled.div`
   display: flex;
+  flex-shrink: 1;
   gap: 0.8rem;
 `;

@@ -38,6 +38,11 @@ const TopicAdmin = ({
           <Responsive only="desktop">
             <TopicDescription>글감 설명</TopicDescription>
           </Responsive>
+          <div style={{ marginLeft: 'auto' }}>
+            <Responsive only="mobile">
+              <TopicDescription>수정/삭제</TopicDescription>
+            </Responsive>
+          </div>
         </TopicAdminCategory>
         <TopicList>
           {data &&
@@ -46,12 +51,14 @@ const TopicAdmin = ({
             ))}
         </TopicList>
       </TopicListWrapper>
+
       <Responsive only="desktop">
         <Spacing marginBottom="3.2" />
       </Responsive>
       <Responsive only="mobile">
         <Spacing marginBottom="1.6" />
       </Responsive>
+
       {data && data.topicCount && (
         <Pagenation
           count={data.topicCount}
@@ -89,7 +96,10 @@ const TopicAdminCategory = styled.ul`
   border-radius: 8px 8px 0 0;
 
   @media ${MOBILE_MEDIA_QUERY} {
+    display: flex;
+    gap: 1.6rem;
     width: 100%;
+    min-width: 33.5rem;
     height: 4rem;
   }
 `;
@@ -97,15 +107,19 @@ const TopicAdminCategory = styled.ul`
 const Topic = styled.li`
   width: 20.8rem;
 
+  white-space: nowrap;
+
   @media ${MOBILE_MEDIA_QUERY} {
     width: 13rem;
-    ${({ theme }) => theme.fonts.editor};
+
+    ${({ theme }) => theme.fonts.editor}
   }
 `;
 
 const TopicTag = styled.li`
   width: 7rem;
 
+  white-space: nowrap;
   text-align: center;
 
   @media ${MOBILE_MEDIA_QUERY} {
@@ -115,7 +129,17 @@ const TopicTag = styled.li`
 `;
 
 const TopicDescription = styled.li`
+  display: flex;
   width: 21.3rem;
+  margin-left: auto;
+
+  white-space: nowrap;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    margin-right: 2rem;
+    ${({ theme }) => theme.fonts.editor}
+  }
 `;
 
 const TopicList = styled.div`
@@ -129,6 +153,7 @@ const TopicList = styled.div`
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
+    min-width: 33.5rem;
     ${({ theme }) => theme.fonts.editor};
   }
 `;
