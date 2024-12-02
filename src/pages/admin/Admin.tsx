@@ -103,6 +103,7 @@ const Wrapper = styled.div`
 
 const AdminWrapper = styled.div`
   width: 100%;
+  padding: 0 16.5rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
