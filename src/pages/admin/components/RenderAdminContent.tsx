@@ -94,13 +94,6 @@ const RenderAdminContent = ({ menu }: RenderAdminContentPropTypes) => {
               />
             </Responsive>
           </AdminLayout>
-
-          <Responsive only="desktop">
-            <Spacing marginBottom="3.6" />
-          </Responsive>
-          <Responsive only="mobile">
-            <Spacing marginBottom="1.2" />
-          </Responsive>
           {showModal && (
             <>
               <ModalOverlay onClick={closeModal} />
@@ -113,6 +106,12 @@ const RenderAdminContent = ({ menu }: RenderAdminContentPropTypes) => {
               />
             </>
           )}
+          <Responsive only="desktop">
+            <Spacing marginBottom="3.6" />
+          </Responsive>
+          <Responsive only="mobile">
+            <Spacing marginBottom="1.2" />
+          </Responsive>
           <TopicAdmin data={adminTopicData} setPageNum={setPageNum} pageNum={pageNum} />
         </AdminContainer>
       );
