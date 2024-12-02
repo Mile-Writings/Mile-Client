@@ -13,9 +13,9 @@ interface topicPropTypes {
   topicId?: string;
   pageNum: number;
   setShowModal: Dispatch<SetStateAction<boolean>>;
-  topicPlaceholder: string;
-  tagPlaceholder: string;
-  descPlaceholder: string;
+  topicPlaceholder?: string;
+  tagPlaceholder?: string;
+  descPlaceholder?: string;
 }
 
 const InputModal = ({

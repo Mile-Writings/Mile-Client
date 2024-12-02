@@ -2,8 +2,6 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import AddEditTopicModal from './AddEditTopicModal';
-
 import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 import useModal from '../../../hooks/useModal';
 
@@ -11,6 +9,7 @@ import { MODAL } from '../constants/modal';
 import { useDeleteAdminTopic } from '../hooks/queries';
 
 import { DeleteIc, EditIc } from '../../../assets/svgs';
+import InputModal from '../../../components/commons/inputModal/InputModal';
 import Responsive from '../../../components/commons/Responsive/Responsive';
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
@@ -63,7 +62,7 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
         {showEditModal && (
           <>
             <ModalOverlay onClick={() => setShowEditModal(false)} />
-            <AddEditTopicModal
+            <InputModal
               topicStored={topicName}
               topicTagStored={topicTag}
               topicDescriptionStored={topicDescription}
