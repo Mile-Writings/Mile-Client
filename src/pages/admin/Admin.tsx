@@ -114,8 +114,6 @@ const AdminLayout = styled.div`
   justify-content: center;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    display: flex;
-    flex-basis: 100%;
     width: 100%;
   }
 `;
