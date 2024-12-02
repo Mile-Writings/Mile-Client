@@ -154,6 +154,7 @@ const CreateGroup = () => {
   const handleBackBtn = () => {
     setCurrentPage('GroupInfoPage');
   };
+
   return (
     <CreateGroupWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
@@ -291,9 +292,5 @@ const CreateGroupBtn = styled.button`
 
     background-color: ${({ theme }) => theme.colors.mileViolet};
     border: 1px solid ${({ theme }) => theme.colors.mileViolet};
-  }
-
-  @media ${MOBILE_MEDIA_QUERY} {
-    max-width:;
   }
 `;
