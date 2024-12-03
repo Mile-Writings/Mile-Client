@@ -153,7 +153,8 @@ const Topic = styled.div`
 `;
 
 const TopicTitle = styled.p`
-  width: 18.2rem;
+  width: 20.9rem;
+  max-width: 20.9rem;
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.black};
@@ -178,6 +179,7 @@ const TopicDate = styled.p`
 `;
 
 const TopicTag = styled.p`
+  flex-shrink: 0;
   width: 7rem;
   padding: 0.6rem 0;
   overflow: hidden;
