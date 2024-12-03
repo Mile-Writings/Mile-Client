@@ -72,14 +72,14 @@ export const AuthorizationHeader = () => {
             />
           </MobileHeaderButtons>
         </HeaderWrapper>
+        {isSidebarOpen && (
+          <MyMobileSidebar
+            onClose={() => {
+              setIsSidebarOpen(false);
+            }}
+          />
+        )}
       </Responsive>
-      {isSidebarOpen && (
-        <MyMobileSidebar
-          onClose={() => {
-            setIsSidebarOpen(false);
-          }}
-        />
-      )}
     </>
   );
 };
