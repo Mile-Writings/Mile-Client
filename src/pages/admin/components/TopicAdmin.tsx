@@ -85,7 +85,7 @@ const TopicAdminCategory = styled.ul`
   display: flex;
   gap: 4rem;
   align-items: center;
-  width: 78.1rem;
+  max-width: 78.1rem;
   height: 4.8rem;
   padding: 0 1.8rem;
 
@@ -106,6 +106,7 @@ const TopicAdminCategory = styled.ul`
 
 const Topic = styled.li`
   width: 20.8rem;
+  max-width: 20.8rem;
 
   white-space: nowrap;
 
@@ -118,6 +119,7 @@ const Topic = styled.li`
 
 const TopicTag = styled.li`
   width: 7rem;
+  max-width: 7rem;
 
   white-space: nowrap;
   text-align: center;
@@ -130,7 +132,7 @@ const TopicTag = styled.li`
 
 const TopicDescription = styled.li`
   display: flex;
-  width: 21.3rem;
+  max-width: 21.3rem;
   margin-left: auto;
 
   white-space: nowrap;
@@ -145,7 +147,7 @@ const TopicDescription = styled.li`
 const TopicList = styled.div`
   display: flex;
   flex-direction: column;
-  width: 78.1rem;
+  max-width: 78.1rem;
   padding: 0.4rem 1.8rem;
 
   background-color: ${({ theme }) => theme.colors.white};

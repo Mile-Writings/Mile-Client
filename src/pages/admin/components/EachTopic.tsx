@@ -48,17 +48,18 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
           <Responsive only="desktop">
             <TopicDescription>{topicDescription}</TopicDescription>
           </Responsive>
-        </TopicData>
-        <TopicAction>
-          <EditIcon
-            onClick={() => {
-              setShowEditModal(true);
-            }}
-          />
+          <TopicAction>
+            <EditIcon
+              onClick={() => {
+                setShowEditModal(true);
+              }}
+            />
 
-          {/* <DeleteIcon onClick={() => setShowDeleteModal(true)} /> */}
-          <DeleteIcon onClick={() => handleShowModal()} />
-        </TopicAction>
+            {/* <DeleteIcon onClick={() => setShowDeleteModal(true)} /> */}
+            <DeleteIcon onClick={() => handleShowModal()} />
+          </TopicAction>
+        </TopicData>
+
         {showEditModal && (
           <>
             <ModalOverlay onClick={() => setShowEditModal(false)} />
@@ -116,12 +117,11 @@ const TopicWrapper = styled.div`
   display: flex;
   gap: 2.4rem;
   align-items: center;
-  width: 74.5rem;
+  width: 100%;
   height: 8.4rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
-    max-width: 81rem;
   }
 `;
 
@@ -129,7 +129,7 @@ const TopicData = styled.div`
   display: flex;
   gap: 4rem;
   align-items: flex-start;
-  width: 64.9rem;
+  width: 74.5rem;
   height: 5.2rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
@@ -142,22 +142,25 @@ const Topic = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  width: 20.8rem;
+  min-width: 20.8rem;
   padding: 0.6rem 0;
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
+    min-width: 13rem;
     max-width: 13rem;
   }
 `;
 
 const TopicTitle = styled.p`
+  width: 18.2rem;
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.black};
   white-space: nowrap;
   text-overflow: ellipsis;
-  ${({ theme }) => theme.fonts.body1};
+
+  ${({ theme }) => theme.fonts.body1}
 
   @media ${MOBILE_MEDIA_QUERY} {
     max-width: 13rem;
@@ -175,21 +178,21 @@ const TopicDate = styled.p`
 `;
 
 const TopicTag = styled.p`
-  align-content: center;
   width: 7rem;
   padding: 0.6rem 0;
+  overflow: hidden;
 
   color: ${({ theme }) => theme.colors.black};
   white-space: nowrap;
   text-align: center;
   text-overflow: ellipsis;
 
-  ${({ theme }) => theme.fonts.body1};
+  ${({ theme }) => theme.fonts.body1}
 
   @media ${MOBILE_MEDIA_QUERY} {
-    display: flex;
     justify-content: center;
     width: 6.1rem;
+    min-width: 6.1rem;
 
     ${({ theme }) => theme.fonts.mSubtitle2};
   }
@@ -197,18 +200,21 @@ const TopicTag = styled.p`
 
 const TopicDescription = styled.p`
   display: -webkit-box;
-  width: 29rem;
+  width: 100%;
+  min-width: 3rem;
+  max-width: 29rem;
   padding-top: 0.2rem;
   overflow: hidden;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 
   color: ${({ theme }) => theme.colors.gray100};
-  ${({ theme }) => theme.fonts.body8};
-`;
+  text-overflow: ellipsis;
 
+  ${({ theme }) => theme.fonts.body8}
+`;
 const TopicAction = styled.div`
   display: flex;
-  flex-shrink: 1;
   gap: 0.8rem;
+  margin-left: auto;
 `;
