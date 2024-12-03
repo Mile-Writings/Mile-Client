@@ -11,6 +11,7 @@ const MyMobileSidebar = ({ onClose }: { onClose: () => void }) => {
   const { navigateToHome } = useNavigateToHome();
 
   useClickOutside(sidebarRef, () => {
+    //헤더 이외부분 클릭시 닫히게
     if (sidebarRef.current) onClose();
   });
   const handleLogOut = () => {
