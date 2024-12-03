@@ -59,7 +59,7 @@ const MyGroupDropDownWrapper = styled.section`
   align-items: center;
 `;
 
-const MyGroupBtnLayout = styled.button`
+export const MyGroupBtnLayout = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;

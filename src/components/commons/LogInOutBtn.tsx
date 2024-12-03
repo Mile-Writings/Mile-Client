@@ -16,6 +16,7 @@ const LogInOutBtn = ({ children, onClick }: LogInOutPropTypes) => {
 export default LogInOutBtn;
 
 const LogInOutWrapper = styled.button`
+  width: 100%;
   height: 4rem;
   padding: 1rem 1.6rem;
 

@@ -18,6 +18,7 @@ import logout from '../../utils/logout';
 
 import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import Responsive from './Responsive/Responsive';
+import MyMobileSidebar from '../../pages/groupFeed/components/MyMobileSidebar';
 
 interface onClickEditProps {
   onClickEditSave: () => void;
@@ -44,6 +45,8 @@ export const AuthorizationHeader = () => {
   useEffect(() => {
     if (data?.data?.moims) setMoims(data?.data.moims);
   }, [data?.data?.moims]);
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <>
       <Responsive only="desktop">
@@ -62,10 +65,21 @@ export const AuthorizationHeader = () => {
         <HeaderWrapper>
           <HeaderLogoIcon onClick={navigateToHome} />
           <MobileHeaderButtons>
-            <HamburgerIcon />
+            <HamburgerIcon
+              onClick={() => {
+                setIsSidebarOpen(true);
+              }}
+            />
           </MobileHeaderButtons>
         </HeaderWrapper>
       </Responsive>
+      {isSidebarOpen && (
+        <MyMobileSidebar
+          onClose={() => {
+            setIsSidebarOpen(false);
+          }}
+        />
+      )}
     </>
   );
 };

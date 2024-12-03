@@ -154,81 +154,86 @@ const CreateGroup = () => {
     setCurrentPage('GroupInfoPage');
   };
   return (
-    <CreateGroupWrapper>
+    <GroupWrapper>
       {localStorage.getItem('accessToken') ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
-      {currentPage === 'GroupInfoPage' && (
-        <CreateGroupInfo
-          setCurrentPage={setCurrentPage}
-          groupName={groupName}
-          setGroupName={setGroupName}
-          groupInfo={groupInfo}
-          setGroupInfo={setGroupInfo}
-          isPublic={isPublic}
-          setIsPublic={setIsPublic}
-          topic={topic}
-          topicTag={topicTag}
-          topicDesc={topicDesc}
-          setTopic={setTopic}
-          setTopicTag={setTopicTag}
-          setTopicDesc={setTopicDesc}
-          groupImageView={groupImageView}
-          setGroupImageView={setGroupImageView}
-          setImageFile={setImageFile}
-        />
-      )}
-      {currentPage === 'GroupLeaderInfoPage' && (
-        <CreateGroupLeaderInfo
-          leaderPenName={leaderPenName}
-          setLeaderPenName={setLeaderPenName}
-          leaderDesc={leaderDesc}
-          setIsGroupLeaderValid={setIsGroupLeaderValid}
-          setLeaderDesc={setLeaderDesc}
-          isGroupLeaderValid={isGroupLeaderValid}
-        />
-      )}
-      {currentPage === 'GroupLeaderInfoPage' && (
-        <BtnWrapper>
-          <CreateGroupBtn type="button" onClick={handleShowModal}>
-            생성하기
-          </CreateGroupBtn>
-          <BackPageBtn type="button" onClick={handleBackBtn}>
-            뒤로가기
-          </BackPageBtn>
-        </BtnWrapper>
-      )}
+      <CreateGroupWrapper>
+        {currentPage === 'GroupInfoPage' && (
+          <CreateGroupInfo
+            setCurrentPage={setCurrentPage}
+            groupName={groupName}
+            setGroupName={setGroupName}
+            groupInfo={groupInfo}
+            setGroupInfo={setGroupInfo}
+            isPublic={isPublic}
+            setIsPublic={setIsPublic}
+            topic={topic}
+            topicTag={topicTag}
+            topicDesc={topicDesc}
+            setTopic={setTopic}
+            setTopicTag={setTopicTag}
+            setTopicDesc={setTopicDesc}
+            groupImageView={groupImageView}
+            setGroupImageView={setGroupImageView}
+            setImageFile={setImageFile}
+          />
+        )}
+        {currentPage === 'GroupLeaderInfoPage' && (
+          <CreateGroupLeaderInfo
+            leaderPenName={leaderPenName}
+            setLeaderPenName={setLeaderPenName}
+            leaderDesc={leaderDesc}
+            setIsGroupLeaderValid={setIsGroupLeaderValid}
+            setLeaderDesc={setLeaderDesc}
+            isGroupLeaderValid={isGroupLeaderValid}
+          />
+        )}
+        {currentPage === 'GroupLeaderInfoPage' && (
+          <BtnWrapper>
+            <CreateGroupBtn type="button" onClick={handleShowModal}>
+              생성하기
+            </CreateGroupBtn>
+            <BackPageBtn type="button" onClick={handleBackBtn}>
+              뒤로가기
+            </BackPageBtn>
+          </BtnWrapper>
+        )}
 
-      <DefaultModal
-        isModalOpen={isModalOpen}
-        onClickBg={handleCloseModal}
-        sizeType="DEFAULT"
-        content={MODAL.ALERT_NICKNAME}
-        modalImg="POST"
-      >
-        <DefaultModalBtn
-          btnText={['아니요', '예']}
-          onClickLeft={handleCloseModal}
-          onClickRight={createGroup}
-        />
-      </DefaultModal>
+        <DefaultModal
+          isModalOpen={isModalOpen}
+          onClickBg={handleCloseModal}
+          sizeType="DEFAULT"
+          content={MODAL.ALERT_NICKNAME}
+          modalImg="POST"
+        >
+          <DefaultModalBtn
+            btnText={['아니요', '예']}
+            onClickLeft={handleCloseModal}
+            onClickRight={createGroup}
+          />
+        </DefaultModal>
 
-      {/* 페이지 이탈 모달 */}
-      <DefaultModal
-        isModalOpen={isPageExitModalOpen}
-        onClickBg={handleClosePageExitModal}
-        content={MODAL.PAGE_EXIT_WARN}
-      >
-        <DefaultModalBtn
-          btnText={['예', '아니요']}
-          onClickLeft={handleExitPage}
-          onClickRight={handleClosePageExitModal}
-        />
-      </DefaultModal>
-    </CreateGroupWrapper>
+        {/* 페이지 이탈 모달 */}
+        <DefaultModal
+          isModalOpen={isPageExitModalOpen}
+          onClickBg={handleClosePageExitModal}
+          content={MODAL.PAGE_EXIT_WARN}
+        >
+          <DefaultModalBtn
+            btnText={['예', '아니요']}
+            onClickLeft={handleExitPage}
+            onClickRight={handleClosePageExitModal}
+          />
+        </DefaultModal>
+      </CreateGroupWrapper>
+    </GroupWrapper>
   );
 };
 
 export default CreateGroup;
 
+const GroupWrapper = styled.div`
+  width: 100%;
+`;
 const BackPageBtn = styled.button`
   display: flex;
   align-items: center;
