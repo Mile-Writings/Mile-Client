@@ -18,7 +18,10 @@ import logout from '../../utils/logout';
 
 import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import Responsive from './Responsive/Responsive';
-import MyMobileSidebar from '../../pages/groupFeed/components/MyMobileSidebar';
+import {
+  MobileUnAuthorizedSidebar,
+  MobileAuthorizedSidebar,
+} from '../../pages/groupFeed/components/MyMobileSidebar';
 
 interface onClickEditProps {
   onClickEditSave: () => void;
@@ -73,7 +76,7 @@ export const AuthorizationHeader = () => {
           </MobileHeaderButtons>
         </HeaderWrapper>
         {isSidebarOpen && (
-          <MyMobileSidebar
+          <MobileAuthorizedSidebar
             onClose={() => {
               setIsSidebarOpen(false);
             }}
@@ -89,21 +92,36 @@ export const UnAuthorizationHeader = () => {
   const { navigateToHome } = useNavigateHome();
   const { navigateToLogin } = useNavigateLoginWithPath();
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
     <>
       <Responsive only="desktop">
         <HeaderWrapper>
           <HeaderLogoIcon onClick={navigateToHome} />
-          <LogInOutBtn onClick={navigateToLogin}>로그인</LogInOutBtn>
+          <LogInWrapper>
+            <LogInOutBtn onClick={navigateToLogin}>로그인</LogInOutBtn>
+          </LogInWrapper>
         </HeaderWrapper>
       </Responsive>
       <Responsive only="mobile">
         <HeaderWrapper>
           <HeaderLogoIcon onClick={navigateToHome} />
           <MobileHeaderButtons>
-            <HamburgerIcon />
+            <HamburgerIcon
+              onClick={() => {
+                setIsSidebarOpen(true);
+              }}
+            />
           </MobileHeaderButtons>
         </HeaderWrapper>
+        {isSidebarOpen && (
+          <MobileUnAuthorizedSidebar
+            onClose={() => {
+              setIsSidebarOpen(false);
+            }}
+          />
+        )}
       </Responsive>
     </>
   );
@@ -185,6 +203,10 @@ export const AdminHeader = () => {
     </>
   );
 };
+
+const LogInWrapper = styled.div`
+  width: 8.1rem;
+`;
 
 const HeaderWrapper = styled.div`
   position: fixed;

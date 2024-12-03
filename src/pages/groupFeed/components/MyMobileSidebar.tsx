@@ -6,7 +6,29 @@ import useNavigateToHome from '../../../hooks/useNavigateHome';
 import { useRef } from 'react';
 import LogInOutBtn from '../../../components/commons/LogInOutBtn';
 
-const MyMobileSidebar = ({ onClose }: { onClose: () => void }) => {
+export const MobileUnAuthorizedSidebar = ({ onClose }: { onClose: () => void }) => {
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const { navigateToHome } = useNavigateToHome();
+
+  useClickOutside(sidebarRef, () => {
+    //헤더 이외부분 클릭시 닫히게
+    if (sidebarRef.current) onClose();
+  });
+  const handleLogOut = () => {
+    logout();
+    navigateToHome();
+  };
+  return (
+    <>
+      <Background onClick={onClose} />
+      <SideBarLayout>
+        <LogInOutBtn onClick={handleLogOut}>로그인</LogInOutBtn>
+      </SideBarLayout>
+    </>
+  );
+};
+
+export const MobileAuthorizedSidebar = ({ onClose }: { onClose: () => void }) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const { navigateToHome } = useNavigateToHome();
 
@@ -27,8 +49,6 @@ const MyMobileSidebar = ({ onClose }: { onClose: () => void }) => {
     </>
   );
 };
-
-export default MyMobileSidebar;
 
 const Background = styled.div`
   position: fixed;
