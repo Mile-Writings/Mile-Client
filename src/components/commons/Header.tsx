@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
 import Button from './Button';
-import LogInOutBtn from './LogInOutBtn';
+import { LogInOutBtn } from './HeaderButton';
 
 import { HamburgerIc, HeaderLogoIc, LinkIc } from '../../assets/svgs';
 import {

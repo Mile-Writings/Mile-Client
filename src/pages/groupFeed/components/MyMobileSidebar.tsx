@@ -4,7 +4,7 @@ import logout from '../../../utils/logout';
 import useNavigateToHome from '../../../hooks/useNavigateHome';
 
 import { useRef } from 'react';
-import LogInOutBtn from '../../../components/commons/LogInOutBtn';
+import { LogInOutBtn } from '../../../components/commons/HeaderButton';
 
 export const MobileUnAuthorizedSidebar = ({ onClose }: { onClose: () => void }) => {
   const sidebarRef = useRef<HTMLDivElement>(null);

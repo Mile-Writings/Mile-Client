@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { MyGroupBtn } from '../../../components/commons/HeaderButton';
 import { Moim } from '../apis/fetchHeaderGroup';
 
 import useClickOutside from '../../../hooks/useClickOutside';
@@ -29,7 +29,7 @@ const MyGroupDropDown = ({ groupData }: CreateGroupBtnProps) => {
 
   return (
     <MyGroupDropDownWrapper ref={dropDownRef}>
-      <MyGroupBtnLayout onClick={handleOnClick}>내 글 모임</MyGroupBtnLayout>
+      <MyGroupBtn onClick={handleOnClick}>내 글 모임</MyGroupBtn>
       <MyGroupListLayout $isOpen={isOpen}>
         {groupData?.length > 0 ? (
           groupData.map(({ moimId, moimName }: Moim) => (
@@ -57,39 +57,6 @@ const MyGroupDropDownWrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-export const MyGroupBtnLayout = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 9.5rem;
-  height: 4rem;
-  padding: 1rem 1.6rem;
-
-  color: ${({ theme }) => theme.colors.gray70};
-  white-space: nowrap;
-  text-align: center;
-
-  cursor: pointer;
-
-  ${({ theme }) => theme.fonts.subtitle6}
-
-  :hover {
-    color: ${({ theme }) => theme.colors.mainViolet};
-
-    background-color: ${({ theme }) => theme.colors.gray10};
-    transform: scale(0.95);
-    border-radius: 0.8rem;
-
-    transition: 0.5s;
-  }
-
-  :active {
-    transform: scale(1.1);
-
-    transition: 0.5s;
-  }
 `;
 
 const MyGroupListLayout = styled.div<{ $isOpen: boolean }>`
