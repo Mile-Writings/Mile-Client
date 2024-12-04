@@ -23,6 +23,10 @@ import {
   MobileAuthorizedSidebar,
 } from '../../pages/groupFeed/components/MyMobileSidebar';
 
+import { useParams } from 'react-router-dom';
+import { useFetchInvitationLink } from '../../pages/admin/hooks/queries';
+import { copyLink } from '../../utils/copyLink';
+
 interface onClickEditProps {
   onClickEditSave: () => void;
 }
@@ -190,6 +194,23 @@ export const DefaultHeader = () => {
 // 관리자 헤더
 export const AdminHeader = () => {
   const { navigateToHome } = useNavigateHome();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [moims, setMoims] = useState<Moim[]>([]);
+  const { data } = useFetchHeaderGroup();
+  const { groupId } = useParams();
+  const { invitationCode } = useFetchInvitationLink(groupId);
+
+  const handleCopyLink = (invitationCode: string) => {
+    copyLink(import.meta.env.VITE_INVITE_URL + `group/${invitationCode}/groupInvite`);
+  };
+
+  const handleInviteBtnClick = () => {
+    handleCopyLink(invitationCode?.invitationCode || '');
+  };
+
+  useEffect(() => {
+    if (data?.data?.moims) setMoims(data?.data.moims);
+  }, [data?.data?.moims]);
   return (
     <>
       <Responsive only="desktop">
@@ -199,10 +220,23 @@ export const AdminHeader = () => {
         <HeaderWrapper>
           <HeaderLogoIcon onClick={navigateToHome} />
           <MobileHeaderButtons>
-            <LinkIcon />
-            <HamburgerIcon />
+            <LinkIcon type="button" onClick={handleInviteBtnClick} />
+            <HamburgerIcon
+              onClick={() => {
+                setIsSidebarOpen(true);
+              }}
+            />
           </MobileHeaderButtons>
         </HeaderWrapper>
+        {isSidebarOpen && (
+          <MobileAuthorizedSidebar
+            onClose={() => {
+              setIsSidebarOpen(false);
+            }}
+            groupCount={data?.data.moims.length ?? 0}
+            groupData={moims ?? []}
+          />
+        )}
       </Responsive>
     </>
   );
