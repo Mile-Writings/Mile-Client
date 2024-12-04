@@ -80,6 +80,8 @@ export const AuthorizationHeader = () => {
             onClose={() => {
               setIsSidebarOpen(false);
             }}
+            groupCount={data?.data.moims.length ?? 0}
+            groupData={moims ?? []}
           />
         )}
       </Responsive>
