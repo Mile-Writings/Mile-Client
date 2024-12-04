@@ -58,7 +58,9 @@ export const AuthorizationHeader = () => {
           <HeaderLayout>
             <MyGroupDropDown groupData={moims ?? []} />
             <HeaderBtnContainer>
-              <CreateGroupBtn groupCount={data?.data.moims.length ?? 0} />
+              <CreateGroupWrapper>
+                <CreateGroupBtn groupCount={data?.data.moims.length ?? 0} />
+              </CreateGroupWrapper>
               <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
             </HeaderBtnContainer>
           </HeaderLayout>
@@ -270,4 +272,8 @@ const HeaderLogoIcon = styled(HeaderLogoIc)`
     width: 7rem;
     height: 1.68rem;
   }
+`;
+
+const CreateGroupWrapper = styled.div`
+  width: 13.6rem;
 `;

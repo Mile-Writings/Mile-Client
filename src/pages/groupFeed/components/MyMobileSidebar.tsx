@@ -94,6 +94,7 @@ const GroupData = styled.div`
 
   color: ${({ theme }) => theme.colors.gray70};
 
+  cursor: pointer;
   border-radius: 0.8rem;
   ${({ theme }) => theme.fonts.mSubtitle2};
 

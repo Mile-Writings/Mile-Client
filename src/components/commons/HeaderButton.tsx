@@ -23,6 +23,7 @@ const basicCSS = css`
 export const CreateGroupBtnWrapper = styled.div`
   ${basicCSS};
   gap: 0.6rem;
+  width: 100%;
 
   color: ${({ theme }) => theme.colors.white};
 
