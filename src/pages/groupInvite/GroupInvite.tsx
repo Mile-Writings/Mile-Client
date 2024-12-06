@@ -25,7 +25,7 @@ const GroupInvite = () => {
     useGetGroupInfo(groupId);
 
   // 글모임 5개 가입 제한
-  const { data } = useFetchHeaderGroup();
+  const { moimsData } = useFetchHeaderGroup();
 
   useEffect(() => {
     if (isError && isAxiosError(error)) {
@@ -53,10 +53,10 @@ const GroupInvite = () => {
   }, [error, isError, groupId]);
 
   useEffect(() => {
-    if (data?.data.moims && data?.data.moims.length >= 5) {
+    if (moimsData && moimsData?.length >= 5) {
       handleShowModal();
     }
-  }, [data?.data.moims.length]);
+  }, [moimsData?.length]);
 
   return (
     <InviteWrapper>

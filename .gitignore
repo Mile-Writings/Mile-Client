@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 .env
 
-stat.html
+stats.html
