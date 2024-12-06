@@ -29,7 +29,7 @@ const GroupJoinCongrats = () => {
           <Spacing marginBottom="4.8" />
           <picture>
             <source srcSet={groupJoinCongratsWebp} />
-            <img src={groupJoinCongratsIlust} />
+            <img src={groupJoinCongratsIlust} alt="가입 축하 일러스트" />
           </picture>
           <Spacing marginBottom="4.8" />
           <GoToGroupFeedBtn onClick={onClickGoToGroupFeedBtn}>

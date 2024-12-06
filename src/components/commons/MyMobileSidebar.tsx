@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
-import useClickOutside from '../../../hooks/useClickOutside';
-import logout from '../../../utils/logout';
-import useNavigateToHome from '../../../hooks/useNavigateHome';
+import useClickOutside from '../../hooks/useClickOutside';
+import logout from '../../utils/logout';
+import useNavigateToHome from '../../hooks/useNavigateHome';
 
 import { useRef } from 'react';
-import { LogInOutBtn } from '../../../components/commons/HeaderButton';
-import CreateGroupBtn from './CreateGroupBtn';
-import useNavigateLoginWithPath from '../../../hooks/useNavigateLoginWithPath';
-import { Moim } from '../apis/fetchHeaderGroup';
+import { LogInOutBtn } from './HeaderButton';
+import CreateGroupBtn from '../../pages/groupFeed/components/CreateGroupBtn';
+import useNavigateLoginWithPath from '../../hooks/useNavigateLoginWithPath';
+import { Moim } from '../../pages/groupFeed/apis/fetchHeaderGroup';
 import { useNavigate } from 'react-router-dom';
 
 export const MobileUnAuthorizedSidebar = ({ onClose }: { onClose: () => void }) => {
@@ -21,23 +21,24 @@ export const MobileUnAuthorizedSidebar = ({ onClose }: { onClose: () => void }) 
 
   return (
     <>
-      <Background onClick={onClose} />
-      <SideBarLayout>
+      <SideBarLayout ref={sidebarRef}>
         <LogInOutBtn onClick={navigateToLogin}>로그인</LogInOutBtn>
       </SideBarLayout>
     </>
   );
 };
 
+interface AuthorizedPropTypes {
+  onClose: () => void;
+  groupCount: number;
+  groupData: Moim[] | [];
+}
+
 export const MobileAuthorizedSidebar = ({
   onClose,
   groupCount,
   groupData,
-}: {
-  onClose: () => void;
-  groupCount: number;
-  groupData: Moim[] | [];
-}) => {
+}: AuthorizedPropTypes) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const { navigateToHome } = useNavigateToHome();
   const navigate = useNavigate();

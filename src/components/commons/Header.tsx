@@ -18,10 +18,7 @@ import logout from '../../utils/logout';
 
 import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import Responsive from './Responsive/Responsive';
-import {
-  MobileUnAuthorizedSidebar,
-  MobileAuthorizedSidebar,
-} from '../../pages/groupFeed/components/MyMobileSidebar';
+import { MobileUnAuthorizedSidebar, MobileAuthorizedSidebar } from './MyMobileSidebar';
 
 import { useParams } from 'react-router-dom';
 import { useFetchInvitationLink } from '../../pages/admin/hooks/queries';
@@ -186,7 +183,7 @@ export const DefaultHeader = () => {
   const { navigateToHome } = useNavigateHome();
   return (
     <HeaderWrapper>
-      <HeaderLogoIcon onClick={navigateToHome}></HeaderLogoIcon>
+      <HeaderLogoIcon onClick={navigateToHome} />
     </HeaderWrapper>
   );
 };
@@ -264,8 +261,7 @@ const HeaderWrapper = styled.div`
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
     height: 5.6rem;
-    padding-right: 2rem;
-    padding-left: 2rem;
+    padding: 0 2rem;
   }
 `;
 
