@@ -41,14 +41,14 @@ interface OnClickTempExistProps {
 export const AuthorizationHeader = () => {
   const [moims, setMoims] = useState<Moim[]>([]);
   const { navigateToHome } = useNavigateToHome();
-  const { data } = useFetchHeaderGroup();
+  const { moimsData } = useFetchHeaderGroup();
   const handleLogOut = () => {
     logout();
     navigateToHome();
   };
   useEffect(() => {
-    if (data?.data?.moims) setMoims(data?.data.moims);
-  }, [data?.data?.moims]);
+    if (moimsData) setMoims(moimsData);
+  }, [moimsData]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
@@ -60,7 +60,7 @@ export const AuthorizationHeader = () => {
             <MyGroupDropDown groupData={moims ?? []} />
             <HeaderBtnContainer>
               <CreateGroupWrapper>
-                <CreateGroupBtn groupCount={data?.data.moims.length ?? 0} />
+                <CreateGroupBtn groupCount={moimsData?.length ?? 0} />
               </CreateGroupWrapper>
               <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
             </HeaderBtnContainer>
@@ -83,7 +83,7 @@ export const AuthorizationHeader = () => {
             onClose={() => {
               setIsSidebarOpen(false);
             }}
-            groupCount={data?.data.moims.length ?? 0}
+            groupCount={moimsData?.length ?? 0}
             groupData={moims ?? []}
           />
         )}
@@ -193,7 +193,7 @@ export const AdminHeader = () => {
   const { navigateToHome } = useNavigateHome();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [moims, setMoims] = useState<Moim[]>([]);
-  const { data } = useFetchHeaderGroup();
+  const { moimsData } = useFetchHeaderGroup();
   const { groupId } = useParams();
   const { invitationCode } = useFetchInvitationLink(groupId);
 
@@ -206,8 +206,8 @@ export const AdminHeader = () => {
   };
 
   useEffect(() => {
-    if (data?.data?.moims) setMoims(data?.data.moims);
-  }, [data?.data?.moims]);
+    if (moimsData) setMoims(moimsData);
+  }, [moimsData]);
   return (
     <>
       <Responsive only="desktop">
@@ -230,7 +230,7 @@ export const AdminHeader = () => {
             onClose={() => {
               setIsSidebarOpen(false);
             }}
-            groupCount={data?.data.moims.length ?? 0}
+            groupCount={moimsData?.length ?? 0}
             groupData={moims ?? []}
           />
         )}

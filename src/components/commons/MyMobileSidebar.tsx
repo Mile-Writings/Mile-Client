@@ -125,7 +125,7 @@ const CustomLine = styled.hr`
   height: 2px;
   margin: 0.4rem 0;
 
-  background-color: #eaeaea;
+  background-color: ${({ theme }) => theme.colors.gray20};
   border: none;
   border-radius: 1px; /* 선의 끝을 둥글게 설정 */
 `;
@@ -142,6 +142,6 @@ const SideBarLayout = styled.div`
   height: 100vh;
   padding: 1.2rem 1.6rem;
 
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 16%);
 `;
