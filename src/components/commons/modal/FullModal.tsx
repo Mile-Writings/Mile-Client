@@ -3,6 +3,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 
 import Spacing from '../Spacing';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface FullModalBtnPropType {
   isPrimary: boolean;
@@ -82,6 +83,11 @@ const ModalWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 10px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 33.5rem;
+    padding: 3.2rem;
+  }
 `;
 
 const Content = styled.p`
@@ -89,6 +95,10 @@ const Content = styled.p`
   white-space: pre-wrap;
   text-align: center;
   ${({ theme }) => theme.fonts.title8};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle4};
+  }
 `;
 
 const BtnWrapper = styled.div`
@@ -120,5 +130,11 @@ const ModalBtn = styled.button<{ $isPrimary: boolean }>`
 
     background-color: ${({ theme }) => theme.colors.mileViolet};
     border: ${({ $isPrimary }) => ($isPrimary ? '1px solid theme.colors.mainViolet' : 'none')};
+  }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 27.1rem;
+
+    ${({ theme }) => theme.fonts.mButton1};
   }
 `;
