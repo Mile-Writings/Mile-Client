@@ -11,6 +11,7 @@ import alertDeletePng from '/src/assets/images/alertDelete.png';
 
 import React from 'react';
 import { MODAL_SIZES } from './constants';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface ModalPropType {
   isModalOpen: boolean;
@@ -57,15 +58,15 @@ export const DefaultModal = (props: ModalPropType) => {
   const getModalImg = () => {
     switch (modalImg) {
       case 'POST':
-        return <img src={alertUploadPng} />;
+        return <ModalImg src={alertUploadPng} />;
       case 'SAVE':
-        return <img src={alertStoragePng} />;
+        return <ModalImg src={alertStoragePng} />;
       case 'CAUTION':
-        return <img src={alertCautionPng} />;
+        return <ModalImg src={alertCautionPng} />;
       case 'EDIT':
-        return <img src={alertModifyPng} />;
+        return <ModalImg src={alertModifyPng} />;
       case 'DELETE':
-        return <img src={alertDeletePng} />;
+        return <ModalImg src={alertDeletePng} />;
     }
   };
 
@@ -134,6 +135,10 @@ const ModalBtn = styled.button<{ $isLeft: boolean }>`
     background-color: ${({ theme }) => theme.colors.mileViolet};
     border: ${({ $isLeft }) => ($isLeft ? '1px solid theme.colors.mainViolet' : 'none')};
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mButton1};
+  }
 `;
 
 const ModalWrapper = styled.div<{ $sizeType: string }>`
@@ -159,6 +164,11 @@ const ModalWrapper = styled.div<{ $sizeType: string }>`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 10px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 33.5rem;
+    padding: 3.2rem;
+  }
 `;
 
 const BtnWrapper = styled.div`
@@ -172,5 +182,17 @@ const Content = styled.p`
   color: ${({ theme }) => theme.colors.gray100};
   white-space: pre-wrap;
   text-align: center;
+  word-break: keep-all;
   ${({ theme }) => theme.fonts.title8};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle1};
+  }
+`;
+
+const ModalImg = styled.img`
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 14rem;
+    height: 12.3rem;
+  }
 `;
