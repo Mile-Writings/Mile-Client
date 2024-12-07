@@ -119,10 +119,17 @@ const RenderAdminContent = ({ menu }: RenderAdminContentPropTypes) => {
     case '멤버 관리':
       return (
         <AdminContainer>
-          <Title>멤버 관리</Title>
-          <Spacing marginBottom="1.2" />
+          <Responsive only="desktop">
+            <Title>멤버 관리</Title>
+            <Spacing marginBottom="1.2" />
+          </Responsive>
           <SubTitle>{`${totalMember}명의 멤버가 함께하고 있어요`}</SubTitle>
-          <Spacing marginBottom="3.6" />
+          <Responsive only="desktop">
+            <Spacing marginBottom="3.6" />
+          </Responsive>
+          <Responsive only="mobile">
+            <Spacing marginBottom="1.2" />
+          </Responsive>
           <MemberManage data={memberData} setPageCount={setPage} pageCount={page} />
         </AdminContainer>
       );
