@@ -62,7 +62,6 @@ const Admin = () => {
           </GroupLayout>
           <Spacing marginBottom="1.2" />
           <MobileNav handleMenuItem={handleMenuItem} isClicked={isClicked} />
-          <Spacing marginBottom="4.1" />
         </Responsive>
 
         <AdminLayout>
