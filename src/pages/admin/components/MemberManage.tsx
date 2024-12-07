@@ -124,6 +124,7 @@ const MemberListTableWrapper = styled.section`
 
 const TableHeaderLayout = styled.div`
   display: flex;
+  gap: 4rem;
   max-width: 78.1rem;
   padding: 1.4rem 1.8rem;
 
@@ -135,6 +136,7 @@ const TableHeaderLayout = styled.div`
 
   @media ${MOBILE_MEDIA_QUERY} {
     display: flex;
+    gap: 0;
     width: 100%;
     min-width: 33.5rem;
     height: 4rem;
@@ -154,7 +156,7 @@ const InfoField = styled.div`
 
   &:first-of-type {
     justify-content: start;
-    margin-right: 9.65rem;
+    margin-right: 5.65rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
       width: 3.4rem;
@@ -163,7 +165,7 @@ const InfoField = styled.div`
   }
 
   &:nth-of-type(2) {
-    margin-right: 12.3rem;
+    margin-right: 8.3rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
       min-width: 12.1rem;
@@ -172,7 +174,7 @@ const InfoField = styled.div`
   }
 
   &:nth-of-type(3) {
-    margin-right: 6rem;
+    margin-right: 2rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
       min-width: 4.9rem;
@@ -181,7 +183,7 @@ const InfoField = styled.div`
   }
 
   &:nth-of-type(4) {
-    margin-right: 31rem;
+    margin-right: 27rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
       min-width: 3.7rem;
