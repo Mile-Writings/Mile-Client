@@ -29,7 +29,7 @@ const MemberItem = ({
 
   return (
     <MemberItemWrapper key={writerNameId}>
-      <AdminProfileIcon style={{ flexShrink: 0 }} />
+      <AdminProfileIcon />
       <Name>
         {isOwner && <MemberMaster />}
         {writerName}
@@ -47,18 +47,22 @@ export default MemberItem;
 
 const MemberItemWrapper = styled.article`
   display: flex;
+  gap: 4rem;
   align-items: center;
+  width: 100%;
   padding: 1.6rem 0;
 
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray10};
 
   @media ${MOBILE_MEDIA_QUERY} {
+    gap: 0;
     height: 5.6rem;
   }
 `;
 
 const AdminProfileIcon = styled(adminProfileIc)`
-  margin-right: 4rem;
+  flex-shrink: 0;
+  min-width: 3.4rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 2.8rem;
@@ -67,64 +71,59 @@ const AdminProfileIcon = styled(adminProfileIc)`
   }
 `;
 
-const Name = styled.p`
+const Name = styled.div`
   display: flex;
+  flex: 2;
   align-items: center;
   justify-content: center;
-  width: 12.3rem;
-  margin-right: 6.8rem;
+  min-width: 12rem;
 
   color: ${({ theme }) => theme.colors.black};
+  ${({ theme }) => theme.fonts.body1};
   white-space: nowrap;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.editor};
+  }
+`;
+
+const PostNumber = styled.div`
+  flex: 1.7;
+  justify-content: start;
+  min-width: 4.4rem;
+
+  color: ${({ theme }) => theme.colors.gray70};
+  text-align: center;
 
   ${({ theme }) => theme.fonts.body1};
 
   @media ${MOBILE_MEDIA_QUERY} {
-    width: 12.1rem;
-    margin-right: 1.2rem;
-
-    ${({ theme }) => theme.fonts.editor}
+    margin-right: 1rem;
+    ${({ theme }) => theme.fonts.editor};
   }
 `;
 
-const PostNumber = styled.p`
-  justify-content: center;
-  width: 5.1rem;
-  margin-right: 6rem;
+const CommentNumber = styled.div`
+  display: flex;
+  flex: 2;
+  justify-content: start;
+  min-width: 3.7rem;
 
   color: ${({ theme }) => theme.colors.gray70};
   text-align: center;
 
-  ${({ theme }) => theme.fonts.body1}
+  ${({ theme }) => theme.fonts.body1};
 
   @media ${MOBILE_MEDIA_QUERY} {
-    max-width: 4.9rem;
-    margin-right: 1.2rem;
+    justify-content: start;
 
-    ${({ theme }) => theme.fonts.editor}
-  }
-`;
-
-const CommentNumber = styled.p`
-  justify-content: center;
-  width: 5.1rem;
-
-  color: ${({ theme }) => theme.colors.gray70};
-  text-align: center;
-
-  ${({ theme }) => theme.fonts.body1}
-
-  @media ${MOBILE_MEDIA_QUERY} {
-    max-width: 3.3rem;
-    margin-right: 0.9rem;
-
-    ${({ theme }) => theme.fonts.editor}
+    ${({ theme }) => theme.fonts.editor};
   }
 `;
 
 const ExpelBtn = styled.button<{ $isOwner: boolean }>`
+  display: flex;
   margin-left: auto;
-  padding: 0;
 
   color: ${({ theme }) => theme.colors.gray50};
   ${({ theme }) => theme.fonts.body5};
@@ -139,6 +138,6 @@ const ExpelBtn = styled.button<{ $isOwner: boolean }>`
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
-    ${({ theme }) => theme.fonts.editor}
+    ${({ theme }) => theme.fonts.editor};
   }
 `;
