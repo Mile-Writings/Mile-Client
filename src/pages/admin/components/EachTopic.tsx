@@ -122,6 +122,7 @@ const TopicWrapper = styled.div`
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
+    height: 7.3rem;
   }
 `;
 

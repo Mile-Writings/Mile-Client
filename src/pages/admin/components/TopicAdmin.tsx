@@ -79,6 +79,7 @@ const TopicListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 78.1rem;
 `;
 
 const TopicAdminCategory = styled.ul`
@@ -133,6 +134,7 @@ const TopicTag = styled.li`
 
 const TopicDescription = styled.li`
   display: flex;
+  justify-content: center;
   max-width: 21.3rem;
   margin-left: auto;
 
@@ -157,6 +159,7 @@ const TopicList = styled.div`
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
     min-width: 33.5rem;
+    padding: 0 1.6rem;
     ${({ theme }) => theme.fonts.editor};
   }
 `;
