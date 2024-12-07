@@ -127,6 +127,7 @@ const TopicTag = styled.li`
   @media ${MOBILE_MEDIA_QUERY} {
     width: 6.1rem;
     ${({ theme }) => theme.fonts.editor};
+    margin-left: auto;
   }
 `;
 

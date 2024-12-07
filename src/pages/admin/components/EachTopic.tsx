@@ -153,7 +153,7 @@ const Topic = styled.div`
 `;
 
 const TopicTitle = styled.p`
-  width: 20.9rem;
+  min-width: 20rem;
   max-width: 20.9rem;
   overflow: hidden;
 
@@ -164,7 +164,8 @@ const TopicTitle = styled.p`
   ${({ theme }) => theme.fonts.body1}
 
   @media ${MOBILE_MEDIA_QUERY} {
-    max-width: 13rem;
+    /* max-width: 13rem; */
+    width: 100%;
     ${({ theme }) => theme.fonts.mSubtitle2};
   }
 `;
@@ -195,6 +196,7 @@ const TopicTag = styled.p`
     justify-content: center;
     width: 6.1rem;
     min-width: 6.1rem;
+    margin-left: auto;
 
     ${({ theme }) => theme.fonts.mSubtitle2};
   }
