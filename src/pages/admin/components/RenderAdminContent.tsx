@@ -18,6 +18,7 @@ import Spacing from '../../../components/commons/Spacing';
 import { ADMIN } from '../../../constants/modal';
 import useBlockPageExit from '../../../hooks/useBlockPageExit';
 import useModal from '../../../hooks/useModal';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 import Loading from '../../loading/Loading';
 import { Menu } from '../types/menu';
 
@@ -227,6 +228,10 @@ const Title = styled.h1`
 const SubTitle = styled.h2`
   ${({ theme }) => theme.fonts.body4};
   color: ${({ theme }) => theme.colors.gray70};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle4};
+  }
 `;
 
 const AdminLayout = styled.div`

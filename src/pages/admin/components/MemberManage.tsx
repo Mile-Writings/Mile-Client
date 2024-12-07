@@ -8,6 +8,7 @@ import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 
 import Pagenation from '../../../components/commons/Pagenation';
+import Responsive from '../../../components/commons/Responsive/Responsive';
 import Spacing from '../../../components/commons/Spacing';
 import useModal from '../../../hooks/useModal';
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
@@ -64,7 +65,12 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
           ))}
         </MemberListLayout>
       </MemberListTableWrapper>
-      <Spacing marginBottom="3.6" />
+      <Responsive only="desktop">
+        <Spacing marginBottom="3.6" />
+      </Responsive>
+      <Responsive only="mobile">
+        <Spacing marginBottom="1.6" />
+      </Responsive>
 
       {memberData && memberData.writerNameCount && (
         <Pagenation
@@ -104,7 +110,8 @@ export default MemberManage;
 const MemberListTableWrapper = styled.section`
   display: flex;
   flex-direction: column;
-  width: 78.1rem;
+  width: 100%;
+  max-width: 78.1rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 0.8rem;
@@ -117,6 +124,7 @@ const MemberListTableWrapper = styled.section`
 
 const TableHeaderLayout = styled.div`
   display: flex;
+  max-width: 78.1rem;
   padding: 1.4rem 1.8rem;
 
   color: ${({ theme }) => theme.colors.mainViolet};
@@ -127,7 +135,6 @@ const TableHeaderLayout = styled.div`
 
   @media ${MOBILE_MEDIA_QUERY} {
     display: flex;
-    gap: 1.6rem;
     width: 100%;
     min-width: 33.5rem;
     height: 4rem;
@@ -136,14 +143,21 @@ const TableHeaderLayout = styled.div`
 
 const InfoField = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
 
   white-space: nowrap;
 
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.editor};
+  }
+
   &:first-of-type {
+    justify-content: start;
     margin-right: 9.65rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
+      width: 3.4rem;
       margin-right: 0;
     }
   }
@@ -152,7 +166,8 @@ const InfoField = styled.div`
     margin-right: 12.3rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
-      margin-right: 0;
+      min-width: 12.1rem;
+      margin-right: 0.4rem;
     }
   }
 
@@ -160,14 +175,18 @@ const InfoField = styled.div`
     margin-right: 6rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
-      margin-right: 0;
+      min-width: 4.9rem;
+      margin-right: 1rem;
     }
   }
 
-  @media ${MOBILE_MEDIA_QUERY} {
-    width: 100%;
-    margin: 0;
-    ${({ theme }) => theme.fonts.editor};
+  &:nth-of-type(4) {
+    margin-right: 31rem;
+
+    @media ${MOBILE_MEDIA_QUERY} {
+      min-width: 3.7rem;
+      margin-right: 0.9rem;
+    }
   }
 `;
 
