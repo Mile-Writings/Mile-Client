@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useEditAdminTopic, usePostAdminTopic } from '../hooks/queries';
-
 import Spacing from '../../../components/commons/Spacing';
+import { useEditAdminTopic, usePostAdminTopic } from '../../../pages/admin/hooks/queries';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface topicPropTypes {
   topicStored?: string;
@@ -13,15 +13,21 @@ interface topicPropTypes {
   topicId?: string;
   pageNum: number;
   setShowModal: Dispatch<SetStateAction<boolean>>;
+  topicPlaceholder?: string;
+  tagPlaceholder?: string;
+  descPlaceholder?: string;
 }
 
-const AddEditTopicModal = ({
+const InputModal = ({
   topicStored,
   topicTagStored,
   topicDescriptionStored,
   topicId,
   pageNum,
   setShowModal,
+  topicPlaceholder,
+  tagPlaceholder,
+  descPlaceholder,
 }: topicPropTypes) => {
   useEffect(() => {
     setTopic(topicStored || '');
@@ -41,12 +47,12 @@ const AddEditTopicModal = ({
   const { postMutateAdminTopic } = usePostAdminTopic(groupId, pageNum);
   const { editMutateAdminTopic } = useEditAdminTopic(topicId, groupId, pageNum);
 
-  const handleTopicNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTopicNameChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTopic(e.target.value);
     setTopicNameError(false); //다시 입력할때의 초기화
   };
 
-  const handleTopicTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTopicTagChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTopicTag(e.target.value);
     setTopicTagError(false);
   };
@@ -81,7 +87,7 @@ const AddEditTopicModal = ({
         <Spacing marginBottom="1.2" />
         <InputWrapper isError={topic.length > 15 || topicNameError}>
           <TopicInput
-            placeholder="함께 작성하고 싶은 글감을 입력해주세요. ex) 마음이 담긴 선물"
+            placeholder={topicPlaceholder}
             value={topic}
             onChange={handleTopicNameChange}
             maxLength={16}
@@ -94,7 +100,7 @@ const AddEditTopicModal = ({
         <Spacing marginBottom="1.2" />
         <InputWrapper isError={topicTag.length > 5 || topicTagError}>
           <TopicInput
-            placeholder="위에 적은 글감을 한 단어로 요약해주세요. ex) 선물"
+            placeholder={tagPlaceholder}
             value={topicTag}
             onChange={handleTopicTagChange}
             maxLength={6}
@@ -107,7 +113,7 @@ const AddEditTopicModal = ({
         <Spacing marginBottom="1.2" />
         <TextAreaWrapper isError={topicDescription.length > 90 || topicDescriptionError}>
           <TopicDescriptionInput
-            placeholder={`글감에 대해 자유롭게 소개해주세요\nex) 마음이 담긴 선물을 주거나 받은 기억을 떠올려보세요.\n그 순간이 당신에게 어떤 의미로 남았는지 이야기해주세요.`}
+            placeholder={descPlaceholder}
             onChange={handleTopicDescriptionChange}
             value={topicDescription}
             maxLength={91}
@@ -125,7 +131,7 @@ const AddEditTopicModal = ({
   );
 };
 
-export default AddEditTopicModal;
+export default InputModal;
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -140,8 +146,17 @@ const ModalWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   transform: translate(-50%, -50%);
-  ${({ theme }) => theme.fonts.subtitle2}
   border-radius: 8px;
+
+  ${({ theme }) => theme.fonts.subtitle2}
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    gap: 1.8rem;
+    max-width: 33.5rem;
+    padding: 1.8rem;
+
+    ${({ theme }) => theme.fonts.mTitle1};
+  }
 `;
 
 const InputWrapper = styled.div<{ isError: boolean }>`
@@ -156,11 +171,21 @@ const InputWrapper = styled.div<{ isError: boolean }>`
   border: 1px solid
     ${({ theme, isError }) => (isError ? theme.colors.mileRed : theme.colors.gray50)};
   border-radius: 6px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    align-items: end;
+    justify-content: baseline;
+    width: 100%;
+    min-height: 6rem;
+    padding: 1rem 1.3rem;
+  }
 `;
 
-const TopicInput = styled.input`
+const TopicInput = styled.textarea`
   width: 46.4rem;
   height: 100%;
+  padding: 0;
+  overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray100};
 
@@ -171,6 +196,13 @@ const TopicInput = styled.input`
 
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray50};
+    white-space: pre-line;
+
+    @media ${MOBILE_MEDIA_QUERY} {
+      min-height: 4rem;
+
+      ${({ theme }) => theme.fonts.mSubtitle2};
+    }
   }
 `;
 
@@ -184,18 +216,24 @@ const SubmitForm = styled.button`
   background-color: ${({ theme }) => theme.colors.mainViolet};
   ${({ theme }) => theme.fonts.button2}
   border-radius: 10px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    height: 4.4rem;
+    padding: 1rem 2rem;
+    ${({ theme }) => theme.fonts.mButton1};
+  }
 `;
 
 const TopicDescriptionInput = styled.textarea<{ isError: boolean }>`
   width: 52.8rem;
   height: 7.8rem;
+  overflow: scroll;
 
   color: ${({ theme }) => theme.colors.gray100};
   ${({ theme }) => theme.fonts.button2}
 
   background-color: ${({ theme }) => theme.colors.gray5};
-  border: 1px solid
-    ${({ theme, isError }) => (isError ? theme.colors.mileRed : theme.colors.gray50)};
   border: none;
   border-radius: 6px;
 
@@ -203,10 +241,18 @@ const TopicDescriptionInput = styled.textarea<{ isError: boolean }>`
 
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray50};
+
+    @media ${MOBILE_MEDIA_QUERY} {
+      ${({ theme }) => theme.fonts.mSubtitle2};
+    }
   }
 
   :focus {
     outline: none;
+  }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
   }
 `;
 
@@ -222,9 +268,17 @@ const TextAreaWrapper = styled.div<{ isError: boolean }>`
   border: 1px solid
     ${({ theme, isError }) => (isError ? theme.colors.mileRed : theme.colors.gray50)};
   border-radius: 6px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 const TextCount = styled.div<{ isError: boolean }>`
   ${({ theme }) => theme.fonts.button3}
   color: ${({ theme, isError }) => (isError ? theme.colors.mileRed : theme.colors.gray70)};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mButton1};
+  }
 `;
