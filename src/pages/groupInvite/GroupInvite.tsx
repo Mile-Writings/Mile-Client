@@ -13,6 +13,8 @@ import Title from './components/Title';
 import UserInfoInput from './components/UserInfoInput';
 import { MODAL } from './constants/modalContent';
 import { useGetGroupInfo } from './hooks/queries';
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
+import Responsive from '../../components/commons/Responsive/Responsive';
 
 const GroupInvite = () => {
   const navigate = useNavigate();
@@ -62,7 +64,12 @@ const GroupInvite = () => {
     <>
       <GroupInviteWrapper>
         <DefaultHeader />
-        <Spacing marginBottom="11.4" />
+        <Responsive only="desktop">
+          <Spacing marginBottom="11.4" />
+        </Responsive>
+        <Responsive only="mobile">
+          <Spacing marginBottom="9.9" />
+        </Responsive>
         <Title />
         <Spacing marginBottom="4.8" />
 
@@ -74,7 +81,12 @@ const GroupInvite = () => {
           memberCount={memberCount}
           description={description}
         />
-        <Spacing marginBottom="2.8" />
+        <Responsive only="desktop">
+          <Spacing marginBottom="2.8" />
+        </Responsive>
+        <Responsive only="mobile">
+          <Spacing marginBottom="3" />
+        </Responsive>
         <UserInfoInput moimTitle={moimTitle} />
 
         <Spacing marginBottom="7.7" />
@@ -102,4 +114,10 @@ const GroupInviteWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 82.6rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0 2rem;
+  }
 `;
