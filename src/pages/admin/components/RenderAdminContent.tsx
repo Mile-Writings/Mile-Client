@@ -81,9 +81,6 @@ const RenderAdminContent = ({ menu }: RenderAdminContentPropTypes) => {
                 <Title>글감 설정</Title>
                 <Spacing marginBottom="1.2" />
               </Responsive>
-              <Responsive only="mobile">
-                <Spacing marginBottom="2.8" />
-              </Responsive>
               <SubTitle>{`${topicCount}개의 글감이 저장되어있어요`}</SubTitle>
             </div>
             <Responsive only="desktop">
@@ -128,7 +125,7 @@ const RenderAdminContent = ({ menu }: RenderAdminContentPropTypes) => {
             <Spacing marginBottom="1.2" />
           </Responsive>
           <Responsive only="mobile">
-            <Spacing marginBottom="4.1" />
+            <Spacing marginBottom="1.3" />
           </Responsive>
           <SubTitle>{`${totalMember}명의 멤버가 함께하고 있어요`}</SubTitle>
           <Responsive only="desktop">
