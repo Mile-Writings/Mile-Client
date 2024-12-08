@@ -42,7 +42,7 @@ const Admin = () => {
     return <Loading />;
   }
   return (
-    <Wrapper>
+    <>
       {accessToken && <AuthorizationHeader />}
       <AdminWrapper>
         <Responsive only="desktop">
@@ -87,28 +87,30 @@ const Admin = () => {
           <RenderAdminContent menu={menu} />
         </AdminLayout>
       </AdminWrapper>
-    </Wrapper>
+    </>
   );
 };
 
 export default Admin;
 
-const Wrapper = styled.div`
-  width: 100%;
-`;
-
 const AdminWrapper = styled.div`
+  display: flex;
+  justify-content: center;
   width: 100%;
-  padding: 0 16.5rem;
+  margin-top: 13.6rem;
+  padding: 0 2rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
     width: 100%;
-    padding: 2rem;
+    margin-top: 0;
+    padding: 0 2rem;
   }
 `;
 
 const AdminLayout = styled.div`
   display: flex;
+  flex-grow: 1;
   gap: 6rem;
   justify-content: center;
 
