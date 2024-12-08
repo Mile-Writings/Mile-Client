@@ -240,7 +240,7 @@ export const theme = {
       line-height: 140%; /* 16.8px */
     `,
     mSubtitle2: css`
-      font-weight: 500;
+      font-weight: 400;
       font-size: 1.4rem;
       font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
@@ -339,7 +339,7 @@ export const theme = {
     `,
     mBody3: css`
       font-weight: 400;
-      font-size: 1.4px;
+      font-size: 1.4rem;
       font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
       line-height: 140%; /* 19.6px */
