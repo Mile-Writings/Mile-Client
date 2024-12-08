@@ -240,7 +240,7 @@ export const theme = {
       line-height: 140%; /* 16.8px */
     `,
     mSubtitle2: css`
-      font-weight: 400;
+      font-weight: 500;
       font-size: 1.4rem;
       font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
