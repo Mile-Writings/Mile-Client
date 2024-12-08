@@ -122,6 +122,7 @@ const TopicWrapper = styled.div`
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
+    height: 7.3rem;
   }
 `;
 
@@ -129,42 +130,40 @@ const TopicData = styled.div`
   display: flex;
   gap: 4rem;
   align-items: flex-start;
-  width: 74.5rem;
+  width: 100%;
   height: 5.2rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    gap: 1.6rem;
+    gap: 0;
     width: 100%;
   }
 `;
 
 const Topic = styled.div`
   display: flex;
+  flex: 0.5;
   flex-direction: column;
   gap: 0.4rem;
-  min-width: 20.8rem;
+  min-width: 20.9rem;
+  max-width: 20.9rem;
   padding: 0.6rem 0;
 
   @media ${MOBILE_MEDIA_QUERY} {
+    flex: 0.3;
     width: 100%;
     min-width: 13rem;
-    max-width: 13rem;
   }
 `;
 
 const TopicTitle = styled.p`
-  width: 20.9rem;
-  max-width: 20.9rem;
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.black};
   white-space: nowrap;
   text-overflow: ellipsis;
-
   ${({ theme }) => theme.fonts.body1}
 
   @media ${MOBILE_MEDIA_QUERY} {
-    max-width: 13rem;
     ${({ theme }) => theme.fonts.mSubtitle2};
   }
 `;
@@ -179,8 +178,8 @@ const TopicDate = styled.p`
 `;
 
 const TopicTag = styled.p`
-  flex-shrink: 0;
-  width: 7rem;
+  flex: 0.1;
+  min-width: 7rem;
   padding: 0.6rem 0;
   overflow: hidden;
 
@@ -192,9 +191,8 @@ const TopicTag = styled.p`
   ${({ theme }) => theme.fonts.body1}
 
   @media ${MOBILE_MEDIA_QUERY} {
+    flex: 0.3;
     justify-content: center;
-    width: 6.1rem;
-    min-width: 6.1rem;
 
     ${({ theme }) => theme.fonts.mSubtitle2};
   }
@@ -202,6 +200,7 @@ const TopicTag = styled.p`
 
 const TopicDescription = styled.p`
   display: -webkit-box;
+  flex: 0.5;
   width: 100%;
   min-width: 3rem;
   max-width: 29rem;
@@ -215,8 +214,14 @@ const TopicDescription = styled.p`
 
   ${({ theme }) => theme.fonts.body8}
 `;
+
 const TopicAction = styled.div`
   display: flex;
   gap: 0.8rem;
   margin-left: auto;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex: 0.6;
+    justify-content: end;
+  }
 `;

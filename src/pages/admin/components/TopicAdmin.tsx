@@ -79,6 +79,7 @@ const TopicListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 78.1rem;
 `;
 
 const TopicAdminCategory = styled.ul`
@@ -106,32 +107,33 @@ const TopicAdminCategory = styled.ul`
 
 const Topic = styled.li`
   width: 20.8rem;
-  max-width: 20.8rem;
+  min-width: 20.8rem;
 
   white-space: nowrap;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    width: 13rem;
-
-    ${({ theme }) => theme.fonts.editor}
+    flex: 0.35;
+    width: 100%;
+    min-width: 13rem;
+    ${({ theme }) => theme.fonts.editor};
   }
 `;
 
 const TopicTag = styled.li`
-  width: 7rem;
+  flex: 0.2;
   max-width: 7rem;
 
   white-space: nowrap;
   text-align: center;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    width: 6.1rem;
     ${({ theme }) => theme.fonts.editor};
   }
 `;
 
 const TopicDescription = styled.li`
   display: flex;
+  justify-content: center;
   max-width: 21.3rem;
   margin-left: auto;
 
@@ -156,6 +158,7 @@ const TopicList = styled.div`
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
     min-width: 33.5rem;
+    padding: 0 1.6rem;
     ${({ theme }) => theme.fonts.editor};
   }
 `;
