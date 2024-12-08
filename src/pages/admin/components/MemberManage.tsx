@@ -134,6 +134,8 @@ const TableHeaderLayout = styled.div`
   ${({ theme }) => theme.fonts.button3};
 
   @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    min-width: 33.5rem;
     height: 4rem;
     padding: 1rem;
   }
@@ -169,6 +171,7 @@ const InfoField = styled.div`
   &:nth-of-type(3) {
     flex: 1;
     justify-content: center;
+    width: 5.2rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
       flex: 1;
