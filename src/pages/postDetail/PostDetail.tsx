@@ -16,6 +16,7 @@ import {
   GroupChatIc,
   GroupCuriousIc,
   GroupViewIc,
+  DivideDotIc,
 } from './../../assets/svgs';
 import Button from './../../components/commons/Button';
 import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/commons/Header';
@@ -26,6 +27,8 @@ import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queri
 import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
 import useModal from '../../hooks/useModal';
 import { MODAL } from './constants/modalContent';
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
+import Responsive from '../../components/commons/Responsive/Responsive';
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -116,7 +119,12 @@ const PostDetail = () => {
             <TitleText>{postData?.title}</TitleText>
             <DetailBox>
               <DateText>{postData?.createdAt} </DateText>
-              <DividingLine />
+              <Responsive only="desktop">
+                <DividingLine />
+              </Responsive>
+              <Responsive only="mobile">
+                <DivideDotIcon />
+              </Responsive>
               <CuriousCount>
                 <GroupCuriousIc />
                 {postData?.curiousCount}
@@ -160,7 +168,7 @@ const PostDetail = () => {
         </PostWrapper>
         <WriterInfoWrapper>
           <WriterInfoContainer>
-            <DefaultProfileIc />
+            <DefaultProfileIcon />
             <InfoWrapper>
               <WriterInfoBox>
                 <WriterInfoText>{postData?.writerName}</WriterInfoText>
@@ -211,6 +219,10 @@ const ThumnailImg = styled.img`
 
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    height: 18rem;
+  }
 `;
 
 const PostDetailWrapper = styled.div`
@@ -220,6 +232,11 @@ const PostDetailWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 82.6rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    padding: 0 2rem;
+  }
 `;
 
 const PostDetailContainer = styled.div`
@@ -227,6 +244,10 @@ const PostDetailContainer = styled.div`
   gap: 1.8rem;
   justify-content: space-between;
   width: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
+  }
 `;
 const InfoTextBox = styled.div`
   display: flex;
@@ -246,11 +267,19 @@ const TitleText = styled.h1`
   color: ${({ theme }) => theme.colors.grayBlack};
   ${({ theme }) => theme.fonts.title1};
   word-break: break-all;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle7};
+  }
 `;
 
 const DateText = styled.p`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.subtitle4};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3};
+  }
 `;
 
 const CuriousCount = styled.div`
@@ -260,6 +289,10 @@ const CuriousCount = styled.div`
 
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.subtitle4};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3};
+  }
 `;
 
 const ViewCount = styled.div`
@@ -269,6 +302,10 @@ const ViewCount = styled.div`
 
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.subtitle4};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3};
+  }
 `;
 
 const CommentCount = styled.div`
@@ -278,6 +315,10 @@ const CommentCount = styled.div`
 
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.subtitle4};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3};
+  }
 `;
 
 const ButtonWrapper = styled.div<{ role: string }>`
@@ -288,6 +329,11 @@ const ButtonWrapper = styled.div<{ role: string }>`
   max-width: ${({ role }) => (role === 'writer' ? `20.4rem` : role === 'owner' ? '12rem' : '0rem')};
   height: 4rem;
   padding-top: 0.4rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    max-width: 100%;
+    ${({ theme }) => theme.fonts.mButton1};
+  }
 `;
 
 const TopicWrapper = styled.div`
@@ -304,6 +350,10 @@ const TopicText = styled.p`
   color: ${({ theme }) => theme.colors.gray90};
 
   ${({ theme }) => theme.fonts.subtitle3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.subtitle6};
+  }
 `;
 
 const PostWrapper = styled.div`
@@ -345,6 +395,7 @@ const PostContainer = styled.div`
 
   & > p {
     min-height: 2.5rem;
+    ${({ theme }) => theme.fonts.body2};
   }
 `;
 
@@ -358,6 +409,12 @@ const WriterInfoWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
+
+  /* 피그마 답 보고 변경 필요 */
+  @media ${MOBILE_MEDIA_QUERY} {
+    height: 12rem;
+    padding: 2.1rem 2rem;
+  }
 `;
 
 const WriterInfoContainer = styled.div`
@@ -372,6 +429,10 @@ const InfoWrapper = styled.div`
   gap: 0.7rem;
   width: 53.6rem;
   max-height: 9.7rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 const WriterInfoBox = styled.div`
@@ -399,4 +460,15 @@ const WriterInfoText = styled.p`
 const GroupInfoText = styled.p`
   color: ${({ theme }) => theme.colors.gray50};
   ${({ theme }) => theme.fonts.body6};
+`;
+
+const DivideDotIcon = styled(DivideDotIc)`
+  margin-bottom: 0.2rem;
+`;
+
+const DefaultProfileIcon = styled(DefaultProfileIc)`
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 4rem;
+    height: 4rem;
+  }
 `;
