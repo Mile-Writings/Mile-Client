@@ -107,28 +107,29 @@ const TopicAdminCategory = styled.ul`
 
 const Topic = styled.li`
   width: 20.8rem;
-  max-width: 20.8rem;
+  min-width: 20.8rem;
 
   white-space: nowrap;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    width: 13rem;
-
-    ${({ theme }) => theme.fonts.editor}
+    flex: 0.35;
+    width: 100%;
+    min-width: 13rem;
+    ${({ theme }) => theme.fonts.editor};
   }
 `;
 
 const TopicTag = styled.li`
-  width: 7rem;
+  flex: 0.2;
   max-width: 7rem;
 
   white-space: nowrap;
   text-align: center;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    width: 6.1rem;
+    flex: 0.3;
+    justify-content: center;
     ${({ theme }) => theme.fonts.editor};
-    margin-left: auto;
   }
 `;
 

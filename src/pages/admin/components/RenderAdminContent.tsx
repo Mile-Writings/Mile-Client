@@ -218,6 +218,7 @@ const AdminContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 78.1rem;
 `;
 
 const Title = styled.h1`
