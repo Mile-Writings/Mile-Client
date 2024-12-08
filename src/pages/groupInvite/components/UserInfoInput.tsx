@@ -10,6 +10,7 @@ import Spacing from '../../../components/commons/Spacing';
 import useModal from '../../../hooks/useModal';
 import { MODAL } from '../constants/modalContent';
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
+import Responsive from '../../../components/commons/Responsive/Responsive';
 
 interface userInfoStateType {
   writerName?: string;
@@ -148,13 +149,22 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
         <UserInfoTitle>모임에서 사용할 필명*</UserInfoTitle>
         <InputBtnWrapper>
           <InputWrapper>
-            <WriterNameInput
-              placeholder="띄어쓰기 포함 8자 이내로 입력해주세요."
-              onChange={onChangeWriterName}
-              $isConflict={isWriterNameConflict || false}
-              $isValidLength={isWriterNameLimit}
-              maxLength={8}
-            />
+            <Responsive only="desktop">
+              <WriterNameInput
+                placeholder="띄어쓰기 포함 8자 이내로 입력해주세요."
+                onChange={onChangeWriterName}
+                $isConflict={isWriterNameConflict || false}
+                $isValidLength={isWriterNameLimit}
+              />
+            </Responsive>
+            <Responsive only="mobile">
+              <WriterNameInput
+                placeholder="띄어쓰기 포함 8자 이내"
+                onChange={onChangeWriterName}
+                $isConflict={isWriterNameConflict || false}
+                $isValidLength={isWriterNameLimit}
+              />
+            </Responsive>
             <WriterCharCount $isWriterNameLimit={isWriterNameLimit}>
               {userInfoVal.writerName ? userInfoVal.writerName.length : 0}/8
             </WriterCharCount>
@@ -207,7 +217,6 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
           placeholder="모임원들에게 ‘나’에 대해 자유롭게 소개해주세요."
           onChange={onChangeWriterIntroduce}
           $isIntroduceLimit={isIntroduceLimit}
-          maxLength={100}
         />
         <IntroduceCharCount $isIntroduceLimit={isIntroduceLimit}>
           {userInfoVal.writerIntroduce ? userInfoVal.writerIntroduce.length : 0}/100
