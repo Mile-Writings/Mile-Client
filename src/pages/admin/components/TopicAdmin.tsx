@@ -127,8 +127,6 @@ const TopicTag = styled.li`
   text-align: center;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    flex: 0.3;
-    justify-content: center;
     ${({ theme }) => theme.fonts.editor};
   }
 `;

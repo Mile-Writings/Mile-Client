@@ -144,7 +144,8 @@ const Topic = styled.div`
   flex: 0.5;
   flex-direction: column;
   gap: 0.4rem;
-  min-width: 20.8rem;
+  min-width: 20.9rem;
+  max-width: 20.9rem;
   padding: 0.6rem 0;
 
   @media ${MOBILE_MEDIA_QUERY} {
@@ -155,7 +156,6 @@ const Topic = styled.div`
 `;
 
 const TopicTitle = styled.p`
-  min-width: 0;
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.black};
