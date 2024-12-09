@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/commons/Header';
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import { copyLink } from '../../utils/copyLink';
 import createGroupCongrats from '/src/assets/images/createGroupCongrats.png';
 
@@ -40,11 +41,17 @@ export default CreateGroupSuccess;
 const CreateGroupCongratsImg = styled.img`
   width: 40.8rem;
   height: 29.2rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 35rem;
+    height: 25rem;
+  }
 `;
 const CreateGroupSuccessWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   height: 100vh;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
@@ -55,9 +62,12 @@ const CreatGroupSection = styled.section`
   flex-direction: column;
   gap: 4rem;
   align-items: center;
-  width: 72rem;
-  margin-top: 7.4rem;
-  padding: 6.4rem 0;
+  width: 100%;
+
+  /* height: calc(100% - 44px); */
+  height: calc(100vh - 64px);
+  margin-top: 6.4rem;
+  padding: 6.4rem 2rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
@@ -74,18 +84,32 @@ const TitleWrapper = styled.div`
 
 const MainTitle = styled.h1`
   color: ${({ theme }) => theme.colors.mainViolet};
+
   ${({ theme }) => theme.fonts.title2};
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle6};
+  }
 `;
 
 const SubTitle = styled.h2`
   color: ${({ theme }) => theme.colors.gray90};
   ${({ theme }) => theme.fonts.subtitle4};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle4};
+  }
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  align-items: center;
+  width: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column-reverse;
+  }
 `;
 
 const Btn = styled.button`
@@ -95,6 +119,10 @@ const Btn = styled.button`
   ${({ theme }) => theme.fonts.button3};
   border: 1px solid ${({ theme }) => theme.colors.mainViolet};
   border-radius: 5px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 const CopyLinkBtn = styled(Btn)`

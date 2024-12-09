@@ -262,6 +262,9 @@ export const useDeleteGroup = (groupId: string) => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY_ADMIN.fetchAdminGroupInfo, groupId],
       });
+      queryClient.invalidateQueries({
+        queryKey: groupKey.userGroups(),
+      });
       navigate('/');
     },
   });

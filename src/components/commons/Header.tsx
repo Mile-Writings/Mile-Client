@@ -126,7 +126,7 @@ export const DefaultHeader = () => {
 
 const HeaderWrapper = styled.div`
   position: fixed;
-  top: 0%;
+  top: 0;
   z-index: 3;
   display: flex;
   align-items: center;
