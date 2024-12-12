@@ -11,7 +11,7 @@ import {
 import Spacing from '../../../components/commons/Spacing';
 import useImageUpload from '../../../hooks/useImageUpload';
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
-import { InputInfoMsg } from '../constants/inputInfoMsg';
+import { INPUT_INFO_MESSAGE } from '../constants/inputInfoMsg';
 import {
   MAX_TOPIC_DESC_LENGTH,
   MAX_TOPIC_KEYWORD_LENGTH,
@@ -66,7 +66,7 @@ const CreateGroupInfo = ({
   const [isGroupTopicEmpty, setIsGroupTopicEmpty] = useState(false);
   const [topicModal, setTopicModal] = useState(false);
   const [passDuplicate, setPassDuplicate] = useState(false);
-  const [groupNameInputMsg, setGroupNameInputMsg] = useState<string>(InputInfoMsg.emptyText);
+  const [groupNameInputMsg, setGroupNameInputMsg] = useState<string>(INPUT_INFO_MESSAGE.EMPTY_TEXT);
   const [isHovered, setIsHovered] = useState(false);
 
   const groupNameRef = useRef<HTMLInputElement>(null);
@@ -119,7 +119,7 @@ const CreateGroupInfo = ({
     }
     //중복검사를 하지 않았거나 통과하지 못했을 때
     else if ((isSuccess && groupNameValidationData === undefined) || !passDuplicate) {
-      setGroupNameInputMsg(InputInfoMsg.groupNameNotCheck);
+      setGroupNameInputMsg(INPUT_INFO_MESSAGE.GROUP_NAME_NOT_CHECK);
       setIsGroupNameEmpty(true);
       if (groupNameRef.current) {
         groupNameRef.current && groupNameRef.current.focus();
@@ -138,7 +138,7 @@ const CreateGroupInfo = ({
       setIsGroupNameValid(false);
     } else {
       setIsGroupNameValid(true);
-      setGroupNameInputMsg(InputInfoMsg.emptyText);
+      setGroupNameInputMsg(INPUT_INFO_MESSAGE.EMPTY_TEXT);
     }
     setGroupName(e);
 
@@ -153,7 +153,7 @@ const CreateGroupInfo = ({
 
   useEffect(() => {
     if (error instanceof AxiosError && error?.response?.data.status === 400) {
-      alert(InputInfoMsg.groupNameLength);
+      alert(INPUT_INFO_MESSAGE.GROUP_NAME_LENGTH);
     }
   }, [error]);
 
@@ -161,19 +161,19 @@ const CreateGroupInfo = ({
     if (isSuccess) {
       // API 호출 성공 시 응답 데이터에 따라 메시지 설정
       if (groupNameValidationData) {
-        setGroupNameInputMsg(InputInfoMsg.groupNameAvailable);
+        setGroupNameInputMsg(INPUT_INFO_MESSAGE.GROUP_NAME_AVAILABLE);
         setIsGroupNameValid(true);
         setIsGroupNameEmpty(false);
         setPassDuplicate(true);
       } else {
-        setGroupNameInputMsg(InputInfoMsg.groupNameNotAvailable);
+        setGroupNameInputMsg(INPUT_INFO_MESSAGE.GROUP_NAME_NOT_AVAILABLE);
         setIsGroupNameValid(false);
         setIsGroupNameEmpty(false);
       }
     }
 
     if (groupName.length > 10) {
-      setGroupNameInputMsg(InputInfoMsg.groupNameLength);
+      setGroupNameInputMsg(INPUT_INFO_MESSAGE.GROUP_NAME_LENGTH);
     }
   }, [isSuccess, groupNameValidationData, error, groupName]);
 
@@ -212,7 +212,7 @@ const CreateGroupInfo = ({
               </DuplicateCheckBtn>
             </GroupNameInputLayout>
 
-            {isGroupNameValid && groupNameInputMsg === InputInfoMsg.groupNameAvailable ? (
+            {isGroupNameValid && groupNameInputMsg === INPUT_INFO_MESSAGE.GROUP_NAME_AVAILABLE ? (
               <SuccessMsgText>{groupNameInputMsg}</SuccessMsgText>
             ) : (
               <ErrorMsgText>{groupNameInputMsg}</ErrorMsgText>
