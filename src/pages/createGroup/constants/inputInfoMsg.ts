@@ -1,4 +1,4 @@
-export const INPUT_INFO_MSG = {
+export const INPUT_INFO_MESSAGE = {
   GROUP_NAME_LENGTH: '10자 이내로 작성해주세요.',
   GROUP_NAME_NOT_AVAILABLE: '이미 사용중인 모임명입니다.',
   GROUP_NAME_NOT_CHECK: '중복확인을 해주세요.',
