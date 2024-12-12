@@ -7,7 +7,7 @@ import useImageUpload from '../../../hooks/useImageUpload';
 import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 interface ImageUploadPropTypes {
   setPreviewImgUrl: Dispatch<SetStateAction<string>>;
-  setImageFile: Dispatch<SetStateAction<File | null>>;
+  setImageFile: Dispatch<SetStateAction<File | null | Blob>>;
   previewImgUrl: string;
 }
 
