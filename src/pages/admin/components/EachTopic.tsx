@@ -2,8 +2,6 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import AddEditTopicModal from './AddEditTopicModal';
-
 import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 import useModal from '../../../hooks/useModal';
 
@@ -11,6 +9,9 @@ import { MODAL } from '../constants/modal';
 import { useDeleteAdminTopic } from '../hooks/queries';
 
 import { DeleteIc, EditIc } from '../../../assets/svgs';
+import InputModal from '../../../components/commons/inputModal/InputModal';
+import Responsive from '../../../components/commons/Responsive/Responsive';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface AdminTopicPropTypes {
   topicId: string;
@@ -44,22 +45,25 @@ const EachTopic = ({ data, pageNum }: eachTopicPropTypes) => {
             <TopicDate>{createdAt}</TopicDate>
           </Topic>
           <TopicTag>{topicTag}</TopicTag>
-          <TopicDescription>{topicDescription}</TopicDescription>
-        </TopicData>
-        <TopicAction>
-          <EditIcon
-            onClick={() => {
-              setShowEditModal(true);
-            }}
-          />
+          <Responsive only="desktop">
+            <TopicDescription>{topicDescription}</TopicDescription>
+          </Responsive>
+          <TopicAction>
+            <EditIcon
+              onClick={() => {
+                setShowEditModal(true);
+              }}
+            />
 
-          {/* <DeleteIcon onClick={() => setShowDeleteModal(true)} /> */}
-          <DeleteIcon onClick={() => handleShowModal()} />
-        </TopicAction>
+            {/* <DeleteIcon onClick={() => setShowDeleteModal(true)} /> */}
+            <DeleteIcon onClick={() => handleShowModal()} />
+          </TopicAction>
+        </TopicData>
+
         {showEditModal && (
           <>
             <ModalOverlay onClick={() => setShowEditModal(false)} />
-            <AddEditTopicModal
+            <InputModal
               topicStored={topicName}
               topicTagStored={topicTag}
               topicDescriptionStored={topicDescription}
@@ -113,58 +117,106 @@ const TopicWrapper = styled.div`
   display: flex;
   gap: 2.4rem;
   align-items: center;
-  width: 74.5rem;
+  width: 100%;
   height: 8.4rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 const TopicData = styled.div`
   display: flex;
   gap: 4rem;
   align-items: flex-start;
-  width: 64.9rem;
+  width: 74.5rem;
   height: 5.2rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    gap: 1.6rem;
+    width: 100%;
+  }
 `;
 
 const Topic = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  width: 20.8rem;
+  min-width: 20.8rem;
   padding: 0.6rem 0;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    min-width: 13rem;
+    max-width: 13rem;
+  }
 `;
 
 const TopicTitle = styled.p`
+  width: 20.9rem;
+  max-width: 20.9rem;
+  overflow: hidden;
+
   color: ${({ theme }) => theme.colors.black};
-  ${({ theme }) => theme.fonts.body1};
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  ${({ theme }) => theme.fonts.body1}
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    max-width: 13rem;
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 
 const TopicDate = styled.p`
   color: ${({ theme }) => theme.colors.gray60};
   ${({ theme }) => theme.fonts.body6};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle1};
+  }
 `;
 
 const TopicTag = styled.p`
+  flex-shrink: 0;
   width: 7rem;
   padding: 0.6rem 0;
+  overflow: hidden;
 
   color: ${({ theme }) => theme.colors.black};
-  ${({ theme }) => theme.fonts.body1};
+  white-space: nowrap;
   text-align: center;
+  text-overflow: ellipsis;
+
+  ${({ theme }) => theme.fonts.body1}
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    justify-content: center;
+    width: 6.1rem;
+    min-width: 6.1rem;
+
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 
 const TopicDescription = styled.p`
   display: -webkit-box;
-  width: 29rem;
+  width: 100%;
+  min-width: 3rem;
+  max-width: 29rem;
   padding-top: 0.2rem;
   overflow: hidden;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 
   color: ${({ theme }) => theme.colors.gray100};
-  ${({ theme }) => theme.fonts.body8};
-`;
+  text-overflow: ellipsis;
 
+  ${({ theme }) => theme.fonts.body8}
+`;
 const TopicAction = styled.div`
   display: flex;
   gap: 0.8rem;
+  margin-left: auto;
 `;
