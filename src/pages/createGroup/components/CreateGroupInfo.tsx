@@ -187,7 +187,7 @@ const CreateGroupInfo = ({
           <Spacing marginBottom="2.4" />
           <picture>
             <source srcSet={createGroupWebp} />
-            <GroupImage src={createGroupIlust} />
+            <GroupImage src={createGroupIlust} alt="group main image" />
           </picture>
         </TitleWrapper>
         <WhiteInputWrapper isValid={!isGroupNameEmpty}>
@@ -201,7 +201,7 @@ const CreateGroupInfo = ({
                 isValid={isGroupNameValid}
                 value={groupName}
                 maxLength={11}
-              />{' '}
+              />
               <DuplicateCheckBtn
                 type="button"
                 positive={groupName !== '' && groupName.length <= 10}
@@ -432,10 +432,9 @@ const GroupInfoWrppaer = styled.section`
 
 const TextAreaLength = styled.p<{ isValid: boolean }>`
   position: absolute;
-  right: 45px;
+  right: 4.5rem;
   bottom: 4rem;
 
-  /* left: 70.6rem; */
   width: fit-content;
 
   color: ${({ theme, isValid }) => (isValid ? theme.colors.gray70 : theme.colors.mileRed)};

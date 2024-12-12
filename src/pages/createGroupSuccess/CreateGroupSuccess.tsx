@@ -63,8 +63,6 @@ const CreatGroupSection = styled.section`
   gap: 4rem;
   align-items: center;
   width: 100%;
-
-  /* height: calc(100% - 44px); */
   height: calc(100vh - 64px);
   margin-top: 6.4rem;
   padding: 6.4rem 2rem;
