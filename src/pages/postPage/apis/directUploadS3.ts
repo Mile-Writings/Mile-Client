@@ -5,9 +5,8 @@ const directUploadS3 = async (url: string, imageFile: File, fileName: string) =>
   try {
     await axios.put(`${url}`, imageFile, {
       headers: {
-        'Content-Type': 'image/jpg',
-        //'Content-Type': 'multipart/form-data',
-        'Access-Control-Allow-Origin': '*',
+        // 'Content-Type': 'image/webp',
+        'Content-Type': 'multipart/form-data',
       },
     });
     const urlToServer = urlToServerParsing(url, fileName);
@@ -21,8 +20,7 @@ const directUploadS3 = async (url: string, imageFile: File, fileName: string) =>
 
         await axios.put(`${data?.data.url}`, imageFile, {
           headers: {
-            'Content-Type': 'image/jpg',
-            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'multipart/form-data',
           },
         });
 
