@@ -229,6 +229,7 @@ const CommentText = styled.p`
   color: ${({ theme }) => theme.colors.gray90};
   ${({ theme }) => theme.fonts.body6};
   white-space: pre-wrap;
+  word-break: break-all;
 
   @media ${MOBILE_MEDIA_QUERY} {
     ${({ theme }) => theme.fonts.mBody3};

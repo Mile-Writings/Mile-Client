@@ -173,8 +173,7 @@ const CommentLayout = styled.div<{ isMainComment: boolean; isError: boolean }>`
 
   @media ${MOBILE_MEDIA_QUERY} {
     ${({ theme }) => theme.fonts.mSubtitle1};
-    /* 넓이 수정 필 */
-    max-width: ${({ isMainComment }) => (isMainComment ? '95%' : '90%')};
+    width: ${({ isMainComment }) => (isMainComment ? '93%' : '90%')};
     min-height: 6rem;
   }
 `;
@@ -200,8 +199,7 @@ const DesktopCommentForm = styled.textarea<{ isMainComment: boolean }>`
 `;
 
 const MobileCommentForm = styled.textarea<{ isMainComment: boolean }>`
-  /* 넓이 수정 필요 */
-  width: ${({ isMainComment }) => (isMainComment ? '100%' : '56.3rem')};
+  width: 100%;
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray100};
@@ -245,8 +243,7 @@ const CommentPostBtn = styled.button<{ $isComment: string }>`
     height: 4.4rem;
     padding: 0;
 
-    /* 폰트 수정 필요 */
-    ${({ theme }) => theme.fonts.mSubtitle1}
+    ${({ theme }) => theme.fonts.mBody1}
   }
 `;
 

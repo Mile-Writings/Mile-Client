@@ -167,19 +167,45 @@ const PostDetail = () => {
           <PostContainer dangerouslySetInnerHTML={{ __html: postData?.content || '' }} />
         </PostWrapper>
         <WriterInfoWrapper>
-          <WriterInfoContainer>
-            <DefaultProfileIcon />
-            <InfoWrapper>
-              <WriterInfoBox>
-                <WriterInfoText>{postData?.writerName}</WriterInfoText>
-                <GroupInfoText>{postData?.moimName}</GroupInfoText>
-              </WriterInfoBox>
-              <WriterDesc>
-                {!postData?.writerInfo ? '아직 작가소개를 작성하지 않았어요' : postData?.writerInfo}
-              </WriterDesc>
-            </InfoWrapper>
-          </WriterInfoContainer>
-          {isMember && <CuriousBtn postId={postId} />}
+          <Responsive only="desktop">
+            <WriterInfoContainer>
+              <DefaultProfileIcon />
+              <InfoWrapper>
+                <WriterInfoBox>
+                  <WriterInfoText>{postData?.writerName}</WriterInfoText>
+                  <GroupInfoText>{postData?.moimName}</GroupInfoText>
+                </WriterInfoBox>
+                <WriterDesc>
+                  {!postData?.writerInfo
+                    ? '아직 작가소개를 작성하지 않았어요'
+                    : postData?.writerInfo}
+                </WriterDesc>
+              </InfoWrapper>
+              {isMember && <CuriousBtn postId={postId} />}
+            </WriterInfoContainer>
+          </Responsive>
+
+          <Responsive only="mobile">
+            <>
+              <MobileWriterInfoTop>
+                <DefaultProfileIcon />
+                <InfoWrapper>
+                  <WriterInfoBox>
+                    <WriterInfoText>{postData?.writerName}</WriterInfoText>
+                    <GroupInfoText>{postData?.moimName}</GroupInfoText>
+                  </WriterInfoBox>
+                  {isMember && <CuriousBtn postId={postId} />}
+                </InfoWrapper>
+              </MobileWriterInfoTop>
+              <MobileWriterDescription>
+                <WriterDesc>
+                  {!postData?.writerInfo
+                    ? '아직 작가소개를 작성하지 않았어요'
+                    : postData?.writerInfo}
+                </WriterDesc>
+              </MobileWriterDescription>
+            </>
+          </Responsive>
         </WriterInfoWrapper>
         {isMember && <Comment postId={postId} />}
         <Spacing marginBottom="8" />
@@ -410,9 +436,10 @@ const WriterInfoWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
 
-  /* 피그마 답 보고 변경 필요 */
   @media ${MOBILE_MEDIA_QUERY} {
-    height: 12rem;
+    flex-direction: column;
+    gap: 1.6rem;
+    height: 16rem;
     padding: 2.1rem 2rem;
   }
 `;
@@ -431,7 +458,11 @@ const InfoWrapper = styled.div`
   max-height: 9.7rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
+    height: 4.4rem;
   }
 `;
 
@@ -441,25 +472,44 @@ const WriterInfoBox = styled.div`
   align-items: center;
   max-width: 53.6rem;
   height: 2.4rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
+    gap: 0.4rem;
+    align-items: flex-start;
+    height: 4.3rem;
+    padding-left: 1rem;
+  }
 `;
 
 const WriterDesc = styled.div`
-  overflow: hidden;
+  height: 6.6rem;
 
   color: ${({ theme }) => theme.colors.gray80};
-  text-overflow: ellipsis;
-  word-break: keep-all;
-
   ${({ theme }) => theme.fonts.body3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3};
+    width: 100%;
+    height: 6rem;
+  }
 `;
 const WriterInfoText = styled.p`
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.subtitle2};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle4};
+  }
 `;
 
 const GroupInfoText = styled.p`
   color: ${({ theme }) => theme.colors.gray50};
   ${({ theme }) => theme.fonts.body6};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3};
+  }
 `;
 
 const DivideDotIcon = styled(DivideDotIc)`
@@ -471,4 +521,17 @@ const DefaultProfileIcon = styled(DefaultProfileIc)`
     width: 4rem;
     height: 4rem;
   }
+`;
+
+const MobileWriterInfoTop = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 1.6rem;
+`;
+
+const MobileWriterDescription = styled.div`
+  width: 100%;
+  ${({ theme }) => theme.fonts.body3}
 `;
