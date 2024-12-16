@@ -18,6 +18,7 @@ import Spacing from '../../../components/commons/Spacing';
 import { ADMIN } from '../../../constants/modal';
 import useBlockPageExit from '../../../hooks/useBlockPageExit';
 import useModal from '../../../hooks/useModal';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 import Loading from '../../loading/Loading';
 import { Menu } from '../types/menu';
 
@@ -210,8 +211,11 @@ const ModalOverlay = styled.div`
 const AdminContainer = styled.div<{ maxWidth?: string }>`
   display: flex;
   flex-direction: column;
-  width: 100%;
   max-width: ${({ maxWidth }) => maxWidth}rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 const Title = styled.h1`
