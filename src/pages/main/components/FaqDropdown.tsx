@@ -47,6 +47,7 @@ const TextWrapper = styled.div`
   display: flex;
   gap: 0.8rem;
   align-items: center;
+  width: 100%;
 `;
 const FaqWrapper = styled.section`
   display: flex;
@@ -114,13 +115,7 @@ const QuestionText = styled.p`
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 85%;
-
-    font-weight: 600;
-    font-size: 16px;
-
-    /* mTitle 6 */
-
-    font-style: normal;
+    ${({ theme }) => theme.fonts.mTitle1}
   }
 `;
 
@@ -134,4 +129,8 @@ const AnswerTextBox = styled.div`
   user-select: none;
 
   ${({ theme }) => theme.fonts.body3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3}
+  }
 `;
