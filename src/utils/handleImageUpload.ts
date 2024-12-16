@@ -3,7 +3,7 @@ import { EDITOR_DEFAULT_IMG } from '../pages/postPage/constants/editorDefaultImg
 const handleImageUpload = async (
   url: string,
   fileName: string,
-  imageFile: File | null,
+  imageFile: File | null | Blob,
   imageUrl: string | undefined,
 ) => {
   try {

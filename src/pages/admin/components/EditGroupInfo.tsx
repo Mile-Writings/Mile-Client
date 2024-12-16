@@ -32,7 +32,7 @@ const EditGroupInfo = () => {
   const { fileName = '', url = '' } = usePresignedUrl();
 
   const [previewImgUrl, setPreviewImgUrl] = useState('');
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<File | null | Blob>(null);
 
   const { onImageUpload } = useImageUpload({ setPreviewImgUrl, setImageFile });
   const [passDuplicate, setPassDuplicate] = useState(false);

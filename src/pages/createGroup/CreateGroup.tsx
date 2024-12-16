@@ -30,7 +30,7 @@ const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
   const [groupImageView, setGroupImageView] = useState('');
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<File | null | Blob>(null);
 
   // 페이지 이탈 감지
   const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =

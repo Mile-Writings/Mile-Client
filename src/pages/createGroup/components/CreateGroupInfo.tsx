@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { AxiosError } from 'axios';
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import createGroupWebp from '/src/assets/webps/creategroup.webp';
 import {
   CreateGroupImageUpload,
   CreateGroupImageUploadedIc,
@@ -20,6 +19,7 @@ import { useGetGroupNameValidation } from '../hooks/queries';
 import { CurrentPageType } from '../types/stateType';
 import CreateGroupTopicModal from './CreateGroupTopicModal';
 import createGroupIlust from '/src/assets/images/createGroupIlust.png';
+import createGroupWebp from '/src/assets/webps/creategroup.webp';
 
 type Setter<T> = (value: T) => void;
 interface CreateGroupInfoPropTypes {
@@ -38,7 +38,7 @@ interface CreateGroupInfoPropTypes {
   setTopicDesc: Setter<string>;
   groupImageView: string;
   setGroupImageView: Dispatch<SetStateAction<string>>;
-  setImageFile: Dispatch<SetStateAction<File | null>>;
+  setImageFile: Dispatch<SetStateAction<File | null | Blob>>;
 }
 export const InputInfoMsg = {
   groupNameLength: '10자 이내로 작성해주세요.',

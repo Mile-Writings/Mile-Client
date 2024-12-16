@@ -10,6 +10,7 @@ import TipTap from './components/TipTap';
 import { EDITOR_DEFAULT_IMG } from './constants/editorDefaultImg';
 import {
   useDeleteTempPost,
+  useGetEditPostContent,
   useGetTempSaveContent,
   useGetTopic,
   usePostContent,
@@ -18,7 +19,6 @@ import {
   usePutEditContent,
   usePutTempSaveContent,
   useTempSaveFlag,
-  useGetEditPostContent,
 } from './hooks/queries';
 import { allowScroll, preventScroll } from './utils/modalPreventScroll';
 
@@ -191,7 +191,7 @@ const PostPage = () => {
   // 에디터 글 내용 태그 제외한 값 (valid 확인용)
   const [contentWithoutTag, setContentWithoutTag] = useState('');
 
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<File | null | Blob>(null);
   const [postContentId, setPostContentId] = useState<string>('');
 
   // 임시저장 불러오기

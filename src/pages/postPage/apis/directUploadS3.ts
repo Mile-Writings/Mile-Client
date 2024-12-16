@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { urlToServerParsing } from '../../../utils/urlToServerParsing';
 import { fetchPresignedUrl } from './fetchPresignedUrl';
-const directUploadS3 = async (url: string, imageFile: File, fileName: string) => {
+const directUploadS3 = async (url: string, imageFile: File | null | Blob, fileName: string) => {
   try {
     await axios.put(`${url}`, imageFile, {
       headers: {
