@@ -1,12 +1,11 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
 import { EDITOR_DEFAULT_IMG } from '../constants/editorDefaultImg';
 
 import useImageUpload from '../../../hooks/useImageUpload';
 import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 import { BinIcn } from '../../../assets/svgs/editorSVG';
-import Responsive from '../../../components/commons/Responsive/Responsive';
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface ImageUploadPropTypes {
@@ -20,16 +19,41 @@ export const ImageUpload = (props: ImageUploadPropTypes) => {
 
   const { onImageUpload } = useImageUpload({ setPreviewImgUrl, setImageFile });
 
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const [isInputDisabled, setInputDisabled] = useState(false);
+
   const onClickThumDefault = (e: React.MouseEvent<SVGSVGElement>) => {
     e.stopPropagation();
+    setInputDisabled(true);
     setPreviewImgUrl(EDITOR_DEFAULT_IMG);
+    if (imageInputRef.current) {
+      imageInputRef.current.value = '';
+    }
   };
+
+  const handleImageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputDisabled(false);
+    if (e.target.files) {
+      onImageUpload(e);
+    }
+  };
+
+  useEffect(() => {
+    isInputDisabled && setInputDisabled(false);
+  }, [isInputDisabled]);
 
   return (
     <>
       <ThumbNailGradient>
         <ThumbNailImg src={previewImgUrl} $imgExist={previewImgUrl} />
-        <ImageInput type="file" accept="image/*" id="editorImg" onChange={onImageUpload} />
+        <ImageInput
+          type="file"
+          accept="image/*"
+          id="editorImg"
+          ref={imageInputRef}
+          onChange={handleImageInputChange}
+          disabled={isInputDisabled}
+        />
         <ImageUploadLabel htmlFor="editorImg">
           <ImageIconWrapper>
             {previewImgUrl !== EDITOR_DEFAULT_IMG ? (
@@ -37,11 +61,13 @@ export const ImageUpload = (props: ImageUploadPropTypes) => {
             ) : (
               <EditorThuminputIcnUnactiveIcon />
             )}
+            <BinIcon
+              onClick={(e) => {
+                onClickThumDefault(e);
+              }}
+            />
           </ImageIconWrapper>
         </ImageUploadLabel>
-        <Responsive only="mobile" asChild>
-          <BinIcon onClick={onClickThumDefault} />
-        </Responsive>
       </ThumbNailGradient>
     </>
   );
@@ -94,7 +120,7 @@ const ImageUploadLabel = styled.label`
 
 const BinIcon = styled(BinIcn)`
   position: absolute;
-  right: 2rem;
+  right: 0.5rem;
   bottom: 2.2rem;
   z-index: 2;
 
@@ -109,23 +135,35 @@ const BinIcon = styled(BinIcn)`
       stroke: ${({ theme }) => theme.colors.mainViolet};
     }
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    right: 2rem;
+  }
 `;
 
 const ImageIconWrapper = styled.div`
+  position: relative;
+  width: 82.8rem;
+  height: 100%;
+`;
+
+const EditorThuminputIcnActiveIcon = styled(EditorThuminputIcnActiveIc)`
   position: absolute;
-  right: 2rem;
-  bottom: 2rem;
+  right: 7rem;
+  bottom: 2.25rem;
+
+  cursor: pointer;
 
   @media ${MOBILE_MEDIA_QUERY} {
     right: 9rem;
   }
 `;
 
-const EditorThuminputIcnActiveIcon = styled(EditorThuminputIcnActiveIc)`
-  cursor: pointer;
-`;
-
 const EditorThuminputIcnUnactiveIcon = styled(EditorThuminputIcnUnactiveIc)`
+  position: absolute;
+  right: 7rem;
+  bottom: 2.25rem;
+
   cursor: pointer;
 
   :hover {
@@ -136,6 +174,10 @@ const EditorThuminputIcnUnactiveIcon = styled(EditorThuminputIcnUnactiveIc)`
     rect {
       stroke: ${({ theme }) => theme.colors.mainViolet};
     }
+  }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    right: 9rem;
   }
 `;
 
