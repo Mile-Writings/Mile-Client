@@ -273,7 +273,12 @@ const PostPage = () => {
       return;
     }
 
-    const imageUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+    const imageUrl = await handleImageUpload({
+      url,
+      fileName,
+      imageFile,
+      imageUrl: editorVal.imageUrl,
+    });
     if (imageUrl) {
       postContent(imageUrl);
     }
@@ -339,7 +344,12 @@ const PostPage = () => {
       return;
     } else {
       try {
-        const imgUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+        const imgUrl = await handleImageUpload({
+          url,
+          fileName,
+          imageFile,
+          imageUrl: editorVal.imageUrl,
+        });
         if (imgUrl) {
           putEditContent(imgUrl);
         }
@@ -378,7 +388,12 @@ const PostPage = () => {
 
   // 임시저장 모달 -> '예' 누르면 쿼리 동작
   const tempSaveHandler = async () => {
-    const imageUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+    const imageUrl = await handleImageUpload({
+      url,
+      fileName,
+      imageFile,
+      imageUrl: editorVal.imageUrl,
+    });
 
     if (imageUrl) {
       postTempSaveContent(imageUrl);
@@ -407,7 +422,12 @@ const PostPage = () => {
       return;
     }
 
-    const imgUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+    const imgUrl = await handleImageUpload({
+      url,
+      fileName,
+      imageFile,
+      imageUrl: editorVal.imageUrl,
+    });
     if (imgUrl) {
       putTempSaveContent(imgUrl);
     }

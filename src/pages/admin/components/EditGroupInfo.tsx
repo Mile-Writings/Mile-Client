@@ -91,12 +91,12 @@ const EditGroupInfo = () => {
   const editGroupInfo = async () => {
     if (groupName) {
       if ((passDuplicate || !isGroupNameChanged) && groupDesc.length <= 100) {
-        const groupImageServerUrl = await handleImageUpload(
+        const groupImageServerUrl = await handleImageUpload({
           url,
           fileName,
           imageFile,
-          previewImgUrl,
-        );
+          imageUrl: previewImgUrl,
+        });
         if (groupImageServerUrl) {
           await putAdminGroupInfo(groupImageServerUrl);
           setEditBtnActive(false);
@@ -124,7 +124,6 @@ const EditGroupInfo = () => {
         setPassDuplicate(true);
       } else if (groupNameValidationData === false) {
         setGroupNameInfoMsg(InputInfoMsg.groupNameNotAvailable);
-        // setGroupNameValid(false);
       }
     }
   }, [groupNameValidationData, isSuccess]);

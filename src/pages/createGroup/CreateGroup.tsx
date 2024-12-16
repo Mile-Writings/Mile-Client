@@ -141,7 +141,12 @@ const CreateGroup = () => {
 
     if (groupName && topic && topicTag && leaderPenName && leaderDesc.length <= 100) {
       setIgnoreBlocker(true);
-      const imageUrl = await handleImageUpload(url, fileName, imageFile, groupImageUrl);
+      const imageUrl = await handleImageUpload({
+        url,
+        fileName,
+        imageFile,
+        imageUrl: groupImageUrl,
+      });
 
       if (imageUrl) {
         mutate(imageUrl);
