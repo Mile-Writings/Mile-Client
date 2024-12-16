@@ -3,11 +3,24 @@ import styled from '@emotion/styled';
 import { createBrowserHistory } from 'history';
 import React, { useEffect, useReducer, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { EditorErrorIcn } from '../../assets/svgs/editorSVG';
+import {
+  EditorEditHeader,
+  EditorTempExistHeader,
+  EditorTempNotExistHeader,
+} from '../../components/commons/Header';
+import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
+import { FullModal, FullModalBtn } from '../../components/commons/modal/FullModal';
+import Spacing from '../../components/commons/Spacing';
+import useBlockPageExit from '../../hooks/useBlockPageExit';
+import useModal from '../../hooks/useModal';
+import { FileType } from '../../types/imageUploadType';
 import handleImageUpload from '../../utils/handleImageUpload';
 import DropDown from './components/DropDown';
 import ImageUpload from './components/ImageUpload';
 import TipTap from './components/TipTap';
 import { EDITOR_DEFAULT_IMG } from './constants/editorDefaultImg';
+import { MODAL } from './constants/modalContent';
 import {
   useDeleteTempPost,
   useGetEditPostContent,
@@ -21,19 +34,6 @@ import {
   useTempSaveFlag,
 } from './hooks/queries';
 import { allowScroll, preventScroll } from './utils/modalPreventScroll';
-
-import { EditorErrorIcn } from '../../assets/svgs/editorSVG';
-import {
-  EditorEditHeader,
-  EditorTempExistHeader,
-  EditorTempNotExistHeader,
-} from '../../components/commons/Header';
-import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
-import { FullModal, FullModalBtn } from '../../components/commons/modal/FullModal';
-import Spacing from '../../components/commons/Spacing';
-import useBlockPageExit from '../../hooks/useBlockPageExit';
-import useModal from '../../hooks/useModal';
-import { MODAL } from './constants/modalContent';
 
 // editor content API 관련
 interface editorStateType {
@@ -191,7 +191,7 @@ const PostPage = () => {
   // 에디터 글 내용 태그 제외한 값 (valid 확인용)
   const [contentWithoutTag, setContentWithoutTag] = useState('');
 
-  const [imageFile, setImageFile] = useState<File | null | Blob>(null);
+  const [imageFile, setImageFile] = useState<FileType>(null);
   const [postContentId, setPostContentId] = useState<string>('');
 
   // 임시저장 불러오기

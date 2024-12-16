@@ -4,10 +4,11 @@ import { Dispatch, SetStateAction } from 'react';
 import { EDITOR_DEFAULT_IMG } from '../constants/editorDefaultImg';
 
 import useImageUpload from '../../../hooks/useImageUpload';
+import { FileType } from '../../../types/imageUploadType';
 import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 interface ImageUploadPropTypes {
   setPreviewImgUrl: Dispatch<SetStateAction<string>>;
-  setImageFile: Dispatch<SetStateAction<File | null | Blob>>;
+  setImageFile: Dispatch<SetStateAction<FileType>>;
   previewImgUrl: string;
 }
 

@@ -1,11 +1,11 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { SUPPORTED_IMAGE_TYPES } from '../constants/supportedImageType';
+import { FileType } from '../types/imageUploadType';
 import { convertImageToWebP } from '../utils/convertImageToWebP';
 import { isSupportedImageType } from '../utils/isSupportedImageType';
-
 interface UseImageUploadPropTypes {
   setPreviewImgUrl: Dispatch<SetStateAction<string>>;
-  setImageFile: Dispatch<SetStateAction<File | null | Blob>>;
+  setImageFile: Dispatch<SetStateAction<FileType>>;
 }
 
 const useImageUpload = ({ setPreviewImgUrl, setImageFile }: UseImageUploadPropTypes) => {

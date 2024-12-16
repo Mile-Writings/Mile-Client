@@ -10,6 +10,7 @@ import {
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 import useImageUpload from '../../../hooks/useImageUpload';
+import { FileType } from '../../../types/imageUploadType';
 import {
   MAX_TOPIC_DESC_LENGTH,
   MAX_TOPIC_KEYWORD_LENGTH,
@@ -38,7 +39,7 @@ interface CreateGroupInfoPropTypes {
   setTopicDesc: Setter<string>;
   groupImageView: string;
   setGroupImageView: Dispatch<SetStateAction<string>>;
-  setImageFile: Dispatch<SetStateAction<File | null | Blob>>;
+  setImageFile: Dispatch<SetStateAction<FileType>>;
 }
 export const InputInfoMsg = {
   groupNameLength: '10자 이내로 작성해주세요.',

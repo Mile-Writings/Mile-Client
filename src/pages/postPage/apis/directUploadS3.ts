@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { DirectToS3Types } from '../../../types/imageUploadType';
 import { urlToServerParsing } from '../../../utils/urlToServerParsing';
 import { fetchPresignedUrl } from './fetchPresignedUrl';
-const directUploadS3 = async (url: string, imageFile: File | null | Blob, fileName: string) => {
+
+const directUploadS3 = async ({ url, fileName, imageFile }: DirectToS3Types) => {
   try {
     await axios.put(`${url}`, imageFile, {
       headers: {
-        // 'Content-Type': 'image/webp',
         'Content-Type': 'multipart/form-data',
       },
     });

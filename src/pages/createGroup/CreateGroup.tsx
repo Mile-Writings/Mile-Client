@@ -11,10 +11,10 @@ import { AuthorizationHeader, UnAuthorizationHeader } from '../../components/com
 import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
 import useModal from '../../hooks/useModal';
 import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
+import { FileType } from '../../types/imageUploadType';
 import handleImageUpload from '../../utils/handleImageUpload';
 import { usePresignedUrl } from '../postPage/hooks/queries';
 import { MODAL } from './constants/modalContent';
-
 type CreateGroupAction =
   | { type: 'setGroupName'; value: string }
   | { type: 'setGroupInfo'; value: string }
@@ -30,7 +30,7 @@ const CreateGroup = () => {
   const [currentPage, setCurrentPage] = useState<CurrentPageType['currentPage']>('GroupInfoPage');
   const [isGroupLeaderValid, setIsGroupLeaderValid] = useState(true);
   const [groupImageView, setGroupImageView] = useState('');
-  const [imageFile, setImageFile] = useState<File | null | Blob>(null);
+  const [imageFile, setImageFile] = useState<FileType>(null);
 
   // 페이지 이탈 감지
   const { isPageExitModalOpen, handleClosePageExitModal, handleExitPage, setIgnoreBlocker } =
