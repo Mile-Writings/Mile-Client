@@ -10,12 +10,12 @@ import {
 } from '../../../assets/svgs';
 import { DEFAULT_IMG_URL } from '../../../constants/defaultImgUrl';
 import useImageUpload from '../../../hooks/useImageUpload';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 import handleImageUpload from '../../../utils/handleImageUpload';
 import { INPUT_INFO_MESSAGE } from '../../createGroup/constants/inputInfoMsg';
 import { useGetGroupNameValidation } from '../../createGroup/hooks/queries';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
 import { useFetchGroupInfo, usePutAdminGroupInfo } from '../hooks/queries';
-
 const EditGroupInfo = () => {
   const [groupName, setGroupName] = useState('');
   const [beforeGroupName, setBeforeGroupName] = useState('');
@@ -310,6 +310,7 @@ const GroupImagePreviewWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 `;
 
 const GroupNameInputWrapper = styled.div`
@@ -412,9 +413,13 @@ const GroupPublicDescWrapper = styled.div`
 const GroupInputDesc = styled.p`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.body4};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle1};
+  }
 `;
 const GroupImagePreview = styled.img`
-  width: 77rem;
+  width: 100%;
   height: 20rem;
   object-fit: cover;
 
@@ -424,6 +429,7 @@ const GroupImagePreview = styled.img`
 
 const GroupImageLabel = styled.label`
   display: block;
+  width: 100%;
 `;
 const GroupImageInput = styled.input`
   display: none;
@@ -433,7 +439,7 @@ const GroupImageWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 77rem;
+  width: 100%;
   height: 20rem;
 
   background-color: ${({ theme }) => theme.colors.gray10};
@@ -469,6 +475,10 @@ const GroupInfoTextarea = styled.textarea<{ isValid: boolean }>`
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray50};
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 const TextAreaLength = styled.p<{ isValid: boolean }>`
   position: absolute;
@@ -477,6 +487,10 @@ const TextAreaLength = styled.p<{ isValid: boolean }>`
 
   ${({ theme }) => theme.fonts.button3};
   color: ${({ theme, isValid }) => (isValid ? theme.colors.gray70 : theme.colors.mileRed)};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody1};
+  }
 `;
 const GroupInfoWrppaer = styled.section`
   display: flex;
@@ -547,6 +561,10 @@ const GroupNameInput = styled.input<{ isValid: boolean }>`
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray50};
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 
 const DuplicateCheckBtn = styled.button<{ positive: boolean }>`
@@ -573,4 +591,9 @@ const CreateGroupLayout = styled.div`
   width: 82.6rem;
   height: fit-content;
   margin-bottom: 8rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    max-width: 81rem;
+  }
 `;
