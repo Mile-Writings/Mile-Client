@@ -12,6 +12,7 @@ import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/De
 import useModal from '../../hooks/useModal';
 import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import { FileType } from '../../types/imageUploadType';
+
 import handleImageUpload from '../../utils/handleImageUpload';
 import { usePresignedUrl } from '../postPage/hooks/queries';
 import { MODAL } from './constants/modalContent';

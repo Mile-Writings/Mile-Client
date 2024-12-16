@@ -10,7 +10,12 @@ import {
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 import useImageUpload from '../../../hooks/useImageUpload';
+
 import { FileType } from '../../../types/imageUploadType';
+
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
+import { INPUT_INFO_MESSAGE } from '../constants/inputInfoMsg';
+
 import {
   MAX_TOPIC_DESC_LENGTH,
   MAX_TOPIC_KEYWORD_LENGTH,
@@ -41,14 +46,7 @@ interface CreateGroupInfoPropTypes {
   setGroupImageView: Dispatch<SetStateAction<string>>;
   setImageFile: Dispatch<SetStateAction<FileType>>;
 }
-export const InputInfoMsg = {
-  groupNameLength: '10자 이내로 작성해주세요.',
-  groupNameNotAvailable: '이미 사용중인 모임명입니다.',
-  groupNameNotCheck: '중복확인을 해주세요.',
-  groupNameAvailable: '사용 가능한 모임명입니다.',
-  groupNameEmpty: '글모임 이름을 입력해주세요.',
-  emptyText: '',
-};
+
 const CreateGroupInfo = ({
   setCurrentPage,
   groupName,
@@ -72,7 +70,7 @@ const CreateGroupInfo = ({
   const [isGroupTopicEmpty, setIsGroupTopicEmpty] = useState(false);
   const [topicModal, setTopicModal] = useState(false);
   const [passDuplicate, setPassDuplicate] = useState(false);
-  const [groupNameInputMsg, setGroupNameInputMsg] = useState<string>(InputInfoMsg.emptyText);
+  const [groupNameInputMsg, setGroupNameInputMsg] = useState<string>(INPUT_INFO_MESSAGE.EMPTY_TEXT);
   const [isHovered, setIsHovered] = useState(false);
 
   const groupNameRef = useRef<HTMLInputElement>(null);
@@ -125,7 +123,7 @@ const CreateGroupInfo = ({
     }
     //중복검사를 하지 않았거나 통과하지 못했을 때
     else if ((isSuccess && groupNameValidationData === undefined) || !passDuplicate) {
-      setGroupNameInputMsg(InputInfoMsg.groupNameNotCheck);
+      setGroupNameInputMsg(INPUT_INFO_MESSAGE.GROUP_NAME_NOT_CHECK);
       setIsGroupNameEmpty(true);
       if (groupNameRef.current) {
         groupNameRef.current && groupNameRef.current.focus();
@@ -144,7 +142,7 @@ const CreateGroupInfo = ({
       setIsGroupNameValid(false);
     } else {
       setIsGroupNameValid(true);
-      setGroupNameInputMsg(InputInfoMsg.emptyText);
+      setGroupNameInputMsg(INPUT_INFO_MESSAGE.EMPTY_TEXT);
     }
     setGroupName(e);
 
@@ -159,7 +157,7 @@ const CreateGroupInfo = ({
 
   useEffect(() => {
     if (error instanceof AxiosError && error?.response?.data.status === 400) {
-      alert(InputInfoMsg.groupNameLength);
+      alert(INPUT_INFO_MESSAGE.GROUP_NAME_LENGTH);
     }
   }, [error]);
 
@@ -167,19 +165,19 @@ const CreateGroupInfo = ({
     if (isSuccess) {
       // API 호출 성공 시 응답 데이터에 따라 메시지 설정
       if (groupNameValidationData) {
-        setGroupNameInputMsg(InputInfoMsg.groupNameAvailable);
+        setGroupNameInputMsg(INPUT_INFO_MESSAGE.GROUP_NAME_AVAILABLE);
         setIsGroupNameValid(true);
         setIsGroupNameEmpty(false);
         setPassDuplicate(true);
       } else {
-        setGroupNameInputMsg(InputInfoMsg.groupNameNotAvailable);
+        setGroupNameInputMsg(INPUT_INFO_MESSAGE.GROUP_NAME_NOT_AVAILABLE);
         setIsGroupNameValid(false);
         setIsGroupNameEmpty(false);
       }
     }
 
     if (groupName.length > 10) {
-      setGroupNameInputMsg(InputInfoMsg.groupNameLength);
+      setGroupNameInputMsg(INPUT_INFO_MESSAGE.GROUP_NAME_LENGTH);
     }
   }, [isSuccess, groupNameValidationData, error, groupName]);
 
@@ -193,7 +191,7 @@ const CreateGroupInfo = ({
           <Spacing marginBottom="2.4" />
           <picture>
             <source srcSet={createGroupWebp} />
-            <img src={createGroupIlust} />
+            <GroupImage src={createGroupIlust} alt="group main image" />
           </picture>
         </TitleWrapper>
         <WhiteInputWrapper isValid={!isGroupNameEmpty}>
@@ -207,7 +205,7 @@ const CreateGroupInfo = ({
                 isValid={isGroupNameValid}
                 value={groupName}
                 maxLength={11}
-              />{' '}
+              />
               <DuplicateCheckBtn
                 type="button"
                 positive={groupName !== '' && groupName.length <= 10}
@@ -218,7 +216,7 @@ const CreateGroupInfo = ({
               </DuplicateCheckBtn>
             </GroupNameInputLayout>
 
-            {isGroupNameValid && groupNameInputMsg === InputInfoMsg.groupNameAvailable ? (
+            {isGroupNameValid && groupNameInputMsg === INPUT_INFO_MESSAGE.GROUP_NAME_AVAILABLE ? (
               <SuccessMsgText>{groupNameInputMsg}</SuccessMsgText>
             ) : (
               <ErrorMsgText>{groupNameInputMsg}</ErrorMsgText>
@@ -288,34 +286,37 @@ const CreateGroupInfo = ({
                 </PublicInfoText>
               </PublicInfoWrapper>
             </GroupPublicDescWrapper>
-            <GroupPublicDescContainer>
-              <GroupIsPublicWrapper>
-                <GroupisPublicLabel htmlFor="isPublicTrue">
-                  {isPublic ? <CreateGroupRadioCheckedIcon /> : <CreateGroupRadioUncheckedIcon />}
-                  공개
+
+            <GroupPublicDescResponsiveBox>
+              <GroupPublicDescContainer>
+                <GroupIsPublicWrapper>
+                  <GroupisPublicLabel htmlFor="isPublicTrue">
+                    {isPublic ? <CreateGroupRadioCheckedIcon /> : <CreateGroupRadioUncheckedIcon />}
+                    공개
+                  </GroupisPublicLabel>
+                </GroupIsPublicWrapper>
+                <GroupIsPublicRadio
+                  type="radio"
+                  id="isPublicTrue"
+                  name="isPublic"
+                  value={'true'}
+                  onChange={handleIsPublic}
+                />
+              </GroupPublicDescContainer>
+              <GroupPublicDescContainer>
+                <GroupisPublicLabel htmlFor="isPublicFalse">
+                  {!isPublic ? <CreateGroupRadioCheckedIcon /> : <CreateGroupRadioUncheckedIcon />}
+                  비공개
                 </GroupisPublicLabel>
-              </GroupIsPublicWrapper>
-              <GroupIsPublicRadio
-                type="radio"
-                id="isPublicTrue"
-                name="isPublic"
-                value={'true'}
-                onChange={handleIsPublic}
-              />
-            </GroupPublicDescContainer>
-            <GroupPublicDescContainer>
-              <GroupisPublicLabel htmlFor="isPublicFalse">
-                {!isPublic ? <CreateGroupRadioCheckedIcon /> : <CreateGroupRadioUncheckedIcon />}
-                비공개
-              </GroupisPublicLabel>
-              <GroupIsPublicRadio
-                type="radio"
-                id="isPublicFalse"
-                name="isPublic"
-                value={'false'}
-                onChange={handleIsPublic}
-              />
-            </GroupPublicDescContainer>
+                <GroupIsPublicRadio
+                  type="radio"
+                  id="isPublicFalse"
+                  name="isPublic"
+                  value={'false'}
+                  onChange={handleIsPublic}
+                />
+              </GroupPublicDescContainer>
+            </GroupPublicDescResponsiveBox>
           </GroupInputHorizonWrapper>
         </WhiteInputWrapper>
         <WhiteInputWrapper isValid={!isGroupTopicEmpty}>
@@ -356,13 +357,35 @@ const CreateGroupInfo = ({
 };
 export default CreateGroupInfo;
 
+const GroupPublicDescResponsiveBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    gap: 1rem;
+    justify-content: flex-start;
+    width: 100%;
+  }
+`;
+const GroupImage = styled.img`
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    max-width: 33.5rem;
+  }
+`;
 const PublicInfoText = styled.p`
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.body3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 const PublicInfoWrapper = styled.div<{ isVisible: boolean }>`
   position: absolute;
   top: 5.7rem;
+  z-index: 2;
   display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
 
   /* display: flex; */
@@ -375,6 +398,14 @@ const PublicInfoWrapper = styled.div<{ isVisible: boolean }>`
   background-color: ${({ theme }) => theme.colors.white};
   border: 2px solid ${({ theme }) => theme.colors.mainViolet};
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    top: 3rem;
+    right: 0;
+    width: 30rem;
+    height: 10rem;
+    padding: 0.8rem;
+  }
 `;
 const SuccessMsgText = styled.p`
   ${({ theme }) => theme.fonts.body4};
@@ -404,13 +435,15 @@ const GroupInfoWrppaer = styled.section`
 `;
 
 const TextAreaLength = styled.p<{ isValid: boolean }>`
-  position: relative;
+  position: absolute;
+  right: 4.5rem;
   bottom: 4rem;
-  left: 70.6rem;
+
   width: fit-content;
 
-  ${({ theme }) => theme.fonts.button3};
   color: ${({ theme, isValid }) => (isValid ? theme.colors.gray70 : theme.colors.mileRed)};
+
+  ${({ theme }) => theme.fonts.button3};
 `;
 const ErrorMsgText = styled.p`
   ${({ theme }) => theme.fonts.body4};
@@ -469,11 +502,16 @@ const TopicCreateBtn = styled.button<{ isBtnEnabled: boolean }>`
     background-color: ${({ theme, isBtnEnabled }) => (isBtnEnabled ? theme.colors.mileViolet : ``)};
   }
   ${({ theme }) => theme.fonts.button2};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 const TopicSettingWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
 `;
 const TopicSettingText = styled.p`
   color: ${({ theme }) => theme.colors.black};
@@ -493,7 +531,11 @@ const GroupIsPublicWrapper = styled.div`
   gap: 0.8rem;
   align-items: center;
   justify-content: flex-end;
-  width: 8rem;
+  width: 10rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    justify-content: flex-start;
+  }
 `;
 const GroupisPublicLabel = styled.label`
   display: flex;
@@ -510,6 +552,10 @@ const GroupPublicDescContainer = styled.div`
   justify-content: flex-end;
   width: 8rem;
   height: 1.9rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    justify-content: flex-start;
+  }
 `;
 const GroupPublicDesc = styled.p`
   color: ${({ theme }) => theme.colors.black};
@@ -520,21 +566,31 @@ const GroupPublicDescWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 61.4rem;
+  width: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 
 const GroupInputDesc = styled.p`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.body4};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle1};
+  }
 `;
 
 const GroupImagePreviewWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 `;
 const GroupImagePreview = styled.img`
-  width: 77rem;
+  width: 100%;
   height: 20rem;
   object-fit: cover;
 
@@ -582,7 +638,7 @@ const GroupImageWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 77rem;
+  width: 100%;
   height: 20rem;
 
   background-color: ${({ theme }) => theme.colors.gray10};
@@ -609,6 +665,10 @@ const CreateGroupLayout = styled.div`
   width: 82.6rem;
   height: fit-content;
   margin-bottom: 8rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 const TitleWrapper = styled.section`
@@ -620,11 +680,19 @@ const TitleWrapper = styled.section`
 const Title = styled.h1`
   color: ${({ theme }) => theme.colors.mainViolet};
   ${({ theme }) => theme.fonts.title1};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle6}
+  }
 `;
 
 const SubTitle = styled.h2`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.title5};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle4};
+  }
 `;
 
 const WhiteInputWrapper = styled.section<{ isValid: boolean }>`
@@ -639,6 +707,7 @@ const WhiteInputWrapper = styled.section<{ isValid: boolean }>`
 `;
 
 const GroupInputWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
@@ -652,6 +721,10 @@ const GroupInputWrapper = styled.div`
 const InputTitleText = styled.p`
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.subtitle2};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle3};
+  }
 `;
 
 const GroupNameInputLayout = styled.div`
@@ -678,6 +751,13 @@ const GroupNameInput = styled.input<{ isValid: boolean }>`
 
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray50};
+  }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle2};
+    ::placeholder {
+      ${({ theme }) => theme.fonts.mSubtitle2};
+    }
   }
 `;
 
@@ -716,6 +796,15 @@ const GroupInfoTextarea = styled.textarea<{ isValid: boolean }>`
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray50};
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    height: 21rem;
+
+    ${({ theme }) => theme.fonts.mSubtitle2};
+    ::placeholder {
+      ${({ theme }) => theme.fonts.mSubtitle2};
+    }
+  }
 `;
 
 const GroupInputHorizonWrapper = styled(GroupInputWrapper)`
@@ -725,4 +814,9 @@ const GroupInputHorizonWrapper = styled(GroupInputWrapper)`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
+    gap: 3rem;
+  }
 `;
