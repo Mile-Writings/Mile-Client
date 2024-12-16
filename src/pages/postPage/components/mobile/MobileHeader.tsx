@@ -56,7 +56,6 @@ export const MobileTempExistHeader = (props: MobileHeaderPropType) => {
 
 // 수정
 // 에디터 창에서 글을 수정하고 있을 때 헤더
-// 디자인 워딩 반영 필요
 export const MobileEditHeader = (props: MobileHeaderPropType) => {
   const { onClickEditSave } = props;
 
@@ -71,7 +70,7 @@ export const MobileEditHeader = (props: MobileHeaderPropType) => {
     <Header>
       <CloseIcon onClick={onClickCloseBtn} />
       <SaveBtnContainer>
-        <SaveBtn onClick={onClickEditSave}>수정하기</SaveBtn>
+        <SaveBtn onClick={onClickEditSave}>수정완료</SaveBtn>
       </SaveBtnContainer>
     </Header>
   );
