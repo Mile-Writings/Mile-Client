@@ -146,11 +146,12 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
         $isWriterNameLimit={isWriterNameLimit}
         $isConflictBtnClicked={isConflictBtnClicked}
       >
-        <UserInfoTitle>모임에서 사용할 필명*</UserInfoTitle>
+        <UserInfoTitle htmlFor="writerName">모임에서 사용할 필명*</UserInfoTitle>
         <InputBtnWrapper>
           <InputWrapper>
             <Responsive only="desktop">
               <WriterNameInput
+                id="writerName"
                 placeholder="띄어쓰기 포함 8자 이내로 입력해주세요."
                 onChange={onChangeWriterName}
                 $isConflict={isWriterNameConflict || false}
@@ -159,6 +160,7 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
             </Responsive>
             <Responsive only="mobile">
               <WriterNameInput
+                id="writerName"
                 placeholder="띄어쓰기 포함 8자 이내"
                 onChange={onChangeWriterName}
                 $isConflict={isWriterNameConflict || false}
@@ -212,8 +214,9 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
       </WriterNameInputWrapper>
       <Spacing marginBottom="2.8" />
       <WriterIntroduceInputWrapper>
-        <UserInfoTitle>소개 글</UserInfoTitle>
+        <UserInfoTitle htmlFor="writerIntroduce">소개 글</UserInfoTitle>
         <WriterIntroduceInput
+          id="writerIntroduce"
           placeholder="모임원들에게 ‘나’에 대해 자유롭게 소개해주세요."
           onChange={onChangeWriterIntroduce}
           $isIntroduceLimit={isIntroduceLimit}
@@ -289,7 +292,7 @@ const WriterIntroduceInputWrapper = styled.section`
   }
 `;
 
-const UserInfoTitle = styled.p`
+const UserInfoTitle = styled.label`
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.subtitle2};
 
