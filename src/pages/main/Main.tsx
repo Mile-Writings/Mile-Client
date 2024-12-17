@@ -93,7 +93,7 @@ const CarouselContainer = styled.div`
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
-    max-width: 420px;
+    max-width: 82rem;
   }
 `;
 

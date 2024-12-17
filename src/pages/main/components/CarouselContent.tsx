@@ -42,24 +42,10 @@ const CarouselContent = ({
           <Topic>{topicName}</Topic>
           <Spacing marginBottom="0.4" />
           <Title>{postTitle}</Title>
-          {/* <Responsive>
-          <Spacing marginBottom="3.1" />
 
-          </Responsive> */}
           <SubText isLast={isLast} isContainPhoto={isContainPhoto}>
             {postContent}
           </SubText>
-          <Responsive only="mobile">
-            {isContainPhoto && (
-              <Image
-                src={imageUrl || ''}
-                isLast={isLast}
-                alt={`썸네일 이미지`}
-                onClick={handleRoutingDetail}
-                onError={replaceDefaultImg}
-              />
-            )}
-          </Responsive>
         </ContentContainer>
         <Responsive only="desktop">
           {isContainPhoto && (
