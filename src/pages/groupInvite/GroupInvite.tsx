@@ -25,7 +25,7 @@ const GroupInvite = () => {
     useGetGroupInfo(groupId);
 
   // 글모임 5개 가입 제한
-  const { data } = useFetchHeaderGroup();
+  const { moimsData } = useFetchHeaderGroup();
 
   useEffect(() => {
     if (isError && isAxiosError(error)) {
@@ -53,15 +53,15 @@ const GroupInvite = () => {
   }, [error, isError, groupId]);
 
   useEffect(() => {
-    if (data?.data.moims && data?.data.moims.length >= 5) {
+    if (moimsData && moimsData?.length >= 5) {
       handleShowModal();
     }
-  }, [data?.data.moims.length]);
+  }, [moimsData?.length]);
 
   return (
-    <>
+    <InviteWrapper>
+      <DefaultHeader />
       <GroupInviteWrapper>
-        <DefaultHeader />
         <Spacing marginBottom="11.4" />
         <Title />
         <Spacing marginBottom="4.8" />
@@ -79,7 +79,6 @@ const GroupInvite = () => {
 
         <Spacing marginBottom="7.7" />
       </GroupInviteWrapper>
-
       <FullModal isModalOpen={isModalOpen} content={MODAL.ALERT_GROUP_LIMIT}>
         <FullModalBtn
           isPrimary={false}
@@ -90,11 +89,16 @@ const GroupInvite = () => {
           }}
         />
       </FullModal>
-    </>
+    </InviteWrapper>
   );
 };
 
 export default GroupInvite;
+
+const InviteWrapper = styled.div`
+  display: flex;
+  width: 100%;
+`;
 
 const GroupInviteWrapper = styled.div`
   display: flex;
@@ -102,4 +106,5 @@ const GroupInviteWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 82.6rem;
+  margin: 0 auto;
 `;
