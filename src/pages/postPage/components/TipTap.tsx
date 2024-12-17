@@ -803,7 +803,6 @@ const ToolbarContainer = styled.div`
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
-    max-width: 71rem;
     height: 5.2rem;
     padding: 1rem 1.6rem;
     overflow: scroll hidden;
