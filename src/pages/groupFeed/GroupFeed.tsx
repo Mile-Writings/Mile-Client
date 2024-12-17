@@ -158,12 +158,15 @@ const GroupFeedWrapper = styled.div`
 `;
 
 const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
+  width: 100%;
   height: 37rem;
+  object-fit: cover;
 
   background-image: ${({ imageUrl }) => `url(${imageUrl || GroupThumbnailImgIc})`};
   background-size: cover;
 
   @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
     height: 18rem;
   }
 `;

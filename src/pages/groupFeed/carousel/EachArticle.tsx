@@ -253,6 +253,10 @@ const ArticleInfo = styled.div`
   color: ${({ theme }) => theme.colors.gray90};
 
   ${({ theme }) => theme.fonts.subtitle3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    margin-top: 1.2rem;
+  }
 `;
 
 const ArticleDetail = styled.div`
