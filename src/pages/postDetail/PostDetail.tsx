@@ -185,7 +185,7 @@ const PostDetail = () => {
             </WriterInfoContainer>
           </Responsive>
 
-          <Responsive only="mobile">
+          <Responsive only="mobile" asChild>
             <>
               <MobileWriterInfoTop>
                 <DefaultProfileIcon />
@@ -229,6 +229,10 @@ const PostDetail = () => {
 };
 
 export default PostDetail;
+
+// const PostDetailTopWrapper = styled.div`
+//   width: 100%;
+// `;
 
 const DividingLine = styled.div`
   width: 0.1rem;
