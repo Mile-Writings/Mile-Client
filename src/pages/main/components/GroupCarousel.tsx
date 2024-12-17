@@ -141,7 +141,7 @@ const PostCardImg = styled.img`
 const Contents = styled.span`
   display: -webkit-box;
   width: 100%;
-  max-height: 5.4rem;
+  height: 5.4rem;
   margin-top: 1rem;
   overflow: hidden;
 
