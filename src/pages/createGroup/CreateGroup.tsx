@@ -178,26 +178,25 @@ const CreateGroup = () => {
           />
         )}
         {currentPage === 'GroupLeaderInfoPage' && (
-          <CreateGroupLeaderInfo
-            leaderPenName={leaderPenName}
-            setLeaderPenName={setLeaderPenName}
-            leaderDesc={leaderDesc}
-            setIsGroupLeaderValid={setIsGroupLeaderValid}
-            setLeaderDesc={setLeaderDesc}
-            isGroupLeaderValid={isGroupLeaderValid}
-          />
+          <>
+            <CreateGroupLeaderInfo
+              leaderPenName={leaderPenName}
+              setLeaderPenName={setLeaderPenName}
+              leaderDesc={leaderDesc}
+              setIsGroupLeaderValid={setIsGroupLeaderValid}
+              setLeaderDesc={setLeaderDesc}
+              isGroupLeaderValid={isGroupLeaderValid}
+            />
+            <BtnWrapper>
+              <CreateGroupBtn type="button" onClick={handleShowModal}>
+                생성하기
+              </CreateGroupBtn>
+              <BackPageBtn type="button" onClick={handleBackBtn}>
+                뒤로가기
+              </BackPageBtn>
+            </BtnWrapper>
+          </>
         )}
-        {currentPage === 'GroupLeaderInfoPage' && (
-          <BtnWrapper>
-            <CreateGroupBtn type="button" onClick={handleShowModal}>
-              생성하기
-            </CreateGroupBtn>
-            <BackPageBtn type="button" onClick={handleBackBtn}>
-              뒤로가기
-            </BackPageBtn>
-          </BtnWrapper>
-        )}
-
         <DefaultModal
           isModalOpen={isModalOpen}
           onClickBg={handleCloseModal}
