@@ -31,7 +31,6 @@ const CuriousArticle = (props: CuriousArticlePropTypes) => {
 
   return (
     <CuriousArticleWrapper>
-      {/* 여기도 디자인 가이드 필요 */}
       {mostCuriousPost?.length == 0 ? (
         <NoCuriousArticleWrapper>
           <Spacing marginBottom="4" />
@@ -82,6 +81,7 @@ const ArticleWrapper = styled.div`
 
 const CuriousArticleWrapper = styled.div`
   display: flex;
+  flex-direction: row;
   gap: 1.6rem;
   margin-bottom: 6.4rem;
 
@@ -126,12 +126,21 @@ const CuriousArticleLayout = styled.div`
     padding: 1.6rem;
 
     &:only-child {
-      width: 100vw;
+      width: 100%;
     }
 
     &:nth-child(1):nth-last-child(2),
     &:nth-child(2):nth-last-child(1) {
-      width: 50vw;
+      width: 50%;
+    }
+
+    @media screen and (width <= 540px) {
+      &:only-child,
+      &:nth-child(1):nth-last-child(2),
+      &:nth-child(2):nth-last-child(1) {
+        width: 100%;
+        max-width: none;
+      }
     }
   }
 
