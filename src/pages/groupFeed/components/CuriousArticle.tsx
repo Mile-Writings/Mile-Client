@@ -68,7 +68,16 @@ export default CuriousArticle;
 
 const ArticleWrapper = styled.div`
   width: 100%;
-  max-width: 37.5rem;
+
+  &:only-child {
+    width: 100vw;
+    max-width: none;
+  }
+
+  &:nth-child(1):nth-last-child(2),
+  &:nth-child(2):nth-last-child(1) {
+    max-width: 37.5rem;
+  }
 `;
 
 const CuriousArticleWrapper = styled.div`
@@ -113,9 +122,17 @@ const CuriousArticleLayout = styled.div`
   @media ${MOBILE_MEDIA_QUERY} {
     flex-direction: row;
     gap: 1.4rem;
-    width: 50%;
     height: 13rem;
     padding: 1.6rem;
+
+    &:only-child {
+      width: 100vw;
+    }
+
+    &:nth-child(1):nth-last-child(2),
+    &:nth-child(2):nth-last-child(1) {
+      width: 50vw;
+    }
   }
 
   @media screen and (width <= 540px) {

@@ -87,9 +87,17 @@ const CuriousProfileLayout = styled.div`
   @media ${MOBILE_MEDIA_QUERY} {
     flex-direction: column;
     gap: 0.8rem;
-    width: 50vw;
     height: 10.6rem;
     padding: 1.4rem;
+
+    &:only-child {
+      width: 100vw;
+    }
+
+    &:nth-child(1):nth-last-child(2),
+    &:nth-child(2):nth-last-child(1) {
+      width: 50vw;
+    }
   }
 `;
 
