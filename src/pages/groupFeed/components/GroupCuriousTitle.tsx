@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import Spacing from '../../../components/commons/Spacing';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface GroupCuriousPropTypes {
   mainText: string;
@@ -28,10 +29,18 @@ const GroupCuriousTitleWrapper = styled.div`
 
 const MainText = styled.div`
   color: ${({ theme }) => theme.colors.black};
+
   ${({ theme }) => theme.fonts.title5};
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle2};
+  }
 `;
 
 const SubText = styled.div`
   color: ${({ theme }) => theme.colors.gray70};
+
   ${({ theme }) => theme.fonts.body3};
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle1};
+  }
 `;

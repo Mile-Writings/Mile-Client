@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import { GroupBestProfileIc, GroupNoDataImgIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface ProfilePropTypes {
   writerName: string;
@@ -18,6 +19,7 @@ const CuriousProfile = (props: CuriousProfilePropTypes) => {
 
   return (
     <CuriousProfileWrapper>
+      {/* 없는 경우 디자인 가이드 필요! */}
       {mostCuriousWriter?.length === 0 ? (
         <NoCuriousProfileeWrapper>
           <Spacing marginBottom="4" />
@@ -29,10 +31,8 @@ const CuriousProfile = (props: CuriousProfilePropTypes) => {
       ) : (
         mostCuriousWriter?.map((writer: ProfilePropTypes, index: number) => (
           <CuriousProfileLayout key={index}>
-            <GroupBestProfileIc />
-            <ProfileWrapper>
-              <ProfileTitle>{writer.writerName}</ProfileTitle>
-            </ProfileWrapper>
+            <GroupBestProfileIcon />
+            <ProfileTitle>{writer.writerName}</ProfileTitle>
           </CuriousProfileLayout>
         ))
       )}
@@ -42,22 +42,27 @@ const CuriousProfile = (props: CuriousProfilePropTypes) => {
 
 export default CuriousProfile;
 
+const GroupBestProfileIcon = styled(GroupBestProfileIc)`
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 5rem;
+    height: 5rem;
+  }
+`;
+
 const CuriousProfileWrapper = styled.div`
   display: flex;
   gap: 1.6rem;
   align-items: center;
-`;
-const ProfileWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  width: 100%;
 `;
 
 const ProfileTitle = styled.div`
   color: ${({ theme }) => theme.colors.gray90};
 
   ${({ theme }) => theme.fonts.subtitle3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 
 const CuriousProfileLayout = styled.div`
@@ -73,6 +78,14 @@ const CuriousProfileLayout = styled.div`
   border-radius: 8px;
 
   ${({ theme }) => theme.fonts.subtitle3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
+    gap: 0.8rem;
+    width: 50vw;
+    height: 10.6rem;
+    padding: 1.4rem;
+  }
 `;
 
 const NoCuriousProfileeWrapper = styled.div`
