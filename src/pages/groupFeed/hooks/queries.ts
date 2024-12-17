@@ -120,7 +120,7 @@ export const useFetchHeaderGroup = () => {
     retry: 3,
   });
 
-  const moimsData = data?.data.moims;
+  const moimsData = data?.data?.moims;
   return { moimsData };
 };
 
