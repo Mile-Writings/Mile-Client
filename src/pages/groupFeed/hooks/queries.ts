@@ -119,7 +119,9 @@ export const useFetchHeaderGroup = () => {
     queryFn: () => fetchHeaderGroup(),
     retry: 3,
   });
-  return { data };
+
+  const moimsData = data?.data?.moims;
+  return { moimsData };
 };
 
 export const useFetchWriterInfo = (

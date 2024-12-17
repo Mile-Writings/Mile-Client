@@ -1,19 +1,17 @@
 import styled from '@emotion/styled';
 import { useNavigate, useParams } from 'react-router-dom';
-
-import { useGroupInfo } from '../groupFeed/hooks/queries';
-import Loading from '../loading/Loading';
-import RenderAdminContent from './components/RenderAdminContent';
-import { useFetchInvitationLink } from './hooks/queries';
-
 import { AdminHomeIc } from '../../assets/svgs';
-import { AuthorizationHeader } from '../../components/commons/Header';
+import { AdminHeader } from '../../components/commons/Header';
 import Responsive from '../../components/commons/Responsive/Responsive';
 import Spacing from '../../components/commons/Spacing';
 import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import { copyLink } from '../../utils/copyLink';
+import { useGroupInfo } from '../groupFeed/hooks/queries';
+import Loading from '../loading/Loading';
 import DesktopNav from './components/navbar/DesktopNav';
 import MobileNav from './components/navbar/MobileNav';
+import RenderAdminContent from './components/RenderAdminContent';
+import { useFetchInvitationLink } from './hooks/queries';
 import useMenu from './hooks/useMenu';
 
 const Admin = () => {
@@ -42,8 +40,8 @@ const Admin = () => {
     return <Loading />;
   }
   return (
-    <>
-      {accessToken && <AuthorizationHeader />}
+    <Wrapper>
+      {accessToken && <AdminHeader />}
       <AdminWrapper>
         <Responsive only="desktop">
           <Spacing marginBottom="13.6" />
@@ -90,11 +88,15 @@ const Admin = () => {
           <RenderAdminContent menu={menu} />
         </AdminLayout>
       </AdminWrapper>
-    </>
+    </Wrapper>
   );
 };
 
 export default Admin;
+
+const Wrapper = styled.div`
+  width: 100%;
+`;
 
 const AdminWrapper = styled.div`
   display: flex;
