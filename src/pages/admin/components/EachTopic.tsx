@@ -145,7 +145,6 @@ const Topic = styled.div`
   flex-direction: column;
   gap: 0.4rem;
   min-width: 20.9rem;
-  max-width: 20.9rem;
   padding: 0.6rem 0;
 
   @media ${MOBILE_MEDIA_QUERY} {
