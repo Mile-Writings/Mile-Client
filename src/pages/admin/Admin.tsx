@@ -1,14 +1,11 @@
 import styled from '@emotion/styled';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { useGroupInfo } from '../groupFeed/hooks/queries';
 import Loading from '../loading/Loading';
 import RenderAdminContent from './components/RenderAdminContent';
 import { useFetchInvitationLink } from './hooks/queries';
-
 import { AdminHomeIc } from '../../assets/svgs';
 import { AdminHeader } from '../../components/commons/Header';
-
 import Responsive from '../../components/commons/Responsive/Responsive';
 import Spacing from '../../components/commons/Spacing';
 import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
