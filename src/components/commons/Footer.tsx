@@ -16,11 +16,11 @@ import theme from './../../styles/theme';
 const Footer = () => {
   return (
     <FooterWrapper>
-      <FooterLayout>
+      <FooterLogoLayout>
         <FooterLogoIc />
         <Spacing marginBottom="1.6" />
         <MileText>Make it look easy, 글쓰기를 쉽고 편안하게</MileText>
-      </FooterLayout>
+      </FooterLogoLayout>
       <FooterLayout>
         <IconContainer>
           <a href={FOOTER_LINK.MAIL} target="_blank">
@@ -65,11 +65,27 @@ const FooterWrapper = styled.div`
     flex-direction: column;
     gap: 4rem;
     align-items: center;
+    height: fit-content;
     padding: 5rem;
   }
 `;
 
 const FooterLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 24.5rem;
+  height: 8.6rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    align-items: flex-start;
+  }
+`;
+
+const FooterLogoLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   width: 24.5rem;
   height: 8.6rem;
 `;
@@ -79,6 +95,10 @@ const FooterBox = styled.div`
   gap: 0.4rem;
   justify-content: flex-end;
   width: 24.5rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    justify-content: flex-start;
+  }
 `;
 
 const MileText = styled.div`
@@ -91,7 +111,6 @@ const MileText = styled.div`
 
 const MilePrivacy = styled.div`
   display: flex;
-  justify-content: flex-end;
   height: 1.7rem;
 
   color: ${theme.colors.gray70};
@@ -103,13 +122,11 @@ const MileCopyright = styled.span`
   height: 1.7rem;
 
   color: ${theme.colors.gray80};
-
   ${({ theme }) => theme.fonts.body5}
 `;
 
 const IconContainer = styled.div`
   display: flex;
   gap: 1.6rem;
-  justify-content: flex-end;
   height: 2.4rem;
 `;
