@@ -53,6 +53,11 @@ const CuriousProfileWrapper = styled.div`
   display: flex;
   gap: 1.6rem;
   align-items: center;
+  margin-bottom: 6.4rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    margin-bottom: 3.2rem;
+  }
 `;
 
 const ProfileTitle = styled.div`

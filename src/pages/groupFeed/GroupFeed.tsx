@@ -99,6 +99,7 @@ const GroupFeed = () => {
               writerName={writerName}
             />
           )}
+          <Spacing marginBottom="6.4" />
         </Responsive>
         <GroupInfo>
           <GroupTodayWriteStyle todayInfo={todayInfo} isMember={isMember} groupId={groupId} />
@@ -112,9 +113,8 @@ const GroupFeed = () => {
                 writerName={writerName}
               />
             )}
-            <Spacing marginBottom="8" />
+            <Spacing marginBottom="3.2" />
           </Responsive>
-          <Spacing marginBottom="6.4" />
 
           <GroupCuriousTitle
             mainText="우리 모임에서 궁금한 글쓴이에요"
@@ -122,14 +122,13 @@ const GroupFeed = () => {
           />
           <Spacing marginBottom="2" />
           <CuriousProfile mostCuriousWriter={mostCuriousWriter} />
-          <Spacing marginBottom="6.4" />
+
           <GroupCuriousTitle
             mainText="우리 모임에서 인기 있는 글이에요"
             subText="매주 월요일마다 업데이트 됩니다"
           />
           <Spacing marginBottom="2" />
           <CuriousArticle groupId={groupId} mostCuriousPost={mostCuriousPost} />
-          <Spacing marginBottom="6.4" />
           <Carousel categoryData={groupFeedCategoryData || []} isLoading={isLoading} />
         </GroupInfo>
       </GroupInfoWrapper>

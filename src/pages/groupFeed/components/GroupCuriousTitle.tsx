@@ -25,6 +25,11 @@ export default GroupCuriousTitle;
 const GroupCuriousTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 6.4rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    margin-top: 0;
+  }
 `;
 
 const MainText = styled.div`

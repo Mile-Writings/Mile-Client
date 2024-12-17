@@ -69,20 +69,22 @@ const GroupMobileInfo = (props: {
           </>
         )}
       </GroupSideHeaderWrapper>
-      <Spacing marginBottom="1.6" />
       {isMember && (
-        <MemberWrapper>
-          <ProfileWrapper>
-            <GroupBestProfileIc /> {writerName}
-          </ProfileWrapper>
-          <SideHeaderButton
-            onClick={() => {
-              setShowEditProfileModal(true);
-            }}
-          >
-            소개글 수정
-          </SideHeaderButton>
-        </MemberWrapper>
+        <>
+          <Spacing marginBottom="1.6" />
+          <MemberWrapper>
+            <ProfileWrapper>
+              <GroupBestProfileIc /> {writerName}
+            </ProfileWrapper>
+            <SideHeaderButton
+              onClick={() => {
+                setShowEditProfileModal(true);
+              }}
+            >
+              소개글 수정
+            </SideHeaderButton>
+          </MemberWrapper>
+        </>
       )}
     </Wrapper>
   );
@@ -116,7 +118,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  height: 15.1rem;
 `;
 
 const MemberWrapper = styled.div`

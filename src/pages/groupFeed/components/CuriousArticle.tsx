@@ -74,6 +74,11 @@ const ArticleWrapper = styled.div`
 const CuriousArticleWrapper = styled.div`
   display: flex;
   gap: 1.6rem;
+  margin-bottom: 6.4rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    margin-bottom: 3.2rem;
+  }
 
   @media screen and (width <= 540px) {
     flex-direction: column;
