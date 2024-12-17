@@ -1,15 +1,16 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { Helmet } from 'react-helmet-async';
+import { useParams } from 'react-router-dom';
+import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
+import useModal from '../../hooks/useModal';
+import checkAuthenticate from '../../utils/checkAuthenticate';
+import { replaceDefaultImg } from '../../utils/replaceDefaultImg';
 import Error from '../error/Error';
 import { useGroupFeedAuth, useGroupFeedPublicStatus } from '../groupFeed/hooks/queries';
 import Loading from '../loading/Loading';
-
-import { useParams } from 'react-router-dom';
-import checkAuthenticate from '../../utils/checkAuthenticate';
-import { replaceDefaultImg } from '../../utils/replaceDefaultImg';
 import {
   CheckboxIc,
   DefaultProfileIc,
@@ -22,10 +23,8 @@ import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/c
 import Spacing from './../../components/commons/Spacing';
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
-import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
-import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
-import useModal from '../../hooks/useModal';
 import { MODAL } from './constants/modalContent';
+import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -106,6 +105,25 @@ const PostDetail = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{postData?.title}</title>
+        <meta property="og:title" content={postData?.title}>
+          {' '}
+        </meta>
+        <meta
+          property="og:description"
+          content={
+            '오직 글쓰기 모임을 위한 블로그, 마일에서 모임원들과 함께 글을 쓰며 여러분 만의 공간을 만들어보세요'
+          }
+        ></meta>
+        <meta property="og:image" content={postData?.imageUrl} />
+        <meta name="keyword" content={`글쓰기, 글, 글모임, mile, MILE, 마일, ${postData?.title}`} />
+        <meta
+          property="pg:url"
+          content={`https://www.milewriting.com/detail/${groupId}/${postId}`}
+        />
+      </Helmet>
+
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <Spacing marginBottom="6.4" />
       <ThumnailImg src={postData?.imageUrl} alt={'썸네일 이미지'} onError={replaceDefaultImg} />
