@@ -61,10 +61,9 @@ const GroupInvite = () => {
   }, [moimsData?.length]);
 
   return (
-    <InviteWrapper>
+    <>
       <DefaultHeader />
       <GroupInviteWrapper>
-        <DefaultHeader />
         <Responsive only="desktop">
           <Spacing marginBottom="11.4" />
         </Responsive>
@@ -102,16 +101,11 @@ const GroupInvite = () => {
           }}
         />
       </FullModal>
-    </InviteWrapper>
+    </>
   );
 };
 
 export default GroupInvite;
-
-const InviteWrapper = styled.div`
-  display: flex;
-  width: 100%;
-`;
 
 const GroupInviteWrapper = styled.div`
   display: flex;
