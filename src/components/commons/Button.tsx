@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -47,6 +48,8 @@ const basicCSS = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
   padding: 1rem 1.6rem;
 
   white-space: nowrap;
@@ -126,4 +129,8 @@ const WritingFlowBtn = styled.button`
     background-color: ${({ theme }) => theme.colors.middleViolet};
   }
   ${({ theme }) => theme.fonts.button1};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mButton1};
+  }
 `;
