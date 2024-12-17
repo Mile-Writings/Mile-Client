@@ -149,33 +149,36 @@ const InfoField = styled.div`
   white-space: nowrap;
 
   &:first-of-type {
-    flex: 0;
     justify-content: start;
 
     @media ${MOBILE_MEDIA_QUERY} {
-      flex: 0;
       justify-content: start;
       min-width: 3.4rem;
+      margin-right: 1rem;
     }
   }
 
   &:nth-of-type(2) {
-    flex: 1.7;
+    flex-grow: 1.7;
+    margin-left: 2rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
-      flex: 1.7;
-      min-width: 12rem;
+      flex-grow: 2;
+      min-width: 12.1rem;
+      margin-right: 0.4rem;
+      margin-left: 0;
     }
   }
 
   &:nth-of-type(3) {
-    flex: 1;
+    flex-grow: 1;
     justify-content: center;
     width: 5.2rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
-      flex: 1;
+      flex-grow: 1;
       justify-content: center;
+      width: 4.9rem;
       margin-right: 1rem;
     }
   }
@@ -183,9 +186,10 @@ const InfoField = styled.div`
   &:nth-of-type(4) {
     flex: 2;
     justify-content: start;
+    margin-right: 5rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
-      flex: 2;
+      flex-grow: 2;
       justify-content: start;
       min-width: 5rem;
     }

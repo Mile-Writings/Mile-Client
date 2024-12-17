@@ -83,6 +83,7 @@ const Name = styled.div`
   white-space: nowrap;
 
   @media ${MOBILE_MEDIA_QUERY} {
+    flex-grow: 2.3;
     ${({ theme }) => theme.fonts.editor};
   }
 `;
@@ -98,7 +99,7 @@ const PostNumber = styled.div`
   ${({ theme }) => theme.fonts.body1};
 
   @media ${MOBILE_MEDIA_QUERY} {
-    margin-right: 1rem;
+    margin-right: 2rem;
     ${({ theme }) => theme.fonts.editor};
   }
 `;

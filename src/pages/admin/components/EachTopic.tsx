@@ -141,8 +141,8 @@ const TopicData = styled.div`
 
 const Topic = styled.div`
   display: flex;
-  flex: 0.5;
   flex-direction: column;
+  flex-shrink: 1;
   gap: 0.4rem;
   min-width: 20.9rem;
   padding: 0.6rem 0;
@@ -177,7 +177,7 @@ const TopicDate = styled.p`
 `;
 
 const TopicTag = styled.p`
-  flex: 0.1;
+  flex-shrink: 1;
   min-width: 7rem;
   padding: 0.6rem 0;
   overflow: hidden;
@@ -199,7 +199,6 @@ const TopicTag = styled.p`
 
 const TopicDescription = styled.p`
   display: -webkit-box;
-  flex: 0.5;
   width: 100%;
   min-width: 3rem;
   max-width: 29rem;
@@ -220,7 +219,7 @@ const TopicAction = styled.div`
   margin-left: auto;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    flex: 0.6;
+    flex-shrink: 0.6;
     justify-content: end;
   }
 `;
