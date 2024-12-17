@@ -94,7 +94,6 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
                 )}
                 <GroupRoutingWrapper>
                   <GroupRoutingTitle>
-                    {' '}
                     이 모임에 대해서 <br></br>더 궁금하신 가요?
                   </GroupRoutingTitle>
 

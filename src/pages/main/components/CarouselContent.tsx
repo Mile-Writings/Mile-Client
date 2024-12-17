@@ -103,11 +103,7 @@ const Topic = styled.h1`
   ${({ theme }) => theme.fonts.body6};
 
   @media ${MOBILE_MEDIA_QUERY} {
-    /* mSubtitle 1 */
-    font-weight: 400;
-    font-size: 12px;
-    font-style: normal;
-    line-height: 120%; /* 14.4px */
+    ${({ theme }) => theme.fonts.mSubtitle1};
   }
 `;
 
@@ -116,11 +112,7 @@ const Title = styled.h2`
   line-height: 120%;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    /* mTitle 1 */
-    font-weight: 700;
-    font-size: 17px;
-    font-style: normal;
-    line-height: 130%;
+    ${({ theme }) => theme.fonts.mTitle1};
   }
 `;
 

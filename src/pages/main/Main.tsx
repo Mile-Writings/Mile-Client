@@ -74,10 +74,6 @@ const MainPageWrapper = styled.div`
   width: 100%;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
-
-  /* @media ${MOBILE_MEDIA_QUERY} {
-    max-width: 76rem;
-  } */
 `;
 
 const GroupCarouselLayout = styled.section`

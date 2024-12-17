@@ -73,26 +73,16 @@ const DropdownLayout = styled.section`
   }
 `;
 
-// const FaqContainer = styled.div`
-
-// `;
-
 const QuestionAnswerBox = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
 const Question = styled.div`
-  /* position: relative; */
   display: flex;
   gap: 0.8rem;
   align-items: center;
   justify-content: space-between;
-
-  & > svg {
-    /* position: absolute;
-    right: 0; */
-  }
 `;
 
 const QuestionMarkText = styled.p`
@@ -100,13 +90,7 @@ const QuestionMarkText = styled.p`
   ${({ theme }) => theme.fonts.title5};
 
   @media ${MOBILE_MEDIA_QUERY} {
-    font-weight: 400;
-    font-size: 14px;
-
-    /* mBody 2 */
-
-    font-style: normal;
-    line-height: 140%; /* 19.6px */
+    ${({ theme }) => theme.fonts.mBody2};
   }
 `;
 
