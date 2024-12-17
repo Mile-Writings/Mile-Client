@@ -190,7 +190,8 @@ const TopicTag = styled.p`
   ${({ theme }) => theme.fonts.body1}
 
   @media ${MOBILE_MEDIA_QUERY} {
-    flex: 0.3;
+    flex-grow: 0.22;
+    flex-shrink: 1;
     justify-content: center;
 
     ${({ theme }) => theme.fonts.mSubtitle2};
