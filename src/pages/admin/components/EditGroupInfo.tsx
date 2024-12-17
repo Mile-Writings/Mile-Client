@@ -11,7 +11,7 @@ import {
 import { DEFAULT_IMG_URL } from '../../../constants/defaultImgUrl';
 import useImageUpload from '../../../hooks/useImageUpload';
 import handleImageUpload from '../../../utils/handleImageUpload';
-import { InputInfoMsg } from '../../createGroup/components/CreateGroupInfo';
+import { INPUT_INFO_MESSAGE } from '../../createGroup/constants/inputInfoMsg';
 import { useGetGroupNameValidation } from '../../createGroup/hooks/queries';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
 import { useFetchGroupInfo, usePutAdminGroupInfo } from '../hooks/queries';
@@ -23,7 +23,7 @@ const EditGroupInfo = () => {
   const [isPublic, setIsPublic] = useState(true);
   const [isHover, setIsHover] = useState(false);
 
-  const [groupNameInfoMsg, setGroupNameInfoMsg] = useState(InputInfoMsg.emptyText);
+  const [groupNameInfoMsg, setGroupNameInfoMsg] = useState(INPUT_INFO_MESSAGE.EMPTY_TEXT);
 
   const groupNameRef = useRef<HTMLInputElement>(null);
 
@@ -49,9 +49,9 @@ const EditGroupInfo = () => {
     setPassDuplicate(false);
     setEditBtnActive(true);
     if (e.target.value.length > 10) {
-      setGroupNameInfoMsg(InputInfoMsg.groupNameLength);
+      setGroupNameInfoMsg(INPUT_INFO_MESSAGE.GROUP_NAME_LENGTH);
     } else {
-      setGroupNameInfoMsg(InputInfoMsg.emptyText);
+      setGroupNameInfoMsg(INPUT_INFO_MESSAGE.EMPTY_TEXT);
     }
   };
   const handleGroupDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -104,14 +104,14 @@ const EditGroupInfo = () => {
         if (groupNameRef.current) {
           groupNameRef.current && groupNameRef.current.focus();
           groupNameRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
-          setGroupNameInfoMsg(InputInfoMsg.groupNameNotCheck);
+          setGroupNameInfoMsg(INPUT_INFO_MESSAGE.GROUP_NAME_NOT_CHECK);
         }
       }
     } else {
       if (groupNameRef.current) {
         groupNameRef.current && groupNameRef.current.focus();
         groupNameRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
-        setGroupNameInfoMsg(InputInfoMsg.groupNameEmpty);
+        setGroupNameInfoMsg(INPUT_INFO_MESSAGE.GROUP_NAME_EMPTY);
       }
     }
   };
@@ -119,10 +119,10 @@ const EditGroupInfo = () => {
   useEffect(() => {
     if (isSuccess) {
       if (groupNameValidationData === true) {
-        setGroupNameInfoMsg(InputInfoMsg.groupNameAvailable);
+        setGroupNameInfoMsg(INPUT_INFO_MESSAGE.GROUP_NAME_AVAILABLE);
         setPassDuplicate(true);
       } else if (groupNameValidationData === false) {
-        setGroupNameInfoMsg(InputInfoMsg.groupNameNotAvailable);
+        setGroupNameInfoMsg(INPUT_INFO_MESSAGE.GROUP_NAME_NOT_AVAILABLE);
         // setGroupNameValid(false);
       }
     }
@@ -168,7 +168,7 @@ const EditGroupInfo = () => {
             </GroupNameInputLayout>
 
             <GroupNameValidationText
-              validation={InputInfoMsg.groupNameAvailable === groupNameInfoMsg}
+              validation={INPUT_INFO_MESSAGE.GROUP_NAME_AVAILABLE === groupNameInfoMsg}
             >
               {groupNameInfoMsg}
             </GroupNameValidationText>
