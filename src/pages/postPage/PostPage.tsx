@@ -583,10 +583,10 @@ const PostPage = () => {
   return (
     <PostPageWrapper>
       {/* 헤더 */}
-      <Responsive only="desktop" asChild>
+      <Responsive only="desktop" >
         {HeaderComponent.desktop}
       </Responsive>
-      <Responsive only="mobile" asChild>
+      <Responsive only="mobile" >
         {HeaderComponent.mobile}
       </Responsive>
       <Spacing marginBottom="6.4" mobileMarginBottom="5.6" />

@@ -8,7 +8,7 @@ interface ResponsivePropTypes {
   asChild?: boolean;
 }
 
-type AvailableSize = 'mobile' | 'desktop' | 'editor';
+type AvailableSize = 'mobile' | 'desktop';
 
 const Responsive = ({ children, only, asChild }: ResponsivePropTypes) => {
   const [current, setCurrent] = useState<AvailableSize | null>(null);
