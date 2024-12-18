@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { usePostComment, usePostNestedComment } from '../hooks/queries';
 
 import { CheckIc } from '../../../assets/svgs';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
+import Responsive from '../../../components/commons/Responsive/Responsive';
 
 interface CommentPropTypes {
   postId: string | undefined;
@@ -25,7 +27,8 @@ const CommentInputBox = (props: CommentPropTypes) => {
   );
   const token = localStorage.getItem('accessToken');
   const navigate = useNavigate();
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const desktopTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const mobileTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleCommentSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -41,24 +44,54 @@ const CommentInputBox = (props: CommentPropTypes) => {
     }
   };
 
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = '2.3rem';
-      const scrollHeight = textareaRef.current.scrollHeight;
-      textareaRef.current.style.height = `${scrollHeight}px`;
+  // 댓글 작성 높이 조정
+  const adjustTextareaHeight = () => {
+    const isDesktop = window.innerWidth > 850;
+
+    if (isDesktop && desktopTextareaRef.current) {
+      desktopTextareaRef.current.style.height = '2.3rem';
+      const scrollHeight = desktopTextareaRef.current.scrollHeight;
+      desktopTextareaRef.current.style.height = `${scrollHeight}px`;
+    } else if (!isDesktop && mobileTextareaRef.current) {
+      mobileTextareaRef.current.style.height = '3.7rem';
+      const scrollHeight = mobileTextareaRef.current.scrollHeight;
+      mobileTextareaRef.current.style.height = `${scrollHeight}px`;
     }
+  };
+
+  useEffect(() => {
+    adjustTextareaHeight();
+
+    window.addEventListener('resize', adjustTextareaHeight);
+
+    return () => {
+      window.removeEventListener('resize', adjustTextareaHeight);
+    };
   }, [comment]);
+
   return (
-    <CommentPostWrapper>
+    <CommentPostWrapper $isMainComment={isMainComment}>
       <CommentLayout isMainComment={isMainComment} isError={comment.length >= 1500}>
-        <CommentForm
-          ref={textareaRef}
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          isMainComment={isMainComment}
-          placeholder="댓글을 남겨주세요."
-          maxLength={1500}
-        />
+        <Responsive only="desktop">
+          <DesktopCommentForm
+            ref={desktopTextareaRef}
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            isMainComment={isMainComment}
+            placeholder="댓글을 남겨주세요."
+            maxLength={1500}
+          />
+        </Responsive>
+        <Responsive only="mobile" asChild>
+          <MobileCommentForm
+            ref={mobileTextareaRef}
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            isMainComment={isMainComment}
+            placeholder="댓글을 남겨주세요."
+            maxLength={1500}
+          />
+        </Responsive>
         <CheckboxLayout>
           <Checkbox
             isUnknownWriter={isUnknownWriter}
@@ -83,11 +116,15 @@ const CheckboxLayout = styled.div`
   gap: 0.4rem;
   align-items: center;
   justify-content: center;
-  width: 5rem;
+  width: 6rem;
   height: 2.3rem;
   ${({ theme }) => theme.fonts.body5};
 
   color: ${({ theme }) => theme.colors.gray70};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle1};
+  }
 `;
 
 const Checkbox = styled.button<{ isUnknownWriter: boolean }>`
@@ -110,17 +147,23 @@ const CommentLayout = styled.div<{ isMainComment: boolean; isError: boolean }>`
   gap: 1rem;
   align-items: flex-end;
   width: ${({ isMainComment }) => (isMainComment ? '69.9rem' : '65.1rem')};
-  height: auto;
+  min-height: 4.3rem;
   padding: 1rem 1.2rem;
 
   background-color: ${({ theme }) => theme.colors.gray5};
   border: 1px solid
     ${({ theme, isError }) => (isError ? theme.colors.mileRed : theme.colors.gray30)};
   border-radius: 6px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle1};
+    width: ${({ isMainComment }) => (isMainComment ? '93%' : '90%')};
+    min-height: 6rem;
+  }
 `;
 
-const CommentForm = styled.textarea<{ isMainComment: boolean }>`
-  width: ${({ isMainComment }) => (isMainComment ? '62.1rem' : '57.3rem')};
+const DesktopCommentForm = styled.textarea<{ isMainComment: boolean }>`
+  width: ${({ isMainComment }) => (isMainComment ? '61.1rem' : '56.3rem')};
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray100};
@@ -137,6 +180,25 @@ const CommentForm = styled.textarea<{ isMainComment: boolean }>`
   }
 
   ${({ theme }) => theme.fonts.button2};
+`;
+
+const MobileCommentForm = styled.textarea<{ isMainComment: boolean }>`
+  width: 100%;
+  overflow: hidden;
+
+  color: ${({ theme }) => theme.colors.gray100};
+
+  background-color: ${({ theme }) => theme.colors.gray5};
+  border: none;
+
+  resize: none;
+
+  ::placeholder {
+    color: ${({ theme }) => theme.colors.gray30};
+
+    background-color: ${({ theme }) => theme.colors.gray5};
+  }
+  ${({ theme }) => theme.fonts.mSubtitle1};
 `;
 
 const CommentPostBtn = styled.button<{ $isComment: string }>`
@@ -159,11 +221,19 @@ const CommentPostBtn = styled.button<{ $isComment: string }>`
     background-color: ${({ $isComment, theme }) =>
       $isComment === '' ? theme.colors.gray10 : theme.colors.mileViolet};
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 4rem;
+    height: 4.4rem;
+    padding: 0;
+
+    ${({ theme }) => theme.fonts.mBody1}
+  }
 `;
 
-const CommentPostWrapper = styled.div`
+const CommentPostWrapper = styled.div<{ $isMainComment: boolean }>`
   display: flex;
   gap: 1.2rem;
   align-items: flex-end;
-  width: 100%;
+  width: ${({ $isMainComment }) => ($isMainComment ? '100%' : '95%')};
 `;
