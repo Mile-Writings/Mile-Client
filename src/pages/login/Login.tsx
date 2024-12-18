@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { HeaderLogoIc, KakaoLoginBtnIc } from '../../assets/svgs';
 import Spacing from '../../components/commons/Spacing';
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import loginIlust from '/src/assets/images/loginIlust.png';
 import loginWebP from '/src/assets/webps/login.webp';
 
@@ -42,7 +43,7 @@ const Login = () => {
           <Spacing marginBottom="2.4" />
           <picture>
             <source srcSet={loginWebP} type="image/webp" />
-            <img src={loginIlust} />
+            <LoginImg src={loginIlust} />
           </picture>
           <Spacing marginBottom="2.4" />
           <KakaoLoginBtnIcon onClick={handleKakaoLogin} />
@@ -83,11 +84,19 @@ const LoginTextBox = styled.div`
 const HeadText = styled.h1`
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.title2};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.title13}
+  }
 `;
 
 const SubText = styled.p`
   color: ${({ theme }) => theme.colors.gray90};
   ${({ theme }) => theme.fonts.subtitle4};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle5}
+  }
 `;
 
 const HeaderWrapper = styled.div`
@@ -123,4 +132,18 @@ const LoginLayout = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 0.8rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 33.5rem;
+  }
+`;
+
+const LoginImg = styled.img`
+  width: 21.8rem;
+  height: 18rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 18rem;
+    height: 15rem;
+  }
 `;
