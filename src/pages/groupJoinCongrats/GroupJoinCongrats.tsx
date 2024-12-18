@@ -50,10 +50,11 @@ const JoinWrapper = styled.div`
 
 const GroupJoinCongratsWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
   width: 100%;
+  padding: 15.6rem 0 11.6rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const GroupJoinCongratsContainer = styled.main`
