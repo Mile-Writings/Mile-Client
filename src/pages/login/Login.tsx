@@ -32,7 +32,6 @@ const Login = () => {
         <HeaderLogoIcon onClick={handleNavigateMain} />
         <HeaderBtnLayout />
       </HeaderWrapper>
-      <Spacing marginBottom="13.2" />
       <LoginLayout>
         <LoginContainer>
           <LoginTextBox>
@@ -105,11 +104,16 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 6.4rem;
+  margin-bottom: 13.2rem;
   padding-right: 6rem;
   padding-left: 6rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    margin-bottom: 10.8rem;
+  }
 `;
 
 const HeaderBtnLayout = styled.div`
