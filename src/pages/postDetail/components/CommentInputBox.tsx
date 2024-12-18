@@ -44,22 +44,6 @@ const CommentInputBox = (props: CommentPropTypes) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (desktopTextareaRef.current) {
-  //     desktopTextareaRef.current.style.height = '2.3rem';
-  //     const scrollHeight = desktopTextareaRef.current.scrollHeight;
-  //     desktopTextareaRef.current.style.height = `${scrollHeight}px`;
-  //   }
-  // });
-
-  // useEffect(() => {
-  //   if (mobileTextareaRef.current) {
-  //     mobileTextareaRef.current.style.height = '3.7rem';
-  //     const scrollHeight = mobileTextareaRef.current.scrollHeight;
-  //     mobileTextareaRef.current.style.height = `${scrollHeight}px`;
-  //   }
-  // });
-
   // 댓글 작성 높이 조정
   const adjustTextareaHeight = () => {
     const isDesktop = window.innerWidth > 850;

@@ -106,10 +106,6 @@ const CommentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  /* box-sizing: content-box; */
-
-  /* width: 76.8rem; */
   width: 100%;
   height: fit-content;
   padding: 2.8rem;
