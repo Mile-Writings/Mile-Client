@@ -110,7 +110,12 @@ const PostDetail = () => {
   return (
     <>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
-      <Spacing marginBottom="6.4" />
+      <Responsive only="desktop">
+        <Spacing marginBottom="6.4" />
+      </Responsive>
+      <Responsive only="mobile">
+        <Spacing marginBottom="5.6" />
+      </Responsive>
       <ThumnailImg src={postData?.imageUrl} alt={'썸네일 이미지'} onError={replaceDefaultImg} />
       <Spacing marginBottom="4.8" />
       <PostDetailWrapper>
@@ -186,7 +191,7 @@ const PostDetail = () => {
           </Responsive>
 
           <Responsive only="mobile" asChild>
-            <>
+            <MobileWriterInfoContainer>
               <MobileWriterInfoTop>
                 <DefaultProfileIcon />
                 <InfoWrapper>
@@ -204,7 +209,7 @@ const PostDetail = () => {
                     : postData?.writerInfo}
                 </WriterDesc>
               </MobileWriterDescription>
-            </>
+            </MobileWriterInfoContainer>
           </Responsive>
         </WriterInfoWrapper>
         {isMember && <Comment postId={postId} />}
@@ -229,10 +234,6 @@ const PostDetail = () => {
 };
 
 export default PostDetail;
-
-// const PostDetailTopWrapper = styled.div`
-//   width: 100%;
-// `;
 
 const DividingLine = styled.div`
   width: 0.1rem;
@@ -525,6 +526,10 @@ const DefaultProfileIcon = styled(DefaultProfileIc)`
     width: 4rem;
     height: 4rem;
   }
+`;
+
+const MobileWriterInfoContainer = styled.div`
+  width: 100%;
 `;
 
 const MobileWriterInfoTop = styled.div`
