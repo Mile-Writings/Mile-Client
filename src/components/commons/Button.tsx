@@ -48,6 +48,7 @@ const basicCSS = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   padding: 1rem 1.6rem;
 
   white-space: nowrap;
@@ -137,4 +138,8 @@ const WritingFlowBtn = styled.button`
     background-color: ${({ theme }) => theme.colors.middleViolet};
   }
   ${({ theme }) => theme.fonts.button1};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mButton1};
+  }
 `;

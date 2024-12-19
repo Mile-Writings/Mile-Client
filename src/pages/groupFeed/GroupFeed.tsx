@@ -24,6 +24,9 @@ import {
   useGroupInfo,
   useTopicList,
 } from './hooks/queries';
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
+import Responsive from '../../components/commons/Responsive/Responsive';
+import GroupMobileInfo from './components/GroupMobileInfo';
 
 const GroupFeed = () => {
   const { groupId } = useParams();
@@ -86,32 +89,46 @@ const GroupFeed = () => {
       <GroupFeedThumnail imageUrl={infoResponse?.imageUrl} />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
-        {infoResponse && (
-          <GroupSideHeader
-            groupInfoData={infoResponse}
-            isMember={isMember}
-            isOwner={isOwner}
-            setShowEditProfileModal={setShowEditProfileModal}
-            writerName={writerName}
-          />
-        )}
+        <Responsive only="desktop">
+          {infoResponse && (
+            <GroupSideHeader
+              groupInfoData={infoResponse}
+              isMember={isMember}
+              isOwner={isOwner}
+              setShowEditProfileModal={setShowEditProfileModal}
+              writerName={writerName}
+            />
+          )}
+          <Spacing marginBottom="6.4" />
+        </Responsive>
         <GroupInfo>
           <GroupTodayWriteStyle todayInfo={todayInfo} isMember={isMember} groupId={groupId} />
-          <Spacing marginBottom="6.4" />
+          <Responsive only="mobile">
+            {infoResponse && (
+              <GroupMobileInfo
+                groupInfoData={infoResponse}
+                isMember={isMember}
+                isOwner={isOwner}
+                setShowEditProfileModal={setShowEditProfileModal}
+                writerName={writerName}
+              />
+            )}
+            <Spacing marginBottom="3.2" />
+          </Responsive>
+
           <GroupCuriousTitle
             mainText="우리 모임에서 궁금한 글쓴이에요"
             subText="매주 월요일마다 업데이트 됩니다"
           />
           <Spacing marginBottom="2" />
           <CuriousProfile mostCuriousWriter={mostCuriousWriter} />
-          <Spacing marginBottom="6.4" />
+
           <GroupCuriousTitle
             mainText="우리 모임에서 인기 있는 글이에요"
             subText="매주 월요일마다 업데이트 됩니다"
           />
           <Spacing marginBottom="2" />
           <CuriousArticle groupId={groupId} mostCuriousPost={mostCuriousPost} />
-          <Spacing marginBottom="6.4" />
           <Carousel categoryData={groupFeedCategoryData || []} isLoading={isLoading} />
         </GroupInfo>
       </GroupInfoWrapper>
@@ -136,29 +153,42 @@ export default GroupFeed;
 
 const GroupFeedWrapper = styled.div`
   width: 100%;
-  height: 100vh;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
 
 const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
+  width: 100%;
   height: 37rem;
+  object-fit: cover;
 
   background-image: ${({ imageUrl }) => `url(${imageUrl || GroupThumbnailImgIc})`};
   background-size: cover;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    height: 18rem;
+  }
 `;
 const GroupInfoWrapper = styled.div`
   display: flex;
   gap: 3.9rem;
   justify-content: center;
-  padding-right: 16.5rem;
-  padding-left: 16.5rem;
+  padding: 0 16.5rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    padding: 0 2rem;
+  }
 `;
 
 const GroupInfo = styled.div`
   display: flex;
   flex-direction: column;
-  width: 72rem;
+  justify-content: center;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 const GroupFloatingBtnIcon = styled(GroupFloatingBtnIc)`
