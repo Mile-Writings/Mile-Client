@@ -48,7 +48,6 @@ const basicCSS = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
   width: 100%;
   padding: 1rem 1.6rem;
 
