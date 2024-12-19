@@ -1,14 +1,19 @@
 import styled from '@emotion/styled';
 
+import Responsive from '../../../components/commons/Responsive/Responsive';
 import Spacing from '../../../components/commons/Spacing';
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 import { MAIN_MANUAL_IMG_URL, MAIN_MANUAL_WEBP_URL } from '../constants/mainManualImgURL';
-
 const Manual = () => {
   return (
     <ManualWrapper>
       <ManualTitle>마일 메뉴얼</ManualTitle>
-      <Spacing marginBottom="3.6" />
+      <Responsive only="desktop">
+        <Spacing marginBottom="3.6" />
+      </Responsive>
+      <Responsive only="mobile">
+        <Spacing marginBottom="1.8" />
+      </Responsive>
       <ManualLayout>
         {MAIN_MANUAL_WEBP_URL.map((webpSrc, idx) => (
           <picture key={idx}>
@@ -36,6 +41,10 @@ const ManualTitle = styled.h1`
   ${({ theme }) => theme.fonts.title3};
 
   cursor: default;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle4};
+  }
 `;
 
 const ManualLayout = styled.section`
@@ -46,6 +55,7 @@ const ManualLayout = styled.section`
 
   @media ${MOBILE_MEDIA_QUERY} {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.3rem;
     width: 100%;
   }
 `;
@@ -55,7 +65,7 @@ const ManualImg = styled.img`
   height: 37.2rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    width: 16.2rem;
-    height: 20rem;
+    width: 19.2rem;
+    height: 24rem;
   }
 `;

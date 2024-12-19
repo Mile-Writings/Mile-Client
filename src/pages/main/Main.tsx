@@ -53,7 +53,7 @@ const Main = () => {
       <FaqLayout>
         <FaqContainer>
           <FaqTitle>자주 묻는 질문</FaqTitle>
-          <Spacing marginBottom="3.6" />
+
           {FAQ_DATA.map(({ id, question, answer }) => (
             <FaqDropdown key={id} id={id} question={question} answer={answer} />
           ))}
@@ -74,10 +74,6 @@ const MainPageWrapper = styled.div`
   width: 100%;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
-
-  /* @media ${MOBILE_MEDIA_QUERY} {
-    max-width: 76rem;
-  } */
 `;
 
 const GroupCarouselLayout = styled.section`
@@ -93,7 +89,7 @@ const CarouselContainer = styled.div`
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
-    max-width: 420px;
+    max-width: 82rem;
   }
 `;
 
@@ -115,11 +111,23 @@ const FaqLayout = styled.section`
 `;
 
 const FaqContainer = styled.div`
+  width: 93rem;
   padding: 0 2rem;
 
   cursor: default;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    max-width: 40rem;
+  }
 `;
 
 const FaqTitle = styled.h3`
   ${({ theme }) => theme.fonts.title3};
+  margin-bottom: 3.6rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle4};
+    margin-bottom: 1.8rem;
+  }
 `;

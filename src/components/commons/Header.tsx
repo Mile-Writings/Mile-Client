@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
 import Button from './Button';
-import LogInOutBtn from './LogInOutBtn';
+import { LogInOutBtn } from './HeaderButton';
 
-import { HeaderLogoIc } from '../../assets/svgs';
+import { HamburgerIc, HeaderLogoIc, LinkIc } from '../../assets/svgs';
 import {
   default as useNavigateHome,
   default as useNavigateToHome,
@@ -15,6 +15,14 @@ import CreateGroupBtn from '../../pages/groupFeed/components/CreateGroupBtn';
 import MyGroupDropDown from '../../pages/groupFeed/components/MyGroupDropDown';
 import { useFetchHeaderGroup } from '../../pages/groupFeed/hooks/queries';
 import logout from '../../utils/logout';
+
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
+import Responsive from './Responsive/Responsive';
+import { MobileUnAuthorizedSidebar, MobileAuthorizedSidebar } from './MyMobileSidebar';
+
+import { useParams } from 'react-router-dom';
+import { useFetchInvitationLink } from '../../pages/admin/hooks/queries';
+import { copyLink } from '../../utils/copyLink';
 
 interface onClickEditProps {
   onClickEditSave: () => void;
@@ -33,25 +41,54 @@ interface OnClickTempExistProps {
 export const AuthorizationHeader = () => {
   const [moims, setMoims] = useState<Moim[]>([]);
   const { navigateToHome } = useNavigateToHome();
-  const { data } = useFetchHeaderGroup();
+  const { moimsData } = useFetchHeaderGroup();
   const handleLogOut = () => {
     logout();
     navigateToHome();
   };
   useEffect(() => {
-    if (data?.data?.moims) setMoims(data?.data.moims);
-  }, [data?.data?.moims]);
+    if (moimsData) setMoims(moimsData);
+  }, [moimsData]);
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
-    <HeaderWrapper>
-      <HeaderLogoIcon onClick={navigateToHome} />
-      <HeaderLayout>
-        <MyGroupDropDown groupData={moims ?? []} />
-        <HeaderBtnContainer>
-          <CreateGroupBtn groupCount={data?.data.moims.length ?? 0} />
-          <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
-        </HeaderBtnContainer>
-      </HeaderLayout>
-    </HeaderWrapper>
+    <>
+      <Responsive only="desktop">
+        <HeaderWrapper>
+          <HeaderLogoIcon onClick={navigateToHome} />
+          <HeaderLayout>
+            <MyGroupDropDown groupData={moims ?? []} />
+            <HeaderBtnContainer>
+              <CreateGroupWrapper>
+                <CreateGroupBtn groupCount={moimsData?.length ?? 0} />
+              </CreateGroupWrapper>
+              <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
+            </HeaderBtnContainer>
+          </HeaderLayout>
+        </HeaderWrapper>
+      </Responsive>
+      <Responsive only="mobile">
+        <HeaderWrapper>
+          <HeaderLogoIcon onClick={navigateToHome} />
+          <MobileHeaderButtons>
+            <HamburgerIcon
+              onClick={() => {
+                setIsSidebarOpen(true);
+              }}
+            />
+          </MobileHeaderButtons>
+        </HeaderWrapper>
+        {isSidebarOpen && (
+          <MobileAuthorizedSidebar
+            onClose={() => {
+              setIsSidebarOpen(false);
+            }}
+            groupCount={moimsData?.length ?? 0}
+            groupData={moims ?? []}
+          />
+        )}
+      </Responsive>
+    </>
   );
 };
 
@@ -60,11 +97,38 @@ export const UnAuthorizationHeader = () => {
   const { navigateToHome } = useNavigateHome();
   const { navigateToLogin } = useNavigateLoginWithPath();
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
-    <HeaderWrapper>
-      <HeaderLogoIcon onClick={navigateToHome} />
-      <LogInOutBtn onClick={navigateToLogin}>로그인</LogInOutBtn>
-    </HeaderWrapper>
+    <>
+      <Responsive only="desktop">
+        <HeaderWrapper>
+          <HeaderLogoIcon onClick={navigateToHome} />
+          <LogInWrapper>
+            <LogInOutBtn onClick={navigateToLogin}>로그인</LogInOutBtn>
+          </LogInWrapper>
+        </HeaderWrapper>
+      </Responsive>
+      <Responsive only="mobile">
+        <HeaderWrapper>
+          <HeaderLogoIcon onClick={navigateToHome} />
+          <MobileHeaderButtons>
+            <HamburgerIcon
+              onClick={() => {
+                setIsSidebarOpen(true);
+              }}
+            />
+          </MobileHeaderButtons>
+        </HeaderWrapper>
+        {isSidebarOpen && (
+          <MobileUnAuthorizedSidebar
+            onClose={() => {
+              setIsSidebarOpen(false);
+            }}
+          />
+        )}
+      </Responsive>
+    </>
   );
 };
 
@@ -124,9 +188,65 @@ export const DefaultHeader = () => {
   );
 };
 
+// 관리자 헤더
+export const AdminHeader = () => {
+  const { navigateToHome } = useNavigateHome();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [moims, setMoims] = useState<Moim[]>([]);
+  const { moimsData } = useFetchHeaderGroup();
+  const { groupId } = useParams();
+  const { invitationCode } = useFetchInvitationLink(groupId);
+
+  const handleCopyLink = (invitationCode: string) => {
+    copyLink(import.meta.env.VITE_INVITE_URL + `group/${invitationCode}/groupInvite`);
+  };
+
+  const handleInviteBtnClick = () => {
+    handleCopyLink(invitationCode?.invitationCode || '');
+  };
+
+  useEffect(() => {
+    if (moimsData) setMoims(moimsData);
+  }, [moimsData]);
+  return (
+    <>
+      <Responsive only="desktop">
+        <AuthorizationHeader />
+      </Responsive>
+      <Responsive only="mobile">
+        <HeaderWrapper>
+          <HeaderLogoIcon onClick={navigateToHome} />
+          <MobileHeaderButtons>
+            <LinkIcon type="button" onClick={handleInviteBtnClick} />
+            <HamburgerIcon
+              onClick={() => {
+                setIsSidebarOpen(true);
+              }}
+            />
+          </MobileHeaderButtons>
+        </HeaderWrapper>
+        {isSidebarOpen && (
+          <MobileAuthorizedSidebar
+            onClose={() => {
+              setIsSidebarOpen(false);
+            }}
+            groupCount={moimsData?.length ?? 0}
+            groupData={moims ?? []}
+          />
+        )}
+      </Responsive>
+    </>
+  );
+};
+
+const LogInWrapper = styled.div`
+  width: 8.1rem;
+`;
+
 const HeaderWrapper = styled.div`
   position: fixed;
   top: 0;
+  left: 0;
   z-index: 3;
   display: flex;
   align-items: center;
@@ -138,6 +258,26 @@ const HeaderWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray30};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    height: 5.6rem;
+    padding: 0 2rem;
+  }
+`;
+
+const LinkIcon = styled(LinkIc)`
+  cursor: pointer;
+`;
+const HamburgerIcon = styled(HamburgerIc)`
+  cursor: pointer;
+`;
+
+const MobileHeaderButtons = styled.div`
+  display: flex;
+  gap: 1.6rem;
+  align-items: center;
+  ${({ theme }) => theme.fonts.mSubtitle4};
 `;
 
 const HeaderLayout = styled.div`
@@ -158,4 +298,13 @@ const HeaderLogoIcon = styled(HeaderLogoIc)`
   flex-shrink: 0;
 
   cursor: pointer;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 7rem;
+    height: 1.68rem;
+  }
+`;
+
+const CreateGroupWrapper = styled.div`
+  width: 13.6rem;
 `;

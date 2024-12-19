@@ -3,25 +3,6 @@ import styled from '@emotion/styled';
 import { createBrowserHistory } from 'history';
 import React, { useEffect, useReducer, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import handleImageUpload from '../../utils/handleImageUpload';
-import DropDown from './components/DropDown';
-import ImageUpload from './components/ImageUpload';
-import TipTap from './components/TipTap';
-import { EDITOR_DEFAULT_IMG } from './constants/editorDefaultImg';
-import {
-  useDeleteTempPost,
-  useGetTempSaveContent,
-  useGetTopic,
-  usePostContent,
-  usePostTempSaveContent,
-  usePresignedUrl,
-  usePutEditContent,
-  usePutTempSaveContent,
-  useTempSaveFlag,
-  useGetEditPostContent,
-} from './hooks/queries';
-import { allowScroll, preventScroll } from './utils/modalPreventScroll';
-
 import { EditorErrorIcn } from '../../assets/svgs/editorSVG';
 import {
   EditorEditHeader,
@@ -33,7 +14,35 @@ import { FullModal, FullModalBtn } from '../../components/commons/modal/FullModa
 import Spacing from '../../components/commons/Spacing';
 import useBlockPageExit from '../../hooks/useBlockPageExit';
 import useModal from '../../hooks/useModal';
+import { FileType } from '../../types/imageUploadType';
+import handleImageUpload from '../../utils/handleImageUpload';
+import DropDown from './components/DropDown';
+import ImageUpload from './components/ImageUpload';
+import TipTap from './components/TipTap';
+import { EDITOR_DEFAULT_IMG } from './constants/editorDefaultImg';
 import { MODAL } from './constants/modalContent';
+import {
+  useDeleteTempPost,
+  useGetEditPostContent,
+  useGetTempSaveContent,
+  useGetTopic,
+  usePostContent,
+  usePostTempSaveContent,
+  usePresignedUrl,
+  usePutEditContent,
+  usePutTempSaveContent,
+  useTempSaveFlag,
+} from './hooks/queries';
+import { allowScroll, preventScroll } from './utils/modalPreventScroll';
+
+// 반응형
+import Responsive from '../../components/commons/Responsive/Responsive';
+import {
+  MobileEditHeader,
+  MobileTempExistHeader,
+  MobileTempNotExistHeader,
+} from './components/mobile/MobileHeader';
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 
 // editor content API 관련
 interface editorStateType {
@@ -191,7 +200,7 @@ const PostPage = () => {
   // 에디터 글 내용 태그 제외한 값 (valid 확인용)
   const [contentWithoutTag, setContentWithoutTag] = useState('');
 
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<FileType>(null);
   const [postContentId, setPostContentId] = useState<string>('');
 
   // 임시저장 불러오기
@@ -273,7 +282,12 @@ const PostPage = () => {
       return;
     }
 
-    const imageUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+    const imageUrl = await handleImageUpload({
+      url,
+      fileName,
+      imageFile,
+      imageUrl: editorVal.imageUrl,
+    });
     if (imageUrl) {
       postContent(imageUrl);
     }
@@ -339,7 +353,12 @@ const PostPage = () => {
       return;
     } else {
       try {
-        const imgUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+        const imgUrl = await handleImageUpload({
+          url,
+          fileName,
+          imageFile,
+          imageUrl: editorVal.imageUrl,
+        });
         if (imgUrl) {
           putEditContent(imgUrl);
         }
@@ -378,7 +397,12 @@ const PostPage = () => {
 
   // 임시저장 모달 -> '예' 누르면 쿼리 동작
   const tempSaveHandler = async () => {
-    const imageUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+    const imageUrl = await handleImageUpload({
+      url,
+      fileName,
+      imageFile,
+      imageUrl: editorVal.imageUrl,
+    });
 
     if (imageUrl) {
       postTempSaveContent(imageUrl);
@@ -407,7 +431,12 @@ const PostPage = () => {
       return;
     }
 
-    const imgUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+    const imgUrl = await handleImageUpload({
+      url,
+      fileName,
+      imageFile,
+      imageUrl: editorVal.imageUrl,
+    });
     if (imgUrl) {
       putTempSaveContent(imgUrl);
     }
@@ -541,20 +570,46 @@ const PostPage = () => {
     };
   }, []);
 
+  // 헤더 컴포넌트
+  const HeaderComponent = (() => {
+    if (viewType === 'edit') {
+      return {
+        desktop: <EditorEditHeader onClickEditSave={onClickEditSaveBtn} />,
+        mobile: <MobileEditHeader onClickEditSave={onClickEditSaveBtn} />,
+      };
+    } else if (continueTempPost) {
+      return {
+        desktop: <EditorTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />,
+        mobile: <MobileTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />,
+      };
+    } else {
+      return {
+        desktop: (
+          <EditorTempNotExistHeader
+            onClickTempSave={onClickTempSaveBtn}
+            onClickSubmit={onClickPostContentBtn}
+          />
+        ),
+        mobile: (
+          <MobileTempNotExistHeader
+            onClickTempSave={onClickTempSaveBtn}
+            onClickSubmit={onClickPostContentBtn}
+          />
+        ),
+      };
+    }
+  })();
+
   return (
     <PostPageWrapper>
       {/* 헤더 */}
-      {viewType === 'edit' ? (
-        <EditorEditHeader onClickEditSave={onClickEditSaveBtn} />
-      ) : continueTempPost ? (
-        <EditorTempExistHeader onClickSubmit={onClickTempExistSaveBtn} />
-      ) : (
-        <EditorTempNotExistHeader
-          onClickTempSave={onClickTempSaveBtn}
-          onClickSubmit={onClickPostContentBtn}
-        />
-      )}
-      <Spacing marginBottom="6.4" />
+      <Responsive only="desktop" >
+        {HeaderComponent.desktop}
+      </Responsive>
+      <Responsive only="mobile" >
+        {HeaderComponent.mobile}
+      </Responsive>
+      <Spacing marginBottom="6.4" mobileMarginBottom="5.6" />
 
       {/* 글 제출 막는 toast */}
       <PostDeclinedWrapper $postAvailable={postErrorMessage.trim().length === 0}>
@@ -567,27 +622,29 @@ const PostPage = () => {
         setImageFile={setImageFile}
       />
 
-      {/* 글감 */}
-      {topics && (
-        <DropDown
-          topicList={topics}
-          setTopic={setTopic}
-          setWriter={setWriter}
-          selectedTopic={editorVal.topic}
-          selectedWriter={editorVal.writer}
-        />
-      )}
-      <Spacing marginBottom="2.4" />
+      <TagEditorWrapper>
+        {/* 글감 */}
+        {topics && (
+          <DropDown
+            topicList={topics}
+            setTopic={setTopic}
+            setWriter={setWriter}
+            selectedTopic={editorVal.topic}
+            selectedWriter={editorVal.writer}
+          />
+        )}
+        <Spacing marginBottom="2.4" />
 
-      {/* 텍스트 에디터 */}
-      <TipTap
-        title={editorVal.title}
-        setTitle={setTitle}
-        tempContent={tempContent}
-        editContent={viewType === 'edit' ? editPostContent : ''}
-        setEditorContent={setContent}
-        setContentWithoutTag={setContentWithoutTag}
-      />
+        {/* 텍스트 에디터 */}
+        <TipTap
+          title={editorVal.title}
+          setTitle={setTitle}
+          tempContent={tempContent}
+          editContent={viewType === 'edit' ? editPostContent : ''}
+          setEditorContent={setContent}
+          setContentWithoutTag={setContentWithoutTag}
+        />
+      </TagEditorWrapper>
       <Spacing marginBottom="8" />
 
       {/* 임시저장 이어쓰기 관련 모달 */}
@@ -637,9 +694,21 @@ const PostPageWrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   align-items: center;
   justify-content: center;
   width: 100%;
+`;
+
+const TagEditorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    padding: 0 2rem;
+  }
 `;
 
 const PostDeclinedWrapper = styled.div<{ $postAvailable: boolean }>`
