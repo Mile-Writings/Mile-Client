@@ -8,6 +8,7 @@ import { Topics } from '../apis/fetchTopic';
 
 import { EditorDropIcnActiveIc, EditorDropIcnActiveOpenIc } from '../../../assets/svgs';
 import useClickOutside from '../../../hooks/useClickOutside';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface TopicPropTypes {
   topicList: Topics[];
@@ -71,6 +72,11 @@ const TopicDropDownWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
@@ -101,6 +107,10 @@ const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
     background-clip: padding-box;
     border: 20px solid ${({ theme }) => theme.colors.gray20};
     border-radius: 4px;
+  }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
   }
 `;
 

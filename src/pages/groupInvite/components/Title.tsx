@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 const Title = () => {
   return (
@@ -23,10 +24,18 @@ const InviteText1 = styled.h2`
   color: ${({ theme }) => theme.colors.gray70};
 
   ${({ theme }) => theme.fonts.title5};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle4};
+  }
 `;
 
 const InviteText2 = styled.h1`
   color: ${({ theme }) => theme.colors.mainViolet};
 
   ${({ theme }) => theme.fonts.title1};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle6};
+  }
 `;

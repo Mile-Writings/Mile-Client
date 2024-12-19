@@ -1,19 +1,17 @@
 import styled from '@emotion/styled';
 import { useNavigate, useParams } from 'react-router-dom';
-
-import { useGroupInfo } from '../groupFeed/hooks/queries';
-import Loading from '../loading/Loading';
-import RenderAdminContent from './components/RenderAdminContent';
-import { useFetchInvitationLink } from './hooks/queries';
-
 import { AdminHomeIc } from '../../assets/svgs';
-import { AuthorizationHeader } from '../../components/commons/Header';
+import { AdminHeader } from '../../components/commons/Header';
 import Responsive from '../../components/commons/Responsive/Responsive';
 import Spacing from '../../components/commons/Spacing';
 import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import { copyLink } from '../../utils/copyLink';
+import { useGroupInfo } from '../groupFeed/hooks/queries';
+import Loading from '../loading/Loading';
 import DesktopNav from './components/navbar/DesktopNav';
 import MobileNav from './components/navbar/MobileNav';
+import RenderAdminContent from './components/RenderAdminContent';
+import { useFetchInvitationLink } from './hooks/queries';
 import useMenu from './hooks/useMenu';
 
 const Admin = () => {
@@ -43,7 +41,7 @@ const Admin = () => {
   }
   return (
     <Wrapper>
-      {accessToken && <AuthorizationHeader />}
+      {accessToken && <AdminHeader />}
       <AdminWrapper>
         <Responsive only="desktop">
           <Spacing marginBottom="13.6" />
@@ -62,7 +60,9 @@ const Admin = () => {
           </GroupLayout>
           <Spacing marginBottom="1.2" />
           <MobileNav handleMenuItem={handleMenuItem} isClicked={isClicked} />
-          <Spacing marginBottom="2.8" />
+          <Responsive only="mobile">
+            <Spacing marginBottom="2.8" />
+          </Responsive>
         </Responsive>
 
         <AdminLayout>
@@ -99,17 +99,23 @@ const Wrapper = styled.div`
 `;
 
 const AdminWrapper = styled.div`
+  display: flex;
+  justify-content: center;
   width: 100%;
-  padding: 0 16.5rem;
+  margin-top: 13.6rem;
+  padding: 0 2rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
     width: 100%;
-    padding: 2rem;
+    margin-top: 0;
+    padding: 0 2rem;
   }
 `;
 
 const AdminLayout = styled.div`
   display: flex;
+  flex-grow: 1;
   gap: 6rem;
   justify-content: center;
 

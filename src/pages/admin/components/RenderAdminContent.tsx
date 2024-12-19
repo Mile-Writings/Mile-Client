@@ -120,11 +120,20 @@ const RenderAdminContent = ({ menu }: RenderAdminContentPropTypes) => {
     case '멤버 관리':
       return (
         <AdminContainer>
-          <Title>멤버 관리</Title>
-
-          <Spacing marginBottom="1.2" />
+          <Responsive only="desktop">
+            <Title>멤버 관리</Title>
+            <Spacing marginBottom="1.2" />
+          </Responsive>
+          <Responsive only="mobile">
+            <Spacing marginBottom="1.3" />
+          </Responsive>
           <SubTitle>{`${totalMember}명의 멤버가 함께하고 있어요`}</SubTitle>
-          <Spacing marginBottom="3.6" />
+          <Responsive only="desktop">
+            <Spacing marginBottom="3.6" />
+          </Responsive>
+          <Responsive only="mobile">
+            <Spacing marginBottom="1.2" />
+          </Responsive>
           <MemberManage data={memberData} setPageCount={setPage} pageCount={page} />
         </AdminContainer>
       );
@@ -216,6 +225,7 @@ const AdminContainer = styled.div<{ maxWidth?: string }>`
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
   }
+
 `;
 
 const Title = styled.h1`
@@ -226,6 +236,10 @@ const Title = styled.h1`
 const SubTitle = styled.h2`
   ${({ theme }) => theme.fonts.body4};
   color: ${({ theme }) => theme.colors.gray70};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle4};
+  }
 `;
 
 const AdminLayout = styled.div`

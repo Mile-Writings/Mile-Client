@@ -272,7 +272,7 @@ export const theme = {
       font-size: 1.6rem;
       font-family: 'Pretendard Variable', sans-serif;
       font-style: normal;
-      line-height: 160%; /* 25.6px */
+      line-height: 200%; /* 25.6px */
     `,
     body3: css`
       font-weight: 400;
