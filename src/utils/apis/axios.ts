@@ -8,7 +8,6 @@ export const client = axios.create({
   baseURL: `${devBaseUrl}`,
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
   },
   withCredentials: true,
 });
