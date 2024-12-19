@@ -12,6 +12,20 @@
     "preview": "vite preview",
     "postbuild": "react-snap"
   },
+  "reactSnap": {
+    "source": "build",
+    "inlineCss": true,
+    "puppeteerArgs": [
+      "--no-sandbox"
+    ],
+    "destination": "build",
+    "include": [
+      "/",
+      "/detail",
+      "/detail/NA==",
+      "/detail/NA==/OTI2"
+    ]
+  },
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
@@ -32,6 +46,7 @@
     "@tiptap/react": "^2.2.3",
     "@tiptap/starter-kit": "^2.2.3",
     "@types/react-slick": "^0.23.13",
+    "@vitejs/plugin-legacy": "^6.0.0",
     "axios": "^1.6.5",
     "emotion-reset": "^3.0.1",
     "history": "^5.3.0",
@@ -46,7 +61,10 @@
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@emotion/babel-plugin": "^11.11.0",
+    "@prerenderer/renderer-puppeteer": "^1.2.4",
+    "@prerenderer/rollup-plugin": "^0.3.12",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
@@ -63,12 +81,14 @@
     "msw": "^2.2.10",
     "postcss-styled-syntax": "^0.6.4",
     "prettier": "3.1.1",
+    "puppeteer": "^23.10.4",
     "react-snap": "^1.23.0",
     "rollup-plugin-visualizer": "^5.12.0",
     "source-map-explorer": "^2.5.3",
     "stylelint": "^16.1.0",
     "stylelint-config-standard": "^36.0.0",
     "stylelint-order": "^6.0.4",
+    "terser": "^5.37.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
     "vite-plugin-svgr": "^4.2.0"

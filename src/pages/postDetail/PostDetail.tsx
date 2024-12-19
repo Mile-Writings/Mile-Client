@@ -107,9 +107,7 @@ const PostDetail = () => {
     <>
       <Helmet>
         <title>{postData?.title}</title>
-        <meta property="og:title" content={postData?.title}>
-          {' '}
-        </meta>
+        <meta property="og:title" content={postData?.title} />
         <meta
           property="og:description"
           content={
