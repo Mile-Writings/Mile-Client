@@ -16,12 +16,29 @@ import { theme } from './styles/theme.ts';
 // }
 
 // enableMocking().then(() => {
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <>
-    <Global styles={globalStyle} />
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
-  </>,
-);
+
+const container = document.getElementById('root') as HTMLElement;
+const root = ReactDOM.createRoot(container);
+
+if (container.hasChildNodes()) {
+  ReactDOM.hydrateRoot(
+    container,
+    <>
+      <Global styles={globalStyle} />
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </>,
+  );
+} else {
+  root.render(
+    <>
+      <Global styles={globalStyle} />
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </>,
+  );
+}
+
 // });

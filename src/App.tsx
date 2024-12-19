@@ -2,11 +2,13 @@ import styled from '@emotion/styled';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Suspense } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { RouterProvider } from 'react-router-dom';
 import ResponsiveProvider from './components/commons/Responsive/ResponsiveProvider';
 import Loading from './pages/loading/Loading';
 import router from './routers/Router';
 import { MOBILE_MEDIA_QUERY } from './styles/mediaQuery';
+
 const App = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -16,11 +18,11 @@ const App = () => {
     },
   });
   return (
-    <>
-      {/* <div style={{ fontSize: '16px' }}> */}
+    <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <ResponsiveProvider>
           <DesktopWrapper>
+            {/* <div style={{ fontSize: '16px' }}> */}
             <Suspense fallback={<Loading />}>
               <RouterProvider router={router} />
             </Suspense>
@@ -28,8 +30,7 @@ const App = () => {
         </ResponsiveProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-      {/* </div> */}
-    </>
+    </HelmetProvider>
   );
 };
 
