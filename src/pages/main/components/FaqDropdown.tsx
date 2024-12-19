@@ -47,6 +47,7 @@ const TextWrapper = styled.div`
   display: flex;
   gap: 0.8rem;
   align-items: center;
+  width: 100%;
 `;
 const FaqWrapper = styled.section`
   display: flex;
@@ -72,26 +73,16 @@ const DropdownLayout = styled.section`
   }
 `;
 
-// const FaqContainer = styled.div`
-
-// `;
-
 const QuestionAnswerBox = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
 const Question = styled.div`
-  /* position: relative; */
   display: flex;
   gap: 0.8rem;
   align-items: center;
   justify-content: space-between;
-
-  & > svg {
-    /* position: absolute;
-    right: 0; */
-  }
 `;
 
 const QuestionMarkText = styled.p`
@@ -99,13 +90,7 @@ const QuestionMarkText = styled.p`
   ${({ theme }) => theme.fonts.title5};
 
   @media ${MOBILE_MEDIA_QUERY} {
-    font-weight: 400;
-    font-size: 14px;
-
-    /* mBody 2 */
-
-    font-style: normal;
-    line-height: 140%; /* 19.6px */
+    ${({ theme }) => theme.fonts.mBody2};
   }
 `;
 
@@ -114,13 +99,7 @@ const QuestionText = styled.p`
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 85%;
-
-    font-weight: 600;
-    font-size: 16px;
-
-    /* mTitle 6 */
-
-    font-style: normal;
+    ${({ theme }) => theme.fonts.mTitle1}
   }
 `;
 
@@ -134,4 +113,8 @@ const AnswerTextBox = styled.div`
   user-select: none;
 
   ${({ theme }) => theme.fonts.body3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3}
+  }
 `;
