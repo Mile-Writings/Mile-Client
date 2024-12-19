@@ -10,8 +10,12 @@ import {
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 import useImageUpload from '../../../hooks/useImageUpload';
+
+import { FileType } from '../../../types/imageUploadType';
+
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 import { INPUT_INFO_MESSAGE } from '../constants/inputInfoMsg';
+
 import {
   MAX_TOPIC_DESC_LENGTH,
   MAX_TOPIC_KEYWORD_LENGTH,
@@ -40,7 +44,7 @@ interface CreateGroupInfoPropTypes {
   setTopicDesc: Setter<string>;
   groupImageView: string;
   setGroupImageView: Dispatch<SetStateAction<string>>;
-  setImageFile: Dispatch<SetStateAction<File | null>>;
+  setImageFile: Dispatch<SetStateAction<FileType>>;
 }
 
 const CreateGroupInfo = ({

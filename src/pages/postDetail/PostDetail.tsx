@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import Error from '../error/Error';
@@ -8,6 +7,8 @@ import { useGroupFeedAuth, useGroupFeedPublicStatus } from '../groupFeed/hooks/q
 import Loading from '../loading/Loading';
 
 import { useParams } from 'react-router-dom';
+import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
+import useModal from '../../hooks/useModal';
 import checkAuthenticate from '../../utils/checkAuthenticate';
 import { replaceDefaultImg } from '../../utils/replaceDefaultImg';
 import {
@@ -23,10 +24,8 @@ import { AuthorizationHeader, UnAuthorizationHeader } from './../../components/c
 import Spacing from './../../components/commons/Spacing';
 import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
-import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
-import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
-import useModal from '../../hooks/useModal';
 import { MODAL } from './constants/modalContent';
+import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
 import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import Responsive from '../../components/commons/Responsive/Responsive';
 

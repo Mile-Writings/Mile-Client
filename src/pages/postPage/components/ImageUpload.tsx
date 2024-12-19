@@ -4,13 +4,14 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { EDITOR_DEFAULT_IMG } from '../constants/editorDefaultImg';
 
 import useImageUpload from '../../../hooks/useImageUpload';
+import { FileType } from '../../../types/imageUploadType';
 import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';
 import { BinIcn } from '../../../assets/svgs/editorSVG';
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface ImageUploadPropTypes {
   setPreviewImgUrl: Dispatch<SetStateAction<string>>;
-  setImageFile: Dispatch<SetStateAction<File | null>>;
+  setImageFile: Dispatch<SetStateAction<FileType>>;
   previewImgUrl: string;
 }
 

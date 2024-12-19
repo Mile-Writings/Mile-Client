@@ -16,6 +16,8 @@ import { INPUT_INFO_MESSAGE } from '../../createGroup/constants/inputInfoMsg';
 import { useGetGroupNameValidation } from '../../createGroup/hooks/queries';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
 import { useFetchGroupInfo, usePutAdminGroupInfo } from '../hooks/queries';
+import { FileType } from '../../../types/imageUploadType';
+
 const EditGroupInfo = () => {
   const [groupName, setGroupName] = useState('');
   const [beforeGroupName, setBeforeGroupName] = useState('');
@@ -32,7 +34,7 @@ const EditGroupInfo = () => {
   const { fileName = '', url = '' } = usePresignedUrl();
 
   const [previewImgUrl, setPreviewImgUrl] = useState('');
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<FileType>(null);
 
   const { onImageUpload } = useImageUpload({ setPreviewImgUrl, setImageFile });
   const [passDuplicate, setPassDuplicate] = useState(false);
@@ -90,12 +92,12 @@ const EditGroupInfo = () => {
   const editGroupInfo = async () => {
     if (groupName) {
       if ((passDuplicate || !isGroupNameChanged) && groupDesc.length <= 100) {
-        const groupImageServerUrl = await handleImageUpload(
+        const groupImageServerUrl = await handleImageUpload({
           url,
           fileName,
           imageFile,
-          previewImgUrl,
-        );
+          imageUrl: previewImgUrl,
+        });
         if (groupImageServerUrl) {
           await putAdminGroupInfo(groupImageServerUrl);
           setEditBtnActive(false);
@@ -123,7 +125,6 @@ const EditGroupInfo = () => {
         setPassDuplicate(true);
       } else if (groupNameValidationData === false) {
         setGroupNameInfoMsg(INPUT_INFO_MESSAGE.GROUP_NAME_NOT_AVAILABLE);
-        // setGroupNameValid(false);
       }
     }
   }, [groupNameValidationData, isSuccess]);
