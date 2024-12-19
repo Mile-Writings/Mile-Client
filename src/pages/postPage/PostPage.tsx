@@ -3,25 +3,6 @@ import styled from '@emotion/styled';
 import { createBrowserHistory } from 'history';
 import React, { useEffect, useReducer, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import handleImageUpload from '../../utils/handleImageUpload';
-import DropDown from './components/DropDown';
-import ImageUpload from './components/ImageUpload';
-import TipTap from './components/TipTap';
-import { EDITOR_DEFAULT_IMG } from './constants/editorDefaultImg';
-import {
-  useDeleteTempPost,
-  useGetTempSaveContent,
-  useGetTopic,
-  usePostContent,
-  usePostTempSaveContent,
-  usePresignedUrl,
-  usePutEditContent,
-  usePutTempSaveContent,
-  useTempSaveFlag,
-  useGetEditPostContent,
-} from './hooks/queries';
-import { allowScroll, preventScroll } from './utils/modalPreventScroll';
-
 import { EditorErrorIcn } from '../../assets/svgs/editorSVG';
 import {
   EditorEditHeader,
@@ -33,7 +14,26 @@ import { FullModal, FullModalBtn } from '../../components/commons/modal/FullModa
 import Spacing from '../../components/commons/Spacing';
 import useBlockPageExit from '../../hooks/useBlockPageExit';
 import useModal from '../../hooks/useModal';
+import { FileType } from '../../types/imageUploadType';
+import handleImageUpload from '../../utils/handleImageUpload';
+import DropDown from './components/DropDown';
+import ImageUpload from './components/ImageUpload';
+import TipTap from './components/TipTap';
+import { EDITOR_DEFAULT_IMG } from './constants/editorDefaultImg';
 import { MODAL } from './constants/modalContent';
+import {
+  useDeleteTempPost,
+  useGetEditPostContent,
+  useGetTempSaveContent,
+  useGetTopic,
+  usePostContent,
+  usePostTempSaveContent,
+  usePresignedUrl,
+  usePutEditContent,
+  usePutTempSaveContent,
+  useTempSaveFlag,
+} from './hooks/queries';
+import { allowScroll, preventScroll } from './utils/modalPreventScroll';
 
 // 반응형
 import Responsive from '../../components/commons/Responsive/Responsive';
@@ -200,7 +200,7 @@ const PostPage = () => {
   // 에디터 글 내용 태그 제외한 값 (valid 확인용)
   const [contentWithoutTag, setContentWithoutTag] = useState('');
 
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<FileType>(null);
   const [postContentId, setPostContentId] = useState<string>('');
 
   // 임시저장 불러오기
@@ -282,7 +282,12 @@ const PostPage = () => {
       return;
     }
 
-    const imageUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+    const imageUrl = await handleImageUpload({
+      url,
+      fileName,
+      imageFile,
+      imageUrl: editorVal.imageUrl,
+    });
     if (imageUrl) {
       postContent(imageUrl);
     }
@@ -348,7 +353,12 @@ const PostPage = () => {
       return;
     } else {
       try {
-        const imgUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+        const imgUrl = await handleImageUpload({
+          url,
+          fileName,
+          imageFile,
+          imageUrl: editorVal.imageUrl,
+        });
         if (imgUrl) {
           putEditContent(imgUrl);
         }
@@ -387,7 +397,12 @@ const PostPage = () => {
 
   // 임시저장 모달 -> '예' 누르면 쿼리 동작
   const tempSaveHandler = async () => {
-    const imageUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+    const imageUrl = await handleImageUpload({
+      url,
+      fileName,
+      imageFile,
+      imageUrl: editorVal.imageUrl,
+    });
 
     if (imageUrl) {
       postTempSaveContent(imageUrl);
@@ -416,7 +431,12 @@ const PostPage = () => {
       return;
     }
 
-    const imgUrl = await handleImageUpload(url, fileName, imageFile, editorVal.imageUrl);
+    const imgUrl = await handleImageUpload({
+      url,
+      fileName,
+      imageFile,
+      imageUrl: editorVal.imageUrl,
+    });
     if (imgUrl) {
       putTempSaveContent(imgUrl);
     }
