@@ -94,3 +94,7 @@ export { default as GroupCuriousIc } from './groupCuriousIcn.svg?react';
 export { default as GroupViewIc } from './groupViewIcn.svg?react';
 
 // export { default as LoadingIc } from './loadingSvg.svg?react';
+
+export { default as LinkIc } from './linkIcon.svg?react';
+export { default as HamburgerIc } from './hamburgerIcon.svg?react';
+export { default as DivideDotIc } from './divideDot.svg?react';
