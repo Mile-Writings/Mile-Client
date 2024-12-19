@@ -405,6 +405,8 @@ const PublicInfoWrapper = styled.div<{ isVisible: boolean }>`
     width: 30rem;
     height: 10rem;
     padding: 0.8rem;
+
+    ${({ theme }) => theme.fonts.mSubtitle3};
   }
 `;
 const SuccessMsgText = styled.p`

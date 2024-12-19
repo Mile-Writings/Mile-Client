@@ -10,13 +10,14 @@ import {
 } from '../../../assets/svgs';
 import { DEFAULT_IMG_URL } from '../../../constants/defaultImgUrl';
 import useImageUpload from '../../../hooks/useImageUpload';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 import handleImageUpload from '../../../utils/handleImageUpload';
 import { INPUT_INFO_MESSAGE } from '../../createGroup/constants/inputInfoMsg';
 import { useGetGroupNameValidation } from '../../createGroup/hooks/queries';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
 import { useFetchGroupInfo, usePutAdminGroupInfo } from '../hooks/queries';
-
 import { FileType } from '../../../types/imageUploadType';
+
 const EditGroupInfo = () => {
   const [groupName, setGroupName] = useState('');
   const [beforeGroupName, setBeforeGroupName] = useState('');
@@ -239,34 +240,36 @@ const EditGroupInfo = () => {
                 </PublicInfoText>
               </PublicInfoWrapper>
             </GroupPublicDescWrapper>
-            <GroupPublicDescContainer>
-              <GroupIsPublicWrapper>
-                <GroupisPublicLabel htmlFor="isPublicTrue">
-                  {isPublic ? <CreateGroupRadioCheckedIc /> : <CreateGroupRadioUncheckedIc />}
-                  공개
+            <GroupPublicDescResponsiveBox>
+              <GroupPublicDescContainer>
+                <GroupIsPublicWrapper>
+                  <GroupisPublicLabel htmlFor="isPublicTrue">
+                    {isPublic ? <CreateGroupRadioCheckedIc /> : <CreateGroupRadioUncheckedIc />}
+                    공개
+                  </GroupisPublicLabel>
+                </GroupIsPublicWrapper>
+                <GroupIsPublicRadio
+                  type="radio"
+                  id="isPublicTrue"
+                  name="isPublic"
+                  value={'true'}
+                  onChange={handleIsPublic}
+                />
+              </GroupPublicDescContainer>
+              <GroupPublicDescContainer>
+                <GroupisPublicLabel htmlFor="isPublicFalse">
+                  {!isPublic ? <CreateGroupRadioCheckedIc /> : <CreateGroupRadioUncheckedIc />}
+                  비공개
                 </GroupisPublicLabel>
-              </GroupIsPublicWrapper>
-              <GroupIsPublicRadio
-                type="radio"
-                id="isPublicTrue"
-                name="isPublic"
-                value={'true'}
-                onChange={handleIsPublic}
-              />
-            </GroupPublicDescContainer>
-            <GroupPublicDescContainer>
-              <GroupisPublicLabel htmlFor="isPublicFalse">
-                {!isPublic ? <CreateGroupRadioCheckedIc /> : <CreateGroupRadioUncheckedIc />}
-                비공개
-              </GroupisPublicLabel>
-              <GroupIsPublicRadio
-                type="radio"
-                id="isPublicFalse"
-                name="isPublic"
-                value={'false'}
-                onChange={handleIsPublic}
-              />
-            </GroupPublicDescContainer>
+                <GroupIsPublicRadio
+                  type="radio"
+                  id="isPublicFalse"
+                  name="isPublic"
+                  value={'false'}
+                  onChange={handleIsPublic}
+                />
+              </GroupPublicDescContainer>
+            </GroupPublicDescResponsiveBox>
           </GroupInputHorizonWrapper>
         </WhiteInputWrapper>
         <EditGroupBtn onClick={editGroupInfo} active={editBtnAcitve} disabled={!editBtnAcitve}>
@@ -278,6 +281,18 @@ const EditGroupInfo = () => {
 };
 
 export default EditGroupInfo;
+
+const GroupPublicDescResponsiveBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    gap: 1rem;
+    justify-content: flex-start;
+    width: 100%;
+  }
+`;
 const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
   position: absolute;
   z-index: 1;
@@ -310,6 +325,7 @@ const GroupImagePreviewWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 `;
 
 const GroupNameInputWrapper = styled.div`
@@ -322,6 +338,10 @@ const GroupInfoTextareaWrapper = styled.div`
 const GroupNameValidationText = styled.p<{ validation: boolean }>`
   ${({ theme }) => theme.fonts.body4};
   color: ${({ theme, validation }) => (validation ? theme.colors.mainGreen : theme.colors.mileRed)};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3};
+  }
 `;
 const EditGroupBtn = styled.button<{ active: boolean }>`
   display: flex;
@@ -368,6 +388,16 @@ const PublicInfoWrapper = styled.div<{ isVisible: boolean }>`
   background-color: ${({ theme }) => theme.colors.white};
   border: 2px solid ${({ theme }) => theme.colors.mainViolet};
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    top: 3rem;
+    right: 0;
+    width: 31.5rem;
+    height: fit-content;
+    padding: 1.2rem;
+
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 const GroupIsPublicRadio = styled.input`
   display: none;
@@ -378,7 +408,11 @@ const GroupIsPublicWrapper = styled.div`
   gap: 0.8rem;
   align-items: center;
   justify-content: flex-end;
-  width: 8rem;
+  width: 10rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    justify-content: flex-start;
+  }
 `;
 const GroupisPublicLabel = styled.label`
   display: flex;
@@ -387,6 +421,7 @@ const GroupisPublicLabel = styled.label`
   overflow: visible;
 
   cursor: pointer;
+
   ${({ theme }) => theme.fonts.subtitle6};
 `;
 
@@ -396,6 +431,10 @@ const GroupPublicDescContainer = styled.div`
   justify-content: flex-end;
   width: 8rem;
   height: 1.9rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    justify-content: flex-start;
+  }
 `;
 const GroupPublicDesc = styled.p`
   color: ${({ theme }) => theme.colors.black};
@@ -406,15 +445,24 @@ const GroupPublicDescWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 61.4rem;
+  width: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 
 const GroupInputDesc = styled.p`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.body4};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle1};
+  }
 `;
 const GroupImagePreview = styled.img`
-  width: 77rem;
+  width: 100%;
   height: 20rem;
   object-fit: cover;
 
@@ -424,6 +472,7 @@ const GroupImagePreview = styled.img`
 
 const GroupImageLabel = styled.label`
   display: block;
+  width: 100%;
 `;
 const GroupImageInput = styled.input`
   display: none;
@@ -433,7 +482,7 @@ const GroupImageWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 77rem;
+  width: 100%;
   height: 20rem;
 
   background-color: ${({ theme }) => theme.colors.gray10};
@@ -469,6 +518,10 @@ const GroupInfoTextarea = styled.textarea<{ isValid: boolean }>`
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray50};
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 const TextAreaLength = styled.p<{ isValid: boolean }>`
   position: absolute;
@@ -477,6 +530,10 @@ const TextAreaLength = styled.p<{ isValid: boolean }>`
 
   ${({ theme }) => theme.fonts.button3};
   color: ${({ theme, isValid }) => (isValid ? theme.colors.gray70 : theme.colors.mileRed)};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody1};
+  }
 `;
 const GroupInfoWrppaer = styled.section`
   display: flex;
@@ -516,6 +573,11 @@ const GroupInputHorizonWrapper = styled(GroupInputWrapper)`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
+    gap: 3rem;
+  }
 `;
 const InputTitleText = styled.p`
   color: ${({ theme }) => theme.colors.black};
@@ -547,6 +609,10 @@ const GroupNameInput = styled.input<{ isValid: boolean }>`
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray50};
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 
 const DuplicateCheckBtn = styled.button<{ positive: boolean }>`
@@ -573,4 +639,9 @@ const CreateGroupLayout = styled.div`
   width: 82.6rem;
   height: fit-content;
   margin-bottom: 8rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    max-width: 81rem;
+  }
 `;
