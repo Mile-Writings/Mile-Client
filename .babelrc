@@ -10,9 +10,9 @@
         "cssPropOptimization": true
       }
     ]
-  ],
-  "presets": [
-    ["@babel/preset-env", { "targets": { "esmodules": true } }], // ESModules 지원
-    "@babel/preset-react" // React 지원
   ]
+  // "presets": [
+  //   ["@babel/preset-env", { "targets": { "esmodules": true } }], // ESModules 지원
+  //   "@babel/preset-react" // React 지원
+  // ]
 }

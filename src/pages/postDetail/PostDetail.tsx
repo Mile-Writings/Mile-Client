@@ -106,21 +106,30 @@ const PostDetail = () => {
   return (
     <>
       <Helmet>
-        <title>{postData?.title}</title>
+        <title>{`MILE - ${postData?.title}`}</title>
         <meta property="og:title" content={postData?.title} />
         <meta
           property="og:description"
           content={
-            '오직 글쓰기 모임을 위한 블로그, 마일에서 모임원들과 함께 글을 쓰며 여러분 만의 공간을 만들어보세요'
+            // '오직 글쓰기 모임을 위한 블로그, 마일에서 모임원들과 함께 글을 쓰며 여러분 만의 공간을 만들어보세요'
+            'test'
           }
         ></meta>
         <meta property="og:image" content={postData?.imageUrl} />
         <meta name="keyword" content={`글쓰기, 글, 글모임, mile, MILE, 마일, ${postData?.title}`} />
         <meta
-          property="pg:url"
+          property="og:url"
           content={`https://www.milewriting.com/detail/${groupId}/${postId}`}
         />
       </Helmet>
+      {/* <Helmet prioritizeSeoTags>
+        <title>A fancy webpage</title>
+        <link rel="notImportant" href="https://www.chipotle.com" />
+        <meta name="whatever" />
+        <meta property="og:image" content={postData?.imageUrl} />
+        <link rel="canonical" href="https://www.tacobell.com" />
+        <meta property="og:title" content="A very important title" />
+      </Helmet> */}
 
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
       <Spacing marginBottom="6.4" />

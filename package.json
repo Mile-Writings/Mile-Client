@@ -21,9 +21,7 @@
     "destination": "build",
     "include": [
       "/",
-      "/detail",
-      "/detail/NA==",
-      "/detail/NA==/OTI2"
+      "/detail"
     ]
   },
   "dependencies": {
