@@ -1,7 +1,7 @@
 import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
-import { defineConfig, loadEnv, type PluginOption } from 'vite';
+import { defineConfig, type PluginOption } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
 // interface PostListWithGroup {
@@ -46,7 +46,7 @@ import svgr from 'vite-plugin-svgr';
 // };
 
 export default defineConfig(async ({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '');
+  // const env = loadEnv(mode, process.cwd(), '');
   // const dynamicRoutes = await generatePerformanceRoutes(env.VITE_DEV_BASE_URL);
 
   return {
