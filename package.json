@@ -9,20 +9,7 @@
     "lint": "eslint './**/*.{ts,tsx,js,jsx}'",
     "lint:fix": "eslint --fix './**/*.{ts,tsx,js,jsx}'",
     "lint:styled": "stylelint './src/**/*.{ts,tsx,js,jsx}' --fix",
-    "preview": "vite preview",
-    "postbuild": "react-snap"
-  },
-  "reactSnap": {
-    "source": "build",
-    "inlineCss": true,
-    "puppeteerArgs": [
-      "--no-sandbox"
-    ],
-    "destination": "build",
-    "include": [
-      "/",
-      "/detail"
-    ]
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",

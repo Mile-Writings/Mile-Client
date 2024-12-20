@@ -1,4 +1,3 @@
-import prerender from '@prerenderer/rollup-plugin';
 import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -21,7 +20,7 @@ interface PostListWithGroup {
   postListMoimMap: postListMoimMap;
 }
 const generatePerformanceRoutes = async (url: string) => {
-  const staticRoutes = ['/', '/detail']; // 정적 경로
+  const staticRoutes = ['/']; // 정적 경로
   const dynamicRoutes: string[] = []; // 동적 경로 저장 배열
 
   const data: postListMoimMap1[] = await fetchAllPostWithGroup(url);
@@ -101,11 +100,15 @@ export default defineConfig(async ({ mode }) => {
           ],
         },
       }),
-      prerender({
-        routes: dynamicRoutes,
-        renderer: '@prerenderer/renderer-puppeteer',
-        rendererOptions: {},
-      }),
+      // prerender({
+      //   // routes: dynamicRoutes,
+      //   routes: dynamicRoutes,
+      //   renderer: '@prerenderer/renderer-puppeteer',
+      //   // rendererOptions: {
+      //   //    maxConcurrentRoutes: 3,
+      //   //    renderAfterTime: 10000,
+      //   // },
+      // }),
       svgr(),
       visualizer() as PluginOption,
     ],
