@@ -5,13 +5,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
+import Responsive from '../../components/commons/Responsive/Responsive';
 import useModal from '../../hooks/useModal';
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 import checkAuthenticate from '../../utils/checkAuthenticate';
 import { replaceDefaultImg } from '../../utils/replaceDefaultImg';
 import Error from '../error/Error';
 import { useGroupFeedAuth, useGroupFeedPublicStatus } from '../groupFeed/hooks/queries';
 import Loading from '../loading/Loading';
-
 import {
   CheckboxIc,
   DefaultProfileIc,
@@ -27,9 +28,6 @@ import Comment from './components/Comment';
 import CuriousBtn from './components/CuriousBtn';
 import { MODAL } from './constants/modalContent';
 import { useCheckPostAuth, useDeletePost, useGetPostDetail } from './hooks/queries';
-
-import Responsive from '../../components/commons/Responsive/Responsive';
-import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 
 const PostDetail = () => {
   const navigate = useNavigate();
