@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
+import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -47,6 +48,7 @@ const basicCSS = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   padding: 1rem 1.6rem;
 
   white-space: nowrap;
@@ -69,6 +71,11 @@ const DeleteTempStoreBtn = styled.button`
     ${({ theme }) => theme.fonts.button3};
   }
   ${({ theme }) => theme.fonts.button3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mButton1};
+    width: 100%;
+  }
 `;
 
 // 글 제출하기, 수정 완료하기, 글 수정하기
@@ -84,6 +91,11 @@ const SubmitEditBtn = styled.button`
     background-color: ${({ theme }) => theme.colors.mileViolet};
   }
   ${({ theme }) => theme.fonts.button3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mButton1};
+    width: 100%;
+  }
 `;
 
 // 댓글 등록하기 비활성화
@@ -126,4 +138,8 @@ const WritingFlowBtn = styled.button`
     background-color: ${({ theme }) => theme.colors.middleViolet};
   }
   ${({ theme }) => theme.fonts.button1};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mButton1};
+  }
 `;

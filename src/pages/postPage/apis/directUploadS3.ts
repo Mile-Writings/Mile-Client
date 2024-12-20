@@ -1,13 +1,13 @@
 import axios from 'axios';
+import { DirectToS3Types } from '../../../types/imageUploadType';
 import { urlToServerParsing } from '../../../utils/urlToServerParsing';
 import { fetchPresignedUrl } from './fetchPresignedUrl';
-const directUploadS3 = async (url: string, imageFile: File, fileName: string) => {
+
+const directUploadS3 = async ({ url, fileName, imageFile }: DirectToS3Types) => {
   try {
     await axios.put(`${url}`, imageFile, {
       headers: {
-        'Content-Type': 'image/jpg',
-        //'Content-Type': 'multipart/form-data',
-        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'multipart/form-data',
       },
     });
     const urlToServer = urlToServerParsing(url, fileName);
@@ -21,8 +21,7 @@ const directUploadS3 = async (url: string, imageFile: File, fileName: string) =>
 
         await axios.put(`${data?.data.url}`, imageFile, {
           headers: {
-            'Content-Type': 'image/jpg',
-            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'multipart/form-data',
           },
         });
 

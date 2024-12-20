@@ -43,11 +43,17 @@
   width: 3.6rem;
   height: 3.7rem;
   background-image: url('/src/assets/svgs/groupTabBeforeBtnEnable.svg');
+  @media screen and (max-width: 850px) {
+    display: none !important;
+  }
 }
 
 .groupFeedCarousel .slick-prev:hover {
   left: -2.5rem;
   background-image: url('/src/assets/svgs/groupTabBeforeBtnHover.svg');
+  @media screen and (max-width: 850px) {
+    display: none !important;
+  }
 }
 
 [dir='rtl'] .slick-prev {
@@ -75,11 +81,17 @@
   height: 3.7rem;
   z-index: 1;
   background-image: url('/src/assets/svgs/groupTabNextBtnEnable.svg');
+  @media screen and (max-width: 850px) {
+    display: none !important;
+  }
 }
 
 .groupFeedCarousel .slick-next:hover {
   right: -2.5rem;
   background-image: url('/src/assets/svgs/groupTabNextBtnHover.svg');
+  @media screen and (max-width: 850px) {
+    display: none !important;
+  }
 }
 [dir='rtl'] .slick-next {
   right: auto;

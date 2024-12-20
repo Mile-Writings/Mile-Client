@@ -5,12 +5,14 @@ import { useParams } from 'react-router-dom';
 import { MODAL } from '../constants/modal';
 import { useDeleteMember, useFetchMemberInfo } from '../hooks/queries';
 
-import { adminProfileIc, MemberMaster } from '../../../assets/svgs';
 import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 
 import Pagenation from '../../../components/commons/Pagenation';
+import Responsive from '../../../components/commons/Responsive/Responsive';
 import Spacing from '../../../components/commons/Spacing';
 import useModal from '../../../hooks/useModal';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
+import MemberItem from './MemberItem';
 
 interface MemberPropTypes {
   pageNumber: number;
@@ -41,11 +43,6 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
   const { memberData } = useFetchMemberInfo(groupId || '', pageCount);
   const { deleteMember } = useDeleteMember();
 
-  const handleExpel = (writerNameId: number) => {
-    setDeleteMemberId(writerNameId);
-    handleShowModal();
-  };
-
   return (
     <>
       <MemberListTableWrapper>
@@ -58,27 +55,22 @@ const MemberManage = ({ data, setPageCount, pageCount }: MemberManagePropTypes) 
         <Spacing marginBottom="0.4" />
 
         <MemberListLayout>
-          {data?.writerNameList.map(
-            ({ writerNameId, writerName, postCount, commentCount, isOwner }) => (
-              <MemberItemContainer key={writerNameId}>
-                <AdminProfileIcon />
-                <Name>
-                  {isOwner && <MemberMaster />}
-                  {writerName}
-                </Name>
-                <PostNumber>{postCount}</PostNumber>
-                <CommentNumber>{commentCount}</CommentNumber>
-                {!isOwner && (
-                  <ExpelBtn type="button" onClick={() => handleExpel(writerNameId)}>
-                    삭제하기
-                  </ExpelBtn>
-                )}
-              </MemberItemContainer>
-            ),
-          )}
+          {data?.writerNameList.map((member) => (
+            <MemberItem
+              key={member.writerNameId}
+              {...member}
+              setDeleteMemberId={setDeleteMemberId}
+              handleShowModal={handleShowModal}
+            />
+          ))}
         </MemberListLayout>
       </MemberListTableWrapper>
-      <Spacing marginBottom="3.6" />
+      <Responsive only="desktop">
+        <Spacing marginBottom="3.6" />
+      </Responsive>
+      <Responsive only="mobile">
+        <Spacing marginBottom="1.6" />
+      </Responsive>
 
       {memberData && memberData.writerNameCount && (
         <Pagenation
@@ -118,14 +110,21 @@ export default MemberManage;
 const MemberListTableWrapper = styled.section`
   display: flex;
   flex-direction: column;
-  width: 78.1rem;
+  width: 100%;
+  max-width: 78.1rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 0.8rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    min-width: 33.5rem;
+  }
 `;
 
 const TableHeaderLayout = styled.div`
   display: flex;
+  width: 100%;
   padding: 1.4rem 1.8rem;
 
   color: ${({ theme }) => theme.colors.mainViolet};
@@ -133,22 +132,71 @@ const TableHeaderLayout = styled.div`
   background-color: ${({ theme }) => theme.colors.mileViolet};
   border-radius: 0.8rem 0.8rem 0 0;
   ${({ theme }) => theme.fonts.button3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    min-width: 33.5rem;
+    height: 4rem;
+    padding: 1rem;
+  }
 `;
 
 const InfoField = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
+
+  white-space: nowrap;
 
   &:first-of-type {
-    margin-right: 8.45rem;
+    justify-content: start;
+
+    @media ${MOBILE_MEDIA_QUERY} {
+      justify-content: start;
+      min-width: 3.4rem;
+      margin-right: 1rem;
+    }
   }
 
   &:nth-of-type(2) {
-    margin-right: 11.1rem;
+    flex-grow: 1.7;
+    margin-left: 2rem;
+
+    @media ${MOBILE_MEDIA_QUERY} {
+      flex-grow: 2;
+      min-width: 12.1rem;
+      margin-right: 0.4rem;
+      margin-left: 0;
+    }
   }
 
   &:nth-of-type(3) {
-    margin-right: 6rem;
+    flex-grow: 1;
+    justify-content: center;
+    width: 5.2rem;
+
+    @media ${MOBILE_MEDIA_QUERY} {
+      flex-grow: 1;
+      justify-content: center;
+      width: 4.9rem;
+      margin-right: 1rem;
+    }
+  }
+
+  &:nth-of-type(4) {
+    flex: 2;
+    justify-content: start;
+    margin-right: 5rem;
+
+    @media ${MOBILE_MEDIA_QUERY} {
+      flex-grow: 2;
+      justify-content: start;
+      min-width: 5rem;
+    }
+  }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.editor};
   }
 `;
 
@@ -156,65 +204,8 @@ const MemberListLayout = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 1.8rem;
-`;
 
-const MemberItemContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 1.6rem 0;
-
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray10};
-`;
-
-const AdminProfileIcon = styled(adminProfileIc)`
-  margin-right: 4rem;
-`;
-
-const Name = styled.span`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 11.1rem;
-  margin-right: 6.8rem;
-
-  color: ${({ theme }) => theme.colors.black};
-  white-space: nowrap;
-
-  ${({ theme }) => theme.fonts.body1};
-`;
-
-const PostNumber = styled.span`
-  /* display: flex; */
-  justify-content: center;
-  width: 5.1rem;
-  margin-right: 6rem;
-
-  color: ${({ theme }) => theme.colors.gray70};
-  text-align: center;
-
-  ${({ theme }) => theme.fonts.body1}
-`;
-
-const CommentNumber = styled.span`
-  justify-content: center;
-  width: 5.1rem;
-
-  color: ${({ theme }) => theme.colors.gray70};
-  text-align: center;
-
-  ${({ theme }) => theme.fonts.body1}
-`;
-
-const ExpelBtn = styled.button`
-  margin-left: auto;
-  padding: 0;
-
-  color: ${({ theme }) => theme.colors.gray50};
-  ${({ theme }) => theme.fonts.body5};
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.mainViolet};
-
-    transition: all 0.3s ease-in-out;
+  @media ${MOBILE_MEDIA_QUERY} {
+    padding: 0 1.2rem;
   }
 `;

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import checkAuthenticate from '../../../utils/checkAuthenticate';
 import { useDeleteCurious, useGetCuriousInfo, usePostCurious } from '../hooks/queries';
 import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets/svgs';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 interface CuriousBtnProps {
   postId: string;
 }
@@ -72,6 +73,10 @@ const CuriousBtnWrapper = styled.button<{ $isClick: boolean }>`
   :hover {
     background-color: ${({ $isClick, theme }) =>
       !$isClick ? theme.colors.mileViolet : theme.colors.mainViolet};
+  }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    height: 4.4rem;
   }
 `;
 
