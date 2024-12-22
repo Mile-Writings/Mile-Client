@@ -45,7 +45,9 @@ export const MobileAuthorizedSidebar = ({
 
   useClickOutside(sidebarRef, () => {
     //헤더 이외부분 클릭시 닫히게
-    if (sidebarRef.current) onClose();
+    if (sidebarRef.current) {
+      onClose();
+    }
   });
   const handleLogOut = () => {
     logout();
@@ -58,8 +60,7 @@ export const MobileAuthorizedSidebar = ({
 
   return (
     <>
-      <Background onClick={onClose} />
-      <SideBarLayout>
+      <SideBarLayout ref={sidebarRef}>
         <LogInOutBtn onClick={handleLogOut}>로그아웃</LogInOutBtn>
         <CreateGroupBtn groupCount={groupCount} />
         <CustomLine />
@@ -110,14 +111,6 @@ const MyGroup = styled.p`
   display: flex;
   justify-content: center;
   ${({ theme }) => theme.fonts.mButton1};
-`;
-
-const Background = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
 `;
 
 const CustomLine = styled.hr`

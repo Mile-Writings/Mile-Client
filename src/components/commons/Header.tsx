@@ -72,8 +72,9 @@ export const AuthorizationHeader = () => {
           <HeaderLogoIcon onClick={navigateToHome} />
           <MobileHeaderButtons>
             <HamburgerIcon
-              onClick={() => {
+              onClick={(e) => {
                 setIsSidebarOpen(true);
+                e.stopPropagation();
               }}
             />
           </MobileHeaderButtons>
@@ -114,7 +115,8 @@ export const UnAuthorizationHeader = () => {
           <HeaderLogoIcon onClick={navigateToHome} />
           <MobileHeaderButtons>
             <HamburgerIcon
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setIsSidebarOpen(true);
               }}
             />
