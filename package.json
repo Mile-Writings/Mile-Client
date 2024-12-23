@@ -9,13 +9,7 @@
     "lint": "eslint './**/*.{ts,tsx,js,jsx}'",
     "lint:fix": "eslint --fix './**/*.{ts,tsx,js,jsx}'",
     "lint:styled": "stylelint './src/**/*.{ts,tsx,js,jsx}' --fix",
-    "preview": "vite preview",
-    "postbuild": "react-snap"
-  },
-  "reactSnap": {
-    "source": "dist",
-    "headless": true,
-    "port": 5173
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",

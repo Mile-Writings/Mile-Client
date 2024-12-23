@@ -1,5 +1,5 @@
 // import prerender from '@prerenderer/renderer-puppeteer';
-import prerender from '@prerenderer/rollup-plugin';
+// import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig, loadEnv, type PluginOption } from 'vite';
@@ -126,58 +126,46 @@ export default defineConfig(async ({ mode }) => {
           ],
         },
       }),
-      prerender({
-        // routes: dynamicRoutes,
-        routes: dynamicRoutes,
-        renderer: '@prerenderer/renderer-puppeteer',
-        server: {
-          host: 'localhost',
-          port: 8000,
-        },
-        // puppeteer: async () => {
-        //   const browser = await puppeteer.launch({
-        //     headless: true,
-        //     args: [
-        //       '--no-sandbox',
-        //       '--cdisable-setuid-sandbox',
-        //       `-–chrome-version=${env.CHROME_VERSION}`,
-        //     ],
-        //   });
-        // },
-        // postProcess: postProcess,
-        rendererOptions: {
-          maxConcurrentRoutes: 1,
-          launchOptions: {
-            args: [
-              '--no-sandbox',
-              '--disable-setuid-sandbox',
-              `--chrome-version=${env.CHROME_VERSION}`,
-            ],
-            ignoreDefaultArgs: ['--disable-extensions'],
+      // prerender({
+      //   // routes: dynamicRoutes,
+      //   routes: dynamicRoutes,
+      //   renderer: '@prerenderer/renderer-puppeteer',
+      //   server: {
+      //     host: 'localhost',
+      //     port: 5173,
+      //   },
+      //   // puppeteer: async () => {
+      //   //   const browser = await puppeteer.launch({
+      //   //     headless: true,
+      //   //     args: [
+      //   //       '--no-sandbox',
+      //   //       '--cdisable-setuid-sandbox',
+      //   //       `-–chrome-version=${env.CHROME_VERSION}`,
+      //   //     ],
+      //   //   });
+      //   // },
+      //   // postProcess: postProcess,
+      //   rendererOptions: {
+      //     maxConcurrentRoutes: 1,
+      //     launchOptions: {
+      //       args: [
+      //         '--no-sandbox',
+      //         '--disable-setuid-sandbox',
+      //         `--chrome-version=${env.CHROME_VERSION}`,
+      //       ],
+      //       ignoreDefaultArgs: ['--disable-extensions'],
 
-            ignoreHTTPSErrors: true,
-            headless: true,
-          },
-        },
-        // postProcess(dynamicRoutes) {
-        //   dynamicRoutes.html = dynamicRoutes.html
-        //     .replace(/http:/i, 'https:')
-        //     .replace(/(https:\/\/)?(localhost|127\.0\.0\.1):\d*/i, 'https://www.milewriting.com/');
-        // },
-      }),
+      //       ignoreHTTPSErrors: true,
+      //       headless: true,
+      //     },
+      //   },
+      //   // postProcess(dynamicRoutes) {
+      //   //   dynamicRoutes.html = dynamicRoutes.html
+      //   //     .replace(/http:/i, 'https:')
+      //   //     .replace(/(https:\/\/)?(localhost|127\.0\.0\.1):\d*/i, 'https://www.milewriting.com/');
+      //   // },
+      // }),
 
-      // {
-      //   ...prerender({
-      //     // routes: dynamicRoutes,
-      //     routes: dynamicRoutes,
-      //     renderer: '@prerenderer/renderer-puppeteer',
-      //     // rendererOptions: {
-      //     //   maxConcurrentRoutes: 1,
-      //     //   renderAfterTime: 10000,
-      //     // },
-      //   }),
-      //   enforce: 'pre', // 'enforce' 속성 추가
-      // },
       svgr(),
       visualizer() as PluginOption,
     ],
