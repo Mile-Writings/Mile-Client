@@ -1,23 +1,31 @@
-// import prerender from '@prerenderer/renderer-puppeteer';
+//  import prerender from '@prerenderer/renderer-puppeteer';
 // import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig, loadEnv, type PluginOption } from 'vite';
 import svgr from 'vite-plugin-svgr';
-import getAllPost from './src/utils/apis/getAllPost';
-// interface PostListWithGroup {
-//   [key: string]: string[]; // key는 문자열이고, 값은 문자열 배열
-// }
-type postListMoimMap = {
-  [key: string]: string[]; // key는 문자열, 값은 문자열 배열
+import prerender from '@prerenderer/rollup-plugin';
+import { postListMoimMap1 } from './src/types/vitePrerenderType';
+import { allPostParsing } from './src/utils/allPostParsing';
+import axios from 'axios';
+
+const generatePerformanceRoutes = async () => {
+  // const staticRoutes = ['/']; // 정적 경로
+  const dynamicRoutes: string[] = []; // 동적 경로 저장 배열
+
+  const data: postListMoimMap1[] = await allPostParsing('https://dev.milewriting.com');
+
+  data.map((items: postListMoimMap1) => {
+    dynamicRoutes.push(`/detail/${items.key}/${items.value}`); // 정적 경로와 동적 경로를 결합하여 반환
+    // const metaData = await getPostDetailParsingMetaTg(`${items.value}`);
+  });
+
+  return dynamicRoutes;
 };
 
-type postListMoimMap1 = {
-  key: string;
-  value: string; // key는 문자열,
-};
-interface PostListWithGroup {
-  postListMoimMap: postListMoimMap;
+function extractLastSegment(url: string): string {
+  const lastIndex = url.lastIndexOf('/');
+  return lastIndex !== -1 ? url.substring(lastIndex + 1) : url;
 }
 
 // async function ssr(url) {
@@ -28,49 +36,10 @@ interface PostListWithGroup {
 //   await browser.close();
 //   return html;
 // }
-const generatePerformanceRoutes = async (url: string) => {
-  const staticRoutes = ['/']; // 정적 경로
-  const dynamicRoutes: string[] = []; // 동적 경로 저장 배열
-
-  const data: postListMoimMap1[] = await fetchAllPostWithGroup(url);
-
-  data.map((items: postListMoimMap1) => {
-    // ssr(`https://milewriting.com/detail/${items.key}/${items.value}`);
-    dynamicRoutes.push(`/detail/${items.key}/${items.value}`); // 정적 경로와 동적 경로를 결합하여 반환
-
-    // (async () => {
-    //   const browser = await puppeteer.launch({
-    //     headless: true, // 브라우저가 백그라운드에서 실행되도록 설정
-    //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    //   });
-    //   const page = await browser.newPage();
-    //   await page.goto(`https://www.milewriting.com/detail/${items.key}/${items.value}`);
-    //   const html = await page.content();
-    //   console.log(html);
-    //   await browser.close();
-    // })();
-  });
-
-  // staticRoutes.concat(dynamicRoutes);
-  // console.log(staticRoutes);
-  return dynamicRoutes;
-};
-
-const fetchAllPostWithGroup = async (url: string) => {
-  const data = await getAllPost(url);
-
-  const postListWithGroup: PostListWithGroup = data?.data?.data;
-
-  const result = Object.entries(postListWithGroup.postListMoimMap).flatMap(
-    ([key, values]: [string, string[]]) => values.map((value: string) => ({ key, value })),
-  );
-
-  return result;
-};
 
 export default defineConfig(async ({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-  const dynamicRoutes = await generatePerformanceRoutes(env.VITE_DEV_BASE_URL);
+  const dynamicRoutes = await generatePerformanceRoutes();
 
   // const browser = await puppeteer.launch({
   //   executablePath: '/path/to/Chrome',
@@ -126,45 +95,73 @@ export default defineConfig(async ({ mode }) => {
           ],
         },
       }),
-      // prerender({
-      //   // routes: dynamicRoutes,
-      //   routes: dynamicRoutes,
-      //   renderer: '@prerenderer/renderer-puppeteer',
-      //   server: {
-      //     host: 'localhost',
-      //     port: 5173,
-      //   },
-      //   // puppeteer: async () => {
-      //   //   const browser = await puppeteer.launch({
-      //   //     headless: true,
-      //   //     args: [
-      //   //       '--no-sandbox',
-      //   //       '--cdisable-setuid-sandbox',
-      //   //       `-–chrome-version=${env.CHROME_VERSION}`,
-      //   //     ],
-      //   //   });
-      //   // },
-      //   // postProcess: postProcess,
-      //   rendererOptions: {
-      //     maxConcurrentRoutes: 1,
-      //     launchOptions: {
-      //       args: [
-      //         '--no-sandbox',
-      //         '--disable-setuid-sandbox',
-      //         `--chrome-version=${env.CHROME_VERSION}`,
-      //       ],
-      //       ignoreDefaultArgs: ['--disable-extensions'],
+      prerender({
+        // routes: dynamicRoutes,
+        routes: dynamicRoutes,
+        renderer: '@prerenderer/renderer-puppeteer',
+        server: {
+          host: 'localhost',
+          port: 5173,
+        },
+        // puppeteer: async () => {
+        //   const browser = await puppeteer.launch({
+        //     headless: true,
+        //     args: [
+        //       '--no-sandbox',
+        //       '--cdisable-setuid-sandbox',
+        //       `-–chrome-version=${env.CHROME_VERSION}`,
+        //     ],
+        //   });
+        // },
+        // postProcess: postProcess,
+        rendererOptions: {
+          maxConcurrentRoutes: 1,
+          launchOptions: {
+            args: [
+              '--no-sandbox',
+              '--disable-setuid-sandbox',
+              `--chrome-version=${env.CHROME_VERSION}`,
+            ],
+            ignoreDefaultArgs: ['--disable-extensions'],
 
-      //       ignoreHTTPSErrors: true,
-      //       headless: true,
-      //     },
-      //   },
-      //   // postProcess(dynamicRoutes) {
-      //   //   dynamicRoutes.html = dynamicRoutes.html
-      //   //     .replace(/http:/i, 'https:')
-      //   //     .replace(/(https:\/\/)?(localhost|127\.0\.0\.1):\d*/i, 'https://www.milewriting.com/');
-      //   // },
-      // }),
+            ignoreHTTPSErrors: true,
+            headless: true,
+          },
+        },
+        postProcess: async (renderRoute) => {
+          // console.log(renderRoute.html);
+          console.log(renderRoute.route);
+          console.log('test');
+          const { data } = await axios.get(
+            `${env.VITE_DEV_BASE_URL}/api/post/${extractLastSegment(renderRoute.route)}`,
+          );
+
+          console.log(data);
+          const title = data.data.title;
+          const imageUrl = data.data.imageUrl;
+          console.log(title);
+          console.log(imageUrl);
+          // console.log(`${env.VITE_DEV_BASE_URL}/api/post/${extractLastSegment(renderRoute.route)}`);
+          // dynamicRoutes.html = dynamicRoutes.html
+          //   .replace(/http:/i, 'https:')
+          //   .replace(/(https:\/\/)?(localhost|127\.0\.0\.1):\d*/i, 'https://www.milewriting.com/');
+
+          renderRoute.html = renderRoute.html.replace(
+            /<\/head>/i,
+            `
+                   <meta property="og:title" content="${title || 'MILE'}" />
+                <meta property="og:image" content="${
+                  imageUrl ||
+                  'https://github.com/user-attachments/assets/52ce1a54-3429-4d0d-9801-e7cda913596f'
+                }" />
+                <meta name="keywords" content="글쓰기, 글모임, 글, 커뮤니티, 아티클" />
+                <meta property="og:description" content="${'링크를 클릭해 마일의 글을 만나보세요'}" />
+                <meta property="og:url" content="${env.CLIENT_URL}${renderRoute.route}" />
+              </head>
+            `,
+          );
+        },
+      }),
 
       svgr(),
       visualizer() as PluginOption,
