@@ -160,10 +160,17 @@ export default defineConfig(async ({ mode }) => {
             .replace(/http:/i, 'https:')
             .replace(/(https:\/\/)?(localhost|127\.0\.0\.1):\d*/i, 'https://www.milewriting.com');
 
+          //기존 meta tag삭제
+          renderRoute.html = renderRoute.html
+            .replace(/<meta property="og:title".*?>/i, '')
+            .replace(/<meta property="og:image".*?>/i, '')
+            .replace(/<meta property="og:description".*?>/i, '')
+            .replace(/<meta property="og:url".*?>/i, '');
+
           renderRoute.html = renderRoute.html.replace(
             /<\/head>/i,
             `
-                   <meta property="og:title" content="${title || 'MILE'}" />
+                <meta property="og:title" content="${title || 'MILE'}" />
                 <meta property="og:image" content="${
                   imageUrl ||
                   'https://github.com/user-attachments/assets/52ce1a54-3429-4d0d-9801-e7cda913596f'
