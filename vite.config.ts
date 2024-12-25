@@ -1,5 +1,5 @@
 //  import prerender from '@prerenderer/renderer-puppeteer';
-// import legacy from '@vitejs/plugin-legacy';
+import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig, loadEnv, type PluginOption } from 'vite';
@@ -56,7 +56,7 @@ export default defineConfig(async ({ mode }) => {
       // configure this value when the browser version of the development environment is lower
       // minimum support es2015
       // https://esbuild.github.io/api/#target
-      // target: 'es2015',
+      //target: 'es2015',
       include: /\.(ts|jsx|tsx)$/,
     },
     build: {
@@ -78,6 +78,20 @@ export default defineConfig(async ({ mode }) => {
       //   //import.meta 사용하기 위한 최소 버전
       //   targets: ['chrome >= 64', 'safari >= 12'],
       //   renderLegacyChunks: true,
+      //   modernPolyfills: true,
+      // }),
+
+      // legacy({
+      //   //? 사용하기 위한 최소 버전
+      //   targets: ['chrome >= 80', 'safari >= 13.4'],
+      //   renderLegacyChunks: true,
+      //   modernPolyfills: true,
+      // }),
+
+      // legacy({
+      //   //? 사용하기 위한 최소 버전
+      //   targets: ['chrome >= 64', 'edge >= 79', 'safari >= 11.1', 'firefox >= 67', 'ie >= 11'],
+      //   renderLegacyChunks: false,
       //   modernPolyfills: true,
       // }),
 
@@ -142,9 +156,9 @@ export default defineConfig(async ({ mode }) => {
           console.log(title);
           console.log(imageUrl);
           // console.log(`${env.VITE_DEV_BASE_URL}/api/post/${extractLastSegment(renderRoute.route)}`);
-          // dynamicRoutes.html = dynamicRoutes.html
-          //   .replace(/http:/i, 'https:')
-          //   .replace(/(https:\/\/)?(localhost|127\.0\.0\.1):\d*/i, 'https://www.milewriting.com/');
+          renderRoute.html = renderRoute.html
+            .replace(/http:/i, 'https:')
+            .replace(/(https:\/\/)?(localhost|127\.0\.0\.1):\d*/i, 'https://www.milewriting.com');
 
           renderRoute.html = renderRoute.html.replace(
             /<\/head>/i,

@@ -8,8 +8,7 @@
     "build": "tsc && vite build",
     "lint": "eslint './**/*.{ts,tsx,js,jsx}'",
     "lint:fix": "eslint --fix './**/*.{ts,tsx,js,jsx}'",
-    "lint:styled": "stylelint './src/**/*.{ts,tsx,js,jsx}' --fix",
-    "preview": "vite preview"
+    "lint:styled": "stylelint './src/**/*.{ts,tsx,js,jsx}' --fix"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
@@ -46,6 +45,8 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
     "@emotion/babel-plugin": "^11.11.0",
     "@prerenderer/renderer-puppeteer": "^1.2.4",
     "@prerenderer/rollup-plugin": "^0.3.12",
@@ -53,7 +54,7 @@
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
     "@typescript-eslint/parser": "^6.16.0",
-    "@vitejs/plugin-legacy": "^6.0.0",
+    "@vitejs/plugin-legacy": "1.8.1",
     "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
