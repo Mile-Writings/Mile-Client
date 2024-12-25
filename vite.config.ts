@@ -14,7 +14,8 @@ function extractPostId(url: string): string {
 
 export default defineConfig(async ({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-  const dynamicRoutes = await generateDynamicRoutes();
+
+  const dynamicRoutes = await generateDynamicRoutes(env.VITE_DEV_BASE_URL);
 
   return {
     esbuild: {
