@@ -182,7 +182,7 @@ export default defineConfig(async ({ mode }) => {
                 }" />
                 <meta name="keywords" content="글쓰기, 글모임, 글, 커뮤니티, 아티클" />
                 <meta property="og:description" content="${'링크를 클릭해 마일의 글을 만나보세요'}" />
-                <meta property="og:url" content="${env.CLIENT_URL}${renderRoute.route}" />
+                <meta property="og:url" content="${env.VITE_DEV_BASE_URL}${renderRoute.route}" />
               </head>
             `,
           );
