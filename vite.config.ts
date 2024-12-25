@@ -1,5 +1,3 @@
-//  import prerender from '@prerenderer/renderer-puppeteer';
-import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig, loadEnv, type PluginOption } from 'vite';
@@ -59,27 +57,6 @@ export default defineConfig(async ({ mode }) => {
       },
     },
     plugins: [
-      // legacy({
-      //   //import.meta 사용하기 위한 최소 버전
-      //   targets: ['chrome >= 64', 'safari >= 12'],
-      //   renderLegacyChunks: true,
-      //   modernPolyfills: true,
-      // }),
-
-      // legacy({
-      //   //? 사용하기 위한 최소 버전
-      //   targets: ['chrome >= 80', 'safari >= 13.4'],
-      //   renderLegacyChunks: true,
-      //   modernPolyfills: true,
-      // }),
-
-      // legacy({
-      //   //? 사용하기 위한 최소 버전
-      //   targets: ['chrome >= 64', 'edge >= 79', 'safari >= 11.1', 'firefox >= 67', 'ie >= 11'],
-      //   renderLegacyChunks: false,
-      //   modernPolyfills: true,
-      // }),
-
       react({
         jsxImportSource: '@emotion/react',
         babel: {
@@ -95,7 +72,6 @@ export default defineConfig(async ({ mode }) => {
         },
       }),
       prerender({
-        // routes: dynamicRoutes,
         routes: dynamicRoutes,
         renderer: '@prerenderer/renderer-puppeteer',
         server: {
@@ -118,9 +94,6 @@ export default defineConfig(async ({ mode }) => {
           },
         },
         postProcess: async (renderRoute) => {
-          // console.log(renderRoute.html);
-          console.log(renderRoute.route);
-          console.log('test');
           const { data } = await axios.get(
             `${env.VITE_DEV_BASE_URL}/api/post/${extractLastSegment(renderRoute.route)}`,
           );
