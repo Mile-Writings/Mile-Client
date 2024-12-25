@@ -5,18 +5,23 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig, loadEnv, type PluginOption } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import prerender from '@prerenderer/rollup-plugin';
-import { postListMoimMap1 } from './src/types/vitePrerenderType';
+
 import { allPostParsing } from './src/utils/allPostParsing';
 import axios from 'axios';
 
-const generatePerformanceRoutes = async () => {
-  // const staticRoutes = ['/']; // 정적 경로
+type GroupPostIdentifierTypes = {
+  groupId: string;
+  postId: string; // key는 문자열,
+};
+const generatePerformanceRoutes = async ({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+
   const dynamicRoutes: string[] = []; // 동적 경로 저장 배열
 
-  const data: postListMoimMap1[] = await allPostParsing('https://dev.milewriting.com');
+  const data: GroupPostIdentifierTypes[] = await allPostParsing(env.VITE_DEV_BASE_URL);
 
-  data.map((items: postListMoimMap1) => {
-    dynamicRoutes.push(`/detail/${items.key}/${items.value}`); // 정적 경로와 동적 경로를 결합하여 반환
+  data.map((items: GroupPostIdentifierTypes) => {
+    dynamicRoutes.push(`/detail/${items.groupId}/${items.postId}`); // 정적 경로와 동적 경로를 결합하여 반환
     // const metaData = await getPostDetailParsingMetaTg(`${items.value}`);
   });
 
@@ -39,7 +44,7 @@ function extractLastSegment(url: string): string {
 
 export default defineConfig(async ({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-  const dynamicRoutes = await generatePerformanceRoutes();
+  const dynamicRoutes = await generatePerformanceRoutes({ mode });
 
   // const browser = await puppeteer.launch({
   //   executablePath: '/path/to/Chrome',
@@ -160,10 +165,17 @@ export default defineConfig(async ({ mode }) => {
             .replace(/http:/i, 'https:')
             .replace(/(https:\/\/)?(localhost|127\.0\.0\.1):\d*/i, 'https://www.milewriting.com');
 
+          //기존 meta tag삭제
+          renderRoute.html = renderRoute.html
+            .replace(/<meta property="og:title".*?>/i, '')
+            .replace(/<meta property="og:image".*?>/i, '')
+            .replace(/<meta property="og:description".*?>/i, '')
+            .replace(/<meta property="og:url".*?>/i, '');
+
           renderRoute.html = renderRoute.html.replace(
             /<\/head>/i,
             `
-                   <meta property="og:title" content="${title || 'MILE'}" />
+                <meta property="og:title" content="${title || 'MILE'}" />
                 <meta property="og:image" content="${
                   imageUrl ||
                   'https://github.com/user-attachments/assets/52ce1a54-3429-4d0d-9801-e7cda913596f'
