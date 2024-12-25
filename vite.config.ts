@@ -65,6 +65,7 @@ export default defineConfig(async ({ mode }) => {
         rendererOptions: {
           maxConcurrentRoutes: 1,
           launchOptions: {
+            //chrome 버전 이슈 해결을 위한 env 설정
             args: [
               '--no-sandbox',
               '--disable-setuid-sandbox',
@@ -76,6 +77,8 @@ export default defineConfig(async ({ mode }) => {
             headless: true,
           },
         },
+
+        //render되는 static index html 파일들을 커스텀하기 위한 로직
         postProcess: async (renderRoute) => {
           const { data } = await axios.get(
             `${env.VITE_DEV_BASE_URL}/api/post/${extractPostId(renderRoute.route)}`,
@@ -88,13 +91,14 @@ export default defineConfig(async ({ mode }) => {
             .replace(/http:/i, 'https:')
             .replace(/(https:\/\/)?(localhost|127\.0\.0\.1):\d*/i, 'https://www.milewriting.com');
 
-          //기존 meta tag삭제
+          //기존 meta tag 삭제
           renderRoute.html = renderRoute.html
             .replace(/<meta property="og:title".*?>/i, '')
             .replace(/<meta property="og:image".*?>/i, '')
             .replace(/<meta property="og:description".*?>/i, '')
             .replace(/<meta property="og:url".*?>/i, '');
 
+          //동적으로 OG tag 삽입
           renderRoute.html = renderRoute.html.replace(
             /<\/head>/i,
             `
