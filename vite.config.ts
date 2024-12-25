@@ -156,9 +156,9 @@ export default defineConfig(async ({ mode }) => {
           console.log(title);
           console.log(imageUrl);
           // console.log(`${env.VITE_DEV_BASE_URL}/api/post/${extractLastSegment(renderRoute.route)}`);
-          // dynamicRoutes.html = dynamicRoutes.html
-          //   .replace(/http:/i, 'https:')
-          //   .replace(/(https:\/\/)?(localhost|127\.0\.0\.1):\d*/i, 'https://www.milewriting.com/');
+          renderRoute.html = renderRoute.html
+            .replace(/http:/i, 'https:')
+            .replace(/(https:\/\/)?(localhost|127\.0\.0\.1):\d*/i, 'https://www.milewriting.com');
 
           renderRoute.html = renderRoute.html.replace(
             /<\/head>/i,
