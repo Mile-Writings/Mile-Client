@@ -3,36 +3,18 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig, loadEnv, type PluginOption } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import prerender from '@prerenderer/rollup-plugin';
+import { generateDynamicRoutes } from './src/utils/generateDynamicRoute';
 
-import { allPostParsing } from './src/utils/allPostParsing';
 import axios from 'axios';
 
-type GroupPostIdentifierTypes = {
-  groupId: string;
-  postId: string;
-};
-const generatePerformanceRoutes = async ({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '');
-
-  const dynamicRoutes: string[] = []; // 동적 경로 저장 배열
-
-  const data: GroupPostIdentifierTypes[] = await allPostParsing(env.VITE_DEV_BASE_URL);
-
-  data.map((items: GroupPostIdentifierTypes) => {
-    dynamicRoutes.push(`/detail/${items.groupId}/${items.postId}`); // 정적 경로와 동적 경로를 결합하여 반환
-  });
-
-  return dynamicRoutes;
-};
-
-function extractLastSegment(url: string): string {
+function extractPostId(url: string): string {
   const lastIndex = url.lastIndexOf('/');
   return lastIndex !== -1 ? url.substring(lastIndex + 1) : url;
 }
 
 export default defineConfig(async ({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-  const dynamicRoutes = await generatePerformanceRoutes({ mode });
+  const dynamicRoutes = await generateDynamicRoutes();
 
   return {
     esbuild: {
@@ -95,7 +77,7 @@ export default defineConfig(async ({ mode }) => {
         },
         postProcess: async (renderRoute) => {
           const { data } = await axios.get(
-            `${env.VITE_DEV_BASE_URL}/api/post/${extractLastSegment(renderRoute.route)}`,
+            `${env.VITE_DEV_BASE_URL}/api/post/${extractPostId(renderRoute.route)}`,
           );
 
           const title = data.data.title;
