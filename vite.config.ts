@@ -1,40 +1,21 @@
-//  import prerender from '@prerenderer/renderer-puppeteer';
-import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig, loadEnv, type PluginOption } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import prerender from '@prerenderer/rollup-plugin';
+import { generateDynamicRoutes } from './src/utils/generateDynamicRoute';
 
-import { allPostParsing } from './src/utils/allPostParsing';
 import axios from 'axios';
 
-type GroupPostIdentifierTypes = {
-  groupId: string;
-  postId: string;
-};
-const generatePerformanceRoutes = async ({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '');
-
-  const dynamicRoutes: string[] = []; // 동적 경로 저장 배열
-
-  const data: GroupPostIdentifierTypes[] = await allPostParsing(env.VITE_DEV_BASE_URL);
-
-  data.map((items: GroupPostIdentifierTypes) => {
-    dynamicRoutes.push(`/detail/${items.groupId}/${items.postId}`); // 정적 경로와 동적 경로를 결합하여 반환
-  });
-
-  return dynamicRoutes;
-};
-
-function extractLastSegment(url: string): string {
+function extractPostId(url: string): string {
   const lastIndex = url.lastIndexOf('/');
   return lastIndex !== -1 ? url.substring(lastIndex + 1) : url;
 }
 
 export default defineConfig(async ({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-  const dynamicRoutes = await generatePerformanceRoutes({ mode });
+
+  const dynamicRoutes = await generateDynamicRoutes(env.VITE_DEV_BASE_URL);
 
   return {
     esbuild: {
@@ -59,27 +40,6 @@ export default defineConfig(async ({ mode }) => {
       },
     },
     plugins: [
-      // legacy({
-      //   //import.meta 사용하기 위한 최소 버전
-      //   targets: ['chrome >= 64', 'safari >= 12'],
-      //   renderLegacyChunks: true,
-      //   modernPolyfills: true,
-      // }),
-
-      // legacy({
-      //   //? 사용하기 위한 최소 버전
-      //   targets: ['chrome >= 80', 'safari >= 13.4'],
-      //   renderLegacyChunks: true,
-      //   modernPolyfills: true,
-      // }),
-
-      // legacy({
-      //   //? 사용하기 위한 최소 버전
-      //   targets: ['chrome >= 64', 'edge >= 79', 'safari >= 11.1', 'firefox >= 67', 'ie >= 11'],
-      //   renderLegacyChunks: false,
-      //   modernPolyfills: true,
-      // }),
-
       react({
         jsxImportSource: '@emotion/react',
         babel: {
@@ -95,7 +55,6 @@ export default defineConfig(async ({ mode }) => {
         },
       }),
       prerender({
-        // routes: dynamicRoutes,
         routes: dynamicRoutes,
         renderer: '@prerenderer/renderer-puppeteer',
         server: {
@@ -106,6 +65,7 @@ export default defineConfig(async ({ mode }) => {
         rendererOptions: {
           maxConcurrentRoutes: 1,
           launchOptions: {
+            //chrome 버전 이슈 해결을 위한 env 설정
             args: [
               '--no-sandbox',
               '--disable-setuid-sandbox',
@@ -117,12 +77,11 @@ export default defineConfig(async ({ mode }) => {
             headless: true,
           },
         },
+
+        //render되는 static index html 파일들을 커스텀하기 위한 로직
         postProcess: async (renderRoute) => {
-          // console.log(renderRoute.html);
-          console.log(renderRoute.route);
-          console.log('test');
           const { data } = await axios.get(
-            `${env.VITE_DEV_BASE_URL}/api/post/${extractLastSegment(renderRoute.route)}`,
+            `${env.VITE_DEV_BASE_URL}/api/post/${extractPostId(renderRoute.route)}`,
           );
 
           const title = data.data.title;
@@ -132,13 +91,14 @@ export default defineConfig(async ({ mode }) => {
             .replace(/http:/i, 'https:')
             .replace(/(https:\/\/)?(localhost|127\.0\.0\.1):\d*/i, 'https://www.milewriting.com');
 
-          //기존 meta tag삭제
+          //기존 meta tag 삭제
           renderRoute.html = renderRoute.html
             .replace(/<meta property="og:title".*?>/i, '')
             .replace(/<meta property="og:image".*?>/i, '')
             .replace(/<meta property="og:description".*?>/i, '')
             .replace(/<meta property="og:url".*?>/i, '');
 
+          //동적으로 OG tag 삽입
           renderRoute.html = renderRoute.html.replace(
             /<\/head>/i,
             `
@@ -148,11 +108,13 @@ export default defineConfig(async ({ mode }) => {
                   'https://github.com/user-attachments/assets/52ce1a54-3429-4d0d-9801-e7cda913596f'
                 }" />
                 <meta name="keywords" content="글쓰기, 글모임, 글, 커뮤니티, 아티클" />
-                <meta property="og:description" content="${'링크를 클릭해 마일의 글을 만나보세요'}" />
+                <meta property="og:description" content="${'링크를 클릭해 마일의 글을 만나보세요!'}" />
                 <meta property="og:url" content="${env.VITE_CLIENT_URL}${renderRoute.route}" />
               </head>
             `,
           );
+
+          //test
         },
       }),
 
