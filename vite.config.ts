@@ -57,26 +57,6 @@ export default defineConfig(async ({ mode }) => {
       prerender({
         routes: dynamicRoutes,
         renderer: '@prerenderer/renderer-puppeteer',
-        server: {
-          host: 'localhost',
-          port: 5173,
-        },
-
-        rendererOptions: {
-          maxConcurrentRoutes: 1,
-          launchOptions: {
-            //chrome 버전 이슈 해결을 위한 env 설정
-            args: [
-              '--no-sandbox',
-              '--disable-setuid-sandbox',
-              `--chrome-version=${env.CHROME_VERSION}`,
-            ],
-            ignoreDefaultArgs: ['--disable-extensions'],
-
-            ignoreHTTPSErrors: true,
-            headless: true,
-          },
-        },
 
         //render되는 static index html 파일들을 커스텀하기 위한 로직
         postProcess: async (renderRoute) => {
@@ -113,8 +93,6 @@ export default defineConfig(async ({ mode }) => {
               </head>
             `,
           );
-
-          //test
         },
       }),
 
