@@ -65,6 +65,7 @@ export default defineConfig(async ({ mode }) => {
           );
 
           const title = data.data.title;
+          const desc = data.data.content;
           const imageUrl = data.data.imageUrl;
 
           renderRoute.html = renderRoute.html
@@ -88,7 +89,9 @@ export default defineConfig(async ({ mode }) => {
                   'https://github.com/user-attachments/assets/52ce1a54-3429-4d0d-9801-e7cda913596f'
                 }" />
                 <meta name="keywords" content="글쓰기, 글모임, 글, 커뮤니티, 아티클" />
-                <meta property="og:description" content="${'링크를 클릭해 마일의 글을 만나보세요!'}" />
+                <meta property="og:description" content="${
+                  desc || '링크를 클릭해 마일의 글을 만나보세요!'
+                }" />
                 <meta property="og:url" content="${env.VITE_CLIENT_URL}${renderRoute.route}" />
               </head>
             `,
