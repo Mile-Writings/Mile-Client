@@ -510,7 +510,7 @@ const TipTap = (props: EditorPropTypes) => {
         <ToolbarContainer className="menu">
           {/* 글자 크기 */}
           <ToolbarDropDownWrapper ref={fontSizeDropDownRef}>
-            <FontSizeToggle onClick={onClickFontSizeToggle}>
+            <FontSizeToggle onClick={onClickFontSizeToggle} $isOpen={isFontSizeOpen}>
               <FontSizeLabel>
                 {editor.isActive('textStyle', { fontSize: '1.2rem' })
                   ? '본문 2'
@@ -860,7 +860,7 @@ const ToolbarDropDownWrapper = styled.div`
 `;
 
 // 글자 크기 드롭다운 리스트
-const FontSizeToggle = styled.div`
+const FontSizeToggle = styled.div<{ $isOpen: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -872,10 +872,12 @@ const FontSizeToggle = styled.div`
   border-radius: 0.8rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    width: 4.9rem;
+    width: 5rem;
     height: 3.2rem;
     margin-right: 0.8rem;
     padding: 0 0.7rem;
+
+    background-color: ${({ $isOpen, theme }) => ($isOpen ? theme.colors.mileViolet : '')};
   }
 `;
 
@@ -1108,12 +1110,19 @@ const ToolbarSvg = styled.button`
     fill: ${({ theme }) => theme.colors.mainViolet};
   }
 
-  :hover {
-    background-color: ${({ theme }) => theme.colors.mileViolet};
-  }
-
   @media ${MOBILE_MEDIA_QUERY} {
     margin: 0;
+
+    :active {
+      /* background-color: ${({ theme }) => theme.colors.mileViolet}; */
+      background-color: red;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    :hover {
+      background-color: ${({ theme }) => theme.colors.mileViolet};
+    }
   }
 `;
 
