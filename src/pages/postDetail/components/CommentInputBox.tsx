@@ -198,7 +198,7 @@ const MobileCommentForm = styled.textarea<{ isMainComment: boolean }>`
 
     background-color: ${({ theme }) => theme.colors.gray5};
   }
-  ${({ theme }) => theme.fonts.mSubtitle1};
+  ${({ theme }) => theme.fonts.mBody3};
 `;
 
 const CommentPostBtn = styled.button<{ $isComment: string }>`

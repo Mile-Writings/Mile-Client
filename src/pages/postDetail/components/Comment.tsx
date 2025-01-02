@@ -115,6 +115,7 @@ const CommentWrapper = styled.div`
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
+    padding: 1.6rem;
   }
 `;
 
