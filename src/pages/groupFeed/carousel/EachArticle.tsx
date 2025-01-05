@@ -151,6 +151,7 @@ const GroupListProfileIcon = styled(GroupListProfileIc)`
 const MobileListWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
+  justify-content: space-between;
   width: 100%;
 `;
 const DividingLine = styled.div`
