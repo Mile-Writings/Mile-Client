@@ -119,7 +119,7 @@ const RenderAdminContent = ({ menu }: RenderAdminContentPropTypes) => {
 
     case '멤버 관리':
       return (
-        <AdminContainer>
+        <AdminContainer maxWidth="78.1">
           <Responsive only="desktop">
             <Title>멤버 관리</Title>
             <Spacing marginBottom="1.2" />
@@ -220,12 +220,12 @@ const ModalOverlay = styled.div`
 const AdminContainer = styled.div<{ maxWidth?: string }>`
   display: flex;
   flex-direction: column;
+  width: 100%;
   max-width: ${({ maxWidth }) => maxWidth}rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
   }
-
 `;
 
 const Title = styled.h1`

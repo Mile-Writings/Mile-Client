@@ -134,10 +134,12 @@ const TableHeaderLayout = styled.div`
   ${({ theme }) => theme.fonts.button3};
 
   @media ${MOBILE_MEDIA_QUERY} {
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.7fr 1.7fr;
     width: 100%;
     min-width: 33.5rem;
     height: 4rem;
-    padding: 1rem;
+    padding: 1rem 6.6rem 1rem 1rem;
   }
 `;
 
@@ -153,19 +155,17 @@ const InfoField = styled.div`
 
     @media ${MOBILE_MEDIA_QUERY} {
       justify-content: start;
-      min-width: 3.4rem;
-      margin-right: 1rem;
+      margin-right: 5rem;
     }
   }
 
   &:nth-of-type(2) {
-    flex-grow: 1.7;
+    flex-grow: 2;
     margin-left: 2rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
-      flex-grow: 2;
-      min-width: 12.1rem;
-      margin-right: 0.4rem;
+      justify-content: start;
+      margin-right: 5rem;
       margin-left: 0;
     }
   }
@@ -176,9 +176,7 @@ const InfoField = styled.div`
     width: 5.2rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
-      flex-grow: 1;
-      justify-content: center;
-      width: 4.9rem;
+      justify-content: start;
       margin-right: 1rem;
     }
   }
@@ -187,12 +185,6 @@ const InfoField = styled.div`
     flex: 2;
     justify-content: start;
     margin-right: 5rem;
-
-    @media ${MOBILE_MEDIA_QUERY} {
-      flex-grow: 2;
-      justify-content: start;
-      min-width: 5rem;
-    }
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
