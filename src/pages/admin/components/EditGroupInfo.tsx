@@ -11,12 +11,12 @@ import {
 import { DEFAULT_IMG_URL } from '../../../constants/defaultImgUrl';
 import useImageUpload from '../../../hooks/useImageUpload';
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
+import { FileType } from '../../../types/imageUploadType';
 import handleImageUpload from '../../../utils/handleImageUpload';
 import { INPUT_INFO_MESSAGE } from '../../createGroup/constants/inputInfoMsg';
 import { useGetGroupNameValidation } from '../../createGroup/hooks/queries';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
 import { useFetchGroupInfo, usePutAdminGroupInfo } from '../hooks/queries';
-import { FileType } from '../../../types/imageUploadType';
 
 const EditGroupInfo = () => {
   const [groupName, setGroupName] = useState('');
@@ -153,7 +153,7 @@ const EditGroupInfo = () => {
                   placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
                   isValid={groupNameLengthValid}
                   value={groupName}
-                />{' '}
+                />
                 <TextAreaLength isValid={groupNameLengthValid}>
                   {groupName.length}/10
                 </TextAreaLength>

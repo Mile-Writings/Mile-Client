@@ -204,6 +204,7 @@ const DeleteGroupBtn = styled.button`
 `;
 const SubTitleWrapper = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
 `;
 const ModalOverlay = styled.div`
