@@ -123,7 +123,8 @@ const MemberListTableWrapper = styled.section`
 `;
 
 const TableHeaderLayout = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 11fr 13fr 8fr 20fr;
   width: 100%;
   padding: 1.4rem 1.8rem;
 
@@ -134,8 +135,7 @@ const TableHeaderLayout = styled.div`
   ${({ theme }) => theme.fonts.button3};
 
   @media ${MOBILE_MEDIA_QUERY} {
-    display: grid;
-    grid-template-columns: 1fr 1fr 0.7fr 1.7fr;
+    grid-template-columns: 10fr 10fr 7fr 17fr;
     width: 100%;
     min-width: 33.5rem;
     height: 4rem;
@@ -144,7 +144,6 @@ const TableHeaderLayout = styled.div`
 `;
 
 const InfoField = styled.div`
-  display: flex;
   align-items: center;
   justify-content: center;
 
@@ -154,14 +153,12 @@ const InfoField = styled.div`
     justify-content: start;
 
     @media ${MOBILE_MEDIA_QUERY} {
-      justify-content: start;
       margin-right: 5rem;
     }
   }
 
   &:nth-of-type(2) {
-    flex-grow: 2;
-    margin-left: 2rem;
+    justify-content: center;
 
     @media ${MOBILE_MEDIA_QUERY} {
       justify-content: start;
@@ -171,9 +168,7 @@ const InfoField = styled.div`
   }
 
   &:nth-of-type(3) {
-    flex-grow: 1;
     justify-content: center;
-    width: 5.2rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
       justify-content: start;
@@ -182,9 +177,7 @@ const InfoField = styled.div`
   }
 
   &:nth-of-type(4) {
-    flex: 2;
     justify-content: start;
-    margin-right: 5rem;
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
