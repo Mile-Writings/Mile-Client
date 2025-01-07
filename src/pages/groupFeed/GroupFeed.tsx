@@ -85,7 +85,6 @@ const GroupFeed = () => {
   return (
     <GroupFeedWrapper>
       {accessToken ? <AuthorizationHeader /> : <UnAuthorizationHeader />}
-      <Spacing marginBottom="6.4" />
       <GroupFeedThumnail imageUrl={infoResponse?.imageUrl} />
       <Spacing marginBottom="6" />
       <GroupInfoWrapper>
@@ -160,6 +159,7 @@ const GroupFeedWrapper = styled.div`
 const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
   width: 100%;
   height: 37rem;
+  margin-top: 6.4rem;
   object-fit: cover;
 
   background-image: ${({ imageUrl }) => `url(${imageUrl || GroupThumbnailImgIc})`};
@@ -168,6 +168,7 @@ const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
     height: 18rem;
+    margin-top: 5.5rem;
   }
 `;
 const GroupInfoWrapper = styled.div`

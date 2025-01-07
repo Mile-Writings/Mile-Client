@@ -30,36 +30,42 @@ const CuriousArticle = (props: CuriousArticlePropTypes) => {
   };
 
   return (
-    <CuriousArticleWrapper>
+    <>
       {mostCuriousPost?.length == 0 ? (
-        <NoCuriousArticleWrapper>
-          <Spacing marginBottom="4" />
-          <GroupNoDataImgIc />
-          <Spacing marginBottom="1.6" />
-          아직은 궁금해요를 많이 받은 작가가 없어요
-          <Spacing marginBottom="4" />
-        </NoCuriousArticleWrapper>
+        <NoArticleWrapper>
+          <NoCuriousArticleWrapper>
+            <Spacing marginBottom="4" />
+            <GroupNoDataImgIc />
+            <Spacing marginBottom="1.6" />
+            아직 궁금해요를 많이 받은 작가가 없어요
+            <Spacing marginBottom="4" />
+          </NoCuriousArticleWrapper>
+        </NoArticleWrapper>
       ) : (
-        mostCuriousPost?.map((article: ArticlePropTypes, index: number) => (
-          <CuriousArticleLayout key={index} onClick={() => handleGoPostDetail(article.postId)}>
-            <Responsive only="desktop">
-              <ArticleThumbnail
-                src={article.isContainPhoto ? article.imageUrl : GroupThumbnailImg}
-              />
-            </Responsive>
-            <Responsive only="mobile">
-              <ArticleThumbnail src={article.isContainPhoto ? article.imageUrl : PopularMobileIc} />
-            </Responsive>
+        <CuriousArticleWrapper>
+          {mostCuriousPost?.map((article: ArticlePropTypes, index: number) => (
+            <CuriousArticleLayout key={index} onClick={() => handleGoPostDetail(article.postId)}>
+              <Responsive only="desktop">
+                <ArticleThumbnail
+                  src={article.isContainPhoto ? article.imageUrl : GroupThumbnailImg}
+                />
+              </Responsive>
+              <Responsive only="mobile">
+                <ArticleThumbnail
+                  src={article.isContainPhoto ? article.imageUrl : PopularMobileIc}
+                />
+              </Responsive>
 
-            <ArticleWrapper>
-              <ArticleWritingStyle>{article.topic}</ArticleWritingStyle>
-              <ArticleTitle>{article.title}</ArticleTitle>
-              <ArticlePreview>{article.content}</ArticlePreview>
-            </ArticleWrapper>
-          </CuriousArticleLayout>
-        ))
+              <ArticleWrapper>
+                <ArticleWritingStyle>{article.topic}</ArticleWritingStyle>
+                <ArticleTitle>{article.title}</ArticleTitle>
+                <ArticlePreview>{article.content}</ArticlePreview>
+              </ArticleWrapper>
+            </CuriousArticleLayout>
+          ))}
+        </CuriousArticleWrapper>
       )}
-    </CuriousArticleWrapper>
+    </>
   );
 };
 
@@ -211,4 +217,15 @@ const NoCuriousArticleWrapper = styled.div`
   color: ${({ theme }) => theme.colors.gray40};
 
   ${({ theme }) => theme.fonts.subtitle3};
+`;
+
+const NoArticleWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1.6rem;
+  margin-bottom: 6.4rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    margin-bottom: 3.2rem;
+  }
 `;

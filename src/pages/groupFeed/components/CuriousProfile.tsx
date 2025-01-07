@@ -19,15 +19,14 @@ const CuriousProfile = (props: CuriousProfilePropTypes) => {
 
   return (
     <CuriousProfileWrapper>
-      {/* 없는 경우 디자인 가이드 필요! */}
       {mostCuriousWriter?.length === 0 ? (
-        <NoCuriousProfileeWrapper>
+        <NoCuriousProfileWrapper>
           <Spacing marginBottom="4" />
           <GroupNoDataImgIc />
           <Spacing marginBottom="1.6" />
           아직 궁금해요를 받은 필명의 글쓴이가 없어요
           <Spacing marginBottom="4" />
-        </NoCuriousProfileeWrapper>
+        </NoCuriousProfileWrapper>
       ) : (
         mostCuriousWriter?.map((writer: ProfilePropTypes, index: number) => (
           <CuriousProfileLayout key={index}>
@@ -100,7 +99,7 @@ const CuriousProfileLayout = styled.div`
   }
 `;
 
-const NoCuriousProfileeWrapper = styled.div`
+const NoCuriousProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
