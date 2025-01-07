@@ -491,14 +491,6 @@ const GroupImageWrapper = styled.div`
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.lightViolet};
-
-    .group-image-preview {
-      g {
-        path {
-          fill: #6139d1;
-        }
-      }
-    }
   }
 `;
 const GroupInfoTextarea = styled.textarea<{ isValid: boolean }>`
