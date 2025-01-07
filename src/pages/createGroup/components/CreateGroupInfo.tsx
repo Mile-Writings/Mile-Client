@@ -201,7 +201,7 @@ const CreateGroupInfo = ({
               <GroupNameInput
                 ref={groupNameRef}
                 onChange={handleGroupName}
-                placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
+                placeholder="띄어쓰기 포함 10자 이내"
                 isValid={isGroupNameValid}
                 value={groupName}
                 maxLength={11}
