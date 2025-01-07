@@ -22,7 +22,7 @@ const CreateGroupSuccess = () => {
       <CreatGroupSection>
         <TitleWrapper>
           <MainTitle>글 모임 생성을 축하해요!</MainTitle>
-          <SubTitle>초대 링크 복사 후, 생성된 글 모임 페이지를 확인해볼까요?</SubTitle>
+          <SubTitle>마일에 오신 것을 환영해요</SubTitle>
         </TitleWrapper>
         <CreateGroupCongratsImg src={createGroupCongrats} />
         <ButtonWrapper>
@@ -95,6 +95,7 @@ const SubTitle = styled.h2`
 
   @media ${MOBILE_MEDIA_QUERY} {
     ${({ theme }) => theme.fonts.mSubtitle4};
+    color: ${({ theme }) => theme.colors.gray70};
   }
 `;
 
