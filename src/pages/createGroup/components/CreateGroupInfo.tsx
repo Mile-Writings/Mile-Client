@@ -720,6 +720,10 @@ const GroupInputWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    padding: 1.8rem;
+  }
 `;
 
 const InputTitleText = styled.p`
@@ -772,6 +776,7 @@ const DuplicateCheckBtn = styled.button<{ positive: boolean }>`
 
   /* padding: 1 1.6rem; */
   width: 8.1rem;
+  min-width: 8rem;
   height: 4rem;
 
   color: ${({ theme }) => theme.colors.gray70};
