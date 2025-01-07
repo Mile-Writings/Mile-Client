@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { AxiosError } from 'axios';
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { MODAL } from '../../admin/constants/modal';
 import {
   CreateGroupImageUpload,
   CreateGroupImageUploadedIc,
@@ -9,6 +10,8 @@ import {
   CreateGroupRadioUncheckedIc,
   CreateCroupImageRemove,
 } from '../../../assets/svgs';
+import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
+import useModal from '../../../hooks/useModal';
 import Spacing from '../../../components/commons/Spacing';
 import useImageUpload from '../../../hooks/useImageUpload';
 
@@ -85,6 +88,7 @@ const CreateGroupInfo = ({
     topicDesc.length <= MAX_TOPIC_DESC_LENGTH;
 
   const { onImageUpload } = useImageUpload({ setPreviewImgUrl: setGroupImageView, setImageFile });
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
   const { groupNameValidationData, refetch, isSuccess, error } =
     useGetGroupNameValidation(groupName);
 
@@ -159,6 +163,7 @@ const CreateGroupInfo = ({
   const handleRemoveImage = () => {
     setGroupImageView('');
     setImageFile(null);
+    handleCloseModal();
   };
 
   useEffect(() => {
@@ -263,7 +268,7 @@ const CreateGroupInfo = ({
                         onChange={onImageUpload}
                       />
                     </GroupImageLabel>
-                    <CreateGroupImageRemoveIcon onClick={handleRemoveImage} />
+                    <CreateGroupImageRemoveIcon onClick={handleShowModal} />
                   </IconWrapper>
                 </GroupImagePreviewWrapper>
               </GroupImageWrapper>
@@ -373,6 +378,20 @@ const CreateGroupInfo = ({
           />
         </Overlay>
       )}
+
+      {/* 글모임 이미지 삭제 모달 */}
+      <DefaultModal
+        isModalOpen={isModalOpen}
+        onClickBg={handleCloseModal}
+        content={MODAL.GROUP_IMAGE_DELETE}
+        sizeType="LARGE"
+      >
+        <DefaultModalBtn
+          btnText={['예', '아니요']}
+          onClickLeft={handleRemoveImage}
+          onClickRight={handleCloseModal}
+        />
+      </DefaultModal>
     </>
   );
 };
