@@ -73,7 +73,7 @@ export default Introduction;
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 33.5rem;
   max-width: 40rem;
 `;
 const IntroductionWrapper = styled.section`
@@ -96,17 +96,25 @@ const IntroductionWrapper = styled.section`
 const MileMakersTextLayout = styled.div`
   display: flex;
   flex-direction: column;
+  width: 33.5rem;
 
   white-space: nowrap;
 `;
 
 const MainText = styled.h1`
   ${({ theme }) => theme.fonts.title3};
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle5};
+  }
 `;
 
 const SubText = styled.span`
   color: ${({ theme }) => theme.colors.darkViolet};
   ${({ theme }) => theme.fonts.subtitle3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3};
+  }
 `;
 
 const GroupRoutingButton = styled.button`
@@ -129,6 +137,10 @@ const GroupRoutingButton = styled.button`
     background-color: ${({ theme }) => theme.colors.white};
 
     transition: all 0.5s;
+
+    @media ${MOBILE_MEDIA_QUERY} {
+      ${({ theme }) => theme.fonts.button3};
+    }
   }
 `;
 
@@ -141,16 +153,29 @@ const IntroduceMileLayout = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0 2px 8px 0 rgb(0 0 0 / 10%);
   border-radius: 1rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 33.5rem;
+    padding: 3rem;
+  }
 `;
 
 const HookText = styled.span`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.subtitle4};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle3};
+  }
 `;
 
 const GreetingText = styled.span`
   white-space: nowrap;
   ${({ theme }) => theme.fonts.title5};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle5};
+  }
 `;
 
 const DiscriptionText = styled.p`
@@ -158,4 +183,8 @@ const DiscriptionText = styled.p`
 
   color: ${({ theme }) => theme.colors.gray80};
   ${({ theme }) => theme.fonts.body3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody2};
+  }
 `;
