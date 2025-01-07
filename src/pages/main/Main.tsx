@@ -121,7 +121,7 @@ const FaqContainer = styled.div`
   }
 
   @media screen and (width <= 400px) {
-    margin: 0 2rem;
+    padding: 0 2rem;
   }
 `;
 
