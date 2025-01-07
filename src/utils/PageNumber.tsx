@@ -31,6 +31,7 @@ const NumberLayout = styled.button<{ isActive: boolean }>`
   ${({ theme, isActive }) => (isActive ? theme.fonts.subtitle3 : theme.fonts.body1)};
 
   @media ${MOBILE_MEDIA_QUERY} {
-    ${({ theme }) => theme.fonts.mSubtitle2};
+    padding: 0.6rem 1.2rem;
+    ${({ theme }) => theme.fonts.mSubtitle4};
   }
 `;

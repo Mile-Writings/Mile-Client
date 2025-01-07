@@ -17,8 +17,8 @@ import { useFetchHeaderGroup } from '../../pages/groupFeed/hooks/queries';
 import logout from '../../utils/logout';
 
 import { MOBILE_MEDIA_QUERY } from '../../styles/mediaQuery';
+import { MobileAuthorizedSidebar, MobileUnAuthorizedSidebar } from './MyMobileSidebar';
 import Responsive from './Responsive/Responsive';
-import { MobileUnAuthorizedSidebar, MobileAuthorizedSidebar } from './MyMobileSidebar';
 
 import { useParams } from 'react-router-dom';
 import { useFetchInvitationLink } from '../../pages/admin/hooks/queries';
@@ -210,6 +210,7 @@ export const AdminHeader = () => {
   useEffect(() => {
     if (moimsData) setMoims(moimsData);
   }, [moimsData]);
+
   return (
     <>
       <Responsive only="desktop">
@@ -221,7 +222,8 @@ export const AdminHeader = () => {
           <MobileHeaderButtons>
             <LinkIcon type="button" onClick={handleInviteBtnClick} />
             <HamburgerIcon
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setIsSidebarOpen(true);
               }}
             />
