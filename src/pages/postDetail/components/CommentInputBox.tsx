@@ -37,9 +37,13 @@ const CommentInputBox = (props: CommentPropTypes) => {
     } else {
       if (comment.trim() !== '') {
         //commendId가 있으면 대댓글, 없으면 댓글
-        commentId ? postNestedComment(comment) : postComment(comment); //댓글 등록
-        setComment(''); // 댓글 등록 후 댓글 초기화
-        setIsNestedComment && setIsNestedComment(false);
+        if (comment.length <= 255) {
+          commentId ? postNestedComment(comment) : postComment(comment); //댓글 등록
+          setComment(''); // 댓글 등록 후 댓글 초기화
+          setIsNestedComment && setIsNestedComment(false);
+        } else {
+          alert('댓글은 최대 255자까지 이용하실 수 있습니다.');
+        }
       }
     }
   };
