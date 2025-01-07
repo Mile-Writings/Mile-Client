@@ -322,7 +322,7 @@ const CreateGroupInfo = ({
         <WhiteInputWrapper isValid={!isGroupTopicEmpty}>
           <GroupInputHorizonWrapper>
             <TopicSettingWrapper>
-              <TopicSettingText>글모임 생성 전에 첫번째 글감을 설정해보세요*</TopicSettingText>
+              <TopicSettingText>글모임 생성 전에 첫 번째 글감을 설정해보세요*</TopicSettingText>
 
               <TopicSettingAdditionalText>
                 {!(topicTag && topic)
@@ -518,6 +518,7 @@ const TopicSettingWrapper = styled.div`
 const TopicSettingText = styled.p`
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.title8};
+  word-break: keep-all;
 `;
 const TopicSettingAdditionalText = styled.p`
   color: ${({ theme }) => theme.colors.mainViolet};
@@ -562,6 +563,7 @@ const GroupPublicDescContainer = styled.div`
 const GroupPublicDesc = styled.p`
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.title8};
+  word-break: keep-all;
 `;
 const GroupPublicDescWrapper = styled.div`
   position: relative;
