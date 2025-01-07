@@ -19,7 +19,6 @@ const CuriousProfile = (props: CuriousProfilePropTypes) => {
 
   return (
     <CuriousProfileWrapper>
-      {/* 없는 경우 디자인 가이드 필요! */}
       {mostCuriousWriter?.length === 0 ? (
         <NoCuriousProfileWrapper>
           <Spacing marginBottom="4" />
