@@ -425,6 +425,7 @@ const WriterCharCount = styled.span<{ $isWriterNameLimit: boolean }>`
   ${({ theme }) => theme.fonts.button3};
 
   @media ${MOBILE_MEDIA_QUERY} {
+    top: 1.1rem;
     ${({ theme }) => theme.fonts.mSubtitle2};
   }
 `;
