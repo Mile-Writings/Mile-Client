@@ -1,13 +1,17 @@
 import styled from '@emotion/styled';
 import { AxiosError } from 'axios';
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { MODAL } from '../../admin/constants/modal';
 import {
   CreateGroupImageUpload,
   CreateGroupImageUploadedIc,
   CreateGroupInfoIc,
   CreateGroupRadioCheckedIc,
   CreateGroupRadioUncheckedIc,
+  CreateCroupImageRemove,
 } from '../../../assets/svgs';
+import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
+import useModal from '../../../hooks/useModal';
 import Spacing from '../../../components/commons/Spacing';
 import useImageUpload from '../../../hooks/useImageUpload';
 
@@ -84,6 +88,7 @@ const CreateGroupInfo = ({
     topicDesc.length <= MAX_TOPIC_DESC_LENGTH;
 
   const { onImageUpload } = useImageUpload({ setPreviewImgUrl: setGroupImageView, setImageFile });
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
   const { groupNameValidationData, refetch, isSuccess, error } =
     useGetGroupNameValidation(groupName);
 
@@ -155,6 +160,12 @@ const CreateGroupInfo = ({
     setTopicModal((prev) => !prev);
   };
 
+  const handleRemoveImage = () => {
+    setGroupImageView('');
+    setImageFile(null);
+    handleCloseModal();
+  };
+
   useEffect(() => {
     if (error instanceof AxiosError && error?.response?.data.status === 400) {
       alert(INPUT_INFO_MESSAGE.GROUP_NAME_LENGTH);
@@ -201,7 +212,7 @@ const CreateGroupInfo = ({
               <GroupNameInput
                 ref={groupNameRef}
                 onChange={handleGroupName}
-                placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
+                placeholder="띄어쓰기 포함 10자 이내"
                 isValid={isGroupNameValid}
                 value={groupName}
                 maxLength={11}
@@ -240,27 +251,42 @@ const CreateGroupInfo = ({
         <WhiteInputWrapper isValid={true}>
           <GroupInputWrapper>
             <InputTitleText>글 모임 사진</InputTitleText>
-            <GroupImageLabel htmlFor="file">
-              <GroupImageWrapper>
-                {' '}
-                {groupImageView ? (
-                  <GroupImagePreviewWrapper>
-                    <GroupImagePreview src={groupImageView} />
-                    <CreateGroupImageUploadedIcon className="group-image-preview" />
-                  </GroupImagePreviewWrapper>
-                ) : (
-                  <CreateGroupImageUploadIcon className="group-image-preview" />
-                )}
-              </GroupImageWrapper>
 
-              <GroupImageInput
-                type="file"
-                name="file"
-                id="file"
-                accept="image/*"
-                onChange={onImageUpload}
-              />
-            </GroupImageLabel>
+            {groupImageView ? (
+              <GroupImageWrapper>
+                <GroupImagePreviewWrapper>
+                  <GroupImagePreview src={groupImageView} isImagePreview={!!groupImageView} />
+
+                  <IconWrapper>
+                    <GroupImageLabel htmlFor="file">
+                      <CreateGroupImageUploadedIcon />
+                      <GroupImageInput
+                        type="file"
+                        name="file"
+                        id="file"
+                        accept="image/*"
+                        onChange={onImageUpload}
+                      />
+                    </GroupImageLabel>
+                    <CreateGroupImageRemoveIcon onClick={handleShowModal} />
+                  </IconWrapper>
+                </GroupImagePreviewWrapper>
+              </GroupImageWrapper>
+            ) : (
+              <GroupImageLabel htmlFor="file">
+                <GroupImageWrapper>
+                  <CreateGroupImageUploadIcon className="group-image-preview" />
+                </GroupImageWrapper>
+
+                <GroupImageInput
+                  type="file"
+                  name="file"
+                  id="file"
+                  accept="image/*"
+                  onChange={onImageUpload}
+                />
+              </GroupImageLabel>
+            )}
 
             <GroupInputDesc>
               *글모임 페이지 상단에 노출될 대표 이미지입니다. 1366*306px사이즈를 권장합니다.
@@ -322,7 +348,7 @@ const CreateGroupInfo = ({
         <WhiteInputWrapper isValid={!isGroupTopicEmpty}>
           <GroupInputHorizonWrapper>
             <TopicSettingWrapper>
-              <TopicSettingText>글모임 생성 전에 첫번째 글감을 설정해보세요*</TopicSettingText>
+              <TopicSettingText>글모임 생성 전에 첫 번째 글감을 설정해보세요*</TopicSettingText>
 
               <TopicSettingAdditionalText>
                 {!(topicTag && topic)
@@ -352,6 +378,20 @@ const CreateGroupInfo = ({
           />
         </Overlay>
       )}
+
+      {/* 글모임 이미지 삭제 모달 */}
+      <DefaultModal
+        isModalOpen={isModalOpen}
+        onClickBg={handleCloseModal}
+        content={MODAL.GROUP_IMAGE_DELETE}
+        sizeType="LARGE"
+      >
+        <DefaultModalBtn
+          btnText={['예', '아니요']}
+          onClickLeft={handleRemoveImage}
+          onClickRight={handleCloseModal}
+        />
+      </DefaultModal>
     </>
   );
 };
@@ -518,6 +558,7 @@ const TopicSettingWrapper = styled.div`
 const TopicSettingText = styled.p`
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.title8};
+  word-break: keep-all;
 `;
 const TopicSettingAdditionalText = styled.p`
   color: ${({ theme }) => theme.colors.mainViolet};
@@ -562,6 +603,7 @@ const GroupPublicDescContainer = styled.div`
 const GroupPublicDesc = styled.p`
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.title8};
+  word-break: keep-all;
 `;
 const GroupPublicDescWrapper = styled.div`
   position: relative;
@@ -586,23 +628,25 @@ const GroupInputDesc = styled.p`
 `;
 
 const GroupImagePreviewWrapper = styled.div`
+  position: relative;
   display: flex;
+  gap: 1.6rem;
   align-items: center;
   justify-content: center;
   width: 100%;
 `;
-const GroupImagePreview = styled.img`
+const GroupImagePreview = styled.img<{ isImagePreview: boolean }>`
+  position: absolute;
+
   width: 100%;
   height: 20rem;
   object-fit: cover;
 
-  cursor: pointer;
+  cursor: ${({ isImagePreview }) => (isImagePreview ? 'default' : 'pointer')};
   border-radius: 8px;
 `;
 
 const CreateGroupImageUploadedIcon = styled(CreateGroupImageUploadedIc)`
-  position: absolute;
-
   cursor: pointer;
 
   &:hover {
@@ -615,7 +659,6 @@ const CreateGroupImageUploadedIcon = styled(CreateGroupImageUploadedIc)`
 `;
 
 const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
-  position: absolute;
   z-index: 1;
 
   cursor: pointer;
@@ -629,8 +672,29 @@ const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
   }
 `;
 
+const CreateGroupImageRemoveIcon = styled(CreateCroupImageRemove)`
+  z-index: 1;
+
+  cursor: pointer;
+
+  &:hover {
+    path {
+      fill: #6139d1;
+    }
+  }
+`;
+
+const IconWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  gap: 1.6rem;
+  justify-content: center;
+  width: 100%;
+
+  cursor: auto;
+`;
 const GroupImageLabel = styled.label`
-  display: block;
+  display: 'block';
 `;
 const GroupImageInput = styled.input`
   display: none;
@@ -718,6 +782,10 @@ const GroupInputWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    padding: 1.8rem;
+  }
 `;
 
 const InputTitleText = styled.p`
@@ -770,6 +838,7 @@ const DuplicateCheckBtn = styled.button<{ positive: boolean }>`
 
   /* padding: 1 1.6rem; */
   width: 8.1rem;
+  min-width: 8rem;
   height: 4rem;
 
   color: ${({ theme }) => theme.colors.gray70};

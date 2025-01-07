@@ -83,10 +83,10 @@ const ErrorMsgText = styled.p`
 
 const TextAreaLength = styled.span<{ isValid: boolean }>`
   position: absolute;
-  right: 2rem;
+  right: 4rem;
   bottom: 4rem;
 
-  width: 6rem;
+  width: fit-content;
 
   color: ${({ theme, isValid }) => (isValid ? theme.colors.gray70 : theme.colors.mileRed)};
 

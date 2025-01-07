@@ -6,4 +6,5 @@ export const MODAL = {
   DELETE_TOPIC:
     '삭제 시, 해당 글감으로 작성된 글도 함께 삭제되며, 삭제된 글감은 복구할 수 없습니다. 계속 하시겠습니까?',
   PAGE_EXIT_WARN: `입력 중인 내용이 있습니다. \n페이지를 나가시겠습니까?`,
+  GROUP_IMAGE_DELETE: '등록한 이미지를 삭제하시겠습니까?',
 };

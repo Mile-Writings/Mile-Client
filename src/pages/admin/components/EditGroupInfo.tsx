@@ -1,14 +1,18 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import useModal from '../../../hooks/useModal';
+import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 import {
   CreateGroupImageUpload,
   CreateGroupImageUploadedIc,
   CreateGroupInfoIc,
   CreateGroupRadioCheckedIc,
   CreateGroupRadioUncheckedIc,
+  CreateCroupImageRemove,
 } from '../../../assets/svgs';
 import { DEFAULT_IMG_URL } from '../../../constants/defaultImgUrl';
+
 import useImageUpload from '../../../hooks/useImageUpload';
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 import { FileType } from '../../../types/imageUploadType';
@@ -37,6 +41,7 @@ const EditGroupInfo = () => {
   const [imageFile, setImageFile] = useState<FileType>(null);
 
   const { onImageUpload } = useImageUpload({ setPreviewImgUrl, setImageFile });
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
   const [passDuplicate, setPassDuplicate] = useState(false);
   const [editBtnAcitve, setEditBtnActive] = useState(false);
 
@@ -117,7 +122,12 @@ const EditGroupInfo = () => {
       }
     }
   };
-
+  const handleRemoveImage = () => {
+    setPreviewImgUrl('');
+    setImageFile(null);
+    handleCloseModal();
+    setEditBtnActive(true);
+  };
   useEffect(() => {
     if (isSuccess) {
       if (groupNameValidationData === true) {
@@ -195,30 +205,42 @@ const EditGroupInfo = () => {
         <WhiteInputWrapper isValid={true}>
           <GroupInputWrapper>
             <InputTitleText>글 모임 사진</InputTitleText>
-            <GroupImageLabel htmlFor="file">
+
+            {previewImgUrl !== DEFAULT_IMG_URL && previewImgUrl !== '' ? (
               <GroupImageWrapper>
                 <GroupImagePreviewWrapper>
-                  {previewImgUrl !== DEFAULT_IMG_URL ? (
-                    <>
-                      <GroupImagePreview src={previewImgUrl} />
-                      <CreateGroupImageUploadedIcon className="group-image-preview" />
-                    </>
-                  ) : (
-                    <CreateGroupImageUploadIcon className="group-image-preview" />
-                  )}
+                  <GroupImagePreview src={previewImgUrl} isImagePreview={!!previewImgUrl} />
+
+                  <IconWrapper>
+                    <GroupImageLabel htmlFor="file">
+                      <CreateGroupImageUploadedIcon />
+                      <GroupImageInput
+                        type="file"
+                        name="file"
+                        id="file"
+                        accept="image/*"
+                        onChange={handleGroupImage}
+                      />
+                    </GroupImageLabel>
+                    <CreateGroupImageRemoveIcon onClick={handleShowModal} />
+                  </IconWrapper>
                 </GroupImagePreviewWrapper>
+              </GroupImageWrapper>
+            ) : (
+              <GroupImageLabel htmlFor="file">
+                <GroupImageWrapper>
+                  <CreateGroupImageUploadIcon className="group-image-preview" />
+                </GroupImageWrapper>
+
                 <GroupImageInput
                   type="file"
                   name="file"
                   id="file"
                   accept="image/*"
-                  onChange={(e) => {
-                    handleGroupImage(e);
-                  }}
+                  onChange={handleGroupImage}
                 />
-              </GroupImageWrapper>
-            </GroupImageLabel>
-
+              </GroupImageLabel>
+            )}
             <GroupInputDesc>
               *글모임 페이지 상단에 노출될 대표 이미지입니다. 1366*306px사이즈를 권장합니다.
             </GroupInputDesc>
@@ -276,12 +298,33 @@ const EditGroupInfo = () => {
           수정하기
         </EditGroupBtn>
       </CreateGroupLayout>
+      {/* 글모임 이미지 삭제 모달 */}
+      <DefaultModal
+        isModalOpen={isModalOpen}
+        onClickBg={handleCloseModal}
+        content={'등록한 이미지를 삭제하시겠습니까?'}
+        sizeType="LARGE"
+      >
+        <DefaultModalBtn
+          btnText={['예', '아니요']}
+          onClickLeft={handleRemoveImage}
+          onClickRight={handleCloseModal}
+        />
+      </DefaultModal>
     </>
   );
 };
 
 export default EditGroupInfo;
+const IconWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  gap: 1.6rem;
+  justify-content: center;
+  width: 100%;
 
+  cursor: auto;
+`;
 const GroupPublicDescResponsiveBox = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -293,8 +336,19 @@ const GroupPublicDescResponsiveBox = styled.div`
     width: 100%;
   }
 `;
+
+const CreateGroupImageRemoveIcon = styled(CreateCroupImageRemove)`
+  z-index: 1;
+
+  cursor: pointer;
+
+  &:hover {
+    path {
+      fill: #6139d1;
+    }
+  }
+`;
 const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
-  position: absolute;
   z-index: 1;
 
   cursor: pointer;
@@ -309,8 +363,6 @@ const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
 `;
 
 const CreateGroupImageUploadedIcon = styled(CreateGroupImageUploadedIc)`
-  position: absolute;
-
   cursor: pointer;
 
   &:hover {
@@ -322,12 +374,13 @@ const CreateGroupImageUploadedIcon = styled(CreateGroupImageUploadedIc)`
   }
 `;
 const GroupImagePreviewWrapper = styled.div`
+  position: relative;
   display: flex;
+  gap: 1.6rem;
   align-items: center;
   justify-content: center;
   width: 100%;
 `;
-
 const GroupNameInputWrapper = styled.div`
   position: relative;
   width: 100%;
@@ -461,18 +514,19 @@ const GroupInputDesc = styled.p`
     ${({ theme }) => theme.fonts.mSubtitle1};
   }
 `;
-const GroupImagePreview = styled.img`
+const GroupImagePreview = styled.img<{ isImagePreview: boolean }>`
+  position: absolute;
+
   width: 100%;
   height: 20rem;
   object-fit: cover;
 
-  cursor: pointer;
+  cursor: ${({ isImagePreview }) => (isImagePreview ? 'default' : 'pointer')};
   border-radius: 8px;
 `;
 
 const GroupImageLabel = styled.label`
   display: block;
-  width: 100%;
 `;
 const GroupImageInput = styled.input`
   display: none;
