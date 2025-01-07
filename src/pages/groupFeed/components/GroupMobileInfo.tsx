@@ -225,4 +225,11 @@ const GroupSideHeaderDetailBox = styled.div`
   word-break: keep-all;
 
   ${({ theme }) => theme.fonts.mSubtitle1};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 `;
