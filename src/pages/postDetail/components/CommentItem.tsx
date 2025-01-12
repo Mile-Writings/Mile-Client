@@ -177,6 +177,7 @@ const CommentItemWrapper = styled.div<{ isComment: boolean }>`
   background-color: ${({ theme }) => theme.colors.white};
 
   @media ${MOBILE_MEDIA_QUERY} {
+    gap: 0;
     width: ${({ isComment }) => (isComment ? '100%' : '95%')};
   }
 `;
@@ -189,7 +190,7 @@ const CommentItemContainer = styled.div`
   height: auto;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    width: 100%;
+    width: 80%;
   }
 `;
 
@@ -289,11 +290,14 @@ const MeatBallWrapper = styled.div`
 const GroupListProfileCloseIcon = styled(GroupListProfileCloseIc)`
   @media ${MOBILE_MEDIA_QUERY} {
     width: 36px;
+    margin-right: 1rem;
   }
 `;
 
 const TextCommentProfileIcon = styled(TextCommentProfileIc)`
   @media ${MOBILE_MEDIA_QUERY} {
-    width: 36px;
+    width: 3.6rem;
+    height: 3.6rem;
+    margin-right: 1rem;
   }
 `;

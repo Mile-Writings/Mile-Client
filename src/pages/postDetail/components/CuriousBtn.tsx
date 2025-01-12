@@ -76,6 +76,7 @@ const CuriousBtnWrapper = styled.button<{ $isClick: boolean }>`
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
+    width: 10.6rem;
     height: 4.4rem;
   }
 `;
