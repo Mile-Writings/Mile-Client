@@ -184,7 +184,7 @@ const PostDetail = () => {
                     : postData?.writerInfo}
                 </WriterDesc>
               </InfoWrapper>
-              {isMember && <CuriousBtn postId={postId} />}
+              <CuriousBtnWrapper>{isMember && <CuriousBtn postId={postId} />}</CuriousBtnWrapper>
             </WriterInfoContainer>
           </Responsive>
 
@@ -233,6 +233,11 @@ const PostDetail = () => {
 
 export default PostDetail;
 
+const CuriousBtnWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  height: 9.7rem;
+`;
 const DividingLine = styled.div`
   width: 0.1rem;
   height: 1.4rem;
