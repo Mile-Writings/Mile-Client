@@ -1109,6 +1109,13 @@ const ToolbarSvgBtnLast = styled.div`
   justify-content: center;
   height: 3.4rem;
   margin-right: 2.7rem;
+
+  &:last-child::after {
+    display: block;
+    width: 3.4rem;
+
+    content: '';
+  }
 `;
 
 const ToolbarSvg = styled.button`
