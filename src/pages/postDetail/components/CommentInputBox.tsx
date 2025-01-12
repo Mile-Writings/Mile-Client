@@ -182,17 +182,22 @@ const DesktopCommentForm = styled.textarea<{ isMainComment: boolean }>`
 
     background-color: ${({ theme }) => theme.colors.gray5};
   }
-
   ${({ theme }) => theme.fonts.button2};
 `;
 
 const MobileCommentForm = styled.textarea<{ isMainComment: boolean }>`
+  --scale: 0.75;
   width: 100%;
+
+  /* width: calc(100% * var(--scale)); */
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray100};
+  font-size: 1.6rem;
 
   background-color: ${({ theme }) => theme.colors.gray5};
+  transform: scale(var(--scale));
+  transform-origin: left top;
   border: none;
 
   resize: none;
@@ -202,7 +207,7 @@ const MobileCommentForm = styled.textarea<{ isMainComment: boolean }>`
 
     background-color: ${({ theme }) => theme.colors.gray5};
   }
-  ${({ theme }) => theme.fonts.mSubtitle1};
+  ${({ theme }) => theme.fonts.mSubtitle1_1};
 `;
 
 const CommentPostBtn = styled.button<{ $isComment: string }>`
