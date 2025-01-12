@@ -556,6 +556,7 @@ const GroupImageWrapper = styled.div`
   }
 `;
 const GroupInfoTextarea = styled.textarea<{ isValid: boolean }>`
+  --scale: 0.875;
   position: relative;
   width: 100%;
   height: 11rem;

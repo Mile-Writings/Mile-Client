@@ -176,11 +176,11 @@ const InputWrapper = styled.textarea`
   ${({ theme }) => theme.fonts.button2}
 
   @media ${MOBILE_MEDIA_QUERY} {
-    --scale: 0.75;
+    --scale: 0.875;
     position: relative;
-    left: 9rem;
-    width: calc(27.5rem * 100 / 75);
-    height: calc(12rem * 100 / 75);
+    left: 4rem;
+    width: calc(27.5rem * 100 / 87.5);
+    height: calc(12rem * 100 / 87.5);
 
     transform: scale(var(--scale));
     transform-origin: left top;
