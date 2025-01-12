@@ -47,18 +47,20 @@ const TopicDropDown = (props: TopicPropTypes) => {
         </EditorDropIcnActiveOpenWrapper>
       </DropDownToggle>
       <TopicListWrapper $isOpen={topicIsOpen}>
-        {topicList.map((item, idx) => {
-          return (
-            <TopicType
-              key={item.topicId}
-              idx={idx}
-              topicName={item.topicName}
-              setTopic={setTopic}
-              selected={selectedTopic === item.topicName}
-              setTopicIsOpen={setTopicIsOpen}
-            />
-          );
-        })}
+        <ScrollDiv>
+          {topicList.map((item, idx) => {
+            return (
+              <TopicType
+                key={item.topicId}
+                idx={idx}
+                topicName={item.topicName}
+                setTopic={setTopic}
+                selected={selectedTopic === item.topicName}
+                setTopicIsOpen={setTopicIsOpen}
+              />
+            );
+          })}
+        </ScrollDiv>
       </TopicListWrapper>
     </TopicDropDownWrapper>
   );
@@ -85,18 +87,28 @@ const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
   z-index: 3;
 
   display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
-  flex-direction: column;
-  gap: 0.6rem;
-  align-items: center;
-  justify-content: flex-start;
   width: 36rem;
   max-height: 37.1rem;
-  padding: 2rem;
-  overflow: hidden scroll;
+  overflow: hidden;
 
   background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.gray50};
   border-radius: 10px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
+`;
+
+const ScrollDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 2rem;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     width: 0.4rem;
@@ -107,10 +119,6 @@ const TopicListWrapper = styled.div<{ $isOpen: boolean }>`
     background-clip: padding-box;
     border: 20px solid ${({ theme }) => theme.colors.gray20};
     border-radius: 4px;
-  }
-
-  @media ${MOBILE_MEDIA_QUERY} {
-    width: 100%;
   }
 `;
 

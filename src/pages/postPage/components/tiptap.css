@@ -84,6 +84,9 @@ li::marker {
 
 /* 반응형 스타일 */
 @media (max-width: 850px) {
+  .tiptap {
+    padding: 2rem;
+  }
   div:has(> .tiptap) {
     /* .tiptap을 자식으로 가진 div에 스타일 적용 */
     width: 100%;
