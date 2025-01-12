@@ -50,7 +50,7 @@ const EditProfileModal = ({
             value={content}
             maxLength={110}
           />
-          <div>{content.length}/100</div>
+          <TextLength>{content.length}/100</TextLength>
         </ContentWrapper>
         <EditButton
           onClick={() => {
@@ -66,6 +66,9 @@ const EditProfileModal = ({
 
 export default EditProfileModal;
 
+const TextLength = styled.div`
+  ${({ theme }) => theme.fonts.mSubtitle2};
+`;
 const AniImgProfileIcon = styled(AniImgProfileIc)`
   @media ${MOBILE_MEDIA_QUERY} {
     width: 6.4rem;
@@ -173,10 +176,16 @@ const InputWrapper = styled.textarea`
   ${({ theme }) => theme.fonts.button2}
 
   @media ${MOBILE_MEDIA_QUERY} {
-    width: 27.5rem;
-    height: 12rem;
+    --scale: 0.75;
+    position: relative;
+    left: 9rem;
+    width: calc(27.5rem * 100 / 75);
+    height: calc(12rem * 100 / 75);
 
-    ${({ theme }) => theme.fonts.mSubtitle2}
+    transform: scale(var(--scale));
+    transform-origin: left top;
+
+    ${({ theme }) => theme.fonts.mSubtitle2_2}
   }
 `;
 

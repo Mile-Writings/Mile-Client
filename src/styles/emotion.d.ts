@@ -67,6 +67,7 @@ declare module '@emotion/react' {
       mSubtitle1: SerializedStyles;
       mSubtitle1_1: SerializedStyles;
       mSubtitle2: SerializedStyles;
+      mSubtitle2_2: SerializedStyles;
       mSubtitle3: SerializedStyles;
       mSubtitle4: SerializedStyles;
       mSubtitle5: SerializedStyles;

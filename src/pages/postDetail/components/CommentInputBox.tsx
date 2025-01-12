@@ -193,7 +193,6 @@ const MobileCommentForm = styled.textarea<{ isMainComment: boolean }>`
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray100};
-  font-size: 1.6rem;
 
   background-color: ${({ theme }) => theme.colors.gray5};
   transform: scale(var(--scale));

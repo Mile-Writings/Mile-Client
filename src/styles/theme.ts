@@ -253,6 +253,13 @@ export const theme = {
       font-style: normal;
       line-height: 140%; /* 19.6px */
     `,
+    mSubtitle2_2: css`
+      font-weight: 500;
+      font-size: 1.6rem;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-style: normal;
+      line-height: 140%; /* 19.6px */
+    `,
     mSubtitle3: css`
       font-weight: 400;
       font-size: 1.5rem;
