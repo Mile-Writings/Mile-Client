@@ -112,13 +112,16 @@ const FaqLayout = styled.section`
 
 const FaqContainer = styled.div`
   width: 93rem;
-  padding: 0 2rem;
 
   cursor: default;
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
     max-width: 40rem;
+  }
+
+  @media screen and (width <= 400px) {
+    padding: 0 2rem;
   }
 `;
 

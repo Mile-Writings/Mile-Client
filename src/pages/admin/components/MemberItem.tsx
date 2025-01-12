@@ -31,7 +31,7 @@ const MemberItem = ({
     <MemberItemWrapper key={writerNameId}>
       <AdminProfileIcon />
       <Name>
-        {isOwner && <MemberMaster />}
+        {isOwner && <MemberMaster css={{ flexShrink: '0' }} />}
         {writerName}
       </Name>
       <PostNumber>{postCount}</PostNumber>
@@ -46,7 +46,8 @@ const MemberItem = ({
 export default MemberItem;
 
 const MemberItemWrapper = styled.article`
-  display: flex;
+  display: grid;
+  grid-template-columns: 3fr 16fr 13fr 16fr auto;
   gap: 4rem;
   align-items: center;
   width: 100%;
@@ -55,6 +56,7 @@ const MemberItemWrapper = styled.article`
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray10};
 
   @media ${MOBILE_MEDIA_QUERY} {
+    grid-template-columns: 5fr 10fr 10fr 15fr auto;
     gap: 0;
     height: 5.6rem;
   }
@@ -73,7 +75,6 @@ const AdminProfileIcon = styled(adminProfileIc)`
 
 const Name = styled.div`
   display: flex;
-  flex: 2;
   align-items: center;
   justify-content: center;
   min-width: 12rem;
@@ -83,13 +84,14 @@ const Name = styled.div`
   white-space: nowrap;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    flex-grow: 2.3;
+    justify-content: center;
+    min-width: 9.5rem;
+    margin-right: 1.2rem;
     ${({ theme }) => theme.fonts.editor};
   }
 `;
 
 const PostNumber = styled.div`
-  flex: 1.7;
   justify-content: start;
   min-width: 4.4rem;
 
@@ -99,14 +101,14 @@ const PostNumber = styled.div`
   ${({ theme }) => theme.fonts.body1};
 
   @media ${MOBILE_MEDIA_QUERY} {
-    margin-right: 2rem;
+    min-width: 3.3rem;
+    margin: 0 2rem 0 1.2rem;
     ${({ theme }) => theme.fonts.editor};
   }
 `;
 
 const CommentNumber = styled.div`
   display: flex;
-  flex: 2;
   justify-content: start;
   min-width: 3.7rem;
 
@@ -117,6 +119,8 @@ const CommentNumber = styled.div`
 
   @media ${MOBILE_MEDIA_QUERY} {
     justify-content: start;
+    min-width: 3.3rem;
+    padding-left: 1rem;
 
     ${({ theme }) => theme.fonts.editor};
   }

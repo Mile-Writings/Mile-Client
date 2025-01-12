@@ -81,7 +81,7 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
               <PostContainer>
                 {moim.moimPosts.map(
                   (post, index) =>
-                    index < 2 && (
+                    index < 3 && (
                       <PostCard onClick={() => handleRoutingDetail(moim.moimId, post.postId)}>
                         <PostCardInfoWrapper>
                           <Topic>{post.topicName}</Topic>
@@ -92,13 +92,15 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
                       </PostCard>
                     ),
                 )}
-                <GroupRoutingWrapper>
-                  <GroupRoutingTitle>
-                    이 모임에 대해서 <br></br>더 궁금하신 가요?
-                  </GroupRoutingTitle>
+                {moim.moimPosts.length < 3 && (
+                  <GroupRoutingWrapper>
+                    <GroupRoutingTitle>
+                      이 모임에 대해서 <br></br>더 궁금하신 가요?
+                    </GroupRoutingTitle>
 
-                  <MainGroupRoutingBtn></MainGroupRoutingBtn>
-                </GroupRoutingWrapper>
+                    <MainGroupRoutingBtn></MainGroupRoutingBtn>
+                  </GroupRoutingWrapper>
+                )}
               </PostContainer>
             </Responsive>
           </CarouselLayout>
@@ -213,6 +215,13 @@ const GroupButton = styled.button`
 
 const CarouselLayout = styled.div`
   display: flex;
+  width: 100%;
+  overflow: scroll;
+  -ms-overflow-style: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const CarouselContainer = styled(Slider)`
@@ -244,4 +253,5 @@ const PostContainer = styled.div`
   width: 100%;
   max-width: 81rem;
   height: 29rem;
+  overflow: hidden;
 `;

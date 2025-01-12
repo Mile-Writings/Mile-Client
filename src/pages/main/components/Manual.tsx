@@ -33,6 +33,10 @@ const ManualWrapper = styled.div`
   flex-direction: column;
   margin: 0 auto;
   padding-bottom: 10rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    max-width: 40rem;
+  }
 `;
 
 const ManualTitle = styled.h1`
@@ -67,5 +71,10 @@ const ManualImg = styled.img`
   @media ${MOBILE_MEDIA_QUERY} {
     width: 19.2rem;
     height: 24rem;
+  }
+
+  @media screen and (width <= 400px) {
+    width: 16.2rem;
+    height: 20rem;
   }
 `;

@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import GroupInfoBox from './GroupInfoBox';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 import {
   GroupDateIc,
@@ -62,9 +63,11 @@ const GroupMobileInfo = (props: {
               <GroupSideHeaderDetailBox>{groupInfoData.description}</GroupSideHeaderDetailBox>
             </MobileInfoLayout>
             {isOwner && (
-              <SideHeaderButton onClick={() => navigate(`/admin/${groupId}`)}>
-                관리자페이지
-              </SideHeaderButton>
+              <SideButtonWrapper>
+                <SideHeaderButton onClick={() => navigate(`/admin/${groupId}`)}>
+                  관리자페이지
+                </SideHeaderButton>
+              </SideButtonWrapper>
             )}
           </>
         )}
@@ -94,7 +97,23 @@ export default GroupMobileInfo;
 
 const MobileInfoLayout = styled.div`
   display: flex;
+  flex-shrink: 0;
   gap: 1.6rem;
+  width: 30.3rem;
+`;
+
+const SideButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  @media screen and (width <= 690px) {
+    width: 30.3rem;
+  }
+
+  @media screen and (width <= 540px) {
+    width: 100%;
+    padding-top: 1.4rem;
+  }
 `;
 
 const ProfileWrapper = styled.div`
@@ -140,12 +159,28 @@ const SideHeaderButton = styled.button`
 
   background-color: ${({ theme }) => theme.colors.gray10};
   border-radius: 8px;
+
   ${({ theme }) => theme.fonts.button3};
 
   :hover {
     color: ${({ theme }) => theme.colors.mainViolet};
 
     background-color: ${({ theme }) => theme.colors.mileViolet};
+  }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 30.3rem;
+  }
+
+  @media screen and (width <= 690px) {
+    flex-direction: column;
+    width: 100%;
+    max-width: 30.3rem;
+    height: auto;
+  }
+
+  @media screen and (width <= 540px) {
+    max-width: none;
   }
 `;
 
@@ -163,6 +198,16 @@ const GroupSideHeaderWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
+
+  @media screen and (width <= 690px) {
+    gap: 1.3rem;
+    justify-content: start;
+  }
+
+  @media screen and (width <= 540px) {
+    flex-direction: column;
+    height: auto;
+  }
 `;
 
 const GroupSideHeaderLayout = styled.div`
@@ -180,4 +225,11 @@ const GroupSideHeaderDetailBox = styled.div`
   word-break: keep-all;
 
   ${({ theme }) => theme.fonts.mSubtitle1};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 `;

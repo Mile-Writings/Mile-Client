@@ -15,7 +15,7 @@ import InputModal from '../../../components/commons/inputModal/InputModal';
 import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 import Responsive from '../../../components/commons/Responsive/Responsive';
 import Spacing from '../../../components/commons/Spacing';
-import { ADMIN } from '../../../constants/modal';
+import { ADMIN, ADMINMOBILE } from '../../../constants/modal';
 import useBlockPageExit from '../../../hooks/useBlockPageExit';
 import useModal from '../../../hooks/useModal';
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
@@ -98,13 +98,26 @@ const RenderAdminContent = ({ menu }: RenderAdminContentPropTypes) => {
           {showModal && (
             <>
               <ModalOverlay onClick={closeModal} />
-              <InputModal
-                pageNum={pageNum}
-                setShowModal={setShowModal}
-                topicPlaceholder={ADMIN.PLACEHOLER.TOPIC}
-                tagPlaceholder={ADMIN.PLACEHOLER.TAG}
-                descPlaceholder={ADMIN.PLACEHOLER.DESC}
-              />
+              <Responsive only="mobile">
+                {' '}
+                <InputModal
+                  pageNum={pageNum}
+                  setShowModal={setShowModal}
+                  topicPlaceholder={ADMINMOBILE.PLACEHOLER.TOPIC}
+                  tagPlaceholder={ADMINMOBILE.PLACEHOLER.TAG}
+                  descPlaceholder={ADMINMOBILE.PLACEHOLER.DESC}
+                />
+              </Responsive>
+              <Responsive only="desktop">
+                {' '}
+                <InputModal
+                  pageNum={pageNum}
+                  setShowModal={setShowModal}
+                  topicPlaceholder={ADMIN.PLACEHOLER.TOPIC}
+                  tagPlaceholder={ADMIN.PLACEHOLER.TAG}
+                  descPlaceholder={ADMIN.PLACEHOLER.DESC}
+                />
+              </Responsive>
             </>
           )}
           <Responsive only="desktop">
@@ -119,7 +132,7 @@ const RenderAdminContent = ({ menu }: RenderAdminContentPropTypes) => {
 
     case '멤버 관리':
       return (
-        <AdminContainer>
+        <AdminContainer maxWidth="78.1">
           <Responsive only="desktop">
             <Title>멤버 관리</Title>
             <Spacing marginBottom="1.2" />
@@ -204,6 +217,7 @@ const DeleteGroupBtn = styled.button`
 `;
 const SubTitleWrapper = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
 `;
 const ModalOverlay = styled.div`
@@ -220,12 +234,12 @@ const ModalOverlay = styled.div`
 const AdminContainer = styled.div<{ maxWidth?: string }>`
   display: flex;
   flex-direction: column;
+  width: 100%;
   max-width: ${({ maxWidth }) => maxWidth}rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
   }
-
 `;
 
 const Title = styled.h1`
