@@ -22,15 +22,17 @@ const GroupJoinCongrats = () => {
       <DefaultHeader />
       <GroupJoinCongratsWrapper>
         <Spacing marginBottom="15.6" />
-        <GroupJoinTitleWrapper>
-          <GroupJoinTitle>{location?.state?.moimTitle} 가입을 축하해요!</GroupJoinTitle>
-          <GroupJoinText>글 모임에서 당신의 소중한 이야기를 들려주세요.</GroupJoinText>
-        </GroupJoinTitleWrapper>
-        <Spacing marginBottom="4.8" />
-        <GroupJoinImg>
-          <source srcSet={groupJoinCongratsWebp} />
-          <GroupJoinIlust src={groupJoinCongratsIlust} alt="가입 축하 일러스트" />
-        </GroupJoinImg>
+        <TitleImgWrapper>
+          <GroupJoinTitleWrapper>
+            <GroupJoinTitle>{location?.state?.moimTitle} 가입을 축하해요!</GroupJoinTitle>
+            <GroupJoinText>글 모임에서 당신의 소중한 이야기를 들려주세요.</GroupJoinText>
+          </GroupJoinTitleWrapper>
+          <Spacing marginBottom="4.8" />
+          <GroupJoinImg>
+            <source srcSet={groupJoinCongratsWebp} />
+            <GroupJoinIlust src={groupJoinCongratsIlust} alt="가입 축하 일러스트" />
+          </GroupJoinImg>
+        </TitleImgWrapper>
         <Spacing marginBottom="4.8" />
         <GoToGroupFeedBtn onClick={onClickGoToGroupFeedBtn}>모임 페이지 보러가기</GoToGroupFeedBtn>
       </GroupJoinCongratsWrapper>
@@ -58,7 +60,15 @@ const GroupJoinCongratsWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
 
   @media ${MOBILE_MEDIA_QUERY} {
+    position: relative;
     padding: 0 2rem;
+  }
+`;
+
+const TitleImgWrapper = styled.div`
+  @media ${MOBILE_MEDIA_QUERY} {
+    position: absolute;
+    top: 25%;
   }
 `;
 
@@ -114,7 +124,6 @@ const GoToGroupFeedBtn = styled.button`
   background-color: ${({ theme }) => theme.colors.mainViolet};
   border-radius: 5px;
 
-  /* 글자 크기 변경 필요 !!!! */
   ${({ theme }) => theme.fonts.subtitle4}
 
   &:hover {
@@ -124,7 +133,12 @@ const GoToGroupFeedBtn = styled.button`
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
-    width: 100%;
+    position: absolute;
+    bottom: 4.2rem;
+    width: 90%;
+
+    border-radius: 10px;
+
     ${({ theme }) => theme.fonts.button2};
   }
 `;

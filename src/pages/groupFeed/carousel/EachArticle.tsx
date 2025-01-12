@@ -112,15 +112,15 @@ const EachArticle = (props: EachProfilePropTypes) => {
                           <DividingLine />
                         </ArticleDetail>
                         <ArticleDetail>
-                          <GroupCuriousIc />
+                          <GroupCuriousIcon />
                         </ArticleDetail>
                         <ArticleDetailBold>{list.curiousCount}</ArticleDetailBold>
                         <ArticleDetail>
-                          <GroupViewIc />
+                          <GroupViewIcon />
                         </ArticleDetail>
                         <ArticleDetailBold>{list.hitsCount}</ArticleDetailBold>
                         <ArticleDetail>
-                          <GroupChatIc />
+                          <GroupChatIcon />
                         </ArticleDetail>
                         <ArticleDetailBold>{list.commentCount}</ArticleDetailBold>
                       </ArticleInfo>
@@ -148,9 +148,29 @@ const GroupListProfileIcon = styled(GroupListProfileIc)`
   }
 `;
 
+const GroupCuriousIcon = styled(GroupCuriousIc)`
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+`;
+const GroupViewIcon = styled(GroupViewIc)`
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+`;
+const GroupChatIcon = styled(GroupChatIc)`
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+`;
+
 const MobileListWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
+  justify-content: space-between;
   width: 100%;
 `;
 const DividingLine = styled.div`
@@ -206,7 +226,7 @@ const ArticleWrapper = styled.button`
   display: flex;
   gap: 3.2rem;
   justify-content: space-between;
-  width: 100%;
+  width: 72rem;
   padding: 3.2rem;
 
   text-align: left;
@@ -280,6 +300,11 @@ const ArticleDetailBold = styled.div`
   color: ${({ theme }) => theme.colors.gray70};
 
   ${({ theme }) => theme.fonts.body5};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    margin-right: 0.4rem;
+    ${({ theme }) => theme.fonts.mSubtitle1};
+  }
 `;
 
 const ProfileName = styled.div`

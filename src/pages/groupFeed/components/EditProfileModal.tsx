@@ -5,6 +5,7 @@ import { useEditWriterIntro } from '../hooks/queries';
 
 import { AniImgProfileIc } from '../../../assets/svgs';
 import { useParams } from 'react-router-dom';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface editProfilModalPropTypes {
   setShowEditProfileModal: Dispatch<SetStateAction<boolean>>;
@@ -39,7 +40,7 @@ const EditProfileModal = ({
       <BackgroundWrapper onClick={() => setShowEditProfileModal(false)} />
       <ModalWrapper ref={modalRef}>
         <ProfileWrapper>
-          <AniImgProfileIc />
+          <AniImgProfileIcon />
           <p>{name}</p>
         </ProfileWrapper>
         <ContentWrapper isError={content.length > 100}>
@@ -64,6 +65,13 @@ const EditProfileModal = ({
 };
 
 export default EditProfileModal;
+
+const AniImgProfileIcon = styled(AniImgProfileIc)`
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 6.4rem;
+    height: 6.4rem;
+  }
+`;
 
 const BackgroundWrapper = styled.div`
   position: fixed;
@@ -95,6 +103,13 @@ const ModalWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   transform: translate(-50%, -50%);
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    gap: 1.8rem;
+    width: 33.5rem;
+    height: 37.7rem;
+    padding: 1.8rem;
+  }
 `;
 
 const ProfileWrapper = styled.div`
@@ -106,6 +121,11 @@ const ProfileWrapper = styled.div`
   color: ${({ theme }) => theme.colors.black};
 
   ${({ theme }) => theme.fonts.title6};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle3};
+    gap: 0.8rem;
+  }
 `;
 
 const ContentWrapper = styled.div<{ isError: boolean }>`
@@ -124,6 +144,11 @@ const ContentWrapper = styled.div<{ isError: boolean }>`
   border-radius: 6px;
 
   ${({ theme }) => theme.fonts.button3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    height: 16rem;
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 
 const InputWrapper = styled.textarea`
@@ -146,6 +171,13 @@ const InputWrapper = styled.textarea`
   }
 
   ${({ theme }) => theme.fonts.button2}
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 27.5rem;
+    height: 12rem;
+
+    ${({ theme }) => theme.fonts.mSubtitle2}
+  }
 `;
 
 const EditButton = styled.button`
@@ -158,4 +190,9 @@ const EditButton = styled.button`
   border-radius: 10px;
 
   ${({ theme }) => theme.fonts.button2};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mButton1}
+    height: 4.4rem;
+  }
 `;

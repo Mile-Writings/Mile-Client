@@ -123,7 +123,8 @@ const MemberListTableWrapper = styled.section`
 `;
 
 const TableHeaderLayout = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 11fr 13fr 8fr 20fr;
   width: 100%;
   padding: 1.4rem 1.8rem;
 
@@ -134,15 +135,15 @@ const TableHeaderLayout = styled.div`
   ${({ theme }) => theme.fonts.button3};
 
   @media ${MOBILE_MEDIA_QUERY} {
+    grid-template-columns: 10fr 10fr 7fr 17fr;
     width: 100%;
     min-width: 33.5rem;
     height: 4rem;
-    padding: 1rem;
+    padding: 1rem 6.6rem 1rem 1rem;
   }
 `;
 
 const InfoField = styled.div`
-  display: flex;
   align-items: center;
   justify-content: center;
 
@@ -152,47 +153,31 @@ const InfoField = styled.div`
     justify-content: start;
 
     @media ${MOBILE_MEDIA_QUERY} {
-      justify-content: start;
-      min-width: 3.4rem;
-      margin-right: 1rem;
+      margin-right: 5rem;
     }
   }
 
   &:nth-of-type(2) {
-    flex-grow: 1.7;
-    margin-left: 2rem;
+    justify-content: center;
 
     @media ${MOBILE_MEDIA_QUERY} {
-      flex-grow: 2;
-      min-width: 12.1rem;
-      margin-right: 0.4rem;
+      justify-content: start;
+      margin-right: 5rem;
       margin-left: 0;
     }
   }
 
   &:nth-of-type(3) {
-    flex-grow: 1;
     justify-content: center;
-    width: 5.2rem;
 
     @media ${MOBILE_MEDIA_QUERY} {
-      flex-grow: 1;
-      justify-content: center;
-      width: 4.9rem;
+      justify-content: start;
       margin-right: 1rem;
     }
   }
 
   &:nth-of-type(4) {
-    flex: 2;
     justify-content: start;
-    margin-right: 5rem;
-
-    @media ${MOBILE_MEDIA_QUERY} {
-      flex-grow: 2;
-      justify-content: start;
-      min-width: 5rem;
-    }
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
