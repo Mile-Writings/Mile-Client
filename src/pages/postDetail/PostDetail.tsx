@@ -494,8 +494,9 @@ const WriterDesc = styled.div`
   height: 6.6rem;
 
   color: ${({ theme }) => theme.colors.gray80};
-  ${({ theme }) => theme.fonts.body3};
+  word-break: break-all;
 
+  ${({ theme }) => theme.fonts.body3};
   @media ${MOBILE_MEDIA_QUERY} {
     ${({ theme }) => theme.fonts.mBody3};
     width: 100%;
