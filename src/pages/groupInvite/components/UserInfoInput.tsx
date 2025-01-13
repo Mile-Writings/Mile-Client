@@ -357,6 +357,7 @@ const WriterExistCheckBtn = styled.button<{ $isBtnDisabled: boolean }>`
   ${({ theme }) => theme.fonts.button3};
 
   @media ${MOBILE_MEDIA_QUERY} {
+    min-width: 8.1rem;
     ${({ theme }) => theme.fonts.mButton1};
   }
 `;
@@ -425,7 +426,7 @@ const WriterCharCount = styled.span<{ $isWriterNameLimit: boolean }>`
   ${({ theme }) => theme.fonts.button3};
 
   @media ${MOBILE_MEDIA_QUERY} {
-    top: 1.1rem;
+    top: 1.25rem;
     ${({ theme }) => theme.fonts.mSubtitle2};
   }
 `;
