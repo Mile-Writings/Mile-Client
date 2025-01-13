@@ -186,7 +186,7 @@ const DesktopCommentForm = styled.textarea<{ isMainComment: boolean }>`
 `;
 
 const MobileCommentForm = styled.textarea<{ isMainComment: boolean }>`
-  --scale: 0.75;
+  --scale: 0.875;
   width: 100%;
 
   /* width: calc(100% * var(--scale)); */
@@ -206,7 +206,12 @@ const MobileCommentForm = styled.textarea<{ isMainComment: boolean }>`
 
     background-color: ${({ theme }) => theme.colors.gray5};
   }
-  ${({ theme }) => theme.fonts.mSubtitle1_1};
+
+  ${({ theme }) => theme.fonts.body6};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle1_1};
+  }
 `;
 
 const CommentPostBtn = styled.button<{ $isComment: string }>`
