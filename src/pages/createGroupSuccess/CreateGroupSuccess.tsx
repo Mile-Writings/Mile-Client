@@ -63,8 +63,8 @@ const CreatGroupSection = styled.section`
   gap: 4rem;
   align-items: center;
   width: 100%;
-  height: calc(100vh - 64px);
-  margin-top: 6.4rem;
+  height: calc(100vh - 56px);
+  margin-top: 5.6rem;
   padding: 6.4rem 2rem;
 
   background-color: ${({ theme }) => theme.colors.white};
