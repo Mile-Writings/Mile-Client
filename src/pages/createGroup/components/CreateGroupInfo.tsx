@@ -824,9 +824,20 @@ const GroupNameInput = styled.input<{ isValid: boolean }>`
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
-    ${({ theme }) => theme.fonts.mSubtitle2};
+    --scale: 0.875;
+
+    /* width: calc(100% * 100 / 87.5); */
+    width: 114%;
+    height: calc(39px * 100 / 87.5);
+    margin-right: -30px;
+    padding: calc(1rem * 1000 / 875) calc(1.2rem * 1000 / 875);
+
+    transform: scale(var(--scale));
+    transform-origin: left top;
+
+    ${({ theme }) => theme.fonts.mSubtitle2_2}
     ::placeholder {
-      ${({ theme }) => theme.fonts.mSubtitle2};
+      ${({ theme }) => theme.fonts.mSubtitle2_2};
     }
   }
 `;
