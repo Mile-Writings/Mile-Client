@@ -60,12 +60,21 @@ const TipTap = (props: EditorPropTypes) => {
   const [isFontBgColorOpen, setIsFontBgColorOpen] = useState(false);
 
   // 제목 textarea 높이 조절용
-  const titleRef = useRef<HTMLTextAreaElement | null>(null);
+  const desktopTitleRef = useRef<HTMLTextAreaElement | null>(null);
+  const mobileTitleRef = useRef<HTMLTextAreaElement | null>(null);
   // 제목 onChange 높이 조절 포함
-  const onChangeTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (titleRef.current) {
-      titleRef.current.style.height = '9.4rem';
-      titleRef.current.style.height = titleRef.current.scrollHeight * 0.1 + 'rem';
+  const onChangeDesktopTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (desktopTitleRef.current) {
+      desktopTitleRef.current.style.height = '9.4rem';
+      desktopTitleRef.current.style.height = desktopTitleRef.current.scrollHeight * 0.1 + 'rem';
+    }
+    setTitle(e);
+  };
+
+  const onChangeMobileTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (mobileTitleRef.current) {
+      mobileTitleRef.current.style.height = '6.1rem';
+      mobileTitleRef.current.style.height = mobileTitleRef.current.scrollHeight * 0.1 + 'rem';
     }
     setTitle(e);
   };
@@ -242,13 +251,24 @@ const TipTap = (props: EditorPropTypes) => {
 
   return (
     <TipTapWrapper>
-      <Title
-        placeholder="제목을 적어주세요"
-        onChange={onChangeTitle}
-        value={title}
-        rows={1}
-        ref={titleRef}
-      />
+      <Responsive only="desktop">
+        <Title
+          placeholder="제목을 적어주세요"
+          onChange={onChangeDesktopTitle}
+          value={title}
+          rows={1}
+          ref={desktopTitleRef}
+        />
+      </Responsive>
+      <Responsive only="mobile" asChild>
+        <Title
+          placeholder="제목을 적어주세요"
+          onChange={onChangeMobileTitle}
+          value={title}
+          rows={1}
+          ref={mobileTitleRef}
+        />
+      </Responsive>
       <ToolbarWrapper>
         {/* 폰트크기 옵션 리스트 */}
         <FontSizeOptionList $isFontSizeOpen={isFontSizeOpen}>
@@ -510,7 +530,7 @@ const TipTap = (props: EditorPropTypes) => {
         <ToolbarContainer className="menu">
           {/* 글자 크기 */}
           <ToolbarDropDownWrapper ref={fontSizeDropDownRef}>
-            <FontSizeToggle onClick={onClickFontSizeToggle}>
+            <FontSizeToggle onClick={onClickFontSizeToggle} $isOpen={isFontSizeOpen}>
               <FontSizeLabel>
                 {editor.isActive('textStyle', { fontSize: '1.2rem' })
                   ? '본문 2'
@@ -860,7 +880,7 @@ const ToolbarDropDownWrapper = styled.div`
 `;
 
 // 글자 크기 드롭다운 리스트
-const FontSizeToggle = styled.div`
+const FontSizeToggle = styled.div<{ $isOpen: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -872,10 +892,12 @@ const FontSizeToggle = styled.div`
   border-radius: 0.8rem;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    width: 4.9rem;
+    width: 5rem;
     height: 3.2rem;
     margin-right: 0.8rem;
     padding: 0 0.7rem;
+
+    background-color: ${({ $isOpen, theme }) => ($isOpen ? theme.colors.mileViolet : '')};
   }
 `;
 
@@ -1087,6 +1109,13 @@ const ToolbarSvgBtnLast = styled.div`
   justify-content: center;
   height: 3.4rem;
   margin-right: 2.7rem;
+
+  &:last-child::after {
+    display: block;
+    width: 3.4rem;
+
+    content: '';
+  }
 `;
 
 const ToolbarSvg = styled.button`
@@ -1108,12 +1137,19 @@ const ToolbarSvg = styled.button`
     fill: ${({ theme }) => theme.colors.mainViolet};
   }
 
-  :hover {
-    background-color: ${({ theme }) => theme.colors.mileViolet};
-  }
-
   @media ${MOBILE_MEDIA_QUERY} {
     margin: 0;
+
+    :active {
+      /* background-color: ${({ theme }) => theme.colors.mileViolet}; */
+      background-color: red;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    :hover {
+      background-color: ${({ theme }) => theme.colors.mileViolet};
+    }
   }
 `;
 

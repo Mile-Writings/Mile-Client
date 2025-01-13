@@ -81,6 +81,8 @@ const DeleteTempStoreBtn = styled.button`
 // 글 제출하기, 수정 완료하기, 글 수정하기
 const SubmitEditBtn = styled.button`
   ${basicCSS};
+  width: auto;
+
   color: ${({ theme }) => theme.colors.mileViolet};
 
   background-color: ${({ theme }) => theme.colors.mainViolet};

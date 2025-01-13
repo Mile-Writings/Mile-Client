@@ -211,7 +211,7 @@ const PostDetail = () => {
           </Responsive>
         </WriterInfoWrapper>
         {isMember && <Comment postId={postId} />}
-        <Spacing marginBottom="8" />
+        <Spacing marginBottom="6.9" mobileMarginBottom='4'/>
       </PostDetailWrapper>
 
       {/* 우선은 조건부로 연결해두었는데 reducer나 state를 통해서 업데이트 하도록 변경해도 될 듯 */}
@@ -438,7 +438,7 @@ const WriterInfoWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 15.3rem;
+  min-height: 15.3rem;
   padding: 2.8rem;
 
   background-color: ${({ theme }) => theme.colors.white};
@@ -447,7 +447,7 @@ const WriterInfoWrapper = styled.div`
   @media ${MOBILE_MEDIA_QUERY} {
     flex-direction: column;
     gap: 1.6rem;
-    height: 16rem;
+    min-height: 16rem;
     padding: 2.1rem 2rem;
   }
 `;
@@ -491,7 +491,7 @@ const WriterInfoBox = styled.div`
 `;
 
 const WriterDesc = styled.div`
-  height: 6.6rem;
+  /* height: 6.6rem; */
 
   color: ${({ theme }) => theme.colors.gray80};
   word-break: break-all;
@@ -500,7 +500,8 @@ const WriterDesc = styled.div`
   @media ${MOBILE_MEDIA_QUERY} {
     ${({ theme }) => theme.fonts.mBody3};
     width: 100%;
-    height: 6rem;
+
+    /* height: 6rem; */
   }
 `;
 const WriterInfoText = styled.p`

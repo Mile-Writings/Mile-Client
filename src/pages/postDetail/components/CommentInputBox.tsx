@@ -212,6 +212,7 @@ const MobileCommentForm = styled.textarea<{ isMainComment: boolean }>`
   @media ${MOBILE_MEDIA_QUERY} {
     ${({ theme }) => theme.fonts.mSubtitle1_1};
   }
+
 `;
 
 const CommentPostBtn = styled.button<{ $isComment: string }>`
