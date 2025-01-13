@@ -164,9 +164,7 @@ const EditGroupInfo = () => {
                   isValid={groupNameLengthValid}
                   value={groupName}
                 />
-                <TextAreaLength isValid={groupNameLengthValid}>
-                  {groupName.length}/10
-                </TextAreaLength>
+                <InputLength isValid={groupNameLengthValid}>{groupName.length}/10</InputLength>
               </GroupNameInputWrapper>
               <DuplicateCheckBtn
                 type="button"
@@ -567,17 +565,36 @@ const GroupInfoTextarea = styled.textarea<{ isValid: boolean }>`
   border: 1px solid
     ${({ theme, isValid }) => (isValid ? theme.colors.gray20 : theme.colors.mileRed)};
   border-radius: 6px;
-
   ${({ theme }) => theme.fonts.button2};
+
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray50};
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
-    ${({ theme }) => theme.fonts.mSubtitle2};
+    --scale: 0.875;
+    width: calc(100% * 100 / 87.5);
+    height: calc(11rem * 100 / 87.5);
+    padding: calc(100rem / 87.5) calc(1.2rem * 100 / 87.5);
+
+    transform: scale(var(--scale));
+    transform-origin: left top;
+    ${({ theme }) => theme.fonts.mSubtitle2_2};
   }
 `;
 const TextAreaLength = styled.p<{ isValid: boolean }>`
+  position: absolute;
+  right: 1.2rem;
+  bottom: 2.6rem;
+
+  ${({ theme }) => theme.fonts.button3};
+  color: ${({ theme, isValid }) => (isValid ? theme.colors.gray70 : theme.colors.mileRed)};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody1};
+  }
+`;
+const InputLength = styled.p<{ isValid: boolean }>`
   position: absolute;
   right: 1.2rem;
   bottom: 1rem;
@@ -665,7 +682,13 @@ const GroupNameInput = styled.input<{ isValid: boolean }>`
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
-    ${({ theme }) => theme.fonts.mSubtitle2};
+    --scale: 0.875;
+    width: calc(100% * 100 / 87.5);
+    height: calc(3.9rem * 100 / 87.5);
+
+    transform: scale(var(--scale));
+    transform-origin: left top;
+    ${({ theme }) => theme.fonts.mSubtitle2_2};
   }
 `;
 

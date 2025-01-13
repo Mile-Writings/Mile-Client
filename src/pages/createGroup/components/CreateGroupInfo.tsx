@@ -486,6 +486,11 @@ const TextAreaLength = styled.p<{ isValid: boolean }>`
   color: ${({ theme, isValid }) => (isValid ? theme.colors.gray70 : theme.colors.mileRed)};
 
   ${({ theme }) => theme.fonts.button3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    right: 3.5rem;
+    bottom: 6rem;
+  }
 `;
 const ErrorMsgText = styled.p`
   ${({ theme }) => theme.fonts.body4};
@@ -824,9 +829,19 @@ const GroupNameInput = styled.input<{ isValid: boolean }>`
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
-    ${({ theme }) => theme.fonts.mSubtitle2};
+    --scale: 0.875;
+    width: calc(100% / var(--scale));
+    height: calc(39px / var(--scale));
+    margin-right: -11.4%;
+    margin-bottom: -24px;
+    padding: calc(1rem * 1000 / 875) calc(1.2rem * 1000 / 875);
+
+    transform: scale(var(--scale));
+    transform-origin: left top;
+
+    ${({ theme }) => theme.fonts.mSubtitle2_2}
     ::placeholder {
-      ${({ theme }) => theme.fonts.mSubtitle2};
+      ${({ theme }) => theme.fonts.mSubtitle2_2};
     }
   }
 `;
@@ -869,11 +884,16 @@ const GroupInfoTextarea = styled.textarea<{ isValid: boolean }>`
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
-    height: 21rem;
+    --scale: 0.875;
+    width: calc(100% / var(--scale));
+    height: calc(21rem / var(--scale));
 
-    ${({ theme }) => theme.fonts.mSubtitle2};
+    transform: scale(var(--scale));
+    transform-origin: left top;
+
+    ${({ theme }) => theme.fonts.mSubtitle2_2};
     ::placeholder {
-      ${({ theme }) => theme.fonts.mSubtitle2};
+      ${({ theme }) => theme.fonts.mSubtitle2_2};
     }
   }
 `;

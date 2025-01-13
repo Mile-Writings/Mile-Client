@@ -37,9 +37,13 @@ const CommentInputBox = (props: CommentPropTypes) => {
     } else {
       if (comment.trim() !== '') {
         //commendId가 있으면 대댓글, 없으면 댓글
-        commentId ? postNestedComment(comment) : postComment(comment); //댓글 등록
-        setComment(''); // 댓글 등록 후 댓글 초기화
-        setIsNestedComment && setIsNestedComment(false);
+        if (comment.length <= 255) {
+          commentId ? postNestedComment(comment) : postComment(comment); //댓글 등록
+          setComment(''); // 댓글 등록 후 댓글 초기화
+          setIsNestedComment && setIsNestedComment(false);
+        } else {
+          alert('댓글은 최대 255자까지 이용하실 수 있습니다.');
+        }
       }
     }
   };
@@ -178,17 +182,21 @@ const DesktopCommentForm = styled.textarea<{ isMainComment: boolean }>`
 
     background-color: ${({ theme }) => theme.colors.gray5};
   }
-
   ${({ theme }) => theme.fonts.button2};
 `;
 
 const MobileCommentForm = styled.textarea<{ isMainComment: boolean }>`
+  --scale: 0.875;
   width: 100%;
+
+  /* width: calc(100% * var(--scale)); */
   overflow: hidden;
 
   color: ${({ theme }) => theme.colors.gray100};
 
   background-color: ${({ theme }) => theme.colors.gray5};
+  transform: scale(var(--scale));
+  transform-origin: left top;
   border: none;
 
   resize: none;
@@ -198,7 +206,13 @@ const MobileCommentForm = styled.textarea<{ isMainComment: boolean }>`
 
     background-color: ${({ theme }) => theme.colors.gray5};
   }
-  ${({ theme }) => theme.fonts.mBody3};
+
+  ${({ theme }) => theme.fonts.body6};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle1_1};
+  }
+
 `;
 
 const CommentPostBtn = styled.button<{ $isComment: string }>`

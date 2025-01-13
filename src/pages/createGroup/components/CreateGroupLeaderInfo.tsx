@@ -83,8 +83,8 @@ const ErrorMsgText = styled.p`
 
 const TextAreaLength = styled.span<{ isValid: boolean }>`
   position: absolute;
-  right: 4rem;
-  bottom: 4rem;
+  right: 5rem;
+  bottom: 3.5rem;
 
   width: fit-content;
 
@@ -110,10 +110,19 @@ const GroupLeaderInfoTextarea = styled.textarea<{ isValid: boolean }>`
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
+    --scale: 0.875;
+    width: calc(100% / var(--scale));
+    height: calc(22rem / var(--scale));
+    margin-bottom: -34px;
+    padding: calc(1rem / var(--scale)) calc(1.2rem / var(--scale));
+
+    transform: scale(var(--scale));
+    transform-origin: left top;
+
     ::placeholder {
-      ${({ theme }) => theme.fonts.mSubtitle2};
+      ${({ theme }) => theme.fonts.mSubtitle2_2};
     }
-    ${({ theme }) => theme.fonts.mSubtitle2};
+    ${({ theme }) => theme.fonts.mSubtitle2_2};
   }
 `;
 
@@ -147,10 +156,18 @@ const GroupLeaderNameInput = styled.input<{ isValid: boolean }>`
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
+    --scale: 0.875;
+    width: calc(100% / var(--scale));
+    height: calc(3.9rem / var(--scale));
+    padding: calc(1rem / var(--scale)) calc(1.2rem / var(--scale));
+
+    transform: scale(var(--scale));
+    transform-origin: left top;
+
     ::placeholder {
-      ${({ theme }) => theme.fonts.mSubtitle2};
+      ${({ theme }) => theme.fonts.mSubtitle2_2};
     }
-    ${({ theme }) => theme.fonts.mSubtitle2};
+    ${({ theme }) => theme.fonts.mSubtitle2_2};
   }
 `;
 const WhiteInputWrapper = styled.section<{ isValid: boolean }>`
