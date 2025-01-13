@@ -93,7 +93,7 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
                     ),
                 )}
                 {moim.moimPosts.length < 3 && (
-                  <GroupRoutingWrapper>
+                  <GroupRoutingWrapper onClick={() => handleButtonOnClick(moim.moimId)}>
                     <GroupRoutingTitle>
                       이 모임에 대해서 <br></br>더 궁금하신 가요?
                     </GroupRoutingTitle>
@@ -124,6 +124,7 @@ const GroupRoutingWrapper = styled.div`
   width: 26.2rem;
 
   background-color: transparent;
+  cursor: pointer;
 `;
 
 const PostCardInfoWrapper = styled.div`
