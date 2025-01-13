@@ -560,13 +560,14 @@ const GroupInfoTextarea = styled.textarea<{ isValid: boolean }>`
   padding: 1rem 1.2rem;
 
   color: ${({ theme }) => theme.colors.gray100};
+  word-break: break-all;
 
   background: ${({ theme }) => theme.colors.gray5};
   border: 1px solid
     ${({ theme, isValid }) => (isValid ? theme.colors.gray20 : theme.colors.mileRed)};
   border-radius: 6px;
-  ${({ theme }) => theme.fonts.button2};
 
+  ${({ theme }) => theme.fonts.button2};
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray50};
   }
@@ -603,6 +604,8 @@ const InputLength = styled.p<{ isValid: boolean }>`
   color: ${({ theme, isValid }) => (isValid ? theme.colors.gray70 : theme.colors.mileRed)};
 
   @media ${MOBILE_MEDIA_QUERY} {
+    bottom: 1.3rem;
+
     ${({ theme }) => theme.fonts.mBody1};
   }
 `;
@@ -636,6 +639,10 @@ const GroupInputWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    padding: 1.8rem;
+  }
 `;
 const GroupInputHorizonWrapper = styled(GroupInputWrapper)`
   display: flex;
@@ -697,7 +704,9 @@ const DuplicateCheckBtn = styled.button<{ positive: boolean }>`
   align-items: center;
   justify-content: center;
   width: 8.1rem;
-  height: 4rem;
+  height: 4.3rem;
+
+  /* padding: 1.2rem 1.6rem; */
 
   color: ${({ theme }) => theme.colors.gray70};
   color: ${({ theme, positive }) => (positive ? theme.colors.white : theme.colors.gray70)};
@@ -707,6 +716,11 @@ const DuplicateCheckBtn = styled.button<{ positive: boolean }>`
   cursor: ${({ positive }) => (positive ? 'pointer' : 'default')};
   border-radius: 8px;
   ${({ theme }) => theme.fonts.button3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mButton1};
+    min-width: 8.1rem;
+  }
 `;
 
 const CreateGroupLayout = styled.div`
