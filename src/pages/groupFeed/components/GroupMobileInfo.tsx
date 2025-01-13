@@ -39,7 +39,7 @@ const GroupMobileInfo = (props: {
         {groupInfoData && (
           <>
             <MobileInfoLayout>
-              <div>
+              <MobileInfoContainer>
                 <GroupSideHeaderTitle>{groupInfoData.moimName}</GroupSideHeaderTitle>
                 <Spacing marginBottom="1.6" />
                 <GroupSideHeaderLayout>
@@ -59,7 +59,7 @@ const GroupMobileInfo = (props: {
                     detail={`${groupInfoData.writerCount}명의 작가들`}
                   />
                 </GroupSideHeaderLayout>
-              </div>
+              </MobileInfoContainer>
               <GroupSideHeaderDetailBox>{groupInfoData.description}</GroupSideHeaderDetailBox>
             </MobileInfoLayout>
             {isOwner && (
@@ -95,10 +95,13 @@ const GroupMobileInfo = (props: {
 
 export default GroupMobileInfo;
 
+const MobileInfoContainer = styled.div`
+  width: 14.9rem;
+`;
 const MobileInfoLayout = styled.div`
   display: flex;
   flex-shrink: 0;
-  gap: 1.6rem;
+  gap: 1.4rem;
   width: 30.3rem;
 `;
 
@@ -130,6 +133,10 @@ const ProfileWrapper = styled.div`
     width: 3.2rem;
     height: 3.2rem;
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    gap: 0.8rem;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -141,6 +148,7 @@ const Wrapper = styled.div`
 
 const MemberWrapper = styled.div`
   display: flex;
+  gap: 2.4rem;
   justify-content: space-between;
   width: 100%;
   height: 8rem;

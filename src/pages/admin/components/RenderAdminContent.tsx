@@ -157,8 +157,9 @@ const RenderAdminContent = ({ menu }: RenderAdminContentPropTypes) => {
           <AdminContainer maxWidth="82.1">
             <Responsive only="desktop">
               <Title>모임 정보 수정</Title>
+              <Spacing marginBottom="4.2" />
             </Responsive>
-            <Spacing marginBottom="4.2" />
+
             <SubTitleWrapper>
               <SubTitle>{`글 모임 정보를 수정할 수 있습니다`}</SubTitle>
               <DeleteGroupBtn onClick={handleShowModal}>삭제하기</DeleteGroupBtn>
@@ -219,6 +220,10 @@ const SubTitleWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    margin-top: 2.7rem;
+  }
 `;
 const ModalOverlay = styled.div`
   position: fixed;

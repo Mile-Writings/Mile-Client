@@ -37,6 +37,10 @@ const GroupInfoBoxWrapper = styled.div`
   display: flex;
   gap: 0.8rem;
   align-items: center;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    gap: 0.4rem;
+  }
 `;
 
 const TitleText = styled.div`
@@ -44,7 +48,7 @@ const TitleText = styled.div`
   ${({ theme }) => theme.fonts.subtitle6}
 
   @media ${MOBILE_MEDIA_QUERY} {
-    ${({ theme }) => theme.fonts.mBody1}
+    ${({ theme }) => theme.fonts.mSubtitle1}
   }
 `;
 
