@@ -142,13 +142,13 @@ const ProfileWrapper = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2.4rem;
   justify-content: space-between;
   width: 100%;
 `;
 
 const MemberWrapper = styled.div`
   display: flex;
+  gap: 2.4rem;
   justify-content: space-between;
   width: 100%;
   height: 8rem;
