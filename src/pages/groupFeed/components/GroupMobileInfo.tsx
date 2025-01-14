@@ -65,7 +65,7 @@ const GroupMobileInfo = (props: {
             {isOwner && (
               <SideButtonWrapper>
                 <SideHeaderButton onClick={() => navigate(`/admin/${groupId}`)}>
-                  관리자페이지
+                  <p> 관리자페이지</p>
                 </SideHeaderButton>
               </SideButtonWrapper>
             )}
@@ -84,7 +84,7 @@ const GroupMobileInfo = (props: {
                 setShowEditProfileModal(true);
               }}
             >
-              소개글 수정
+              <p>소개글 수정</p>
             </SideHeaderButton>
           </MemberWrapper>
         </>
@@ -159,6 +159,9 @@ const MemberWrapper = styled.div`
 `;
 
 const SideHeaderButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 20.8rem;
   height: 4rem;
   padding: 1rem 1.6rem;
@@ -201,7 +204,7 @@ const GroupSideHeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: 15.1rem;
+  height: 16.8rem;
   padding: 1.6rem;
 
   background-color: ${({ theme }) => theme.colors.white};
@@ -230,14 +233,17 @@ const GroupSideHeaderDetailBox = styled.div`
   width: 14rem;
 
   color: ${({ theme }) => theme.colors.gray70};
-  word-break: keep-all;
+  word-break: break-all;
 
   ${({ theme }) => theme.fonts.mSubtitle1};
 
   @media ${MOBILE_MEDIA_QUERY} {
     display: -webkit-box;
-    -webkit-line-clamp: 7;
-    -webkit-box-orient: vertical;
     overflow: hidden;
+
+    word-break: break-all;
+
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
   }
 `;
