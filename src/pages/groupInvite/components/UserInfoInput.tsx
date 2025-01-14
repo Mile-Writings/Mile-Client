@@ -9,6 +9,8 @@ import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal
 import Spacing from '../../../components/commons/Spacing';
 import useModal from '../../../hooks/useModal';
 import { MODAL } from '../constants/modalContent';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
+import Responsive from '../../../components/commons/Responsive/Responsive';
 
 interface userInfoStateType {
   writerName?: string;
@@ -59,7 +61,7 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
   // 소개글 글자수 제한
   const [isIntroduceLimit, setIsIntroduceLimit] = useState(false);
   // 필명 글자수 제한
-  const [isWriterNamLimit, setIsWriterNameLimit] = useState(false);
+  const [isWriterNameLimit, setIsWriterNameLimit] = useState(false);
   // 중복확인 버튼 눌렸는지 체크
   const [isConflictBtnClicked, setIsConflictBtnClicked] = useState(false);
   // 가입하기 버튼 클릭여부
@@ -126,7 +128,7 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
   const onClickSignUp = () => {
     setIsSubmitBtnClicked(true);
     if (
-      !isWriterNamLimit &&
+      !isWriterNameLimit &&
       !isIntroduceLimit &&
       isConflictBtnClicked &&
       !isWriterNameConflict &&
@@ -141,37 +143,54 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
       <WriterNameInputWrapper
         $valueNotTyped={isSubmitBtnClicked && userInfoVal.writerName?.trim().length === 0}
         $isConflictChecked={isSubmitBtnClicked && !isConflictBtnClicked}
-        $isWriterNamLimit={isWriterNamLimit}
+        $isWriterNameLimit={isWriterNameLimit}
         $isConflictBtnClicked={isConflictBtnClicked}
       >
-        <UserInfoTitle>모임에서 사용할 필명*</UserInfoTitle>
-        <InputWrapper>
-          <WriterNameInput
-            placeholder="띄어쓰기 포함 8자 이내로 입력해주세요."
-            onChange={onChangeWriterName}
-            $isConflict={isWriterNameConflict || false}
-            $isValidLength={isWriterNamLimit}
-          />
+        <UserInfoTitle htmlFor="writerName">모임에서 사용할 필명*</UserInfoTitle>
+        <InputBtnWrapper>
+          <InputWrapper>
+            <Responsive only="desktop">
+              <WriterNameInput
+                id="writerName"
+                placeholder="띄어쓰기 포함 8자 이내로 입력해주세요."
+                onChange={onChangeWriterName}
+                $isConflict={isWriterNameConflict || false}
+                $isValidLength={isWriterNameLimit}
+              />
+            </Responsive>
+            <Responsive only="mobile">
+              <WriterNameInput
+                id="writerName"
+                placeholder="띄어쓰기 포함 8자 이내"
+                onChange={onChangeWriterName}
+                $isConflict={isWriterNameConflict || false}
+                $isValidLength={isWriterNameLimit}
+              />
+            </Responsive>
+            <WriterCharCount $isWriterNameLimit={isWriterNameLimit}>
+              {userInfoVal.writerName ? userInfoVal.writerName.length : 0}/8
+            </WriterCharCount>
+          </InputWrapper>
           <WriterExistCheckBtn
             disabled={
               userInfoVal.writerName
-                ? userInfoVal.writerName.trim().length === 0 || isWriterNamLimit
+                ? userInfoVal.writerName.trim().length === 0 || isWriterNameLimit
                 : true
             }
             onClick={onClickConflictBtn}
             $isBtnDisabled={
               userInfoVal.writerName
-                ? userInfoVal.writerName.trim().length === 0 || isWriterNamLimit
+                ? userInfoVal.writerName.trim().length === 0 || isWriterNameLimit
                 : true
             }
           >
             중복확인
           </WriterExistCheckBtn>
-        </InputWrapper>
+        </InputBtnWrapper>
         {/* 중복확인 안 누르고 가입하기 눌렀을 경우 */}
         {isSubmitBtnClicked &&
         userInfoVal.writerName?.trim().length !== 0 &&
-        !isWriterNamLimit &&
+        !isWriterNameLimit &&
         !isConflictBtnClicked &&
         !isWriterNameConflict ? (
           <WriterNameLength>중복확인을 해주세요.</WriterNameLength>
@@ -179,7 +198,7 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
           <></>
         )}
         {/* 필명 8자 이상일 경우 */}
-        {userInfoVal.writerName && isWriterNamLimit ? (
+        {userInfoVal.writerName && isWriterNameLimit ? (
           <WriterNameLength>8자 이내로 작성해주세요.</WriterNameLength>
         ) : (
           <></>
@@ -195,15 +214,16 @@ const UserInfoInput = (props: UserInfoInputPropTypes) => {
       </WriterNameInputWrapper>
       <Spacing marginBottom="2.8" />
       <WriterIntroduceInputWrapper>
-        <UserInfoTitle>소개 글</UserInfoTitle>
+        <UserInfoTitle htmlFor="writerIntroduce">소개 글</UserInfoTitle>
         <WriterIntroduceInput
+          id="writerIntroduce"
           placeholder="모임원들에게 ‘나’에 대해 자유롭게 소개해주세요."
           onChange={onChangeWriterIntroduce}
           $isIntroduceLimit={isIntroduceLimit}
         />
-        <CharCount $isIntroduceLimit={isIntroduceLimit}>
+        <IntroduceCharCount $isIntroduceLimit={isIntroduceLimit}>
           {userInfoVal.writerIntroduce ? userInfoVal.writerIntroduce.length : 0}/100
-        </CharCount>
+        </IntroduceCharCount>
       </WriterIntroduceInputWrapper>
       <Spacing marginBottom="2.8" />
       <SignUpBtn onClick={onClickSignUp}>가입하기</SignUpBtn>
@@ -229,10 +249,9 @@ export default UserInfoInput;
 const WriterNameInputWrapper = styled.section<{
   $valueNotTyped: boolean;
   $isConflictChecked: boolean;
-  $isWriterNamLimit: boolean;
+  $isWriterNameLimit: boolean;
   $isConflictBtnClicked: boolean;
 }>`
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
@@ -243,14 +262,18 @@ const WriterNameInputWrapper = styled.section<{
   border: ${({
     $valueNotTyped,
     $isConflictChecked,
-    $isWriterNamLimit,
+    $isWriterNameLimit,
     $isConflictBtnClicked,
     theme,
   }) =>
-    $valueNotTyped || $isConflictChecked || ($isWriterNamLimit && $isConflictBtnClicked)
+    $valueNotTyped || $isConflictChecked || ($isWriterNameLimit && $isConflictBtnClicked)
       ? `1px solid ${theme.colors.mileRed}`
       : `1px solid transparent`};
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    padding: 1.8rem;
+  }
 `;
 
 const WriterIntroduceInputWrapper = styled.section`
@@ -263,22 +286,36 @@ const WriterIntroduceInputWrapper = styled.section`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    padding: 1.8rem;
+  }
 `;
 
-const UserInfoTitle = styled.p`
+const UserInfoTitle = styled.label`
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.subtitle2};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle3};
+  }
 `;
 
-const InputWrapper = styled.div`
+const InputBtnWrapper = styled.div`
+  position: relative;
   display: flex;
   gap: 1.2rem;
   align-items: center;
   width: 100%;
 `;
 
+const InputWrapper = styled.div`
+  position: relative;
+  width: 90%;
+`;
+
 const WriterNameInput = styled.input<{ $isConflict: boolean; $isValidLength: boolean }>`
-  width: 67.7rem;
+  width: 100%;
   padding: 1rem 1.2rem;
 
   color: ${({ theme }) => theme.colors.gray100};
@@ -298,12 +335,17 @@ const WriterNameInput = styled.input<{ $isConflict: boolean; $isValidLength: boo
   &:focus {
     ${({ $isValidLength, theme }) => ($isValidLength ? theme.colors.mileRed : theme.colors.gray50)};
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    padding-right: 5.2rem;
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 
 const WriterExistCheckBtn = styled.button<{ $isBtnDisabled: boolean }>`
   width: 8.1rem;
   height: 4rem;
-  padding: 1rem 1.6rem;
 
   color: ${({ $isBtnDisabled, theme }) =>
     $isBtnDisabled ? theme.colors.gray70 : theme.colors.white};
@@ -313,6 +355,11 @@ const WriterExistCheckBtn = styled.button<{ $isBtnDisabled: boolean }>`
   cursor: ${({ $isBtnDisabled }) => ($isBtnDisabled ? 'default' : 'cursor')};
   border-radius: 8px;
   ${({ theme }) => theme.fonts.button3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    min-width: 8.1rem;
+    ${({ theme }) => theme.fonts.mButton1};
+  }
 `;
 
 const WriterNameEnable = styled.div<{ $isConflict: boolean | undefined }>`
@@ -322,12 +369,20 @@ const WriterNameEnable = styled.div<{ $isConflict: boolean | undefined }>`
     $isConflict ? theme.colors.mileRed : theme.colors.mainGreen};
 
   ${({ theme }) => theme.fonts.body4};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3};
+  }
 `;
 
 const WriterNameLength = styled.div`
   color: ${({ theme }) => theme.colors.mileRed};
 
   ${({ theme }) => theme.fonts.body4};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3};
+  }
 `;
 
 const WriterIntroduceInput = styled.textarea<{ $isIntroduceLimit: boolean }>`
@@ -354,9 +409,29 @@ const WriterIntroduceInput = styled.textarea<{ $isIntroduceLimit: boolean }>`
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray50};
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle2};
+    height: 21.1rem;
+  }
 `;
 
-const CharCount = styled.span<{ $isIntroduceLimit: boolean }>`
+const WriterCharCount = styled.span<{ $isWriterNameLimit: boolean }>`
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+
+  color: ${({ $isWriterNameLimit, theme }) =>
+    $isWriterNameLimit ? theme.colors.mileRed : theme.colors.gray70};
+  ${({ theme }) => theme.fonts.button3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    top: 1.25rem;
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
+`;
+
+const IntroduceCharCount = styled.span<{ $isIntroduceLimit: boolean }>`
   position: absolute;
   right: 4rem;
   bottom: 3.8rem;
@@ -364,6 +439,12 @@ const CharCount = styled.span<{ $isIntroduceLimit: boolean }>`
   color: ${({ $isIntroduceLimit, theme }) =>
     $isIntroduceLimit ? theme.colors.mileRed : theme.colors.gray70};
   ${({ theme }) => theme.fonts.button3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle2};
+    right: 3rem;
+    bottom: 2.8rem;
+  }
 `;
 
 const SignUpBtn = styled.button`

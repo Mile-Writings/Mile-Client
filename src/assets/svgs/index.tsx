@@ -62,6 +62,7 @@ export { default as adminEmptyMemberIc } from './adminEmptyMember.svg?react';
 export { default as AdminHomeIc } from './adminHomeIcn.svg?react';
 export { default as adminProfileIc } from './adminProfileIc.svg?react';
 export { default as CreateGroupImageUpload } from './createGroupImageUpload.svg?react';
+export { default as CreateCroupImageRemove } from './groupImageRemove.svg?react';
 export { default as CreateGroupInfoIc } from './createGroupInfoIc.svg?react';
 export { default as EditorCatIc } from './editorCatSvg.svg?react';
 export { default as faviconMileIc } from './faviconMile.svg?react';
@@ -93,4 +94,9 @@ export { default as GroupChatIc } from './groupChatIcn.svg?react';
 export { default as GroupCuriousIc } from './groupCuriousIcn.svg?react';
 export { default as GroupViewIc } from './groupViewIcn.svg?react';
 
+export { default as PopularMobileIc } from './popularMobile.svg?react';
 // export { default as LoadingIc } from './loadingSvg.svg?react';
+
+export { default as LinkIc } from './linkIcon.svg?react';
+export { default as HamburgerIc } from './hamburgerIcon.svg?react';
+export { default as DivideDotIc } from './divideDot.svg?react';

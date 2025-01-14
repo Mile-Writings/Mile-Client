@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import AddEditTopicModal from './AddEditTopicModal';
 import EditGroupInfo from './EditGroupInfo';
 import MemberManage from './MemberManage';
 import TopicAdmin from './TopicAdmin';
@@ -12,12 +11,22 @@ import { useAdminTopic, useDeleteGroup, useFetchMemberInfo } from '../hooks/quer
 
 import { useNavigate } from 'react-router-dom';
 import { MakeGroupAdminIc } from '../../../assets/svgs';
+import InputModal from '../../../components/commons/inputModal/InputModal';
 import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
+import Responsive from '../../../components/commons/Responsive/Responsive';
 import Spacing from '../../../components/commons/Spacing';
+import { ADMIN, ADMINMOBILE } from '../../../constants/modal';
 import useBlockPageExit from '../../../hooks/useBlockPageExit';
 import useModal from '../../../hooks/useModal';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 import Loading from '../../loading/Loading';
-const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo' }) => {
+import { Menu } from '../types/menu';
+
+interface RenderAdminContentPropTypes {
+  menu: Menu;
+}
+
+const RenderAdminContent = ({ menu }: RenderAdminContentPropTypes) => {
   const { groupId } = useParams();
   const [page, setPage] = useState(1);
   const [pageNum, setPageNum] = useState(1);
@@ -45,8 +54,8 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
 
   // groupInfo일 때만 페이지 이탈 감지 활성화
   useEffect(() => {
-    admin === 'groupInfo' ? setIgnoreBlocker(false) : setIgnoreBlocker(true);
-  }, [admin]);
+    menu === '모임 정보 수정' ? setIgnoreBlocker(false) : setIgnoreBlocker(true);
+  }, [menu]);
 
   const { mutate: deleteGroup, isPending, isError } = useDeleteGroup(groupId || '');
 
@@ -62,52 +71,105 @@ const RenderAdminContent = ({ admin }: { admin: 'topic' | 'member' | 'groupInfo'
     return <Loading />;
   }
 
-  switch (admin) {
-    case 'topic':
+  switch (menu) {
+    case '글감 설정':
       return (
-        <AdminContainer>
+        <AdminContainer maxWidth="78.1">
           <AdminLayout>
             <div>
-              <Title>글감 설정</Title>
-              <Spacing marginBottom="1.2" />
+              <Responsive only="desktop">
+                <Title>글감 설정</Title>
+                <Spacing marginBottom="1.2" />
+              </Responsive>
               <SubTitle>{`${topicCount}개의 글감이 저장되어있어요`}</SubTitle>
             </div>
-            <MakeGroupAdminIc style={{ cursor: 'pointer' }} onClick={openModal} />
+            <Responsive only="desktop">
+              <MakeGroupAdminIc style={{ cursor: 'pointer' }} onClick={openModal} />
+            </Responsive>
+            <Responsive only="mobile">
+              <MakeGroupAdminIc
+                width={32}
+                height={32}
+                style={{ cursor: 'pointer' }}
+                onClick={openModal}
+              />
+            </Responsive>
           </AdminLayout>
-          <Spacing marginBottom="3.6" />
           {showModal && (
             <>
               <ModalOverlay onClick={closeModal} />
-              <AddEditTopicModal pageNum={pageNum} setShowModal={setShowModal} />
+              <Responsive only="mobile">
+                {' '}
+                <InputModal
+                  pageNum={pageNum}
+                  setShowModal={setShowModal}
+                  topicPlaceholder={ADMINMOBILE.PLACEHOLER.TOPIC}
+                  tagPlaceholder={ADMINMOBILE.PLACEHOLER.TAG}
+                  descPlaceholder={ADMINMOBILE.PLACEHOLER.DESC}
+                />
+              </Responsive>
+              <Responsive only="desktop">
+                {' '}
+                <InputModal
+                  pageNum={pageNum}
+                  setShowModal={setShowModal}
+                  topicPlaceholder={ADMIN.PLACEHOLER.TOPIC}
+                  tagPlaceholder={ADMIN.PLACEHOLER.TAG}
+                  descPlaceholder={ADMIN.PLACEHOLER.DESC}
+                />
+              </Responsive>
             </>
           )}
+          <Responsive only="desktop">
+            <Spacing marginBottom="3.6" />
+          </Responsive>
+          <Responsive only="mobile">
+            <Spacing marginBottom="1.2" />
+          </Responsive>
           <TopicAdmin data={adminTopicData} setPageNum={setPageNum} pageNum={pageNum} />
         </AdminContainer>
       );
 
-    case 'member':
+    case '멤버 관리':
       return (
-        <AdminContainer>
-          <Title>멤버 관리</Title>
-          <Spacing marginBottom="1.2" />
+        <AdminContainer maxWidth="78.1">
+          <Responsive only="desktop">
+            <Title>멤버 관리</Title>
+            <Spacing marginBottom="1.2" />
+          </Responsive>
+          <Responsive only="mobile">
+            <Spacing marginBottom="1.3" />
+          </Responsive>
           <SubTitle>{`${totalMember}명의 멤버가 함께하고 있어요`}</SubTitle>
-          <Spacing marginBottom="3.6" />
+          <Responsive only="desktop">
+            <Spacing marginBottom="3.6" />
+          </Responsive>
+          <Responsive only="mobile">
+            <Spacing marginBottom="1.2" />
+          </Responsive>
           <MemberManage data={memberData} setPageCount={setPage} pageCount={page} />
         </AdminContainer>
       );
 
-    case 'groupInfo':
+    case '모임 정보 수정':
       return (
         <>
-          <AdminContainer>
-            <Title>모임 정보 수정</Title>
-            <Spacing marginBottom="1.2" />
+          <AdminContainer maxWidth="82.1">
+            <Responsive only="desktop">
+              <Title>모임 정보 수정</Title>
+              <Spacing marginBottom="4.2" />
+            </Responsive>
+
             <SubTitleWrapper>
               <SubTitle>{`글 모임 정보를 수정할 수 있습니다`}</SubTitle>
               <DeleteGroupBtn onClick={handleShowModal}>삭제하기</DeleteGroupBtn>
             </SubTitleWrapper>
-
-            <Spacing marginBottom="3.6" />
+            <Responsive only="desktop">
+              <Spacing marginBottom="3.6" />
+            </Responsive>
+            <Responsive only="mobile">
+              <Spacing marginBottom="1.2" />
+            </Responsive>
             <EditGroupInfo />
           </AdminContainer>
 
@@ -156,7 +218,12 @@ const DeleteGroupBtn = styled.button`
 `;
 const SubTitleWrapper = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    margin-top: 2.7rem;
+  }
 `;
 const ModalOverlay = styled.div`
   position: fixed;
@@ -169,11 +236,15 @@ const ModalOverlay = styled.div`
   background-color: rgb(0 0 0 / 50%); /* 반투명한 배경색 */
 `;
 
-const AdminContainer = styled.div`
+const AdminContainer = styled.div<{ maxWidth?: string }>`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: ${({ maxWidth }) => maxWidth}rem;
 
-  /* width: 78.1rem; */
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 const Title = styled.h1`
@@ -184,6 +255,10 @@ const Title = styled.h1`
 const SubTitle = styled.h2`
   ${({ theme }) => theme.fonts.body4};
   color: ${({ theme }) => theme.colors.gray70};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle4};
+  }
 `;
 
 const AdminLayout = styled.div`

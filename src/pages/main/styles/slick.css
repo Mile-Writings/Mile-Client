@@ -75,6 +75,10 @@
 .slick-slide {
   width: 45.4rem;
   height: 24rem;
+
+  @media screen and (max-width: 850px) {
+    height: 29rem;
+  }
 }
 [dir='rtl'] .slick-slide {
   float: right;

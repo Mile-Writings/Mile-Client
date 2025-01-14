@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import { GroupBestProfileIc, GroupNoDataImgIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface ProfilePropTypes {
   writerName: string;
@@ -19,20 +20,18 @@ const CuriousProfile = (props: CuriousProfilePropTypes) => {
   return (
     <CuriousProfileWrapper>
       {mostCuriousWriter?.length === 0 ? (
-        <NoCuriousProfileeWrapper>
+        <NoCuriousProfileWrapper>
           <Spacing marginBottom="4" />
           <GroupNoDataImgIc />
           <Spacing marginBottom="1.6" />
           아직 궁금해요를 받은 필명의 글쓴이가 없어요
           <Spacing marginBottom="4" />
-        </NoCuriousProfileeWrapper>
+        </NoCuriousProfileWrapper>
       ) : (
         mostCuriousWriter?.map((writer: ProfilePropTypes, index: number) => (
           <CuriousProfileLayout key={index}>
-            <GroupBestProfileIc />
-            <ProfileWrapper>
-              <ProfileTitle>{writer.writerName}</ProfileTitle>
-            </ProfileWrapper>
+            <GroupBestProfileIcon />
+            <ProfileTitle>{writer.writerName}</ProfileTitle>
           </CuriousProfileLayout>
         ))
       )}
@@ -42,22 +41,31 @@ const CuriousProfile = (props: CuriousProfilePropTypes) => {
 
 export default CuriousProfile;
 
+const GroupBestProfileIcon = styled(GroupBestProfileIc)`
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 5rem;
+    height: 5rem;
+  }
+`;
+
 const CuriousProfileWrapper = styled.div`
   display: flex;
   gap: 1.6rem;
   align-items: center;
-`;
-const ProfileWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  width: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    margin-bottom: 3.2rem;
+  }
 `;
 
 const ProfileTitle = styled.div`
   color: ${({ theme }) => theme.colors.gray90};
 
   ${({ theme }) => theme.fonts.subtitle3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 
 const CuriousProfileLayout = styled.div`
@@ -73,9 +81,25 @@ const CuriousProfileLayout = styled.div`
   border-radius: 8px;
 
   ${({ theme }) => theme.fonts.subtitle3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
+    gap: 0.8rem;
+    height: 10.6rem;
+    padding: 1.4rem;
+
+    &:only-child {
+      width: 100vw;
+    }
+
+    &:nth-child(1):nth-last-child(2),
+    &:nth-child(2):nth-last-child(1) {
+      width: 50vw;
+    }
+  }
 `;
 
-const NoCuriousProfileeWrapper = styled.div`
+const NoCuriousProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

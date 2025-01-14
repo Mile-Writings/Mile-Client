@@ -1,17 +1,23 @@
 import styled from '@emotion/styled';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import useModal from '../../../hooks/useModal';
+import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';
 import {
   CreateGroupImageUpload,
   CreateGroupImageUploadedIc,
   CreateGroupInfoIc,
   CreateGroupRadioCheckedIc,
   CreateGroupRadioUncheckedIc,
+  CreateCroupImageRemove,
 } from '../../../assets/svgs';
 import { DEFAULT_IMG_URL } from '../../../constants/defaultImgUrl';
+
 import useImageUpload from '../../../hooks/useImageUpload';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
+import { FileType } from '../../../types/imageUploadType';
 import handleImageUpload from '../../../utils/handleImageUpload';
-import { InputInfoMsg } from '../../createGroup/components/CreateGroupInfo';
+import { INPUT_INFO_MESSAGE } from '../../createGroup/constants/inputInfoMsg';
 import { useGetGroupNameValidation } from '../../createGroup/hooks/queries';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
 import { useFetchGroupInfo, usePutAdminGroupInfo } from '../hooks/queries';
@@ -23,7 +29,7 @@ const EditGroupInfo = () => {
   const [isPublic, setIsPublic] = useState(true);
   const [isHover, setIsHover] = useState(false);
 
-  const [groupNameInfoMsg, setGroupNameInfoMsg] = useState(InputInfoMsg.emptyText);
+  const [groupNameInfoMsg, setGroupNameInfoMsg] = useState(INPUT_INFO_MESSAGE.EMPTY_TEXT);
 
   const groupNameRef = useRef<HTMLInputElement>(null);
 
@@ -32,9 +38,10 @@ const EditGroupInfo = () => {
   const { fileName = '', url = '' } = usePresignedUrl();
 
   const [previewImgUrl, setPreviewImgUrl] = useState('');
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<FileType>(null);
 
   const { onImageUpload } = useImageUpload({ setPreviewImgUrl, setImageFile });
+  const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
   const [passDuplicate, setPassDuplicate] = useState(false);
   const [editBtnAcitve, setEditBtnActive] = useState(false);
 
@@ -49,9 +56,9 @@ const EditGroupInfo = () => {
     setPassDuplicate(false);
     setEditBtnActive(true);
     if (e.target.value.length > 10) {
-      setGroupNameInfoMsg(InputInfoMsg.groupNameLength);
+      setGroupNameInfoMsg(INPUT_INFO_MESSAGE.GROUP_NAME_LENGTH);
     } else {
-      setGroupNameInfoMsg(InputInfoMsg.emptyText);
+      setGroupNameInfoMsg(INPUT_INFO_MESSAGE.EMPTY_TEXT);
     }
   };
   const handleGroupDesc = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -90,12 +97,12 @@ const EditGroupInfo = () => {
   const editGroupInfo = async () => {
     if (groupName) {
       if ((passDuplicate || !isGroupNameChanged) && groupDesc.length <= 100) {
-        const groupImageServerUrl = await handleImageUpload(
+        const groupImageServerUrl = await handleImageUpload({
           url,
           fileName,
           imageFile,
-          previewImgUrl,
-        );
+          imageUrl: previewImgUrl,
+        });
         if (groupImageServerUrl) {
           await putAdminGroupInfo(groupImageServerUrl);
           setEditBtnActive(false);
@@ -104,26 +111,30 @@ const EditGroupInfo = () => {
         if (groupNameRef.current) {
           groupNameRef.current && groupNameRef.current.focus();
           groupNameRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
-          setGroupNameInfoMsg(InputInfoMsg.groupNameNotCheck);
+          setGroupNameInfoMsg(INPUT_INFO_MESSAGE.GROUP_NAME_NOT_CHECK);
         }
       }
     } else {
       if (groupNameRef.current) {
         groupNameRef.current && groupNameRef.current.focus();
         groupNameRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
-        setGroupNameInfoMsg(InputInfoMsg.groupNameEmpty);
+        setGroupNameInfoMsg(INPUT_INFO_MESSAGE.GROUP_NAME_EMPTY);
       }
     }
   };
-
+  const handleRemoveImage = () => {
+    setPreviewImgUrl('');
+    setImageFile(null);
+    handleCloseModal();
+    setEditBtnActive(true);
+  };
   useEffect(() => {
     if (isSuccess) {
       if (groupNameValidationData === true) {
-        setGroupNameInfoMsg(InputInfoMsg.groupNameAvailable);
+        setGroupNameInfoMsg(INPUT_INFO_MESSAGE.GROUP_NAME_AVAILABLE);
         setPassDuplicate(true);
       } else if (groupNameValidationData === false) {
-        setGroupNameInfoMsg(InputInfoMsg.groupNameNotAvailable);
-        // setGroupNameValid(false);
+        setGroupNameInfoMsg(INPUT_INFO_MESSAGE.GROUP_NAME_NOT_AVAILABLE);
       }
     }
   }, [groupNameValidationData, isSuccess]);
@@ -152,10 +163,8 @@ const EditGroupInfo = () => {
                   placeholder="띄어쓰기 포함 10자 이내로 입력해주세요."
                   isValid={groupNameLengthValid}
                   value={groupName}
-                />{' '}
-                <TextAreaLength isValid={groupNameLengthValid}>
-                  {groupName.length}/10
-                </TextAreaLength>
+                />
+                <InputLength isValid={groupNameLengthValid}>{groupName.length}/10</InputLength>
               </GroupNameInputWrapper>
               <DuplicateCheckBtn
                 type="button"
@@ -168,7 +177,7 @@ const EditGroupInfo = () => {
             </GroupNameInputLayout>
 
             <GroupNameValidationText
-              validation={InputInfoMsg.groupNameAvailable === groupNameInfoMsg}
+              validation={INPUT_INFO_MESSAGE.GROUP_NAME_AVAILABLE === groupNameInfoMsg}
             >
               {groupNameInfoMsg}
             </GroupNameValidationText>
@@ -194,30 +203,42 @@ const EditGroupInfo = () => {
         <WhiteInputWrapper isValid={true}>
           <GroupInputWrapper>
             <InputTitleText>글 모임 사진</InputTitleText>
-            <GroupImageLabel htmlFor="file">
+
+            {previewImgUrl !== DEFAULT_IMG_URL && previewImgUrl !== '' ? (
               <GroupImageWrapper>
                 <GroupImagePreviewWrapper>
-                  {previewImgUrl !== DEFAULT_IMG_URL ? (
-                    <>
-                      <GroupImagePreview src={previewImgUrl} />
-                      <CreateGroupImageUploadedIcon className="group-image-preview" />
-                    </>
-                  ) : (
-                    <CreateGroupImageUploadIcon className="group-image-preview" />
-                  )}
+                  <GroupImagePreview src={previewImgUrl} isImagePreview={!!previewImgUrl} />
+
+                  <IconWrapper>
+                    <GroupImageLabel htmlFor="file">
+                      <CreateGroupImageUploadedIcon />
+                      <GroupImageInput
+                        type="file"
+                        name="file"
+                        id="file"
+                        accept="image/*"
+                        onChange={handleGroupImage}
+                      />
+                    </GroupImageLabel>
+                    <CreateGroupImageRemoveIcon onClick={handleShowModal} />
+                  </IconWrapper>
                 </GroupImagePreviewWrapper>
+              </GroupImageWrapper>
+            ) : (
+              <GroupImageLabel htmlFor="file">
+                <GroupImageWrapper>
+                  <CreateGroupImageUploadIcon className="group-image-preview" />
+                </GroupImageWrapper>
+
                 <GroupImageInput
                   type="file"
                   name="file"
                   id="file"
                   accept="image/*"
-                  onChange={(e) => {
-                    handleGroupImage(e);
-                  }}
+                  onChange={handleGroupImage}
                 />
-              </GroupImageWrapper>
-            </GroupImageLabel>
-
+              </GroupImageLabel>
+            )}
             <GroupInputDesc>
               *글모임 페이지 상단에 노출될 대표 이미지입니다. 1366*306px사이즈를 권장합니다.
             </GroupInputDesc>
@@ -239,47 +260,93 @@ const EditGroupInfo = () => {
                 </PublicInfoText>
               </PublicInfoWrapper>
             </GroupPublicDescWrapper>
-            <GroupPublicDescContainer>
-              <GroupIsPublicWrapper>
-                <GroupisPublicLabel htmlFor="isPublicTrue">
-                  {isPublic ? <CreateGroupRadioCheckedIc /> : <CreateGroupRadioUncheckedIc />}
-                  공개
+            <GroupPublicDescResponsiveBox>
+              <GroupPublicDescContainer>
+                <GroupIsPublicWrapper>
+                  <GroupisPublicLabel htmlFor="isPublicTrue">
+                    {isPublic ? <CreateGroupRadioCheckedIc /> : <CreateGroupRadioUncheckedIc />}
+                    공개
+                  </GroupisPublicLabel>
+                </GroupIsPublicWrapper>
+                <GroupIsPublicRadio
+                  type="radio"
+                  id="isPublicTrue"
+                  name="isPublic"
+                  value={'true'}
+                  onChange={handleIsPublic}
+                />
+              </GroupPublicDescContainer>
+              <GroupPublicDescContainer>
+                <GroupisPublicLabel htmlFor="isPublicFalse">
+                  {!isPublic ? <CreateGroupRadioCheckedIc /> : <CreateGroupRadioUncheckedIc />}
+                  비공개
                 </GroupisPublicLabel>
-              </GroupIsPublicWrapper>
-              <GroupIsPublicRadio
-                type="radio"
-                id="isPublicTrue"
-                name="isPublic"
-                value={'true'}
-                onChange={handleIsPublic}
-              />
-            </GroupPublicDescContainer>
-            <GroupPublicDescContainer>
-              <GroupisPublicLabel htmlFor="isPublicFalse">
-                {!isPublic ? <CreateGroupRadioCheckedIc /> : <CreateGroupRadioUncheckedIc />}
-                비공개
-              </GroupisPublicLabel>
-              <GroupIsPublicRadio
-                type="radio"
-                id="isPublicFalse"
-                name="isPublic"
-                value={'false'}
-                onChange={handleIsPublic}
-              />
-            </GroupPublicDescContainer>
+                <GroupIsPublicRadio
+                  type="radio"
+                  id="isPublicFalse"
+                  name="isPublic"
+                  value={'false'}
+                  onChange={handleIsPublic}
+                />
+              </GroupPublicDescContainer>
+            </GroupPublicDescResponsiveBox>
           </GroupInputHorizonWrapper>
         </WhiteInputWrapper>
         <EditGroupBtn onClick={editGroupInfo} active={editBtnAcitve} disabled={!editBtnAcitve}>
           수정하기
         </EditGroupBtn>
       </CreateGroupLayout>
+      {/* 글모임 이미지 삭제 모달 */}
+      <DefaultModal
+        isModalOpen={isModalOpen}
+        onClickBg={handleCloseModal}
+        content={'등록한 이미지를 삭제하시겠습니까?'}
+        sizeType="LARGE"
+      >
+        <DefaultModalBtn
+          btnText={['예', '아니요']}
+          onClickLeft={handleRemoveImage}
+          onClickRight={handleCloseModal}
+        />
+      </DefaultModal>
     </>
   );
 };
 
 export default EditGroupInfo;
-const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
+const IconWrapper = styled.div`
   position: absolute;
+  display: flex;
+  gap: 1.6rem;
+  justify-content: center;
+  width: 100%;
+
+  cursor: auto;
+`;
+const GroupPublicDescResponsiveBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    gap: 1rem;
+    justify-content: flex-start;
+    width: 100%;
+  }
+`;
+
+const CreateGroupImageRemoveIcon = styled(CreateCroupImageRemove)`
+  z-index: 1;
+
+  cursor: pointer;
+
+  &:hover {
+    path {
+      fill: #6139d1;
+    }
+  }
+`;
+const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
   z-index: 1;
 
   cursor: pointer;
@@ -294,8 +361,6 @@ const CreateGroupImageUploadIcon = styled(CreateGroupImageUpload)`
 `;
 
 const CreateGroupImageUploadedIcon = styled(CreateGroupImageUploadedIc)`
-  position: absolute;
-
   cursor: pointer;
 
   &:hover {
@@ -307,11 +372,13 @@ const CreateGroupImageUploadedIcon = styled(CreateGroupImageUploadedIc)`
   }
 `;
 const GroupImagePreviewWrapper = styled.div`
+  position: relative;
   display: flex;
+  gap: 1.6rem;
   align-items: center;
   justify-content: center;
+  width: 100%;
 `;
-
 const GroupNameInputWrapper = styled.div`
   position: relative;
   width: 100%;
@@ -322,6 +389,10 @@ const GroupInfoTextareaWrapper = styled.div`
 const GroupNameValidationText = styled.p<{ validation: boolean }>`
   ${({ theme }) => theme.fonts.body4};
   color: ${({ theme, validation }) => (validation ? theme.colors.mainGreen : theme.colors.mileRed)};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3};
+  }
 `;
 const EditGroupBtn = styled.button<{ active: boolean }>`
   display: flex;
@@ -368,6 +439,16 @@ const PublicInfoWrapper = styled.div<{ isVisible: boolean }>`
   background-color: ${({ theme }) => theme.colors.white};
   border: 2px solid ${({ theme }) => theme.colors.mainViolet};
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    top: 3rem;
+    right: 0;
+    width: 31.5rem;
+    height: fit-content;
+    padding: 1.2rem;
+
+    ${({ theme }) => theme.fonts.mSubtitle2};
+  }
 `;
 const GroupIsPublicRadio = styled.input`
   display: none;
@@ -378,7 +459,11 @@ const GroupIsPublicWrapper = styled.div`
   gap: 0.8rem;
   align-items: center;
   justify-content: flex-end;
-  width: 8rem;
+  width: 10rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    justify-content: flex-start;
+  }
 `;
 const GroupisPublicLabel = styled.label`
   display: flex;
@@ -387,6 +472,7 @@ const GroupisPublicLabel = styled.label`
   overflow: visible;
 
   cursor: pointer;
+
   ${({ theme }) => theme.fonts.subtitle6};
 `;
 
@@ -396,6 +482,10 @@ const GroupPublicDescContainer = styled.div`
   justify-content: flex-end;
   width: 8rem;
   height: 1.9rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    justify-content: flex-start;
+  }
 `;
 const GroupPublicDesc = styled.p`
   color: ${({ theme }) => theme.colors.black};
@@ -406,19 +496,30 @@ const GroupPublicDescWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 61.4rem;
+  width: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 
 const GroupInputDesc = styled.p`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.body4};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle1};
+  }
 `;
-const GroupImagePreview = styled.img`
-  width: 77rem;
+const GroupImagePreview = styled.img<{ isImagePreview: boolean }>`
+  position: absolute;
+
+  width: 100%;
   height: 20rem;
   object-fit: cover;
 
-  cursor: pointer;
+  cursor: ${({ isImagePreview }) => (isImagePreview ? 'default' : 'pointer')};
   border-radius: 8px;
 `;
 
@@ -433,7 +534,7 @@ const GroupImageWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 77rem;
+  width: 100%;
   height: 20rem;
 
   background-color: ${({ theme }) => theme.colors.gray10};
@@ -459,6 +560,7 @@ const GroupInfoTextarea = styled.textarea<{ isValid: boolean }>`
   padding: 1rem 1.2rem;
 
   color: ${({ theme }) => theme.colors.gray100};
+  word-break: break-all;
 
   background: ${({ theme }) => theme.colors.gray5};
   border: 1px solid
@@ -469,14 +571,43 @@ const GroupInfoTextarea = styled.textarea<{ isValid: boolean }>`
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray50};
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    --scale: 0.875;
+    width: calc(100% * 100 / 87.5);
+    height: calc(11rem * 100 / 87.5);
+    padding: calc(100rem / 87.5) calc(1.2rem * 100 / 87.5);
+
+    transform: scale(var(--scale));
+    transform-origin: left top;
+    ${({ theme }) => theme.fonts.mSubtitle2_2};
+  }
 `;
 const TextAreaLength = styled.p<{ isValid: boolean }>`
+  position: absolute;
+  right: 1.2rem;
+  bottom: 2.6rem;
+
+  ${({ theme }) => theme.fonts.button3};
+  color: ${({ theme, isValid }) => (isValid ? theme.colors.gray70 : theme.colors.mileRed)};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody1};
+  }
+`;
+const InputLength = styled.p<{ isValid: boolean }>`
   position: absolute;
   right: 1.2rem;
   bottom: 1rem;
 
   ${({ theme }) => theme.fonts.button3};
   color: ${({ theme, isValid }) => (isValid ? theme.colors.gray70 : theme.colors.mileRed)};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    bottom: 1.3rem;
+
+    ${({ theme }) => theme.fonts.mBody1};
+  }
 `;
 const GroupInfoWrppaer = styled.section`
   display: flex;
@@ -508,6 +639,10 @@ const GroupInputWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    padding: 1.8rem;
+  }
 `;
 const GroupInputHorizonWrapper = styled(GroupInputWrapper)`
   display: flex;
@@ -516,6 +651,11 @@ const GroupInputHorizonWrapper = styled(GroupInputWrapper)`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
+    gap: 3rem;
+  }
 `;
 const InputTitleText = styled.p`
   color: ${({ theme }) => theme.colors.black};
@@ -547,6 +687,16 @@ const GroupNameInput = styled.input<{ isValid: boolean }>`
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray50};
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    --scale: 0.875;
+    width: calc(100% * 100 / 87.5);
+    height: calc(3.9rem * 100 / 87.5);
+
+    transform: scale(var(--scale));
+    transform-origin: left top;
+    ${({ theme }) => theme.fonts.mSubtitle2_2};
+  }
 `;
 
 const DuplicateCheckBtn = styled.button<{ positive: boolean }>`
@@ -554,7 +704,9 @@ const DuplicateCheckBtn = styled.button<{ positive: boolean }>`
   align-items: center;
   justify-content: center;
   width: 8.1rem;
-  height: 4rem;
+  height: 4.3rem;
+
+  /* padding: 1.2rem 1.6rem; */
 
   color: ${({ theme }) => theme.colors.gray70};
   color: ${({ theme, positive }) => (positive ? theme.colors.white : theme.colors.gray70)};
@@ -564,6 +716,11 @@ const DuplicateCheckBtn = styled.button<{ positive: boolean }>`
   cursor: ${({ positive }) => (positive ? 'pointer' : 'default')};
   border-radius: 8px;
   ${({ theme }) => theme.fonts.button3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mButton1};
+    min-width: 8.1rem;
+  }
 `;
 
 const CreateGroupLayout = styled.div`
@@ -573,4 +730,9 @@ const CreateGroupLayout = styled.div`
   width: 82.6rem;
   height: fit-content;
   margin-bottom: 8rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    max-width: 81rem;
+  }
 `;

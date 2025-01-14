@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import Spacing from '../../../components/commons/Spacing';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 import mainOnBoardingImg from '/src/assets/images/mainOnBoarding.png';
 import mainOnBoardingWebp from '/src/assets/webps/mainonboarding.webp';
 const OnBoarding = () => {
@@ -37,6 +38,11 @@ const OnBoardingWrapper = styled.section`
   padding: 6.8rem 21.8rem 4.8rem;
 
   background-color: ${({ theme }) => theme.colors.white};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    max-width: 82rem;
+    padding: 3.5rem 2rem 2.7rem;
+  }
 `;
 
 const OnBoardingIcWithTextLayout = styled.div`
@@ -55,14 +61,32 @@ const MainText = styled.p`
   justify-content: flex-start;
   width: fit-content;
   ${({ theme }) => theme.fonts.title12};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.title13};
+  }
 `;
 
 const SubText = styled.p`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.subtitle7};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    font-weight: 500;
+    font-size: 13px;
+    font-style: normal;
+    line-height: 120%; /* 15.6px */
+  }
 `;
 
 const MainOnboardingImg = styled.img`
   width: 93rem;
   height: 35.7rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    max-width: 80rem;
+    height: 3%;
+    object-fit: cover;
+  }
 `;

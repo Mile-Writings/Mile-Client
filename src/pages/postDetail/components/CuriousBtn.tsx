@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import checkAuthenticate from '../../../utils/checkAuthenticate';
 import { useDeleteCurious, useGetCuriousInfo, usePostCurious } from '../hooks/queries';
 import { DetailPurpleFavoriteIc, DetailWhiteFavoriteIc } from './../../../assets/svgs';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 interface CuriousBtnProps {
   postId: string;
 }
@@ -54,10 +55,14 @@ const ButtonCSS = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 11.6rem;
-  height: 4rem;
+  max-height: 4rem;
+  padding: 10px 16px;
 
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    padding: 14px 16px;
+  }
 `;
 
 const CuriousBtnWrapper = styled.button<{ $isClick: boolean }>`
@@ -67,12 +72,21 @@ const CuriousBtnWrapper = styled.button<{ $isClick: boolean }>`
     $isClick ? theme.colors.mainViolet : theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.mainViolet};
   ${ButtonCSS}
+
   ${({ theme }) => theme.fonts.button3};
 
   :hover {
     background-color: ${({ $isClick, theme }) =>
       !$isClick ? theme.colors.mileViolet : theme.colors.mainViolet};
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody1};
+  }
+
+  /* @media ${MOBILE_MEDIA_QUERY} {
+    height: 4.4rem;
+  } */
 `;
 
 const CuriousTextWrapper = styled.div`
@@ -80,6 +94,10 @@ const CuriousTextWrapper = styled.div`
   gap: 0.6rem;
   align-items: center;
   justify-content: center;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    gap: 0.4rem;
+  }
 `;
 
 const CuriousTextContainer = styled.div`
@@ -87,5 +105,9 @@ const CuriousTextContainer = styled.div`
   gap: 0.2rem;
   align-items: center;
   justify-content: center;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    gap: 0;
+  }
 `;
 export default CuriousBtn;

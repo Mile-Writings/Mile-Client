@@ -14,6 +14,7 @@ import { useArticleList } from '../hooks/queries';
 import Spacing from '../../../components/commons/Spacing';
 
 import Loading from '../../loading/Loading';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface CategoryDataPropTypes {
   topicId: string;
@@ -45,6 +46,21 @@ const Carousel = ({
       setActiveCategoryId(newIndex + 1);
       categoryData && setSelectedTopicId(categoryData[newIndex]?.topicId);
     },
+
+    responsive: [
+      {
+        breakpoint: 690,
+        settings: {
+          slidesToShow: 5,
+        },
+      },
+      {
+        breakpoint: 540,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+    ],
   };
 
   const handleCategoryClick = (categoryId: number, topicId: string) => {
@@ -96,23 +112,42 @@ export default Carousel;
 
 const CarouselWrapper = styled.div`
   position: relative;
-  width: 72rem;
+  width: auto;
+  max-width: 72rem;
   height: 6.2rem;
 
   background-color: ${({ theme }) => theme.colors.backGroundGray};
   border-bottom: 0.1rem solid ${({ theme }) => theme.colors.gray30};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    max-width: 81rem;
+    height: 4.4rem;
+  }
 `;
 
 const Topic = styled.div`
   width: 63.1rem;
 
   color: ${({ theme }) => theme.colors.black};
+
   ${({ theme }) => theme.fonts.title5};
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: auto;
+    max-width: 60.4rem;
+
+    ${({ theme }) => theme.fonts.mTitle2};
+  }
 `;
 
 const TopicDescription = styled.div`
   width: 63.1rem;
 
   color: ${({ theme }) => theme.colors.gray70};
+
   ${({ theme }) => theme.fonts.body3};
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: auto;
+    max-width: 60.4rem;
+    ${({ theme }) => theme.fonts.mSubtitle1};
+  }
 `;

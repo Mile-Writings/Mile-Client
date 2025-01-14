@@ -8,7 +8,6 @@ export const client = axios.create({
   baseURL: `${devBaseUrl}`,
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
   },
   withCredentials: true,
 });
@@ -18,25 +17,11 @@ export const authClient = axios.create({
   baseURL: `${devBaseUrl}`,
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
 
     Authorization: `Bearer ${accessToken}`,
   },
   withCredentials: true,
 });
-
-// authClient.interceptors.request.use(
-//   (config) => {
-//     const accessToken = localStorage.getItem('accessToken');
-//     if (accessToken) {
-//       config.headers.Authorization = `Bearer ${accessToken}`;
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   },
-// );
 
 authClient.interceptors.response.use(
   (config) => {

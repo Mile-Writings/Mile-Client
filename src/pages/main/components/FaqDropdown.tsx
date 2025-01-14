@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 import { MainToggleArrowOpenedIc, MainTogglearrowClosedIc } from './../../../assets/svgs';
 import { faqDataPropTypes } from './../constants/faqData';
 
@@ -15,16 +16,18 @@ const FaqDropdown = ({ id, question, answer }: faqDataPropTypes) => {
   return (
     <FaqWrapper>
       <DropdownLayout onClick={handleDropDown}>
-        <FaqContainer>
-          <QuestionAnswerBox key={id}>
-            <Question>
+        <QuestionAnswerBox key={id}>
+          <Question>
+            <TextWrapper>
               <QuestionMarkText>Q.</QuestionMarkText>
               <QuestionText>{question}</QuestionText>
+            </TextWrapper>
+            <ToggleWrapper>
               {dropDownOpened ? <MainTogglearrowClosedIc /> : <MainToggleArrowOpenedIc />}
-            </Question>
-            {dropDownOpened && <AnswerTextBox>{answer}</AnswerTextBox>}
-          </QuestionAnswerBox>
-        </FaqContainer>
+            </ToggleWrapper>
+          </Question>
+          {dropDownOpened && <AnswerTextBox>{answer}</AnswerTextBox>}
+        </QuestionAnswerBox>
       </DropdownLayout>
     </FaqWrapper>
   );
@@ -32,6 +35,20 @@ const FaqDropdown = ({ id, question, answer }: faqDataPropTypes) => {
 
 export default FaqDropdown;
 
+const ToggleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: cneter;
+  width: 1.4rem;
+  height: 1.4rem;
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  width: 100%;
+`;
 const FaqWrapper = styled.section`
   display: flex;
   flex-direction: column;
@@ -42,15 +59,18 @@ const FaqWrapper = styled.section`
 
 const DropdownLayout = styled.section`
   width: fit-content;
+  width: 87.4rem;
   padding: 2.4rem 2.8rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
   border-radius: 8px;
-`;
 
-const FaqContainer = styled.div`
-  width: 87.4rem;
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    min-width: 33.5rem;
+    max-width: 81rem;
+  }
 `;
 
 const QuestionAnswerBox = styled.div`
@@ -62,19 +82,25 @@ const Question = styled.div`
   display: flex;
   gap: 0.8rem;
   align-items: center;
-
-  & > svg {
-    margin-left: auto;
-  }
+  justify-content: space-between;
 `;
 
 const QuestionMarkText = styled.p`
   color: ${({ theme }) => theme.colors.mainViolet};
   ${({ theme }) => theme.fonts.title5};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody2};
+  }
 `;
 
 const QuestionText = styled.p`
   ${({ theme }) => theme.fonts.title5};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 85%;
+    ${({ theme }) => theme.fonts.mTitle1}
+  }
 `;
 
 const AnswerTextBox = styled.div`
@@ -87,4 +113,8 @@ const AnswerTextBox = styled.div`
   user-select: none;
 
   ${({ theme }) => theme.fonts.body3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3}
+  }
 `;

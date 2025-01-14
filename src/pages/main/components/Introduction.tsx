@@ -1,15 +1,15 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { INTRODUCTION_DATA } from '../constants/introductionData';
-
 import {
   MainIcnArrowWhite as MainArrowWhiteIc,
   MainGraphicLogo as MainGraphicLogoIc,
   MainIcnArrowPurple as MainIcnArrowPurpleIcon,
 } from '../../../assets/svgs';
+import Responsive from '../../../components/commons/Responsive/Responsive';
 import Spacing from '../../../components/commons/Spacing';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
+import { INTRODUCTION_DATA } from '../constants/introductionData';
 
 const Introduction = () => {
   const navigate = useNavigate();
@@ -29,16 +29,19 @@ const Introduction = () => {
         </MainText>
         <Spacing marginBottom="0.8" />
         <SubText>{INTRODUCTION_DATA[0].subText}</SubText>
-        <Spacing marginBottom="8" />
-        <GroupRoutingButton
-          type="button"
-          onClick={handleOnClick}
-          onMouseOver={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          마일 글 모임 바로가기
-          {IsHovered ? <MainIcnArrowPurpleIcon /> : <MainArrowWhiteIc />}
-        </GroupRoutingButton>
+        <Responsive only="desktop">
+          <Spacing marginBottom="8" />
+
+          <GroupRoutingButton
+            type="button"
+            onClick={handleOnClick}
+            onMouseOver={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            마일 글 모임 바로가기
+            {IsHovered ? <MainIcnArrowPurpleIcon /> : <MainArrowWhiteIc />}
+          </GroupRoutingButton>
+        </Responsive>
       </MileMakersTextLayout>
       <IntroduceMileLayout>
         <HookText>{INTRODUCTION_DATA[0].hookText}</HookText>
@@ -47,12 +50,32 @@ const Introduction = () => {
         <Spacing marginBottom="3" />
         <DiscriptionText>{INTRODUCTION_DATA[0].discriptionText}</DiscriptionText>
       </IntroduceMileLayout>
+
+      <Responsive only="mobile" asChild>
+        <ButtonWrapper>
+          <GroupRoutingButton
+            type="button"
+            onClick={handleOnClick}
+            onMouseOver={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            마일 글 모임 바로가기
+            {IsHovered ? <MainIcnArrowPurpleIcon /> : <MainArrowWhiteIc />}
+          </GroupRoutingButton>
+        </ButtonWrapper>
+      </Responsive>
     </IntroductionWrapper>
   );
 };
 
 export default Introduction;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 33.5rem;
+  max-width: 40rem;
+`;
 const IntroductionWrapper = styled.section`
   display: flex;
   gap: 10.2rem;
@@ -62,22 +85,36 @@ const IntroductionWrapper = styled.section`
   padding: 10rem 21.8rem 10rem 28.4rem;
 
   background-color: ${({ theme }) => theme.colors.backGroundViolet};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
+    gap: 3rem;
+    padding: 4.6rem 2rem;
+  }
 `;
 
 const MileMakersTextLayout = styled.div`
   display: flex;
   flex-direction: column;
+  width: 33.5rem;
 
   white-space: nowrap;
 `;
 
 const MainText = styled.h1`
   ${({ theme }) => theme.fonts.title3};
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle5};
+  }
 `;
 
 const SubText = styled.span`
   color: ${({ theme }) => theme.colors.darkViolet};
   ${({ theme }) => theme.fonts.subtitle3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3};
+  }
 `;
 
 const GroupRoutingButton = styled.button`
@@ -100,6 +137,10 @@ const GroupRoutingButton = styled.button`
     background-color: ${({ theme }) => theme.colors.white};
 
     transition: all 0.5s;
+
+    @media ${MOBILE_MEDIA_QUERY} {
+      ${({ theme }) => theme.fonts.button3};
+    }
   }
 `;
 
@@ -112,16 +153,29 @@ const IntroduceMileLayout = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0 2px 8px 0 rgb(0 0 0 / 10%);
   border-radius: 1rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 33.5rem;
+    padding: 3rem;
+  }
 `;
 
 const HookText = styled.span`
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.subtitle4};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle3};
+  }
 `;
 
 const GreetingText = styled.span`
   white-space: nowrap;
   ${({ theme }) => theme.fonts.title5};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mTitle5};
+  }
 `;
 
 const DiscriptionText = styled.p`
@@ -129,4 +183,8 @@ const DiscriptionText = styled.p`
 
   color: ${({ theme }) => theme.colors.gray80};
   ${({ theme }) => theme.fonts.body3};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody2};
+  }
 `;

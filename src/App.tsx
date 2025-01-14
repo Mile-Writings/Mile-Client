@@ -1,10 +1,13 @@
 import styled from '@emotion/styled';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import router from './routers/Router';
-import { RouterProvider } from 'react-router-dom';
 import { Suspense } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
+import { RouterProvider } from 'react-router-dom';
+import ResponsiveProvider from './components/commons/Responsive/ResponsiveProvider';
 import Loading from './pages/loading/Loading';
+import router from './routers/Router';
+import { MOBILE_MEDIA_QUERY } from './styles/mediaQuery';
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -15,18 +18,19 @@ const App = () => {
     },
   });
   return (
-    <>
-      <div style={{ fontSize: '16px' }}>
-        <QueryClientProvider client={queryClient}>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <ResponsiveProvider>
           <DesktopWrapper>
+            {/* <div style={{ fontSize: '16px' }}> */}
             <Suspense fallback={<Loading />}>
               <RouterProvider router={router} />
             </Suspense>
           </DesktopWrapper>
-          <ReactQueryDevtools initialIsOpen />
-        </QueryClientProvider>
-      </div>
-    </>
+        </ResponsiveProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 };
 
@@ -38,4 +42,10 @@ const DesktopWrapper = styled.div`
   align-items: center;
   width: 100%;
   scroll-behavior: smooth;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    /* width: 100%; */
+    width: 100%;
+    max-width: 83rem;
+  }
 `;

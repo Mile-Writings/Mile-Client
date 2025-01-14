@@ -13,6 +13,7 @@ import {
   GroupListProfileCloseIc,
 } from '../../../assets/svgs';
 import useClickOutside from '../../../hooks/useClickOutside';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface CommentItem {
   name: string;
@@ -69,7 +70,7 @@ const CommentItem = ({
   return (
     <>
       <CommentItemWrapper isComment={type === 'comment'}>
-        {isAnonymous ? <GroupListProfileCloseIc /> : <TextCommentProfileIc />}
+        {isAnonymous ? <GroupListProfileCloseIcon /> : <TextCommentProfileIcon />}
         <CommentItemContainer>
           <CommentInfoWrapper>
             <CommenterNameText $name={name}>{name}</CommenterNameText>
@@ -142,10 +143,18 @@ const NestedCommentWrapper = styled.div`
   align-items: center;
   margin-left: 1.2rem;
   padding: 1.2rem 0;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 const IconWrapper = styled.div`
   display: flex;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    gap: 1.2rem;
+  }
 `;
 
 const NestCommentIcon = styled.div`
@@ -166,6 +175,11 @@ const CommentItemWrapper = styled.div<{ isComment: boolean }>`
   padding: 1.8rem 0;
 
   background-color: ${({ theme }) => theme.colors.white};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    gap: 0;
+    width: ${({ isComment }) => (isComment ? '100%' : '95%')};
+  }
 `;
 
 const CommentItemContainer = styled.div`
@@ -174,6 +188,10 @@ const CommentItemContainer = styled.div`
   gap: 0.6rem;
   width: 67rem;
   height: auto;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 80%;
+  }
 `;
 
 const CommentInfoWrapper = styled.div`
@@ -181,6 +199,11 @@ const CommentInfoWrapper = styled.div`
   gap: 0.4rem;
   align-items: center;
   justify-content: start;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 const CommenterNameText = styled.p<{ $name: string }>`
@@ -188,17 +211,30 @@ const CommenterNameText = styled.p<{ $name: string }>`
   color: ${({ $name, theme }) =>
     $name == '글쓴이' ? theme.colors.mainViolet : theme.colors.black};
   ${({ theme }) => theme.fonts.body5};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3};
+  }
 `;
 
 const CommnertGroupNameText = styled.p`
   color: ${({ theme }) => theme.colors.gray50};
   ${({ theme }) => theme.fonts.body8};
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mSubtitle1};
+  }
 `;
 
 const CommentText = styled.p`
   color: ${({ theme }) => theme.colors.gray90};
   ${({ theme }) => theme.fonts.body6};
   white-space: pre-wrap;
+  word-break: break-all;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    ${({ theme }) => theme.fonts.mBody3};
+  }
 `;
 
 const Modal = styled.div`
@@ -248,5 +284,20 @@ const MeatBallWrapper = styled.div`
 
   :hover {
     background-color: ${({ theme }) => theme.colors.gray20};
+  }
+`;
+
+const GroupListProfileCloseIcon = styled(GroupListProfileCloseIc)`
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 36px;
+    margin-right: 1rem;
+  }
+`;
+
+const TextCommentProfileIcon = styled(TextCommentProfileIc)`
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 3.6rem;
+    height: 3.6rem;
+    margin-right: 1rem;
   }
 `;

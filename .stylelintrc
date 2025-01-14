@@ -3,6 +3,7 @@
   "plugins": ["stylelint-order"],
   "customSyntax": "postcss-styled-syntax",
   "rules": {
+    "media-query-no-invalid": null,
     "declaration-empty-line-before": [
       "never",
       {

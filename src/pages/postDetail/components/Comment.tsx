@@ -8,6 +8,7 @@ import { useGetCommentList } from '../hooks/queries';
 import { ArrowTopLeftIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 import noCommentImg from '/src/assets/images/noCommentImage.png';
+import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
 
 interface CommentPropTypes {
   postId: string | undefined;
@@ -51,7 +52,7 @@ const Comment = (props: CommentPropTypes) => {
         </>
       ) : (
         commentListData?.map((data: CommentListPropTypes) => (
-          <div key={data.commentId}>
+          <CommentListWrapper key={data.commentId}>
             <CommentItem
               name={data.name}
               moimName={data.moimName}
@@ -80,7 +81,7 @@ const Comment = (props: CommentPropTypes) => {
                   />
                 </NestedWrapper>
               ))}
-          </div>
+          </CommentListWrapper>
         ))
       )}
     </CommentWrapper>
@@ -95,19 +96,27 @@ const NestedWrapper = styled.div`
   align-items: center;
   width: 76.8rem;
   padding-left: 1.2rem;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+  }
 `;
 
 const CommentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: content-box;
-  width: 76.8rem;
+  width: 100%;
   height: fit-content;
   padding: 2.8rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    width: 100%;
+    padding: 1.6rem;
+  }
 `;
 
 const NoCommentText = styled.p`
@@ -116,4 +125,8 @@ const NoCommentText = styled.p`
   color: ${({ theme }) => theme.colors.gray50};
 
   ${({ theme }) => theme.fonts.title8};
+`;
+
+const CommentListWrapper = styled.div`
+  width: 100%;
 `;
