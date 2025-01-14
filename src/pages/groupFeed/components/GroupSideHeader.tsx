@@ -165,7 +165,7 @@ const GroupSideHeaderDetailBox = styled.div`
   width: 20.8rem;
 
   color: ${({ theme }) => theme.colors.gray70};
-  word-break: keep-all;
+  word-break: break-all;
 
   ${({ theme }) => theme.fonts.body2};
 `;
