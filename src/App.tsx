@@ -6,10 +6,13 @@ import { HelmetProvider } from 'react-helmet-async';
 import { RouterProvider } from 'react-router-dom';
 import ResponsiveProvider from './components/commons/Responsive/ResponsiveProvider';
 import Loading from './pages/loading/Loading';
+import { routeChangeTracker } from './routers/routeChangeTracker';
 import router from './routers/Router';
 import { MOBILE_MEDIA_QUERY } from './styles/mediaQuery';
 
 const App = () => {
+  routeChangeTracker();
+
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -17,6 +20,7 @@ const App = () => {
       },
     },
   });
+
   return (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
