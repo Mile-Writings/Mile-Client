@@ -10,9 +10,9 @@ const RouteTracker = () => {
   useEffect(() => {
     if (!window.location.href.includes('localhost')) {
       ReactGA.initialize(import.meta.env.VITE_GOOGLE_ANALYTICS_ID);
-
-      setIsInitialized(true);
     }
+
+    setIsInitialized(true);
   }, []);
 
   useEffect(() => {
