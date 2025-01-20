@@ -18,7 +18,7 @@ const RouteTracker = () => {
   useEffect(() => {
     if (isInitialized) {
       ReactGA.set({ page: location.pathname });
-      ReactGA.send('page');
+      ReactGA.send('pageview');
     }
   }, [isInitialized, location]);
 
