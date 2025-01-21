@@ -8,7 +8,6 @@ import ResponsiveProvider from './components/commons/Responsive/ResponsiveProvid
 import Loading from './pages/loading/Loading';
 
 import router from './routers/Router';
-import RouteTracker from './routers/RouteTracker';
 import { MOBILE_MEDIA_QUERY } from './styles/mediaQuery';
 
 const App = () => {
@@ -27,7 +26,6 @@ const App = () => {
           <DesktopWrapper>
             <Suspense fallback={<Loading />}>
               <RouterProvider router={router} />
-              <RouteTracker />
             </Suspense>
           </DesktopWrapper>
         </ResponsiveProvider>
