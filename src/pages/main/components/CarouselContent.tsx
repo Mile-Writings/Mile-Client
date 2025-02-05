@@ -47,7 +47,7 @@ const CarouselContent = ({
             {postContent}
           </SubText>
         </ContentContainer>
-        <Responsive only="desktop">
+        <Responsive only="desktop" asChild>
           {isContainPhoto && (
             <Image
               src={imageUrl || ''}
@@ -81,6 +81,7 @@ export default CarouselContent;
 const CarouselWrapper = styled.section`
   display: flex;
   gap: 5rem;
+  width: 93rem;
 `;
 
 const CarouselContentLayout = styled.div`

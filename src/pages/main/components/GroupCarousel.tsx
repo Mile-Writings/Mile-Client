@@ -1,18 +1,17 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import Responsive from '../../../components/commons/Responsive/Responsive';
 import '../styles/slick-theme.css';
 import '../styles/slick.css';
 import CarouselContent from './CarouselContent';
-
+import { MainCarouselNextBtn } from '../../../assets/svgs';
 import { groupPropTypes } from '../types/groupContent';
 
 import {
   MainGroupRoutingBtn,
   MainIcnArrowBlack as MainIcnArrowBlackIcon,
-  MainIcnArrowPurple as MainIcnArrowPurpleIcon,
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
@@ -53,7 +52,7 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
           <Spacing marginBottom="1.6" />
 
           <CarouselLayout>
-            <Responsive only="desktop">
+            <Responsive only="desktop" asChild>
               <CarouselContainer {...settings} className="main">
                 {moim.moimPosts.map((post, index) => (
                   <CarouselContent
@@ -215,7 +214,7 @@ const GroupButton = styled.button`
 const CarouselLayout = styled.div`
   display: flex;
   width: 100%;
-  overflow: scroll;
+
   -ms-overflow-style: none;
 
   ::-webkit-scrollbar {
@@ -224,9 +223,12 @@ const CarouselLayout = styled.div`
 `;
 
 const CarouselContainer = styled(Slider)`
-  width: 93rem;
+  width: 93rem !important;
   height: 24rem;
 
+  .slick-list {
+    width: 100%;
+  }
   .slick-slide.slick-active:last-child {
     width: 75.4rem !important;
   }

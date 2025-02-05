@@ -9,8 +9,6 @@
 
   display: block;
 
-  width: 20px;
-  height: 20px;
   padding: 0;
   -webkit-transform: translate(0, -50%);
   -ms-transform: translate(0, -50%);
@@ -37,10 +35,7 @@
   display: block;
   content: url('/src/assets/svgs/mainBtnBeforeHover.svg');
 }
-.main .slick-next:hover:before {
-  display: block;
-  content: url('/src/assets/svgs/mainBtnNextHover.svg');
-}
+
 .main .slick-prev.slick-disabled:before,
 .main .slick-next.slick-disabled:before {
   display: none;
@@ -93,6 +88,10 @@
 }
 [dir='rtl'] .slick-next:before {
   display: block;
+}
+.main .slick-next:hover:before {
+  display: block;
+  content: url('/src/assets/svgs/mainBtnNextHover.svg');
 }
 
 /* Dots */
