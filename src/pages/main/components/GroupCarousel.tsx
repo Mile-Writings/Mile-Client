@@ -40,21 +40,15 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
   const handleRoutingDetail = (groupId: string, postId: string) => {
     navigate(`/detail/${groupId}/${postId}`);
   };
-  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   return (
     <>
       {data?.map((moim) => (
         <CarouselWrapper key={moim.moimId}>
           <Spacing marginBottom="3.6" />
-          <GroupButton
-            type="button"
-            onClick={() => handleButtonOnClick(moim.moimId)}
-            onMouseOver={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
+          <GroupButton type="button" onClick={() => handleButtonOnClick(moim.moimId)}>
             {moim.moimName}
-            {isHovered ? <MainIcnArrowPurpleIcon /> : <MainIcnArrowBlackIcon />}
+            <MainIcnArrowBlackIcon />
           </GroupButton>
           <Spacing marginBottom="1.6" />
 
@@ -211,6 +205,10 @@ const GroupButton = styled.button`
 
     background-color: ${({ theme }) => theme.colors.white};
     border: 1px solid ${({ theme }) => theme.colors.white};
+
+    svg path {
+      stroke: #6139d1;
+    }
   }
 `;
 
