@@ -79,9 +79,16 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
                         <PostCardInfoWrapper>
                           <Topic>{post.topicName}</Topic>
                           <Title> {post.postTitle}</Title>
-                          <Contents>{post.postContent}</Contents>
+
+                          {post.isContainPhoto ? (
+                            <NoImageContents>{post.postContent}</NoImageContents>
+                          ) : (
+                            <Contents>{post.postContent}</Contents>
+                          )}
                         </PostCardInfoWrapper>
-                        <PostCardImg src={post.imageUrl} alt="썸네일 이미지"></PostCardImg>
+                        {post.isContainPhoto && (
+                          <PostCardImg src={post.imageUrl} alt="썸네일 이미지" />
+                        )}
                       </PostCard>
                     ),
                 )}
@@ -133,7 +140,7 @@ const PostCardImg = styled.img`
   border-radius: 6px;
 `;
 
-const Contents = styled.span`
+const NoImageContents = styled.span`
   display: -webkit-box;
   width: 100%;
   height: 5.4rem;
@@ -151,16 +158,35 @@ const Contents = styled.span`
   ${({ theme }) => theme.fonts.mBody2};
 `;
 
-const Topic = styled.h1`
+const Contents = styled.span`
+  display: -webkit-box;
+  width: 100%;
+
+  margin-top: 1rem;
+  overflow: hidden;
+
+  color: ${({ theme }) => theme.colors.gray80};
+  text-align: left;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+
+  ${({ theme }) => theme.fonts.mBody2}
+`;
+
+const Topic = styled.h2`
   margin-bottom: 0.6rem;
 
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.mSubtitle1};
 `;
 
-const Title = styled.h2`
-  ${({ theme }) => theme.fonts.mTitle1};
+const Title = styled.h1`
+  ${({ theme }) => theme.fonts.mTitle2};
   line-height: 120%;
+  word-break: break-all;
 `;
 
 const PostCard = styled.article`
@@ -252,7 +278,7 @@ const PostContainer = styled.div`
   display: flex;
   gap: 2rem;
   width: 100%;
-  max-width: 81rem;
+
   height: 29rem;
   overflow: hidden;
 `;
