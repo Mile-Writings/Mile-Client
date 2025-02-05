@@ -47,7 +47,7 @@ const CarouselContent = ({
             {postContent}
           </SubText>
         </ContentContainer>
-        <Responsive only="desktop">
+        <Responsive only="desktop" asChild>
           {isContainPhoto && (
             <Image
               src={imageUrl || ''}
@@ -81,6 +81,8 @@ export default CarouselContent;
 const CarouselWrapper = styled.section`
   display: flex;
   gap: 5rem;
+  width: 93rem;
+  cursor: pointer;
 `;
 
 const CarouselContentLayout = styled.div`
@@ -88,7 +90,7 @@ const CarouselContentLayout = styled.div`
   gap: 3.6rem;
   height: 24rem;
   padding: 3.6rem;
-
+  width: 100%;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
 
@@ -119,7 +121,7 @@ const Title = styled.h2`
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 29rem;
+  height: 100%;
 `;
 
 const SubText = styled.span<{ isContainPhoto: boolean; isLast: boolean }>`
@@ -184,7 +186,7 @@ const GroupRoutingText = styled.p`
   ${({ theme }) => theme.fonts.title8};
 `;
 
-const GroupRoutingBtnBox = styled.div`
+const GroupRoutingBtnBox = styled.button`
   cursor: pointer;
 
   & > svg:hover {

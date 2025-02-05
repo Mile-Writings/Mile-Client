@@ -36,6 +36,7 @@ export { default as MainIcnArrowWhite } from './mainIcnArrowWhite.svg?react';
 export { default as MakeGroupPlusHoverBtn } from './mainMakeGroupBtnHover.svg?react';
 export { default as MakeGroupPlusBtn } from './mainMakeGroupPlusBtn.svg?react';
 
+export { default as MainCarouselNextBtn } from './mainBtnNext.svg?react';
 export { default as MainTogglearrowClosedIc } from './mainTogglearrowClosedIc.svg?react';
 export { default as MainToggleArrowOpenedIc } from './mainTogglearrowOpenedIc.svg?react';
 
