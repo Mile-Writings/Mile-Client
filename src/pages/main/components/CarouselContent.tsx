@@ -88,7 +88,7 @@ const CarouselContentLayout = styled.div`
   gap: 3.6rem;
   height: 24rem;
   padding: 3.6rem;
-
+  width: 100%;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
 
@@ -119,7 +119,7 @@ const Title = styled.h2`
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 29rem;
+  height: 100%;
 `;
 
 const SubText = styled.span<{ isContainPhoto: boolean; isLast: boolean }>`
