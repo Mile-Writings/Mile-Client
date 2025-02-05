@@ -75,7 +75,7 @@
 .main .slick-next {
   display: block;
   position: absolute;
-  right: -5rem;
+  right: -7.5rem;
   top: 11rem;
 }
 [dir='rtl'] .slick-next {
