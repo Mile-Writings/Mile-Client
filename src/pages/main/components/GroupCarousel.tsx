@@ -6,7 +6,6 @@ import Responsive from '../../../components/commons/Responsive/Responsive';
 import '../styles/slick-theme.css';
 import '../styles/slick.css';
 import CarouselContent from './CarouselContent';
-import { MainCarouselNextBtn } from '../../../assets/svgs';
 import { groupPropTypes } from '../types/groupContent';
 
 import {
