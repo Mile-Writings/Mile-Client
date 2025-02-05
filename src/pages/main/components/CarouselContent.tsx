@@ -82,6 +82,7 @@ const CarouselWrapper = styled.section`
   display: flex;
   gap: 5rem;
   width: 93rem;
+  cursor: pointer;
 `;
 
 const CarouselContentLayout = styled.div`
@@ -185,7 +186,7 @@ const GroupRoutingText = styled.p`
   ${({ theme }) => theme.fonts.title8};
 `;
 
-const GroupRoutingBtnBox = styled.div`
+const GroupRoutingBtnBox = styled.button`
   cursor: pointer;
 
   & > svg:hover {

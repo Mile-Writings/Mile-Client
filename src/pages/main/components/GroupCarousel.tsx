@@ -179,7 +179,7 @@ const PostCard = styled.article`
 const CarouselWrapper = styled.div`
   flex-direction: column;
   height: 29.4rem;
-
+  cursor: default;
   @media ${MOBILE_MEDIA_QUERY} {
     height: 34.4rem;
     padding: 0 2rem;
