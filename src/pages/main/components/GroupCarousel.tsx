@@ -1,18 +1,16 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import Responsive from '../../../components/commons/Responsive/Responsive';
 import '../styles/slick-theme.css';
 import '../styles/slick.css';
 import CarouselContent from './CarouselContent';
-
 import { groupPropTypes } from '../types/groupContent';
 
 import {
   MainGroupRoutingBtn,
   MainIcnArrowBlack as MainIcnArrowBlackIcon,
-  MainIcnArrowPurple as MainIcnArrowPurpleIcon,
 } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
@@ -40,26 +38,20 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
   const handleRoutingDetail = (groupId: string, postId: string) => {
     navigate(`/detail/${groupId}/${postId}`);
   };
-  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   return (
     <>
       {data?.map((moim) => (
         <CarouselWrapper key={moim.moimId}>
           <Spacing marginBottom="3.6" />
-          <GroupButton
-            type="button"
-            onClick={() => handleButtonOnClick(moim.moimId)}
-            onMouseOver={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
+          <GroupButton type="button" onClick={() => handleButtonOnClick(moim.moimId)}>
             {moim.moimName}
-            {isHovered ? <MainIcnArrowPurpleIcon /> : <MainIcnArrowBlackIcon />}
+            <MainIcnArrowBlackIcon />
           </GroupButton>
           <Spacing marginBottom="1.6" />
 
           <CarouselLayout>
-            <Responsive only="desktop">
+            <Responsive only="desktop" asChild>
               <CarouselContainer {...settings} className="main">
                 {moim.moimPosts.map((post, index) => (
                   <CarouselContent
@@ -86,9 +78,16 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
                         <PostCardInfoWrapper>
                           <Topic>{post.topicName}</Topic>
                           <Title> {post.postTitle}</Title>
-                          <Contents>{post.postContent}</Contents>
+
+                          {post.isContainPhoto ? (
+                            <NoImageContents>{post.postContent}</NoImageContents>
+                          ) : (
+                            <Contents>{post.postContent}</Contents>
+                          )}
                         </PostCardInfoWrapper>
-                        <PostCardImg src={post.imageUrl} alt="썸네일 이미지"></PostCardImg>
+                        {post.isContainPhoto && (
+                          <PostCardImg src={post.imageUrl} alt="썸네일 이미지" />
+                        )}
                       </PostCard>
                     ),
                 )}
@@ -140,7 +139,7 @@ const PostCardImg = styled.img`
   border-radius: 6px;
 `;
 
-const Contents = styled.span`
+const NoImageContents = styled.span`
   display: -webkit-box;
   width: 100%;
   height: 5.4rem;
@@ -158,16 +157,35 @@ const Contents = styled.span`
   ${({ theme }) => theme.fonts.mBody2};
 `;
 
-const Topic = styled.h1`
+const Contents = styled.span`
+  display: -webkit-box;
+  width: 100%;
+
+  margin-top: 1rem;
+  overflow: hidden;
+
+  color: ${({ theme }) => theme.colors.gray80};
+  text-align: left;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+
+  ${({ theme }) => theme.fonts.mBody2}
+`;
+
+const Topic = styled.h2`
   margin-bottom: 0.6rem;
 
   color: ${({ theme }) => theme.colors.gray70};
   ${({ theme }) => theme.fonts.mSubtitle1};
 `;
 
-const Title = styled.h2`
-  ${({ theme }) => theme.fonts.mTitle1};
+const Title = styled.h1`
+  ${({ theme }) => theme.fonts.mTitle2};
   line-height: 120%;
+  word-break: break-all;
 `;
 
 const PostCard = styled.article`
@@ -186,7 +204,7 @@ const PostCard = styled.article`
 const CarouselWrapper = styled.div`
   flex-direction: column;
   height: 29.4rem;
-
+  cursor: default;
   @media ${MOBILE_MEDIA_QUERY} {
     height: 34.4rem;
     padding: 0 2rem;
@@ -211,13 +229,17 @@ const GroupButton = styled.button`
 
     background-color: ${({ theme }) => theme.colors.white};
     border: 1px solid ${({ theme }) => theme.colors.white};
+
+    svg path {
+      stroke: #6139d1;
+    }
   }
 `;
 
 const CarouselLayout = styled.div`
   display: flex;
   width: 100%;
-  overflow: scroll;
+
   -ms-overflow-style: none;
 
   ::-webkit-scrollbar {
@@ -226,9 +248,12 @@ const CarouselLayout = styled.div`
 `;
 
 const CarouselContainer = styled(Slider)`
-  width: 93rem;
+  width: 93rem !important;
   height: 24rem;
 
+  .slick-list {
+    width: 100%;
+  }
   .slick-slide.slick-active:last-child {
     width: 75.4rem !important;
   }
@@ -252,7 +277,7 @@ const PostContainer = styled.div`
   display: flex;
   gap: 2rem;
   width: 100%;
-  max-width: 81rem;
+
   height: 29rem;
   overflow: hidden;
 `;

@@ -84,6 +84,7 @@ const GroupCarouselLayout = styled.section`
 `;
 
 const CarouselContainer = styled.div`
+  /* width: 100.7rem; */
   width: 93rem;
   height: 100%;
 
@@ -94,7 +95,7 @@ const CarouselContainer = styled.div`
 `;
 
 const CarouselBox = styled.div`
-  cursor: default;
+  cursor: pointer;
 `;
 
 const CarouselTitle = styled.h1`
