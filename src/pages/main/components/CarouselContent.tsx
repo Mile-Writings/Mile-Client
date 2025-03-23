@@ -82,15 +82,17 @@ const CarouselWrapper = styled.section`
   display: flex;
   gap: 5rem;
   width: 93rem;
+
   cursor: pointer;
 `;
 
 const CarouselContentLayout = styled.div`
   display: flex;
   gap: 3.6rem;
+  width: 100%;
   height: 24rem;
   padding: 3.6rem;
-  width: 100%;
+
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
 
