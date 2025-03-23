@@ -160,7 +160,6 @@ const NoImageContents = styled.span`
 const Contents = styled.span`
   display: -webkit-box;
   width: 100%;
-
   margin-top: 1rem;
   overflow: hidden;
 
@@ -204,10 +203,11 @@ const PostCard = styled.article`
 const CarouselWrapper = styled.div`
   flex-direction: column;
   height: 29.4rem;
+
   cursor: default;
+
   @media ${MOBILE_MEDIA_QUERY} {
     height: 34.4rem;
-    padding: 0 2rem;
   }
 `;
 
@@ -234,6 +234,10 @@ const GroupButton = styled.button`
       stroke: #6139d1;
     }
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    margin-left: 2rem;
+  }
 `;
 
 const CarouselLayout = styled.div`
@@ -245,6 +249,11 @@ const CarouselLayout = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    padding: 0 2rem;
+    overflow: scroll;
+  }
 `;
 
 const CarouselContainer = styled(Slider)`
@@ -254,13 +263,12 @@ const CarouselContainer = styled(Slider)`
   .slick-list {
     width: 100%;
   }
+
   .slick-slide.slick-active:last-child {
     width: 75.4rem !important;
   }
 
   @media ${MOBILE_MEDIA_QUERY} {
-    /* width: 45rem; */
-
     display: flex;
     gap: 2rem;
     width: 100%;
@@ -277,7 +285,6 @@ const PostContainer = styled.div`
   display: flex;
   gap: 2rem;
   width: 100%;
-
   height: 29rem;
   overflow: hidden;
 `;
