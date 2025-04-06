@@ -651,11 +651,15 @@ const GroupImagePreview = styled.img<{ isImagePreview: boolean }>`
   position: absolute;
 
   width: 100%;
-  height: 20rem;
+  height: 25rem;
   object-fit: cover;
 
   cursor: ${({ isImagePreview }) => (isImagePreview ? 'default' : 'pointer')};
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    height: 25.5rem;
+  }
 `;
 
 const CreateGroupImageUploadedIcon = styled(CreateGroupImageUploadedIc)`
