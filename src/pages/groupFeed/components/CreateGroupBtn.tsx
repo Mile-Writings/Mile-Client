@@ -19,7 +19,7 @@ const CreateGroupBtn = ({ groupCount }: groupCountProps) => {
   const navigate = useNavigate();
 
   const handleCreateGroupBtn = () => {
-    if (groupCount <= MAX_GROUP_COUNT) {
+    if (groupCount < MAX_GROUP_COUNT) {
       navigate('/group/create');
     } else {
       handleShowModal();
