@@ -30,7 +30,7 @@ const MyGroupDropDown = ({ groupData }: CreateGroupBtnProps) => {
   return (
     <MyGroupDropDownWrapper ref={dropDownRef}>
       <MyGroupBtn onClick={handleOnClick}>내 글 모임</MyGroupBtn>
-      <ListLayout>
+      <ListLayout $isOpen={isOpen}>
         <MyGroupList $isOpen={isOpen}>
           {groupData?.length > 0 ? (
             groupData.map(({ moimId, moimName }: Moim) => (
@@ -59,11 +59,12 @@ const MyGroupDropDownWrapper = styled.section`
   align-items: center;
 `;
 
-const ListLayout = styled.div`
+const ListLayout = styled.div<{ $isOpen: boolean }>`
   position: absolute;
   top: 6rem;
-  max-height: 22.4rem;
-  padding: 1.2rem;
+  display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
+  max-height: 22rem;
+  padding: 1.2rem 0.5rem 1.2rem 1.2rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 16%);
@@ -96,6 +97,7 @@ const MyGroupList = styled.ul<{ $isOpen: boolean }>`
 
 const GroupItem = styled.li<{ $isEmpty: boolean }>`
   width: 15.2rem;
+  height: 4rem;
   padding: 1rem 1.6rem;
 
   color: ${({ theme }) => theme.colors.gray70};
