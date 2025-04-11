@@ -30,23 +30,23 @@ const MyGroupDropDown = ({ groupData }: CreateGroupBtnProps) => {
   return (
     <MyGroupDropDownWrapper ref={dropDownRef}>
       <MyGroupBtn onClick={handleOnClick}>내 글 모임</MyGroupBtn>
-      <MyGroupListLayout $isOpen={isOpen}>
-        {groupData?.length > 0 ? (
-          groupData.map(({ moimId, moimName }: Moim) => (
-            <GroupContentContainer
-              $isEmpty={false}
-              key={moimId}
-              onClick={() => handleRoutingGroupFeed(moimId)}
-            >
-              {moimName}
-            </GroupContentContainer>
-          ))
-        ) : (
-          <GroupContentContainer
-            $isEmpty={true}
-          >{`가입한 글 모임이\n 없습니다.`}</GroupContentContainer>
-        )}
-      </MyGroupListLayout>
+      <ListLayout>
+        <MyGroupList $isOpen={isOpen}>
+          {groupData?.length > 0 ? (
+            groupData.map(({ moimId, moimName }: Moim) => (
+              <GroupItem
+                $isEmpty={false}
+                key={moimId}
+                onClick={() => handleRoutingGroupFeed(moimId)}
+              >
+                {moimName}
+              </GroupItem>
+            ))
+          ) : (
+            <GroupItem $isEmpty={true}>{`가입한 글 모임이\n 없습니다.`}</GroupItem>
+          )}
+        </MyGroupList>
+      </ListLayout>
     </MyGroupDropDownWrapper>
   );
 };
@@ -59,23 +59,44 @@ const MyGroupDropDownWrapper = styled.section`
   align-items: center;
 `;
 
-const MyGroupListLayout = styled.div<{ $isOpen: boolean }>`
+const ListLayout = styled.div`
   position: absolute;
   top: 6rem;
-  display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
-  flex-direction: column;
-  gap: 1rem;
-  align-items: flex-start;
+  max-height: 22.4rem;
   padding: 1.2rem;
 
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 16%);
-  cursor: pointer;
   border: ${({ theme }) => theme.colors.grayViolet};
   border-radius: 0.8rem;
 `;
 
-const GroupContentContainer = styled.div<{ $isEmpty: boolean }>`
+const MyGroupList = styled.ul<{ $isOpen: boolean }>`
+  /* position: absolute;
+  top: 6rem; */
+  display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 20rem;
+  padding-right: 0.5rem;
+  overflow-y: auto;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  scroll-behavior: smooth;
+
+  ::-webkit-scrollbar {
+    width: 0.2rem;
+    height: 0.4rem;
+
+    border-radius: 0.2rem;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.grayViolet};
+  }
+`;
+
+const GroupItem = styled.li<{ $isEmpty: boolean }>`
   width: 15.2rem;
   padding: 1rem 1.6rem;
 
@@ -84,7 +105,7 @@ const GroupContentContainer = styled.div<{ $isEmpty: boolean }>`
   white-space: pre-line;
   text-align: ${({ $isEmpty }) => ($isEmpty ? 'center' : 'left')};
 
-  cursor: ${({ $isEmpty }) => ($isEmpty ? 'default' : 'cursor')};
+  cursor: ${({ $isEmpty }) => ($isEmpty ? 'default' : 'pointer')};
   border-radius: 0.8rem;
   ${({ $isEmpty, theme }) => ($isEmpty ? theme.fonts.body9 : theme.fonts.body1)};
 
