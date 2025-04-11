@@ -72,8 +72,6 @@ const ListLayout = styled.div`
 `;
 
 const MyGroupList = styled.ul<{ $isOpen: boolean }>`
-  /* position: absolute;
-  top: 6rem; */
   display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
   flex-direction: column;
   align-items: flex-start;
@@ -92,7 +90,7 @@ const MyGroupList = styled.ul<{ $isOpen: boolean }>`
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.grayViolet};
+    background-color: ${({ theme }) => theme.colors.gray30};
   }
 `;
 
