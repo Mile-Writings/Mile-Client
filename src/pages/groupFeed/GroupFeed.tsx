@@ -156,10 +156,9 @@ const GroupFeedWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.backGroundGray};
 `;
 
-//디자인 확정나면
 const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
   width: 100%;
-  height: 45rem;
+  height: 38.6rem;
   margin-top: 6.4rem;
   object-fit: cover;
 
@@ -168,7 +167,7 @@ const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
-    height: 28rem;
+    height: 22.4rem;
     margin-top: 5.5rem;
   }
 `;
