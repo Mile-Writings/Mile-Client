@@ -79,13 +79,13 @@ export default ImageUpload;
 const ThumbNailGradient = styled.div`
   position: relative;
   width: 100%;
-  height: 30.7rem;
+  height: 38.6rem;
 
   background: ${({ theme }) => theme.colors.thumbnailGradient};
   border-radius: 0 0 10px 10px;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    height: 18rem;
+    height: 22.4rem;
   }
 `;
 
@@ -93,14 +93,14 @@ const ThumbNailImg = styled.img<{ $imgExist: string }>`
   position: relative;
 
   width: 100%;
-  height: 30.7rem;
+  height: 38.6rem;
   object-fit: cover;
 
   border-radius: 0 0 10px 10px;
   ${({ $imgExist }) => $imgExist && $imgExist.length === 0 && 'content: "";'}
 
   @media ${MOBILE_MEDIA_QUERY} {
-    height: 18rem;
+    height: 22.4rem;
   }
 `;
 
