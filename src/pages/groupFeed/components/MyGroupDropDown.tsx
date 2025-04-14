@@ -96,7 +96,7 @@ const MyGroupList = styled.ul<{ $isOpen: boolean }>`
 `;
 
 const GroupItem = styled.li<{ $isEmpty: boolean }>`
-  width: 15.2rem;
+  width: 17.1rem;
   height: 4rem;
   padding: 1rem 1.6rem;
 
