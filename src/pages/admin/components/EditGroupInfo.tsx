@@ -21,6 +21,7 @@ import { INPUT_INFO_MESSAGE } from '../../createGroup/constants/inputInfoMsg';
 import { useGetGroupNameValidation } from '../../createGroup/hooks/queries';
 import { usePresignedUrl } from '../../postPage/hooks/queries';
 import { useFetchGroupInfo, usePutAdminGroupInfo } from '../hooks/queries';
+import Responsive from '../../../components/commons/Responsive/Responsive';
 
 const EditGroupInfo = () => {
   const [groupName, setGroupName] = useState('');
@@ -239,9 +240,15 @@ const EditGroupInfo = () => {
                 />
               </GroupImageLabel>
             )}
-            <GroupInputDesc>
-              *글모임 페이지 상단에 노출될 대표 이미지입니다. 1366*306px사이즈를 권장합니다.
-            </GroupInputDesc>
+            <Responsive only="desktop">
+              <GroupInputDesc>
+                * 글 모임 페이지 상단에 노출될 대표 이미지입니다. 1440*480(3:1) 사이즈를 권장합니다.
+              </GroupInputDesc>
+            </Responsive>
+            <Responsive only="mobile">
+              <GroupInputDesc>* 글 모임 페이지 상단에 노출될 대표 이미지입니다.</GroupInputDesc>
+              <GroupInputDesc>1440*480(3:1) 사이즈를 권장합니다.</GroupInputDesc>
+            </Responsive>
           </GroupInputWrapper>
         </WhiteInputWrapper>
         <WhiteInputWrapper isValid={true}>
@@ -516,11 +523,15 @@ const GroupImagePreview = styled.img<{ isImagePreview: boolean }>`
   position: absolute;
 
   width: 100%;
-  height: 20rem;
+  height: 25rem;
   object-fit: cover;
 
   cursor: ${({ isImagePreview }) => (isImagePreview ? 'default' : 'pointer')};
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    height: 25.5rem;
+  }
 `;
 
 const GroupImageLabel = styled.label`
@@ -535,11 +546,15 @@ const GroupImageWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 20rem;
+  height: 25rem;
 
   background-color: ${({ theme }) => theme.colors.gray10};
   cursor: pointer;
   border-radius: 8px;
+
+  @media ${MOBILE_MEDIA_QUERY} {
+    height: 25.5rem;
+  }
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.lightViolet};

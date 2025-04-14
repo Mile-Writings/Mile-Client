@@ -211,7 +211,7 @@ const PostDetail = () => {
           </Responsive>
         </WriterInfoWrapper>
         {isMember && <Comment postId={postId} />}
-        <Spacing marginBottom="6.9" mobileMarginBottom='4'/>
+        <Spacing marginBottom="6.9" mobileMarginBottom="4" />
       </PostDetailWrapper>
 
       {/* 우선은 조건부로 연결해두었는데 reducer나 state를 통해서 업데이트 하도록 변경해도 될 듯 */}
@@ -248,14 +248,14 @@ const DividingLine = styled.div`
 
 const ThumnailImg = styled.img`
   width: 100%;
-  height: 37rem;
+  height: 38.6rem;
   object-fit: cover;
 
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 
   @media ${MOBILE_MEDIA_QUERY} {
-    height: 18rem;
+    height: 22.4rem;
   }
 `;
 
