@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { MakeGroupPlusBtn, MakeGroupPlusHoverBtn } from '../../../assets/svgs';
+import { CreateGroupBtnWrapper } from '../../../components/commons/HeaderButton';
 import { FullModal, FullModalBtn } from '../../../components/commons/modal/FullModal';
 import useModal from '../../../hooks/useModal';
+import { MAX_GROUP_COUNT } from '../constants/count';
 import { MODAL } from '../constants/modalContent';
-import { CreateGroupBtnWrapper } from '../../../components/commons/HeaderButton';
 
 interface groupCountProps {
   groupCount: number;
@@ -18,7 +19,7 @@ const CreateGroupBtn = ({ groupCount }: groupCountProps) => {
   const navigate = useNavigate();
 
   const handleCreateGroupBtn = () => {
-    if (groupCount < 5) {
+    if (groupCount < MAX_GROUP_COUNT) {
       navigate('/group/create');
     } else {
       handleShowModal();

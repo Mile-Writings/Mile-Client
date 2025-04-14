@@ -158,7 +158,7 @@ const GroupFeedWrapper = styled.div`
 
 const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
   width: 100%;
-  height: 37rem;
+  height: 38.6rem;
   margin-top: 6.4rem;
   object-fit: cover;
 
@@ -167,7 +167,7 @@ const GroupFeedThumnail = styled.div<{ imageUrl: string | undefined }>`
 
   @media ${MOBILE_MEDIA_QUERY} {
     width: 100%;
-    height: 18rem;
+    height: 22.4rem;
     margin-top: 5.5rem;
   }
 `;
