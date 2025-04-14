@@ -103,8 +103,8 @@ const CuriousArticleWrapper = styled.div`
 const ArticleThumbnail = styled.img`
   width: 28.8rem;
   height: 14rem;
+  object-fit: cover;
 
-  background-size: cover;
   border-radius: 8px;
 
   @media ${MOBILE_MEDIA_QUERY} {
