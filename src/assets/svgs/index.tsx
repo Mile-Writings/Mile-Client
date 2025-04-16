@@ -49,7 +49,7 @@ export { default as EditorDropIcnOpen } from './editorDropIcnOpen.svg?react';
 
 export { default as EditorDropIcnActiveIc } from './editorDropIcnActive.svg?react';
 export { default as EditorDropIcnActiveOpenIc } from './editorDropIcnActiveopen.svg?react';
-export { default as GroupThumbnailImgIc } from './groupThumbnailImg.svg?react';
+export { default as GroupThumbnailImgIc } from './groupThumbnailImg.svg?url';
 
 export { default as EditorThuminputIcnActiveIc } from './editorThuminputIcnActive.svg?react';
 export { default as EditorThuminputIcnUnactiveIc } from './editorThuminputIcnUnactive.svg?react';
