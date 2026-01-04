@@ -1,19 +1,20 @@
 import styled from '@emotion/styled';
-
 import { useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
-import Responsive from '../../../components/commons/Responsive/Responsive';
+
 import '../styles/slick-theme.css';
 import '../styles/slick.css';
-import CarouselContent from './CarouselContent';
 import { groupPropTypes } from '../types/groupContent';
 
 import {
   MainGroupRoutingBtn,
   MainIcnArrowBlack as MainIcnArrowBlackIcon,
 } from '../../../assets/svgs';
+import Responsive from '../../../components/commons/Responsive/Responsive';
 import Spacing from '../../../components/commons/Spacing';
 import { MOBILE_MEDIA_QUERY } from '../../../styles/mediaQuery';
+
+import CarouselContent from './CarouselContent';
 
 export interface carouselItemPropTypes {
   moimId?: string;
@@ -74,7 +75,10 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
                 {moim.moimPosts.map(
                   (post, index) =>
                     index < 3 && (
-                      <PostCard onClick={() => handleRoutingDetail(moim.moimId, post.postId)}>
+                      <PostCard
+                        key={post.postId}
+                        onClick={() => handleRoutingDetail(moim.moimId, post.postId)}
+                      >
                         <PostCardInfoWrapper>
                           <Topic>{post.topicName}</Topic>
                           <Title> {post.postTitle}</Title>
@@ -94,10 +98,10 @@ const GroupCarousel = ({ data }: carouselItemPropTypes) => {
                 {moim.moimPosts.length < 3 && (
                   <GroupRoutingWrapper onClick={() => handleButtonOnClick(moim.moimId)}>
                     <GroupRoutingTitle>
-                      이 모임에 대해서 <br></br>더 궁금하신 가요?
+                      이 모임에 대해서 <br />더 궁금하신 가요?
                     </GroupRoutingTitle>
 
-                    <MainGroupRoutingBtn></MainGroupRoutingBtn>
+                    <MainGroupRoutingBtn />
                   </GroupRoutingWrapper>
                 )}
               </PostContainer>

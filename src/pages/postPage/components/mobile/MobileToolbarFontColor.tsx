@@ -1,6 +1,7 @@
 import * as ToolbarIcons from '../../../../assets/svgs/editorSVG';
 import styled from '@emotion/styled';
 import { MOBILE_MEDIA_QUERY } from '../../../../styles/mediaQuery';
+import React from 'react';
 
 const toolbarColorSvgs = [
   'EditorTextColorBlackIcn',

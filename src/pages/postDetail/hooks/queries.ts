@@ -143,7 +143,7 @@ export const useDeleteCurious = (postId: string) => {
           if (oldData === undefined) {
             return undefined;
           }
-          let optimisticCuriousCount =
+          const optimisticCuriousCount =
             oldData.data.curiousCount === 0
               ? oldData.data.curiousCount
               : oldData.data.curiousCount - 1;

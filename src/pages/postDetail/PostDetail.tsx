@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { useParams } from 'react-router-dom';
 import { DefaultModal, DefaultModalBtn } from '../../components/commons/modal/DefaultModal';
 import Responsive from '../../components/commons/Responsive/Responsive';
 import useModal from '../../hooks/useModal';
@@ -32,32 +31,30 @@ const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
   const { groupId } = useParams();
+  const location = useLocation();
 
   // 모달 연결 위한 state
   const [modalType, setModalType] = useState('');
   // modal 열고닫음
   const { isModalOpen, handleShowModal, handleCloseModal } = useModal();
 
-  if (!postId || !groupId) {
-    return <Error />;
-  }
   //글 삭제시 쿼리키 가져오기 위해서
-  const location = useLocation();
   const topicId = location.state?.topicId;
 
+  // 모든 hooks는 early return 전에 호출되어야 함
   const {
     isPublic,
     isLoading: publicStatusLoading,
     isError: publicStatusError,
-  } = useGroupFeedPublicStatus(groupId);
+  } = useGroupFeedPublicStatus(groupId || '');
   const {
     isMember,
     isLoading: feedAuthLoading,
     isError: groupAuthError,
-  } = useGroupFeedAuth(groupId);
-  const { data, isError, isLoading } = useGetPostDetail(postId);
-  const { data: postAuth } = useCheckPostAuth(postId);
-  const { mutate: deletePost } = useDeletePost(postId, topicId, groupId);
+  } = useGroupFeedAuth(groupId || '');
+  const { data, isError, isLoading } = useGetPostDetail(postId || '');
+  const { data: postAuth } = useCheckPostAuth(postId || '');
+  const { mutate: deletePost } = useDeletePost(postId || '', topicId, groupId || '');
 
   const postData = data?.data;
   const accessToken = localStorage.getItem('accessToken');
@@ -65,7 +62,6 @@ const PostDetail = () => {
 
   //글 작성 후 뒤로가기 하면 모임페이지로 이동하는 로직
   //메인페이지 -> 글 상세페이지 -> 뒤로가기 -> 글 모임페이지가 되어 UX에 좋은 영향을 끼치지 않는 부분도 있어서 추후 적용
-
   useEffect(() => {
     if (!publicStatusLoading && !feedAuthLoading) {
       if (!isPublic) {
@@ -75,7 +71,11 @@ const PostDetail = () => {
         }
       }
     }
-  }, [isPublic, role]);
+  }, [isPublic, role, publicStatusLoading, feedAuthLoading, navigate]);
+
+  if (!postId || !groupId) {
+    return <Error />;
+  }
   if (isLoading || publicStatusLoading || feedAuthLoading) {
     return <Loading />;
   }
