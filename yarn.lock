@@ -3034,7 +3034,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.2.17":
+"@types/react-dom@npm:18.2.18":
   version: 18.2.18
   resolution: "@types/react-dom@npm:18.2.18"
   dependencies:
@@ -3043,7 +3043,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-slick@npm:^0.23.13":
+"@types/react-slick@npm:0.23.13":
   version: 0.23.13
   resolution: "@types/react-slick@npm:0.23.13"
   dependencies:
@@ -3052,7 +3052,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.2.43":
+"@types/react@npm:18.2.47":
   version: 18.2.47
   resolution: "@types/react@npm:18.2.47"
   dependencies:
@@ -7390,9 +7390,9 @@ __metadata:
     "@tiptap/pm": "npm:^2.2.3"
     "@tiptap/react": "npm:^2.2.3"
     "@tiptap/starter-kit": "npm:^2.2.3"
-    "@types/react": "npm:^18.2.43"
-    "@types/react-dom": "npm:^18.2.17"
-    "@types/react-slick": "npm:^0.23.13"
+    "@types/react": "npm:18.2.43"
+    "@types/react-dom": "npm:18.2.17"
+    "@types/react-slick": "npm:0.23.13"
     "@typescript-eslint/eslint-plugin": "npm:^6.16.0"
     "@typescript-eslint/parser": "npm:^6.16.0"
     "@vitejs/plugin-legacy": "npm:1.8.1"
@@ -7414,22 +7414,22 @@ __metadata:
     prettier: "npm:3.1.1"
     puppeteer: "npm:13"
     quill-divider: "npm:^0.2.0"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
+    react: "npm:18.2.0"
+    react-dom: "npm:18.2.0"
     react-ga4: "npm:^2.1.0"
     react-helmet-async: "npm:^2.0.5"
     react-quill: "npm:^2.0.0"
     react-router-dom: "npm:^6.26.1"
-    react-slick: "npm:^0.30.2"
+    react-slick: "npm:0.29.0"
     react-snap: "npm:^1.23.0"
     rollup-plugin-visualizer: "npm:^5.12.0"
-    slick-carousel: "npm:^1.8.1"
+    slick-carousel: "npm:1.8.1"
     source-map-explorer: "npm:^2.5.3"
     stylelint: "npm:^16.1.0"
     stylelint-config-standard: "npm:^36.0.0"
     stylelint-order: "npm:^6.0.4"
     terser: "npm:^5.37.0"
-    typescript: "npm:^5.2.2"
+    typescript: "npm:5.2.2"
     vite: "npm:^5.0.8"
     vite-plugin-svgr: "npm:^4.2.0"
   languageName: unknown
@@ -8780,7 +8780,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.2.0":
+"react-dom@npm:18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
   dependencies:
@@ -8871,9 +8871,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-slick@npm:^0.30.2":
-  version: 0.30.3
-  resolution: "react-slick@npm:0.30.3"
+"react-slick@npm:0.29.0":
+  version: 0.29.0
+  resolution: "react-slick@npm:0.29.0"
   dependencies:
     classnames: "npm:^2.2.5"
     enquire.js: "npm:^2.1.6"
@@ -8881,9 +8881,9 @@ __metadata:
     lodash.debounce: "npm:^4.0.8"
     resize-observer-polyfill: "npm:^1.5.0"
   peerDependencies:
-    react: ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-    react-dom: ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/7a4cc4f898ede6fd3a0b7ac48921c1021c7ed3bb1eee5d701b7c3d3d53b0d18d20e72aab1dcb8012ff13636b4927c4bcf243fb97258811a9511bed7ab5a6d27d
+    react: ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/965e2957b7d72435397adfa062911e62310e181c14b8667b528f9fe88bda490b86fd94d685c186a4b7704b77e10ef3d6c7be24541652a9787baa80b98000190f
   languageName: node
   linkType: hard
 
@@ -8907,7 +8907,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.2.0":
+"react@npm:18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:
@@ -9635,7 +9635,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"slick-carousel@npm:^1.8.1":
+"slick-carousel@npm:1.8.1":
   version: 1.8.1
   resolution: "slick-carousel@npm:1.8.1"
   peerDependencies:
@@ -10368,7 +10368,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.2.2, typescript@npm:^5.3.3":
+"typescript@npm:5.2.2":
+  version: 5.2.2
+  resolution: "typescript@npm:5.2.2"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/91ae3e6193d0ddb8656d4c418a033f0f75dec5e077ebbc2bd6d76439b93f35683936ee1bdc0e9cf94ec76863aa49f27159b5788219b50e1cd0cd6d110aa34b07
+  languageName: node
+  linkType: hard
+
+"typescript@npm:^5.3.3":
   version: 5.3.3
   resolution: "typescript@npm:5.3.3"
   bin:
@@ -10378,7 +10388,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.2.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.3.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>":
+  version: 5.2.2
+  resolution: "typescript@patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>::version=5.2.2&hash=f3b441"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/062c1cee1990e6b9419ce8a55162b8dc917eb87f807e4de0327dbc1c2fa4e5f61bc0dd4e034d38ff541d1ed0479b53bcee8e4de3a4075c51a1724eb6216cb6f5
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A^5.3.3#optional!builtin<compat/typescript>":
   version: 5.3.3
   resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"
   bin:
