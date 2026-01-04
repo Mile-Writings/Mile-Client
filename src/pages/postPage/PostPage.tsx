@@ -603,12 +603,8 @@ const PostPage = () => {
   return (
     <PostPageWrapper>
       {/* 헤더 */}
-      <Responsive only="desktop" >
-        {HeaderComponent.desktop}
-      </Responsive>
-      <Responsive only="mobile" >
-        {HeaderComponent.mobile}
-      </Responsive>
+      <Responsive only="desktop">{HeaderComponent.desktop}</Responsive>
+      <Responsive only="mobile">{HeaderComponent.mobile}</Responsive>
       <Spacing marginBottom="6.4" mobileMarginBottom="5.6" />
 
       {/* 글 제출 막는 toast */}

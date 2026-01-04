@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Slider from 'react-slick';
+import Slider, { Settings } from 'react-slick';
 
 import CarouselContainer from './CarouselContainer';
 import EachArticle from './EachArticle';
@@ -34,7 +34,7 @@ const Carousel = ({
 
   const [activeCategoryId, setActiveCategoryId] = useState<number>(1);
 
-  const settings = {
+  const settings: Settings = {
     dots: false,
     infinite: false,
     speed: 500,

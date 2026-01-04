@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
 import { EDITOR_DEFAULT_IMG } from '../constants/editorDefaultImg';
-
 import useImageUpload from '../../../hooks/useImageUpload';
 import { FileType } from '../../../types/imageUploadType';
 import { EditorThuminputIcnActiveIc, EditorThuminputIcnUnactiveIc } from './../../../assets/svgs';

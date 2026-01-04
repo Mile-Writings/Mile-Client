@@ -23,6 +23,15 @@
   },
   "ignorePatterns": ["build", "dist", "public"], // lint 무시 파일 정하기
 
+  "overrides": [
+    {
+      "files": ["vite.config.ts", "*.config.ts", "*.config.js"],
+      "env": {
+        "node": true
+      }
+    }
+  ],
+
   "rules": {
     "react/self-closing-comp": [
       "error",
@@ -44,29 +53,25 @@
     "no-undef": "error", // 정의 안 한 변수 사용 x
     "indent": "off", // 프리티어 충돌로 인한 OFF
     "no-trailing-spaces": "error", // 쓸데없는 공백 없애기
-    "import/newline-after-import": ["error", { "count": 1 }], // import 구문들 뒤에 한 칸 띄우고 코드 작성
+    "import/newline-after-import": "off", // import 구문들 뒤에 한 칸 띄우고 코드 작성
     "react-hooks/rules-of-hooks": "error", // 리액트 훅의 순서를 지키게끔 한다. (React는 Hook이 호출되는 순서에 의존하기 때문에)
     "arrow-parens": ["error", "always"], // arrow-function 인자가 2개 이상이면 괄호 필수
     "no-multi-spaces": "error", // 스페이스 여러개 금지
+    "no-useless-catch": "off", // 쓸데없는 catch 예외 처리 금지
     "import/no-unresolved": "off", // 타입스크립트에서 경로를 제대로 잡지 못할 때 사용 or  eslint-import-resolver-typescript 설치
 
     "import/order": [
-      "error",
+      "warn",
       {
         "groups": [["builtin", "external"], "internal", ["parent", "sibling"], "index"], //import 순서를 고정. builtin- 외부- 내부
         "pathGroups": [
-          // react 컴포넌트가 builtin 뒤에 (external import 앞에 나오도록 설정)
-          // { "pattern": "react", "group": "builtin", "position": "after" },
-          // { "pattern": "react-dom", "group": "builtin", "position": "after" },
           { "pattern": "./**", "group": "index" }, // './'로 시작하는 상대 경로 파일은 internal 그룹에 속하도록 설정
-          { "pattern": "../**", "group": "parent", "position": "befo∂re" } // '../'로 시작하는 상위 경로 파일은 parent 그룹에 속하도록 설정
+          { "pattern": "../**", "group": "parent", "position": "before" } // '../'로 시작하는 상위 경로 파일은 parent 그룹에 속하도록 설정
         ],
-        // "pathGroupsExcludedImportTypes": ["react", "react-dom"], // pathGroups가 올바르게 적용하기 위해.. (확실치 않음)
         "alphabetize": {
           "order": "asc", // 알파벳 순서 정렬 방식
           "caseInsensitive": true // 알파벳 대소문자 구분
-        },
-        "newlines-between": "always" // group들 사이마다 개행 적용 (group 내부에서 개행 적용 불가)
+        }
       }
     ]
   }

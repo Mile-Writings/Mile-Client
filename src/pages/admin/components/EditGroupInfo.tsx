@@ -46,8 +46,8 @@ const EditGroupInfo = () => {
   const [passDuplicate, setPassDuplicate] = useState(false);
   const [editBtnAcitve, setEditBtnActive] = useState(false);
 
-  let isGroupNameChanged = beforeGroupName !== groupName;
-  let groupNameLengthValid = groupName.length <= 10;
+  const isGroupNameChanged = beforeGroupName !== groupName;
+  const groupNameLengthValid = groupName.length <= 10;
   const handleHover = () => {
     setIsHover((prev) => !prev);
   };

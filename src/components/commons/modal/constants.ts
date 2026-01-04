@@ -6,5 +6,5 @@ export const MODAL_SIZES = {
 };
 
 export const MOBILE_MODAL_SIZES = {
-  DEFAULT: '33.5rem'
-}
+  DEFAULT: '33.5rem',
+};

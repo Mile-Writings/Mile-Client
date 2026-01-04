@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import EditGroupInfo from './EditGroupInfo';
 import MemberManage from './MemberManage';
@@ -9,7 +9,6 @@ import TopicAdmin from './TopicAdmin';
 import { MODAL } from '../constants/modal';
 import { useAdminTopic, useDeleteGroup, useFetchMemberInfo } from '../hooks/queries';
 
-import { useNavigate } from 'react-router-dom';
 import { MakeGroupAdminIc } from '../../../assets/svgs';
 import InputModal from '../../../components/commons/inputModal/InputModal';
 import { DefaultModal, DefaultModalBtn } from '../../../components/commons/modal/DefaultModal';

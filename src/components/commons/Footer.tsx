@@ -23,16 +23,16 @@ const Footer = () => {
       </FooterLogoLayout>
       <FooterLayout>
         <IconContainer>
-          <a href={FOOTER_LINK.MAIL} target="_blank">
+          <a href={FOOTER_LINK.MAIL} target="_blank" rel="noopener noreferrer">
             <FooterMailIc />
           </a>
-          <a href={FOOTER_LINK.INSTAGRAM} target="_blank">
+          <a href={FOOTER_LINK.INSTAGRAM} target="_blank" rel="noopener noreferrer">
             <FooterInstaIc />
           </a>
-          <a href={FOOTER_LINK.NOTION} target="_blank">
+          <a href={FOOTER_LINK.NOTION} target="_blank" rel="noopener noreferrer">
             <FooterNotionIc />
           </a>
-          <a href={FOOTER_LINK.WALLA} target="_blank">
+          <a href={FOOTER_LINK.WALLA} target="_blank" rel="noopener noreferrer">
             <FooterWallaIc />
           </a>
         </IconContainer>
