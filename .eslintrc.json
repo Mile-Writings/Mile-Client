@@ -23,6 +23,15 @@
   },
   "ignorePatterns": ["build", "dist", "public"], // lint 무시 파일 정하기
 
+  "overrides": [
+    {
+      "files": ["vite.config.ts", "*.config.ts", "*.config.js"],
+      "env": {
+        "node": true
+      }
+    }
+  ],
+
   "rules": {
     "react/self-closing-comp": [
       "error",
