@@ -84,5 +84,8 @@
     "workerDirectory": [
       "public"
     ]
+  },
+  "engines": {
+    "node": "24.x"
   }
 }
