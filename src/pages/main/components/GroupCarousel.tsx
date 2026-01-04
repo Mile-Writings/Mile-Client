@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import Slider from 'react-slick';
+import Slider, { Settings } from 'react-slick';
 
 import '../styles/slick-theme.css';
 import '../styles/slick.css';
@@ -23,8 +23,8 @@ export interface carouselItemPropTypes {
 }
 
 const GroupCarousel = ({ data }: carouselItemPropTypes) => {
-  const settings = {
-    arrow: false,
+  const settings: Settings = {
+    arrows: false,
     dots: false,
     infinite: false,
     speed: 500,
