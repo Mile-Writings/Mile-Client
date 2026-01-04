@@ -1,6 +1,6 @@
-import { ComponentType, ReactNode } from 'react';
-
 declare module 'react-slick' {
+  import * as React from 'react';
+
   export interface ResponsiveSetting {
     breakpoint: number;
     settings: Partial<Settings>;
@@ -14,14 +14,14 @@ declare module 'react-slick' {
     initialSlide?: number;
     arrows?: boolean;
     dots?: boolean;
-    prevArrow?: ReactNode;
-    nextArrow?: ReactNode;
+    prevArrow?: React.ReactNode;
+    nextArrow?: React.ReactNode;
     responsive?: ResponsiveSetting[];
     afterChange?: (currentSlide?: number) => void;
     beforeChange?: (currentSlide: number, nextSlide: number) => void;
-    asNavFor?: SliderRef;
+    asNavFor?: Slider | undefined;
     className?: string;
-    children?: ReactNode;
+    children?: React.ReactNode;
   }
 
   export interface SliderRef {
@@ -30,7 +30,9 @@ declare module 'react-slick' {
     slickGoTo(slide: number, dontAnimate?: boolean): void;
   }
 
-  const Slider: ComponentType<Settings & { ref?: React.Ref<SliderRef> }>;
-  export default Slider;
-  export type { Settings };
+  export default class Slider extends React.Component<Settings> implements SliderRef {
+    slickNext(): void;
+    slickPrev(): void;
+    slickGoTo(slide: number, dontAnimate?: boolean): void;
+  }
 }
