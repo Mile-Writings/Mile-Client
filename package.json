@@ -41,7 +41,7 @@
     "react-helmet-async": "^2.0.5",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.26.1",
-    "react-slick": "^0.29.0",
+    "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
@@ -87,5 +87,8 @@
   },
   "engines": {
     "node": "24.x"
+  },
+  "resolutions": {
+    "@types/react": "^18.2.43"
   }
 }

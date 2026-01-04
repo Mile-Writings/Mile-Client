@@ -3052,7 +3052,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.2.43":
+"@types/react@npm:^18.2.43":
   version: 18.2.47
   resolution: "@types/react@npm:18.2.47"
   dependencies:
@@ -7420,7 +7420,7 @@ __metadata:
     react-helmet-async: "npm:^2.0.5"
     react-quill: "npm:^2.0.0"
     react-router-dom: "npm:^6.26.1"
-    react-slick: "npm:^0.29.0"
+    react-slick: "npm:^0.30.2"
     react-snap: "npm:^1.23.0"
     rollup-plugin-visualizer: "npm:^5.12.0"
     slick-carousel: "npm:^1.8.1"
@@ -8871,9 +8871,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-slick@npm:^0.29.0":
-  version: 0.29.0
-  resolution: "react-slick@npm:0.29.0"
+"react-slick@npm:^0.30.2":
+  version: 0.30.3
+  resolution: "react-slick@npm:0.30.3"
   dependencies:
     classnames: "npm:^2.2.5"
     enquire.js: "npm:^2.1.6"
@@ -8881,9 +8881,9 @@ __metadata:
     lodash.debounce: "npm:^4.0.8"
     resize-observer-polyfill: "npm:^1.5.0"
   peerDependencies:
-    react: ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/965e2957b7d72435397adfa062911e62310e181c14b8667b528f9fe88bda490b86fd94d685c186a4b7704b77e10ef3d6c7be24541652a9787baa80b98000190f
+    react: ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/7a4cc4f898ede6fd3a0b7ac48921c1021c7ed3bb1eee5d701b7c3d3d53b0d18d20e72aab1dcb8012ff13636b4927c4bcf243fb97258811a9511bed7ab5a6d27d
   languageName: node
   linkType: hard
 
